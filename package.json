@@ -1,5 +1,5 @@
 {
-  "name": "expo-backend",
+  "name": "expo-backend-types",
   "version": "0.0.1",
   "description": "",
   "author": "Expo",
@@ -17,7 +17,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "postversion": "npm publish",
+    "postpublish": "git push origin --all; git push origin --tags"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -71,5 +73,16 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   },
-  "types": "types/schema.d.ts"
+  "types": "./types/schema.d.ts",
+  "files": [
+    "./types/schema.d.ts"
+  ],
+  "exports": {
+    ".": {
+      "import": "./types/schema.d.ts",
+      "require": "./types/schema.d.ts",
+      "default": "./types/schema.d.ts",
+      "types": "./types/schema.d.ts"
+    }
+  }
 }
