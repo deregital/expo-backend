@@ -1,0 +1,20 @@
+openapi: "3.0.0"
+paths:
+  /:
+    get:
+      operationId: "AppController_getHello"
+      parameters: []
+      responses:
+        200:
+          description: ""
+info:
+  title: "NestJS API"
+  description: "The NestJS API description"
+  version: "1.0"
+  contact: {}
+tags:
+  - name: "nestjs"
+    description: ""
+servers: []
+components:
+  schemas: {}
