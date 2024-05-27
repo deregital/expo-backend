@@ -91,6 +91,6 @@
     }
   },
   "bundledDependencies": [
-    ".prisma/client"
+    ".prisma"
   ]
 }
