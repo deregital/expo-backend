@@ -19,8 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "generate-ts-schema": "ts-node src/main.swagger.ts && openapi-typescript ./swagger.yaml -o ./types/schema.d.ts",
-    "postversion": "npm run generate-ts-schema && git add swagger.yaml && git commit -m \"Added Swagger.yaml\" && npm publish",
-    "postpublish": "git push --follow-tags"
+    "postversion": "npm run generate-ts-schema && npm publish",
+    "postpublish": "git add . && git commit -m \"\" && git push --follow-tags"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
