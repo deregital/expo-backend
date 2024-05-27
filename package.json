@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "generate-ts-schema": "ts-node src/main.swagger.ts && openapi-typescript ./swagger.yaml -o ./types/schema.d.ts",
     "postversion": "npm run generate-ts-schema && npm publish",
-    "postpublish": "git add . && git commit -m \"\" && git push --follow-tags"
+    "postpublish": "git push --follow-tags"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
