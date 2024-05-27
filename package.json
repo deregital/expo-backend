@@ -79,7 +79,8 @@
   "types": "./types/index.d.ts",
   "files": [
     "./types/index.d.ts",
-    "./types/schema.d.ts"
+    "./types/schema.d.ts",
+    "node_modules\\.prisma\\client\\index.d.ts"
   ],
   "exports": {
     ".": {
