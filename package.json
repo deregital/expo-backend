@@ -80,7 +80,7 @@
   "files": [
     "./types/index.d.ts",
     "./types/schema.d.ts",
-    "./types/prisma-schema.d.ts"
+    "./types/prisma-schema/index.d.ts"
   ],
   "exports": {
     ".": {
@@ -89,8 +89,5 @@
       "default": "./types/index.d.ts",
       "types": "./types/index.d.ts"
     }
-  },
-  "bundledDependencies": [
-    "node_modules\\.prisma\\client\\index.d.ts"
-  ]
+  }
 }
