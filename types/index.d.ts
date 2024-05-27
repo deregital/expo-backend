@@ -1,4 +1,2 @@
-import type { paths as Paths } from 'types/schema';
-import type { prisma as Prisma } from 'types/prisma';
-
-export { Paths, Prisma };
+export * from './schema';
+export * from './prisma';
