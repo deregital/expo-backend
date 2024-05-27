@@ -80,7 +80,8 @@
   "files": [
     "./types/index.d.ts",
     "./types/schema.d.ts",
-    "./types/prisma-schema/index.d.ts"
+    "./types/prisma-schema/index.d.ts",
+    "./types/prisma-schema/runtime/library.d.ts"
   ],
   "exports": {
     ".": {
