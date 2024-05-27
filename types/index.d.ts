@@ -1,2 +1,2 @@
 export * from './schema';
-export * from './prisma';
+export * from '@prisma/client';

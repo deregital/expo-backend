@@ -78,15 +78,15 @@
   },
   "types": "./types/index.d.ts",
   "files": [
-    "./types/schema.d.ts",
-    "./types/prisma.d.ts"
+    "./types/index.d.ts",
+    "./types/schema.d.ts"
   ],
   "exports": {
     ".": {
-      "import": "./types/schema.d.ts",
-      "require": "./types/schema.d.ts",
-      "default": "./types/schema.d.ts",
-      "types": "./types/schema.d.ts"
+      "import": "./types/index.d.ts",
+      "require": "./types/index.d.ts",
+      "default": "./types/index.d.ts",
+      "types": "./types/index.d.ts"
     }
   }
 }
