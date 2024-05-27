@@ -18,7 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "postversion": "npm publish",
+    "generate-ts-schema": "ts-node src/main.swagger.ts && openapi-typescript ./swagger.yaml -o ./types/schema.d.ts",
+    "postversion": "generate-ts-schema && npm publish",
     "postpublish": "git push --follow-tags"
   },
   "dependencies": {
