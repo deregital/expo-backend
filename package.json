@@ -76,8 +76,9 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   },
-  "types": "./types/schema.d.ts",
+  "types": "./types/index.d.ts",
   "files": [
+    "./types/index.d.ts",
     "./types/schema.d.ts",
     "./types/prisma.d.ts"
   ],
