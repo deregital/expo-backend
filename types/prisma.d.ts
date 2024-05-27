@@ -1,3 +1,3 @@
-import * as Prisma from '@prisma/client'
+import type * as PrismaTypes from '@prisma/client';
 
-export default Prisma;
+export default PrismaTypes;

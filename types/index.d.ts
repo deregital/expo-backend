@@ -1,4 +1,4 @@
-import type { paths } from 'types/schema';
-import type { prisma } from 'types/prisma';
+import type { paths as Paths } from 'types/schema';
+import type { prisma as Prisma } from 'types/prisma';
 
-export { paths, prisma };
+export { Paths, Prisma };
