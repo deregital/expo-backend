@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-type-constraint */
-
 /**
  * Client
  **/
