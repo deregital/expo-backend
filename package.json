@@ -98,13 +98,16 @@
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
       "prettier --write",
-      "eslint --fix"
+      "eslint --fix",
+      "git add"
     ],
     "*.json": [
-      "prettier --write"
+      "prettier --write",
+      "git add"
     ],
     "packages/prisma/schema.prisma": [
-      "prisma format"
+      "prisma format",
+      "git add"
     ]
   }
 }
