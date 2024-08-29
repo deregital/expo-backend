@@ -19,6 +19,28 @@ paths:
       responses:
         200:
           description: ""
+    post:
+      operationId: "AppController_testPost"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        201:
+          description: ""
+    put:
+      operationId: "AppController_testPut"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: ""
 info:
   title: "Cats example"
   description: "The cats API description"
