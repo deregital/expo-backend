@@ -5,9 +5,15 @@
   "author": "Expo",
   "private": false,
   "license": "UNLICENSED",
+  "files": [
+    "types"
+  ],
   "scripts": {
+    "ci": "npm run generate-ts-schema && npm run build && npm run check-format && npm run check-exports",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "check-format": "prettier --check \"src/**/*.ts\"",
+    "check-exports": "attw --pack .",
     "start": "nest start",
     "dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -34,6 +40,7 @@
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.15.4",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
@@ -63,30 +70,7 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.5"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
-  },
-  "types": "./types/index.d.ts",
-  "files": [
-    "./types/index.d.ts",
-    "./types/schema.d.ts",
-    "./types/prisma-schema/index.d.ts",
-    "./types/prisma-schema/runtime/library.d.ts"
-  ],
+  "main": "dist/main.d.ts",
   "exports": {
     ".": {
       "import": "./types/index.d.ts",
