@@ -1,5 +1,12 @@
 # expo-backend-types
 
+## 0.0.29
+
+### Patch Changes
+
+- f42a447: new test route
+- 71ebffd: new test route
+
 ## 0.0.28
 
 ### Patch Changes
