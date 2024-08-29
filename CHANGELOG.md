@@ -4,6 +4,12 @@
 
 ### Patch Changes
 
+- a71c733: test new route otraRuta
+
+## 0.0.30
+
+### Patch Changes
+
 - cb59329: New test put route
 
 ## 0.0.29
