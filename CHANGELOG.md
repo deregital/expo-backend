@@ -1,5 +1,11 @@
 # expo-backend-types
 
+## 0.0.32
+
+### Patch Changes
+
+- f49e590: Routes return JSONs
+
 ## 0.0.31
 
 ### Patch Changes
