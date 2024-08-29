@@ -1,5 +1,11 @@
 # expo-backend-types
 
+## 0.0.30
+
+### Patch Changes
+
+- cb59329: New test put route
+
 ## 0.0.29
 
 ### Patch Changes
