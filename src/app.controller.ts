@@ -18,4 +18,11 @@ export class AppController {
   @Put('/test/:id') testPut(@Param('id') id: string): string {
     return 'test' + id;
   }
+
+  @Post('/otraRuta/:id1/:id2') otraRuta(
+    @Param('id1') id1: string,
+    @Param('id2') id2: string,
+  ): string {
+    return 'otraRuta' + id1 + id2;
+  }
 }

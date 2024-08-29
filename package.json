@@ -1,6 +1,6 @@
 {
   "name": "expo-backend-types",
-  "version": "0.0.30",
+  "version": "0.0.29",
   "description": "",
   "author": "Expo",
   "private": false,
@@ -9,12 +9,13 @@
     "types"
   ],
   "scripts": {
-    "ci": "npm run build && npm run check-format && npm run lint && npm run check-exports",
+    "ci": "npm run generate-ts-schema && npm run commit-schema && npm run build && npm run check-format && npm run lint && npm run check-exports",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
     "check-format": "prettier --check \"src/**/*.ts\"",
     "check-exports": "attw --pack .",
     "local-release": "changeset version && changeset publish",
+    "commit-schema": "git add ./types/schema.d.ts swagger.yaml && git commit -m \"Update schema\"",
     "start": "nest start",
     "dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -84,6 +85,12 @@
     "**/*.{js,ts,jsx,tsx}": [
       "prettier --write",
       "eslint --fix",
+      "git add"
+    ],
+    "swagger.yaml": [
+      "git add"
+    ],
+    "types/schema.d.ts": [
       "git add"
     ],
     "*.json": [
