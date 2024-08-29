@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { AppService } from './app.service';
 @Controller()
 export class AppController {
@@ -12,6 +12,10 @@ export class AppController {
   }
 
   @Post('/test/:id') testPost(@Param('id') id: string): string {
+    return 'test' + id;
+  }
+
+  @Put('/test/:id') testPut(@Param('id') id: string): string {
     return 'test' + id;
   }
 }
