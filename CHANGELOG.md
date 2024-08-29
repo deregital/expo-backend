@@ -1,5 +1,11 @@
 # expo-backend-types
 
+## 0.0.31
+
+### Patch Changes
+
+- 2a358c0: remove commit-schema from ci
+
 ## 0.0.30
 
 ### Patch Changes
