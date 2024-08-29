@@ -9,7 +9,7 @@
     "types"
   ],
   "scripts": {
-    "ci": "npm run generate-ts-schema && npm run build && npm run check-format && npm run check-exports",
+    "ci": "npm run generate-ts-schema && npm run build && npm run check-format && npm run lint && npm run check-exports",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
     "check-format": "prettier --check \"src/**/*.ts\"",
