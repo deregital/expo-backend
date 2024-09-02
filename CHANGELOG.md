@@ -1,5 +1,11 @@
 # expo-backend-types
 
+## 0.0.33
+
+### Patch Changes
+
+- 290484c: Basic auth and cuenta
+
 ## 0.0.32
 
 ### Patch Changes
