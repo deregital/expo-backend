@@ -59,12 +59,12 @@ paths:
         201:
           description: ""
 info:
-  title: "NestJS API"
-  description: "The NestJS API description"
+  title: "Cats example"
+  description: "The cats API description"
   version: "1.0"
   contact: {}
 tags:
-  - name: "nestjs"
+  - name: "cats"
     description: ""
 servers: []
 components:
