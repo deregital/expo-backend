@@ -58,13 +58,34 @@ paths:
       responses:
         201:
           description: ""
+  /auth/register:
+    post:
+      operationId: "AuthController_registerUser"
+      parameters: []
+      responses:
+        201:
+          description: ""
+  /auth/login:
+    post:
+      operationId: "AuthController_loginUser"
+      parameters: []
+      responses:
+        201:
+          description: ""
+  /auth/refresh:
+    post:
+      operationId: "AuthController_refreshToken"
+      parameters: []
+      responses:
+        201:
+          description: ""
 info:
-  title: "Cats example"
-  description: "The cats API description"
+  title: "NestJS API"
+  description: "The NestJS API description"
   version: "1.0"
   contact: {}
 tags:
-  - name: "cats"
+  - name: "nestjs"
     description: ""
 servers: []
 components:
