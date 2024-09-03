@@ -7,8 +7,10 @@ import { AuthModule } from 'src/auth/auth.module';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Module({
-  imports: [ConfigModule.forRoot(), CuentaModule, AuthModule],
+  imports: [ConfigModule.forRoot(), AuthModule, CuentaModule],
+  providers: [PrismaService, AppService],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
 })
-export class AppModule {}
+export class AppModule {
+  // Code here
+}

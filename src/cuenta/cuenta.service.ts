@@ -1,13 +1,13 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { Cuenta } from '@prisma/client';
 import { hash } from 'bcrypt';
-import { CreateCuentaDto } from 'src/cuenta/dto/cuenta.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateCuentaDto } from 'src/cuenta/dto/cuenta.dto';
 import z from 'zod';
 
 @Injectable()
 export class CuentaService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
   async create(
     dto: z.infer<typeof CreateCuentaDto>,

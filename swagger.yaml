@@ -22,12 +22,12 @@ paths:
         201:
           description: ""
 info:
-  title: "NestJS API"
-  description: "The NestJS API description"
+  title: "Expo Backend"
+  description: "Backend de las aplicaciones de Expo"
   version: "1.0"
   contact: {}
 tags:
-  - name: "nestjs"
+  - name: "expo-backend"
     description: ""
 servers: []
 components:

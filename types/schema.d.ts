@@ -4,39 +4,7 @@
  */
 
 export interface paths {
-  '/': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations['AppController_getHello'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/test/{id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations['AppController_test'];
-    put: operations['AppController_testPut'];
-    post: operations['AppController_testPost'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/otraRuta/{id1}/{id2}': {
+  '/auth/register': {
     parameters: {
       query?: never;
       header?: never;
@@ -45,7 +13,39 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    post: operations['AppController_otraRuta'];
+    post: operations['AuthController_registerUser'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/auth/login': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['AuthController_loginUser'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/auth/refresh': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['AuthController_refreshToken'];
     delete?: never;
     options?: never;
     head?: never;
@@ -64,68 +64,11 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  AppController_getHello: {
+  AuthController_registerUser: {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  AppController_test: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  AppController_testPut: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  AppController_testPost: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        id: string;
-      };
       cookie?: never;
     };
     requestBody?: never;
@@ -138,14 +81,28 @@ export interface operations {
       };
     };
   };
-  AppController_otraRuta: {
+  AuthController_loginUser: {
     parameters: {
       query?: never;
       header?: never;
-      path: {
-        id1: string;
-        id2: string;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
       };
+    };
+  };
+  AuthController_refreshToken: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
       cookie?: never;
     };
     requestBody?: never;
