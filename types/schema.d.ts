@@ -55,7 +55,39 @@ export interface paths {
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: never;
+  schemas: {
+    CreateCuentaDto: {
+      username: string;
+      password: string;
+      /** @default false */
+      esAdmin: boolean;
+    };
+    CreateCuentaResponseDto: {
+      username: string;
+      /** @default false */
+      esAdmin: boolean;
+    };
+    LoginDto: {
+      username: string;
+      password: string;
+    };
+    LoginResponseDto: {
+      user: {
+        id?: string;
+        nombreUsuario?: string;
+        contrasena?: string;
+        esAdmin?: boolean;
+        created_at?: string;
+        updated_at?: string;
+        filtroBaseActivo?: boolean;
+        fcmToken?: string[];
+      };
+      backendTokens: {
+        accessToken?: string;
+        refreshToken?: string;
+      };
+    };
+  };
   responses: never;
   parameters: never;
   requestBodies: never;
@@ -71,13 +103,20 @@ export interface operations {
       path?: never;
       cookie?: never;
     };
-    requestBody?: never;
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateCuentaDto'];
+      };
+    };
     responses: {
+      /** @description Cuenta creada */
       201: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['CreateCuentaResponseDto'];
+        };
       };
     };
   };
@@ -88,13 +127,20 @@ export interface operations {
       path?: never;
       cookie?: never;
     };
-    requestBody?: never;
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['LoginDto'];
+      };
+    };
     responses: {
-      201: {
+      /** @description Cuenta creada */
+      200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['LoginResponseDto'];
+        };
       };
     };
   };

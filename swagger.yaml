@@ -4,16 +4,36 @@ paths:
     post:
       operationId: "AuthController_registerUser"
       parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCuentaDto"
       responses:
         201:
-          description: ""
+          description: "Cuenta creada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCuentaResponseDto"
   /auth/login:
     post:
       operationId: "AuthController_loginUser"
       parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginDto"
       responses:
-        201:
-          description: ""
+        200:
+          description: "Cuenta creada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponseDto"
   /auth/refresh:
     post:
       operationId: "AuthController_refreshToken"
@@ -31,4 +51,91 @@ tags:
     description: ""
 servers: []
 components:
-  schemas: {}
+  schemas:
+    CreateCuentaDto:
+      type: "object"
+      properties:
+        username:
+          type: "string"
+          minLength: 3
+          maxLength: 255
+        password:
+          type: "string"
+          minLength: 6
+        esAdmin:
+          default: false
+          type: "boolean"
+      required:
+        - "username"
+        - "password"
+    CreateCuentaResponseDto:
+      type: "object"
+      properties:
+        username:
+          type: "string"
+          minLength: 3
+          maxLength: 255
+        esAdmin:
+          default: false
+          type: "boolean"
+      required:
+        - "username"
+    LoginDto:
+      type: "object"
+      properties:
+        username:
+          type: "string"
+          minLength: 3
+          maxLength: 255
+        password:
+          type: "string"
+          minLength: 6
+      required:
+        - "username"
+        - "password"
+    LoginResponseDto:
+      type: "object"
+      properties:
+        user:
+          type: "object"
+          properties:
+            id:
+              type: "string"
+            nombreUsuario:
+              type: "string"
+            contrasena:
+              type: "string"
+            esAdmin:
+              type: "boolean"
+            created_at:
+              type: "string"
+            updated_at:
+              type: "string"
+            filtroBaseActivo:
+              type: "boolean"
+            fcmToken:
+              type: "array"
+              items:
+                type: "string"
+          required:
+            - "id"
+            - "nombreUsuario"
+            - "contrasena"
+            - "esAdmin"
+            - "created_at"
+            - "updated_at"
+            - "filtroBaseActivo"
+            - "fcmToken"
+        backendTokens:
+          type: "object"
+          properties:
+            accessToken:
+              type: "string"
+            refreshToken:
+              type: "string"
+          required:
+            - "accessToken"
+            - "refreshToken"
+      required:
+        - "user"
+        - "backendTokens"
