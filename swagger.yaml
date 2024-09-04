@@ -96,40 +96,41 @@ components:
             id:
               type: "string"
               format: "uuid"
+              required: true
             username:
               type: "string"
+              required: true
             isAdmin:
               default: false
               type: "boolean"
+              required: false
             created_at:
               type: "string"
               format: "date-time"
+              required: true
             updated_at:
               type: "string"
               format: "date-time"
+              required: true
             filtroBaseActivo:
               default: false
               type: "boolean"
+              required: false
             fcmToken:
               default: []
               type: "array"
               items:
                 type: "string"
-          required:
-            - "id"
-            - "username"
-            - "created_at"
-            - "updated_at"
+              required: false
         backendTokens:
           type: "object"
           properties:
             accessToken:
               type: "string"
+              required: true
             refreshToken:
               type: "string"
-          required:
-            - "accessToken"
-            - "refreshToken"
+              required: true
       required:
         - "user"
         - "backendTokens"

@@ -56,16 +56,16 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
-    CreateCuentaDto: {
+    RegisterDto: {
       username: string;
       password: string;
       /** @default false */
-      esAdmin: boolean;
+      isAdmin: boolean;
     };
-    CreateCuentaResponseDto: {
+    RegisterResponseDto: {
       username: string;
       /** @default false */
-      esAdmin: boolean;
+      isAdmin: boolean;
     };
     LoginDto: {
       username: string;
@@ -73,14 +73,19 @@ export interface components {
     };
     LoginResponseDto: {
       user: {
+        /** Format: uuid */
         id?: string;
-        nombreUsuario?: string;
-        contrasena?: string;
-        esAdmin?: boolean;
+        username?: string;
+        /** @default false */
+        isAdmin: boolean;
+        /** Format: date-time */
         created_at?: string;
+        /** Format: date-time */
         updated_at?: string;
-        filtroBaseActivo?: boolean;
-        fcmToken?: string[];
+        /** @default false */
+        filtroBaseActivo: boolean;
+        /** @default [] */
+        fcmToken: string[];
       };
       backendTokens: {
         accessToken?: string;
@@ -105,7 +110,7 @@ export interface operations {
     };
     requestBody: {
       content: {
-        'application/json': components['schemas']['CreateCuentaDto'];
+        'application/json': components['schemas']['RegisterDto'];
       };
     };
     responses: {
@@ -115,7 +120,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['CreateCuentaResponseDto'];
+          'application/json': components['schemas']['RegisterResponseDto'];
         };
       };
     };
