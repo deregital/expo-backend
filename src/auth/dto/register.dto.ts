@@ -9,8 +9,8 @@ export const registerSchema = cuentaSchema.pick({
 
 export class RegisterDto extends createZodDto(registerSchema) {}
 
-export const RegisterResponseSchema = registerSchema.omit({
+export const registerResponseSchema = registerSchema.omit({
   password: true,
 });
 
-export class RegisterResponseDto extends createZodDto(RegisterResponseSchema) {}
+export class RegisterResponseDto extends createZodDto(registerResponseSchema) {}

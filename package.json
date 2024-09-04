@@ -6,7 +6,8 @@
   "private": false,
   "license": "UNLICENSED",
   "files": [
-    "types"
+    "types",
+    "src/**/*.dto.ts"
   ],
   "scripts": {
     "ci": "npm run build && npm run generate-ts-schema && npm run check-format && npm run lint && npm run check-exports",
@@ -26,7 +27,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "generate-ts-schema": "node ./dist/main.swagger.js && openapi-typescript ./swagger.yaml -o ./types/schema.d.ts",
+    "generate-ts-schema": "node ./dist/src/main.swagger.js && openapi-typescript ./swagger.yaml -o ./types/schema.d.ts",
     "prepare": "husky",
     "prepublishOnly": "npm run ci"
   },
