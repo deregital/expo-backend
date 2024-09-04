@@ -1,7 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { LoginDto } from 'src/auth/dto/auth.dto';
+import { LoginDto } from 'src/auth/dto/login.dto';
 import { CuentaService } from 'src/cuenta/cuenta.service';
-import { z } from 'zod';
 import { JwtService } from '@nestjs/jwt';
 import { Cuenta } from '@prisma/client';
 
@@ -20,8 +19,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async login(dto: z.infer<typeof LoginDto>): Promise<LoginPayload> {
-    console.log(dto);
+  async login(dto: LoginDto): Promise<LoginPayload> {
     const user = await this.validateUser(dto);
 
     const payload = {
@@ -46,7 +44,7 @@ export class AuthService {
     };
   }
 
-  private async validateUser(dto: z.infer<typeof LoginDto>): Promise<Cuenta> {
+  private async validateUser(dto: LoginDto): Promise<Cuenta> {
     const user = await this.cuentaService.findByUsername(dto.username);
 
     if (

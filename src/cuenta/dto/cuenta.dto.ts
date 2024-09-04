@@ -1,14 +1,28 @@
+import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
 
-export const CreateCuentaDto = z.object({
-  username: z
-    .string()
-    .min(3, { message: 'El nombre debe tener al menos 3 caracteres' })
-    .max(255, { message: 'El nombre debe tener como máximo 255 caracteres' }),
+export const cuentaSchema = z.object({
+  id: z
+    .string({
+      required_error: 'El id es requerido',
+    })
+    .uuid({
+      message: 'El id debe ser un UUID',
+    }),
+  username: z.string({
+    required_error: 'El nombre de usuario es requerido',
+  }),
   password: z
     .string({
-      message: 'La contraseña es requerida y debe tener al menos 6 caracteres',
+      required_error: 'La contraseña es requerida',
     })
-    .min(6, { message: 'La contraseña debe tener al menos 6 caracteres' }),
-  esAdmin: z.boolean().default(false),
+    .min(6, 'La contraseña debe tener al menos 6 caracteres'),
+  isAdmin: z.boolean().default(false),
+  created_at: z.string().datetime(),
+  updated_at: z.string().datetime(),
+  // filtroBase: z.array(EtiquetaSchema),
+  filtroBaseActivo: z.boolean().default(false),
+  fcmToken: z.array(z.string()).default([]),
 });
+
+export class CuentaDto extends createZodDto(cuentaSchema) {}

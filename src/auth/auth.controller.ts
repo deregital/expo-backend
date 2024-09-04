@@ -1,12 +1,12 @@
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
-import { ZodPipe } from 'src/filters/zod.pipe';
-import { CreateCuentaDto } from 'src/cuenta/dto/cuenta.dto';
-import { z } from 'zod';
+import { RegisterDto, RegisterResponseDto } from 'src/auth/dto/register.dto';
 import { CuentaService } from 'src/cuenta/cuenta.service';
-import { LoginDto } from 'src/auth/dto/auth.dto';
+import { LoginDto } from 'src/auth/dto/login.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { RefreshJwtGuard } from 'src/auth/guards/refresh.guard';
 import { Request as ExpReq } from 'express';
+import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
+import { LoginResponseDto } from 'src/auth/dto/login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -16,14 +16,20 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  async registerUser(
-    @Body(new ZodPipe(CreateCuentaDto)) body: z.infer<typeof CreateCuentaDto>,
-  ) {
+  @ApiCreatedResponse({
+    description: 'Cuenta creada',
+    type: RegisterResponseDto,
+  })
+  async registerUser(@Body() body: RegisterDto) {
     return await this.cuentaService.create(body);
   }
 
+  @ApiOkResponse({
+    description: 'Cuenta creada',
+    type: LoginResponseDto,
+  })
   @Post('login')
-  async loginUser(@Body(new ZodPipe(LoginDto)) body: z.infer<typeof LoginDto>) {
+  async loginUser(@Body() body: LoginDto) {
     return await this.authService.login(body);
   }
 

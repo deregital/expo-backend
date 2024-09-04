@@ -9,14 +9,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateCuentaDto"
+              $ref: "#/components/schemas/RegisterDto"
       responses:
         201:
           description: "Cuenta creada"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreateCuentaResponseDto"
+                $ref: "#/components/schemas/RegisterResponseDto"
   /auth/login:
     post:
       operationId: "AuthController_loginUser"
@@ -52,30 +52,26 @@ tags:
 servers: []
 components:
   schemas:
-    CreateCuentaDto:
+    RegisterDto:
       type: "object"
       properties:
         username:
           type: "string"
-          minLength: 3
-          maxLength: 255
         password:
           type: "string"
           minLength: 6
-        esAdmin:
+        isAdmin:
           default: false
           type: "boolean"
       required:
         - "username"
         - "password"
-    CreateCuentaResponseDto:
+    RegisterResponseDto:
       type: "object"
       properties:
         username:
           type: "string"
-          minLength: 3
-          maxLength: 255
-        esAdmin:
+        isAdmin:
           default: false
           type: "boolean"
       required:
@@ -85,8 +81,6 @@ components:
       properties:
         username:
           type: "string"
-          minLength: 3
-          maxLength: 255
         password:
           type: "string"
           minLength: 6
@@ -101,31 +95,31 @@ components:
           properties:
             id:
               type: "string"
-            nombreUsuario:
+              format: "uuid"
+            username:
               type: "string"
-            contrasena:
-              type: "string"
-            esAdmin:
+            isAdmin:
+              default: false
               type: "boolean"
             created_at:
               type: "string"
+              format: "date-time"
             updated_at:
               type: "string"
+              format: "date-time"
             filtroBaseActivo:
+              default: false
               type: "boolean"
             fcmToken:
+              default: []
               type: "array"
               items:
                 type: "string"
           required:
             - "id"
-            - "nombreUsuario"
-            - "contrasena"
-            - "esAdmin"
+            - "username"
             - "created_at"
             - "updated_at"
-            - "filtroBaseActivo"
-            - "fcmToken"
         backendTokens:
           type: "object"
           properties:

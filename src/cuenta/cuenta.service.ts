@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { Cuenta } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateCuentaDto } from 'src/cuenta/dto/cuenta.dto';
+import { RegisterResponseDto, registerSchema } from 'src/auth/dto/register.dto';
 import z from 'zod';
 
 @Injectable()
@@ -10,8 +10,8 @@ export class CuentaService {
   constructor(private prisma: PrismaService) {}
 
   async create(
-    dto: z.infer<typeof CreateCuentaDto>,
-  ): Promise<Omit<Cuenta, 'contrasena'>> {
+    dto: z.infer<typeof registerSchema>,
+  ): Promise<RegisterResponseDto> {
     const user = await this.prisma.cuenta.findUnique({
       where: {
         nombreUsuario: dto.username,
@@ -32,7 +32,10 @@ export class CuentaService {
 
     const { contrasena, ...result } = newUser;
 
-    return result;
+    return {
+      isAdmin: result.esAdmin,
+      username: result.nombreUsuario,
+    };
   }
 
   async findByUsername(
