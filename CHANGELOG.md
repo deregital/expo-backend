@@ -1,5 +1,11 @@
 # expo-backend-types
 
+## 0.0.35
+
+### Patch Changes
+
+- 4c7f035: add dto to exported files
+
 ## 0.0.34
 
 ### Patch Changes
