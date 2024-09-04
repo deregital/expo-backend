@@ -1,5 +1,11 @@
 # expo-backend-types
 
+## 0.0.34
+
+### Patch Changes
+
+- d51fc0e: support for zod in openapi
+
 ## 0.0.33
 
 ### Patch Changes
