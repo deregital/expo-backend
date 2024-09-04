@@ -3,11 +3,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as YAML from 'json-to-pretty-yaml';
 import { AppModule } from './app.module';
 import * as fs from 'fs';
-import { ZodFilter } from 'src/filters/zod.filter';
+import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalFilters(new ZodFilter());
 
   const config = new DocumentBuilder()
     .setTitle('Expo Backend')
@@ -16,7 +15,11 @@ async function bootstrap() {
     .addTag('expo-backend')
     .build();
 
+  patchNestjsSwagger();
+
   const document = SwaggerModule.createDocument(app, config);
+
+  SwaggerModule.setup('api', app, document);
 
   fs.writeFileSync('./swagger.yaml', YAML.stringify(document));
 

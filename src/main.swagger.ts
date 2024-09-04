@@ -4,11 +4,9 @@ import { AppModule } from './app.module';
 import * as path from 'path';
 import { writeFileSync } from 'fs';
 import * as YAML from 'json-to-pretty-yaml';
-import { ZodFilter } from 'src/filters/zod.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalFilters(new ZodFilter());
 
   const options = new DocumentBuilder()
     .setTitle('Expo Backend')
