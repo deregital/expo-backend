@@ -1,17 +1,17 @@
 {
   "name": "expo-backend-types",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "description": "",
   "author": "Expo",
   "private": false,
   "license": "UNLICENSED",
   "files": [
-    "types",
-    "src/**/*.dto.ts",
-    "src/**/export.ts"
+    "dist/types",
+    "dist/src/**/*.dto.*.{js,ts}",
+    "dist/src/**/exports.*.{js,ts}"
   ],
   "scripts": {
-    "ci": "npm run build && npm run generate-ts-schema && npm run format && npm run lint && npm run check-exports",
+    "ci": "npm run generate-ts-schema && npm run build && npx prisma generate && npm run format && npm run lint && npm run check-exports",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
     "check-format": "prettier --check \"src/**/*.ts\"",
@@ -28,7 +28,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "generate-ts-schema": "node ./dist/src/main.swagger.js && openapi-typescript ./swagger.yaml -o ./types/schema.d.ts",
+    "generate-ts-schema": "node ./dist/src/main.swagger.js && openapi-typescript ./swagger.yaml -o ./types/schema.ts",
     "prepare": "husky",
     "prepublishOnly": "npm run ci"
   },
@@ -82,13 +82,13 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.5"
   },
-  "main": "types/index.d.ts",
+  "main": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "import": "./types/index.d.ts",
-      "require": "./types/index.d.ts",
-      "default": "./types/index.d.ts",
-      "types": "./types/index.d.ts"
+      "import": "./dist/types/index.js",
+      "require": "./dist/types/index.js",
+      "default": "./dist/types/index.js",
+      "types": "./dist/types/index.d.ts"
     }
   },
   "lint-staged": {

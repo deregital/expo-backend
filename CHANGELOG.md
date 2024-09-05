@@ -1,5 +1,11 @@
 # expo-backend-types
 
+## 0.0.44
+
+### Patch Changes
+
+- 9fa6774: added things
+
 ## 0.0.43
 
 ### Patch Changes
