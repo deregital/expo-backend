@@ -1,4 +1,5 @@
 generator client {
+  output   = "../dist/types/prisma-schema"
   provider = "prisma-client-js"
 }
 

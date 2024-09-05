@@ -1,5 +1,5 @@
 import { createZodDto } from '@anatine/zod-nestjs';
-import { cuentaSchema } from 'src/cuenta/dto/cuenta.dto';
+import { cuentaSchema } from '../../cuenta/dto/cuenta.dto';
 
 export const registerSchema = cuentaSchema.pick({
   username: true,
