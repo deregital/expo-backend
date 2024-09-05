@@ -1,6 +1,6 @@
 {
   "name": "expo-backend-types",
-  "version": "0.0.42",
+  "version": "0.0.43",
   "description": "",
   "author": "Expo",
   "private": false,
@@ -89,12 +89,6 @@
       "require": "./types/index.d.ts",
       "default": "./types/index.d.ts",
       "types": "./types/index.d.ts"
-    },
-    "./dto": {
-      "import": "./types/dto.ts",
-      "require": "./types/dto.ts",
-      "default": "./types/dto.ts",
-      "types": "./types/dto.ts"
     }
   },
   "lint-staged": {

@@ -1,5 +1,12 @@
 # expo-backend-types
 
+## 0.0.43
+
+### Patch Changes
+
+- 55224fe: test
+- 1c7be8e: more tests
+
 ## 0.0.42
 
 ### Patch Changes
