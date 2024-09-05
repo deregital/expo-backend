@@ -1,14 +1,14 @@
 {
   "name": "expo-backend-types",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "description": "",
   "author": "Expo",
   "private": false,
   "license": "UNLICENSED",
   "files": [
     "dist/types",
-    "dist/src/**/*.dto.*.{js,ts}",
-    "dist/src/**/exports.*.{js,ts}"
+    "dist/src/**/*.dto.{js,d.ts,ts}",
+    "dist/src/**/exports.{js,d.ts,ts}"
   ],
   "scripts": {
     "ci": "npm run generate-ts-schema && npm run build && npx prisma generate && npm run format && npm run lint && npm run check-exports",

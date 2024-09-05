@@ -1,5 +1,11 @@
 # expo-backend-types
 
+## 0.0.45
+
+### Patch Changes
+
+- 70899f3: include .js in files
+
 ## 0.0.44
 
 ### Patch Changes
