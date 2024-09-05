@@ -1,5 +1,11 @@
 # expo-backend-types
 
+## 0.0.42
+
+### Patch Changes
+
+- f418567: dto
+
 ## 0.0.36
 
 ### Patch Changes

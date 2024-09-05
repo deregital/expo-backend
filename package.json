@@ -1,13 +1,14 @@
 {
   "name": "expo-backend-types",
-  "version": "0.0.36",
+  "version": "0.0.42",
   "description": "",
   "author": "Expo",
   "private": false,
   "license": "UNLICENSED",
   "files": [
     "types",
-    "src/**/*.dto.ts"
+    "src/**/*.dto.ts",
+    "src/**/export.ts"
   ],
   "scripts": {
     "ci": "npm run build && npm run generate-ts-schema && npm run format && npm run lint && npm run check-exports",
@@ -88,6 +89,12 @@
       "require": "./types/index.d.ts",
       "default": "./types/index.d.ts",
       "types": "./types/index.d.ts"
+    },
+    "./dto": {
+      "import": "./types/dto.ts",
+      "require": "./types/dto.ts",
+      "default": "./types/dto.ts",
+      "types": "./types/dto.ts"
     }
   },
   "lint-staged": {
