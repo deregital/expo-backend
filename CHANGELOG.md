@@ -1,5 +1,11 @@
 # expo-backend-types
 
+## 0.0.36
+
+### Patch Changes
+
+- d925507: revert
+
 ## 0.0.35
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "expo-backend-types",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "description": "",
   "author": "Expo",
   "private": false,
@@ -10,7 +10,7 @@
     "src/**/*.dto.ts"
   ],
   "scripts": {
-    "ci": "npm run build && npm run generate-ts-schema && npm run check-format && npm run lint && npm run check-exports",
+    "ci": "npm run build && npm run generate-ts-schema && npm run format && npm run lint && npm run check-exports",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
     "check-format": "prettier --check \"src/**/*.ts\"",
