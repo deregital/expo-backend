@@ -1,5 +1,11 @@
 # expo-backend-types
 
+## 0.0.46
+
+### Patch Changes
+
+- 7481aa6: fix: src instead of ../..
+
 ## 0.0.45
 
 ### Patch Changes
