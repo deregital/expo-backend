@@ -1,5 +1,11 @@
 # expo-backend-types
 
+## 0.0.47
+
+### Patch Changes
+
+- da784b1: dto as separate subroute
+
 ## 0.0.46
 
 ### Patch Changes

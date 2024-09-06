@@ -1,6 +1,6 @@
 {
   "name": "expo-backend-types",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "description": "",
   "author": "Expo",
   "private": false,
@@ -15,7 +15,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
     "check-format": "prettier --check \"src/**/*.ts\"",
-    "check-exports": "attw --pack .",
+    "check-exports": "attw --pack . --ignore-rules no-resolution",
     "local-release": "changeset version && changeset publish",
     "commit-schema": "git add ./types/schema.d.ts swagger.yaml && git commit -m \"Update schema\"",
     "start": "nest start",
@@ -82,13 +82,19 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.5"
   },
-  "main": "./dist/types/index.d.ts",
+  "main": "./dist/types/index.ts",
   "exports": {
     ".": {
       "import": "./dist/types/index.js",
       "require": "./dist/types/index.js",
       "default": "./dist/types/index.js",
       "types": "./dist/types/index.d.ts"
+    },
+    "./dto": {
+      "import": "./dist/types/dto.js",
+      "require": "./dist/types/dto.js",
+      "default": "./dist/types/dto.js",
+      "types": "./dist/types/dto.d.ts"
     }
   },
   "lint-staged": {
