@@ -1,5 +1,11 @@
 # expo-backend-types
 
+## 0.0.48
+
+### Patch Changes
+
+- 700dea7: check exports
+
 ## 0.0.47
 
 ### Patch Changes
