@@ -50,7 +50,8 @@ jobs:
           else
             NEW_VERSION=$((LAST_VERSION + 1))
           fi
-          FULL_VERSION="${BRANCH_NAME}-${NEW_VERSION}"
+          # Format the version as a valid SemVer with a pre-release identifier
+          FULL_VERSION="1.0.0-${BRANCH_NAME}.${NEW_VERSION}"
           echo "VERSION=$FULL_VERSION" >> $GITHUB_ENV
           echo "New version: $FULL_VERSION"
 
