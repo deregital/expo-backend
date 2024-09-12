@@ -78,7 +78,7 @@ jobs:
           # Set up Git user and push the new version tag
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git tag "$VERSION"
+          git tag v"$VERSION"
           git push origin "$VERSION"
 
   publish-npm:
