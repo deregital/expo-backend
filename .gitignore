@@ -55,7 +55,8 @@ pids
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-/types/prisma-schema/*
-!types/prisma-schema/index.d.ts
+/src/types/prisma-schema/*
+!/src/types/prisma-schema/index.d.ts
+!/src/types/prisma-schema/runtime/library.d.ts
 
 estructura.md
