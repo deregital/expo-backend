@@ -25,30 +25,44 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+
       - name: Get branch name
         id: get_branch
-        run: echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+        run: |
+          echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+          echo "Branch name is $BRANCH_NAME"
 
       - name: Get current version
         id: get_version
         run: |
-          # Obtener el último tag de la rama actual que siga el patrón de versión
-          LAST_VERSION=$(git tag --list "${BRANCH_NAME}-*" --sort=-v:refname | head -n 1 | grep -o '[0-9]\+$')
-          # Si no hay versiones previas, iniciar en 0
+          set -e
+          # Ensure BRANCH_NAME is set
+          if [ -z "$BRANCH_NAME" ]; then
+            echo "Branch name could not be determined."
+            exit 1
+          fi
+          # Get the last tag matching the branch pattern
+          LAST_VERSION=$(git tag --list "${BRANCH_NAME}-*" --sort=-v:refname | head -n 1 | grep -o '[0-9]\+$' || echo "0")
+          echo "Last version found: $LAST_VERSION"
+          # Increment the version
           if [ -z "$LAST_VERSION" ]; then
             NEW_VERSION=1
           else
             NEW_VERSION=$((LAST_VERSION + 1))
           fi
-          # Combinar el nombre de la rama y el nuevo número de versión
           FULL_VERSION="${BRANCH_NAME}-${NEW_VERSION}"
           echo "VERSION=$FULL_VERSION" >> $GITHUB_ENV
+          echo "New version: $FULL_VERSION"
 
       - name: Bump version
         run: |
-          # Establecer la nueva versión en el package.json sin crear un tag de Git
+          set -e
+          # Bump the version in package.json
           npm version "$VERSION" --no-git-tag-version
-          # Crear un tag opcional para mantener el control de versiones en la rama
+          echo "Updated package.json to version $VERSION"
+          # Create and push the Git tag
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
           git tag "$VERSION"
           git push origin "$VERSION"
 
