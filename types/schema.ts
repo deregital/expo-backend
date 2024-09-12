@@ -4,39 +4,7 @@
  */
 
 export interface paths {
-  '/': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations['AppController_getHello'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/test/{id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations['AppController_test'];
-    put: operations['AppController_testPut'];
-    post: operations['AppController_testPost'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/otraRuta/{id1}/{id2}': {
+  '/auth/register': {
     parameters: {
       query?: never;
       header?: never;
@@ -45,7 +13,39 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    post: operations['AppController_otraRuta'];
+    post: operations['AuthController_registerUser'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/auth/login': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['AuthController_loginUser'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/auth/refresh': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['AuthController_refreshToken'];
     delete?: never;
     options?: never;
     head?: never;
@@ -55,7 +55,44 @@ export interface paths {
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: never;
+  schemas: {
+    RegisterDto: {
+      username: string;
+      password: string;
+      /** @default false */
+      isAdmin: boolean;
+    };
+    RegisterResponseDto: {
+      username: string;
+      /** @default false */
+      isAdmin: boolean;
+    };
+    LoginDto: {
+      username: string;
+      password: string;
+    };
+    LoginResponseDto: {
+      user: {
+        /** Format: uuid */
+        id?: string;
+        username?: string;
+        /** @default false */
+        isAdmin: boolean;
+        /** Format: date-time */
+        created_at?: string;
+        /** Format: date-time */
+        updated_at?: string;
+        /** @default false */
+        filtroBaseActivo: boolean;
+        /** @default [] */
+        fcmToken: string[];
+      };
+      backendTokens: {
+        accessToken?: string;
+        refreshToken?: string;
+      };
+    };
+  };
   responses: never;
   parameters: never;
   requestBodies: never;
@@ -64,88 +101,59 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  AppController_getHello: {
+  AuthController_registerUser: {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    requestBody?: never;
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['RegisterDto'];
+      };
+    };
     responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  AppController_test: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  AppController_testPut: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  AppController_testPost: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
+      /** @description Cuenta creada */
       201: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['RegisterResponseDto'];
+        };
       };
     };
   };
-  AppController_otraRuta: {
+  AuthController_loginUser: {
     parameters: {
       query?: never;
       header?: never;
-      path: {
-        id1: string;
-        id2: string;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['LoginDto'];
       };
+    };
+    responses: {
+      /** @description Cuenta creada */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['LoginResponseDto'];
+        };
+      };
+    };
+  };
+  AuthController_refreshToken: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
       cookie?: never;
     };
     requestBody?: never;
