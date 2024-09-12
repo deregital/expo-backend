@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from 'src/auth/dto/login.dto';
 import { CuentaService } from 'src/cuenta/cuenta.service';
 import { JwtService } from '@nestjs/jwt';
-import { Cuenta } from 'src/types/prisma-schema';
+import { type Cuenta } from 'src/types/prisma-schema/index';
 
 type LoginPayload = {
   user: Omit<Cuenta, 'password'>;
