@@ -51,7 +51,7 @@ jobs:
             # Increment the minor version for dev branch
             MINOR=$((MINOR + 1))
             PATCH=0
-            NEW_VERSION="{MAJOR}.${MINOR}.${PATCH}"
+            NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
           elif [ "$BRANCH_NAME" = "prod" ]; then
             # Increment the major version for prod branch
             MAJOR=$((MAJOR + 1))
