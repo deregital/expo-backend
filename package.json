@@ -29,7 +29,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "generate-ts-schema": "ts-node -r tsconfig-paths/register src/main.swagger.ts && openapi-typescript ./swagger.yaml -o ./types/schema.ts",
+    "generate-ts-schema": "npx ts-node -r tsconfig-paths/register src/main.swagger.ts && openapi-typescript ./swagger.yaml -o ./types/schema.ts",
     "prepare": "husky",
     "prepublishOnly": "npm run ci"
   },
