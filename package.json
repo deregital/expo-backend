@@ -100,22 +100,10 @@
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
       "prettier --write",
-      "eslint --fix",
-      "git add"
-    ],
-    "swagger.yaml": [
-      "git add"
-    ],
-    "types/schema.d.ts": [
-      "git add"
+      "eslint --fix"
     ],
     "*.json": [
-      "prettier --write",
-      "git add"
-    ],
-    "packages/prisma/schema.prisma": [
-      "prisma format",
-      "git add"
+      "prettier --write"
     ]
   }
 }
