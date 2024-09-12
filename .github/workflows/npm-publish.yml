@@ -37,7 +37,7 @@ jobs:
         run: |
           set -e
           # Get the latest version tag in SemVer format
-          LATEST_VERSION=$(git tag --sort=-v:refname | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 || echo "0.0.0")
+          LATEST_VERSION=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 | cut -c2- || echo "0.0.0")
           echo "Latest version found: $LATEST_VERSION"
 
           # Split the version into major, minor, and patch
