@@ -12,7 +12,7 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ['.eslintrc.js', 'src/types/prisma-schema/*'],
+  ignorePatterns: ['.eslintrc.js', 'types/prisma-schema/*'],
   rules: {
     'unused-imports/no-unused-imports': 'warn',
     '@typescript-eslint/interface-name-prefix': 'off',
