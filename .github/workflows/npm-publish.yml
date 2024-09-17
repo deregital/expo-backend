@@ -9,28 +9,38 @@ on:
       - EXPO-*
 
 jobs:
-  build:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+
       - run: npm install # Install dependencies
 
       - run: npx prisma generate # Generate Prisma Client
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
       - run: npm run generate-ts-schema # Generate TypeScript schema
+
         env:
           NODE_ENV: development
 
       - run: npm run build # Build the project
 
-      - run: npx prisma generate # Generate Prisma Client
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      # - run: npx prisma generate # Generate Prisma Client
+      #   env:
+      #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - run: npm run format # Format code
       - run: npm run lint # Lint code
