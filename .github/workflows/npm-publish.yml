@@ -87,6 +87,7 @@ jobs:
           else
             # Use the latest major.minor.patch and append the branch with an increment
             LAST_BRANCH_VERSION=$(git tag --list "${MAJOR}.${MINOR}.${PATCH}-${BRANCH_NAME}.*" --sort=-v:refname | head -n 1 | grep -o '[0-9]\+$' || echo "0")
+            echo "Last Branch Version: $LAST_BRANCH_VERSION"
             NEW_INCREMENT=$((LAST_BRANCH_VERSION + 1))
             NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}-${BRANCH_NAME}.${NEW_INCREMENT}"
           fi
