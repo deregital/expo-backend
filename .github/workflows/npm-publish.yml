@@ -104,17 +104,14 @@ jobs:
           git show-ref --tags | grep "$VERSION" || exit 1
           echo "Tag $VERSION created successfully."
 
-          # Version without V
-          VERSION_WITHOUT_INITIAL_V=$(echo "$VERSION" | cut -c2-)
-
           # Update the version in package.json without creating a git tag
-          npm version "$VERSION_WITHOUT_INITIAL_V" --no-git-tag-version
-          echo "Updated package.json to version $VERSION_WITHOUT_INITIAL_V"
+          npm version "$VERSION" --no-git-tag-version
+          echo "Updated package.json to version $VERSION"
 
           # Set up Git user and push the new version tag
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git push origin "$VERSION_WITHOUT_INITIAL_V"
+          git push origin "$VERSION"
 
       - run: npm publish
         env:
