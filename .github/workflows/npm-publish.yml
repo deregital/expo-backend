@@ -104,23 +104,15 @@ jobs:
           echo "Tag $VERSION created successfully."
 
           # Update the version in package.json without creating a git tag
-          npm version "$VERSION" --no-git-tag-version
-          echo "Updated package.json to version $VERSION"
+          VERSION_WITHOUT_INITIAL_V = $(echo "$VERSION" | cut -c2-)
+          npm version "$VERSION_WITHOUT_INITIAL_V" --no-git-tag-version
+          echo "Updated package.json to version $VERSION_WITHOUT_INITIAL_V"
 
           # Set up Git user and push the new version tag
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git push origin "$VERSION"
+          git push origin "$VERSION_WITHOUT_INITIAL_V"
 
-  publish-npm:
-    needs: bump-version
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
