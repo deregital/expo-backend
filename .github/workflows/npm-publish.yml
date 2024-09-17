@@ -23,6 +23,8 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
+      - run: ls -la types/prisma-schema # Debug step to list contents
+
       - run: npm run generate-ts-schema # Generate TypeScript schema
         env:
           NODE_ENV: development
