@@ -21,8 +21,9 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "paths": {
-      "types/*": ["types/*"],
-      "src/*": ["src/*"]
+      "@/*": ["./src/*"],
+      "~/*": ["./*"]
     }
-  }
+  },
+  "include": ["src", "types"]
 }

@@ -1,5 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { type Cuenta } from 'types/prisma-schema';
+import { type Cuenta } from '~/types/prisma-schema';
 import { hash } from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RegisterDto, RegisterResponseDto } from 'src/auth/dto/register.dto';
