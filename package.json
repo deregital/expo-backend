@@ -11,8 +11,7 @@
     "dist/src/**/exports.{js,d.ts,ts}"
   ],
   "scripts": {
-    "ci": "npm install && npm run generate-ts-schema && npm run build && npx prisma generate && npm run format && npm run lint && npm run check-exports",
-    "postinstall": "npx prisma generate",
+    "ci": "npm install && npx prisma generate && npm run generate-ts-schema && npm run build && npx prisma generate && npm run format && npm run lint && npm run check-exports",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
     "check-format": "prettier --check \"src/**/*.ts\"",
