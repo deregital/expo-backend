@@ -23,7 +23,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - run: ls -la types/prisma-schema # Debug step to list contents
+      # - run: ls -la types/prisma-schema # Debug step to list contents
 
       - run: npm run generate-ts-schema # Generate TypeScript schema
         env:
@@ -31,9 +31,9 @@ jobs:
 
       - run: npm run build # Build the project
 
-      # - run: npx prisma generate # Generate Prisma Client
-      #   env:
-      #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - run: npx prisma generate # Generate Prisma Client
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - run: npm run format # Format code
       - run: npm run lint # Lint code
