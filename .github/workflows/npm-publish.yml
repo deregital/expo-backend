@@ -9,7 +9,7 @@ on:
       - EXPO-*
 
 jobs:
-  setup:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,17 +22,8 @@ jobs:
       - run: npx prisma generate # Generate Prisma Client
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  build:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
 
       - run: npm run generate-ts-schema # Generate TypeScript schema
-
         env:
           NODE_ENV: development
 
