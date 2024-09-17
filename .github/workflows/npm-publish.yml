@@ -6,6 +6,7 @@ on:
       - main
       - dev
       - expo-*
+      - EXPO-*
 
 jobs:
   build:
@@ -15,26 +16,26 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install  # Install dependencies
+      - run: npm install # Install dependencies
 
-      - run: npx prisma generate  # Generate Prisma Client
+      - run: npx prisma generate # Generate Prisma Client
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - run: npm run generate-ts-schema  # Generate TypeScript schema
+      - run: npm run generate-ts-schema # Generate TypeScript schema
         env:
           NODE_ENV: development
 
-      - run: npm run build  # Build the project
+      - run: npm run build # Build the project
 
-      - run: npx prisma generate  # Generate Prisma Client
+      - run: npx prisma generate # Generate Prisma Client
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - run: npm run format  # Format code
-      - run: npm run lint    # Lint code
+      - run: npm run format # Format code
+      - run: npm run lint # Lint code
 
-      - run: npm run check-exports  # Custom script to check exports
+      - run: npm run check-exports # Custom script to check exports
 
   bump-version:
     needs: build
