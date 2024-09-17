@@ -72,6 +72,12 @@ jobs:
           MINOR=$(echo "$LATEST_VERSION" | cut -d. -f2 || echo "0")
           PATCH=$(echo "$LATEST_VERSION" | cut -d. -f3 || echo "0")
 
+          echo "Latest Major version: $MAJOR"
+          echo "Latest Minor version: $MINOR"
+          echo "Latest Patch version: $PATCH"
+
+          echo "Searching for ${MAJOR}.${MINOR}.${PATCH}-${BRANCH_NAME}.*"
+
           # Determine the new version based on the branch
           if [ "$BRANCH_NAME" = "dev" ]; then
             # Increment the minor version for dev branch
