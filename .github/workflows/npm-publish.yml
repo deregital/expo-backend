@@ -72,12 +72,6 @@ jobs:
           MINOR=$(echo "$LATEST_VERSION" | cut -d. -f2 || echo "0")
           PATCH=$(echo "$LATEST_VERSION" | cut -d. -f3 || echo "0")
 
-          echo "Latest Major version: $MAJOR"
-          echo "Latest Minor version: $MINOR"
-          echo "Latest Patch version: $PATCH"
-
-          echo "Searching for ${MAJOR}.${MINOR}.${PATCH}-${BRANCH_NAME}.*"
-
           # Determine the new version based on the branch
           if [ "$BRANCH_NAME" = "dev" ]; then
             # Increment the minor version for dev branch
@@ -110,8 +104,10 @@ jobs:
           git show-ref --tags | grep "$VERSION" || exit 1
           echo "Tag $VERSION created successfully."
 
+          # Version without V
+          VERSION_WITHOUT_INITIAL_V=$(echo "$VERSION" | cut -c2-)
+
           # Update the version in package.json without creating a git tag
-          VERSION_WITHOUT_INITIAL_V = $(echo "$VERSION" | cut -c2-)
           npm version "$VERSION_WITHOUT_INITIAL_V" --no-git-tag-version
           echo "Updated package.json to version $VERSION_WITHOUT_INITIAL_V"
 
