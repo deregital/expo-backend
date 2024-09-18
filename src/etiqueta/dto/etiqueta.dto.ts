@@ -6,13 +6,13 @@ export const etiquetaSchema = z.object({
   id: z.string().uuid({
     message: 'El ID debe ser un UUID',
   }),
-  nombre: z.string().min(1, {
+  name: z.string().min(1, {
     message: 'El nombre debe tener al menos 1 caracter',
   }),
-  grupoId: z.string().uuid({
+  groupId: z.string().uuid({
     message: 'Debes seleccionar un grupo de etiquetas',
   }),
-  tipo: z.nativeEnum(TipoEtiqueta, {
+  type: z.nativeEnum(TipoEtiqueta, {
     message: 'El tipo de etiqueta no es válido',
   }),
   created_at: z.string().datetime(),
