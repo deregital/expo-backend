@@ -1639,6 +1639,7 @@ export namespace Prisma {
   export type CuentaCountOutputType = {
     comentarios: number;
     etiquetas: number;
+    filtroBase: number;
   };
 
   export type CuentaCountOutputTypeSelect<
@@ -1646,6 +1647,7 @@ export namespace Prisma {
   > = {
     comentarios?: boolean | CuentaCountOutputTypeCountComentariosArgs;
     etiquetas?: boolean | CuentaCountOutputTypeCountEtiquetasArgs;
+    filtroBase?: boolean | CuentaCountOutputTypeCountFiltroBaseArgs;
   };
 
   // Custom InputTypes
@@ -1674,6 +1676,15 @@ export namespace Prisma {
    * CuentaCountOutputType without action
    */
   export type CuentaCountOutputTypeCountEtiquetasArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: EtiquetaWhereInput;
+  };
+
+  /**
+   * CuentaCountOutputType without action
+   */
+  export type CuentaCountOutputTypeCountFiltroBaseArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: EtiquetaWhereInput;
@@ -1746,6 +1757,7 @@ export namespace Prisma {
     eventosConfirmados: number;
     cuentas: number;
     perfiles: number;
+    cuentasFiltroBase: number;
   };
 
   export type EtiquetaCountOutputTypeSelect<
@@ -1759,6 +1771,9 @@ export namespace Prisma {
       | EtiquetaCountOutputTypeCountEventosConfirmadosArgs;
     cuentas?: boolean | EtiquetaCountOutputTypeCountCuentasArgs;
     perfiles?: boolean | EtiquetaCountOutputTypeCountPerfilesArgs;
+    cuentasFiltroBase?:
+      | boolean
+      | EtiquetaCountOutputTypeCountCuentasFiltroBaseArgs;
   };
 
   // Custom InputTypes
@@ -1808,6 +1823,15 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: PerfilWhereInput;
+  };
+
+  /**
+   * EtiquetaCountOutputType without action
+   */
+  export type EtiquetaCountOutputTypeCountCuentasFiltroBaseArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: CuentaWhereInput;
   };
 
   /**
@@ -1903,6 +1927,7 @@ export namespace Prisma {
     esAdmin: boolean | null;
     created_at: Date | null;
     updated_at: Date | null;
+    filtroBaseActivo: boolean | null;
   };
 
   export type CuentaMaxAggregateOutputType = {
@@ -1912,6 +1937,7 @@ export namespace Prisma {
     esAdmin: boolean | null;
     created_at: Date | null;
     updated_at: Date | null;
+    filtroBaseActivo: boolean | null;
   };
 
   export type CuentaCountAggregateOutputType = {
@@ -1921,6 +1947,8 @@ export namespace Prisma {
     esAdmin: number;
     created_at: number;
     updated_at: number;
+    filtroBaseActivo: number;
+    fcmToken: number;
     _all: number;
   };
 
@@ -1931,6 +1959,7 @@ export namespace Prisma {
     esAdmin?: true;
     created_at?: true;
     updated_at?: true;
+    filtroBaseActivo?: true;
   };
 
   export type CuentaMaxAggregateInputType = {
@@ -1940,6 +1969,7 @@ export namespace Prisma {
     esAdmin?: true;
     created_at?: true;
     updated_at?: true;
+    filtroBaseActivo?: true;
   };
 
   export type CuentaCountAggregateInputType = {
@@ -1949,6 +1979,8 @@ export namespace Prisma {
     esAdmin?: true;
     created_at?: true;
     updated_at?: true;
+    filtroBaseActivo?: true;
+    fcmToken?: true;
     _all?: true;
   };
 
@@ -2034,6 +2066,8 @@ export namespace Prisma {
     esAdmin: boolean;
     created_at: Date;
     updated_at: Date;
+    filtroBaseActivo: boolean;
+    fcmToken: string[];
     _count: CuentaCountAggregateOutputType | null;
     _min: CuentaMinAggregateOutputType | null;
     _max: CuentaMaxAggregateOutputType | null;
@@ -2062,8 +2096,11 @@ export namespace Prisma {
       esAdmin?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
+      filtroBaseActivo?: boolean;
+      fcmToken?: boolean;
       comentarios?: boolean | Cuenta$comentariosArgs<ExtArgs>;
       etiquetas?: boolean | Cuenta$etiquetasArgs<ExtArgs>;
+      filtroBase?: boolean | Cuenta$filtroBaseArgs<ExtArgs>;
       _count?: boolean | CuentaCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['cuenta']
@@ -2076,6 +2113,8 @@ export namespace Prisma {
     esAdmin?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
+    filtroBaseActivo?: boolean;
+    fcmToken?: boolean;
   };
 
   export type CuentaInclude<
@@ -2083,6 +2122,7 @@ export namespace Prisma {
   > = {
     comentarios?: boolean | Cuenta$comentariosArgs<ExtArgs>;
     etiquetas?: boolean | Cuenta$etiquetasArgs<ExtArgs>;
+    filtroBase?: boolean | Cuenta$filtroBaseArgs<ExtArgs>;
     _count?: boolean | CuentaCountOutputTypeDefaultArgs<ExtArgs>;
   };
 
@@ -2093,6 +2133,7 @@ export namespace Prisma {
     objects: {
       comentarios: Prisma.$ComentarioPayload<ExtArgs>[];
       etiquetas: Prisma.$EtiquetaPayload<ExtArgs>[];
+      filtroBase: Prisma.$EtiquetaPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -2102,6 +2143,8 @@ export namespace Prisma {
         esAdmin: boolean;
         created_at: Date;
         updated_at: Date;
+        filtroBaseActivo: boolean;
+        fcmToken: string[];
       },
       ExtArgs['result']['cuenta']
     >;
@@ -2567,6 +2610,12 @@ export namespace Prisma {
       $Result.GetResult<Prisma.$EtiquetaPayload<ExtArgs>, T, 'findMany'> | Null
     >;
 
+    filtroBase<T extends Cuenta$filtroBaseArgs<ExtArgs> = {}>(
+      args?: Subset<T, Cuenta$filtroBaseArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<Prisma.$EtiquetaPayload<ExtArgs>, T, 'findMany'> | Null
+    >;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2613,6 +2662,8 @@ export namespace Prisma {
     readonly esAdmin: FieldRef<'Cuenta', 'Boolean'>;
     readonly created_at: FieldRef<'Cuenta', 'DateTime'>;
     readonly updated_at: FieldRef<'Cuenta', 'DateTime'>;
+    readonly filtroBaseActivo: FieldRef<'Cuenta', 'Boolean'>;
+    readonly fcmToken: FieldRef<'Cuenta', 'String[]'>;
   }
 
   // Custom InputTypes
@@ -3004,6 +3055,30 @@ export namespace Prisma {
   };
 
   /**
+   * Cuenta.filtroBase
+   */
+  export type Cuenta$filtroBaseArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Etiqueta
+     */
+    select?: EtiquetaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EtiquetaInclude<ExtArgs> | null;
+    where?: EtiquetaWhereInput;
+    orderBy?:
+      | EtiquetaOrderByWithRelationInput
+      | EtiquetaOrderByWithRelationInput[];
+    cursor?: EtiquetaWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: EtiquetaScalarFieldEnum | EtiquetaScalarFieldEnum[];
+  };
+
+  /**
    * Cuenta without action
    */
   export type CuentaDefaultArgs<
@@ -3041,41 +3116,57 @@ export namespace Prisma {
 
   export type PerfilMinAggregateOutputType = {
     id: string | null;
+    idLegible: number | null;
     telefono: string | null;
     nombreCompleto: string | null;
     nombrePila: string | null;
     genero: string | null;
     fechaNacimiento: Date | null;
     fotoUrl: string | null;
+    instagram: string | null;
+    mail: string | null;
+    dni: string | null;
+    esPapelera: boolean | null;
+    fechaPapelera: Date | null;
     created_at: Date | null;
     updated_at: Date | null;
-    idLegible: number | null;
   };
 
   export type PerfilMaxAggregateOutputType = {
     id: string | null;
+    idLegible: number | null;
     telefono: string | null;
     nombreCompleto: string | null;
     nombrePila: string | null;
     genero: string | null;
     fechaNacimiento: Date | null;
     fotoUrl: string | null;
+    instagram: string | null;
+    mail: string | null;
+    dni: string | null;
+    esPapelera: boolean | null;
+    fechaPapelera: Date | null;
     created_at: Date | null;
     updated_at: Date | null;
-    idLegible: number | null;
   };
 
   export type PerfilCountAggregateOutputType = {
     id: number;
+    idLegible: number;
     telefono: number;
     nombreCompleto: number;
     nombrePila: number;
     genero: number;
     fechaNacimiento: number;
     fotoUrl: number;
+    instagram: number;
+    mail: number;
+    dni: number;
+    nombresAlternativos: number;
+    esPapelera: number;
+    fechaPapelera: number;
     created_at: number;
     updated_at: number;
-    idLegible: number;
     _all: number;
   };
 
@@ -3089,41 +3180,57 @@ export namespace Prisma {
 
   export type PerfilMinAggregateInputType = {
     id?: true;
+    idLegible?: true;
     telefono?: true;
     nombreCompleto?: true;
     nombrePila?: true;
     genero?: true;
     fechaNacimiento?: true;
     fotoUrl?: true;
+    instagram?: true;
+    mail?: true;
+    dni?: true;
+    esPapelera?: true;
+    fechaPapelera?: true;
     created_at?: true;
     updated_at?: true;
-    idLegible?: true;
   };
 
   export type PerfilMaxAggregateInputType = {
     id?: true;
+    idLegible?: true;
     telefono?: true;
     nombreCompleto?: true;
     nombrePila?: true;
     genero?: true;
     fechaNacimiento?: true;
     fotoUrl?: true;
+    instagram?: true;
+    mail?: true;
+    dni?: true;
+    esPapelera?: true;
+    fechaPapelera?: true;
     created_at?: true;
     updated_at?: true;
-    idLegible?: true;
   };
 
   export type PerfilCountAggregateInputType = {
     id?: true;
+    idLegible?: true;
     telefono?: true;
     nombreCompleto?: true;
     nombrePila?: true;
     genero?: true;
     fechaNacimiento?: true;
     fotoUrl?: true;
+    instagram?: true;
+    mail?: true;
+    dni?: true;
+    nombresAlternativos?: true;
+    esPapelera?: true;
+    fechaPapelera?: true;
     created_at?: true;
     updated_at?: true;
-    idLegible?: true;
     _all?: true;
   };
 
@@ -3218,15 +3325,21 @@ export namespace Prisma {
 
   export type PerfilGroupByOutputType = {
     id: string;
+    idLegible: number;
     telefono: string;
     nombreCompleto: string;
     nombrePila: string | null;
     genero: string | null;
     fechaNacimiento: Date | null;
     fotoUrl: string | null;
+    instagram: string | null;
+    mail: string | null;
+    dni: string | null;
+    nombresAlternativos: string[];
+    esPapelera: boolean;
+    fechaPapelera: Date | null;
     created_at: Date;
     updated_at: Date;
-    idLegible: number | null;
     _count: PerfilCountAggregateOutputType | null;
     _avg: PerfilAvgAggregateOutputType | null;
     _sum: PerfilSumAggregateOutputType | null;
@@ -3252,15 +3365,21 @@ export namespace Prisma {
   > = $Extensions.GetSelect<
     {
       id?: boolean;
+      idLegible?: boolean;
       telefono?: boolean;
       nombreCompleto?: boolean;
       nombrePila?: boolean;
       genero?: boolean;
       fechaNacimiento?: boolean;
       fotoUrl?: boolean;
+      instagram?: boolean;
+      mail?: boolean;
+      dni?: boolean;
+      nombresAlternativos?: boolean;
+      esPapelera?: boolean;
+      fechaPapelera?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
-      idLegible?: boolean;
       comentarios?: boolean | Perfil$comentariosArgs<ExtArgs>;
       mensajes?: boolean | Perfil$mensajesArgs<ExtArgs>;
       etiquetas?: boolean | Perfil$etiquetasArgs<ExtArgs>;
@@ -3271,15 +3390,21 @@ export namespace Prisma {
 
   export type PerfilSelectScalar = {
     id?: boolean;
+    idLegible?: boolean;
     telefono?: boolean;
     nombreCompleto?: boolean;
     nombrePila?: boolean;
     genero?: boolean;
     fechaNacimiento?: boolean;
     fotoUrl?: boolean;
+    instagram?: boolean;
+    mail?: boolean;
+    dni?: boolean;
+    nombresAlternativos?: boolean;
+    esPapelera?: boolean;
+    fechaPapelera?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
-    idLegible?: boolean;
   };
 
   export type PerfilInclude<
@@ -3303,15 +3428,21 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<
       {
         id: string;
+        idLegible: number;
         telefono: string;
         nombreCompleto: string;
         nombrePila: string | null;
         genero: string | null;
         fechaNacimiento: Date | null;
         fotoUrl: string | null;
+        instagram: string | null;
+        mail: string | null;
+        dni: string | null;
+        nombresAlternativos: string[];
+        esPapelera: boolean;
+        fechaPapelera: Date | null;
         created_at: Date;
         updated_at: Date;
-        idLegible: number | null;
       },
       ExtArgs['result']['perfil']
     >;
@@ -3824,15 +3955,21 @@ export namespace Prisma {
    */
   interface PerfilFieldRefs {
     readonly id: FieldRef<'Perfil', 'String'>;
+    readonly idLegible: FieldRef<'Perfil', 'Int'>;
     readonly telefono: FieldRef<'Perfil', 'String'>;
     readonly nombreCompleto: FieldRef<'Perfil', 'String'>;
     readonly nombrePila: FieldRef<'Perfil', 'String'>;
     readonly genero: FieldRef<'Perfil', 'String'>;
     readonly fechaNacimiento: FieldRef<'Perfil', 'DateTime'>;
     readonly fotoUrl: FieldRef<'Perfil', 'String'>;
+    readonly instagram: FieldRef<'Perfil', 'String'>;
+    readonly mail: FieldRef<'Perfil', 'String'>;
+    readonly dni: FieldRef<'Perfil', 'String'>;
+    readonly nombresAlternativos: FieldRef<'Perfil', 'String[]'>;
+    readonly esPapelera: FieldRef<'Perfil', 'Boolean'>;
+    readonly fechaPapelera: FieldRef<'Perfil', 'DateTime'>;
     readonly created_at: FieldRef<'Perfil', 'DateTime'>;
     readonly updated_at: FieldRef<'Perfil', 'DateTime'>;
-    readonly idLegible: FieldRef<'Perfil', 'Int'>;
   }
 
   // Custom InputTypes
@@ -4276,8 +4413,8 @@ export namespace Prisma {
   export type ComentarioMinAggregateOutputType = {
     id: string | null;
     contenido: string | null;
-    perfilId: string | null;
     creadoPor: string | null;
+    perfilId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -4285,8 +4422,8 @@ export namespace Prisma {
   export type ComentarioMaxAggregateOutputType = {
     id: string | null;
     contenido: string | null;
-    perfilId: string | null;
     creadoPor: string | null;
+    perfilId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -4294,8 +4431,8 @@ export namespace Prisma {
   export type ComentarioCountAggregateOutputType = {
     id: number;
     contenido: number;
-    perfilId: number;
     creadoPor: number;
+    perfilId: number;
     created_at: number;
     updated_at: number;
     _all: number;
@@ -4304,8 +4441,8 @@ export namespace Prisma {
   export type ComentarioMinAggregateInputType = {
     id?: true;
     contenido?: true;
-    perfilId?: true;
     creadoPor?: true;
+    perfilId?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -4313,8 +4450,8 @@ export namespace Prisma {
   export type ComentarioMaxAggregateInputType = {
     id?: true;
     contenido?: true;
-    perfilId?: true;
     creadoPor?: true;
+    perfilId?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -4322,8 +4459,8 @@ export namespace Prisma {
   export type ComentarioCountAggregateInputType = {
     id?: true;
     contenido?: true;
-    perfilId?: true;
     creadoPor?: true;
+    perfilId?: true;
     created_at?: true;
     updated_at?: true;
     _all?: true;
@@ -4409,8 +4546,8 @@ export namespace Prisma {
   export type ComentarioGroupByOutputType = {
     id: string;
     contenido: string;
-    perfilId: string;
     creadoPor: string;
+    perfilId: string;
     created_at: Date;
     updated_at: Date;
     _count: ComentarioCountAggregateOutputType | null;
@@ -4437,8 +4574,8 @@ export namespace Prisma {
     {
       id?: boolean;
       contenido?: boolean;
-      perfilId?: boolean;
       creadoPor?: boolean;
+      perfilId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       cuenta?: boolean | CuentaDefaultArgs<ExtArgs>;
@@ -4450,8 +4587,8 @@ export namespace Prisma {
   export type ComentarioSelectScalar = {
     id?: boolean;
     contenido?: boolean;
-    perfilId?: boolean;
     creadoPor?: boolean;
+    perfilId?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
   };
@@ -4475,8 +4612,8 @@ export namespace Prisma {
       {
         id: string;
         contenido: string;
-        perfilId: string;
         creadoPor: string;
+        perfilId: string;
         created_at: Date;
         updated_at: Date;
       },
@@ -5016,8 +5153,8 @@ export namespace Prisma {
   interface ComentarioFieldRefs {
     readonly id: FieldRef<'Comentario', 'String'>;
     readonly contenido: FieldRef<'Comentario', 'String'>;
-    readonly perfilId: FieldRef<'Comentario', 'String'>;
     readonly creadoPor: FieldRef<'Comentario', 'String'>;
+    readonly perfilId: FieldRef<'Comentario', 'String'>;
     readonly created_at: FieldRef<'Comentario', 'DateTime'>;
     readonly updated_at: FieldRef<'Comentario', 'DateTime'>;
   }
@@ -5570,6 +5707,7 @@ export namespace Prisma {
       eventosConfirmados?: boolean | Etiqueta$eventosConfirmadosArgs<ExtArgs>;
       cuentas?: boolean | Etiqueta$cuentasArgs<ExtArgs>;
       perfiles?: boolean | Etiqueta$perfilesArgs<ExtArgs>;
+      cuentasFiltroBase?: boolean | Etiqueta$cuentasFiltroBaseArgs<ExtArgs>;
       _count?: boolean | EtiquetaCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['etiqueta']
@@ -5592,6 +5730,7 @@ export namespace Prisma {
     eventosConfirmados?: boolean | Etiqueta$eventosConfirmadosArgs<ExtArgs>;
     cuentas?: boolean | Etiqueta$cuentasArgs<ExtArgs>;
     perfiles?: boolean | Etiqueta$perfilesArgs<ExtArgs>;
+    cuentasFiltroBase?: boolean | Etiqueta$cuentasFiltroBaseArgs<ExtArgs>;
     _count?: boolean | EtiquetaCountOutputTypeDefaultArgs<ExtArgs>;
   };
 
@@ -5605,6 +5744,7 @@ export namespace Prisma {
       eventosConfirmados: Prisma.$EventoPayload<ExtArgs>[];
       cuentas: Prisma.$CuentaPayload<ExtArgs>[];
       perfiles: Prisma.$PerfilPayload<ExtArgs>[];
+      cuentasFiltroBase: Prisma.$CuentaPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -6120,6 +6260,12 @@ export namespace Prisma {
       $Result.GetResult<Prisma.$PerfilPayload<ExtArgs>, T, 'findMany'> | Null
     >;
 
+    cuentasFiltroBase<T extends Etiqueta$cuentasFiltroBaseArgs<ExtArgs> = {}>(
+      args?: Subset<T, Etiqueta$cuentasFiltroBaseArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<Prisma.$CuentaPayload<ExtArgs>, T, 'findMany'> | Null
+    >;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6603,6 +6749,28 @@ export namespace Prisma {
     take?: number;
     skip?: number;
     distinct?: PerfilScalarFieldEnum | PerfilScalarFieldEnum[];
+  };
+
+  /**
+   * Etiqueta.cuentasFiltroBase
+   */
+  export type Etiqueta$cuentasFiltroBaseArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Cuenta
+     */
+    select?: CuentaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CuentaInclude<ExtArgs> | null;
+    where?: CuentaWhereInput;
+    orderBy?: CuentaOrderByWithRelationInput | CuentaOrderByWithRelationInput[];
+    cursor?: CuentaWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: CuentaScalarFieldEnum | CuentaScalarFieldEnum[];
   };
 
   /**
@@ -7768,11 +7936,11 @@ export namespace Prisma {
     nombre: string | null;
     fecha: Date | null;
     ubicacion: string | null;
+    etiquetaAsistioId: string | null;
+    etiquetaConfirmoId: string | null;
     eventoPadreId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
-    etiquetaAsistioId: string | null;
-    etiquetaConfirmoId: string | null;
   };
 
   export type EventoMaxAggregateOutputType = {
@@ -7780,11 +7948,11 @@ export namespace Prisma {
     nombre: string | null;
     fecha: Date | null;
     ubicacion: string | null;
+    etiquetaAsistioId: string | null;
+    etiquetaConfirmoId: string | null;
     eventoPadreId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
-    etiquetaAsistioId: string | null;
-    etiquetaConfirmoId: string | null;
   };
 
   export type EventoCountAggregateOutputType = {
@@ -7792,11 +7960,11 @@ export namespace Prisma {
     nombre: number;
     fecha: number;
     ubicacion: number;
+    etiquetaAsistioId: number;
+    etiquetaConfirmoId: number;
     eventoPadreId: number;
     created_at: number;
     updated_at: number;
-    etiquetaAsistioId: number;
-    etiquetaConfirmoId: number;
     _all: number;
   };
 
@@ -7805,11 +7973,11 @@ export namespace Prisma {
     nombre?: true;
     fecha?: true;
     ubicacion?: true;
+    etiquetaAsistioId?: true;
+    etiquetaConfirmoId?: true;
     eventoPadreId?: true;
     created_at?: true;
     updated_at?: true;
-    etiquetaAsistioId?: true;
-    etiquetaConfirmoId?: true;
   };
 
   export type EventoMaxAggregateInputType = {
@@ -7817,11 +7985,11 @@ export namespace Prisma {
     nombre?: true;
     fecha?: true;
     ubicacion?: true;
+    etiquetaAsistioId?: true;
+    etiquetaConfirmoId?: true;
     eventoPadreId?: true;
     created_at?: true;
     updated_at?: true;
-    etiquetaAsistioId?: true;
-    etiquetaConfirmoId?: true;
   };
 
   export type EventoCountAggregateInputType = {
@@ -7829,11 +7997,11 @@ export namespace Prisma {
     nombre?: true;
     fecha?: true;
     ubicacion?: true;
+    etiquetaAsistioId?: true;
+    etiquetaConfirmoId?: true;
     eventoPadreId?: true;
     created_at?: true;
     updated_at?: true;
-    etiquetaAsistioId?: true;
-    etiquetaConfirmoId?: true;
     _all?: true;
   };
 
@@ -7917,11 +8085,11 @@ export namespace Prisma {
     nombre: string;
     fecha: Date;
     ubicacion: string;
+    etiquetaAsistioId: string;
+    etiquetaConfirmoId: string;
     eventoPadreId: string | null;
     created_at: Date;
     updated_at: Date;
-    etiquetaAsistioId: string;
-    etiquetaConfirmoId: string;
     _count: EventoCountAggregateOutputType | null;
     _min: EventoMinAggregateOutputType | null;
     _max: EventoMaxAggregateOutputType | null;
@@ -7948,11 +8116,11 @@ export namespace Prisma {
       nombre?: boolean;
       fecha?: boolean;
       ubicacion?: boolean;
+      etiquetaAsistioId?: boolean;
+      etiquetaConfirmoId?: boolean;
       eventoPadreId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
-      etiquetaAsistioId?: boolean;
-      etiquetaConfirmoId?: boolean;
       etiquetaAsistio?: boolean | EtiquetaDefaultArgs<ExtArgs>;
       etiquetaConfirmo?: boolean | EtiquetaDefaultArgs<ExtArgs>;
       eventoPadre?: boolean | Evento$eventoPadreArgs<ExtArgs>;
@@ -7967,11 +8135,11 @@ export namespace Prisma {
     nombre?: boolean;
     fecha?: boolean;
     ubicacion?: boolean;
+    etiquetaAsistioId?: boolean;
+    etiquetaConfirmoId?: boolean;
     eventoPadreId?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
-    etiquetaAsistioId?: boolean;
-    etiquetaConfirmoId?: boolean;
   };
 
   export type EventoInclude<
@@ -8000,11 +8168,11 @@ export namespace Prisma {
         nombre: string;
         fecha: Date;
         ubicacion: string;
+        etiquetaAsistioId: string;
+        etiquetaConfirmoId: string;
         eventoPadreId: string | null;
         created_at: Date;
         updated_at: Date;
-        etiquetaAsistioId: string;
-        etiquetaConfirmoId: string;
       },
       ExtArgs['result']['evento']
     >;
@@ -8545,11 +8713,11 @@ export namespace Prisma {
     readonly nombre: FieldRef<'Evento', 'String'>;
     readonly fecha: FieldRef<'Evento', 'DateTime'>;
     readonly ubicacion: FieldRef<'Evento', 'String'>;
+    readonly etiquetaAsistioId: FieldRef<'Evento', 'String'>;
+    readonly etiquetaConfirmoId: FieldRef<'Evento', 'String'>;
     readonly eventoPadreId: FieldRef<'Evento', 'String'>;
     readonly created_at: FieldRef<'Evento', 'DateTime'>;
     readonly updated_at: FieldRef<'Evento', 'DateTime'>;
-    readonly etiquetaAsistioId: FieldRef<'Evento', 'String'>;
-    readonly etiquetaConfirmoId: FieldRef<'Evento', 'String'>;
   }
 
   // Custom InputTypes
@@ -8960,64 +9128,70 @@ export namespace Prisma {
   export type MensajeMinAggregateOutputType = {
     id: string | null;
     wamId: string | null;
-    status: $Enums.MensajeStatus | null;
     perfilTelefono: string | null;
+    status: $Enums.MensajeStatus | null;
+    statusAt: Date | null;
+    visto: boolean | null;
     created_at: Date | null;
     updated_at: Date | null;
-    statusAt: Date | null;
   };
 
   export type MensajeMaxAggregateOutputType = {
     id: string | null;
     wamId: string | null;
-    status: $Enums.MensajeStatus | null;
     perfilTelefono: string | null;
+    status: $Enums.MensajeStatus | null;
+    statusAt: Date | null;
+    visto: boolean | null;
     created_at: Date | null;
     updated_at: Date | null;
-    statusAt: Date | null;
   };
 
   export type MensajeCountAggregateOutputType = {
     id: number;
     wamId: number;
     message: number;
-    status: number;
     perfilTelefono: number;
+    status: number;
+    statusAt: number;
+    visto: number;
     created_at: number;
     updated_at: number;
-    statusAt: number;
     _all: number;
   };
 
   export type MensajeMinAggregateInputType = {
     id?: true;
     wamId?: true;
-    status?: true;
     perfilTelefono?: true;
+    status?: true;
+    statusAt?: true;
+    visto?: true;
     created_at?: true;
     updated_at?: true;
-    statusAt?: true;
   };
 
   export type MensajeMaxAggregateInputType = {
     id?: true;
     wamId?: true;
-    status?: true;
     perfilTelefono?: true;
+    status?: true;
+    statusAt?: true;
+    visto?: true;
     created_at?: true;
     updated_at?: true;
-    statusAt?: true;
   };
 
   export type MensajeCountAggregateInputType = {
     id?: true;
     wamId?: true;
     message?: true;
-    status?: true;
     perfilTelefono?: true;
+    status?: true;
+    statusAt?: true;
+    visto?: true;
     created_at?: true;
     updated_at?: true;
-    statusAt?: true;
     _all?: true;
   };
 
@@ -9102,11 +9276,12 @@ export namespace Prisma {
     id: string;
     wamId: string;
     message: JsonValue;
-    status: $Enums.MensajeStatus;
     perfilTelefono: string;
+    status: $Enums.MensajeStatus;
+    statusAt: Date | null;
+    visto: boolean;
     created_at: Date;
     updated_at: Date;
-    statusAt: Date | null;
     _count: MensajeCountAggregateOutputType | null;
     _min: MensajeMinAggregateOutputType | null;
     _max: MensajeMaxAggregateOutputType | null;
@@ -9132,11 +9307,12 @@ export namespace Prisma {
       id?: boolean;
       wamId?: boolean;
       message?: boolean;
-      status?: boolean;
       perfilTelefono?: boolean;
+      status?: boolean;
+      statusAt?: boolean;
+      visto?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
-      statusAt?: boolean;
       perfil?: boolean | PerfilDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['mensaje']
@@ -9146,11 +9322,12 @@ export namespace Prisma {
     id?: boolean;
     wamId?: boolean;
     message?: boolean;
-    status?: boolean;
     perfilTelefono?: boolean;
+    status?: boolean;
+    statusAt?: boolean;
+    visto?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
-    statusAt?: boolean;
   };
 
   export type MensajeInclude<
@@ -9171,11 +9348,12 @@ export namespace Prisma {
         id: string;
         wamId: string;
         message: Prisma.JsonValue;
-        status: $Enums.MensajeStatus;
         perfilTelefono: string;
+        status: $Enums.MensajeStatus;
+        statusAt: Date | null;
+        visto: boolean;
         created_at: Date;
         updated_at: Date;
-        statusAt: Date | null;
       },
       ExtArgs['result']['mensaje']
     >;
@@ -9692,11 +9870,12 @@ export namespace Prisma {
     readonly id: FieldRef<'Mensaje', 'String'>;
     readonly wamId: FieldRef<'Mensaje', 'String'>;
     readonly message: FieldRef<'Mensaje', 'Json'>;
-    readonly status: FieldRef<'Mensaje', 'MensajeStatus'>;
     readonly perfilTelefono: FieldRef<'Mensaje', 'String'>;
+    readonly status: FieldRef<'Mensaje', 'MensajeStatus'>;
+    readonly statusAt: FieldRef<'Mensaje', 'DateTime'>;
+    readonly visto: FieldRef<'Mensaje', 'Boolean'>;
     readonly created_at: FieldRef<'Mensaje', 'DateTime'>;
     readonly updated_at: FieldRef<'Mensaje', 'DateTime'>;
-    readonly statusAt: FieldRef<'Mensaje', 'DateTime'>;
   }
 
   // Custom InputTypes
@@ -11059,6 +11238,8 @@ export namespace Prisma {
     esAdmin: 'esAdmin';
     created_at: 'created_at';
     updated_at: 'updated_at';
+    filtroBaseActivo: 'filtroBaseActivo';
+    fcmToken: 'fcmToken';
   };
 
   export type CuentaScalarFieldEnum =
@@ -11066,15 +11247,21 @@ export namespace Prisma {
 
   export const PerfilScalarFieldEnum: {
     id: 'id';
+    idLegible: 'idLegible';
     telefono: 'telefono';
     nombreCompleto: 'nombreCompleto';
     nombrePila: 'nombrePila';
     genero: 'genero';
     fechaNacimiento: 'fechaNacimiento';
     fotoUrl: 'fotoUrl';
+    instagram: 'instagram';
+    mail: 'mail';
+    dni: 'dni';
+    nombresAlternativos: 'nombresAlternativos';
+    esPapelera: 'esPapelera';
+    fechaPapelera: 'fechaPapelera';
     created_at: 'created_at';
     updated_at: 'updated_at';
-    idLegible: 'idLegible';
   };
 
   export type PerfilScalarFieldEnum =
@@ -11083,8 +11270,8 @@ export namespace Prisma {
   export const ComentarioScalarFieldEnum: {
     id: 'id';
     contenido: 'contenido';
-    perfilId: 'perfilId';
     creadoPor: 'creadoPor';
+    perfilId: 'perfilId';
     created_at: 'created_at';
     updated_at: 'updated_at';
   };
@@ -11121,11 +11308,11 @@ export namespace Prisma {
     nombre: 'nombre';
     fecha: 'fecha';
     ubicacion: 'ubicacion';
+    etiquetaAsistioId: 'etiquetaAsistioId';
+    etiquetaConfirmoId: 'etiquetaConfirmoId';
     eventoPadreId: 'eventoPadreId';
     created_at: 'created_at';
     updated_at: 'updated_at';
-    etiquetaAsistioId: 'etiquetaAsistioId';
-    etiquetaConfirmoId: 'etiquetaConfirmoId';
   };
 
   export type EventoScalarFieldEnum =
@@ -11135,11 +11322,12 @@ export namespace Prisma {
     id: 'id';
     wamId: 'wamId';
     message: 'message';
-    status: 'status';
     perfilTelefono: 'perfilTelefono';
+    status: 'status';
+    statusAt: 'statusAt';
+    visto: 'visto';
     created_at: 'created_at';
     updated_at: 'updated_at';
-    statusAt: 'statusAt';
   };
 
   export type MensajeScalarFieldEnum =
@@ -11341,8 +11529,11 @@ export namespace Prisma {
     esAdmin?: BoolFilter<'Cuenta'> | boolean;
     created_at?: DateTimeFilter<'Cuenta'> | Date | string;
     updated_at?: DateTimeFilter<'Cuenta'> | Date | string;
+    filtroBaseActivo?: BoolFilter<'Cuenta'> | boolean;
+    fcmToken?: StringNullableListFilter<'Cuenta'>;
     comentarios?: ComentarioListRelationFilter;
     etiquetas?: EtiquetaListRelationFilter;
+    filtroBase?: EtiquetaListRelationFilter;
   };
 
   export type CuentaOrderByWithRelationInput = {
@@ -11352,8 +11543,11 @@ export namespace Prisma {
     esAdmin?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
+    filtroBaseActivo?: SortOrder;
+    fcmToken?: SortOrder;
     comentarios?: ComentarioOrderByRelationAggregateInput;
     etiquetas?: EtiquetaOrderByRelationAggregateInput;
+    filtroBase?: EtiquetaOrderByRelationAggregateInput;
   };
 
   export type CuentaWhereUniqueInput = Prisma.AtLeast<
@@ -11367,8 +11561,11 @@ export namespace Prisma {
       esAdmin?: BoolFilter<'Cuenta'> | boolean;
       created_at?: DateTimeFilter<'Cuenta'> | Date | string;
       updated_at?: DateTimeFilter<'Cuenta'> | Date | string;
+      filtroBaseActivo?: BoolFilter<'Cuenta'> | boolean;
+      fcmToken?: StringNullableListFilter<'Cuenta'>;
       comentarios?: ComentarioListRelationFilter;
       etiquetas?: EtiquetaListRelationFilter;
+      filtroBase?: EtiquetaListRelationFilter;
     },
     'id' | 'nombreUsuario'
   >;
@@ -11380,6 +11577,8 @@ export namespace Prisma {
     esAdmin?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
+    filtroBaseActivo?: SortOrder;
+    fcmToken?: SortOrder;
     _count?: CuentaCountOrderByAggregateInput;
     _max?: CuentaMaxOrderByAggregateInput;
     _min?: CuentaMinOrderByAggregateInput;
@@ -11399,6 +11598,8 @@ export namespace Prisma {
     esAdmin?: BoolWithAggregatesFilter<'Cuenta'> | boolean;
     created_at?: DateTimeWithAggregatesFilter<'Cuenta'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Cuenta'> | Date | string;
+    filtroBaseActivo?: BoolWithAggregatesFilter<'Cuenta'> | boolean;
+    fcmToken?: StringNullableListFilter<'Cuenta'>;
   };
 
   export type PerfilWhereInput = {
@@ -11406,15 +11607,21 @@ export namespace Prisma {
     OR?: PerfilWhereInput[];
     NOT?: PerfilWhereInput | PerfilWhereInput[];
     id?: StringFilter<'Perfil'> | string;
+    idLegible?: IntFilter<'Perfil'> | number;
     telefono?: StringFilter<'Perfil'> | string;
     nombreCompleto?: StringFilter<'Perfil'> | string;
     nombrePila?: StringNullableFilter<'Perfil'> | string | null;
     genero?: StringNullableFilter<'Perfil'> | string | null;
     fechaNacimiento?: DateTimeNullableFilter<'Perfil'> | Date | string | null;
     fotoUrl?: StringNullableFilter<'Perfil'> | string | null;
+    instagram?: StringNullableFilter<'Perfil'> | string | null;
+    mail?: StringNullableFilter<'Perfil'> | string | null;
+    dni?: StringNullableFilter<'Perfil'> | string | null;
+    nombresAlternativos?: StringNullableListFilter<'Perfil'>;
+    esPapelera?: BoolFilter<'Perfil'> | boolean;
+    fechaPapelera?: DateTimeNullableFilter<'Perfil'> | Date | string | null;
     created_at?: DateTimeFilter<'Perfil'> | Date | string;
     updated_at?: DateTimeFilter<'Perfil'> | Date | string;
-    idLegible?: IntNullableFilter<'Perfil'> | number | null;
     comentarios?: ComentarioListRelationFilter;
     mensajes?: MensajeListRelationFilter;
     etiquetas?: EtiquetaListRelationFilter;
@@ -11422,15 +11629,21 @@ export namespace Prisma {
 
   export type PerfilOrderByWithRelationInput = {
     id?: SortOrder;
+    idLegible?: SortOrder;
     telefono?: SortOrder;
     nombreCompleto?: SortOrder;
     nombrePila?: SortOrderInput | SortOrder;
     genero?: SortOrderInput | SortOrder;
     fechaNacimiento?: SortOrderInput | SortOrder;
     fotoUrl?: SortOrderInput | SortOrder;
+    instagram?: SortOrderInput | SortOrder;
+    mail?: SortOrderInput | SortOrder;
+    dni?: SortOrderInput | SortOrder;
+    nombresAlternativos?: SortOrder;
+    esPapelera?: SortOrder;
+    fechaPapelera?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    idLegible?: SortOrderInput | SortOrder;
     comentarios?: ComentarioOrderByRelationAggregateInput;
     mensajes?: MensajeOrderByRelationAggregateInput;
     etiquetas?: EtiquetaOrderByRelationAggregateInput;
@@ -11443,14 +11656,20 @@ export namespace Prisma {
       AND?: PerfilWhereInput | PerfilWhereInput[];
       OR?: PerfilWhereInput[];
       NOT?: PerfilWhereInput | PerfilWhereInput[];
+      idLegible?: IntFilter<'Perfil'> | number;
       nombreCompleto?: StringFilter<'Perfil'> | string;
       nombrePila?: StringNullableFilter<'Perfil'> | string | null;
       genero?: StringNullableFilter<'Perfil'> | string | null;
       fechaNacimiento?: DateTimeNullableFilter<'Perfil'> | Date | string | null;
       fotoUrl?: StringNullableFilter<'Perfil'> | string | null;
+      instagram?: StringNullableFilter<'Perfil'> | string | null;
+      mail?: StringNullableFilter<'Perfil'> | string | null;
+      dni?: StringNullableFilter<'Perfil'> | string | null;
+      nombresAlternativos?: StringNullableListFilter<'Perfil'>;
+      esPapelera?: BoolFilter<'Perfil'> | boolean;
+      fechaPapelera?: DateTimeNullableFilter<'Perfil'> | Date | string | null;
       created_at?: DateTimeFilter<'Perfil'> | Date | string;
       updated_at?: DateTimeFilter<'Perfil'> | Date | string;
-      idLegible?: IntNullableFilter<'Perfil'> | number | null;
       comentarios?: ComentarioListRelationFilter;
       mensajes?: MensajeListRelationFilter;
       etiquetas?: EtiquetaListRelationFilter;
@@ -11460,15 +11679,21 @@ export namespace Prisma {
 
   export type PerfilOrderByWithAggregationInput = {
     id?: SortOrder;
+    idLegible?: SortOrder;
     telefono?: SortOrder;
     nombreCompleto?: SortOrder;
     nombrePila?: SortOrderInput | SortOrder;
     genero?: SortOrderInput | SortOrder;
     fechaNacimiento?: SortOrderInput | SortOrder;
     fotoUrl?: SortOrderInput | SortOrder;
+    instagram?: SortOrderInput | SortOrder;
+    mail?: SortOrderInput | SortOrder;
+    dni?: SortOrderInput | SortOrder;
+    nombresAlternativos?: SortOrder;
+    esPapelera?: SortOrder;
+    fechaPapelera?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    idLegible?: SortOrderInput | SortOrder;
     _count?: PerfilCountOrderByAggregateInput;
     _avg?: PerfilAvgOrderByAggregateInput;
     _max?: PerfilMaxOrderByAggregateInput;
@@ -11485,6 +11710,7 @@ export namespace Prisma {
       | PerfilScalarWhereWithAggregatesInput
       | PerfilScalarWhereWithAggregatesInput[];
     id?: StringWithAggregatesFilter<'Perfil'> | string;
+    idLegible?: IntWithAggregatesFilter<'Perfil'> | number;
     telefono?: StringWithAggregatesFilter<'Perfil'> | string;
     nombreCompleto?: StringWithAggregatesFilter<'Perfil'> | string;
     nombrePila?: StringNullableWithAggregatesFilter<'Perfil'> | string | null;
@@ -11495,9 +11721,18 @@ export namespace Prisma {
       | string
       | null;
     fotoUrl?: StringNullableWithAggregatesFilter<'Perfil'> | string | null;
+    instagram?: StringNullableWithAggregatesFilter<'Perfil'> | string | null;
+    mail?: StringNullableWithAggregatesFilter<'Perfil'> | string | null;
+    dni?: StringNullableWithAggregatesFilter<'Perfil'> | string | null;
+    nombresAlternativos?: StringNullableListFilter<'Perfil'>;
+    esPapelera?: BoolWithAggregatesFilter<'Perfil'> | boolean;
+    fechaPapelera?:
+      | DateTimeNullableWithAggregatesFilter<'Perfil'>
+      | Date
+      | string
+      | null;
     created_at?: DateTimeWithAggregatesFilter<'Perfil'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Perfil'> | Date | string;
-    idLegible?: IntNullableWithAggregatesFilter<'Perfil'> | number | null;
   };
 
   export type ComentarioWhereInput = {
@@ -11506,8 +11741,8 @@ export namespace Prisma {
     NOT?: ComentarioWhereInput | ComentarioWhereInput[];
     id?: StringFilter<'Comentario'> | string;
     contenido?: StringFilter<'Comentario'> | string;
-    perfilId?: StringFilter<'Comentario'> | string;
     creadoPor?: StringFilter<'Comentario'> | string;
+    perfilId?: StringFilter<'Comentario'> | string;
     created_at?: DateTimeFilter<'Comentario'> | Date | string;
     updated_at?: DateTimeFilter<'Comentario'> | Date | string;
     cuenta?: XOR<CuentaRelationFilter, CuentaWhereInput>;
@@ -11517,8 +11752,8 @@ export namespace Prisma {
   export type ComentarioOrderByWithRelationInput = {
     id?: SortOrder;
     contenido?: SortOrder;
-    perfilId?: SortOrder;
     creadoPor?: SortOrder;
+    perfilId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     cuenta?: CuentaOrderByWithRelationInput;
@@ -11532,8 +11767,8 @@ export namespace Prisma {
       OR?: ComentarioWhereInput[];
       NOT?: ComentarioWhereInput | ComentarioWhereInput[];
       contenido?: StringFilter<'Comentario'> | string;
-      perfilId?: StringFilter<'Comentario'> | string;
       creadoPor?: StringFilter<'Comentario'> | string;
+      perfilId?: StringFilter<'Comentario'> | string;
       created_at?: DateTimeFilter<'Comentario'> | Date | string;
       updated_at?: DateTimeFilter<'Comentario'> | Date | string;
       cuenta?: XOR<CuentaRelationFilter, CuentaWhereInput>;
@@ -11545,8 +11780,8 @@ export namespace Prisma {
   export type ComentarioOrderByWithAggregationInput = {
     id?: SortOrder;
     contenido?: SortOrder;
-    perfilId?: SortOrder;
     creadoPor?: SortOrder;
+    perfilId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     _count?: ComentarioCountOrderByAggregateInput;
@@ -11564,8 +11799,8 @@ export namespace Prisma {
       | ComentarioScalarWhereWithAggregatesInput[];
     id?: StringWithAggregatesFilter<'Comentario'> | string;
     contenido?: StringWithAggregatesFilter<'Comentario'> | string;
-    perfilId?: StringWithAggregatesFilter<'Comentario'> | string;
     creadoPor?: StringWithAggregatesFilter<'Comentario'> | string;
+    perfilId?: StringWithAggregatesFilter<'Comentario'> | string;
     created_at?: DateTimeWithAggregatesFilter<'Comentario'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Comentario'> | Date | string;
   };
@@ -11585,6 +11820,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoListRelationFilter;
     cuentas?: CuentaListRelationFilter;
     perfiles?: PerfilListRelationFilter;
+    cuentasFiltroBase?: CuentaListRelationFilter;
   };
 
   export type EtiquetaOrderByWithRelationInput = {
@@ -11599,6 +11835,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoOrderByRelationAggregateInput;
     cuentas?: CuentaOrderByRelationAggregateInput;
     perfiles?: PerfilOrderByRelationAggregateInput;
+    cuentasFiltroBase?: CuentaOrderByRelationAggregateInput;
   };
 
   export type EtiquetaWhereUniqueInput = Prisma.AtLeast<
@@ -11617,6 +11854,7 @@ export namespace Prisma {
       eventosConfirmados?: EventoListRelationFilter;
       cuentas?: CuentaListRelationFilter;
       perfiles?: PerfilListRelationFilter;
+      cuentasFiltroBase?: CuentaListRelationFilter;
     },
     'id'
   >;
@@ -11726,11 +11964,11 @@ export namespace Prisma {
     nombre?: StringFilter<'Evento'> | string;
     fecha?: DateTimeFilter<'Evento'> | Date | string;
     ubicacion?: StringFilter<'Evento'> | string;
+    etiquetaAsistioId?: StringFilter<'Evento'> | string;
+    etiquetaConfirmoId?: StringFilter<'Evento'> | string;
     eventoPadreId?: StringNullableFilter<'Evento'> | string | null;
     created_at?: DateTimeFilter<'Evento'> | Date | string;
     updated_at?: DateTimeFilter<'Evento'> | Date | string;
-    etiquetaAsistioId?: StringFilter<'Evento'> | string;
-    etiquetaConfirmoId?: StringFilter<'Evento'> | string;
     etiquetaAsistio?: XOR<EtiquetaRelationFilter, EtiquetaWhereInput>;
     etiquetaConfirmo?: XOR<EtiquetaRelationFilter, EtiquetaWhereInput>;
     eventoPadre?: XOR<EventoNullableRelationFilter, EventoWhereInput> | null;
@@ -11742,11 +11980,11 @@ export namespace Prisma {
     nombre?: SortOrder;
     fecha?: SortOrder;
     ubicacion?: SortOrder;
+    etiquetaAsistioId?: SortOrder;
+    etiquetaConfirmoId?: SortOrder;
     eventoPadreId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    etiquetaAsistioId?: SortOrder;
-    etiquetaConfirmoId?: SortOrder;
     etiquetaAsistio?: EtiquetaOrderByWithRelationInput;
     etiquetaConfirmo?: EtiquetaOrderByWithRelationInput;
     eventoPadre?: EventoOrderByWithRelationInput;
@@ -11762,11 +12000,11 @@ export namespace Prisma {
       nombre?: StringFilter<'Evento'> | string;
       fecha?: DateTimeFilter<'Evento'> | Date | string;
       ubicacion?: StringFilter<'Evento'> | string;
+      etiquetaAsistioId?: StringFilter<'Evento'> | string;
+      etiquetaConfirmoId?: StringFilter<'Evento'> | string;
       eventoPadreId?: StringNullableFilter<'Evento'> | string | null;
       created_at?: DateTimeFilter<'Evento'> | Date | string;
       updated_at?: DateTimeFilter<'Evento'> | Date | string;
-      etiquetaAsistioId?: StringFilter<'Evento'> | string;
-      etiquetaConfirmoId?: StringFilter<'Evento'> | string;
       etiquetaAsistio?: XOR<EtiquetaRelationFilter, EtiquetaWhereInput>;
       etiquetaConfirmo?: XOR<EtiquetaRelationFilter, EtiquetaWhereInput>;
       eventoPadre?: XOR<EventoNullableRelationFilter, EventoWhereInput> | null;
@@ -11780,11 +12018,11 @@ export namespace Prisma {
     nombre?: SortOrder;
     fecha?: SortOrder;
     ubicacion?: SortOrder;
+    etiquetaAsistioId?: SortOrder;
+    etiquetaConfirmoId?: SortOrder;
     eventoPadreId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    etiquetaAsistioId?: SortOrder;
-    etiquetaConfirmoId?: SortOrder;
     _count?: EventoCountOrderByAggregateInput;
     _max?: EventoMaxOrderByAggregateInput;
     _min?: EventoMinOrderByAggregateInput;
@@ -11802,14 +12040,14 @@ export namespace Prisma {
     nombre?: StringWithAggregatesFilter<'Evento'> | string;
     fecha?: DateTimeWithAggregatesFilter<'Evento'> | Date | string;
     ubicacion?: StringWithAggregatesFilter<'Evento'> | string;
+    etiquetaAsistioId?: StringWithAggregatesFilter<'Evento'> | string;
+    etiquetaConfirmoId?: StringWithAggregatesFilter<'Evento'> | string;
     eventoPadreId?:
       | StringNullableWithAggregatesFilter<'Evento'>
       | string
       | null;
     created_at?: DateTimeWithAggregatesFilter<'Evento'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Evento'> | Date | string;
-    etiquetaAsistioId?: StringWithAggregatesFilter<'Evento'> | string;
-    etiquetaConfirmoId?: StringWithAggregatesFilter<'Evento'> | string;
   };
 
   export type MensajeWhereInput = {
@@ -11819,11 +12057,12 @@ export namespace Prisma {
     id?: StringFilter<'Mensaje'> | string;
     wamId?: StringFilter<'Mensaje'> | string;
     message?: JsonFilter<'Mensaje'>;
-    status?: EnumMensajeStatusFilter<'Mensaje'> | $Enums.MensajeStatus;
     perfilTelefono?: StringFilter<'Mensaje'> | string;
+    status?: EnumMensajeStatusFilter<'Mensaje'> | $Enums.MensajeStatus;
+    statusAt?: DateTimeNullableFilter<'Mensaje'> | Date | string | null;
+    visto?: BoolFilter<'Mensaje'> | boolean;
     created_at?: DateTimeFilter<'Mensaje'> | Date | string;
     updated_at?: DateTimeFilter<'Mensaje'> | Date | string;
-    statusAt?: DateTimeNullableFilter<'Mensaje'> | Date | string | null;
     perfil?: XOR<PerfilRelationFilter, PerfilWhereInput>;
   };
 
@@ -11831,11 +12070,12 @@ export namespace Prisma {
     id?: SortOrder;
     wamId?: SortOrder;
     message?: SortOrder;
-    status?: SortOrder;
     perfilTelefono?: SortOrder;
+    status?: SortOrder;
+    statusAt?: SortOrderInput | SortOrder;
+    visto?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    statusAt?: SortOrderInput | SortOrder;
     perfil?: PerfilOrderByWithRelationInput;
   };
 
@@ -11847,11 +12087,12 @@ export namespace Prisma {
       OR?: MensajeWhereInput[];
       NOT?: MensajeWhereInput | MensajeWhereInput[];
       message?: JsonFilter<'Mensaje'>;
-      status?: EnumMensajeStatusFilter<'Mensaje'> | $Enums.MensajeStatus;
       perfilTelefono?: StringFilter<'Mensaje'> | string;
+      status?: EnumMensajeStatusFilter<'Mensaje'> | $Enums.MensajeStatus;
+      statusAt?: DateTimeNullableFilter<'Mensaje'> | Date | string | null;
+      visto?: BoolFilter<'Mensaje'> | boolean;
       created_at?: DateTimeFilter<'Mensaje'> | Date | string;
       updated_at?: DateTimeFilter<'Mensaje'> | Date | string;
-      statusAt?: DateTimeNullableFilter<'Mensaje'> | Date | string | null;
       perfil?: XOR<PerfilRelationFilter, PerfilWhereInput>;
     },
     'id' | 'wamId'
@@ -11861,11 +12102,12 @@ export namespace Prisma {
     id?: SortOrder;
     wamId?: SortOrder;
     message?: SortOrder;
-    status?: SortOrder;
     perfilTelefono?: SortOrder;
+    status?: SortOrder;
+    statusAt?: SortOrderInput | SortOrder;
+    visto?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    statusAt?: SortOrderInput | SortOrder;
     _count?: MensajeCountOrderByAggregateInput;
     _max?: MensajeMaxOrderByAggregateInput;
     _min?: MensajeMinOrderByAggregateInput;
@@ -11882,17 +12124,18 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<'Mensaje'> | string;
     wamId?: StringWithAggregatesFilter<'Mensaje'> | string;
     message?: JsonWithAggregatesFilter<'Mensaje'>;
+    perfilTelefono?: StringWithAggregatesFilter<'Mensaje'> | string;
     status?:
       | EnumMensajeStatusWithAggregatesFilter<'Mensaje'>
       | $Enums.MensajeStatus;
-    perfilTelefono?: StringWithAggregatesFilter<'Mensaje'> | string;
-    created_at?: DateTimeWithAggregatesFilter<'Mensaje'> | Date | string;
-    updated_at?: DateTimeWithAggregatesFilter<'Mensaje'> | Date | string;
     statusAt?:
       | DateTimeNullableWithAggregatesFilter<'Mensaje'>
       | Date
       | string
       | null;
+    visto?: BoolWithAggregatesFilter<'Mensaje'> | boolean;
+    created_at?: DateTimeWithAggregatesFilter<'Mensaje'> | Date | string;
+    updated_at?: DateTimeWithAggregatesFilter<'Mensaje'> | Date | string;
   };
 
   export type EnumsWhereInput = {
@@ -11963,8 +12206,11 @@ export namespace Prisma {
     esAdmin?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
+    filtroBaseActivo?: boolean;
+    fcmToken?: CuentaCreatefcmTokenInput | string[];
     comentarios?: ComentarioCreateNestedManyWithoutCuentaInput;
     etiquetas?: EtiquetaCreateNestedManyWithoutCuentasInput;
+    filtroBase?: EtiquetaCreateNestedManyWithoutCuentasFiltroBaseInput;
   };
 
   export type CuentaUncheckedCreateInput = {
@@ -11974,8 +12220,11 @@ export namespace Prisma {
     esAdmin?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
+    filtroBaseActivo?: boolean;
+    fcmToken?: CuentaCreatefcmTokenInput | string[];
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutCuentaInput;
     etiquetas?: EtiquetaUncheckedCreateNestedManyWithoutCuentasInput;
+    filtroBase?: EtiquetaUncheckedCreateNestedManyWithoutCuentasFiltroBaseInput;
   };
 
   export type CuentaUpdateInput = {
@@ -11985,8 +12234,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    filtroBaseActivo?: BoolFieldUpdateOperationsInput | boolean;
+    fcmToken?: CuentaUpdatefcmTokenInput | string[];
     comentarios?: ComentarioUpdateManyWithoutCuentaNestedInput;
     etiquetas?: EtiquetaUpdateManyWithoutCuentasNestedInput;
+    filtroBase?: EtiquetaUpdateManyWithoutCuentasFiltroBaseNestedInput;
   };
 
   export type CuentaUncheckedUpdateInput = {
@@ -11996,8 +12248,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    filtroBaseActivo?: BoolFieldUpdateOperationsInput | boolean;
+    fcmToken?: CuentaUpdatefcmTokenInput | string[];
     comentarios?: ComentarioUncheckedUpdateManyWithoutCuentaNestedInput;
     etiquetas?: EtiquetaUncheckedUpdateManyWithoutCuentasNestedInput;
+    filtroBase?: EtiquetaUncheckedUpdateManyWithoutCuentasFiltroBaseNestedInput;
   };
 
   export type CuentaCreateManyInput = {
@@ -12007,6 +12262,8 @@ export namespace Prisma {
     esAdmin?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
+    filtroBaseActivo?: boolean;
+    fcmToken?: CuentaCreatefcmTokenInput | string[];
   };
 
   export type CuentaUpdateManyMutationInput = {
@@ -12016,6 +12273,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    filtroBaseActivo?: BoolFieldUpdateOperationsInput | boolean;
+    fcmToken?: CuentaUpdatefcmTokenInput | string[];
   };
 
   export type CuentaUncheckedUpdateManyInput = {
@@ -12025,19 +12284,27 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    filtroBaseActivo?: BoolFieldUpdateOperationsInput | boolean;
+    fcmToken?: CuentaUpdatefcmTokenInput | string[];
   };
 
   export type PerfilCreateInput = {
     id?: string;
+    idLegible: number;
     telefono: string;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
     fechaNacimiento?: Date | string | null;
     fotoUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    nombresAlternativos?: PerfilCreatenombresAlternativosInput | string[];
+    esPapelera?: boolean;
+    fechaPapelera?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    idLegible?: number | null;
     comentarios?: ComentarioCreateNestedManyWithoutPerfilInput;
     mensajes?: MensajeCreateNestedManyWithoutPerfilInput;
     etiquetas?: EtiquetaCreateNestedManyWithoutPerfilesInput;
@@ -12045,15 +12312,21 @@ export namespace Prisma {
 
   export type PerfilUncheckedCreateInput = {
     id?: string;
+    idLegible: number;
     telefono: string;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
     fechaNacimiento?: Date | string | null;
     fotoUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    nombresAlternativos?: PerfilCreatenombresAlternativosInput | string[];
+    esPapelera?: boolean;
+    fechaPapelera?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    idLegible?: number | null;
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutPerfilInput;
     mensajes?: MensajeUncheckedCreateNestedManyWithoutPerfilInput;
     etiquetas?: EtiquetaUncheckedCreateNestedManyWithoutPerfilesInput;
@@ -12061,6 +12334,7 @@ export namespace Prisma {
 
   export type PerfilUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
+    idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -12071,9 +12345,18 @@ export namespace Prisma {
       | string
       | null;
     fotoUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    nombresAlternativos?: PerfilUpdatenombresAlternativosInput | string[];
+    esPapelera?: BoolFieldUpdateOperationsInput | boolean;
+    fechaPapelera?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    idLegible?: NullableIntFieldUpdateOperationsInput | number | null;
     comentarios?: ComentarioUpdateManyWithoutPerfilNestedInput;
     mensajes?: MensajeUpdateManyWithoutPerfilNestedInput;
     etiquetas?: EtiquetaUpdateManyWithoutPerfilesNestedInput;
@@ -12081,6 +12364,7 @@ export namespace Prisma {
 
   export type PerfilUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
+    idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -12091,9 +12375,18 @@ export namespace Prisma {
       | string
       | null;
     fotoUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    nombresAlternativos?: PerfilUpdatenombresAlternativosInput | string[];
+    esPapelera?: BoolFieldUpdateOperationsInput | boolean;
+    fechaPapelera?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    idLegible?: NullableIntFieldUpdateOperationsInput | number | null;
     comentarios?: ComentarioUncheckedUpdateManyWithoutPerfilNestedInput;
     mensajes?: MensajeUncheckedUpdateManyWithoutPerfilNestedInput;
     etiquetas?: EtiquetaUncheckedUpdateManyWithoutPerfilesNestedInput;
@@ -12101,19 +12394,26 @@ export namespace Prisma {
 
   export type PerfilCreateManyInput = {
     id?: string;
+    idLegible: number;
     telefono: string;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
     fechaNacimiento?: Date | string | null;
     fotoUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    nombresAlternativos?: PerfilCreatenombresAlternativosInput | string[];
+    esPapelera?: boolean;
+    fechaPapelera?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    idLegible?: number | null;
   };
 
   export type PerfilUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string;
+    idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -12124,13 +12424,23 @@ export namespace Prisma {
       | string
       | null;
     fotoUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    nombresAlternativos?: PerfilUpdatenombresAlternativosInput | string[];
+    esPapelera?: BoolFieldUpdateOperationsInput | boolean;
+    fechaPapelera?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    idLegible?: NullableIntFieldUpdateOperationsInput | number | null;
   };
 
   export type PerfilUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string;
+    idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -12141,9 +12451,18 @@ export namespace Prisma {
       | string
       | null;
     fotoUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    nombresAlternativos?: PerfilUpdatenombresAlternativosInput | string[];
+    esPapelera?: BoolFieldUpdateOperationsInput | boolean;
+    fechaPapelera?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    idLegible?: NullableIntFieldUpdateOperationsInput | number | null;
   };
 
   export type ComentarioCreateInput = {
@@ -12158,8 +12477,8 @@ export namespace Prisma {
   export type ComentarioUncheckedCreateInput = {
     id?: string;
     contenido: string;
-    perfilId: string;
     creadoPor: string;
+    perfilId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -12176,8 +12495,8 @@ export namespace Prisma {
   export type ComentarioUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     contenido?: StringFieldUpdateOperationsInput | string;
-    perfilId?: StringFieldUpdateOperationsInput | string;
     creadoPor?: StringFieldUpdateOperationsInput | string;
+    perfilId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -12185,8 +12504,8 @@ export namespace Prisma {
   export type ComentarioCreateManyInput = {
     id?: string;
     contenido: string;
-    perfilId: string;
     creadoPor: string;
+    perfilId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -12201,8 +12520,8 @@ export namespace Prisma {
   export type ComentarioUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string;
     contenido?: StringFieldUpdateOperationsInput | string;
-    perfilId?: StringFieldUpdateOperationsInput | string;
     creadoPor?: StringFieldUpdateOperationsInput | string;
+    perfilId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -12218,6 +12537,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoCreateNestedManyWithoutEtiquetaConfirmoInput;
     cuentas?: CuentaCreateNestedManyWithoutEtiquetasInput;
     perfiles?: PerfilCreateNestedManyWithoutEtiquetasInput;
+    cuentasFiltroBase?: CuentaCreateNestedManyWithoutFiltroBaseInput;
   };
 
   export type EtiquetaUncheckedCreateInput = {
@@ -12231,6 +12551,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoUncheckedCreateNestedManyWithoutEtiquetaConfirmoInput;
     cuentas?: CuentaUncheckedCreateNestedManyWithoutEtiquetasInput;
     perfiles?: PerfilUncheckedCreateNestedManyWithoutEtiquetasInput;
+    cuentasFiltroBase?: CuentaUncheckedCreateNestedManyWithoutFiltroBaseInput;
   };
 
   export type EtiquetaUpdateInput = {
@@ -12244,6 +12565,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoUpdateManyWithoutEtiquetaConfirmoNestedInput;
     cuentas?: CuentaUpdateManyWithoutEtiquetasNestedInput;
     perfiles?: PerfilUpdateManyWithoutEtiquetasNestedInput;
+    cuentasFiltroBase?: CuentaUpdateManyWithoutFiltroBaseNestedInput;
   };
 
   export type EtiquetaUncheckedUpdateInput = {
@@ -12257,6 +12579,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoUncheckedUpdateManyWithoutEtiquetaConfirmoNestedInput;
     cuentas?: CuentaUncheckedUpdateManyWithoutEtiquetasNestedInput;
     perfiles?: PerfilUncheckedUpdateManyWithoutEtiquetasNestedInput;
+    cuentasFiltroBase?: CuentaUncheckedUpdateManyWithoutFiltroBaseNestedInput;
   };
 
   export type EtiquetaCreateManyInput = {
@@ -12370,11 +12693,11 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    etiquetaAsistioId: string;
+    etiquetaConfirmoId: string;
     eventoPadreId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    etiquetaAsistioId: string;
-    etiquetaConfirmoId: string;
     subEventos?: EventoUncheckedCreateNestedManyWithoutEventoPadreInput;
   };
 
@@ -12396,11 +12719,11 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
+    etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
-    etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     subEventos?: EventoUncheckedUpdateManyWithoutEventoPadreNestedInput;
   };
 
@@ -12409,11 +12732,11 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    etiquetaAsistioId: string;
+    etiquetaConfirmoId: string;
     eventoPadreId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    etiquetaAsistioId: string;
-    etiquetaConfirmoId: string;
   };
 
   export type EventoUpdateManyMutationInput = {
@@ -12430,11 +12753,11 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
+    etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
-    etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
   };
 
   export type MensajeCreateInput = {
@@ -12442,9 +12765,10 @@ export namespace Prisma {
     wamId: string;
     message: JsonNullValueInput | InputJsonValue;
     status?: $Enums.MensajeStatus;
+    statusAt?: Date | string | null;
+    visto?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
-    statusAt?: Date | string | null;
     perfil: PerfilCreateNestedOneWithoutMensajesInput;
   };
 
@@ -12452,11 +12776,12 @@ export namespace Prisma {
     id?: string;
     wamId: string;
     message: JsonNullValueInput | InputJsonValue;
-    status?: $Enums.MensajeStatus;
     perfilTelefono: string;
+    status?: $Enums.MensajeStatus;
+    statusAt?: Date | string | null;
+    visto?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
-    statusAt?: Date | string | null;
   };
 
   export type MensajeUpdateInput = {
@@ -12464,13 +12789,14 @@ export namespace Prisma {
     wamId?: StringFieldUpdateOperationsInput | string;
     message?: JsonNullValueInput | InputJsonValue;
     status?: EnumMensajeStatusFieldUpdateOperationsInput | $Enums.MensajeStatus;
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     statusAt?:
       | NullableDateTimeFieldUpdateOperationsInput
       | Date
       | string
       | null;
+    visto?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     perfil?: PerfilUpdateOneRequiredWithoutMensajesNestedInput;
   };
 
@@ -12478,26 +12804,28 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     wamId?: StringFieldUpdateOperationsInput | string;
     message?: JsonNullValueInput | InputJsonValue;
-    status?: EnumMensajeStatusFieldUpdateOperationsInput | $Enums.MensajeStatus;
     perfilTelefono?: StringFieldUpdateOperationsInput | string;
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    status?: EnumMensajeStatusFieldUpdateOperationsInput | $Enums.MensajeStatus;
     statusAt?:
       | NullableDateTimeFieldUpdateOperationsInput
       | Date
       | string
       | null;
+    visto?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type MensajeCreateManyInput = {
     id?: string;
     wamId: string;
     message: JsonNullValueInput | InputJsonValue;
-    status?: $Enums.MensajeStatus;
     perfilTelefono: string;
+    status?: $Enums.MensajeStatus;
+    statusAt?: Date | string | null;
+    visto?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
-    statusAt?: Date | string | null;
   };
 
   export type MensajeUpdateManyMutationInput = {
@@ -12505,28 +12833,30 @@ export namespace Prisma {
     wamId?: StringFieldUpdateOperationsInput | string;
     message?: JsonNullValueInput | InputJsonValue;
     status?: EnumMensajeStatusFieldUpdateOperationsInput | $Enums.MensajeStatus;
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     statusAt?:
       | NullableDateTimeFieldUpdateOperationsInput
       | Date
       | string
       | null;
+    visto?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type MensajeUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string;
     wamId?: StringFieldUpdateOperationsInput | string;
     message?: JsonNullValueInput | InputJsonValue;
-    status?: EnumMensajeStatusFieldUpdateOperationsInput | $Enums.MensajeStatus;
     perfilTelefono?: StringFieldUpdateOperationsInput | string;
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    status?: EnumMensajeStatusFieldUpdateOperationsInput | $Enums.MensajeStatus;
     statusAt?:
       | NullableDateTimeFieldUpdateOperationsInput
       | Date
       | string
       | null;
+    visto?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type EnumsCreateInput = {
@@ -12618,6 +12948,14 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string;
   };
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null;
+    has?: string | StringFieldRefInput<$PrismaModel> | null;
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>;
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>;
+    isEmpty?: boolean;
+  };
+
   export type ComentarioListRelationFilter = {
     every?: ComentarioWhereInput;
     some?: ComentarioWhereInput;
@@ -12645,6 +12983,8 @@ export namespace Prisma {
     esAdmin?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
+    filtroBaseActivo?: SortOrder;
+    fcmToken?: SortOrder;
   };
 
   export type CuentaMaxOrderByAggregateInput = {
@@ -12654,6 +12994,7 @@ export namespace Prisma {
     esAdmin?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
+    filtroBaseActivo?: SortOrder;
   };
 
   export type CuentaMinOrderByAggregateInput = {
@@ -12663,6 +13004,7 @@ export namespace Prisma {
     esAdmin?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
+    filtroBaseActivo?: SortOrder;
   };
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -12705,6 +13047,17 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>;
   };
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntFilter<$PrismaModel> | number;
+  };
+
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null;
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null;
@@ -12731,17 +13084,6 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null;
   };
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    lt?: number | IntFieldRefInput<$PrismaModel>;
-    lte?: number | IntFieldRefInput<$PrismaModel>;
-    gt?: number | IntFieldRefInput<$PrismaModel>;
-    gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null;
-  };
-
   export type MensajeListRelationFilter = {
     every?: MensajeWhereInput;
     some?: MensajeWhereInput;
@@ -12759,15 +13101,21 @@ export namespace Prisma {
 
   export type PerfilCountOrderByAggregateInput = {
     id?: SortOrder;
+    idLegible?: SortOrder;
     telefono?: SortOrder;
     nombreCompleto?: SortOrder;
     nombrePila?: SortOrder;
     genero?: SortOrder;
     fechaNacimiento?: SortOrder;
     fotoUrl?: SortOrder;
+    instagram?: SortOrder;
+    mail?: SortOrder;
+    dni?: SortOrder;
+    nombresAlternativos?: SortOrder;
+    esPapelera?: SortOrder;
+    fechaPapelera?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    idLegible?: SortOrder;
   };
 
   export type PerfilAvgOrderByAggregateInput = {
@@ -12776,32 +13124,58 @@ export namespace Prisma {
 
   export type PerfilMaxOrderByAggregateInput = {
     id?: SortOrder;
+    idLegible?: SortOrder;
     telefono?: SortOrder;
     nombreCompleto?: SortOrder;
     nombrePila?: SortOrder;
     genero?: SortOrder;
     fechaNacimiento?: SortOrder;
     fotoUrl?: SortOrder;
+    instagram?: SortOrder;
+    mail?: SortOrder;
+    dni?: SortOrder;
+    esPapelera?: SortOrder;
+    fechaPapelera?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    idLegible?: SortOrder;
   };
 
   export type PerfilMinOrderByAggregateInput = {
     id?: SortOrder;
+    idLegible?: SortOrder;
     telefono?: SortOrder;
     nombreCompleto?: SortOrder;
     nombrePila?: SortOrder;
     genero?: SortOrder;
     fechaNacimiento?: SortOrder;
     fotoUrl?: SortOrder;
+    instagram?: SortOrder;
+    mail?: SortOrder;
+    dni?: SortOrder;
+    esPapelera?: SortOrder;
+    fechaPapelera?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    idLegible?: SortOrder;
   };
 
   export type PerfilSumOrderByAggregateInput = {
     idLegible?: SortOrder;
+  };
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _avg?: NestedFloatFilter<$PrismaModel>;
+    _sum?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedIntFilter<$PrismaModel>;
+    _max?: NestedIntFilter<$PrismaModel>;
   };
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -12843,22 +13217,6 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>;
   };
 
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    lt?: number | IntFieldRefInput<$PrismaModel>;
-    lte?: number | IntFieldRefInput<$PrismaModel>;
-    gt?: number | IntFieldRefInput<$PrismaModel>;
-    gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
-    _count?: NestedIntNullableFilter<$PrismaModel>;
-    _avg?: NestedFloatNullableFilter<$PrismaModel>;
-    _sum?: NestedIntNullableFilter<$PrismaModel>;
-    _min?: NestedIntNullableFilter<$PrismaModel>;
-    _max?: NestedIntNullableFilter<$PrismaModel>;
-  };
-
   export type CuentaRelationFilter = {
     is?: CuentaWhereInput;
     isNot?: CuentaWhereInput;
@@ -12872,8 +13230,8 @@ export namespace Prisma {
   export type ComentarioCountOrderByAggregateInput = {
     id?: SortOrder;
     contenido?: SortOrder;
-    perfilId?: SortOrder;
     creadoPor?: SortOrder;
+    perfilId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -12881,8 +13239,8 @@ export namespace Prisma {
   export type ComentarioMaxOrderByAggregateInput = {
     id?: SortOrder;
     contenido?: SortOrder;
-    perfilId?: SortOrder;
     creadoPor?: SortOrder;
+    perfilId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -12890,8 +13248,8 @@ export namespace Prisma {
   export type ComentarioMinOrderByAggregateInput = {
     id?: SortOrder;
     contenido?: SortOrder;
-    perfilId?: SortOrder;
     creadoPor?: SortOrder;
+    perfilId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -13027,11 +13385,11 @@ export namespace Prisma {
     nombre?: SortOrder;
     fecha?: SortOrder;
     ubicacion?: SortOrder;
+    etiquetaAsistioId?: SortOrder;
+    etiquetaConfirmoId?: SortOrder;
     eventoPadreId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    etiquetaAsistioId?: SortOrder;
-    etiquetaConfirmoId?: SortOrder;
   };
 
   export type EventoMaxOrderByAggregateInput = {
@@ -13039,11 +13397,11 @@ export namespace Prisma {
     nombre?: SortOrder;
     fecha?: SortOrder;
     ubicacion?: SortOrder;
+    etiquetaAsistioId?: SortOrder;
+    etiquetaConfirmoId?: SortOrder;
     eventoPadreId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    etiquetaAsistioId?: SortOrder;
-    etiquetaConfirmoId?: SortOrder;
   };
 
   export type EventoMinOrderByAggregateInput = {
@@ -13051,11 +13409,11 @@ export namespace Prisma {
     nombre?: SortOrder;
     fecha?: SortOrder;
     ubicacion?: SortOrder;
+    etiquetaAsistioId?: SortOrder;
+    etiquetaConfirmoId?: SortOrder;
     eventoPadreId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    etiquetaAsistioId?: SortOrder;
-    etiquetaConfirmoId?: SortOrder;
   };
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -13106,31 +13464,34 @@ export namespace Prisma {
     id?: SortOrder;
     wamId?: SortOrder;
     message?: SortOrder;
-    status?: SortOrder;
     perfilTelefono?: SortOrder;
+    status?: SortOrder;
+    statusAt?: SortOrder;
+    visto?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    statusAt?: SortOrder;
   };
 
   export type MensajeMaxOrderByAggregateInput = {
     id?: SortOrder;
     wamId?: SortOrder;
-    status?: SortOrder;
     perfilTelefono?: SortOrder;
+    status?: SortOrder;
+    statusAt?: SortOrder;
+    visto?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    statusAt?: SortOrder;
   };
 
   export type MensajeMinOrderByAggregateInput = {
     id?: SortOrder;
     wamId?: SortOrder;
-    status?: SortOrder;
     perfilTelefono?: SortOrder;
+    status?: SortOrder;
+    statusAt?: SortOrder;
+    visto?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    statusAt?: SortOrder;
   };
   export type JsonWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -13275,6 +13636,10 @@ export namespace Prisma {
       _max?: NestedEnumCategoriaPlantillaFilter<$PrismaModel>;
     };
 
+  export type CuentaCreatefcmTokenInput = {
+    set: string[];
+  };
+
   export type ComentarioCreateNestedManyWithoutCuentaInput = {
     create?:
       | XOR<
@@ -13301,6 +13666,20 @@ export namespace Prisma {
     connectOrCreate?:
       | EtiquetaCreateOrConnectWithoutCuentasInput
       | EtiquetaCreateOrConnectWithoutCuentasInput[];
+    connect?: EtiquetaWhereUniqueInput | EtiquetaWhereUniqueInput[];
+  };
+
+  export type EtiquetaCreateNestedManyWithoutCuentasFiltroBaseInput = {
+    create?:
+      | XOR<
+          EtiquetaCreateWithoutCuentasFiltroBaseInput,
+          EtiquetaUncheckedCreateWithoutCuentasFiltroBaseInput
+        >
+      | EtiquetaCreateWithoutCuentasFiltroBaseInput[]
+      | EtiquetaUncheckedCreateWithoutCuentasFiltroBaseInput[];
+    connectOrCreate?:
+      | EtiquetaCreateOrConnectWithoutCuentasFiltroBaseInput
+      | EtiquetaCreateOrConnectWithoutCuentasFiltroBaseInput[];
     connect?: EtiquetaWhereUniqueInput | EtiquetaWhereUniqueInput[];
   };
 
@@ -13333,6 +13712,20 @@ export namespace Prisma {
     connect?: EtiquetaWhereUniqueInput | EtiquetaWhereUniqueInput[];
   };
 
+  export type EtiquetaUncheckedCreateNestedManyWithoutCuentasFiltroBaseInput = {
+    create?:
+      | XOR<
+          EtiquetaCreateWithoutCuentasFiltroBaseInput,
+          EtiquetaUncheckedCreateWithoutCuentasFiltroBaseInput
+        >
+      | EtiquetaCreateWithoutCuentasFiltroBaseInput[]
+      | EtiquetaUncheckedCreateWithoutCuentasFiltroBaseInput[];
+    connectOrCreate?:
+      | EtiquetaCreateOrConnectWithoutCuentasFiltroBaseInput
+      | EtiquetaCreateOrConnectWithoutCuentasFiltroBaseInput[];
+    connect?: EtiquetaWhereUniqueInput | EtiquetaWhereUniqueInput[];
+  };
+
   export type StringFieldUpdateOperationsInput = {
     set?: string;
   };
@@ -13343,6 +13736,11 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string;
+  };
+
+  export type CuentaUpdatefcmTokenInput = {
+    set?: string[];
+    push?: string | string[];
   };
 
   export type ComentarioUpdateManyWithoutCuentaNestedInput = {
@@ -13400,6 +13798,33 @@ export namespace Prisma {
     deleteMany?: EtiquetaScalarWhereInput | EtiquetaScalarWhereInput[];
   };
 
+  export type EtiquetaUpdateManyWithoutCuentasFiltroBaseNestedInput = {
+    create?:
+      | XOR<
+          EtiquetaCreateWithoutCuentasFiltroBaseInput,
+          EtiquetaUncheckedCreateWithoutCuentasFiltroBaseInput
+        >
+      | EtiquetaCreateWithoutCuentasFiltroBaseInput[]
+      | EtiquetaUncheckedCreateWithoutCuentasFiltroBaseInput[];
+    connectOrCreate?:
+      | EtiquetaCreateOrConnectWithoutCuentasFiltroBaseInput
+      | EtiquetaCreateOrConnectWithoutCuentasFiltroBaseInput[];
+    upsert?:
+      | EtiquetaUpsertWithWhereUniqueWithoutCuentasFiltroBaseInput
+      | EtiquetaUpsertWithWhereUniqueWithoutCuentasFiltroBaseInput[];
+    set?: EtiquetaWhereUniqueInput | EtiquetaWhereUniqueInput[];
+    disconnect?: EtiquetaWhereUniqueInput | EtiquetaWhereUniqueInput[];
+    delete?: EtiquetaWhereUniqueInput | EtiquetaWhereUniqueInput[];
+    connect?: EtiquetaWhereUniqueInput | EtiquetaWhereUniqueInput[];
+    update?:
+      | EtiquetaUpdateWithWhereUniqueWithoutCuentasFiltroBaseInput
+      | EtiquetaUpdateWithWhereUniqueWithoutCuentasFiltroBaseInput[];
+    updateMany?:
+      | EtiquetaUpdateManyWithWhereWithoutCuentasFiltroBaseInput
+      | EtiquetaUpdateManyWithWhereWithoutCuentasFiltroBaseInput[];
+    deleteMany?: EtiquetaScalarWhereInput | EtiquetaScalarWhereInput[];
+  };
+
   export type ComentarioUncheckedUpdateManyWithoutCuentaNestedInput = {
     create?:
       | XOR<
@@ -13453,6 +13878,37 @@ export namespace Prisma {
       | EtiquetaUpdateManyWithWhereWithoutCuentasInput
       | EtiquetaUpdateManyWithWhereWithoutCuentasInput[];
     deleteMany?: EtiquetaScalarWhereInput | EtiquetaScalarWhereInput[];
+  };
+
+  export type EtiquetaUncheckedUpdateManyWithoutCuentasFiltroBaseNestedInput = {
+    create?:
+      | XOR<
+          EtiquetaCreateWithoutCuentasFiltroBaseInput,
+          EtiquetaUncheckedCreateWithoutCuentasFiltroBaseInput
+        >
+      | EtiquetaCreateWithoutCuentasFiltroBaseInput[]
+      | EtiquetaUncheckedCreateWithoutCuentasFiltroBaseInput[];
+    connectOrCreate?:
+      | EtiquetaCreateOrConnectWithoutCuentasFiltroBaseInput
+      | EtiquetaCreateOrConnectWithoutCuentasFiltroBaseInput[];
+    upsert?:
+      | EtiquetaUpsertWithWhereUniqueWithoutCuentasFiltroBaseInput
+      | EtiquetaUpsertWithWhereUniqueWithoutCuentasFiltroBaseInput[];
+    set?: EtiquetaWhereUniqueInput | EtiquetaWhereUniqueInput[];
+    disconnect?: EtiquetaWhereUniqueInput | EtiquetaWhereUniqueInput[];
+    delete?: EtiquetaWhereUniqueInput | EtiquetaWhereUniqueInput[];
+    connect?: EtiquetaWhereUniqueInput | EtiquetaWhereUniqueInput[];
+    update?:
+      | EtiquetaUpdateWithWhereUniqueWithoutCuentasFiltroBaseInput
+      | EtiquetaUpdateWithWhereUniqueWithoutCuentasFiltroBaseInput[];
+    updateMany?:
+      | EtiquetaUpdateManyWithWhereWithoutCuentasFiltroBaseInput
+      | EtiquetaUpdateManyWithWhereWithoutCuentasFiltroBaseInput[];
+    deleteMany?: EtiquetaScalarWhereInput | EtiquetaScalarWhereInput[];
+  };
+
+  export type PerfilCreatenombresAlternativosInput = {
+    set: string[];
   };
 
   export type ComentarioCreateNestedManyWithoutPerfilInput = {
@@ -13543,6 +13999,14 @@ export namespace Prisma {
     connect?: EtiquetaWhereUniqueInput | EtiquetaWhereUniqueInput[];
   };
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+  };
+
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null;
   };
@@ -13551,12 +14015,9 @@ export namespace Prisma {
     set?: Date | string | null;
   };
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null;
-    increment?: number;
-    decrement?: number;
-    multiply?: number;
-    divide?: number;
+  export type PerfilUpdatenombresAlternativosInput = {
+    set?: string[];
+    push?: string | string[];
   };
 
   export type ComentarioUpdateManyWithoutPerfilNestedInput = {
@@ -13844,6 +14305,20 @@ export namespace Prisma {
     connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[];
   };
 
+  export type CuentaCreateNestedManyWithoutFiltroBaseInput = {
+    create?:
+      | XOR<
+          CuentaCreateWithoutFiltroBaseInput,
+          CuentaUncheckedCreateWithoutFiltroBaseInput
+        >
+      | CuentaCreateWithoutFiltroBaseInput[]
+      | CuentaUncheckedCreateWithoutFiltroBaseInput[];
+    connectOrCreate?:
+      | CuentaCreateOrConnectWithoutFiltroBaseInput
+      | CuentaCreateOrConnectWithoutFiltroBaseInput[];
+    connect?: CuentaWhereUniqueInput | CuentaWhereUniqueInput[];
+  };
+
   export type EventoUncheckedCreateNestedManyWithoutEtiquetaAsistioInput = {
     create?:
       | XOR<
@@ -13900,6 +14375,20 @@ export namespace Prisma {
       | PerfilCreateOrConnectWithoutEtiquetasInput
       | PerfilCreateOrConnectWithoutEtiquetasInput[];
     connect?: PerfilWhereUniqueInput | PerfilWhereUniqueInput[];
+  };
+
+  export type CuentaUncheckedCreateNestedManyWithoutFiltroBaseInput = {
+    create?:
+      | XOR<
+          CuentaCreateWithoutFiltroBaseInput,
+          CuentaUncheckedCreateWithoutFiltroBaseInput
+        >
+      | CuentaCreateWithoutFiltroBaseInput[]
+      | CuentaUncheckedCreateWithoutFiltroBaseInput[];
+    connectOrCreate?:
+      | CuentaCreateOrConnectWithoutFiltroBaseInput
+      | CuentaCreateOrConnectWithoutFiltroBaseInput[];
+    connect?: CuentaWhereUniqueInput | CuentaWhereUniqueInput[];
   };
 
   export type EnumTipoEtiquetaFieldUpdateOperationsInput = {
@@ -14033,6 +14522,33 @@ export namespace Prisma {
     deleteMany?: PerfilScalarWhereInput | PerfilScalarWhereInput[];
   };
 
+  export type CuentaUpdateManyWithoutFiltroBaseNestedInput = {
+    create?:
+      | XOR<
+          CuentaCreateWithoutFiltroBaseInput,
+          CuentaUncheckedCreateWithoutFiltroBaseInput
+        >
+      | CuentaCreateWithoutFiltroBaseInput[]
+      | CuentaUncheckedCreateWithoutFiltroBaseInput[];
+    connectOrCreate?:
+      | CuentaCreateOrConnectWithoutFiltroBaseInput
+      | CuentaCreateOrConnectWithoutFiltroBaseInput[];
+    upsert?:
+      | CuentaUpsertWithWhereUniqueWithoutFiltroBaseInput
+      | CuentaUpsertWithWhereUniqueWithoutFiltroBaseInput[];
+    set?: CuentaWhereUniqueInput | CuentaWhereUniqueInput[];
+    disconnect?: CuentaWhereUniqueInput | CuentaWhereUniqueInput[];
+    delete?: CuentaWhereUniqueInput | CuentaWhereUniqueInput[];
+    connect?: CuentaWhereUniqueInput | CuentaWhereUniqueInput[];
+    update?:
+      | CuentaUpdateWithWhereUniqueWithoutFiltroBaseInput
+      | CuentaUpdateWithWhereUniqueWithoutFiltroBaseInput[];
+    updateMany?:
+      | CuentaUpdateManyWithWhereWithoutFiltroBaseInput
+      | CuentaUpdateManyWithWhereWithoutFiltroBaseInput[];
+    deleteMany?: CuentaScalarWhereInput | CuentaScalarWhereInput[];
+  };
+
   export type EventoUncheckedUpdateManyWithoutEtiquetaAsistioNestedInput = {
     create?:
       | XOR<
@@ -14141,6 +14657,33 @@ export namespace Prisma {
       | PerfilUpdateManyWithWhereWithoutEtiquetasInput
       | PerfilUpdateManyWithWhereWithoutEtiquetasInput[];
     deleteMany?: PerfilScalarWhereInput | PerfilScalarWhereInput[];
+  };
+
+  export type CuentaUncheckedUpdateManyWithoutFiltroBaseNestedInput = {
+    create?:
+      | XOR<
+          CuentaCreateWithoutFiltroBaseInput,
+          CuentaUncheckedCreateWithoutFiltroBaseInput
+        >
+      | CuentaCreateWithoutFiltroBaseInput[]
+      | CuentaUncheckedCreateWithoutFiltroBaseInput[];
+    connectOrCreate?:
+      | CuentaCreateOrConnectWithoutFiltroBaseInput
+      | CuentaCreateOrConnectWithoutFiltroBaseInput[];
+    upsert?:
+      | CuentaUpsertWithWhereUniqueWithoutFiltroBaseInput
+      | CuentaUpsertWithWhereUniqueWithoutFiltroBaseInput[];
+    set?: CuentaWhereUniqueInput | CuentaWhereUniqueInput[];
+    disconnect?: CuentaWhereUniqueInput | CuentaWhereUniqueInput[];
+    delete?: CuentaWhereUniqueInput | CuentaWhereUniqueInput[];
+    connect?: CuentaWhereUniqueInput | CuentaWhereUniqueInput[];
+    update?:
+      | CuentaUpdateWithWhereUniqueWithoutFiltroBaseInput
+      | CuentaUpdateWithWhereUniqueWithoutFiltroBaseInput[];
+    updateMany?:
+      | CuentaUpdateManyWithWhereWithoutFiltroBaseInput
+      | CuentaUpdateManyWithWhereWithoutFiltroBaseInput[];
+    deleteMany?: CuentaScalarWhereInput | CuentaScalarWhereInput[];
   };
 
   export type EtiquetaCreateNestedManyWithoutGrupoInput = {
@@ -14538,15 +15081,31 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null;
   };
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>;
     lt?: number | IntFieldRefInput<$PrismaModel>;
     lte?: number | IntFieldRefInput<$PrismaModel>;
     gt?: number | IntFieldRefInput<$PrismaModel>;
     gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null;
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _avg?: NestedFloatFilter<$PrismaModel>;
+    _sum?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedIntFilter<$PrismaModel>;
+    _max?: NestedIntFilter<$PrismaModel>;
+  };
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>;
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>;
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>;
+    lt?: number | FloatFieldRefInput<$PrismaModel>;
+    lte?: number | FloatFieldRefInput<$PrismaModel>;
+    gt?: number | FloatFieldRefInput<$PrismaModel>;
+    gte?: number | FloatFieldRefInput<$PrismaModel>;
+    not?: NestedFloatFilter<$PrismaModel> | number;
   };
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -14567,6 +15126,17 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>;
     _min?: NestedStringNullableFilter<$PrismaModel>;
     _max?: NestedStringNullableFilter<$PrismaModel>;
+  };
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null;
   };
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> =
@@ -14591,33 +15161,6 @@ export namespace Prisma {
       _min?: NestedDateTimeNullableFilter<$PrismaModel>;
       _max?: NestedDateTimeNullableFilter<$PrismaModel>;
     };
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    lt?: number | IntFieldRefInput<$PrismaModel>;
-    lte?: number | IntFieldRefInput<$PrismaModel>;
-    gt?: number | IntFieldRefInput<$PrismaModel>;
-    gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
-    _count?: NestedIntNullableFilter<$PrismaModel>;
-    _avg?: NestedFloatNullableFilter<$PrismaModel>;
-    _sum?: NestedIntNullableFilter<$PrismaModel>;
-    _min?: NestedIntNullableFilter<$PrismaModel>;
-    _max?: NestedIntNullableFilter<$PrismaModel>;
-  };
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    lt?: number | FloatFieldRefInput<$PrismaModel>;
-    lte?: number | FloatFieldRefInput<$PrismaModel>;
-    gt?: number | FloatFieldRefInput<$PrismaModel>;
-    gte?: number | FloatFieldRefInput<$PrismaModel>;
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
-  };
 
   export type NestedEnumTipoEtiquetaFilter<$PrismaModel = never> = {
     equals?: $Enums.TipoEtiqueta | EnumTipoEtiquetaFieldRefInput<$PrismaModel>;
@@ -14822,6 +15365,7 @@ export namespace Prisma {
     eventosAsistidos?: EventoCreateNestedManyWithoutEtiquetaAsistioInput;
     eventosConfirmados?: EventoCreateNestedManyWithoutEtiquetaConfirmoInput;
     perfiles?: PerfilCreateNestedManyWithoutEtiquetasInput;
+    cuentasFiltroBase?: CuentaCreateNestedManyWithoutFiltroBaseInput;
   };
 
   export type EtiquetaUncheckedCreateWithoutCuentasInput = {
@@ -14834,6 +15378,7 @@ export namespace Prisma {
     eventosAsistidos?: EventoUncheckedCreateNestedManyWithoutEtiquetaAsistioInput;
     eventosConfirmados?: EventoUncheckedCreateNestedManyWithoutEtiquetaConfirmoInput;
     perfiles?: PerfilUncheckedCreateNestedManyWithoutEtiquetasInput;
+    cuentasFiltroBase?: CuentaUncheckedCreateNestedManyWithoutFiltroBaseInput;
   };
 
   export type EtiquetaCreateOrConnectWithoutCuentasInput = {
@@ -14841,6 +15386,40 @@ export namespace Prisma {
     create: XOR<
       EtiquetaCreateWithoutCuentasInput,
       EtiquetaUncheckedCreateWithoutCuentasInput
+    >;
+  };
+
+  export type EtiquetaCreateWithoutCuentasFiltroBaseInput = {
+    id?: string;
+    nombre: string;
+    tipo?: $Enums.TipoEtiqueta;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    grupo: EtiquetaGrupoCreateNestedOneWithoutEtiquetasInput;
+    eventosAsistidos?: EventoCreateNestedManyWithoutEtiquetaAsistioInput;
+    eventosConfirmados?: EventoCreateNestedManyWithoutEtiquetaConfirmoInput;
+    cuentas?: CuentaCreateNestedManyWithoutEtiquetasInput;
+    perfiles?: PerfilCreateNestedManyWithoutEtiquetasInput;
+  };
+
+  export type EtiquetaUncheckedCreateWithoutCuentasFiltroBaseInput = {
+    id?: string;
+    nombre: string;
+    grupoId: string;
+    tipo?: $Enums.TipoEtiqueta;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    eventosAsistidos?: EventoUncheckedCreateNestedManyWithoutEtiquetaAsistioInput;
+    eventosConfirmados?: EventoUncheckedCreateNestedManyWithoutEtiquetaConfirmoInput;
+    cuentas?: CuentaUncheckedCreateNestedManyWithoutEtiquetasInput;
+    perfiles?: PerfilUncheckedCreateNestedManyWithoutEtiquetasInput;
+  };
+
+  export type EtiquetaCreateOrConnectWithoutCuentasFiltroBaseInput = {
+    where: EtiquetaWhereUniqueInput;
+    create: XOR<
+      EtiquetaCreateWithoutCuentasFiltroBaseInput,
+      EtiquetaUncheckedCreateWithoutCuentasFiltroBaseInput
     >;
   };
 
@@ -14878,8 +15457,8 @@ export namespace Prisma {
     NOT?: ComentarioScalarWhereInput | ComentarioScalarWhereInput[];
     id?: StringFilter<'Comentario'> | string;
     contenido?: StringFilter<'Comentario'> | string;
-    perfilId?: StringFilter<'Comentario'> | string;
     creadoPor?: StringFilter<'Comentario'> | string;
+    perfilId?: StringFilter<'Comentario'> | string;
     created_at?: DateTimeFilter<'Comentario'> | Date | string;
     updated_at?: DateTimeFilter<'Comentario'> | Date | string;
   };
@@ -14924,6 +15503,34 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<'Etiqueta'> | Date | string;
   };
 
+  export type EtiquetaUpsertWithWhereUniqueWithoutCuentasFiltroBaseInput = {
+    where: EtiquetaWhereUniqueInput;
+    update: XOR<
+      EtiquetaUpdateWithoutCuentasFiltroBaseInput,
+      EtiquetaUncheckedUpdateWithoutCuentasFiltroBaseInput
+    >;
+    create: XOR<
+      EtiquetaCreateWithoutCuentasFiltroBaseInput,
+      EtiquetaUncheckedCreateWithoutCuentasFiltroBaseInput
+    >;
+  };
+
+  export type EtiquetaUpdateWithWhereUniqueWithoutCuentasFiltroBaseInput = {
+    where: EtiquetaWhereUniqueInput;
+    data: XOR<
+      EtiquetaUpdateWithoutCuentasFiltroBaseInput,
+      EtiquetaUncheckedUpdateWithoutCuentasFiltroBaseInput
+    >;
+  };
+
+  export type EtiquetaUpdateManyWithWhereWithoutCuentasFiltroBaseInput = {
+    where: EtiquetaScalarWhereInput;
+    data: XOR<
+      EtiquetaUpdateManyMutationInput,
+      EtiquetaUncheckedUpdateManyWithoutCuentasFiltroBaseInput
+    >;
+  };
+
   export type ComentarioCreateWithoutPerfilInput = {
     id?: string;
     contenido: string;
@@ -14958,9 +15565,10 @@ export namespace Prisma {
     wamId: string;
     message: JsonNullValueInput | InputJsonValue;
     status?: $Enums.MensajeStatus;
+    statusAt?: Date | string | null;
+    visto?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
-    statusAt?: Date | string | null;
   };
 
   export type MensajeUncheckedCreateWithoutPerfilInput = {
@@ -14968,9 +15576,10 @@ export namespace Prisma {
     wamId: string;
     message: JsonNullValueInput | InputJsonValue;
     status?: $Enums.MensajeStatus;
+    statusAt?: Date | string | null;
+    visto?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
-    statusAt?: Date | string | null;
   };
 
   export type MensajeCreateOrConnectWithoutPerfilInput = {
@@ -14996,6 +15605,7 @@ export namespace Prisma {
     eventosAsistidos?: EventoCreateNestedManyWithoutEtiquetaAsistioInput;
     eventosConfirmados?: EventoCreateNestedManyWithoutEtiquetaConfirmoInput;
     cuentas?: CuentaCreateNestedManyWithoutEtiquetasInput;
+    cuentasFiltroBase?: CuentaCreateNestedManyWithoutFiltroBaseInput;
   };
 
   export type EtiquetaUncheckedCreateWithoutPerfilesInput = {
@@ -15008,6 +15618,7 @@ export namespace Prisma {
     eventosAsistidos?: EventoUncheckedCreateNestedManyWithoutEtiquetaAsistioInput;
     eventosConfirmados?: EventoUncheckedCreateNestedManyWithoutEtiquetaConfirmoInput;
     cuentas?: CuentaUncheckedCreateNestedManyWithoutEtiquetasInput;
+    cuentasFiltroBase?: CuentaUncheckedCreateNestedManyWithoutFiltroBaseInput;
   };
 
   export type EtiquetaCreateOrConnectWithoutPerfilesInput = {
@@ -15081,11 +15692,12 @@ export namespace Prisma {
     id?: StringFilter<'Mensaje'> | string;
     wamId?: StringFilter<'Mensaje'> | string;
     message?: JsonFilter<'Mensaje'>;
-    status?: EnumMensajeStatusFilter<'Mensaje'> | $Enums.MensajeStatus;
     perfilTelefono?: StringFilter<'Mensaje'> | string;
+    status?: EnumMensajeStatusFilter<'Mensaje'> | $Enums.MensajeStatus;
+    statusAt?: DateTimeNullableFilter<'Mensaje'> | Date | string | null;
+    visto?: BoolFilter<'Mensaje'> | boolean;
     created_at?: DateTimeFilter<'Mensaje'> | Date | string;
     updated_at?: DateTimeFilter<'Mensaje'> | Date | string;
-    statusAt?: DateTimeNullableFilter<'Mensaje'> | Date | string | null;
   };
 
   export type EtiquetaUpsertWithWhereUniqueWithoutPerfilesInput = {
@@ -15123,7 +15735,10 @@ export namespace Prisma {
     esAdmin?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
+    filtroBaseActivo?: boolean;
+    fcmToken?: CuentaCreatefcmTokenInput | string[];
     etiquetas?: EtiquetaCreateNestedManyWithoutCuentasInput;
+    filtroBase?: EtiquetaCreateNestedManyWithoutCuentasFiltroBaseInput;
   };
 
   export type CuentaUncheckedCreateWithoutComentariosInput = {
@@ -15133,7 +15748,10 @@ export namespace Prisma {
     esAdmin?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
+    filtroBaseActivo?: boolean;
+    fcmToken?: CuentaCreatefcmTokenInput | string[];
     etiquetas?: EtiquetaUncheckedCreateNestedManyWithoutCuentasInput;
+    filtroBase?: EtiquetaUncheckedCreateNestedManyWithoutCuentasFiltroBaseInput;
   };
 
   export type CuentaCreateOrConnectWithoutComentariosInput = {
@@ -15146,30 +15764,42 @@ export namespace Prisma {
 
   export type PerfilCreateWithoutComentariosInput = {
     id?: string;
+    idLegible: number;
     telefono: string;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
     fechaNacimiento?: Date | string | null;
     fotoUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    nombresAlternativos?: PerfilCreatenombresAlternativosInput | string[];
+    esPapelera?: boolean;
+    fechaPapelera?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    idLegible?: number | null;
     mensajes?: MensajeCreateNestedManyWithoutPerfilInput;
     etiquetas?: EtiquetaCreateNestedManyWithoutPerfilesInput;
   };
 
   export type PerfilUncheckedCreateWithoutComentariosInput = {
     id?: string;
+    idLegible: number;
     telefono: string;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
     fechaNacimiento?: Date | string | null;
     fotoUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    nombresAlternativos?: PerfilCreatenombresAlternativosInput | string[];
+    esPapelera?: boolean;
+    fechaPapelera?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    idLegible?: number | null;
     mensajes?: MensajeUncheckedCreateNestedManyWithoutPerfilInput;
     etiquetas?: EtiquetaUncheckedCreateNestedManyWithoutPerfilesInput;
   };
@@ -15209,7 +15839,10 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    filtroBaseActivo?: BoolFieldUpdateOperationsInput | boolean;
+    fcmToken?: CuentaUpdatefcmTokenInput | string[];
     etiquetas?: EtiquetaUpdateManyWithoutCuentasNestedInput;
+    filtroBase?: EtiquetaUpdateManyWithoutCuentasFiltroBaseNestedInput;
   };
 
   export type CuentaUncheckedUpdateWithoutComentariosInput = {
@@ -15219,7 +15852,10 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    filtroBaseActivo?: BoolFieldUpdateOperationsInput | boolean;
+    fcmToken?: CuentaUpdatefcmTokenInput | string[];
     etiquetas?: EtiquetaUncheckedUpdateManyWithoutCuentasNestedInput;
+    filtroBase?: EtiquetaUncheckedUpdateManyWithoutCuentasFiltroBaseNestedInput;
   };
 
   export type PerfilUpsertWithoutComentariosInput = {
@@ -15244,6 +15880,7 @@ export namespace Prisma {
 
   export type PerfilUpdateWithoutComentariosInput = {
     id?: StringFieldUpdateOperationsInput | string;
+    idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -15254,15 +15891,25 @@ export namespace Prisma {
       | string
       | null;
     fotoUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    nombresAlternativos?: PerfilUpdatenombresAlternativosInput | string[];
+    esPapelera?: BoolFieldUpdateOperationsInput | boolean;
+    fechaPapelera?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    idLegible?: NullableIntFieldUpdateOperationsInput | number | null;
     mensajes?: MensajeUpdateManyWithoutPerfilNestedInput;
     etiquetas?: EtiquetaUpdateManyWithoutPerfilesNestedInput;
   };
 
   export type PerfilUncheckedUpdateWithoutComentariosInput = {
     id?: StringFieldUpdateOperationsInput | string;
+    idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -15273,9 +15920,18 @@ export namespace Prisma {
       | string
       | null;
     fotoUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    nombresAlternativos?: PerfilUpdatenombresAlternativosInput | string[];
+    esPapelera?: BoolFieldUpdateOperationsInput | boolean;
+    fechaPapelera?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    idLegible?: NullableIntFieldUpdateOperationsInput | number | null;
     mensajes?: MensajeUncheckedUpdateManyWithoutPerfilNestedInput;
     etiquetas?: EtiquetaUncheckedUpdateManyWithoutPerfilesNestedInput;
   };
@@ -15323,10 +15979,10 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    etiquetaConfirmoId: string;
     eventoPadreId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    etiquetaConfirmoId: string;
     subEventos?: EventoUncheckedCreateNestedManyWithoutEventoPadreInput;
   };
 
@@ -15362,10 +16018,10 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    etiquetaAsistioId: string;
     eventoPadreId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    etiquetaAsistioId: string;
     subEventos?: EventoUncheckedCreateNestedManyWithoutEventoPadreInput;
   };
 
@@ -15391,7 +16047,10 @@ export namespace Prisma {
     esAdmin?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
+    filtroBaseActivo?: boolean;
+    fcmToken?: CuentaCreatefcmTokenInput | string[];
     comentarios?: ComentarioCreateNestedManyWithoutCuentaInput;
+    filtroBase?: EtiquetaCreateNestedManyWithoutCuentasFiltroBaseInput;
   };
 
   export type CuentaUncheckedCreateWithoutEtiquetasInput = {
@@ -15401,7 +16060,10 @@ export namespace Prisma {
     esAdmin?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
+    filtroBaseActivo?: boolean;
+    fcmToken?: CuentaCreatefcmTokenInput | string[];
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutCuentaInput;
+    filtroBase?: EtiquetaUncheckedCreateNestedManyWithoutCuentasFiltroBaseInput;
   };
 
   export type CuentaCreateOrConnectWithoutEtiquetasInput = {
@@ -15414,30 +16076,42 @@ export namespace Prisma {
 
   export type PerfilCreateWithoutEtiquetasInput = {
     id?: string;
+    idLegible: number;
     telefono: string;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
     fechaNacimiento?: Date | string | null;
     fotoUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    nombresAlternativos?: PerfilCreatenombresAlternativosInput | string[];
+    esPapelera?: boolean;
+    fechaPapelera?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    idLegible?: number | null;
     comentarios?: ComentarioCreateNestedManyWithoutPerfilInput;
     mensajes?: MensajeCreateNestedManyWithoutPerfilInput;
   };
 
   export type PerfilUncheckedCreateWithoutEtiquetasInput = {
     id?: string;
+    idLegible: number;
     telefono: string;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
     fechaNacimiento?: Date | string | null;
     fotoUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    nombresAlternativos?: PerfilCreatenombresAlternativosInput | string[];
+    esPapelera?: boolean;
+    fechaPapelera?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    idLegible?: number | null;
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutPerfilInput;
     mensajes?: MensajeUncheckedCreateNestedManyWithoutPerfilInput;
   };
@@ -15447,6 +16121,40 @@ export namespace Prisma {
     create: XOR<
       PerfilCreateWithoutEtiquetasInput,
       PerfilUncheckedCreateWithoutEtiquetasInput
+    >;
+  };
+
+  export type CuentaCreateWithoutFiltroBaseInput = {
+    id?: string;
+    nombreUsuario: string;
+    contrasena: string;
+    esAdmin?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    filtroBaseActivo?: boolean;
+    fcmToken?: CuentaCreatefcmTokenInput | string[];
+    comentarios?: ComentarioCreateNestedManyWithoutCuentaInput;
+    etiquetas?: EtiquetaCreateNestedManyWithoutCuentasInput;
+  };
+
+  export type CuentaUncheckedCreateWithoutFiltroBaseInput = {
+    id?: string;
+    nombreUsuario: string;
+    contrasena: string;
+    esAdmin?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    filtroBaseActivo?: boolean;
+    fcmToken?: CuentaCreatefcmTokenInput | string[];
+    comentarios?: ComentarioUncheckedCreateNestedManyWithoutCuentaInput;
+    etiquetas?: EtiquetaUncheckedCreateNestedManyWithoutCuentasInput;
+  };
+
+  export type CuentaCreateOrConnectWithoutFiltroBaseInput = {
+    where: CuentaWhereUniqueInput;
+    create: XOR<
+      CuentaCreateWithoutFiltroBaseInput,
+      CuentaUncheckedCreateWithoutFiltroBaseInput
     >;
   };
 
@@ -15524,11 +16232,11 @@ export namespace Prisma {
     nombre?: StringFilter<'Evento'> | string;
     fecha?: DateTimeFilter<'Evento'> | Date | string;
     ubicacion?: StringFilter<'Evento'> | string;
+    etiquetaAsistioId?: StringFilter<'Evento'> | string;
+    etiquetaConfirmoId?: StringFilter<'Evento'> | string;
     eventoPadreId?: StringNullableFilter<'Evento'> | string | null;
     created_at?: DateTimeFilter<'Evento'> | Date | string;
     updated_at?: DateTimeFilter<'Evento'> | Date | string;
-    etiquetaAsistioId?: StringFilter<'Evento'> | string;
-    etiquetaConfirmoId?: StringFilter<'Evento'> | string;
   };
 
   export type EventoUpsertWithWhereUniqueWithoutEtiquetaConfirmoInput = {
@@ -15597,6 +16305,8 @@ export namespace Prisma {
     esAdmin?: BoolFilter<'Cuenta'> | boolean;
     created_at?: DateTimeFilter<'Cuenta'> | Date | string;
     updated_at?: DateTimeFilter<'Cuenta'> | Date | string;
+    filtroBaseActivo?: BoolFilter<'Cuenta'> | boolean;
+    fcmToken?: StringNullableListFilter<'Cuenta'>;
   };
 
   export type PerfilUpsertWithWhereUniqueWithoutEtiquetasInput = {
@@ -15632,15 +16342,49 @@ export namespace Prisma {
     OR?: PerfilScalarWhereInput[];
     NOT?: PerfilScalarWhereInput | PerfilScalarWhereInput[];
     id?: StringFilter<'Perfil'> | string;
+    idLegible?: IntFilter<'Perfil'> | number;
     telefono?: StringFilter<'Perfil'> | string;
     nombreCompleto?: StringFilter<'Perfil'> | string;
     nombrePila?: StringNullableFilter<'Perfil'> | string | null;
     genero?: StringNullableFilter<'Perfil'> | string | null;
     fechaNacimiento?: DateTimeNullableFilter<'Perfil'> | Date | string | null;
     fotoUrl?: StringNullableFilter<'Perfil'> | string | null;
+    instagram?: StringNullableFilter<'Perfil'> | string | null;
+    mail?: StringNullableFilter<'Perfil'> | string | null;
+    dni?: StringNullableFilter<'Perfil'> | string | null;
+    nombresAlternativos?: StringNullableListFilter<'Perfil'>;
+    esPapelera?: BoolFilter<'Perfil'> | boolean;
+    fechaPapelera?: DateTimeNullableFilter<'Perfil'> | Date | string | null;
     created_at?: DateTimeFilter<'Perfil'> | Date | string;
     updated_at?: DateTimeFilter<'Perfil'> | Date | string;
-    idLegible?: IntNullableFilter<'Perfil'> | number | null;
+  };
+
+  export type CuentaUpsertWithWhereUniqueWithoutFiltroBaseInput = {
+    where: CuentaWhereUniqueInput;
+    update: XOR<
+      CuentaUpdateWithoutFiltroBaseInput,
+      CuentaUncheckedUpdateWithoutFiltroBaseInput
+    >;
+    create: XOR<
+      CuentaCreateWithoutFiltroBaseInput,
+      CuentaUncheckedCreateWithoutFiltroBaseInput
+    >;
+  };
+
+  export type CuentaUpdateWithWhereUniqueWithoutFiltroBaseInput = {
+    where: CuentaWhereUniqueInput;
+    data: XOR<
+      CuentaUpdateWithoutFiltroBaseInput,
+      CuentaUncheckedUpdateWithoutFiltroBaseInput
+    >;
+  };
+
+  export type CuentaUpdateManyWithWhereWithoutFiltroBaseInput = {
+    where: CuentaScalarWhereInput;
+    data: XOR<
+      CuentaUpdateManyMutationInput,
+      CuentaUncheckedUpdateManyWithoutFiltroBaseInput
+    >;
   };
 
   export type EtiquetaCreateWithoutGrupoInput = {
@@ -15653,6 +16397,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoCreateNestedManyWithoutEtiquetaConfirmoInput;
     cuentas?: CuentaCreateNestedManyWithoutEtiquetasInput;
     perfiles?: PerfilCreateNestedManyWithoutEtiquetasInput;
+    cuentasFiltroBase?: CuentaCreateNestedManyWithoutFiltroBaseInput;
   };
 
   export type EtiquetaUncheckedCreateWithoutGrupoInput = {
@@ -15665,6 +16410,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoUncheckedCreateNestedManyWithoutEtiquetaConfirmoInput;
     cuentas?: CuentaUncheckedCreateNestedManyWithoutEtiquetasInput;
     perfiles?: PerfilUncheckedCreateNestedManyWithoutEtiquetasInput;
+    cuentasFiltroBase?: CuentaUncheckedCreateNestedManyWithoutFiltroBaseInput;
   };
 
   export type EtiquetaCreateOrConnectWithoutGrupoInput = {
@@ -15718,6 +16464,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoCreateNestedManyWithoutEtiquetaConfirmoInput;
     cuentas?: CuentaCreateNestedManyWithoutEtiquetasInput;
     perfiles?: PerfilCreateNestedManyWithoutEtiquetasInput;
+    cuentasFiltroBase?: CuentaCreateNestedManyWithoutFiltroBaseInput;
   };
 
   export type EtiquetaUncheckedCreateWithoutEventosAsistidosInput = {
@@ -15730,6 +16477,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoUncheckedCreateNestedManyWithoutEtiquetaConfirmoInput;
     cuentas?: CuentaUncheckedCreateNestedManyWithoutEtiquetasInput;
     perfiles?: PerfilUncheckedCreateNestedManyWithoutEtiquetasInput;
+    cuentasFiltroBase?: CuentaUncheckedCreateNestedManyWithoutFiltroBaseInput;
   };
 
   export type EtiquetaCreateOrConnectWithoutEventosAsistidosInput = {
@@ -15750,6 +16498,7 @@ export namespace Prisma {
     eventosAsistidos?: EventoCreateNestedManyWithoutEtiquetaAsistioInput;
     cuentas?: CuentaCreateNestedManyWithoutEtiquetasInput;
     perfiles?: PerfilCreateNestedManyWithoutEtiquetasInput;
+    cuentasFiltroBase?: CuentaCreateNestedManyWithoutFiltroBaseInput;
   };
 
   export type EtiquetaUncheckedCreateWithoutEventosConfirmadosInput = {
@@ -15762,6 +16511,7 @@ export namespace Prisma {
     eventosAsistidos?: EventoUncheckedCreateNestedManyWithoutEtiquetaAsistioInput;
     cuentas?: CuentaUncheckedCreateNestedManyWithoutEtiquetasInput;
     perfiles?: PerfilUncheckedCreateNestedManyWithoutEtiquetasInput;
+    cuentasFiltroBase?: CuentaUncheckedCreateNestedManyWithoutFiltroBaseInput;
   };
 
   export type EtiquetaCreateOrConnectWithoutEventosConfirmadosInput = {
@@ -15789,11 +16539,11 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    etiquetaAsistioId: string;
+    etiquetaConfirmoId: string;
     eventoPadreId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    etiquetaAsistioId: string;
-    etiquetaConfirmoId: string;
   };
 
   export type EventoCreateOrConnectWithoutSubEventosInput = {
@@ -15821,10 +16571,10 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
-    created_at?: Date | string;
-    updated_at?: Date | string;
     etiquetaAsistioId: string;
     etiquetaConfirmoId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
     subEventos?: EventoUncheckedCreateNestedManyWithoutEventoPadreInput;
   };
 
@@ -15871,6 +16621,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoUpdateManyWithoutEtiquetaConfirmoNestedInput;
     cuentas?: CuentaUpdateManyWithoutEtiquetasNestedInput;
     perfiles?: PerfilUpdateManyWithoutEtiquetasNestedInput;
+    cuentasFiltroBase?: CuentaUpdateManyWithoutFiltroBaseNestedInput;
   };
 
   export type EtiquetaUncheckedUpdateWithoutEventosAsistidosInput = {
@@ -15883,6 +16634,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoUncheckedUpdateManyWithoutEtiquetaConfirmoNestedInput;
     cuentas?: CuentaUncheckedUpdateManyWithoutEtiquetasNestedInput;
     perfiles?: PerfilUncheckedUpdateManyWithoutEtiquetasNestedInput;
+    cuentasFiltroBase?: CuentaUncheckedUpdateManyWithoutFiltroBaseNestedInput;
   };
 
   export type EtiquetaUpsertWithoutEventosConfirmadosInput = {
@@ -15915,6 +16667,7 @@ export namespace Prisma {
     eventosAsistidos?: EventoUpdateManyWithoutEtiquetaAsistioNestedInput;
     cuentas?: CuentaUpdateManyWithoutEtiquetasNestedInput;
     perfiles?: PerfilUpdateManyWithoutEtiquetasNestedInput;
+    cuentasFiltroBase?: CuentaUpdateManyWithoutFiltroBaseNestedInput;
   };
 
   export type EtiquetaUncheckedUpdateWithoutEventosConfirmadosInput = {
@@ -15927,6 +16680,7 @@ export namespace Prisma {
     eventosAsistidos?: EventoUncheckedUpdateManyWithoutEtiquetaAsistioNestedInput;
     cuentas?: CuentaUncheckedUpdateManyWithoutEtiquetasNestedInput;
     perfiles?: PerfilUncheckedUpdateManyWithoutEtiquetasNestedInput;
+    cuentasFiltroBase?: CuentaUncheckedUpdateManyWithoutFiltroBaseNestedInput;
   };
 
   export type EventoUpsertWithoutSubEventosInput = {
@@ -15966,11 +16720,11 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
+    etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
-    etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
   };
 
   export type EventoUpsertWithWhereUniqueWithoutEventoPadreInput = {
@@ -16003,30 +16757,42 @@ export namespace Prisma {
 
   export type PerfilCreateWithoutMensajesInput = {
     id?: string;
+    idLegible: number;
     telefono: string;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
     fechaNacimiento?: Date | string | null;
     fotoUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    nombresAlternativos?: PerfilCreatenombresAlternativosInput | string[];
+    esPapelera?: boolean;
+    fechaPapelera?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    idLegible?: number | null;
     comentarios?: ComentarioCreateNestedManyWithoutPerfilInput;
     etiquetas?: EtiquetaCreateNestedManyWithoutPerfilesInput;
   };
 
   export type PerfilUncheckedCreateWithoutMensajesInput = {
     id?: string;
+    idLegible: number;
     telefono: string;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
     fechaNacimiento?: Date | string | null;
     fotoUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    nombresAlternativos?: PerfilCreatenombresAlternativosInput | string[];
+    esPapelera?: boolean;
+    fechaPapelera?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    idLegible?: number | null;
     comentarios?: ComentarioUncheckedCreateNestedManyWithoutPerfilInput;
     etiquetas?: EtiquetaUncheckedCreateNestedManyWithoutPerfilesInput;
   };
@@ -16061,6 +16827,7 @@ export namespace Prisma {
 
   export type PerfilUpdateWithoutMensajesInput = {
     id?: StringFieldUpdateOperationsInput | string;
+    idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -16071,15 +16838,25 @@ export namespace Prisma {
       | string
       | null;
     fotoUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    nombresAlternativos?: PerfilUpdatenombresAlternativosInput | string[];
+    esPapelera?: BoolFieldUpdateOperationsInput | boolean;
+    fechaPapelera?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    idLegible?: NullableIntFieldUpdateOperationsInput | number | null;
     comentarios?: ComentarioUpdateManyWithoutPerfilNestedInput;
     etiquetas?: EtiquetaUpdateManyWithoutPerfilesNestedInput;
   };
 
   export type PerfilUncheckedUpdateWithoutMensajesInput = {
     id?: StringFieldUpdateOperationsInput | string;
+    idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -16090,9 +16867,18 @@ export namespace Prisma {
       | string
       | null;
     fotoUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    nombresAlternativos?: PerfilUpdatenombresAlternativosInput | string[];
+    esPapelera?: BoolFieldUpdateOperationsInput | boolean;
+    fechaPapelera?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    idLegible?: NullableIntFieldUpdateOperationsInput | number | null;
     comentarios?: ComentarioUncheckedUpdateManyWithoutPerfilNestedInput;
     etiquetas?: EtiquetaUncheckedUpdateManyWithoutPerfilesNestedInput;
   };
@@ -16139,6 +16925,7 @@ export namespace Prisma {
     eventosAsistidos?: EventoUpdateManyWithoutEtiquetaAsistioNestedInput;
     eventosConfirmados?: EventoUpdateManyWithoutEtiquetaConfirmoNestedInput;
     perfiles?: PerfilUpdateManyWithoutEtiquetasNestedInput;
+    cuentasFiltroBase?: CuentaUpdateManyWithoutFiltroBaseNestedInput;
   };
 
   export type EtiquetaUncheckedUpdateWithoutCuentasInput = {
@@ -16151,9 +16938,45 @@ export namespace Prisma {
     eventosAsistidos?: EventoUncheckedUpdateManyWithoutEtiquetaAsistioNestedInput;
     eventosConfirmados?: EventoUncheckedUpdateManyWithoutEtiquetaConfirmoNestedInput;
     perfiles?: PerfilUncheckedUpdateManyWithoutEtiquetasNestedInput;
+    cuentasFiltroBase?: CuentaUncheckedUpdateManyWithoutFiltroBaseNestedInput;
   };
 
   export type EtiquetaUncheckedUpdateManyWithoutCuentasInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombre?: StringFieldUpdateOperationsInput | string;
+    grupoId?: StringFieldUpdateOperationsInput | string;
+    tipo?: EnumTipoEtiquetaFieldUpdateOperationsInput | $Enums.TipoEtiqueta;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type EtiquetaUpdateWithoutCuentasFiltroBaseInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombre?: StringFieldUpdateOperationsInput | string;
+    tipo?: EnumTipoEtiquetaFieldUpdateOperationsInput | $Enums.TipoEtiqueta;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    grupo?: EtiquetaGrupoUpdateOneRequiredWithoutEtiquetasNestedInput;
+    eventosAsistidos?: EventoUpdateManyWithoutEtiquetaAsistioNestedInput;
+    eventosConfirmados?: EventoUpdateManyWithoutEtiquetaConfirmoNestedInput;
+    cuentas?: CuentaUpdateManyWithoutEtiquetasNestedInput;
+    perfiles?: PerfilUpdateManyWithoutEtiquetasNestedInput;
+  };
+
+  export type EtiquetaUncheckedUpdateWithoutCuentasFiltroBaseInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombre?: StringFieldUpdateOperationsInput | string;
+    grupoId?: StringFieldUpdateOperationsInput | string;
+    tipo?: EnumTipoEtiquetaFieldUpdateOperationsInput | $Enums.TipoEtiqueta;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    eventosAsistidos?: EventoUncheckedUpdateManyWithoutEtiquetaAsistioNestedInput;
+    eventosConfirmados?: EventoUncheckedUpdateManyWithoutEtiquetaConfirmoNestedInput;
+    cuentas?: CuentaUncheckedUpdateManyWithoutEtiquetasNestedInput;
+    perfiles?: PerfilUncheckedUpdateManyWithoutEtiquetasNestedInput;
+  };
+
+  export type EtiquetaUncheckedUpdateManyWithoutCuentasFiltroBaseInput = {
     id?: StringFieldUpdateOperationsInput | string;
     nombre?: StringFieldUpdateOperationsInput | string;
     grupoId?: StringFieldUpdateOperationsInput | string;
@@ -16175,9 +16998,10 @@ export namespace Prisma {
     wamId: string;
     message: JsonNullValueInput | InputJsonValue;
     status?: $Enums.MensajeStatus;
+    statusAt?: Date | string | null;
+    visto?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
-    statusAt?: Date | string | null;
   };
 
   export type ComentarioUpdateWithoutPerfilInput = {
@@ -16209,13 +17033,14 @@ export namespace Prisma {
     wamId?: StringFieldUpdateOperationsInput | string;
     message?: JsonNullValueInput | InputJsonValue;
     status?: EnumMensajeStatusFieldUpdateOperationsInput | $Enums.MensajeStatus;
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     statusAt?:
       | NullableDateTimeFieldUpdateOperationsInput
       | Date
       | string
       | null;
+    visto?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type MensajeUncheckedUpdateWithoutPerfilInput = {
@@ -16223,13 +17048,14 @@ export namespace Prisma {
     wamId?: StringFieldUpdateOperationsInput | string;
     message?: JsonNullValueInput | InputJsonValue;
     status?: EnumMensajeStatusFieldUpdateOperationsInput | $Enums.MensajeStatus;
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     statusAt?:
       | NullableDateTimeFieldUpdateOperationsInput
       | Date
       | string
       | null;
+    visto?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type MensajeUncheckedUpdateManyWithoutPerfilInput = {
@@ -16237,13 +17063,14 @@ export namespace Prisma {
     wamId?: StringFieldUpdateOperationsInput | string;
     message?: JsonNullValueInput | InputJsonValue;
     status?: EnumMensajeStatusFieldUpdateOperationsInput | $Enums.MensajeStatus;
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     statusAt?:
       | NullableDateTimeFieldUpdateOperationsInput
       | Date
       | string
       | null;
+    visto?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type EtiquetaUpdateWithoutPerfilesInput = {
@@ -16256,6 +17083,7 @@ export namespace Prisma {
     eventosAsistidos?: EventoUpdateManyWithoutEtiquetaAsistioNestedInput;
     eventosConfirmados?: EventoUpdateManyWithoutEtiquetaConfirmoNestedInput;
     cuentas?: CuentaUpdateManyWithoutEtiquetasNestedInput;
+    cuentasFiltroBase?: CuentaUpdateManyWithoutFiltroBaseNestedInput;
   };
 
   export type EtiquetaUncheckedUpdateWithoutPerfilesInput = {
@@ -16268,6 +17096,7 @@ export namespace Prisma {
     eventosAsistidos?: EventoUncheckedUpdateManyWithoutEtiquetaAsistioNestedInput;
     eventosConfirmados?: EventoUncheckedUpdateManyWithoutEtiquetaConfirmoNestedInput;
     cuentas?: CuentaUncheckedUpdateManyWithoutEtiquetasNestedInput;
+    cuentasFiltroBase?: CuentaUncheckedUpdateManyWithoutFiltroBaseNestedInput;
   };
 
   export type EtiquetaUncheckedUpdateManyWithoutPerfilesInput = {
@@ -16284,10 +17113,10 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    etiquetaConfirmoId: string;
     eventoPadreId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    etiquetaConfirmoId: string;
   };
 
   export type EventoCreateManyEtiquetaConfirmoInput = {
@@ -16295,10 +17124,10 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    etiquetaAsistioId: string;
     eventoPadreId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    etiquetaAsistioId: string;
   };
 
   export type EventoUpdateWithoutEtiquetaAsistioInput = {
@@ -16318,10 +17147,10 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     subEventos?: EventoUncheckedUpdateManyWithoutEventoPadreNestedInput;
   };
 
@@ -16330,10 +17159,10 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
   };
 
   export type EventoUpdateWithoutEtiquetaConfirmoInput = {
@@ -16353,10 +17182,10 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
     subEventos?: EventoUncheckedUpdateManyWithoutEventoPadreNestedInput;
   };
 
@@ -16365,10 +17194,10 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
   };
 
   export type CuentaUpdateWithoutEtiquetasInput = {
@@ -16378,7 +17207,10 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    filtroBaseActivo?: BoolFieldUpdateOperationsInput | boolean;
+    fcmToken?: CuentaUpdatefcmTokenInput | string[];
     comentarios?: ComentarioUpdateManyWithoutCuentaNestedInput;
+    filtroBase?: EtiquetaUpdateManyWithoutCuentasFiltroBaseNestedInput;
   };
 
   export type CuentaUncheckedUpdateWithoutEtiquetasInput = {
@@ -16388,7 +17220,10 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    filtroBaseActivo?: BoolFieldUpdateOperationsInput | boolean;
+    fcmToken?: CuentaUpdatefcmTokenInput | string[];
     comentarios?: ComentarioUncheckedUpdateManyWithoutCuentaNestedInput;
+    filtroBase?: EtiquetaUncheckedUpdateManyWithoutCuentasFiltroBaseNestedInput;
   };
 
   export type CuentaUncheckedUpdateManyWithoutEtiquetasInput = {
@@ -16398,10 +17233,13 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    filtroBaseActivo?: BoolFieldUpdateOperationsInput | boolean;
+    fcmToken?: CuentaUpdatefcmTokenInput | string[];
   };
 
   export type PerfilUpdateWithoutEtiquetasInput = {
     id?: StringFieldUpdateOperationsInput | string;
+    idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -16412,15 +17250,25 @@ export namespace Prisma {
       | string
       | null;
     fotoUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    nombresAlternativos?: PerfilUpdatenombresAlternativosInput | string[];
+    esPapelera?: BoolFieldUpdateOperationsInput | boolean;
+    fechaPapelera?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    idLegible?: NullableIntFieldUpdateOperationsInput | number | null;
     comentarios?: ComentarioUpdateManyWithoutPerfilNestedInput;
     mensajes?: MensajeUpdateManyWithoutPerfilNestedInput;
   };
 
   export type PerfilUncheckedUpdateWithoutEtiquetasInput = {
     id?: StringFieldUpdateOperationsInput | string;
+    idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -16431,15 +17279,25 @@ export namespace Prisma {
       | string
       | null;
     fotoUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    nombresAlternativos?: PerfilUpdatenombresAlternativosInput | string[];
+    esPapelera?: BoolFieldUpdateOperationsInput | boolean;
+    fechaPapelera?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    idLegible?: NullableIntFieldUpdateOperationsInput | number | null;
     comentarios?: ComentarioUncheckedUpdateManyWithoutPerfilNestedInput;
     mensajes?: MensajeUncheckedUpdateManyWithoutPerfilNestedInput;
   };
 
   export type PerfilUncheckedUpdateManyWithoutEtiquetasInput = {
     id?: StringFieldUpdateOperationsInput | string;
+    idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -16450,9 +17308,55 @@ export namespace Prisma {
       | string
       | null;
     fotoUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    nombresAlternativos?: PerfilUpdatenombresAlternativosInput | string[];
+    esPapelera?: BoolFieldUpdateOperationsInput | boolean;
+    fechaPapelera?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    idLegible?: NullableIntFieldUpdateOperationsInput | number | null;
+  };
+
+  export type CuentaUpdateWithoutFiltroBaseInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombreUsuario?: StringFieldUpdateOperationsInput | string;
+    contrasena?: StringFieldUpdateOperationsInput | string;
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    filtroBaseActivo?: BoolFieldUpdateOperationsInput | boolean;
+    fcmToken?: CuentaUpdatefcmTokenInput | string[];
+    comentarios?: ComentarioUpdateManyWithoutCuentaNestedInput;
+    etiquetas?: EtiquetaUpdateManyWithoutCuentasNestedInput;
+  };
+
+  export type CuentaUncheckedUpdateWithoutFiltroBaseInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombreUsuario?: StringFieldUpdateOperationsInput | string;
+    contrasena?: StringFieldUpdateOperationsInput | string;
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    filtroBaseActivo?: BoolFieldUpdateOperationsInput | boolean;
+    fcmToken?: CuentaUpdatefcmTokenInput | string[];
+    comentarios?: ComentarioUncheckedUpdateManyWithoutCuentaNestedInput;
+    etiquetas?: EtiquetaUncheckedUpdateManyWithoutCuentasNestedInput;
+  };
+
+  export type CuentaUncheckedUpdateManyWithoutFiltroBaseInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombreUsuario?: StringFieldUpdateOperationsInput | string;
+    contrasena?: StringFieldUpdateOperationsInput | string;
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    filtroBaseActivo?: BoolFieldUpdateOperationsInput | boolean;
+    fcmToken?: CuentaUpdatefcmTokenInput | string[];
   };
 
   export type EtiquetaCreateManyGrupoInput = {
@@ -16473,6 +17377,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoUpdateManyWithoutEtiquetaConfirmoNestedInput;
     cuentas?: CuentaUpdateManyWithoutEtiquetasNestedInput;
     perfiles?: PerfilUpdateManyWithoutEtiquetasNestedInput;
+    cuentasFiltroBase?: CuentaUpdateManyWithoutFiltroBaseNestedInput;
   };
 
   export type EtiquetaUncheckedUpdateWithoutGrupoInput = {
@@ -16485,6 +17390,7 @@ export namespace Prisma {
     eventosConfirmados?: EventoUncheckedUpdateManyWithoutEtiquetaConfirmoNestedInput;
     cuentas?: CuentaUncheckedUpdateManyWithoutEtiquetasNestedInput;
     perfiles?: PerfilUncheckedUpdateManyWithoutEtiquetasNestedInput;
+    cuentasFiltroBase?: CuentaUncheckedUpdateManyWithoutFiltroBaseNestedInput;
   };
 
   export type EtiquetaUncheckedUpdateManyWithoutGrupoInput = {
@@ -16500,10 +17406,10 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
-    created_at?: Date | string;
-    updated_at?: Date | string;
     etiquetaAsistioId: string;
     etiquetaConfirmoId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
   };
 
   export type EventoUpdateWithoutEventoPadreInput = {
@@ -16523,10 +17429,10 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
     etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     subEventos?: EventoUncheckedUpdateManyWithoutEventoPadreNestedInput;
   };
 
@@ -16535,10 +17441,10 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
     etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   /**

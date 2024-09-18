@@ -6,6 +6,7 @@ on:
       - main
       - dev
       - expo-*
+      - EXPO-*
 
 jobs:
   build:
@@ -15,26 +16,29 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install  # Install dependencies
 
-      - run: npx prisma generate  # Generate Prisma Client
+      - run: npm install # Install dependencies
+
+      - run: npx prisma generate # Generate Prisma Client
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - run: npm run generate-ts-schema  # Generate TypeScript schema
+      # - run: ls -la types/prisma-schema # Debug step to list contents
+
+      - run: npm run generate-ts-schema # Generate TypeScript schema
         env:
           NODE_ENV: development
 
-      - run: npm run build  # Build the project
+      - run: npm run build # Build the project
 
-      - run: npx prisma generate  # Generate Prisma Client
+      - run: npx prisma generate # Generate Prisma Client
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - run: npm run format  # Format code
-      - run: npm run lint    # Lint code
+      - run: npm run format # Format code
+      - run: npm run lint # Lint code
 
-      - run: npm run check-exports  # Custom script to check exports
+      - run: npm run check-exports # Custom script to check exports
 
   bump-version:
     needs: build
@@ -45,6 +49,8 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
           node-version: 20
 
       - name: Get branch name
@@ -74,7 +80,7 @@ jobs:
             MINOR=$((MINOR + 1))
             PATCH=0
             NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
-          elif [ "$BRANCH_NAME" = "prod" ]; then
+          elif [ "$BRANCH_NAME" = "main" ]; then
             # Increment the major version for prod branch
             MAJOR=$((MAJOR + 1))
             MINOR=0
@@ -82,7 +88,8 @@ jobs:
             NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
           else
             # Use the latest major.minor.patch and append the branch with an increment
-            LAST_BRANCH_VERSION=$(git tag --list "${MAJOR}.${MINOR}.${PATCH}-${BRANCH_NAME}.*" --sort=-v:refname | head -n 1 | grep -o '[0-9]\+$' || echo "0")
+            LAST_BRANCH_VERSION=$(git tag --list "v${MAJOR}.${MINOR}.${PATCH}-${BRANCH_NAME}.*" --sort=-v:refname | head -n 1 | grep -o '[0-9]\+$' || echo "0")
+            echo "Last Branch Version: $LAST_BRANCH_VERSION"
             NEW_INCREMENT=$((LAST_BRANCH_VERSION + 1))
             NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}-${BRANCH_NAME}.${NEW_INCREMENT}"
           fi
@@ -108,15 +115,6 @@ jobs:
           git config user.email "github-actions@github.com"
           git push origin "$VERSION"
 
-  publish-npm:
-    needs: bump-version
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

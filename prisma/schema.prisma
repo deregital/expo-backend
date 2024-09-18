@@ -1,5 +1,10 @@
-generator client {
+generator toDist {
   output   = "../dist/types/prisma-schema"
+  provider = "prisma-client-js"
+}
+
+generator client {
+  output   = "../types/prisma-schema"
   provider = "prisma-client-js"
 }
 
