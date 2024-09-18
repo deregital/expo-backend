@@ -1,5 +1,6 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
+import { etiquetaSchema, grupoEtiquetaSchema } from '~/types';
 
 export const cuentaSchema = z.object({
   id: z
@@ -20,7 +21,23 @@ export const cuentaSchema = z.object({
   isAdmin: z.boolean().default(false),
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),
-  // filtroBase: z.array(EtiquetaSchema),
+  filtroBase: z.object({
+    etiquetas: etiquetaSchema
+      .pick({
+        id: true,
+        name: true,
+      })
+      .merge(
+        z.object({
+          grupo: grupoEtiquetaSchema.pick({
+            id: true,
+            color: true,
+            isExclusive: true,
+          }),
+        }),
+      ),
+    active: z.boolean(),
+  }),
   filtroBaseActivo: z.boolean().default(false),
   fcmToken: z.array(z.string()).default([]),
 });

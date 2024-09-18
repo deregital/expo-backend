@@ -2,6 +2,9 @@ import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
 
 export const grupoEtiquetaSchema = z.object({
+  id: z.string().uuid({
+    message: 'El ID debe ser un UUID',
+  }),
   name: z.string().min(1, {
     message: 'El nombre debe tener al menos 1 caracter',
   }),
