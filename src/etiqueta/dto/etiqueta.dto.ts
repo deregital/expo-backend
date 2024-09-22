@@ -1,6 +1,6 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
-import { TipoEtiqueta } from '~/types';
+import { TipoEtiqueta } from '~/types/prisma-schema';
 
 export const etiquetaSchema = z.object({
   id: z.string().uuid({

@@ -66,6 +66,7 @@ components:
       required:
         - "username"
         - "password"
+        - "isAdmin"
     RegisterResponseDto:
       type: "object"
       properties:
@@ -76,6 +77,7 @@ components:
           type: "boolean"
       required:
         - "username"
+        - "isAdmin"
     LoginDto:
       type: "object"
       properties:
@@ -96,41 +98,69 @@ components:
             id:
               type: "string"
               format: "uuid"
-              required: true
             username:
               type: "string"
-              required: true
             isAdmin:
               default: false
               type: "boolean"
-              required: false
             created_at:
               type: "string"
               format: "date-time"
-              required: true
             updated_at:
               type: "string"
               format: "date-time"
-              required: true
+            filtroBase:
+              type: "object"
+              properties:
+                etiquetas:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    grupo:
+                      type: "object"
+                      properties:
+                        id:
+                          type: "string"
+                          format: "uuid"
+                        color:
+                          type: "string"
+                          minLength: 7
+                          maxLength: 7
+                        isExclusive:
+                          type: "boolean"
+                      required:
+                        - "id"
+                        - "color"
+                        - "isExclusive"
+                  required:
+                    - "id"
+                    - "name"
+                    - "grupo"
+                active:
+                  type: "boolean"
+              required:
+                - "etiquetas"
+                - "active"
             filtroBaseActivo:
               default: false
               type: "boolean"
-              required: false
             fcmToken:
               default: []
               type: "array"
               items:
                 type: "string"
-              required: false
         backendTokens:
           type: "object"
           properties:
             accessToken:
               type: "string"
-              required: true
             refreshToken:
               type: "string"
-              required: true
       required:
         - "user"
         - "backendTokens"

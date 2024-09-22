@@ -13,7 +13,6 @@ import { ZodValidationPipe } from 'src/filters/zod.pipe';
   providers: [
     {
       provide: APP_PIPE,
-      // mirar https://github.com/anatine/zod-plugins/blob/main/packages/zod-nestjs/src/lib/zod-validation-pipe.ts y ver si se pueden cambiar los valores de los errores
       useClass: ZodValidationPipe,
     },
     PrismaService,

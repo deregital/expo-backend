@@ -82,6 +82,20 @@ export interface components {
         created_at?: string;
         /** Format: date-time */
         updated_at?: string;
+        filtroBase?: {
+          etiquetas: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            grupo: {
+              /** Format: uuid */
+              id: string;
+              color: string;
+              isExclusive: boolean;
+            };
+          };
+          active: boolean;
+        };
         /** @default false */
         filtroBaseActivo: boolean;
         /** @default [] */

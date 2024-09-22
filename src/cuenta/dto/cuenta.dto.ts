@@ -1,6 +1,7 @@
+import { etiquetaSchema } from '@/etiqueta/dto/etiqueta.dto';
+import { grupoEtiquetaSchema } from '@/grupo-etiqueta/dto/grupo-etiqueta.dto';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
-import { etiquetaSchema, grupoEtiquetaSchema } from '~/types';
 
 export const cuentaSchema = z.object({
   id: z

@@ -1,4 +1,4 @@
-import { etiquetaSchema } from '@/exports';
+import { etiquetaSchema } from '@/etiqueta/dto/etiqueta.dto';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
 
