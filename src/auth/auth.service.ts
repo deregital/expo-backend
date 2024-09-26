@@ -24,6 +24,7 @@ export class AuthService {
 
     const payload = {
       username: user.nombreUsuario,
+      id: user.id,
       sub: {
         usernname: user.nombreUsuario,
       },
@@ -33,7 +34,7 @@ export class AuthService {
       user,
       backendTokens: {
         accessToken: await this.jwtService.signAsync(payload, {
-          expiresIn: '20s',
+          expiresIn: '1d',
           secret: process.env.JWT_SECRET,
         }),
         refreshToken: await this.jwtService.signAsync(payload, {
