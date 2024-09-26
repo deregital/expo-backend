@@ -2,12 +2,16 @@ import {
   CreateCuentaDto,
   CreateCuentaResponseDto,
 } from '@/cuenta/dto/createCuenta.dto';
-import { Body, Controller, Patch, Post, UseGuards } from '@nestjs/common';
-import { ApiCreatedResponse } from '@nestjs/swagger';
+import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
+import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { CuentaService } from './cuenta.service';
-import { UpdateFiltroBaseDto } from '@/cuenta/dto/updateFiltroBase.dto';
+import {
+  UpdateFiltroBaseDto,
+  UpdateFiltroBaseResponseDto,
+} from '@/cuenta/dto/updateFiltroBase.dto';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { CuentaSinContrasena, User } from '@/auth/decorators/user.decorator';
+import { GetFiltroBaseResponseDto } from '@/cuenta/dto/getFiltroBase.dto';
 
 @Controller('cuenta')
 @UseGuards(JwtGuard)
@@ -24,10 +28,23 @@ export class CuentaController {
   }
 
   @Patch('/filtro-base')
+  @ApiOkResponse({
+    description: 'Filtro base actualizado',
+    type: UpdateFiltroBaseResponseDto,
+  })
   async updateFiltroBase(
     @Body() body: UpdateFiltroBaseDto,
     @User() user: CuentaSinContrasena,
   ) {
     return await this.cuentaService.updateFiltroBase(user.id, body);
+  }
+
+  @Get('/filtro-base')
+  @ApiOkResponse({
+    description: 'Filtro base obtenido',
+    type: GetFiltroBaseResponseDto,
+  })
+  async getFiltroBase(@User() user: CuentaSinContrasena) {
+    return await this.cuentaService.getFiltroBase(user.id);
   }
 }

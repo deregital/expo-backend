@@ -1,9 +1,14 @@
-import { ConflictException, Injectable } from '@nestjs/common';
-import { Etiqueta, type Cuenta } from '~/types/prisma-schema';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { Etiqueta, TipoEtiqueta, type Cuenta } from '~/types/prisma-schema';
 import { hash } from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RegisterDto } from 'src/auth/dto/register.dto';
 import { CreateCuentaResponseDto } from '@/cuenta/dto/createCuenta.dto';
+import { GetFiltroBaseResponseDto } from '@/cuenta/dto/getFiltroBase.dto';
 
 @Injectable()
 export class CuentaService {
@@ -69,7 +74,16 @@ export class CuentaService {
       active: boolean;
       etiquetasIds: Array<Etiqueta['id']>;
     },
-  ): Promise<Cuenta | undefined> {
+  ): Promise<
+    | (Cuenta & {
+        filtroBase: {
+          id: string;
+          nombre: string;
+          tipo: TipoEtiqueta;
+        }[];
+      })
+    | undefined
+  > {
     try {
       return await this.prisma.cuenta.update({
         where: {
@@ -88,5 +102,48 @@ export class CuentaService {
     } catch (e) {
       throw new ConflictException('Etiquetas inválidas');
     }
+  }
+
+  async getFiltroBase(id: Cuenta['id']): Promise<GetFiltroBaseResponseDto> {
+    const cuenta = await this.prisma.cuenta.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        filtroBaseActivo: true,
+        filtroBase: {
+          select: {
+            id: true,
+            nombre: true,
+            tipo: true,
+            grupo: {
+              select: {
+                id: true,
+                esExclusivo: true,
+                color: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!cuenta) {
+      throw new NotFoundException('Cuenta no encontrada');
+    }
+
+    return {
+      active: cuenta.filtroBaseActivo,
+      filtroBase: cuenta.filtroBase.map((etiqueta) => ({
+        id: etiqueta.id,
+        name: etiqueta.nombre,
+        type: etiqueta.tipo,
+        grupo: {
+          id: etiqueta.grupo.id,
+          isExclusive: etiqueta.grupo.esExclusivo,
+          color: etiqueta.grupo.color,
+        },
+      })),
+    };
   }
 }
