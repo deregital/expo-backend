@@ -1,19 +1,29 @@
 import { etiquetaSchema } from '@/etiqueta/dto/etiqueta.dto';
+import { translate } from '@/i18n/translate';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
 
 const eventoSchemaBase = z.object({
-  id: z.string().uuid({ message: 'El ID debe ser un UUID' }),
-  name: z.string().min(1, 'El nombre es requerido'),
-  date: z.string().min(1, 'La fecha es requerida'),
-  location: z.string().min(1, 'La ubicación es requerida'),
+  id: z.string().uuid({ message: translate('model.evento.id.uuid') }),
+  name: z.string().min(1, translate('model.evento.name.required')),
+  date: z
+    .string({
+      required_error: translate('model.evento.date.required'),
+    })
+    .date(translate('model.evento.date.invalid')),
+  location: z.string().min(1, translate('model.evento.location.required')),
 
   etiquetaAsistioId: etiquetaSchema.shape.id,
   etiquetaAsistio: etiquetaSchema,
   etiquetaConfirmoId: etiquetaSchema.shape.id,
   etiquetaConfirmo: etiquetaSchema,
 
-  eventoPadreId: z.string().uuid().optional(),
+  eventoPadreId: z
+    .string()
+    .uuid({
+      message: translate('model.evento.id.uuid'),
+    })
+    .optional(),
 
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),

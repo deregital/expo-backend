@@ -1,16 +1,16 @@
+import { cuentaSchema } from '@/exports';
+import { translate } from '@/i18n/translate';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
 
 export const comentarioSchema = z.object({
   id: z.string().uuid({
-    message: 'El ID debe ser un UUID',
+    message: translate('model.comentario.id.uuid'),
   }),
   content: z.string().min(1, {
-    message: 'El contenido debe tener al menos 1 caracter',
+    message: translate('model.comentario.content.min'),
   }),
-  createdBy: z.string().uuid({
-    message: 'El createdBy debe ser un UUID',
-  }),
+  createdBy: cuentaSchema.shape.id,
 
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),

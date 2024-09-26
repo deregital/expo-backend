@@ -1,19 +1,23 @@
+import { grupoEtiquetaSchema } from '@/grupo-etiqueta/dto/grupo-etiqueta.dto';
+import { translate } from '@/i18n/translate';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
 import { TipoEtiqueta } from '~/types/prisma-schema';
 
 export const etiquetaSchema = z.object({
   id: z.string().uuid({
-    message: 'El ID debe ser un UUID',
+    message: translate('model.etiqueta.id.uuid'),
   }),
-  name: z.string().min(1, {
-    message: 'El nombre debe tener al menos 1 caracter',
-  }),
-  groupId: z.string().uuid({
-    message: 'Debes seleccionar un grupo de etiquetas',
-  }),
+  name: z
+    .string({
+      required_error: translate('model.etiqueta.name.required'),
+    })
+    .min(1, {
+      message: translate('model.etiqueta.name.min'),
+    }),
+  groupId: grupoEtiquetaSchema.shape.id,
   type: z.nativeEnum(TipoEtiqueta, {
-    message: 'El tipo de etiqueta no es válido',
+    message: translate('model.etiqueta.type.invalid'),
   }),
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),

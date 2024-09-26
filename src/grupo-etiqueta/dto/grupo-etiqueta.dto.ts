@@ -1,18 +1,19 @@
+import { translate } from '@/i18n/translate';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
 
 export const grupoEtiquetaSchema = z.object({
   id: z.string().uuid({
-    message: 'El ID debe ser un UUID',
+    message: translate('model.grupoEtiqueta.id.uuid'),
   }),
   name: z.string().min(1, {
-    message: 'El nombre debe tener al menos 1 caracter',
+    message: translate('model.grupoEtiqueta.name.required'),
   }),
   color: z
     .string()
     .length(7)
     .startsWith('#', {
-      message: 'El color debe tener el formato #ABCDEF',
+      message: translate('model.grupoEtiqueta.color.invalid'),
     })
     .toLowerCase(),
   isExclusive: z.boolean(),

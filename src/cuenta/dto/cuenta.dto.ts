@@ -1,24 +1,25 @@
 import { etiquetaSchema } from '@/etiqueta/dto/etiqueta.dto';
 import { grupoEtiquetaSchema } from '@/grupo-etiqueta/dto/grupo-etiqueta.dto';
+import { translate } from '@/i18n/translate';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
 
 export const cuentaSchema = z.object({
   id: z
     .string({
-      required_error: 'El id es requerido',
+      required_error: translate('model.cuenta.id.required'),
     })
     .uuid({
-      message: 'El id debe ser un UUID',
+      message: translate('model.cuenta.id.uuid'),
     }),
   username: z.string({
-    required_error: 'El nombre de usuario es requerido',
+    required_error: translate('model.cuenta.username.required'),
   }),
   password: z
     .string({
-      required_error: 'La contraseña es requerida',
+      required_error: translate('model.cuenta.password.required'),
     })
-    .min(6, 'La contraseña debe tener al menos 6 caracteres'),
+    .min(6, translate('model.cuenta.password.min')),
   isAdmin: z.boolean().default(false),
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),

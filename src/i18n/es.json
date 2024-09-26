@@ -1,0 +1,67 @@
+{
+  "model": {
+    "comentario": {
+      "id": {
+        "uuid": "El ID debe ser un UUID"
+      },
+      "content": {
+        "min": "El contenido debe tener al menos 1 caracter"
+      }
+    },
+    "cuenta": {
+      "id": {
+        "required": "El ID es requerido",
+        "uuid": "El ID debe ser un UUID"
+      },
+      "username": {
+        "required": "El nombre de usuario es requerido"
+      },
+      "email": {
+        "required": "El email es requerido",
+        "email": "El email debe ser un email válido"
+      },
+      "password": {
+        "required": "La contraseña es requerida",
+        "min": "La contraseña debe tener al menos 6 caracteres"
+      }
+    },
+    "etiqueta": {
+      "id": {
+        "uuid": "El ID debe ser un UUID"
+      },
+      "name": {
+        "required": "El nombre es requerido",
+        "min": "El nombre debe tener al menos 1 caracter"
+      },
+      "type": {
+        "invalid": "El tipo de etiqueta es inválido"
+      }
+    },
+    "evento": {
+      "id": {
+        "uuid": "El ID debe ser un UUID"
+      },
+      "name": {
+        "required": "El nombre es requerido"
+      },
+      "date": {
+        "required": "La fecha es requerida",
+        "invalid": "La fecha debe ser una fecha válida"
+      },
+      "location": {
+        "required": "La localización es requerida"
+      }
+    },
+    "grupoEtiqueta": {
+      "id": {
+        "uuid": "El ID debe ser un UUID"
+      },
+      "name": {
+        "required": "El nombre es requerido"
+      },
+      "color": {
+        "invalid": "El color debe tener el formato hexadecimal (#ABCDEF)"
+      }
+    }
+  }
+}

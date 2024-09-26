@@ -1,22 +1,5 @@
 openapi: "3.0.0"
 paths:
-  /auth/register:
-    post:
-      operationId: "AuthController_registerUser"
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RegisterDto"
-      responses:
-        201:
-          description: "Cuenta creada"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/RegisterResponseDto"
   /auth/login:
     post:
       operationId: "AuthController_loginUser"
@@ -107,32 +90,6 @@ tags:
 servers: []
 components:
   schemas:
-    RegisterDto:
-      type: "object"
-      properties:
-        username:
-          type: "string"
-        password:
-          type: "string"
-          minLength: 6
-        isAdmin:
-          default: false
-          type: "boolean"
-      required:
-        - "username"
-        - "password"
-        - "isAdmin"
-    RegisterResponseDto:
-      type: "object"
-      properties:
-        username:
-          type: "string"
-        isAdmin:
-          default: false
-          type: "boolean"
-      required:
-        - "username"
-        - "isAdmin"
     LoginDto:
       type: "object"
       properties:
@@ -209,6 +166,12 @@ components:
               type: "array"
               items:
                 type: "string"
+          required:
+            - "id"
+            - "username"
+            - "created_at"
+            - "updated_at"
+            - "filtroBase"
         backendTokens:
           type: "object"
           properties:
@@ -216,6 +179,9 @@ components:
               type: "string"
             refreshToken:
               type: "string"
+          required:
+            - "accessToken"
+            - "refreshToken"
       required:
         - "user"
         - "backendTokens"
@@ -233,7 +199,6 @@ components:
       required:
         - "username"
         - "password"
-        - "isAdmin"
     CreateCuentaResponseDto:
       type: "object"
       properties:
@@ -256,9 +221,6 @@ components:
       required:
         - "id"
         - "username"
-        - "isAdmin"
-        - "filtroBaseActivo"
-        - "fcmToken"
     UpdateFiltroBaseDto:
       type: "object"
       properties:
@@ -282,8 +244,7 @@ components:
         esAdmin:
           type: "boolean"
         fcmToken:
-          type: "string"
-          nullable: true
+          type: "null"
         filtroBaseActivo:
           type: "boolean"
         filtroBase:
@@ -325,6 +286,9 @@ components:
                   - "type"
                   - "created_at"
                   - "updated_at"
+          required:
+            - "active"
+            - "etiquetas"
       required:
         - "id"
         - "nombreUsuario"
@@ -430,6 +394,9 @@ components:
                 - "grupo"
             active:
               type: "boolean"
+          required:
+            - "etiquetas"
+            - "active"
         filtroBaseActivo:
           default: false
           type: "boolean"
@@ -441,9 +408,6 @@ components:
       required:
         - "id"
         - "username"
-        - "isAdmin"
         - "created_at"
         - "updated_at"
         - "filtroBase"
-        - "filtroBaseActivo"
-        - "fcmToken"
