@@ -1,5 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { type Cuenta } from '~/types/prisma-schema';
+import { Etiqueta, type Cuenta } from '~/types/prisma-schema';
 import { hash } from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RegisterDto } from 'src/auth/dto/register.dto';
@@ -58,5 +58,35 @@ export class CuentaService {
         id,
       },
     });
+  }
+
+  async updateFiltroBase(
+    id: Cuenta['id'],
+    {
+      active,
+      etiquetasIds,
+    }: {
+      active: boolean;
+      etiquetasIds: Array<Etiqueta['id']>;
+    },
+  ): Promise<Cuenta | undefined> {
+    try {
+      return await this.prisma.cuenta.update({
+        where: {
+          id: id,
+        },
+        data: {
+          filtroBaseActivo: active,
+          filtroBase: {
+            set: etiquetasIds ? etiquetasIds.map((id) => ({ id })) : [],
+          },
+        },
+        include: {
+          filtroBase: true,
+        },
+      });
+    } catch (e) {
+      throw new ConflictException('Etiquetas inválidas');
+    }
   }
 }

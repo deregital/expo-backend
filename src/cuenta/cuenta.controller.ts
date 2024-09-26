@@ -28,7 +28,6 @@ export class CuentaController {
     @Body() body: UpdateFiltroBaseDto,
     @User() user: CuentaSinContrasena,
   ) {
-    return user;
-    // return await this.cuentaService.updateFiltroBase();
+    return await this.cuentaService.updateFiltroBase(user.id, body);
   }
 }
