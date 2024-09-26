@@ -41,6 +41,61 @@ paths:
       responses:
         201:
           description: ""
+  /cuenta/create:
+    post:
+      operationId: "CuentaController_createCuenta"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCuentaDto"
+      responses:
+        201:
+          description: "Cuenta creada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCuentaResponseDto"
+  /cuenta/filtro-base:
+    patch:
+      operationId: "CuentaController_updateFiltroBase"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateFiltroBaseDto"
+      responses:
+        200:
+          description: "Filtro base actualizado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateFiltroBaseResponseDto"
+    get:
+      operationId: "CuentaController_getFiltroBase"
+      parameters: []
+      responses:
+        200:
+          description: "Filtro base obtenido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetFiltroBaseResponseDto"
+  /cuenta/me:
+    get:
+      operationId: "CuentaController_getMe"
+      parameters: []
+      responses:
+        200:
+          description: "Cuenta obtenida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetMeResponseDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -66,7 +121,6 @@ components:
       required:
         - "username"
         - "password"
-        - "isAdmin"
     RegisterResponseDto:
       type: "object"
       properties:
@@ -77,7 +131,6 @@ components:
           type: "boolean"
       required:
         - "username"
-        - "isAdmin"
     LoginDto:
       type: "object"
       properties:
@@ -154,6 +207,12 @@ components:
               type: "array"
               items:
                 type: "string"
+          required:
+            - "id"
+            - "username"
+            - "created_at"
+            - "updated_at"
+            - "filtroBase"
         backendTokens:
           type: "object"
           properties:
@@ -161,6 +220,235 @@ components:
               type: "string"
             refreshToken:
               type: "string"
+          required:
+            - "accessToken"
+            - "refreshToken"
       required:
         - "user"
         - "backendTokens"
+    CreateCuentaDto:
+      type: "object"
+      properties:
+        username:
+          type: "string"
+        password:
+          type: "string"
+          minLength: 6
+        isAdmin:
+          default: false
+          type: "boolean"
+      required:
+        - "username"
+        - "password"
+    CreateCuentaResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        username:
+          type: "string"
+        isAdmin:
+          default: false
+          type: "boolean"
+        filtroBaseActivo:
+          default: false
+          type: "boolean"
+        fcmToken:
+          default: []
+          type: "array"
+          items:
+            type: "string"
+      required:
+        - "id"
+        - "username"
+    UpdateFiltroBaseDto:
+      type: "object"
+      properties:
+        active:
+          type: "boolean"
+        etiquetasIds:
+          type: "array"
+          items:
+            type: "string"
+            format: "uuid"
+      required:
+        - "active"
+        - "etiquetasIds"
+    UpdateFiltroBaseResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        nombreUsuario:
+          type: "string"
+        esAdmin:
+          type: "boolean"
+        fcmToken:
+          type: "null"
+        filtroBaseActivo:
+          type: "boolean"
+        filtroBase:
+          type: "object"
+          properties:
+            active:
+              type: "boolean"
+            etiquetas:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                    format: "uuid"
+                  name:
+                    type: "string"
+                    minLength: 1
+                  groupId:
+                    type: "string"
+                    format: "uuid"
+                  type:
+                    type: "string"
+                    enum:
+                      - "PERSONAL"
+                      - "EVENTO"
+                      - "MODELO"
+                      - "TENTATIVA"
+                  created_at:
+                    type: "string"
+                    format: "date-time"
+                  updated_at:
+                    type: "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "name"
+                  - "groupId"
+                  - "type"
+                  - "created_at"
+                  - "updated_at"
+          required:
+            - "active"
+            - "etiquetas"
+      required:
+        - "id"
+        - "nombreUsuario"
+        - "esAdmin"
+        - "fcmToken"
+        - "filtroBaseActivo"
+        - "filtroBase"
+    GetFiltroBaseResponseDto:
+      type: "object"
+      properties:
+        active:
+          type: "boolean"
+        filtroBase:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              type:
+                type: "string"
+                enum:
+                  - "PERSONAL"
+                  - "EVENTO"
+                  - "MODELO"
+                  - "TENTATIVA"
+              grupo:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                    format: "uuid"
+                  color:
+                    type: "string"
+                    minLength: 7
+                    maxLength: 7
+                  isExclusive:
+                    type: "boolean"
+                required:
+                  - "id"
+                  - "color"
+                  - "isExclusive"
+            required:
+              - "id"
+              - "name"
+              - "type"
+              - "grupo"
+      required:
+        - "active"
+        - "filtroBase"
+    GetMeResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        username:
+          type: "string"
+        isAdmin:
+          default: false
+          type: "boolean"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+        filtroBase:
+          type: "object"
+          properties:
+            etiquetas:
+              type: "object"
+              properties:
+                id:
+                  type: "string"
+                  format: "uuid"
+                name:
+                  type: "string"
+                  minLength: 1
+                grupo:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    color:
+                      type: "string"
+                      minLength: 7
+                      maxLength: 7
+                    isExclusive:
+                      type: "boolean"
+                  required:
+                    - "id"
+                    - "color"
+                    - "isExclusive"
+              required:
+                - "id"
+                - "name"
+                - "grupo"
+            active:
+              type: "boolean"
+          required:
+            - "etiquetas"
+            - "active"
+        filtroBaseActivo:
+          default: false
+          type: "boolean"
+        fcmToken:
+          default: []
+          type: "array"
+          items:
+            type: "string"
+      required:
+        - "id"
+        - "username"
+        - "created_at"
+        - "updated_at"
+        - "filtroBase"

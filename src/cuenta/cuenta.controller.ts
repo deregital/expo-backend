@@ -12,6 +12,7 @@ import {
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { CuentaSinContrasena, User } from '@/auth/decorators/user.decorator';
 import { GetFiltroBaseResponseDto } from '@/cuenta/dto/getFiltroBase.dto';
+import { GetMeResponseDto } from '@/cuenta/dto/getMe.dto';
 
 @Controller('cuenta')
 @UseGuards(JwtGuard)
@@ -46,5 +47,14 @@ export class CuentaController {
   })
   async getFiltroBase(@User() user: CuentaSinContrasena) {
     return await this.cuentaService.getFiltroBase(user.id);
+  }
+
+  @Get('/me')
+  @ApiOkResponse({
+    description: 'Cuenta obtenida',
+    type: GetMeResponseDto,
+  })
+  async getMe(@User() user: CuentaSinContrasena) {
+    return user;
   }
 }

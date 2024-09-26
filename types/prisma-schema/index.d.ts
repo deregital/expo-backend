@@ -38,6 +38,12 @@ export type Etiqueta = $Result.DefaultSelection<Prisma.$EtiquetaPayload>;
 export type EtiquetaGrupo =
   $Result.DefaultSelection<Prisma.$EtiquetaGrupoPayload>;
 /**
+ * Model EventosCarpeta
+ *
+ */
+export type EventosCarpeta =
+  $Result.DefaultSelection<Prisma.$EventosCarpetaPayload>;
+/**
  * Model Evento
  *
  */
@@ -313,6 +319,16 @@ export class PrismaClient<
    * ```
    */
   get etiquetaGrupo(): Prisma.EtiquetaGrupoDelegate<ExtArgs>;
+
+  /**
+   * `prisma.eventosCarpeta`: Exposes CRUD operations for the **EventosCarpeta** model.
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more EventosCarpetas
+   * const eventosCarpetas = await prisma.eventosCarpeta.findMany()
+   * ```
+   */
+  get eventosCarpeta(): Prisma.EventosCarpetaDelegate<ExtArgs>;
 
   /**
    * `prisma.evento`: Exposes CRUD operations for the **Evento** model.
@@ -861,6 +877,7 @@ export namespace Prisma {
     Comentario: 'Comentario';
     Etiqueta: 'Etiqueta';
     EtiquetaGrupo: 'EtiquetaGrupo';
+    EventosCarpeta: 'EventosCarpeta';
     Evento: 'Evento';
     Mensaje: 'Mensaje';
     Enums: 'Enums';
@@ -890,6 +907,7 @@ export namespace Prisma {
         | 'comentario'
         | 'etiqueta'
         | 'etiquetaGrupo'
+        | 'eventosCarpeta'
         | 'evento'
         | 'mensaje'
         | 'enums';
@@ -1246,6 +1264,78 @@ export namespace Prisma {
             args: Prisma.EtiquetaGrupoCountArgs<ExtArgs>;
             result:
               | $Utils.Optional<EtiquetaGrupoCountAggregateOutputType>
+              | number;
+          };
+        };
+      };
+      EventosCarpeta: {
+        payload: Prisma.$EventosCarpetaPayload<ExtArgs>;
+        fields: Prisma.EventosCarpetaFieldRefs;
+        operations: {
+          findUnique: {
+            args: Prisma.EventosCarpetaFindUniqueArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventosCarpetaPayload> | null;
+          };
+          findUniqueOrThrow: {
+            args: Prisma.EventosCarpetaFindUniqueOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventosCarpetaPayload>;
+          };
+          findFirst: {
+            args: Prisma.EventosCarpetaFindFirstArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventosCarpetaPayload> | null;
+          };
+          findFirstOrThrow: {
+            args: Prisma.EventosCarpetaFindFirstOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventosCarpetaPayload>;
+          };
+          findMany: {
+            args: Prisma.EventosCarpetaFindManyArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventosCarpetaPayload>[];
+          };
+          create: {
+            args: Prisma.EventosCarpetaCreateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventosCarpetaPayload>;
+          };
+          createMany: {
+            args: Prisma.EventosCarpetaCreateManyArgs<ExtArgs>;
+            result: Prisma.BatchPayload;
+          };
+          createManyAndReturn: {
+            args: Prisma.EventosCarpetaCreateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventosCarpetaPayload>[];
+          };
+          delete: {
+            args: Prisma.EventosCarpetaDeleteArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventosCarpetaPayload>;
+          };
+          update: {
+            args: Prisma.EventosCarpetaUpdateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventosCarpetaPayload>;
+          };
+          deleteMany: {
+            args: Prisma.EventosCarpetaDeleteManyArgs<ExtArgs>;
+            result: Prisma.BatchPayload;
+          };
+          updateMany: {
+            args: Prisma.EventosCarpetaUpdateManyArgs<ExtArgs>;
+            result: Prisma.BatchPayload;
+          };
+          upsert: {
+            args: Prisma.EventosCarpetaUpsertArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventosCarpetaPayload>;
+          };
+          aggregate: {
+            args: Prisma.EventosCarpetaAggregateArgs<ExtArgs>;
+            result: $Utils.Optional<AggregateEventosCarpeta>;
+          };
+          groupBy: {
+            args: Prisma.EventosCarpetaGroupByArgs<ExtArgs>;
+            result: $Utils.Optional<EventosCarpetaGroupByOutputType>[];
+          };
+          count: {
+            args: Prisma.EventosCarpetaCountArgs<ExtArgs>;
+            result:
+              | $Utils.Optional<EventosCarpetaCountAggregateOutputType>
               | number;
           };
         };
@@ -1868,6 +1958,42 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: EtiquetaWhereInput;
+  };
+
+  /**
+   * Count Type EventosCarpetaCountOutputType
+   */
+
+  export type EventosCarpetaCountOutputType = {
+    eventos: number;
+  };
+
+  export type EventosCarpetaCountOutputTypeSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    eventos?: boolean | EventosCarpetaCountOutputTypeCountEventosArgs;
+  };
+
+  // Custom InputTypes
+  /**
+   * EventosCarpetaCountOutputType without action
+   */
+  export type EventosCarpetaCountOutputTypeDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventosCarpetaCountOutputType
+     */
+    select?: EventosCarpetaCountOutputTypeSelect<ExtArgs> | null;
+  };
+
+  /**
+   * EventosCarpetaCountOutputType without action
+   */
+  export type EventosCarpetaCountOutputTypeCountEventosArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: EventoWhereInput;
   };
 
   /**
@@ -3118,6 +3244,7 @@ export namespace Prisma {
     id: string | null;
     idLegible: number | null;
     telefono: string | null;
+    telefonoSecundario: string | null;
     nombreCompleto: string | null;
     nombrePila: string | null;
     genero: string | null;
@@ -3136,6 +3263,7 @@ export namespace Prisma {
     id: string | null;
     idLegible: number | null;
     telefono: string | null;
+    telefonoSecundario: string | null;
     nombreCompleto: string | null;
     nombrePila: string | null;
     genero: string | null;
@@ -3154,6 +3282,7 @@ export namespace Prisma {
     id: number;
     idLegible: number;
     telefono: number;
+    telefonoSecundario: number;
     nombreCompleto: number;
     nombrePila: number;
     genero: number;
@@ -3182,6 +3311,7 @@ export namespace Prisma {
     id?: true;
     idLegible?: true;
     telefono?: true;
+    telefonoSecundario?: true;
     nombreCompleto?: true;
     nombrePila?: true;
     genero?: true;
@@ -3200,6 +3330,7 @@ export namespace Prisma {
     id?: true;
     idLegible?: true;
     telefono?: true;
+    telefonoSecundario?: true;
     nombreCompleto?: true;
     nombrePila?: true;
     genero?: true;
@@ -3218,6 +3349,7 @@ export namespace Prisma {
     id?: true;
     idLegible?: true;
     telefono?: true;
+    telefonoSecundario?: true;
     nombreCompleto?: true;
     nombrePila?: true;
     genero?: true;
@@ -3327,6 +3459,7 @@ export namespace Prisma {
     id: string;
     idLegible: number;
     telefono: string;
+    telefonoSecundario: string | null;
     nombreCompleto: string;
     nombrePila: string | null;
     genero: string | null;
@@ -3367,6 +3500,7 @@ export namespace Prisma {
       id?: boolean;
       idLegible?: boolean;
       telefono?: boolean;
+      telefonoSecundario?: boolean;
       nombreCompleto?: boolean;
       nombrePila?: boolean;
       genero?: boolean;
@@ -3392,6 +3526,7 @@ export namespace Prisma {
     id?: boolean;
     idLegible?: boolean;
     telefono?: boolean;
+    telefonoSecundario?: boolean;
     nombreCompleto?: boolean;
     nombrePila?: boolean;
     genero?: boolean;
@@ -3430,6 +3565,7 @@ export namespace Prisma {
         id: string;
         idLegible: number;
         telefono: string;
+        telefonoSecundario: string | null;
         nombreCompleto: string;
         nombrePila: string | null;
         genero: string | null;
@@ -3957,6 +4093,7 @@ export namespace Prisma {
     readonly id: FieldRef<'Perfil', 'String'>;
     readonly idLegible: FieldRef<'Perfil', 'Int'>;
     readonly telefono: FieldRef<'Perfil', 'String'>;
+    readonly telefonoSecundario: FieldRef<'Perfil', 'String'>;
     readonly nombreCompleto: FieldRef<'Perfil', 'String'>;
     readonly nombrePila: FieldRef<'Perfil', 'String'>;
     readonly genero: FieldRef<'Perfil', 'String'>;
@@ -7922,6 +8059,1125 @@ export namespace Prisma {
   };
 
   /**
+   * Model EventosCarpeta
+   */
+
+  export type AggregateEventosCarpeta = {
+    _count: EventosCarpetaCountAggregateOutputType | null;
+    _min: EventosCarpetaMinAggregateOutputType | null;
+    _max: EventosCarpetaMaxAggregateOutputType | null;
+  };
+
+  export type EventosCarpetaMinAggregateOutputType = {
+    id: string | null;
+    nombre: string | null;
+    color: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type EventosCarpetaMaxAggregateOutputType = {
+    id: string | null;
+    nombre: string | null;
+    color: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type EventosCarpetaCountAggregateOutputType = {
+    id: number;
+    nombre: number;
+    color: number;
+    created_at: number;
+    updated_at: number;
+    _all: number;
+  };
+
+  export type EventosCarpetaMinAggregateInputType = {
+    id?: true;
+    nombre?: true;
+    color?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type EventosCarpetaMaxAggregateInputType = {
+    id?: true;
+    nombre?: true;
+    color?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type EventosCarpetaCountAggregateInputType = {
+    id?: true;
+    nombre?: true;
+    color?: true;
+    created_at?: true;
+    updated_at?: true;
+    _all?: true;
+  };
+
+  export type EventosCarpetaAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which EventosCarpeta to aggregate.
+     */
+    where?: EventosCarpetaWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of EventosCarpetas to fetch.
+     */
+    orderBy?:
+      | EventosCarpetaOrderByWithRelationInput
+      | EventosCarpetaOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: EventosCarpetaWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` EventosCarpetas from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` EventosCarpetas.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned EventosCarpetas
+     **/
+    _count?: true | EventosCarpetaCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+     **/
+    _min?: EventosCarpetaMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+     **/
+    _max?: EventosCarpetaMaxAggregateInputType;
+  };
+
+  export type GetEventosCarpetaAggregateType<
+    T extends EventosCarpetaAggregateArgs,
+  > = {
+    [P in keyof T & keyof AggregateEventosCarpeta]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEventosCarpeta[P]>
+      : GetScalarType<T[P], AggregateEventosCarpeta[P]>;
+  };
+
+  export type EventosCarpetaGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: EventosCarpetaWhereInput;
+    orderBy?:
+      | EventosCarpetaOrderByWithAggregationInput
+      | EventosCarpetaOrderByWithAggregationInput[];
+    by: EventosCarpetaScalarFieldEnum[] | EventosCarpetaScalarFieldEnum;
+    having?: EventosCarpetaScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: EventosCarpetaCountAggregateInputType | true;
+    _min?: EventosCarpetaMinAggregateInputType;
+    _max?: EventosCarpetaMaxAggregateInputType;
+  };
+
+  export type EventosCarpetaGroupByOutputType = {
+    id: string;
+    nombre: string;
+    color: string;
+    created_at: Date;
+    updated_at: Date;
+    _count: EventosCarpetaCountAggregateOutputType | null;
+    _min: EventosCarpetaMinAggregateOutputType | null;
+    _max: EventosCarpetaMaxAggregateOutputType | null;
+  };
+
+  type GetEventosCarpetaGroupByPayload<T extends EventosCarpetaGroupByArgs> =
+    Prisma.PrismaPromise<
+      Array<
+        PickEnumerable<EventosCarpetaGroupByOutputType, T['by']> & {
+          [P in keyof T &
+            keyof EventosCarpetaGroupByOutputType]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EventosCarpetaGroupByOutputType[P]>
+            : GetScalarType<T[P], EventosCarpetaGroupByOutputType[P]>;
+        }
+      >
+    >;
+
+  export type EventosCarpetaSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      nombre?: boolean;
+      color?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      eventos?: boolean | EventosCarpeta$eventosArgs<ExtArgs>;
+      _count?: boolean | EventosCarpetaCountOutputTypeDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['eventosCarpeta']
+  >;
+
+  export type EventosCarpetaSelectScalar = {
+    id?: boolean;
+    nombre?: boolean;
+    color?: boolean;
+    created_at?: boolean;
+    updated_at?: boolean;
+  };
+
+  export type EventosCarpetaInclude<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    eventos?: boolean | EventosCarpeta$eventosArgs<ExtArgs>;
+    _count?: boolean | EventosCarpetaCountOutputTypeDefaultArgs<ExtArgs>;
+  };
+
+  export type $EventosCarpetaPayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    name: 'EventosCarpeta';
+    objects: {
+      eventos: Prisma.$EventoPayload<ExtArgs>[];
+    };
+    scalars: $Extensions.GetPayloadResult<
+      {
+        id: string;
+        nombre: string;
+        color: string;
+        created_at: Date;
+        updated_at: Date;
+      },
+      ExtArgs['result']['eventosCarpeta']
+    >;
+    composites: {};
+  };
+
+  type EventosCarpetaGetPayload<
+    S extends boolean | null | undefined | EventosCarpetaDefaultArgs,
+  > = $Result.GetResult<Prisma.$EventosCarpetaPayload, S>;
+
+  type EventosCarpetaCountArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = Omit<EventosCarpetaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+    select?: EventosCarpetaCountAggregateInputType | true;
+  };
+
+  export interface EventosCarpetaDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['EventosCarpeta'];
+      meta: { name: 'EventosCarpeta' };
+    };
+    /**
+     * Find zero or one EventosCarpeta that matches the filter.
+     * @param {EventosCarpetaFindUniqueArgs} args - Arguments to find a EventosCarpeta
+     * @example
+     * // Get one EventosCarpeta
+     * const eventosCarpeta = await prisma.eventosCarpeta.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     **/
+    findUnique<T extends EventosCarpetaFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, EventosCarpetaFindUniqueArgs<ExtArgs>>,
+    ): Prisma__EventosCarpetaClient<
+      $Result.GetResult<
+        Prisma.$EventosCarpetaPayload<ExtArgs>,
+        T,
+        'findUnique'
+      > | null,
+      null,
+      ExtArgs
+    >;
+
+    /**
+     * Find one EventosCarpeta that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {EventosCarpetaFindUniqueOrThrowArgs} args - Arguments to find a EventosCarpeta
+     * @example
+     * // Get one EventosCarpeta
+     * const eventosCarpeta = await prisma.eventosCarpeta.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     **/
+    findUniqueOrThrow<T extends EventosCarpetaFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, EventosCarpetaFindUniqueOrThrowArgs<ExtArgs>>,
+    ): Prisma__EventosCarpetaClient<
+      $Result.GetResult<
+        Prisma.$EventosCarpetaPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow'
+      >,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Find the first EventosCarpeta that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventosCarpetaFindFirstArgs} args - Arguments to find a EventosCarpeta
+     * @example
+     * // Get one EventosCarpeta
+     * const eventosCarpeta = await prisma.eventosCarpeta.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     **/
+    findFirst<T extends EventosCarpetaFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, EventosCarpetaFindFirstArgs<ExtArgs>>,
+    ): Prisma__EventosCarpetaClient<
+      $Result.GetResult<
+        Prisma.$EventosCarpetaPayload<ExtArgs>,
+        T,
+        'findFirst'
+      > | null,
+      null,
+      ExtArgs
+    >;
+
+    /**
+     * Find the first EventosCarpeta that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventosCarpetaFindFirstOrThrowArgs} args - Arguments to find a EventosCarpeta
+     * @example
+     * // Get one EventosCarpeta
+     * const eventosCarpeta = await prisma.eventosCarpeta.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     **/
+    findFirstOrThrow<T extends EventosCarpetaFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, EventosCarpetaFindFirstOrThrowArgs<ExtArgs>>,
+    ): Prisma__EventosCarpetaClient<
+      $Result.GetResult<
+        Prisma.$EventosCarpetaPayload<ExtArgs>,
+        T,
+        'findFirstOrThrow'
+      >,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Find zero or more EventosCarpetas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventosCarpetaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all EventosCarpetas
+     * const eventosCarpetas = await prisma.eventosCarpeta.findMany()
+     *
+     * // Get first 10 EventosCarpetas
+     * const eventosCarpetas = await prisma.eventosCarpeta.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const eventosCarpetaWithIdOnly = await prisma.eventosCarpeta.findMany({ select: { id: true } })
+     *
+     **/
+    findMany<T extends EventosCarpetaFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, EventosCarpetaFindManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<Prisma.$EventosCarpetaPayload<ExtArgs>, T, 'findMany'>
+    >;
+
+    /**
+     * Create a EventosCarpeta.
+     * @param {EventosCarpetaCreateArgs} args - Arguments to create a EventosCarpeta.
+     * @example
+     * // Create one EventosCarpeta
+     * const EventosCarpeta = await prisma.eventosCarpeta.create({
+     *   data: {
+     *     // ... data to create a EventosCarpeta
+     *   }
+     * })
+     *
+     **/
+    create<T extends EventosCarpetaCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, EventosCarpetaCreateArgs<ExtArgs>>,
+    ): Prisma__EventosCarpetaClient<
+      $Result.GetResult<Prisma.$EventosCarpetaPayload<ExtArgs>, T, 'create'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Create many EventosCarpetas.
+     * @param {EventosCarpetaCreateManyArgs} args - Arguments to create many EventosCarpetas.
+     * @example
+     * // Create many EventosCarpetas
+     * const eventosCarpeta = await prisma.eventosCarpeta.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     **/
+    createMany<T extends EventosCarpetaCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, EventosCarpetaCreateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create many EventosCarpetas and returns the data saved in the database.
+     * @param {EventosCarpetaCreateManyAndReturnArgs} args - Arguments to create many EventosCarpetas.
+     * @example
+     * // Create many EventosCarpetas
+     * const eventosCarpeta = await prisma.eventosCarpeta.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many EventosCarpetas and only return the `id`
+     * const eventosCarpetaWithIdOnly = await prisma.eventosCarpeta.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     **/
+    createManyAndReturn<
+      T extends EventosCarpetaCreateManyAndReturnArgs<ExtArgs>,
+    >(
+      args?: SelectSubset<T, EventosCarpetaCreateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$EventosCarpetaPayload<ExtArgs>,
+        T,
+        'createManyAndReturn'
+      >
+    >;
+
+    /**
+     * Delete a EventosCarpeta.
+     * @param {EventosCarpetaDeleteArgs} args - Arguments to delete one EventosCarpeta.
+     * @example
+     * // Delete one EventosCarpeta
+     * const EventosCarpeta = await prisma.eventosCarpeta.delete({
+     *   where: {
+     *     // ... filter to delete one EventosCarpeta
+     *   }
+     * })
+     *
+     **/
+    delete<T extends EventosCarpetaDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, EventosCarpetaDeleteArgs<ExtArgs>>,
+    ): Prisma__EventosCarpetaClient<
+      $Result.GetResult<Prisma.$EventosCarpetaPayload<ExtArgs>, T, 'delete'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Update one EventosCarpeta.
+     * @param {EventosCarpetaUpdateArgs} args - Arguments to update one EventosCarpeta.
+     * @example
+     * // Update one EventosCarpeta
+     * const eventosCarpeta = await prisma.eventosCarpeta.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     **/
+    update<T extends EventosCarpetaUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, EventosCarpetaUpdateArgs<ExtArgs>>,
+    ): Prisma__EventosCarpetaClient<
+      $Result.GetResult<Prisma.$EventosCarpetaPayload<ExtArgs>, T, 'update'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Delete zero or more EventosCarpetas.
+     * @param {EventosCarpetaDeleteManyArgs} args - Arguments to filter EventosCarpetas to delete.
+     * @example
+     * // Delete a few EventosCarpetas
+     * const { count } = await prisma.eventosCarpeta.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     **/
+    deleteMany<T extends EventosCarpetaDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, EventosCarpetaDeleteManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more EventosCarpetas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventosCarpetaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many EventosCarpetas
+     * const eventosCarpeta = await prisma.eventosCarpeta.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     **/
+    updateMany<T extends EventosCarpetaUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, EventosCarpetaUpdateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create or update one EventosCarpeta.
+     * @param {EventosCarpetaUpsertArgs} args - Arguments to update or create a EventosCarpeta.
+     * @example
+     * // Update or create a EventosCarpeta
+     * const eventosCarpeta = await prisma.eventosCarpeta.upsert({
+     *   create: {
+     *     // ... data to create a EventosCarpeta
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the EventosCarpeta we want to update
+     *   }
+     * })
+     **/
+    upsert<T extends EventosCarpetaUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, EventosCarpetaUpsertArgs<ExtArgs>>,
+    ): Prisma__EventosCarpetaClient<
+      $Result.GetResult<Prisma.$EventosCarpetaPayload<ExtArgs>, T, 'upsert'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Count the number of EventosCarpetas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventosCarpetaCountArgs} args - Arguments to filter EventosCarpetas to count.
+     * @example
+     * // Count the number of EventosCarpetas
+     * const count = await prisma.eventosCarpeta.count({
+     *   where: {
+     *     // ... the filter for the EventosCarpetas we want to count
+     *   }
+     * })
+     **/
+    count<T extends EventosCarpetaCountArgs>(
+      args?: Subset<T, EventosCarpetaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EventosCarpetaCountAggregateOutputType>
+        : number
+    >;
+
+    /**
+     * Allows you to perform aggregations operations on a EventosCarpeta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventosCarpetaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+     **/
+    aggregate<T extends EventosCarpetaAggregateArgs>(
+      args: Subset<T, EventosCarpetaAggregateArgs>,
+    ): Prisma.PrismaPromise<GetEventosCarpetaAggregateType<T>>;
+
+    /**
+     * Group by EventosCarpeta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventosCarpetaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+     **/
+    groupBy<
+      T extends EventosCarpetaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EventosCarpetaGroupByArgs['orderBy'] }
+        : { orderBy?: EventosCarpetaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<
+        Keys<MaybeTupleToUnion<T['orderBy']>>
+      >,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ];
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields],
+    >(
+      args: SubsetIntersection<T, EventosCarpetaGroupByArgs, OrderByArg> &
+        InputErrors,
+    ): {} extends InputErrors
+      ? GetEventosCarpetaGroupByPayload<T>
+      : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the EventosCarpeta model
+     */
+    readonly fields: EventosCarpetaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for EventosCarpeta.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EventosCarpetaClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    eventos<T extends EventosCarpeta$eventosArgs<ExtArgs> = {}>(
+      args?: Subset<T, EventosCarpeta$eventosArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<Prisma.$EventoPayload<ExtArgs>, T, 'findMany'> | Null
+    >;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?:
+        | ((value: T) => TResult1 | PromiseLike<TResult1>)
+        | undefined
+        | null,
+      onrejected?:
+        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?:
+        | ((reason: any) => TResult | PromiseLike<TResult>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+  /**
+   * Fields of the EventosCarpeta model
+   */
+  interface EventosCarpetaFieldRefs {
+    readonly id: FieldRef<'EventosCarpeta', 'String'>;
+    readonly nombre: FieldRef<'EventosCarpeta', 'String'>;
+    readonly color: FieldRef<'EventosCarpeta', 'String'>;
+    readonly created_at: FieldRef<'EventosCarpeta', 'DateTime'>;
+    readonly updated_at: FieldRef<'EventosCarpeta', 'DateTime'>;
+  }
+
+  // Custom InputTypes
+  /**
+   * EventosCarpeta findUnique
+   */
+  export type EventosCarpetaFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventosCarpeta
+     */
+    select?: EventosCarpetaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventosCarpetaInclude<ExtArgs> | null;
+    /**
+     * Filter, which EventosCarpeta to fetch.
+     */
+    where: EventosCarpetaWhereUniqueInput;
+  };
+
+  /**
+   * EventosCarpeta findUniqueOrThrow
+   */
+  export type EventosCarpetaFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventosCarpeta
+     */
+    select?: EventosCarpetaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventosCarpetaInclude<ExtArgs> | null;
+    /**
+     * Filter, which EventosCarpeta to fetch.
+     */
+    where: EventosCarpetaWhereUniqueInput;
+  };
+
+  /**
+   * EventosCarpeta findFirst
+   */
+  export type EventosCarpetaFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventosCarpeta
+     */
+    select?: EventosCarpetaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventosCarpetaInclude<ExtArgs> | null;
+    /**
+     * Filter, which EventosCarpeta to fetch.
+     */
+    where?: EventosCarpetaWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of EventosCarpetas to fetch.
+     */
+    orderBy?:
+      | EventosCarpetaOrderByWithRelationInput
+      | EventosCarpetaOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for EventosCarpetas.
+     */
+    cursor?: EventosCarpetaWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` EventosCarpetas from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` EventosCarpetas.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of EventosCarpetas.
+     */
+    distinct?: EventosCarpetaScalarFieldEnum | EventosCarpetaScalarFieldEnum[];
+  };
+
+  /**
+   * EventosCarpeta findFirstOrThrow
+   */
+  export type EventosCarpetaFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventosCarpeta
+     */
+    select?: EventosCarpetaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventosCarpetaInclude<ExtArgs> | null;
+    /**
+     * Filter, which EventosCarpeta to fetch.
+     */
+    where?: EventosCarpetaWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of EventosCarpetas to fetch.
+     */
+    orderBy?:
+      | EventosCarpetaOrderByWithRelationInput
+      | EventosCarpetaOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for EventosCarpetas.
+     */
+    cursor?: EventosCarpetaWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` EventosCarpetas from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` EventosCarpetas.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of EventosCarpetas.
+     */
+    distinct?: EventosCarpetaScalarFieldEnum | EventosCarpetaScalarFieldEnum[];
+  };
+
+  /**
+   * EventosCarpeta findMany
+   */
+  export type EventosCarpetaFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventosCarpeta
+     */
+    select?: EventosCarpetaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventosCarpetaInclude<ExtArgs> | null;
+    /**
+     * Filter, which EventosCarpetas to fetch.
+     */
+    where?: EventosCarpetaWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of EventosCarpetas to fetch.
+     */
+    orderBy?:
+      | EventosCarpetaOrderByWithRelationInput
+      | EventosCarpetaOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing EventosCarpetas.
+     */
+    cursor?: EventosCarpetaWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` EventosCarpetas from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` EventosCarpetas.
+     */
+    skip?: number;
+    distinct?: EventosCarpetaScalarFieldEnum | EventosCarpetaScalarFieldEnum[];
+  };
+
+  /**
+   * EventosCarpeta create
+   */
+  export type EventosCarpetaCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventosCarpeta
+     */
+    select?: EventosCarpetaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventosCarpetaInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a EventosCarpeta.
+     */
+    data: XOR<EventosCarpetaCreateInput, EventosCarpetaUncheckedCreateInput>;
+  };
+
+  /**
+   * EventosCarpeta createMany
+   */
+  export type EventosCarpetaCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to create many EventosCarpetas.
+     */
+    data: EventosCarpetaCreateManyInput | EventosCarpetaCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * EventosCarpeta createManyAndReturn
+   */
+  export type EventosCarpetaCreateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventosCarpeta
+     */
+    select?: EventosCarpetaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventosCarpetaInclude<ExtArgs> | null;
+    /**
+     * The data used to create many EventosCarpetas.
+     */
+    data: EventosCarpetaCreateManyInput | EventosCarpetaCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * EventosCarpeta update
+   */
+  export type EventosCarpetaUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventosCarpeta
+     */
+    select?: EventosCarpetaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventosCarpetaInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a EventosCarpeta.
+     */
+    data: XOR<EventosCarpetaUpdateInput, EventosCarpetaUncheckedUpdateInput>;
+    /**
+     * Choose, which EventosCarpeta to update.
+     */
+    where: EventosCarpetaWhereUniqueInput;
+  };
+
+  /**
+   * EventosCarpeta updateMany
+   */
+  export type EventosCarpetaUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to update EventosCarpetas.
+     */
+    data: XOR<
+      EventosCarpetaUpdateManyMutationInput,
+      EventosCarpetaUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which EventosCarpetas to update
+     */
+    where?: EventosCarpetaWhereInput;
+  };
+
+  /**
+   * EventosCarpeta upsert
+   */
+  export type EventosCarpetaUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventosCarpeta
+     */
+    select?: EventosCarpetaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventosCarpetaInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the EventosCarpeta to update in case it exists.
+     */
+    where: EventosCarpetaWhereUniqueInput;
+    /**
+     * In case the EventosCarpeta found by the `where` argument doesn't exist, create a new EventosCarpeta with this data.
+     */
+    create: XOR<EventosCarpetaCreateInput, EventosCarpetaUncheckedCreateInput>;
+    /**
+     * In case the EventosCarpeta was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EventosCarpetaUpdateInput, EventosCarpetaUncheckedUpdateInput>;
+  };
+
+  /**
+   * EventosCarpeta delete
+   */
+  export type EventosCarpetaDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventosCarpeta
+     */
+    select?: EventosCarpetaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventosCarpetaInclude<ExtArgs> | null;
+    /**
+     * Filter which EventosCarpeta to delete.
+     */
+    where: EventosCarpetaWhereUniqueInput;
+  };
+
+  /**
+   * EventosCarpeta deleteMany
+   */
+  export type EventosCarpetaDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which EventosCarpetas to delete
+     */
+    where?: EventosCarpetaWhereInput;
+  };
+
+  /**
+   * EventosCarpeta.eventos
+   */
+  export type EventosCarpeta$eventosArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Evento
+     */
+    select?: EventoSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventoInclude<ExtArgs> | null;
+    where?: EventoWhereInput;
+    orderBy?: EventoOrderByWithRelationInput | EventoOrderByWithRelationInput[];
+    cursor?: EventoWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: EventoScalarFieldEnum | EventoScalarFieldEnum[];
+  };
+
+  /**
+   * EventosCarpeta without action
+   */
+  export type EventosCarpetaDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventosCarpeta
+     */
+    select?: EventosCarpetaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventosCarpetaInclude<ExtArgs> | null;
+  };
+
+  /**
    * Model Evento
    */
 
@@ -7936,6 +9192,7 @@ export namespace Prisma {
     nombre: string | null;
     fecha: Date | null;
     ubicacion: string | null;
+    carpetaId: string | null;
     etiquetaAsistioId: string | null;
     etiquetaConfirmoId: string | null;
     eventoPadreId: string | null;
@@ -7948,6 +9205,7 @@ export namespace Prisma {
     nombre: string | null;
     fecha: Date | null;
     ubicacion: string | null;
+    carpetaId: string | null;
     etiquetaAsistioId: string | null;
     etiquetaConfirmoId: string | null;
     eventoPadreId: string | null;
@@ -7960,6 +9218,7 @@ export namespace Prisma {
     nombre: number;
     fecha: number;
     ubicacion: number;
+    carpetaId: number;
     etiquetaAsistioId: number;
     etiquetaConfirmoId: number;
     eventoPadreId: number;
@@ -7973,6 +9232,7 @@ export namespace Prisma {
     nombre?: true;
     fecha?: true;
     ubicacion?: true;
+    carpetaId?: true;
     etiquetaAsistioId?: true;
     etiquetaConfirmoId?: true;
     eventoPadreId?: true;
@@ -7985,6 +9245,7 @@ export namespace Prisma {
     nombre?: true;
     fecha?: true;
     ubicacion?: true;
+    carpetaId?: true;
     etiquetaAsistioId?: true;
     etiquetaConfirmoId?: true;
     eventoPadreId?: true;
@@ -7997,6 +9258,7 @@ export namespace Prisma {
     nombre?: true;
     fecha?: true;
     ubicacion?: true;
+    carpetaId?: true;
     etiquetaAsistioId?: true;
     etiquetaConfirmoId?: true;
     eventoPadreId?: true;
@@ -8085,6 +9347,7 @@ export namespace Prisma {
     nombre: string;
     fecha: Date;
     ubicacion: string;
+    carpetaId: string | null;
     etiquetaAsistioId: string;
     etiquetaConfirmoId: string;
     eventoPadreId: string | null;
@@ -8116,11 +9379,13 @@ export namespace Prisma {
       nombre?: boolean;
       fecha?: boolean;
       ubicacion?: boolean;
+      carpetaId?: boolean;
       etiquetaAsistioId?: boolean;
       etiquetaConfirmoId?: boolean;
       eventoPadreId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
+      carpeta?: boolean | Evento$carpetaArgs<ExtArgs>;
       etiquetaAsistio?: boolean | EtiquetaDefaultArgs<ExtArgs>;
       etiquetaConfirmo?: boolean | EtiquetaDefaultArgs<ExtArgs>;
       eventoPadre?: boolean | Evento$eventoPadreArgs<ExtArgs>;
@@ -8135,6 +9400,7 @@ export namespace Prisma {
     nombre?: boolean;
     fecha?: boolean;
     ubicacion?: boolean;
+    carpetaId?: boolean;
     etiquetaAsistioId?: boolean;
     etiquetaConfirmoId?: boolean;
     eventoPadreId?: boolean;
@@ -8145,6 +9411,7 @@ export namespace Prisma {
   export type EventoInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
+    carpeta?: boolean | Evento$carpetaArgs<ExtArgs>;
     etiquetaAsistio?: boolean | EtiquetaDefaultArgs<ExtArgs>;
     etiquetaConfirmo?: boolean | EtiquetaDefaultArgs<ExtArgs>;
     eventoPadre?: boolean | Evento$eventoPadreArgs<ExtArgs>;
@@ -8157,6 +9424,7 @@ export namespace Prisma {
   > = {
     name: 'Evento';
     objects: {
+      carpeta: Prisma.$EventosCarpetaPayload<ExtArgs> | null;
       etiquetaAsistio: Prisma.$EtiquetaPayload<ExtArgs>;
       etiquetaConfirmo: Prisma.$EtiquetaPayload<ExtArgs>;
       eventoPadre: Prisma.$EventoPayload<ExtArgs> | null;
@@ -8168,6 +9436,7 @@ export namespace Prisma {
         nombre: string;
         fecha: Date;
         ubicacion: string;
+        carpetaId: string | null;
         etiquetaAsistioId: string;
         etiquetaConfirmoId: string;
         eventoPadreId: string | null;
@@ -8625,6 +9894,18 @@ export namespace Prisma {
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
+    carpeta<T extends Evento$carpetaArgs<ExtArgs> = {}>(
+      args?: Subset<T, Evento$carpetaArgs<ExtArgs>>,
+    ): Prisma__EventosCarpetaClient<
+      $Result.GetResult<
+        Prisma.$EventosCarpetaPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow'
+      > | null,
+      null,
+      ExtArgs
+    >;
+
     etiquetaAsistio<T extends EtiquetaDefaultArgs<ExtArgs> = {}>(
       args?: Subset<T, EtiquetaDefaultArgs<ExtArgs>>,
     ): Prisma__EtiquetaClient<
@@ -8713,6 +9994,7 @@ export namespace Prisma {
     readonly nombre: FieldRef<'Evento', 'String'>;
     readonly fecha: FieldRef<'Evento', 'DateTime'>;
     readonly ubicacion: FieldRef<'Evento', 'String'>;
+    readonly carpetaId: FieldRef<'Evento', 'String'>;
     readonly etiquetaAsistioId: FieldRef<'Evento', 'String'>;
     readonly etiquetaConfirmoId: FieldRef<'Evento', 'String'>;
     readonly eventoPadreId: FieldRef<'Evento', 'String'>;
@@ -9058,6 +10340,23 @@ export namespace Prisma {
      * Filter which Eventos to delete
      */
     where?: EventoWhereInput;
+  };
+
+  /**
+   * Evento.carpeta
+   */
+  export type Evento$carpetaArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventosCarpeta
+     */
+    select?: EventosCarpetaSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventosCarpetaInclude<ExtArgs> | null;
+    where?: EventosCarpetaWhereInput;
   };
 
   /**
@@ -11249,6 +12548,7 @@ export namespace Prisma {
     id: 'id';
     idLegible: 'idLegible';
     telefono: 'telefono';
+    telefonoSecundario: 'telefonoSecundario';
     nombreCompleto: 'nombreCompleto';
     nombrePila: 'nombrePila';
     genero: 'genero';
@@ -11303,11 +12603,23 @@ export namespace Prisma {
   export type EtiquetaGrupoScalarFieldEnum =
     (typeof EtiquetaGrupoScalarFieldEnum)[keyof typeof EtiquetaGrupoScalarFieldEnum];
 
+  export const EventosCarpetaScalarFieldEnum: {
+    id: 'id';
+    nombre: 'nombre';
+    color: 'color';
+    created_at: 'created_at';
+    updated_at: 'updated_at';
+  };
+
+  export type EventosCarpetaScalarFieldEnum =
+    (typeof EventosCarpetaScalarFieldEnum)[keyof typeof EventosCarpetaScalarFieldEnum];
+
   export const EventoScalarFieldEnum: {
     id: 'id';
     nombre: 'nombre';
     fecha: 'fecha';
     ubicacion: 'ubicacion';
+    carpetaId: 'carpetaId';
     etiquetaAsistioId: 'etiquetaAsistioId';
     etiquetaConfirmoId: 'etiquetaConfirmoId';
     eventoPadreId: 'eventoPadreId';
@@ -11609,6 +12921,7 @@ export namespace Prisma {
     id?: StringFilter<'Perfil'> | string;
     idLegible?: IntFilter<'Perfil'> | number;
     telefono?: StringFilter<'Perfil'> | string;
+    telefonoSecundario?: StringNullableFilter<'Perfil'> | string | null;
     nombreCompleto?: StringFilter<'Perfil'> | string;
     nombrePila?: StringNullableFilter<'Perfil'> | string | null;
     genero?: StringNullableFilter<'Perfil'> | string | null;
@@ -11631,6 +12944,7 @@ export namespace Prisma {
     id?: SortOrder;
     idLegible?: SortOrder;
     telefono?: SortOrder;
+    telefonoSecundario?: SortOrderInput | SortOrder;
     nombreCompleto?: SortOrder;
     nombrePila?: SortOrderInput | SortOrder;
     genero?: SortOrderInput | SortOrder;
@@ -11653,6 +12967,7 @@ export namespace Prisma {
     {
       id?: string;
       telefono?: string;
+      telefonoSecundario?: string;
       AND?: PerfilWhereInput | PerfilWhereInput[];
       OR?: PerfilWhereInput[];
       NOT?: PerfilWhereInput | PerfilWhereInput[];
@@ -11674,13 +12989,14 @@ export namespace Prisma {
       mensajes?: MensajeListRelationFilter;
       etiquetas?: EtiquetaListRelationFilter;
     },
-    'id' | 'telefono'
+    'id' | 'telefono' | 'telefonoSecundario'
   >;
 
   export type PerfilOrderByWithAggregationInput = {
     id?: SortOrder;
     idLegible?: SortOrder;
     telefono?: SortOrder;
+    telefonoSecundario?: SortOrderInput | SortOrder;
     nombreCompleto?: SortOrder;
     nombrePila?: SortOrderInput | SortOrder;
     genero?: SortOrderInput | SortOrder;
@@ -11712,6 +13028,10 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<'Perfil'> | string;
     idLegible?: IntWithAggregatesFilter<'Perfil'> | number;
     telefono?: StringWithAggregatesFilter<'Perfil'> | string;
+    telefonoSecundario?:
+      | StringNullableWithAggregatesFilter<'Perfil'>
+      | string
+      | null;
     nombreCompleto?: StringWithAggregatesFilter<'Perfil'> | string;
     nombrePila?: StringNullableWithAggregatesFilter<'Perfil'> | string | null;
     genero?: StringNullableWithAggregatesFilter<'Perfil'> | string | null;
@@ -11956,6 +13276,68 @@ export namespace Prisma {
     updated_at?: DateTimeWithAggregatesFilter<'EtiquetaGrupo'> | Date | string;
   };
 
+  export type EventosCarpetaWhereInput = {
+    AND?: EventosCarpetaWhereInput | EventosCarpetaWhereInput[];
+    OR?: EventosCarpetaWhereInput[];
+    NOT?: EventosCarpetaWhereInput | EventosCarpetaWhereInput[];
+    id?: StringFilter<'EventosCarpeta'> | string;
+    nombre?: StringFilter<'EventosCarpeta'> | string;
+    color?: StringFilter<'EventosCarpeta'> | string;
+    created_at?: DateTimeFilter<'EventosCarpeta'> | Date | string;
+    updated_at?: DateTimeFilter<'EventosCarpeta'> | Date | string;
+    eventos?: EventoListRelationFilter;
+  };
+
+  export type EventosCarpetaOrderByWithRelationInput = {
+    id?: SortOrder;
+    nombre?: SortOrder;
+    color?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    eventos?: EventoOrderByRelationAggregateInput;
+  };
+
+  export type EventosCarpetaWhereUniqueInput = Prisma.AtLeast<
+    {
+      id?: string;
+      AND?: EventosCarpetaWhereInput | EventosCarpetaWhereInput[];
+      OR?: EventosCarpetaWhereInput[];
+      NOT?: EventosCarpetaWhereInput | EventosCarpetaWhereInput[];
+      nombre?: StringFilter<'EventosCarpeta'> | string;
+      color?: StringFilter<'EventosCarpeta'> | string;
+      created_at?: DateTimeFilter<'EventosCarpeta'> | Date | string;
+      updated_at?: DateTimeFilter<'EventosCarpeta'> | Date | string;
+      eventos?: EventoListRelationFilter;
+    },
+    'id'
+  >;
+
+  export type EventosCarpetaOrderByWithAggregationInput = {
+    id?: SortOrder;
+    nombre?: SortOrder;
+    color?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    _count?: EventosCarpetaCountOrderByAggregateInput;
+    _max?: EventosCarpetaMaxOrderByAggregateInput;
+    _min?: EventosCarpetaMinOrderByAggregateInput;
+  };
+
+  export type EventosCarpetaScalarWhereWithAggregatesInput = {
+    AND?:
+      | EventosCarpetaScalarWhereWithAggregatesInput
+      | EventosCarpetaScalarWhereWithAggregatesInput[];
+    OR?: EventosCarpetaScalarWhereWithAggregatesInput[];
+    NOT?:
+      | EventosCarpetaScalarWhereWithAggregatesInput
+      | EventosCarpetaScalarWhereWithAggregatesInput[];
+    id?: StringWithAggregatesFilter<'EventosCarpeta'> | string;
+    nombre?: StringWithAggregatesFilter<'EventosCarpeta'> | string;
+    color?: StringWithAggregatesFilter<'EventosCarpeta'> | string;
+    created_at?: DateTimeWithAggregatesFilter<'EventosCarpeta'> | Date | string;
+    updated_at?: DateTimeWithAggregatesFilter<'EventosCarpeta'> | Date | string;
+  };
+
   export type EventoWhereInput = {
     AND?: EventoWhereInput | EventoWhereInput[];
     OR?: EventoWhereInput[];
@@ -11964,11 +13346,16 @@ export namespace Prisma {
     nombre?: StringFilter<'Evento'> | string;
     fecha?: DateTimeFilter<'Evento'> | Date | string;
     ubicacion?: StringFilter<'Evento'> | string;
+    carpetaId?: StringNullableFilter<'Evento'> | string | null;
     etiquetaAsistioId?: StringFilter<'Evento'> | string;
     etiquetaConfirmoId?: StringFilter<'Evento'> | string;
     eventoPadreId?: StringNullableFilter<'Evento'> | string | null;
     created_at?: DateTimeFilter<'Evento'> | Date | string;
     updated_at?: DateTimeFilter<'Evento'> | Date | string;
+    carpeta?: XOR<
+      EventosCarpetaNullableRelationFilter,
+      EventosCarpetaWhereInput
+    > | null;
     etiquetaAsistio?: XOR<EtiquetaRelationFilter, EtiquetaWhereInput>;
     etiquetaConfirmo?: XOR<EtiquetaRelationFilter, EtiquetaWhereInput>;
     eventoPadre?: XOR<EventoNullableRelationFilter, EventoWhereInput> | null;
@@ -11980,11 +13367,13 @@ export namespace Prisma {
     nombre?: SortOrder;
     fecha?: SortOrder;
     ubicacion?: SortOrder;
+    carpetaId?: SortOrderInput | SortOrder;
     etiquetaAsistioId?: SortOrder;
     etiquetaConfirmoId?: SortOrder;
     eventoPadreId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
+    carpeta?: EventosCarpetaOrderByWithRelationInput;
     etiquetaAsistio?: EtiquetaOrderByWithRelationInput;
     etiquetaConfirmo?: EtiquetaOrderByWithRelationInput;
     eventoPadre?: EventoOrderByWithRelationInput;
@@ -12000,11 +13389,16 @@ export namespace Prisma {
       nombre?: StringFilter<'Evento'> | string;
       fecha?: DateTimeFilter<'Evento'> | Date | string;
       ubicacion?: StringFilter<'Evento'> | string;
+      carpetaId?: StringNullableFilter<'Evento'> | string | null;
       etiquetaAsistioId?: StringFilter<'Evento'> | string;
       etiquetaConfirmoId?: StringFilter<'Evento'> | string;
       eventoPadreId?: StringNullableFilter<'Evento'> | string | null;
       created_at?: DateTimeFilter<'Evento'> | Date | string;
       updated_at?: DateTimeFilter<'Evento'> | Date | string;
+      carpeta?: XOR<
+        EventosCarpetaNullableRelationFilter,
+        EventosCarpetaWhereInput
+      > | null;
       etiquetaAsistio?: XOR<EtiquetaRelationFilter, EtiquetaWhereInput>;
       etiquetaConfirmo?: XOR<EtiquetaRelationFilter, EtiquetaWhereInput>;
       eventoPadre?: XOR<EventoNullableRelationFilter, EventoWhereInput> | null;
@@ -12018,6 +13412,7 @@ export namespace Prisma {
     nombre?: SortOrder;
     fecha?: SortOrder;
     ubicacion?: SortOrder;
+    carpetaId?: SortOrderInput | SortOrder;
     etiquetaAsistioId?: SortOrder;
     etiquetaConfirmoId?: SortOrder;
     eventoPadreId?: SortOrderInput | SortOrder;
@@ -12040,6 +13435,7 @@ export namespace Prisma {
     nombre?: StringWithAggregatesFilter<'Evento'> | string;
     fecha?: DateTimeWithAggregatesFilter<'Evento'> | Date | string;
     ubicacion?: StringWithAggregatesFilter<'Evento'> | string;
+    carpetaId?: StringNullableWithAggregatesFilter<'Evento'> | string | null;
     etiquetaAsistioId?: StringWithAggregatesFilter<'Evento'> | string;
     etiquetaConfirmoId?: StringWithAggregatesFilter<'Evento'> | string;
     eventoPadreId?:
@@ -12292,6 +13688,7 @@ export namespace Prisma {
     id?: string;
     idLegible: number;
     telefono: string;
+    telefonoSecundario?: string | null;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
@@ -12314,6 +13711,7 @@ export namespace Prisma {
     id?: string;
     idLegible: number;
     telefono: string;
+    telefonoSecundario?: string | null;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
@@ -12336,6 +13734,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
+    telefonoSecundario?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
     genero?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -12366,6 +13768,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
+    telefonoSecundario?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
     genero?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -12396,6 +13802,7 @@ export namespace Prisma {
     id?: string;
     idLegible: number;
     telefono: string;
+    telefonoSecundario?: string | null;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
@@ -12415,6 +13822,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
+    telefonoSecundario?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
     genero?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -12442,6 +13853,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
+    telefonoSecundario?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
     genero?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -12675,6 +14090,66 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
+  export type EventosCarpetaCreateInput = {
+    id?: string;
+    nombre: string;
+    color: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    eventos?: EventoCreateNestedManyWithoutCarpetaInput;
+  };
+
+  export type EventosCarpetaUncheckedCreateInput = {
+    id?: string;
+    nombre: string;
+    color: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    eventos?: EventoUncheckedCreateNestedManyWithoutCarpetaInput;
+  };
+
+  export type EventosCarpetaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombre?: StringFieldUpdateOperationsInput | string;
+    color?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    eventos?: EventoUpdateManyWithoutCarpetaNestedInput;
+  };
+
+  export type EventosCarpetaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombre?: StringFieldUpdateOperationsInput | string;
+    color?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    eventos?: EventoUncheckedUpdateManyWithoutCarpetaNestedInput;
+  };
+
+  export type EventosCarpetaCreateManyInput = {
+    id?: string;
+    nombre: string;
+    color: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type EventosCarpetaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombre?: StringFieldUpdateOperationsInput | string;
+    color?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type EventosCarpetaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombre?: StringFieldUpdateOperationsInput | string;
+    color?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
   export type EventoCreateInput = {
     id?: string;
     nombre: string;
@@ -12682,6 +14157,7 @@ export namespace Prisma {
     ubicacion: string;
     created_at?: Date | string;
     updated_at?: Date | string;
+    carpeta?: EventosCarpetaCreateNestedOneWithoutEventosInput;
     etiquetaAsistio: EtiquetaCreateNestedOneWithoutEventosAsistidosInput;
     etiquetaConfirmo: EtiquetaCreateNestedOneWithoutEventosConfirmadosInput;
     eventoPadre?: EventoCreateNestedOneWithoutSubEventosInput;
@@ -12693,6 +14169,7 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    carpetaId?: string | null;
     etiquetaAsistioId: string;
     etiquetaConfirmoId: string;
     eventoPadreId?: string | null;
@@ -12708,6 +14185,7 @@ export namespace Prisma {
     ubicacion?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    carpeta?: EventosCarpetaUpdateOneWithoutEventosNestedInput;
     etiquetaAsistio?: EtiquetaUpdateOneRequiredWithoutEventosAsistidosNestedInput;
     etiquetaConfirmo?: EtiquetaUpdateOneRequiredWithoutEventosConfirmadosNestedInput;
     eventoPadre?: EventoUpdateOneWithoutSubEventosNestedInput;
@@ -12719,6 +14197,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    carpetaId?: NullableStringFieldUpdateOperationsInput | string | null;
     etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
     etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -12732,6 +14211,7 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    carpetaId?: string | null;
     etiquetaAsistioId: string;
     etiquetaConfirmoId: string;
     eventoPadreId?: string | null;
@@ -12753,6 +14233,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    carpetaId?: NullableStringFieldUpdateOperationsInput | string | null;
     etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
     etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -13103,6 +14584,7 @@ export namespace Prisma {
     id?: SortOrder;
     idLegible?: SortOrder;
     telefono?: SortOrder;
+    telefonoSecundario?: SortOrder;
     nombreCompleto?: SortOrder;
     nombrePila?: SortOrder;
     genero?: SortOrder;
@@ -13126,6 +14608,7 @@ export namespace Prisma {
     id?: SortOrder;
     idLegible?: SortOrder;
     telefono?: SortOrder;
+    telefonoSecundario?: SortOrder;
     nombreCompleto?: SortOrder;
     nombrePila?: SortOrder;
     genero?: SortOrder;
@@ -13144,6 +14627,7 @@ export namespace Prisma {
     id?: SortOrder;
     idLegible?: SortOrder;
     telefono?: SortOrder;
+    telefonoSecundario?: SortOrder;
     nombreCompleto?: SortOrder;
     nombrePila?: SortOrder;
     genero?: SortOrder;
@@ -13370,6 +14854,35 @@ export namespace Prisma {
     updated_at?: SortOrder;
   };
 
+  export type EventosCarpetaCountOrderByAggregateInput = {
+    id?: SortOrder;
+    nombre?: SortOrder;
+    color?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type EventosCarpetaMaxOrderByAggregateInput = {
+    id?: SortOrder;
+    nombre?: SortOrder;
+    color?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type EventosCarpetaMinOrderByAggregateInput = {
+    id?: SortOrder;
+    nombre?: SortOrder;
+    color?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type EventosCarpetaNullableRelationFilter = {
+    is?: EventosCarpetaWhereInput | null;
+    isNot?: EventosCarpetaWhereInput | null;
+  };
+
   export type EtiquetaRelationFilter = {
     is?: EtiquetaWhereInput;
     isNot?: EtiquetaWhereInput;
@@ -13385,6 +14898,7 @@ export namespace Prisma {
     nombre?: SortOrder;
     fecha?: SortOrder;
     ubicacion?: SortOrder;
+    carpetaId?: SortOrder;
     etiquetaAsistioId?: SortOrder;
     etiquetaConfirmoId?: SortOrder;
     eventoPadreId?: SortOrder;
@@ -13397,6 +14911,7 @@ export namespace Prisma {
     nombre?: SortOrder;
     fecha?: SortOrder;
     ubicacion?: SortOrder;
+    carpetaId?: SortOrder;
     etiquetaAsistioId?: SortOrder;
     etiquetaConfirmoId?: SortOrder;
     eventoPadreId?: SortOrder;
@@ -13409,6 +14924,7 @@ export namespace Prisma {
     nombre?: SortOrder;
     fecha?: SortOrder;
     ubicacion?: SortOrder;
+    carpetaId?: SortOrder;
     etiquetaAsistioId?: SortOrder;
     etiquetaConfirmoId?: SortOrder;
     eventoPadreId?: SortOrder;
@@ -14772,6 +16288,101 @@ export namespace Prisma {
     deleteMany?: EtiquetaScalarWhereInput | EtiquetaScalarWhereInput[];
   };
 
+  export type EventoCreateNestedManyWithoutCarpetaInput = {
+    create?:
+      | XOR<
+          EventoCreateWithoutCarpetaInput,
+          EventoUncheckedCreateWithoutCarpetaInput
+        >
+      | EventoCreateWithoutCarpetaInput[]
+      | EventoUncheckedCreateWithoutCarpetaInput[];
+    connectOrCreate?:
+      | EventoCreateOrConnectWithoutCarpetaInput
+      | EventoCreateOrConnectWithoutCarpetaInput[];
+    createMany?: EventoCreateManyCarpetaInputEnvelope;
+    connect?: EventoWhereUniqueInput | EventoWhereUniqueInput[];
+  };
+
+  export type EventoUncheckedCreateNestedManyWithoutCarpetaInput = {
+    create?:
+      | XOR<
+          EventoCreateWithoutCarpetaInput,
+          EventoUncheckedCreateWithoutCarpetaInput
+        >
+      | EventoCreateWithoutCarpetaInput[]
+      | EventoUncheckedCreateWithoutCarpetaInput[];
+    connectOrCreate?:
+      | EventoCreateOrConnectWithoutCarpetaInput
+      | EventoCreateOrConnectWithoutCarpetaInput[];
+    createMany?: EventoCreateManyCarpetaInputEnvelope;
+    connect?: EventoWhereUniqueInput | EventoWhereUniqueInput[];
+  };
+
+  export type EventoUpdateManyWithoutCarpetaNestedInput = {
+    create?:
+      | XOR<
+          EventoCreateWithoutCarpetaInput,
+          EventoUncheckedCreateWithoutCarpetaInput
+        >
+      | EventoCreateWithoutCarpetaInput[]
+      | EventoUncheckedCreateWithoutCarpetaInput[];
+    connectOrCreate?:
+      | EventoCreateOrConnectWithoutCarpetaInput
+      | EventoCreateOrConnectWithoutCarpetaInput[];
+    upsert?:
+      | EventoUpsertWithWhereUniqueWithoutCarpetaInput
+      | EventoUpsertWithWhereUniqueWithoutCarpetaInput[];
+    createMany?: EventoCreateManyCarpetaInputEnvelope;
+    set?: EventoWhereUniqueInput | EventoWhereUniqueInput[];
+    disconnect?: EventoWhereUniqueInput | EventoWhereUniqueInput[];
+    delete?: EventoWhereUniqueInput | EventoWhereUniqueInput[];
+    connect?: EventoWhereUniqueInput | EventoWhereUniqueInput[];
+    update?:
+      | EventoUpdateWithWhereUniqueWithoutCarpetaInput
+      | EventoUpdateWithWhereUniqueWithoutCarpetaInput[];
+    updateMany?:
+      | EventoUpdateManyWithWhereWithoutCarpetaInput
+      | EventoUpdateManyWithWhereWithoutCarpetaInput[];
+    deleteMany?: EventoScalarWhereInput | EventoScalarWhereInput[];
+  };
+
+  export type EventoUncheckedUpdateManyWithoutCarpetaNestedInput = {
+    create?:
+      | XOR<
+          EventoCreateWithoutCarpetaInput,
+          EventoUncheckedCreateWithoutCarpetaInput
+        >
+      | EventoCreateWithoutCarpetaInput[]
+      | EventoUncheckedCreateWithoutCarpetaInput[];
+    connectOrCreate?:
+      | EventoCreateOrConnectWithoutCarpetaInput
+      | EventoCreateOrConnectWithoutCarpetaInput[];
+    upsert?:
+      | EventoUpsertWithWhereUniqueWithoutCarpetaInput
+      | EventoUpsertWithWhereUniqueWithoutCarpetaInput[];
+    createMany?: EventoCreateManyCarpetaInputEnvelope;
+    set?: EventoWhereUniqueInput | EventoWhereUniqueInput[];
+    disconnect?: EventoWhereUniqueInput | EventoWhereUniqueInput[];
+    delete?: EventoWhereUniqueInput | EventoWhereUniqueInput[];
+    connect?: EventoWhereUniqueInput | EventoWhereUniqueInput[];
+    update?:
+      | EventoUpdateWithWhereUniqueWithoutCarpetaInput
+      | EventoUpdateWithWhereUniqueWithoutCarpetaInput[];
+    updateMany?:
+      | EventoUpdateManyWithWhereWithoutCarpetaInput
+      | EventoUpdateManyWithWhereWithoutCarpetaInput[];
+    deleteMany?: EventoScalarWhereInput | EventoScalarWhereInput[];
+  };
+
+  export type EventosCarpetaCreateNestedOneWithoutEventosInput = {
+    create?: XOR<
+      EventosCarpetaCreateWithoutEventosInput,
+      EventosCarpetaUncheckedCreateWithoutEventosInput
+    >;
+    connectOrCreate?: EventosCarpetaCreateOrConnectWithoutEventosInput;
+    connect?: EventosCarpetaWhereUniqueInput;
+  };
+
   export type EtiquetaCreateNestedOneWithoutEventosAsistidosInput = {
     create?: XOR<
       EtiquetaCreateWithoutEventosAsistidosInput,
@@ -14827,6 +16438,25 @@ export namespace Prisma {
       | EventoCreateOrConnectWithoutEventoPadreInput[];
     createMany?: EventoCreateManyEventoPadreInputEnvelope;
     connect?: EventoWhereUniqueInput | EventoWhereUniqueInput[];
+  };
+
+  export type EventosCarpetaUpdateOneWithoutEventosNestedInput = {
+    create?: XOR<
+      EventosCarpetaCreateWithoutEventosInput,
+      EventosCarpetaUncheckedCreateWithoutEventosInput
+    >;
+    connectOrCreate?: EventosCarpetaCreateOrConnectWithoutEventosInput;
+    upsert?: EventosCarpetaUpsertWithoutEventosInput;
+    disconnect?: EventosCarpetaWhereInput | boolean;
+    delete?: EventosCarpetaWhereInput | boolean;
+    connect?: EventosCarpetaWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        EventosCarpetaUpdateToOneWithWhereWithoutEventosInput,
+        EventosCarpetaUpdateWithoutEventosInput
+      >,
+      EventosCarpetaUncheckedUpdateWithoutEventosInput
+    >;
   };
 
   export type EtiquetaUpdateOneRequiredWithoutEventosAsistidosNestedInput = {
@@ -15766,6 +17396,7 @@ export namespace Prisma {
     id?: string;
     idLegible: number;
     telefono: string;
+    telefonoSecundario?: string | null;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
@@ -15787,6 +17418,7 @@ export namespace Prisma {
     id?: string;
     idLegible: number;
     telefono: string;
+    telefonoSecundario?: string | null;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
@@ -15882,6 +17514,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
+    telefonoSecundario?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
     genero?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -15911,6 +17547,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
+    telefonoSecundario?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
     genero?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -15969,6 +17609,7 @@ export namespace Prisma {
     ubicacion: string;
     created_at?: Date | string;
     updated_at?: Date | string;
+    carpeta?: EventosCarpetaCreateNestedOneWithoutEventosInput;
     etiquetaConfirmo: EtiquetaCreateNestedOneWithoutEventosConfirmadosInput;
     eventoPadre?: EventoCreateNestedOneWithoutSubEventosInput;
     subEventos?: EventoCreateNestedManyWithoutEventoPadreInput;
@@ -15979,6 +17620,7 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    carpetaId?: string | null;
     etiquetaConfirmoId: string;
     eventoPadreId?: string | null;
     created_at?: Date | string;
@@ -16008,6 +17650,7 @@ export namespace Prisma {
     ubicacion: string;
     created_at?: Date | string;
     updated_at?: Date | string;
+    carpeta?: EventosCarpetaCreateNestedOneWithoutEventosInput;
     etiquetaAsistio: EtiquetaCreateNestedOneWithoutEventosAsistidosInput;
     eventoPadre?: EventoCreateNestedOneWithoutSubEventosInput;
     subEventos?: EventoCreateNestedManyWithoutEventoPadreInput;
@@ -16018,6 +17661,7 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    carpetaId?: string | null;
     etiquetaAsistioId: string;
     eventoPadreId?: string | null;
     created_at?: Date | string;
@@ -16078,6 +17722,7 @@ export namespace Prisma {
     id?: string;
     idLegible: number;
     telefono: string;
+    telefonoSecundario?: string | null;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
@@ -16099,6 +17744,7 @@ export namespace Prisma {
     id?: string;
     idLegible: number;
     telefono: string;
+    telefonoSecundario?: string | null;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
@@ -16232,6 +17878,7 @@ export namespace Prisma {
     nombre?: StringFilter<'Evento'> | string;
     fecha?: DateTimeFilter<'Evento'> | Date | string;
     ubicacion?: StringFilter<'Evento'> | string;
+    carpetaId?: StringNullableFilter<'Evento'> | string | null;
     etiquetaAsistioId?: StringFilter<'Evento'> | string;
     etiquetaConfirmoId?: StringFilter<'Evento'> | string;
     eventoPadreId?: StringNullableFilter<'Evento'> | string | null;
@@ -16344,6 +17991,7 @@ export namespace Prisma {
     id?: StringFilter<'Perfil'> | string;
     idLegible?: IntFilter<'Perfil'> | number;
     telefono?: StringFilter<'Perfil'> | string;
+    telefonoSecundario?: StringNullableFilter<'Perfil'> | string | null;
     nombreCompleto?: StringFilter<'Perfil'> | string;
     nombrePila?: StringNullableFilter<'Perfil'> | string | null;
     genero?: StringNullableFilter<'Perfil'> | string | null;
@@ -16454,6 +18102,97 @@ export namespace Prisma {
     >;
   };
 
+  export type EventoCreateWithoutCarpetaInput = {
+    id?: string;
+    nombre: string;
+    fecha: Date | string;
+    ubicacion: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    etiquetaAsistio: EtiquetaCreateNestedOneWithoutEventosAsistidosInput;
+    etiquetaConfirmo: EtiquetaCreateNestedOneWithoutEventosConfirmadosInput;
+    eventoPadre?: EventoCreateNestedOneWithoutSubEventosInput;
+    subEventos?: EventoCreateNestedManyWithoutEventoPadreInput;
+  };
+
+  export type EventoUncheckedCreateWithoutCarpetaInput = {
+    id?: string;
+    nombre: string;
+    fecha: Date | string;
+    ubicacion: string;
+    etiquetaAsistioId: string;
+    etiquetaConfirmoId: string;
+    eventoPadreId?: string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    subEventos?: EventoUncheckedCreateNestedManyWithoutEventoPadreInput;
+  };
+
+  export type EventoCreateOrConnectWithoutCarpetaInput = {
+    where: EventoWhereUniqueInput;
+    create: XOR<
+      EventoCreateWithoutCarpetaInput,
+      EventoUncheckedCreateWithoutCarpetaInput
+    >;
+  };
+
+  export type EventoCreateManyCarpetaInputEnvelope = {
+    data: EventoCreateManyCarpetaInput | EventoCreateManyCarpetaInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type EventoUpsertWithWhereUniqueWithoutCarpetaInput = {
+    where: EventoWhereUniqueInput;
+    update: XOR<
+      EventoUpdateWithoutCarpetaInput,
+      EventoUncheckedUpdateWithoutCarpetaInput
+    >;
+    create: XOR<
+      EventoCreateWithoutCarpetaInput,
+      EventoUncheckedCreateWithoutCarpetaInput
+    >;
+  };
+
+  export type EventoUpdateWithWhereUniqueWithoutCarpetaInput = {
+    where: EventoWhereUniqueInput;
+    data: XOR<
+      EventoUpdateWithoutCarpetaInput,
+      EventoUncheckedUpdateWithoutCarpetaInput
+    >;
+  };
+
+  export type EventoUpdateManyWithWhereWithoutCarpetaInput = {
+    where: EventoScalarWhereInput;
+    data: XOR<
+      EventoUpdateManyMutationInput,
+      EventoUncheckedUpdateManyWithoutCarpetaInput
+    >;
+  };
+
+  export type EventosCarpetaCreateWithoutEventosInput = {
+    id?: string;
+    nombre: string;
+    color: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type EventosCarpetaUncheckedCreateWithoutEventosInput = {
+    id?: string;
+    nombre: string;
+    color: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type EventosCarpetaCreateOrConnectWithoutEventosInput = {
+    where: EventosCarpetaWhereUniqueInput;
+    create: XOR<
+      EventosCarpetaCreateWithoutEventosInput,
+      EventosCarpetaUncheckedCreateWithoutEventosInput
+    >;
+  };
+
   export type EtiquetaCreateWithoutEventosAsistidosInput = {
     id?: string;
     nombre: string;
@@ -16529,6 +18268,7 @@ export namespace Prisma {
     ubicacion: string;
     created_at?: Date | string;
     updated_at?: Date | string;
+    carpeta?: EventosCarpetaCreateNestedOneWithoutEventosInput;
     etiquetaAsistio: EtiquetaCreateNestedOneWithoutEventosAsistidosInput;
     etiquetaConfirmo: EtiquetaCreateNestedOneWithoutEventosConfirmadosInput;
     eventoPadre?: EventoCreateNestedOneWithoutSubEventosInput;
@@ -16539,6 +18279,7 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    carpetaId?: string | null;
     etiquetaAsistioId: string;
     etiquetaConfirmoId: string;
     eventoPadreId?: string | null;
@@ -16561,6 +18302,7 @@ export namespace Prisma {
     ubicacion: string;
     created_at?: Date | string;
     updated_at?: Date | string;
+    carpeta?: EventosCarpetaCreateNestedOneWithoutEventosInput;
     etiquetaAsistio: EtiquetaCreateNestedOneWithoutEventosAsistidosInput;
     etiquetaConfirmo: EtiquetaCreateNestedOneWithoutEventosConfirmadosInput;
     subEventos?: EventoCreateNestedManyWithoutEventoPadreInput;
@@ -16571,6 +18313,7 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    carpetaId?: string | null;
     etiquetaAsistioId: string;
     etiquetaConfirmoId: string;
     created_at?: Date | string;
@@ -16589,6 +18332,42 @@ export namespace Prisma {
   export type EventoCreateManyEventoPadreInputEnvelope = {
     data: EventoCreateManyEventoPadreInput | EventoCreateManyEventoPadreInput[];
     skipDuplicates?: boolean;
+  };
+
+  export type EventosCarpetaUpsertWithoutEventosInput = {
+    update: XOR<
+      EventosCarpetaUpdateWithoutEventosInput,
+      EventosCarpetaUncheckedUpdateWithoutEventosInput
+    >;
+    create: XOR<
+      EventosCarpetaCreateWithoutEventosInput,
+      EventosCarpetaUncheckedCreateWithoutEventosInput
+    >;
+    where?: EventosCarpetaWhereInput;
+  };
+
+  export type EventosCarpetaUpdateToOneWithWhereWithoutEventosInput = {
+    where?: EventosCarpetaWhereInput;
+    data: XOR<
+      EventosCarpetaUpdateWithoutEventosInput,
+      EventosCarpetaUncheckedUpdateWithoutEventosInput
+    >;
+  };
+
+  export type EventosCarpetaUpdateWithoutEventosInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombre?: StringFieldUpdateOperationsInput | string;
+    color?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type EventosCarpetaUncheckedUpdateWithoutEventosInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombre?: StringFieldUpdateOperationsInput | string;
+    color?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type EtiquetaUpsertWithoutEventosAsistidosInput = {
@@ -16710,6 +18489,7 @@ export namespace Prisma {
     ubicacion?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    carpeta?: EventosCarpetaUpdateOneWithoutEventosNestedInput;
     etiquetaAsistio?: EtiquetaUpdateOneRequiredWithoutEventosAsistidosNestedInput;
     etiquetaConfirmo?: EtiquetaUpdateOneRequiredWithoutEventosConfirmadosNestedInput;
     eventoPadre?: EventoUpdateOneWithoutSubEventosNestedInput;
@@ -16720,6 +18500,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    carpetaId?: NullableStringFieldUpdateOperationsInput | string | null;
     etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
     etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -16759,6 +18540,7 @@ export namespace Prisma {
     id?: string;
     idLegible: number;
     telefono: string;
+    telefonoSecundario?: string | null;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
@@ -16780,6 +18562,7 @@ export namespace Prisma {
     id?: string;
     idLegible: number;
     telefono: string;
+    telefonoSecundario?: string | null;
     nombreCompleto: string;
     nombrePila?: string | null;
     genero?: string | null;
@@ -16829,6 +18612,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
+    telefonoSecundario?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
     genero?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -16858,6 +18645,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
+    telefonoSecundario?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
     genero?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -17113,6 +18904,7 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    carpetaId?: string | null;
     etiquetaConfirmoId: string;
     eventoPadreId?: string | null;
     created_at?: Date | string;
@@ -17124,6 +18916,7 @@ export namespace Prisma {
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    carpetaId?: string | null;
     etiquetaAsistioId: string;
     eventoPadreId?: string | null;
     created_at?: Date | string;
@@ -17137,6 +18930,7 @@ export namespace Prisma {
     ubicacion?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    carpeta?: EventosCarpetaUpdateOneWithoutEventosNestedInput;
     etiquetaConfirmo?: EtiquetaUpdateOneRequiredWithoutEventosConfirmadosNestedInput;
     eventoPadre?: EventoUpdateOneWithoutSubEventosNestedInput;
     subEventos?: EventoUpdateManyWithoutEventoPadreNestedInput;
@@ -17147,6 +18941,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    carpetaId?: NullableStringFieldUpdateOperationsInput | string | null;
     etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -17159,6 +18954,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    carpetaId?: NullableStringFieldUpdateOperationsInput | string | null;
     etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -17172,6 +18968,7 @@ export namespace Prisma {
     ubicacion?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    carpeta?: EventosCarpetaUpdateOneWithoutEventosNestedInput;
     etiquetaAsistio?: EtiquetaUpdateOneRequiredWithoutEventosAsistidosNestedInput;
     eventoPadre?: EventoUpdateOneWithoutSubEventosNestedInput;
     subEventos?: EventoUpdateManyWithoutEventoPadreNestedInput;
@@ -17182,6 +18979,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    carpetaId?: NullableStringFieldUpdateOperationsInput | string | null;
     etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -17194,6 +18992,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    carpetaId?: NullableStringFieldUpdateOperationsInput | string | null;
     etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
     eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -17241,6 +19040,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
+    telefonoSecundario?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
     genero?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -17270,6 +19073,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
+    telefonoSecundario?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
     genero?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -17299,6 +19106,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     idLegible?: IntFieldUpdateOperationsInput | number;
     telefono?: StringFieldUpdateOperationsInput | string;
+    telefonoSecundario?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
     nombreCompleto?: StringFieldUpdateOperationsInput | string;
     nombrePila?: NullableStringFieldUpdateOperationsInput | string | null;
     genero?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -17401,11 +19212,62 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
+  export type EventoCreateManyCarpetaInput = {
+    id?: string;
+    nombre: string;
+    fecha: Date | string;
+    ubicacion: string;
+    etiquetaAsistioId: string;
+    etiquetaConfirmoId: string;
+    eventoPadreId?: string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type EventoUpdateWithoutCarpetaInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombre?: StringFieldUpdateOperationsInput | string;
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
+    ubicacion?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    etiquetaAsistio?: EtiquetaUpdateOneRequiredWithoutEventosAsistidosNestedInput;
+    etiquetaConfirmo?: EtiquetaUpdateOneRequiredWithoutEventosConfirmadosNestedInput;
+    eventoPadre?: EventoUpdateOneWithoutSubEventosNestedInput;
+    subEventos?: EventoUpdateManyWithoutEventoPadreNestedInput;
+  };
+
+  export type EventoUncheckedUpdateWithoutCarpetaInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombre?: StringFieldUpdateOperationsInput | string;
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
+    ubicacion?: StringFieldUpdateOperationsInput | string;
+    etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
+    etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
+    eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    subEventos?: EventoUncheckedUpdateManyWithoutEventoPadreNestedInput;
+  };
+
+  export type EventoUncheckedUpdateManyWithoutCarpetaInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    nombre?: StringFieldUpdateOperationsInput | string;
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
+    ubicacion?: StringFieldUpdateOperationsInput | string;
+    etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
+    etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
+    eventoPadreId?: NullableStringFieldUpdateOperationsInput | string | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
   export type EventoCreateManyEventoPadreInput = {
     id?: string;
     nombre: string;
     fecha: Date | string;
     ubicacion: string;
+    carpetaId?: string | null;
     etiquetaAsistioId: string;
     etiquetaConfirmoId: string;
     created_at?: Date | string;
@@ -17419,6 +19281,7 @@ export namespace Prisma {
     ubicacion?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    carpeta?: EventosCarpetaUpdateOneWithoutEventosNestedInput;
     etiquetaAsistio?: EtiquetaUpdateOneRequiredWithoutEventosAsistidosNestedInput;
     etiquetaConfirmo?: EtiquetaUpdateOneRequiredWithoutEventosConfirmadosNestedInput;
     subEventos?: EventoUpdateManyWithoutEventoPadreNestedInput;
@@ -17429,6 +19292,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    carpetaId?: NullableStringFieldUpdateOperationsInput | string | null;
     etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
     etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -17441,6 +19305,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string;
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string;
     ubicacion?: StringFieldUpdateOperationsInput | string;
+    carpetaId?: NullableStringFieldUpdateOperationsInput | string | null;
     etiquetaAsistioId?: StringFieldUpdateOperationsInput | string;
     etiquetaConfirmoId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -17474,6 +19339,12 @@ export namespace Prisma {
   export type EtiquetaGrupoCountOutputTypeArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = EtiquetaGrupoCountOutputTypeDefaultArgs<ExtArgs>;
+  /**
+   * @deprecated Use EventosCarpetaCountOutputTypeDefaultArgs instead
+   */
+  export type EventosCarpetaCountOutputTypeArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = EventosCarpetaCountOutputTypeDefaultArgs<ExtArgs>;
   /**
    * @deprecated Use EventoCountOutputTypeDefaultArgs instead
    */
@@ -17510,6 +19381,12 @@ export namespace Prisma {
   export type EtiquetaGrupoArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = EtiquetaGrupoDefaultArgs<ExtArgs>;
+  /**
+   * @deprecated Use EventosCarpetaDefaultArgs instead
+   */
+  export type EventosCarpetaArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = EventosCarpetaDefaultArgs<ExtArgs>;
   /**
    * @deprecated Use EventoDefaultArgs instead
    */
