@@ -6,15 +6,17 @@ import {
 import { Etiqueta, TipoEtiqueta, type Cuenta } from '~/types/prisma-schema';
 import { hash } from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { RegisterDto } from 'src/auth/dto/register.dto';
-import { CreateCuentaResponseDto } from '@/cuenta/dto/createCuenta.dto';
+import {
+  CreateCuentaDto,
+  CreateCuentaResponseDto,
+} from '@/cuenta/dto/createCuenta.dto';
 import { GetFiltroBaseResponseDto } from '@/cuenta/dto/getFiltroBase.dto';
 
 @Injectable()
 export class CuentaService {
   constructor(private prisma: PrismaService) {}
 
-  async create(dto: RegisterDto): Promise<CreateCuentaResponseDto> {
+  async create(dto: CreateCuentaDto): Promise<CreateCuentaResponseDto> {
     const user = await this.prisma.cuenta.findUnique({
       where: {
         nombreUsuario: dto.username,

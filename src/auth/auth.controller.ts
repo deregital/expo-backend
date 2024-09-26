@@ -1,11 +1,10 @@
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
-import { RegisterDto, RegisterResponseDto } from 'src/auth/dto/register.dto';
 import { CuentaService } from 'src/cuenta/cuenta.service';
 import { LoginDto } from 'src/auth/dto/login.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { RefreshJwtGuard } from 'src/auth/guards/refresh.guard';
 import { Request as ExpReq } from 'express';
-import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse } from '@nestjs/swagger';
 import { LoginResponseDto } from 'src/auth/dto/login.dto';
 
 @Controller('auth')
@@ -14,15 +13,6 @@ export class AuthController {
     private readonly cuentaService: CuentaService,
     private authService: AuthService,
   ) {}
-
-  @Post('register')
-  @ApiCreatedResponse({
-    description: 'Cuenta creada',
-    type: RegisterResponseDto,
-  })
-  async registerUser(@Body() body: RegisterDto) {
-    return await this.cuentaService.create(body);
-  }
 
   @ApiOkResponse({
     description: 'Cuenta creada',

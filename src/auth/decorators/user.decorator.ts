@@ -14,10 +14,8 @@ export type CuentaSinContrasena = Omit<Cuenta, 'contrasena'>;
 export const User = createParamDecorator(
   async (data: unknown, context: ExecutionContext) => {
     const request = context.switchToHttp().getRequest();
-    const jwtService = new JwtService({ secret: process.env.JWT_SECRET }); // Configura JwtService con tus opciones
-    // TODO: ESTO ES HORRBILE, PERO NO SE ME OCURRE OTRA FORMA DE HACERLO
-    // Quiza en retrospectiva, en lugar de hacer un BaseGuard y meter la logica ahi, podria haberlo hecho por composicion o con Strategy
-    // era strategy me parece
+    const jwtService = new JwtService({ secret: process.env.JWT_SECRET });
+
     const prismaService = new PrismaService();
     const userService = new CuentaService(prismaService);
 
