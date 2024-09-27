@@ -63,5 +63,24 @@
         "invalid": "El color debe tener el formato hexadecimal (#ABCDEF)"
       }
     }
+  },
+  "route": {
+    "cuenta": {
+      "create": {
+        "success": "Cuenta creada con éxito",
+        "conflict": "Cuenta ya existente"
+      },
+      "filtro-base-patch": {
+        "success": "Filtro base actualizado",
+        "conflict": "Etiquetas Inválidas"
+      },
+      "filtro-base-get": {
+        "success": "Filtro base obtenido",
+        "not-found": "Cuenta no encontrada"
+      },
+      "me": {
+        "success": "Cuenta obtenida"
+      }
+    }
   }
 }

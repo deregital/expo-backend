@@ -13,6 +13,7 @@ import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { CuentaSinContrasena, User } from '@/auth/decorators/user.decorator';
 import { GetFiltroBaseResponseDto } from '@/cuenta/dto/getFiltroBase.dto';
 import { GetMeResponseDto } from '@/cuenta/dto/getMe.dto';
+import { translate } from '@/i18n/translate';
 
 @Controller('cuenta')
 @UseGuards(JwtGuard)
@@ -21,7 +22,7 @@ export class CuentaController {
 
   @Post('/create')
   @ApiCreatedResponse({
-    description: 'Cuenta creada',
+    description: translate('route.cuenta.create.success'),
     type: CreateCuentaResponseDto,
   })
   async createCuenta(@Body() body: CreateCuentaDto) {
@@ -30,7 +31,7 @@ export class CuentaController {
 
   @Patch('/filtro-base')
   @ApiOkResponse({
-    description: 'Filtro base actualizado',
+    description: translate('route.cuenta.filtro-base-patch.success'),
     type: UpdateFiltroBaseResponseDto,
   })
   async updateFiltroBase(
@@ -42,7 +43,7 @@ export class CuentaController {
 
   @Get('/filtro-base')
   @ApiOkResponse({
-    description: 'Filtro base obtenido',
+    description: translate('route.cuenta.filtro-base-get.success'),
     type: GetFiltroBaseResponseDto,
   })
   async getFiltroBase(@User() user: CuentaSinContrasena) {
@@ -51,7 +52,7 @@ export class CuentaController {
 
   @Get('/me')
   @ApiOkResponse({
-    description: 'Cuenta obtenida',
+    description: translate('route.cuenta.me.success'),
     type: GetMeResponseDto,
   })
   async getMe(@User() user: CuentaSinContrasena) {

@@ -36,7 +36,7 @@ paths:
               $ref: "#/components/schemas/CreateCuentaDto"
       responses:
         201:
-          description: "Cuenta creada"
+          description: "Cuenta creada con éxito"
           content:
             application/json:
               schema:

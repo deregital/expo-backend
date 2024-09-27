@@ -11,6 +11,7 @@ import {
   CreateCuentaResponseDto,
 } from '@/cuenta/dto/createCuenta.dto';
 import { GetFiltroBaseResponseDto } from '@/cuenta/dto/getFiltroBase.dto';
+import { translate } from '@/i18n/translate';
 
 @Injectable()
 export class CuentaService {
@@ -24,7 +25,7 @@ export class CuentaService {
     });
 
     if (user) {
-      throw new ConflictException('Usuario ya existente');
+      throw new ConflictException(translate('route.cuenta.create.conflict'));
     }
 
     const newUser = await this.prisma.cuenta.create({
@@ -102,7 +103,9 @@ export class CuentaService {
         },
       });
     } catch (e) {
-      throw new ConflictException('Etiquetas inválidas');
+      throw new ConflictException(
+        translate('route.cuenta.filtro-base-patch.conflict'),
+      );
     }
   }
 
@@ -131,7 +134,9 @@ export class CuentaService {
     });
 
     if (!cuenta) {
-      throw new NotFoundException('Cuenta no encontrada');
+      throw new NotFoundException(
+        translate('route.cuenta.filtro-base-get.not-found'),
+      );
     }
 
     return {
