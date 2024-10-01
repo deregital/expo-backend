@@ -8,7 +8,8 @@
   "files": [
     "dist/types",
     "dist/src/**/*.dto.{js,d.ts,ts}",
-    "dist/src/**/exports.{js,d.ts,ts}"
+    "dist/src/**/exports.{js,d.ts,ts}",
+    "dist/src/i18n"
   ],
   "scripts": {
     "ci": "npm install && npx prisma generate && npm run generate-ts-schema && npm run build && npx prisma generate && npm run format && npm run lint && npm run check-exports",
