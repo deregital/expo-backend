@@ -4,22 +4,6 @@
  */
 
 export interface paths {
-  '/auth/register': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    post: operations['AuthController_registerUser'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
   '/auth/login': {
     parameters: {
       query?: never;
@@ -52,7 +36,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/cuenta/create': {
+  '/account/create': {
     parameters: {
       query?: never;
       header?: never;
@@ -61,37 +45,37 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    post: operations['CuentaController_createCuenta'];
+    post: operations['AccountController_createCuenta'];
     delete?: never;
     options?: never;
     head?: never;
     patch?: never;
     trace?: never;
   };
-  '/cuenta/filtro-base': {
+  '/account/global-filter': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get: operations['CuentaController_getFiltroBase'];
+    get: operations['AccountController_getFiltroBase'];
     put?: never;
     post?: never;
     delete?: never;
     options?: never;
     head?: never;
-    patch: operations['CuentaController_updateFiltroBase'];
+    patch: operations['AccountController_updateFiltroBase'];
     trace?: never;
   };
-  '/cuenta/me': {
+  '/account/me': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get: operations['CuentaController_getMe'];
+    get: operations['AccountController_getMe'];
     put?: never;
     post?: never;
     delete?: never;
@@ -104,17 +88,6 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
-    RegisterDto: {
-      username: string;
-      password: string;
-      /** @default false */
-      isAdmin: boolean;
-    };
-    RegisterResponseDto: {
-      username: string;
-      /** @default false */
-      isAdmin: boolean;
-    };
     LoginDto: {
       username: string;
       password: string;
@@ -124,18 +97,18 @@ export interface components {
         /** Format: uuid */
         id?: string;
         username?: string;
-        /** @default false */
-        isAdmin: boolean;
+        /** @enum {string} */
+        role?: 'USER' | 'ADMIN';
         /** Format: date-time */
         created_at?: string;
         /** Format: date-time */
         updated_at?: string;
-        filtroBase?: {
-          etiquetas: {
+        globalFilter?: {
+          tags: {
             /** Format: uuid */
             id: string;
             name: string;
-            grupo: {
+            group: {
               /** Format: uuid */
               id: string;
               color: string;
@@ -145,7 +118,7 @@ export interface components {
           active: boolean;
         };
         /** @default false */
-        filtroBaseActivo: boolean;
+        isGlobalFilterActive: boolean;
         /** @default [] */
         fcmToken: string[];
       };
@@ -154,28 +127,29 @@ export interface components {
         refreshToken?: string;
       };
     };
-    CreateCuentaDto: {
+    CreateAccountDto: {
       username: string;
       password: string;
-      /** @default false */
-      isAdmin: boolean;
+      /** @enum {string} */
+      role: 'USER' | 'ADMIN';
     };
     CreateCuentaResponseDto: {
       /** Format: uuid */
       id: string;
       username: string;
+      /** @enum {string} */
+      role: 'USER' | 'ADMIN';
       /** @default false */
-      isAdmin: boolean;
-      /** @default false */
-      filtroBaseActivo: boolean;
+      isGlobalFilterActive: boolean;
       /** @default [] */
       fcmToken: string[];
     };
-    UpdateFiltroBaseDto: {
+    UpdateGlobalFilterDto: {
+      /** @default false */
       active: boolean;
-      etiquetasIds: string[];
+      tagsIds: string[];
     };
-    UpdateFiltroBaseResponseDto: {
+    UpdateGlobalFilterResponseDto: {
       id: string;
       nombreUsuario: string;
       esAdmin: boolean;
@@ -190,7 +164,7 @@ export interface components {
           /** Format: uuid */
           groupId: string;
           /** @enum {string} */
-          type: 'PERSONAL' | 'EVENTO' | 'MODELO' | 'TENTATIVA';
+          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -198,15 +172,15 @@ export interface components {
         }[];
       };
     };
-    GetFiltroBaseResponseDto: {
+    GetGlobalFilterResponseDto: {
       active: boolean;
-      filtroBase: {
+      globalFilter: {
         /** Format: uuid */
         id: string;
         name: string;
         /** @enum {string} */
-        type: 'PERSONAL' | 'EVENTO' | 'MODELO' | 'TENTATIVA';
-        grupo: {
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        group: {
           /** Format: uuid */
           id: string;
           color: string;
@@ -218,18 +192,18 @@ export interface components {
       /** Format: uuid */
       id: string;
       username: string;
-      /** @default false */
-      isAdmin: boolean;
+      /** @enum {string} */
+      role: 'USER' | 'ADMIN';
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
       updated_at: string;
-      filtroBase: {
-        etiquetas?: {
+      globalFilter: {
+        tags?: {
           /** Format: uuid */
           id: string;
           name: string;
-          grupo: {
+          group: {
             /** Format: uuid */
             id: string;
             color: string;
@@ -239,7 +213,7 @@ export interface components {
         active?: boolean;
       };
       /** @default false */
-      filtroBaseActivo: boolean;
+      isGlobalFilterActive: boolean;
       /** @default [] */
       fcmToken: string[];
     };
@@ -252,30 +226,6 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  AuthController_registerUser: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['RegisterDto'];
-      };
-    };
-    responses: {
-      /** @description Cuenta creada */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['RegisterResponseDto'];
-        };
-      };
-    };
-  };
   AuthController_loginUser: {
     parameters: {
       query?: never;
@@ -317,7 +267,7 @@ export interface operations {
       };
     };
   };
-  CuentaController_createCuenta: {
+  AccountController_createCuenta: {
     parameters: {
       query?: never;
       header?: never;
@@ -326,11 +276,11 @@ export interface operations {
     };
     requestBody: {
       content: {
-        'application/json': components['schemas']['CreateCuentaDto'];
+        'application/json': components['schemas']['CreateAccountDto'];
       };
     };
     responses: {
-      /** @description Cuenta creada */
+      /** @description Cuenta creada con éxito */
       201: {
         headers: {
           [name: string]: unknown;
@@ -341,7 +291,7 @@ export interface operations {
       };
     };
   };
-  CuentaController_getFiltroBase: {
+  AccountController_getFiltroBase: {
     parameters: {
       query?: never;
       header?: never;
@@ -356,12 +306,12 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['GetFiltroBaseResponseDto'];
+          'application/json': components['schemas']['GetGlobalFilterResponseDto'];
         };
       };
     };
   };
-  CuentaController_updateFiltroBase: {
+  AccountController_updateFiltroBase: {
     parameters: {
       query?: never;
       header?: never;
@@ -370,7 +320,7 @@ export interface operations {
     };
     requestBody: {
       content: {
-        'application/json': components['schemas']['UpdateFiltroBaseDto'];
+        'application/json': components['schemas']['UpdateGlobalFilterDto'];
       };
     };
     responses: {
@@ -380,12 +330,12 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['UpdateFiltroBaseResponseDto'];
+          'application/json': components['schemas']['UpdateGlobalFilterResponseDto'];
         };
       };
     };
   };
-  CuentaController_getMe: {
+  AccountController_getMe: {
     parameters: {
       query?: never;
       header?: never;

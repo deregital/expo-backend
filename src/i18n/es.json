@@ -1,6 +1,6 @@
 {
   "model": {
-    "comentario": {
+    "comment": {
       "id": {
         "uuid": "El ID debe ser un UUID"
       },
@@ -8,7 +8,7 @@
         "min": "El contenido debe tener al menos 1 caracter"
       }
     },
-    "cuenta": {
+    "account": {
       "id": {
         "required": "El ID es requerido",
         "uuid": "El ID debe ser un UUID"
@@ -23,9 +23,12 @@
       "password": {
         "required": "La contraseña es requerida",
         "min": "La contraseña debe tener al menos 6 caracteres"
+      },
+      "role": {
+        "invalid": "El rol es inválido"
       }
     },
-    "etiqueta": {
+    "tag": {
       "id": {
         "uuid": "El ID debe ser un UUID"
       },
@@ -37,7 +40,7 @@
         "invalid": "El tipo de etiqueta es inválido"
       }
     },
-    "evento": {
+    "event": {
       "id": {
         "uuid": "El ID debe ser un UUID"
       },
@@ -49,10 +52,10 @@
         "invalid": "La fecha debe ser una fecha válida"
       },
       "location": {
-        "required": "La localización es requerida"
+        "required": "La ubicación es requerida"
       }
     },
-    "grupoEtiqueta": {
+    "tagGroup": {
       "id": {
         "uuid": "El ID debe ser un UUID"
       },
@@ -62,19 +65,27 @@
       "color": {
         "invalid": "El color debe tener el formato hexadecimal (#ABCDEF)"
       }
+    },
+    "eventFolder": {
+      "id": {
+        "uuid": "El ID debe ser un UUID"
+      },
+      "color": {
+        "invalid": "El color debe tener el formato hexadecimal (#ABCDEF)"
+      }
     }
   },
   "route": {
-    "cuenta": {
+    "account": {
       "create": {
         "success": "Cuenta creada con éxito",
         "conflict": "Cuenta ya existente"
       },
-      "filtro-base-patch": {
+      "global-filter-patch": {
         "success": "Filtro base actualizado",
         "conflict": "Etiquetas Inválidas"
       },
-      "filtro-base-get": {
+      "global-filter-get": {
         "success": "Filtro base obtenido",
         "not-found": "Cuenta no encontrada"
       },

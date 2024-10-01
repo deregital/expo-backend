@@ -1,11 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from 'src/auth/dto/login.dto';
-import { CuentaService } from 'src/cuenta/cuenta.service';
+import { AccountService } from '@/account/account.service';
 import { JwtService } from '@nestjs/jwt';
-import { type Cuenta } from '~/types/prisma-schema';
+import { type Account } from '~/types/prisma-schema';
+import { compare } from 'bcrypt';
 
 type LoginPayload = {
-  user: Omit<Cuenta, 'password'>;
+  user: Omit<Account, 'password'>;
   backendTokens: {
     accessToken: string;
     refreshToken: string;
@@ -15,7 +16,7 @@ type LoginPayload = {
 @Injectable()
 export class AuthService {
   constructor(
-    private cuentaService: CuentaService,
+    private cuentaService: AccountService,
     private jwtService: JwtService,
   ) {}
 
@@ -23,10 +24,11 @@ export class AuthService {
     const user = await this.validateUser(dto);
 
     const payload = {
-      username: user.nombreUsuario,
+      username: user.username,
       id: user.id,
+      role: user.role,
       sub: {
-        usernname: user.nombreUsuario,
+        usernname: user.username,
       },
     };
 
@@ -45,13 +47,13 @@ export class AuthService {
     };
   }
 
-  private async validateUser(dto: LoginDto): Promise<Cuenta> {
+  private async validateUser(dto: LoginDto): Promise<Account> {
     const user = await this.cuentaService.findByUsername(dto.username);
 
     if (
       user &&
-      // (await compare(dto.password, user.contrasena)) TODO: CUANDO LO TENGAMOS CON HASH
-      dto.password === user.contrasena
+      (await compare(dto.password, user.password)) //TODO: CUANDO LO TENGAMOS CON HASH
+      // dto.password === user.password
     ) {
       return user;
     }
@@ -65,6 +67,8 @@ export class AuthService {
   }> {
     const payload = {
       username: pay.username,
+      id: pay.id,
+      role: pay.role,
       sub: pay.sub,
     };
 

@@ -6,13 +6,13 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { CuentaService } from 'src/cuenta/cuenta.service';
+import { AccountService } from '@/account/account.service';
 
 @Injectable()
 export class JwtGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly cuentaService: CuentaService,
+    private readonly cuentaService: AccountService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {

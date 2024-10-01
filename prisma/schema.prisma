@@ -14,177 +14,209 @@ datasource db {
   relationMode = "foreignKeys"
 }
 
-model Cuenta {
-  id            String  @id @default(uuid())
-  nombreUsuario String  @unique @map("nombre_usuario")
-  contrasena    String
-  esAdmin       Boolean @default(false) @map("es_admin")
+model Account {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+  role     Role   @default(USER)
 
-  comentarios Comentario[]
-  etiquetas   Etiqueta[]   @relation("CUENTA_X_ETIQUETA")
+  comments         Comment[] @relation("ACCOUNT_X_COMMENT")
+  solvableComments Comment[] @relation("ACCOUNT_X_SOLVED_COMMENT")
+  tags             Tag[]     @relation("ACCOUNT_X_TAG")
 
-  created_at       DateTime   @default(now())
-  updated_at       DateTime   @updatedAt
-  filtroBase       Etiqueta[] @relation("FILTRO_BASE_X_ETIQUETA")
-  filtroBaseActivo Boolean    @default(false) @map("filtro_base_activo")
-
-  fcmToken String[] @map("fcm_token")
-
-  @@map("CUENTA")
-}
-
-model Perfil {
-  id        String @id @default(uuid())
-  idLegible Int    @map("id_legible")
-
-  telefono            String    @unique
-  telefonoSecundario  String?   @unique
-  nombreCompleto      String    @map("nombre_completo")
-  nombrePila          String?   @map("nombre_pila")
-  genero              String?
-  fechaNacimiento     DateTime? @map("fecha_nacimiento")
-  fotoUrl             String?   @map("foto_url")
-  instagram           String?
-  mail                String?
-  dni                 String?
-  nombresAlternativos String[]  @map("nombres_alternativos")
-
-  comentarios   Comentario[]
-  mensajes      Mensaje[]    @relation("PERFIL_X_MENSAJE")
-  etiquetas     Etiqueta[]   @relation("PERFIL_X_ETIQUETA")
-  esPapelera    Boolean      @default(false)
-  fechaPapelera DateTime?    @map("fecha_papelera")
+  globalFilter         Tag[]    @relation("GLOBAL_FILTER_X_ACCOUNT")
+  isGlobalFilterActive Boolean  @default(false) @map("is_global_filter_active")
+  fcmToken             String[] @map("fcm_token")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@map("PERFIL")
+  @@map("ACCOUNT")
 }
 
-model Comentario {
-  id        String @id @default(uuid())
-  contenido String
+enum Role {
+  USER
+  ADMIN
+}
 
-  creadoPor String @map("creado_por")
-  cuenta    Cuenta @relation(fields: [creadoPor], references: [id])
-  perfilId  String @map("perfil_id")
-  perfil    Perfil @relation(fields: [perfilId], references: [id], onDelete: Cascade)
+model Profile {
+  id      String @id @default(uuid())
+  shortId Int    @map("short_id")
+
+  phoneNumber          String    @unique @map("phone_number")
+  secondaryPhoneNumber String?   @unique @map("secondary_phone_number")
+  fullName             String    @map("full_name")
+  fistName             String?   @map("first_name")
+  gender               String?
+  birthDate            DateTime? @map("birth_date")
+  profilePictureUrl    String?   @map("profile_picture_url")
+  instagram            String?
+  mail                 String?
+  dni                  String?
+  alternativeNames     String[]  @map("alternative_names")
+
+  comments Comment[] @relation("PROFILE_X_COMMENT")
+  messages Message[] @relation("PROFILE_X_MESSAGE")
+  tags     Tag[]     @relation("PROFILE_X_TAG")
+
+  isInTrash        Boolean   @default(false) @map("is_in_trash")
+  movedToTrashDate DateTime? @map("moved_to_trash_date")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@map("COMENTARIO")
+  @@map("PROFILE")
 }
 
-model Etiqueta {
-  id      String        @id @default(uuid())
-  nombre  String
-  grupoId String        @map("grupo_id")
-  tipo    TipoEtiqueta  @default(PERSONAL)
-  grupo   EtiquetaGrupo @relation(fields: [grupoId], references: [id], onDelete: Cascade)
+model Comment {
+  id      String @id @default(uuid())
+  content String
 
-  eventosAsistidos   Evento[] @relation("EVENTOASISTIDO_X_ETIQUETA")
-  eventosConfirmados Evento[] @relation("EVENTOCONFIRMADO_X_ETIQUETA")
-  cuentas            Cuenta[] @relation("CUENTA_X_ETIQUETA")
-  perfiles           Perfil[] @relation("PERFIL_X_ETIQUETA")
-  cuentasFiltroBase  Cuenta[] @relation("FILTRO_BASE_X_ETIQUETA")
+  createdBy String  @map("created_by")
+  account   Account @relation("ACCOUNT_X_COMMENT", fields: [createdBy], references: [id])
+
+  profileId String  @map("perfil_id")
+  profile   Profile @relation("PROFILE_X_COMMENT", fields: [profileId], references: [id], onDelete: Cascade)
+
+  isSolvable Boolean   @default(false) @map("is_solvable")
+  isSolved   Boolean   @default(false) @map("is_solved")
+  solvedAt   DateTime? @map("solved_at")
+
+  solvedById String?  @map("solved_by")
+  solvedBy   Account? @relation("ACCOUNT_X_SOLVED_COMMENT", fields: [solvedById], references: [id])
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@map("ETIQUETA")
+  @@map("COMMENT")
 }
 
-model EtiquetaGrupo {
-  id          String     @id @default(uuid())
-  nombre      String
+model Tag {
+  id   String  @id @default(uuid())
+  name String
+  type TagType @default(PROFILE)
+
+  groupId String   @map("group_id")
+  group   TagGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  assistedEvent  Event? @relation("EVENT_X_TAG_ASISTED")
+  confirmedEvent Event? @relation("EVENT_X_TAG_CONFIRMED")
+
+  accounts             Account[] @relation("ACCOUNT_X_TAG")
+  profiles             Profile[] @relation("PROFILE_X_TAG")
+  accountsGlobalFilter Account[] @relation("GLOBAL_FILTER_X_ACCOUNT")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("TAG")
+}
+
+model TagGroup {
+  id          String  @id @default(uuid())
+  name        String
   color       String
-  esExclusivo Boolean    @map("es_exclusivo")
-  etiquetas   Etiqueta[]
+  isExclusive Boolean @map("is_exclusive")
+  tags        Tag[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@map("GRUPO_ETIQUETA")
+  @@map("TAG_GROUP")
 }
 
-model EventosCarpeta {
-  id      String   @id @default(uuid())
-  nombre  String
-  color   String
-  eventos Evento[] @relation("CarpetaEventos_Eventos")
+model Event {
+  id       String   @id @default(uuid())
+  name     String
+  date     DateTime
+  location String
+
+  folderId String?      @map("folder_id")
+  folder   EventFolder? @relation("EVENT_FOLDER_X_EVENT", fields: [folderId], references: [id], onDelete: Cascade)
+
+  tagAssistedId String @unique @map("tag_assisted")
+  tagAssisted   Tag    @relation("EVENT_X_TAG_ASISTED", fields: [tagAssistedId], references: [id])
+
+  tagConfirmedId String @unique @map("tag_confirmed")
+  tagConfirmed   Tag    @relation("EVENT_X_TAG_CONFIRMED", fields: [tagConfirmedId], references: [id])
+
+  supraEventId String? @map("supra_event_id")
+  supraEvent   Event?  @relation("SubEvents", fields: [supraEventId], references: [id], onDelete: Cascade)
+
+  subEvents Event[] @relation("SubEvents")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@map("EVENTOS_CARPETA")
+  @@map("EVENT")
 }
 
-model Evento {
-  id        String          @id @default(uuid())
-  nombre    String
-  fecha     DateTime
-  ubicacion String
-  carpetaId String?         @map("carpeta_id")
-  carpeta   EventosCarpeta? @relation("CarpetaEventos_Eventos", fields: [carpetaId], references: [id], onDelete: Cascade)
-
-  etiquetaAsistioId  String   @map("etiqueta_asistio")
-  etiquetaAsistio    Etiqueta @relation("EVENTOASISTIDO_X_ETIQUETA", fields: [etiquetaAsistioId], references: [id], onDelete: Cascade)
-  etiquetaConfirmoId String   @map("etiqueta_confirmo")
-  etiquetaConfirmo   Etiqueta @relation("EVENTOCONFIRMADO_X_ETIQUETA", fields: [etiquetaConfirmoId], references: [id], onDelete: Cascade)
-  eventoPadreId      String?  @map("evento_padre")
-  eventoPadre        Evento?  @relation("SubEventos", fields: [eventoPadreId], references: [id], onDelete: Cascade)
-  subEventos         Evento[] @relation("SubEventos")
+model EventFolder {
+  id     String  @id @default(uuid())
+  name   String
+  color  String
+  events Event[] @relation("EVENT_FOLDER_X_EVENT")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@map("EVENTO")
+  @@map("EVENT_FOLDER")
 }
 
-model Mensaje {
-  id             String        @id @default(uuid())
-  wamId          String        @unique @map("wam_id")
-  message        Json
-  perfilTelefono String        @map("perfil_telefono")
-  perfil         Perfil        @relation("PERFIL_X_MENSAJE", fields: [perfilTelefono], references: [telefono], onDelete: Cascade)
-  status         MensajeStatus @default(ENVIADO)
-  statusAt       DateTime?     @map("status_at")
-  visto          Boolean       @default(false)
+model Message {
+  id      String @id @default(uuid())
+  wamId   String @unique @map("wam_id")
+  message Json
+
+  profilePhoneNumber String  @map("profile_phone_number")
+  profile            Profile @relation("PROFILE_X_MESSAGE", fields: [profilePhoneNumber], references: [phoneNumber], onDelete: Cascade)
+
+  state MessageState @default(SENT)
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@map("MENSAJE")
+  @@map("MESSAGE")
+}
+
+model CannedResponse {
+  id      String @id @default(uuid())
+  name    String
+  content String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("CANNED_RESPONSE")
 }
 
 model Enums {
-  id                 String             @id
-  EstadoPlantilla    EstadoPlantilla
-  CategoriaPlantilla CategoriaPlantilla
+  id               String           @id
+  templateStatus   TemplateStatus
+  templateCategory TemplateCategory
 }
 
-enum EstadoPlantilla {
+enum TemplateStatus {
   APRROVED
   PENDING
   REJECTED
 }
 
-enum CategoriaPlantilla {
+enum TemplateCategory {
   MARKETING
   UTILITY
   AUTHENTICATION
 }
 
-enum TipoEtiqueta {
-  PERSONAL
-  EVENTO
-  MODELO
-  TENTATIVA
+enum TagType {
+  PROFILE
+  EVENT
+  PARTICIPANT
+  NOT_IN_SYSTEM
 }
 
-enum MensajeStatus {
-  ENVIADO
-  RECIBIDO
-  LEIDO
+enum MessageState {
+  SENT
+  RECEIVED
+  SEEN
 }

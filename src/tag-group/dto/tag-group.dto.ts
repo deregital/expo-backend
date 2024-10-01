@@ -2,18 +2,18 @@ import { translate } from '@/i18n/translate';
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
 
-export const grupoEtiquetaSchema = z.object({
+export const tagGroupSchema = z.object({
   id: z.string().uuid({
-    message: translate('model.grupoEtiqueta.id.uuid'),
+    message: translate('model.tagGroup.id.uuid'),
   }),
   name: z.string().min(1, {
-    message: translate('model.grupoEtiqueta.name.required'),
+    message: translate('model.tagGroup.name.required'),
   }),
   color: z
     .string()
     .length(7)
     .startsWith('#', {
-      message: translate('model.grupoEtiqueta.color.invalid'),
+      message: translate('model.tagGroup.color.invalid'),
     })
     .toLowerCase(),
   isExclusive: z.boolean(),
@@ -21,4 +21,4 @@ export const grupoEtiquetaSchema = z.object({
   updated_at: z.string().datetime(),
 });
 
-export class GrupoEtiquetaDto extends createZodDto(grupoEtiquetaSchema) {}
+export class TagGroupDto extends createZodDto(tagGroupSchema) {}

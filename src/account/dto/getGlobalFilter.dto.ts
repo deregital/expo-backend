@@ -1,11 +1,12 @@
-import { etiquetaSchema, grupoEtiquetaSchema } from '@/exports';
+import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
+import { tagSchema } from '@/tag/dto/tag.dto';
 import { createZodDto } from '@anatine/zod-nestjs';
 import z from 'zod';
 
-export const getFiltroBaseResponse = z.object({
+export const getGlobalFilterResponse = z.object({
   active: z.boolean(),
-  filtroBase: z.array(
-    etiquetaSchema
+  globalFilter: z.array(
+    tagSchema
       .pick({
         id: true,
         name: true,
@@ -13,7 +14,7 @@ export const getFiltroBaseResponse = z.object({
       })
       .merge(
         z.object({
-          grupo: grupoEtiquetaSchema.pick({
+          group: tagGroupSchema.pick({
             id: true,
             color: true,
             isExclusive: true,
@@ -23,6 +24,6 @@ export const getFiltroBaseResponse = z.object({
   ),
 });
 
-export class GetFiltroBaseResponseDto extends createZodDto(
-  getFiltroBaseResponse,
+export class GetGlobalFilterResponseDto extends createZodDto(
+  getGlobalFilterResponse,
 ) {}

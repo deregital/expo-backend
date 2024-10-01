@@ -5,11 +5,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { CuentaService } from 'src/cuenta/cuenta.service';
+import { AccountService } from '@/account/account.service';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Cuenta } from '~/types/prisma-schema';
+import { Account } from '~/types/prisma-schema';
 
-export type CuentaSinContrasena = Omit<Cuenta, 'contrasena'>;
+export type AccountWithoutPassword = Omit<Account, 'password'>;
 
 export const User = createParamDecorator(
   async (data: unknown, context: ExecutionContext) => {
@@ -17,7 +17,7 @@ export const User = createParamDecorator(
     const jwtService = new JwtService({ secret: process.env.JWT_SECRET });
 
     const prismaService = new PrismaService();
-    const userService = new CuentaService(prismaService);
+    const userService = new AccountService(prismaService);
 
     try {
       const token = request.headers.authorization?.split(' ')[1];
@@ -35,7 +35,7 @@ export const User = createParamDecorator(
         throw new NotFoundException('User not found');
       }
 
-      const { contrasena, ...userWithoutPassword } = user;
+      const { password, ...userWithoutPassword } = user;
 
       return userWithoutPassword;
     } catch (error) {

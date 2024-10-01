@@ -24,16 +24,16 @@ paths:
       responses:
         201:
           description: ""
-  /cuenta/create:
+  /account/create:
     post:
-      operationId: "CuentaController_createCuenta"
+      operationId: "AccountController_createCuenta"
       parameters: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateCuentaDto"
+              $ref: "#/components/schemas/CreateAccountDto"
       responses:
         201:
           description: "Cuenta creada con éxito"
@@ -41,25 +41,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CreateCuentaResponseDto"
-  /cuenta/filtro-base:
+  /account/global-filter:
     patch:
-      operationId: "CuentaController_updateFiltroBase"
+      operationId: "AccountController_updateFiltroBase"
       parameters: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateFiltroBaseDto"
+              $ref: "#/components/schemas/UpdateGlobalFilterDto"
       responses:
         200:
           description: "Filtro base actualizado"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UpdateFiltroBaseResponseDto"
+                $ref: "#/components/schemas/UpdateGlobalFilterResponseDto"
     get:
-      operationId: "CuentaController_getFiltroBase"
+      operationId: "AccountController_getFiltroBase"
       parameters: []
       responses:
         200:
@@ -67,10 +67,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetFiltroBaseResponseDto"
-  /cuenta/me:
+                $ref: "#/components/schemas/GetGlobalFilterResponseDto"
+  /account/me:
     get:
-      operationId: "CuentaController_getMe"
+      operationId: "AccountController_getMe"
       parameters: []
       responses:
         200:
@@ -112,19 +112,21 @@ components:
               format: "uuid"
             username:
               type: "string"
-            isAdmin:
-              default: false
-              type: "boolean"
+            role:
+              type: "string"
+              enum:
+                - "USER"
+                - "ADMIN"
             created_at:
               type: "string"
               format: "date-time"
             updated_at:
               type: "string"
               format: "date-time"
-            filtroBase:
+            globalFilter:
               type: "object"
               properties:
-                etiquetas:
+                tags:
                   type: "object"
                   properties:
                     id:
@@ -133,7 +135,7 @@ components:
                     name:
                       type: "string"
                       minLength: 1
-                    grupo:
+                    group:
                       type: "object"
                       properties:
                         id:
@@ -152,13 +154,13 @@ components:
                   required:
                     - "id"
                     - "name"
-                    - "grupo"
+                    - "group"
                 active:
                   type: "boolean"
               required:
-                - "etiquetas"
+                - "tags"
                 - "active"
-            filtroBaseActivo:
+            isGlobalFilterActive:
               default: false
               type: "boolean"
             fcmToken:
@@ -166,12 +168,6 @@ components:
               type: "array"
               items:
                 type: "string"
-          required:
-            - "id"
-            - "username"
-            - "created_at"
-            - "updated_at"
-            - "filtroBase"
         backendTokens:
           type: "object"
           properties:
@@ -179,13 +175,10 @@ components:
               type: "string"
             refreshToken:
               type: "string"
-          required:
-            - "accessToken"
-            - "refreshToken"
       required:
         - "user"
         - "backendTokens"
-    CreateCuentaDto:
+    CreateAccountDto:
       type: "object"
       properties:
         username:
@@ -193,12 +186,15 @@ components:
         password:
           type: "string"
           minLength: 6
-        isAdmin:
-          default: false
-          type: "boolean"
+        role:
+          type: "string"
+          enum:
+            - "USER"
+            - "ADMIN"
       required:
         - "username"
         - "password"
+        - "role"
     CreateCuentaResponseDto:
       type: "object"
       properties:
@@ -207,10 +203,12 @@ components:
           format: "uuid"
         username:
           type: "string"
-        isAdmin:
-          default: false
-          type: "boolean"
-        filtroBaseActivo:
+        role:
+          type: "string"
+          enum:
+            - "USER"
+            - "ADMIN"
+        isGlobalFilterActive:
           default: false
           type: "boolean"
         fcmToken:
@@ -221,20 +219,24 @@ components:
       required:
         - "id"
         - "username"
-    UpdateFiltroBaseDto:
+        - "role"
+        - "isGlobalFilterActive"
+        - "fcmToken"
+    UpdateGlobalFilterDto:
       type: "object"
       properties:
         active:
+          default: false
           type: "boolean"
-        etiquetasIds:
+        tagsIds:
           type: "array"
           items:
             type: "string"
             format: "uuid"
       required:
         - "active"
-        - "etiquetasIds"
-    UpdateFiltroBaseResponseDto:
+        - "tagsIds"
+    UpdateGlobalFilterResponseDto:
       type: "object"
       properties:
         id:
@@ -244,7 +246,8 @@ components:
         esAdmin:
           type: "boolean"
         fcmToken:
-          type: "null"
+          type: "string"
+          nullable: true
         filtroBaseActivo:
           type: "boolean"
         filtroBase:
@@ -269,10 +272,10 @@ components:
                   type:
                     type: "string"
                     enum:
-                      - "PERSONAL"
-                      - "EVENTO"
-                      - "MODELO"
-                      - "TENTATIVA"
+                      - "PROFILE"
+                      - "EVENT"
+                      - "PARTICIPANT"
+                      - "NOT_IN_SYSTEM"
                   created_at:
                     type: "string"
                     format: "date-time"
@@ -286,9 +289,6 @@ components:
                   - "type"
                   - "created_at"
                   - "updated_at"
-          required:
-            - "active"
-            - "etiquetas"
       required:
         - "id"
         - "nombreUsuario"
@@ -296,12 +296,12 @@ components:
         - "fcmToken"
         - "filtroBaseActivo"
         - "filtroBase"
-    GetFiltroBaseResponseDto:
+    GetGlobalFilterResponseDto:
       type: "object"
       properties:
         active:
           type: "boolean"
-        filtroBase:
+        globalFilter:
           type: "array"
           items:
             type: "object"
@@ -315,11 +315,11 @@ components:
               type:
                 type: "string"
                 enum:
-                  - "PERSONAL"
-                  - "EVENTO"
-                  - "MODELO"
-                  - "TENTATIVA"
-              grupo:
+                  - "PROFILE"
+                  - "EVENT"
+                  - "PARTICIPANT"
+                  - "NOT_IN_SYSTEM"
+              group:
                 type: "object"
                 properties:
                   id:
@@ -339,10 +339,10 @@ components:
               - "id"
               - "name"
               - "type"
-              - "grupo"
+              - "group"
       required:
         - "active"
-        - "filtroBase"
+        - "globalFilter"
     GetMeResponseDto:
       type: "object"
       properties:
@@ -351,19 +351,21 @@ components:
           format: "uuid"
         username:
           type: "string"
-        isAdmin:
-          default: false
-          type: "boolean"
+        role:
+          type: "string"
+          enum:
+            - "USER"
+            - "ADMIN"
         created_at:
           type: "string"
           format: "date-time"
         updated_at:
           type: "string"
           format: "date-time"
-        filtroBase:
+        globalFilter:
           type: "object"
           properties:
-            etiquetas:
+            tags:
               type: "object"
               properties:
                 id:
@@ -372,7 +374,7 @@ components:
                 name:
                   type: "string"
                   minLength: 1
-                grupo:
+                group:
                   type: "object"
                   properties:
                     id:
@@ -391,13 +393,10 @@ components:
               required:
                 - "id"
                 - "name"
-                - "grupo"
+                - "group"
             active:
               type: "boolean"
-          required:
-            - "etiquetas"
-            - "active"
-        filtroBaseActivo:
+        isGlobalFilterActive:
           default: false
           type: "boolean"
         fcmToken:
@@ -408,6 +407,9 @@ components:
       required:
         - "id"
         - "username"
+        - "role"
         - "created_at"
         - "updated_at"
-        - "filtroBase"
+        - "globalFilter"
+        - "isGlobalFilterActive"
+        - "fcmToken"

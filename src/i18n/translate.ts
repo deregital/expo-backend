@@ -13,8 +13,6 @@ export const i18n = new I18n(translations, {
   missingTranslationPrefix: 'TRANSLATION MISSING: ',
 });
 
-type A = (typeof translations)['es'];
-
 type Translations = Paths<(typeof translations)['es']>;
 
 export function translate<Keys extends Translations>(

@@ -1,7 +1,7 @@
-import { cuentaSchema } from '../dto/cuenta.dto';
+import { accountSchema } from './account.dto';
 import { createZodDto } from '@anatine/zod-nestjs';
 
-export const getMeResponseSchema = cuentaSchema.omit({
+export const getMeResponseSchema = accountSchema.omit({
   password: true,
 });
 
