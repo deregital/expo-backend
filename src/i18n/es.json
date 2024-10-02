@@ -25,6 +25,7 @@
         "min": "La contraseña debe tener al menos 6 caracteres"
       },
       "role": {
+        "required": "El rol es requerido",
         "invalid": "El rol es inválido"
       }
     },

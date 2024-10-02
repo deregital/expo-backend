@@ -40,7 +40,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreateCuentaResponseDto"
+                $ref: "#/components/schemas/CreateAccountResponseDto"
   /account/global-filter:
     patch:
       operationId: "AccountController_updateFiltroBase"
@@ -168,6 +168,13 @@ components:
               type: "array"
               items:
                 type: "string"
+          required:
+            - "id"
+            - "username"
+            - "role"
+            - "created_at"
+            - "updated_at"
+            - "globalFilter"
         backendTokens:
           type: "object"
           properties:
@@ -175,6 +182,9 @@ components:
               type: "string"
             refreshToken:
               type: "string"
+          required:
+            - "accessToken"
+            - "refreshToken"
       required:
         - "user"
         - "backendTokens"
@@ -195,7 +205,7 @@ components:
         - "username"
         - "password"
         - "role"
-    CreateCuentaResponseDto:
+    CreateAccountResponseDto:
       type: "object"
       properties:
         id:
@@ -220,8 +230,6 @@ components:
         - "id"
         - "username"
         - "role"
-        - "isGlobalFilterActive"
-        - "fcmToken"
     UpdateGlobalFilterDto:
       type: "object"
       properties:
@@ -234,7 +242,6 @@ components:
             type: "string"
             format: "uuid"
       required:
-        - "active"
         - "tagsIds"
     UpdateGlobalFilterResponseDto:
       type: "object"
@@ -246,8 +253,7 @@ components:
         esAdmin:
           type: "boolean"
         fcmToken:
-          type: "string"
-          nullable: true
+          type: "null"
         filtroBaseActivo:
           type: "boolean"
         filtroBase:
@@ -289,6 +295,9 @@ components:
                   - "type"
                   - "created_at"
                   - "updated_at"
+          required:
+            - "active"
+            - "etiquetas"
       required:
         - "id"
         - "nombreUsuario"
@@ -396,6 +405,9 @@ components:
                 - "group"
             active:
               type: "boolean"
+          required:
+            - "tags"
+            - "active"
         isGlobalFilterActive:
           default: false
           type: "boolean"
@@ -411,5 +423,3 @@ components:
         - "created_at"
         - "updated_at"
         - "globalFilter"
-        - "isGlobalFilterActive"
-        - "fcmToken"

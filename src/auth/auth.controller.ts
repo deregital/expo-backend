@@ -1,5 +1,4 @@
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
-import { AccountService } from '@/account/account.service';
 import { LoginDto } from 'src/auth/dto/login.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { RefreshJwtGuard } from 'src/auth/guards/refresh.guard';
@@ -12,10 +11,7 @@ import { RoleGuard } from '@/auth/guards/role.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly cuentaService: AccountService,
-    private authService: AuthService,
-  ) {}
+  constructor(private authService: AuthService) {}
 
   @Roles(Role.ADMIN, Role.USER)
   @UseGuards(RoleGuard)

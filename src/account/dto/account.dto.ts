@@ -22,6 +22,7 @@ export const accountSchema = z.object({
     })
     .min(6, translate('model.account.password.min')),
   role: z.nativeEnum(Role, {
+    required_error: translate('model.account.role.required'),
     message: translate('model.account.role.invalid'),
   }),
   created_at: z.string().datetime(),

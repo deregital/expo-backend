@@ -7,7 +7,7 @@ import { hash } from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import {
   CreateAccountDto,
-  CreateCuentaResponseDto,
+  CreateAccountResponseDto,
 } from '@/account/dto/createAccount.dto';
 import { GetGlobalFilterResponseDto } from '@/account/dto/getGlobalFilter.dto';
 import { translate } from '@/i18n/translate';
@@ -17,7 +17,7 @@ import { Account, Tag } from '~/types/prisma-schema';
 export class AccountService {
   constructor(private prisma: PrismaService) {}
 
-  async create(dto: CreateAccountDto): Promise<CreateCuentaResponseDto> {
+  async create(dto: CreateAccountDto): Promise<CreateAccountResponseDto> {
     const user = await this.prisma.account.findUnique({
       where: {
         username: dto.username,

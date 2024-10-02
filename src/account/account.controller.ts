@@ -1,6 +1,6 @@
 import {
   CreateAccountDto,
-  CreateCuentaResponseDto,
+  CreateAccountResponseDto,
 } from '@/account/dto/createAccount.dto';
 import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
@@ -19,23 +19,20 @@ import { RoleGuard } from '@/auth/guards/role.guard';
 import { Roles } from '@/auth/decorators/rol.decorator';
 
 @Controller('account')
-@UseGuards(JwtGuard)
 export class AccountController {
-  constructor(private readonly cuentaService: AccountService) {}
+  constructor(private readonly accountService: AccountService) {}
 
-  @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard)
   @Post('/create')
   @ApiCreatedResponse({
     description: translate('route.account.create.success'),
-    type: CreateCuentaResponseDto,
+    type: CreateAccountResponseDto,
   })
   async createCuenta(@Body() body: CreateAccountDto) {
-    return await this.cuentaService.create(body);
+    return await this.accountService.create(body);
   }
 
   @Roles(Role.ADMIN, Role.USER)
-  @UseGuards(RoleGuard)
+  @UseGuards(JwtGuard, RoleGuard)
   @Patch('/global-filter')
   @ApiOkResponse({
     description: translate('route.account.global-filter-patch.success'),
@@ -45,22 +42,22 @@ export class AccountController {
     @Body() body: UpdateGlobalFilterDto,
     @User() user: AccountWithoutPassword,
   ) {
-    return await this.cuentaService.updateGlobalFilter(user.id, body);
+    return await this.accountService.updateGlobalFilter(user.id, body);
   }
 
   @Roles(Role.ADMIN, Role.USER)
-  @UseGuards(RoleGuard)
+  @UseGuards(JwtGuard, RoleGuard)
   @Get('/global-filter')
   @ApiOkResponse({
     description: translate('route.account.global-filter-get.success'),
     type: GetGlobalFilterResponseDto,
   })
   async getFiltroBase(@User() user: AccountWithoutPassword) {
-    return await this.cuentaService.getFiltroBase(user.id);
+    return await this.accountService.getFiltroBase(user.id);
   }
 
   @Roles(Role.ADMIN, Role.USER)
-  @UseGuards(RoleGuard)
+  @UseGuards(JwtGuard, RoleGuard)
   @Get('/me')
   @ApiOkResponse({
     description: translate('route.account.me.success'),

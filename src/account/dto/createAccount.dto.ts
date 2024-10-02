@@ -16,6 +16,6 @@ export const createAccountResponseSchema = accountSchema.omit({
   updated_at: true,
 });
 
-export class CreateCuentaResponseDto extends createZodDto(
+export class CreateAccountResponseDto extends createZodDto(
   createAccountResponseSchema,
 ) {}
