@@ -1,8 +1,8 @@
 import z from 'zod';
 import { createZodDto } from '@anatine/zod-nestjs';
-import { cuentaSchema } from 'src/cuenta/dto/cuenta.dto';
+import { accountSchema } from '@/account/dto/account.dto';
 
-export const loginSchema = cuentaSchema.pick({
+export const loginSchema = accountSchema.pick({
   username: true,
   password: true,
 });
@@ -10,7 +10,7 @@ export const loginSchema = cuentaSchema.pick({
 export class LoginDto extends createZodDto(loginSchema) {}
 
 export const loginResponseSchema = z.object({
-  user: cuentaSchema.omit({
+  user: accountSchema.omit({
     password: true,
   }),
   backendTokens: z.object({

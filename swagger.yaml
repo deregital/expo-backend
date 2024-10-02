@@ -1,22 +1,5 @@
 openapi: "3.0.0"
 paths:
-  /auth/register:
-    post:
-      operationId: "AuthController_registerUser"
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RegisterDto"
-      responses:
-        201:
-          description: "Cuenta creada"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/RegisterResponseDto"
   /auth/login:
     post:
       operationId: "AuthController_loginUser"
@@ -41,6 +24,61 @@ paths:
       responses:
         201:
           description: ""
+  /account/create:
+    post:
+      operationId: "AccountController_createCuenta"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAccountDto"
+      responses:
+        201:
+          description: "Cuenta creada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateAccountResponseDto"
+  /account/global-filter:
+    patch:
+      operationId: "AccountController_updateFiltroBase"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGlobalFilterDto"
+      responses:
+        200:
+          description: "Filtro base actualizado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateGlobalFilterResponseDto"
+    get:
+      operationId: "AccountController_getFiltroBase"
+      parameters: []
+      responses:
+        200:
+          description: "Filtro base obtenido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetGlobalFilterResponseDto"
+  /account/me:
+    get:
+      operationId: "AccountController_getMe"
+      parameters: []
+      responses:
+        200:
+          description: "Cuenta obtenida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetMeResponseDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -52,30 +90,6 @@ tags:
 servers: []
 components:
   schemas:
-    RegisterDto:
-      type: "object"
-      properties:
-        username:
-          type: "string"
-        password:
-          type: "string"
-          minLength: 6
-        isAdmin:
-          default: false
-          type: "boolean"
-      required:
-        - "username"
-        - "password"
-    RegisterResponseDto:
-      type: "object"
-      properties:
-        username:
-          type: "string"
-        isAdmin:
-          default: false
-          type: "boolean"
-      required:
-        - "username"
     LoginDto:
       type: "object"
       properties:
@@ -96,41 +110,316 @@ components:
             id:
               type: "string"
               format: "uuid"
-              required: true
             username:
               type: "string"
-              required: true
-            isAdmin:
-              default: false
-              type: "boolean"
-              required: false
+            role:
+              type: "string"
+              enum:
+                - "USER"
+                - "ADMIN"
             created_at:
               type: "string"
               format: "date-time"
-              required: true
             updated_at:
               type: "string"
               format: "date-time"
-              required: true
-            filtroBaseActivo:
+            globalFilter:
+              type: "object"
+              properties:
+                tags:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    group:
+                      type: "object"
+                      properties:
+                        id:
+                          type: "string"
+                          format: "uuid"
+                        color:
+                          type: "string"
+                          minLength: 7
+                          maxLength: 7
+                        isExclusive:
+                          type: "boolean"
+                      required:
+                        - "id"
+                        - "color"
+                        - "isExclusive"
+                  required:
+                    - "id"
+                    - "name"
+                    - "group"
+                active:
+                  type: "boolean"
+              required:
+                - "tags"
+                - "active"
+            isGlobalFilterActive:
               default: false
               type: "boolean"
-              required: false
             fcmToken:
               default: []
               type: "array"
               items:
                 type: "string"
-              required: false
+          required:
+            - "id"
+            - "username"
+            - "role"
+            - "created_at"
+            - "updated_at"
+            - "globalFilter"
         backendTokens:
           type: "object"
           properties:
             accessToken:
               type: "string"
-              required: true
             refreshToken:
               type: "string"
-              required: true
+          required:
+            - "accessToken"
+            - "refreshToken"
       required:
         - "user"
         - "backendTokens"
+    CreateAccountDto:
+      type: "object"
+      properties:
+        username:
+          type: "string"
+        password:
+          type: "string"
+          minLength: 6
+        role:
+          type: "string"
+          enum:
+            - "USER"
+            - "ADMIN"
+      required:
+        - "username"
+        - "password"
+        - "role"
+    CreateAccountResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        username:
+          type: "string"
+        role:
+          type: "string"
+          enum:
+            - "USER"
+            - "ADMIN"
+        isGlobalFilterActive:
+          default: false
+          type: "boolean"
+        fcmToken:
+          default: []
+          type: "array"
+          items:
+            type: "string"
+      required:
+        - "id"
+        - "username"
+        - "role"
+    UpdateGlobalFilterDto:
+      type: "object"
+      properties:
+        active:
+          default: false
+          type: "boolean"
+        tagsIds:
+          type: "array"
+          items:
+            type: "string"
+            format: "uuid"
+      required:
+        - "tagsIds"
+    UpdateGlobalFilterResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        nombreUsuario:
+          type: "string"
+        esAdmin:
+          type: "boolean"
+        fcmToken:
+          type: "null"
+        filtroBaseActivo:
+          type: "boolean"
+        filtroBase:
+          type: "object"
+          properties:
+            active:
+              type: "boolean"
+            etiquetas:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                    format: "uuid"
+                  name:
+                    type: "string"
+                    minLength: 1
+                  groupId:
+                    type: "string"
+                    format: "uuid"
+                  type:
+                    type: "string"
+                    enum:
+                      - "PROFILE"
+                      - "EVENT"
+                      - "PARTICIPANT"
+                      - "NOT_IN_SYSTEM"
+                  created_at:
+                    type: "string"
+                    format: "date-time"
+                  updated_at:
+                    type: "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "name"
+                  - "groupId"
+                  - "type"
+                  - "created_at"
+                  - "updated_at"
+          required:
+            - "active"
+            - "etiquetas"
+      required:
+        - "id"
+        - "nombreUsuario"
+        - "esAdmin"
+        - "fcmToken"
+        - "filtroBaseActivo"
+        - "filtroBase"
+    GetGlobalFilterResponseDto:
+      type: "object"
+      properties:
+        active:
+          type: "boolean"
+        globalFilter:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              type:
+                type: "string"
+                enum:
+                  - "PROFILE"
+                  - "EVENT"
+                  - "PARTICIPANT"
+                  - "NOT_IN_SYSTEM"
+              group:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                    format: "uuid"
+                  color:
+                    type: "string"
+                    minLength: 7
+                    maxLength: 7
+                  isExclusive:
+                    type: "boolean"
+                required:
+                  - "id"
+                  - "color"
+                  - "isExclusive"
+            required:
+              - "id"
+              - "name"
+              - "type"
+              - "group"
+      required:
+        - "active"
+        - "globalFilter"
+    GetMeResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        username:
+          type: "string"
+        role:
+          type: "string"
+          enum:
+            - "USER"
+            - "ADMIN"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+        globalFilter:
+          type: "object"
+          properties:
+            tags:
+              type: "object"
+              properties:
+                id:
+                  type: "string"
+                  format: "uuid"
+                name:
+                  type: "string"
+                  minLength: 1
+                group:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    color:
+                      type: "string"
+                      minLength: 7
+                      maxLength: 7
+                    isExclusive:
+                      type: "boolean"
+                  required:
+                    - "id"
+                    - "color"
+                    - "isExclusive"
+              required:
+                - "id"
+                - "name"
+                - "group"
+            active:
+              type: "boolean"
+          required:
+            - "tags"
+            - "active"
+        isGlobalFilterActive:
+          default: false
+          type: "boolean"
+        fcmToken:
+          default: []
+          type: "array"
+          items:
+            type: "string"
+      required:
+        - "id"
+        - "username"
+        - "role"
+        - "created_at"
+        - "updated_at"
+        - "globalFilter"
