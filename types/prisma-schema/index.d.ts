@@ -22,6 +22,11 @@ export type Account = $Result.DefaultSelection<Prisma.$AccountPayload>;
  */
 export type Profile = $Result.DefaultSelection<Prisma.$ProfilePayload>;
 /**
+ * Model Location
+ *
+ */
+export type Location = $Result.DefaultSelection<Prisma.$LocationPayload>;
+/**
  * Model Comment
  *
  */
@@ -303,6 +308,16 @@ export class PrismaClient<
    * ```
    */
   get profile(): Prisma.ProfileDelegate<ExtArgs>;
+
+  /**
+   * `prisma.location`: Exposes CRUD operations for the **Location** model.
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more Locations
+   * const locations = await prisma.location.findMany()
+   * ```
+   */
+  get location(): Prisma.LocationDelegate<ExtArgs>;
 
   /**
    * `prisma.comment`: Exposes CRUD operations for the **Comment** model.
@@ -898,6 +913,7 @@ export namespace Prisma {
   export const ModelName: {
     Account: 'Account';
     Profile: 'Profile';
+    Location: 'Location';
     Comment: 'Comment';
     Tag: 'Tag';
     TagGroup: 'TagGroup';
@@ -929,6 +945,7 @@ export namespace Prisma {
       modelProps:
         | 'account'
         | 'profile'
+        | 'location'
         | 'comment'
         | 'tag'
         | 'tagGroup'
@@ -1077,6 +1094,76 @@ export namespace Prisma {
           count: {
             args: Prisma.ProfileCountArgs<ExtArgs>;
             result: $Utils.Optional<ProfileCountAggregateOutputType> | number;
+          };
+        };
+      };
+      Location: {
+        payload: Prisma.$LocationPayload<ExtArgs>;
+        fields: Prisma.LocationFieldRefs;
+        operations: {
+          findUnique: {
+            args: Prisma.LocationFindUniqueArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload> | null;
+          };
+          findUniqueOrThrow: {
+            args: Prisma.LocationFindUniqueOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>;
+          };
+          findFirst: {
+            args: Prisma.LocationFindFirstArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload> | null;
+          };
+          findFirstOrThrow: {
+            args: Prisma.LocationFindFirstOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>;
+          };
+          findMany: {
+            args: Prisma.LocationFindManyArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>[];
+          };
+          create: {
+            args: Prisma.LocationCreateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>;
+          };
+          createMany: {
+            args: Prisma.LocationCreateManyArgs<ExtArgs>;
+            result: Prisma.BatchPayload;
+          };
+          createManyAndReturn: {
+            args: Prisma.LocationCreateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>[];
+          };
+          delete: {
+            args: Prisma.LocationDeleteArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>;
+          };
+          update: {
+            args: Prisma.LocationUpdateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>;
+          };
+          deleteMany: {
+            args: Prisma.LocationDeleteManyArgs<ExtArgs>;
+            result: Prisma.BatchPayload;
+          };
+          updateMany: {
+            args: Prisma.LocationUpdateManyArgs<ExtArgs>;
+            result: Prisma.BatchPayload;
+          };
+          upsert: {
+            args: Prisma.LocationUpsertArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>;
+          };
+          aggregate: {
+            args: Prisma.LocationAggregateArgs<ExtArgs>;
+            result: $Utils.Optional<AggregateLocation>;
+          };
+          groupBy: {
+            args: Prisma.LocationGroupByArgs<ExtArgs>;
+            result: $Utils.Optional<LocationGroupByOutputType>[];
+          };
+          count: {
+            args: Prisma.LocationCountArgs<ExtArgs>;
+            result: $Utils.Optional<LocationCountAggregateOutputType> | number;
           };
         };
       };
@@ -1943,6 +2030,55 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: TagWhereInput;
+  };
+
+  /**
+   * Count Type LocationCountOutputType
+   */
+
+  export type LocationCountOutputType = {
+    birthProfiles: number;
+    residenceProfiles: number;
+  };
+
+  export type LocationCountOutputTypeSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    birthProfiles?: boolean | LocationCountOutputTypeCountBirthProfilesArgs;
+    residenceProfiles?:
+      | boolean
+      | LocationCountOutputTypeCountResidenceProfilesArgs;
+  };
+
+  // Custom InputTypes
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the LocationCountOutputType
+     */
+    select?: LocationCountOutputTypeSelect<ExtArgs> | null;
+  };
+
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeCountBirthProfilesArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: ProfileWhereInput;
+  };
+
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeCountResidenceProfilesArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: ProfileWhereInput;
   };
 
   /**
@@ -3359,10 +3495,18 @@ export namespace Prisma {
 
   export type ProfileAvgAggregateOutputType = {
     shortId: number | null;
+    birthLongitude: number | null;
+    birthLatitude: number | null;
+    residenceLongitude: number | null;
+    residenceLatitude: number | null;
   };
 
   export type ProfileSumAggregateOutputType = {
     shortId: number | null;
+    birthLongitude: number | null;
+    birthLatitude: number | null;
+    residenceLongitude: number | null;
+    residenceLatitude: number | null;
   };
 
   export type ProfileMinAggregateOutputType = {
@@ -3378,6 +3522,10 @@ export namespace Prisma {
     instagram: string | null;
     mail: string | null;
     dni: string | null;
+    birthLongitude: number | null;
+    birthLatitude: number | null;
+    residenceLongitude: number | null;
+    residenceLatitude: number | null;
     isInTrash: boolean | null;
     movedToTrashDate: Date | null;
     created_at: Date | null;
@@ -3397,6 +3545,10 @@ export namespace Prisma {
     instagram: string | null;
     mail: string | null;
     dni: string | null;
+    birthLongitude: number | null;
+    birthLatitude: number | null;
+    residenceLongitude: number | null;
+    residenceLatitude: number | null;
     isInTrash: boolean | null;
     movedToTrashDate: Date | null;
     created_at: Date | null;
@@ -3417,6 +3569,10 @@ export namespace Prisma {
     mail: number;
     dni: number;
     alternativeNames: number;
+    birthLongitude: number;
+    birthLatitude: number;
+    residenceLongitude: number;
+    residenceLatitude: number;
     isInTrash: number;
     movedToTrashDate: number;
     created_at: number;
@@ -3426,10 +3582,18 @@ export namespace Prisma {
 
   export type ProfileAvgAggregateInputType = {
     shortId?: true;
+    birthLongitude?: true;
+    birthLatitude?: true;
+    residenceLongitude?: true;
+    residenceLatitude?: true;
   };
 
   export type ProfileSumAggregateInputType = {
     shortId?: true;
+    birthLongitude?: true;
+    birthLatitude?: true;
+    residenceLongitude?: true;
+    residenceLatitude?: true;
   };
 
   export type ProfileMinAggregateInputType = {
@@ -3445,6 +3609,10 @@ export namespace Prisma {
     instagram?: true;
     mail?: true;
     dni?: true;
+    birthLongitude?: true;
+    birthLatitude?: true;
+    residenceLongitude?: true;
+    residenceLatitude?: true;
     isInTrash?: true;
     movedToTrashDate?: true;
     created_at?: true;
@@ -3464,6 +3632,10 @@ export namespace Prisma {
     instagram?: true;
     mail?: true;
     dni?: true;
+    birthLongitude?: true;
+    birthLatitude?: true;
+    residenceLongitude?: true;
+    residenceLatitude?: true;
     isInTrash?: true;
     movedToTrashDate?: true;
     created_at?: true;
@@ -3484,6 +3656,10 @@ export namespace Prisma {
     mail?: true;
     dni?: true;
     alternativeNames?: true;
+    birthLongitude?: true;
+    birthLatitude?: true;
+    residenceLongitude?: true;
+    residenceLatitude?: true;
     isInTrash?: true;
     movedToTrashDate?: true;
     created_at?: true;
@@ -3596,6 +3772,10 @@ export namespace Prisma {
     mail: string | null;
     dni: string | null;
     alternativeNames: string[];
+    birthLongitude: number | null;
+    birthLatitude: number | null;
+    residenceLongitude: number | null;
+    residenceLatitude: number | null;
     isInTrash: boolean;
     movedToTrashDate: Date | null;
     created_at: Date;
@@ -3637,6 +3817,10 @@ export namespace Prisma {
       mail?: boolean;
       dni?: boolean;
       alternativeNames?: boolean;
+      birthLongitude?: boolean;
+      birthLatitude?: boolean;
+      residenceLongitude?: boolean;
+      residenceLatitude?: boolean;
       isInTrash?: boolean;
       movedToTrashDate?: boolean;
       created_at?: boolean;
@@ -3644,6 +3828,8 @@ export namespace Prisma {
       comments?: boolean | Profile$commentsArgs<ExtArgs>;
       messages?: boolean | Profile$messagesArgs<ExtArgs>;
       tags?: boolean | Profile$tagsArgs<ExtArgs>;
+      birthLocation?: boolean | Profile$birthLocationArgs<ExtArgs>;
+      residenceLocation?: boolean | Profile$residenceLocationArgs<ExtArgs>;
       _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['profile']
@@ -3663,6 +3849,10 @@ export namespace Prisma {
     mail?: boolean;
     dni?: boolean;
     alternativeNames?: boolean;
+    birthLongitude?: boolean;
+    birthLatitude?: boolean;
+    residenceLongitude?: boolean;
+    residenceLatitude?: boolean;
     isInTrash?: boolean;
     movedToTrashDate?: boolean;
     created_at?: boolean;
@@ -3675,6 +3865,8 @@ export namespace Prisma {
     comments?: boolean | Profile$commentsArgs<ExtArgs>;
     messages?: boolean | Profile$messagesArgs<ExtArgs>;
     tags?: boolean | Profile$tagsArgs<ExtArgs>;
+    birthLocation?: boolean | Profile$birthLocationArgs<ExtArgs>;
+    residenceLocation?: boolean | Profile$residenceLocationArgs<ExtArgs>;
     _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>;
   };
 
@@ -3686,6 +3878,8 @@ export namespace Prisma {
       comments: Prisma.$CommentPayload<ExtArgs>[];
       messages: Prisma.$MessagePayload<ExtArgs>[];
       tags: Prisma.$TagPayload<ExtArgs>[];
+      birthLocation: Prisma.$LocationPayload<ExtArgs> | null;
+      residenceLocation: Prisma.$LocationPayload<ExtArgs> | null;
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -3702,6 +3896,10 @@ export namespace Prisma {
         mail: string | null;
         dni: string | null;
         alternativeNames: string[];
+        birthLongitude: number | null;
+        birthLatitude: number | null;
+        residenceLongitude: number | null;
+        residenceLatitude: number | null;
         isInTrash: boolean;
         movedToTrashDate: Date | null;
         created_at: Date;
@@ -4184,6 +4382,30 @@ export namespace Prisma {
       $Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, 'findMany'> | Null
     >;
 
+    birthLocation<T extends Profile$birthLocationArgs<ExtArgs> = {}>(
+      args?: Subset<T, Profile$birthLocationArgs<ExtArgs>>,
+    ): Prisma__LocationClient<
+      $Result.GetResult<
+        Prisma.$LocationPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow'
+      > | null,
+      null,
+      ExtArgs
+    >;
+
+    residenceLocation<T extends Profile$residenceLocationArgs<ExtArgs> = {}>(
+      args?: Subset<T, Profile$residenceLocationArgs<ExtArgs>>,
+    ): Prisma__LocationClient<
+      $Result.GetResult<
+        Prisma.$LocationPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow'
+      > | null,
+      null,
+      ExtArgs
+    >;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4237,6 +4459,10 @@ export namespace Prisma {
     readonly mail: FieldRef<'Profile', 'String'>;
     readonly dni: FieldRef<'Profile', 'String'>;
     readonly alternativeNames: FieldRef<'Profile', 'String[]'>;
+    readonly birthLongitude: FieldRef<'Profile', 'Float'>;
+    readonly birthLatitude: FieldRef<'Profile', 'Float'>;
+    readonly residenceLongitude: FieldRef<'Profile', 'Float'>;
+    readonly residenceLatitude: FieldRef<'Profile', 'Float'>;
     readonly isInTrash: FieldRef<'Profile', 'Boolean'>;
     readonly movedToTrashDate: FieldRef<'Profile', 'DateTime'>;
     readonly created_at: FieldRef<'Profile', 'DateTime'>;
@@ -4660,6 +4886,40 @@ export namespace Prisma {
   };
 
   /**
+   * Profile.birthLocation
+   */
+  export type Profile$birthLocationArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null;
+    where?: LocationWhereInput;
+  };
+
+  /**
+   * Profile.residenceLocation
+   */
+  export type Profile$residenceLocationArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null;
+    where?: LocationWhereInput;
+  };
+
+  /**
    * Profile without action
    */
   export type ProfileDefaultArgs<
@@ -4673,6 +4933,1215 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ProfileInclude<ExtArgs> | null;
+  };
+
+  /**
+   * Model Location
+   */
+
+  export type AggregateLocation = {
+    _count: LocationCountAggregateOutputType | null;
+    _avg: LocationAvgAggregateOutputType | null;
+    _sum: LocationSumAggregateOutputType | null;
+    _min: LocationMinAggregateOutputType | null;
+    _max: LocationMaxAggregateOutputType | null;
+  };
+
+  export type LocationAvgAggregateOutputType = {
+    latitude: number | null;
+    longitude: number | null;
+  };
+
+  export type LocationSumAggregateOutputType = {
+    latitude: number | null;
+    longitude: number | null;
+  };
+
+  export type LocationMinAggregateOutputType = {
+    latitude: number | null;
+    longitude: number | null;
+    country: string | null;
+    province: string | null;
+    city: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type LocationMaxAggregateOutputType = {
+    latitude: number | null;
+    longitude: number | null;
+    country: string | null;
+    province: string | null;
+    city: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type LocationCountAggregateOutputType = {
+    latitude: number;
+    longitude: number;
+    country: number;
+    province: number;
+    city: number;
+    created_at: number;
+    updated_at: number;
+    _all: number;
+  };
+
+  export type LocationAvgAggregateInputType = {
+    latitude?: true;
+    longitude?: true;
+  };
+
+  export type LocationSumAggregateInputType = {
+    latitude?: true;
+    longitude?: true;
+  };
+
+  export type LocationMinAggregateInputType = {
+    latitude?: true;
+    longitude?: true;
+    country?: true;
+    province?: true;
+    city?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type LocationMaxAggregateInputType = {
+    latitude?: true;
+    longitude?: true;
+    country?: true;
+    province?: true;
+    city?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type LocationCountAggregateInputType = {
+    latitude?: true;
+    longitude?: true;
+    country?: true;
+    province?: true;
+    city?: true;
+    created_at?: true;
+    updated_at?: true;
+    _all?: true;
+  };
+
+  export type LocationAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which Location to aggregate.
+     */
+    where?: LocationWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Locations to fetch.
+     */
+    orderBy?:
+      | LocationOrderByWithRelationInput
+      | LocationOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: LocationWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Locations from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Locations.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned Locations
+     **/
+    _count?: true | LocationCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to average
+     **/
+    _avg?: LocationAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+     **/
+    _sum?: LocationSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+     **/
+    _min?: LocationMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+     **/
+    _max?: LocationMaxAggregateInputType;
+  };
+
+  export type GetLocationAggregateType<T extends LocationAggregateArgs> = {
+    [P in keyof T & keyof AggregateLocation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLocation[P]>
+      : GetScalarType<T[P], AggregateLocation[P]>;
+  };
+
+  export type LocationGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: LocationWhereInput;
+    orderBy?:
+      | LocationOrderByWithAggregationInput
+      | LocationOrderByWithAggregationInput[];
+    by: LocationScalarFieldEnum[] | LocationScalarFieldEnum;
+    having?: LocationScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: LocationCountAggregateInputType | true;
+    _avg?: LocationAvgAggregateInputType;
+    _sum?: LocationSumAggregateInputType;
+    _min?: LocationMinAggregateInputType;
+    _max?: LocationMaxAggregateInputType;
+  };
+
+  export type LocationGroupByOutputType = {
+    latitude: number;
+    longitude: number;
+    country: string;
+    province: string;
+    city: string;
+    created_at: Date;
+    updated_at: Date;
+    _count: LocationCountAggregateOutputType | null;
+    _avg: LocationAvgAggregateOutputType | null;
+    _sum: LocationSumAggregateOutputType | null;
+    _min: LocationMinAggregateOutputType | null;
+    _max: LocationMaxAggregateOutputType | null;
+  };
+
+  type GetLocationGroupByPayload<T extends LocationGroupByArgs> =
+    Prisma.PrismaPromise<
+      Array<
+        PickEnumerable<LocationGroupByOutputType, T['by']> & {
+          [P in keyof T & keyof LocationGroupByOutputType]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LocationGroupByOutputType[P]>
+            : GetScalarType<T[P], LocationGroupByOutputType[P]>;
+        }
+      >
+    >;
+
+  export type LocationSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      latitude?: boolean;
+      longitude?: boolean;
+      country?: boolean;
+      province?: boolean;
+      city?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      birthProfiles?: boolean | Location$birthProfilesArgs<ExtArgs>;
+      residenceProfiles?: boolean | Location$residenceProfilesArgs<ExtArgs>;
+      _count?: boolean | LocationCountOutputTypeDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['location']
+  >;
+
+  export type LocationSelectScalar = {
+    latitude?: boolean;
+    longitude?: boolean;
+    country?: boolean;
+    province?: boolean;
+    city?: boolean;
+    created_at?: boolean;
+    updated_at?: boolean;
+  };
+
+  export type LocationInclude<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    birthProfiles?: boolean | Location$birthProfilesArgs<ExtArgs>;
+    residenceProfiles?: boolean | Location$residenceProfilesArgs<ExtArgs>;
+    _count?: boolean | LocationCountOutputTypeDefaultArgs<ExtArgs>;
+  };
+
+  export type $LocationPayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    name: 'Location';
+    objects: {
+      birthProfiles: Prisma.$ProfilePayload<ExtArgs>[];
+      residenceProfiles: Prisma.$ProfilePayload<ExtArgs>[];
+    };
+    scalars: $Extensions.GetPayloadResult<
+      {
+        latitude: number;
+        longitude: number;
+        country: string;
+        province: string;
+        city: string;
+        created_at: Date;
+        updated_at: Date;
+      },
+      ExtArgs['result']['location']
+    >;
+    composites: {};
+  };
+
+  type LocationGetPayload<
+    S extends boolean | null | undefined | LocationDefaultArgs,
+  > = $Result.GetResult<Prisma.$LocationPayload, S>;
+
+  type LocationCountArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = Omit<LocationFindManyArgs, 'select' | 'include' | 'distinct'> & {
+    select?: LocationCountAggregateInputType | true;
+  };
+
+  export interface LocationDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['Location'];
+      meta: { name: 'Location' };
+    };
+    /**
+     * Find zero or one Location that matches the filter.
+     * @param {LocationFindUniqueArgs} args - Arguments to find a Location
+     * @example
+     * // Get one Location
+     * const location = await prisma.location.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     **/
+    findUnique<T extends LocationFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, LocationFindUniqueArgs<ExtArgs>>,
+    ): Prisma__LocationClient<
+      $Result.GetResult<
+        Prisma.$LocationPayload<ExtArgs>,
+        T,
+        'findUnique'
+      > | null,
+      null,
+      ExtArgs
+    >;
+
+    /**
+     * Find one Location that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LocationFindUniqueOrThrowArgs} args - Arguments to find a Location
+     * @example
+     * // Get one Location
+     * const location = await prisma.location.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     **/
+    findUniqueOrThrow<T extends LocationFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, LocationFindUniqueOrThrowArgs<ExtArgs>>,
+    ): Prisma__LocationClient<
+      $Result.GetResult<
+        Prisma.$LocationPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow'
+      >,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Find the first Location that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationFindFirstArgs} args - Arguments to find a Location
+     * @example
+     * // Get one Location
+     * const location = await prisma.location.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     **/
+    findFirst<T extends LocationFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, LocationFindFirstArgs<ExtArgs>>,
+    ): Prisma__LocationClient<
+      $Result.GetResult<
+        Prisma.$LocationPayload<ExtArgs>,
+        T,
+        'findFirst'
+      > | null,
+      null,
+      ExtArgs
+    >;
+
+    /**
+     * Find the first Location that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationFindFirstOrThrowArgs} args - Arguments to find a Location
+     * @example
+     * // Get one Location
+     * const location = await prisma.location.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     **/
+    findFirstOrThrow<T extends LocationFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, LocationFindFirstOrThrowArgs<ExtArgs>>,
+    ): Prisma__LocationClient<
+      $Result.GetResult<
+        Prisma.$LocationPayload<ExtArgs>,
+        T,
+        'findFirstOrThrow'
+      >,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Find zero or more Locations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Locations
+     * const locations = await prisma.location.findMany()
+     *
+     * // Get first 10 Locations
+     * const locations = await prisma.location.findMany({ take: 10 })
+     *
+     * // Only select the `latitude`
+     * const locationWithLatitudeOnly = await prisma.location.findMany({ select: { latitude: true } })
+     *
+     **/
+    findMany<T extends LocationFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, LocationFindManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, 'findMany'>
+    >;
+
+    /**
+     * Create a Location.
+     * @param {LocationCreateArgs} args - Arguments to create a Location.
+     * @example
+     * // Create one Location
+     * const Location = await prisma.location.create({
+     *   data: {
+     *     // ... data to create a Location
+     *   }
+     * })
+     *
+     **/
+    create<T extends LocationCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, LocationCreateArgs<ExtArgs>>,
+    ): Prisma__LocationClient<
+      $Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, 'create'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Create many Locations.
+     * @param {LocationCreateManyArgs} args - Arguments to create many Locations.
+     * @example
+     * // Create many Locations
+     * const location = await prisma.location.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     **/
+    createMany<T extends LocationCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, LocationCreateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create many Locations and returns the data saved in the database.
+     * @param {LocationCreateManyAndReturnArgs} args - Arguments to create many Locations.
+     * @example
+     * // Create many Locations
+     * const location = await prisma.location.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many Locations and only return the `latitude`
+     * const locationWithLatitudeOnly = await prisma.location.createManyAndReturn({
+     *   select: { latitude: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     **/
+    createManyAndReturn<T extends LocationCreateManyAndReturnArgs<ExtArgs>>(
+      args?: SelectSubset<T, LocationCreateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$LocationPayload<ExtArgs>,
+        T,
+        'createManyAndReturn'
+      >
+    >;
+
+    /**
+     * Delete a Location.
+     * @param {LocationDeleteArgs} args - Arguments to delete one Location.
+     * @example
+     * // Delete one Location
+     * const Location = await prisma.location.delete({
+     *   where: {
+     *     // ... filter to delete one Location
+     *   }
+     * })
+     *
+     **/
+    delete<T extends LocationDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, LocationDeleteArgs<ExtArgs>>,
+    ): Prisma__LocationClient<
+      $Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, 'delete'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Update one Location.
+     * @param {LocationUpdateArgs} args - Arguments to update one Location.
+     * @example
+     * // Update one Location
+     * const location = await prisma.location.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     **/
+    update<T extends LocationUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, LocationUpdateArgs<ExtArgs>>,
+    ): Prisma__LocationClient<
+      $Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, 'update'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Delete zero or more Locations.
+     * @param {LocationDeleteManyArgs} args - Arguments to filter Locations to delete.
+     * @example
+     * // Delete a few Locations
+     * const { count } = await prisma.location.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     **/
+    deleteMany<T extends LocationDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, LocationDeleteManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more Locations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Locations
+     * const location = await prisma.location.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     **/
+    updateMany<T extends LocationUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, LocationUpdateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create or update one Location.
+     * @param {LocationUpsertArgs} args - Arguments to update or create a Location.
+     * @example
+     * // Update or create a Location
+     * const location = await prisma.location.upsert({
+     *   create: {
+     *     // ... data to create a Location
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Location we want to update
+     *   }
+     * })
+     **/
+    upsert<T extends LocationUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, LocationUpsertArgs<ExtArgs>>,
+    ): Prisma__LocationClient<
+      $Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, 'upsert'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Count the number of Locations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationCountArgs} args - Arguments to filter Locations to count.
+     * @example
+     * // Count the number of Locations
+     * const count = await prisma.location.count({
+     *   where: {
+     *     // ... the filter for the Locations we want to count
+     *   }
+     * })
+     **/
+    count<T extends LocationCountArgs>(
+      args?: Subset<T, LocationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LocationCountAggregateOutputType>
+        : number
+    >;
+
+    /**
+     * Allows you to perform aggregations operations on a Location.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+     **/
+    aggregate<T extends LocationAggregateArgs>(
+      args: Subset<T, LocationAggregateArgs>,
+    ): Prisma.PrismaPromise<GetLocationAggregateType<T>>;
+
+    /**
+     * Group by Location.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+     **/
+    groupBy<
+      T extends LocationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LocationGroupByArgs['orderBy'] }
+        : { orderBy?: LocationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<
+        Keys<MaybeTupleToUnion<T['orderBy']>>
+      >,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ];
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields],
+    >(
+      args: SubsetIntersection<T, LocationGroupByArgs, OrderByArg> &
+        InputErrors,
+    ): {} extends InputErrors
+      ? GetLocationGroupByPayload<T>
+      : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the Location model
+     */
+    readonly fields: LocationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Location.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LocationClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    birthProfiles<T extends Location$birthProfilesArgs<ExtArgs> = {}>(
+      args?: Subset<T, Location$birthProfilesArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, 'findMany'> | Null
+    >;
+
+    residenceProfiles<T extends Location$residenceProfilesArgs<ExtArgs> = {}>(
+      args?: Subset<T, Location$residenceProfilesArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, 'findMany'> | Null
+    >;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?:
+        | ((value: T) => TResult1 | PromiseLike<TResult1>)
+        | undefined
+        | null,
+      onrejected?:
+        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?:
+        | ((reason: any) => TResult | PromiseLike<TResult>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+  /**
+   * Fields of the Location model
+   */
+  interface LocationFieldRefs {
+    readonly latitude: FieldRef<'Location', 'Float'>;
+    readonly longitude: FieldRef<'Location', 'Float'>;
+    readonly country: FieldRef<'Location', 'String'>;
+    readonly province: FieldRef<'Location', 'String'>;
+    readonly city: FieldRef<'Location', 'String'>;
+    readonly created_at: FieldRef<'Location', 'DateTime'>;
+    readonly updated_at: FieldRef<'Location', 'DateTime'>;
+  }
+
+  // Custom InputTypes
+  /**
+   * Location findUnique
+   */
+  export type LocationFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null;
+    /**
+     * Filter, which Location to fetch.
+     */
+    where: LocationWhereUniqueInput;
+  };
+
+  /**
+   * Location findUniqueOrThrow
+   */
+  export type LocationFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null;
+    /**
+     * Filter, which Location to fetch.
+     */
+    where: LocationWhereUniqueInput;
+  };
+
+  /**
+   * Location findFirst
+   */
+  export type LocationFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null;
+    /**
+     * Filter, which Location to fetch.
+     */
+    where?: LocationWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Locations to fetch.
+     */
+    orderBy?:
+      | LocationOrderByWithRelationInput
+      | LocationOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Locations.
+     */
+    cursor?: LocationWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Locations from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Locations.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Locations.
+     */
+    distinct?: LocationScalarFieldEnum | LocationScalarFieldEnum[];
+  };
+
+  /**
+   * Location findFirstOrThrow
+   */
+  export type LocationFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null;
+    /**
+     * Filter, which Location to fetch.
+     */
+    where?: LocationWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Locations to fetch.
+     */
+    orderBy?:
+      | LocationOrderByWithRelationInput
+      | LocationOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Locations.
+     */
+    cursor?: LocationWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Locations from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Locations.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Locations.
+     */
+    distinct?: LocationScalarFieldEnum | LocationScalarFieldEnum[];
+  };
+
+  /**
+   * Location findMany
+   */
+  export type LocationFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null;
+    /**
+     * Filter, which Locations to fetch.
+     */
+    where?: LocationWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Locations to fetch.
+     */
+    orderBy?:
+      | LocationOrderByWithRelationInput
+      | LocationOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing Locations.
+     */
+    cursor?: LocationWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Locations from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Locations.
+     */
+    skip?: number;
+    distinct?: LocationScalarFieldEnum | LocationScalarFieldEnum[];
+  };
+
+  /**
+   * Location create
+   */
+  export type LocationCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a Location.
+     */
+    data: XOR<LocationCreateInput, LocationUncheckedCreateInput>;
+  };
+
+  /**
+   * Location createMany
+   */
+  export type LocationCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to create many Locations.
+     */
+    data: LocationCreateManyInput | LocationCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * Location createManyAndReturn
+   */
+  export type LocationCreateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null;
+    /**
+     * The data used to create many Locations.
+     */
+    data: LocationCreateManyInput | LocationCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * Location update
+   */
+  export type LocationUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a Location.
+     */
+    data: XOR<LocationUpdateInput, LocationUncheckedUpdateInput>;
+    /**
+     * Choose, which Location to update.
+     */
+    where: LocationWhereUniqueInput;
+  };
+
+  /**
+   * Location updateMany
+   */
+  export type LocationUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to update Locations.
+     */
+    data: XOR<
+      LocationUpdateManyMutationInput,
+      LocationUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which Locations to update
+     */
+    where?: LocationWhereInput;
+  };
+
+  /**
+   * Location upsert
+   */
+  export type LocationUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the Location to update in case it exists.
+     */
+    where: LocationWhereUniqueInput;
+    /**
+     * In case the Location found by the `where` argument doesn't exist, create a new Location with this data.
+     */
+    create: XOR<LocationCreateInput, LocationUncheckedCreateInput>;
+    /**
+     * In case the Location was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LocationUpdateInput, LocationUncheckedUpdateInput>;
+  };
+
+  /**
+   * Location delete
+   */
+  export type LocationDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null;
+    /**
+     * Filter which Location to delete.
+     */
+    where: LocationWhereUniqueInput;
+  };
+
+  /**
+   * Location deleteMany
+   */
+  export type LocationDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which Locations to delete
+     */
+    where?: LocationWhereInput;
+  };
+
+  /**
+   * Location.birthProfiles
+   */
+  export type Location$birthProfilesArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null;
+    where?: ProfileWhereInput;
+    orderBy?:
+      | ProfileOrderByWithRelationInput
+      | ProfileOrderByWithRelationInput[];
+    cursor?: ProfileWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[];
+  };
+
+  /**
+   * Location.residenceProfiles
+   */
+  export type Location$residenceProfilesArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null;
+    where?: ProfileWhereInput;
+    orderBy?:
+      | ProfileOrderByWithRelationInput
+      | ProfileOrderByWithRelationInput[];
+    cursor?: ProfileWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[];
+  };
+
+  /**
+   * Location without action
+   */
+  export type LocationDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null;
   };
 
   /**
@@ -13724,6 +15193,10 @@ export namespace Prisma {
     mail: 'mail';
     dni: 'dni';
     alternativeNames: 'alternativeNames';
+    birthLongitude: 'birthLongitude';
+    birthLatitude: 'birthLatitude';
+    residenceLongitude: 'residenceLongitude';
+    residenceLatitude: 'residenceLatitude';
     isInTrash: 'isInTrash';
     movedToTrashDate: 'movedToTrashDate';
     created_at: 'created_at';
@@ -13732,6 +15205,19 @@ export namespace Prisma {
 
   export type ProfileScalarFieldEnum =
     (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum];
+
+  export const LocationScalarFieldEnum: {
+    latitude: 'latitude';
+    longitude: 'longitude';
+    country: 'country';
+    province: 'province';
+    city: 'city';
+    created_at: 'created_at';
+    updated_at: 'updated_at';
+  };
+
+  export type LocationScalarFieldEnum =
+    (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum];
 
   export const CommentScalarFieldEnum: {
     id: 'id';
@@ -13947,6 +15433,22 @@ export namespace Prisma {
   >;
 
   /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<
+    $PrismaModel,
+    'Float'
+  >;
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<
+    $PrismaModel,
+    'Float[]'
+  >;
+
+  /**
    * Reference to a field of type 'TagType'
    */
   export type EnumTagTypeFieldRefInput<$PrismaModel> = FieldRefInputType<
@@ -14009,22 +15511,6 @@ export namespace Prisma {
    */
   export type ListEnumTemplateCategoryFieldRefInput<$PrismaModel> =
     FieldRefInputType<$PrismaModel, 'TemplateCategory[]'>;
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<
-    $PrismaModel,
-    'Float'
-  >;
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<
-    $PrismaModel,
-    'Float[]'
-  >;
 
   /**
    * Deep Input Types
@@ -14133,6 +15619,10 @@ export namespace Prisma {
     mail?: StringNullableFilter<'Profile'> | string | null;
     dni?: StringNullableFilter<'Profile'> | string | null;
     alternativeNames?: StringNullableListFilter<'Profile'>;
+    birthLongitude?: FloatNullableFilter<'Profile'> | number | null;
+    birthLatitude?: FloatNullableFilter<'Profile'> | number | null;
+    residenceLongitude?: FloatNullableFilter<'Profile'> | number | null;
+    residenceLatitude?: FloatNullableFilter<'Profile'> | number | null;
     isInTrash?: BoolFilter<'Profile'> | boolean;
     movedToTrashDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
     created_at?: DateTimeFilter<'Profile'> | Date | string;
@@ -14140,6 +15630,14 @@ export namespace Prisma {
     comments?: CommentListRelationFilter;
     messages?: MessageListRelationFilter;
     tags?: TagListRelationFilter;
+    birthLocation?: XOR<
+      LocationNullableRelationFilter,
+      LocationWhereInput
+    > | null;
+    residenceLocation?: XOR<
+      LocationNullableRelationFilter,
+      LocationWhereInput
+    > | null;
   };
 
   export type ProfileOrderByWithRelationInput = {
@@ -14156,6 +15654,10 @@ export namespace Prisma {
     mail?: SortOrderInput | SortOrder;
     dni?: SortOrderInput | SortOrder;
     alternativeNames?: SortOrder;
+    birthLongitude?: SortOrderInput | SortOrder;
+    birthLatitude?: SortOrderInput | SortOrder;
+    residenceLongitude?: SortOrderInput | SortOrder;
+    residenceLatitude?: SortOrderInput | SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
@@ -14163,6 +15665,8 @@ export namespace Prisma {
     comments?: CommentOrderByRelationAggregateInput;
     messages?: MessageOrderByRelationAggregateInput;
     tags?: TagOrderByRelationAggregateInput;
+    birthLocation?: LocationOrderByWithRelationInput;
+    residenceLocation?: LocationOrderByWithRelationInput;
   };
 
   export type ProfileWhereUniqueInput = Prisma.AtLeast<
@@ -14183,6 +15687,10 @@ export namespace Prisma {
       mail?: StringNullableFilter<'Profile'> | string | null;
       dni?: StringNullableFilter<'Profile'> | string | null;
       alternativeNames?: StringNullableListFilter<'Profile'>;
+      birthLongitude?: FloatNullableFilter<'Profile'> | number | null;
+      birthLatitude?: FloatNullableFilter<'Profile'> | number | null;
+      residenceLongitude?: FloatNullableFilter<'Profile'> | number | null;
+      residenceLatitude?: FloatNullableFilter<'Profile'> | number | null;
       isInTrash?: BoolFilter<'Profile'> | boolean;
       movedToTrashDate?:
         | DateTimeNullableFilter<'Profile'>
@@ -14194,6 +15702,14 @@ export namespace Prisma {
       comments?: CommentListRelationFilter;
       messages?: MessageListRelationFilter;
       tags?: TagListRelationFilter;
+      birthLocation?: XOR<
+        LocationNullableRelationFilter,
+        LocationWhereInput
+      > | null;
+      residenceLocation?: XOR<
+        LocationNullableRelationFilter,
+        LocationWhereInput
+      > | null;
     },
     'id' | 'phoneNumber' | 'secondaryPhoneNumber'
   >;
@@ -14212,6 +15728,10 @@ export namespace Prisma {
     mail?: SortOrderInput | SortOrder;
     dni?: SortOrderInput | SortOrder;
     alternativeNames?: SortOrder;
+    birthLongitude?: SortOrderInput | SortOrder;
+    birthLatitude?: SortOrderInput | SortOrder;
+    residenceLongitude?: SortOrderInput | SortOrder;
+    residenceLatitude?: SortOrderInput | SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
@@ -14254,6 +15774,22 @@ export namespace Prisma {
     mail?: StringNullableWithAggregatesFilter<'Profile'> | string | null;
     dni?: StringNullableWithAggregatesFilter<'Profile'> | string | null;
     alternativeNames?: StringNullableListFilter<'Profile'>;
+    birthLongitude?:
+      | FloatNullableWithAggregatesFilter<'Profile'>
+      | number
+      | null;
+    birthLatitude?:
+      | FloatNullableWithAggregatesFilter<'Profile'>
+      | number
+      | null;
+    residenceLongitude?:
+      | FloatNullableWithAggregatesFilter<'Profile'>
+      | number
+      | null;
+    residenceLatitude?:
+      | FloatNullableWithAggregatesFilter<'Profile'>
+      | number
+      | null;
     isInTrash?: BoolWithAggregatesFilter<'Profile'> | boolean;
     movedToTrashDate?:
       | DateTimeNullableWithAggregatesFilter<'Profile'>
@@ -14262,6 +15798,84 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeWithAggregatesFilter<'Profile'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Profile'> | Date | string;
+  };
+
+  export type LocationWhereInput = {
+    AND?: LocationWhereInput | LocationWhereInput[];
+    OR?: LocationWhereInput[];
+    NOT?: LocationWhereInput | LocationWhereInput[];
+    latitude?: FloatFilter<'Location'> | number;
+    longitude?: FloatFilter<'Location'> | number;
+    country?: StringFilter<'Location'> | string;
+    province?: StringFilter<'Location'> | string;
+    city?: StringFilter<'Location'> | string;
+    created_at?: DateTimeFilter<'Location'> | Date | string;
+    updated_at?: DateTimeFilter<'Location'> | Date | string;
+    birthProfiles?: ProfileListRelationFilter;
+    residenceProfiles?: ProfileListRelationFilter;
+  };
+
+  export type LocationOrderByWithRelationInput = {
+    latitude?: SortOrder;
+    longitude?: SortOrder;
+    country?: SortOrder;
+    province?: SortOrder;
+    city?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    birthProfiles?: ProfileOrderByRelationAggregateInput;
+    residenceProfiles?: ProfileOrderByRelationAggregateInput;
+  };
+
+  export type LocationWhereUniqueInput = Prisma.AtLeast<
+    {
+      latitude_longitude?: LocationLatitudeLongitudeCompoundUniqueInput;
+      AND?: LocationWhereInput | LocationWhereInput[];
+      OR?: LocationWhereInput[];
+      NOT?: LocationWhereInput | LocationWhereInput[];
+      latitude?: FloatFilter<'Location'> | number;
+      longitude?: FloatFilter<'Location'> | number;
+      country?: StringFilter<'Location'> | string;
+      province?: StringFilter<'Location'> | string;
+      city?: StringFilter<'Location'> | string;
+      created_at?: DateTimeFilter<'Location'> | Date | string;
+      updated_at?: DateTimeFilter<'Location'> | Date | string;
+      birthProfiles?: ProfileListRelationFilter;
+      residenceProfiles?: ProfileListRelationFilter;
+    },
+    'latitude_longitude'
+  >;
+
+  export type LocationOrderByWithAggregationInput = {
+    latitude?: SortOrder;
+    longitude?: SortOrder;
+    country?: SortOrder;
+    province?: SortOrder;
+    city?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    _count?: LocationCountOrderByAggregateInput;
+    _avg?: LocationAvgOrderByAggregateInput;
+    _max?: LocationMaxOrderByAggregateInput;
+    _min?: LocationMinOrderByAggregateInput;
+    _sum?: LocationSumOrderByAggregateInput;
+  };
+
+  export type LocationScalarWhereWithAggregatesInput = {
+    AND?:
+      | LocationScalarWhereWithAggregatesInput
+      | LocationScalarWhereWithAggregatesInput[];
+    OR?: LocationScalarWhereWithAggregatesInput[];
+    NOT?:
+      | LocationScalarWhereWithAggregatesInput
+      | LocationScalarWhereWithAggregatesInput[];
+    latitude?: FloatWithAggregatesFilter<'Location'> | number;
+    longitude?: FloatWithAggregatesFilter<'Location'> | number;
+    country?: StringWithAggregatesFilter<'Location'> | string;
+    province?: StringWithAggregatesFilter<'Location'> | string;
+    city?: StringWithAggregatesFilter<'Location'> | string;
+    created_at?: DateTimeWithAggregatesFilter<'Location'> | Date | string;
+    updated_at?: DateTimeWithAggregatesFilter<'Location'> | Date | string;
   };
 
   export type CommentWhereInput = {
@@ -14983,6 +16597,8 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutProfileInput;
     messages?: MessageCreateNestedManyWithoutProfileInput;
     tags?: TagCreateNestedManyWithoutProfilesInput;
+    birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
+    residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
   };
 
   export type ProfileUncheckedCreateInput = {
@@ -14999,6 +16615,10 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    birthLongitude?: number | null;
+    birthLatitude?: number | null;
+    residenceLongitude?: number | null;
+    residenceLatitude?: number | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -15043,6 +16663,8 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutProfileNestedInput;
     messages?: MessageUpdateManyWithoutProfileNestedInput;
     tags?: TagUpdateManyWithoutProfilesNestedInput;
+    birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
+    residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
   };
 
   export type ProfileUncheckedUpdateInput = {
@@ -15069,6 +16691,13 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    residenceLongitude?:
+      | NullableFloatFieldUpdateOperationsInput
+      | number
+      | null;
+    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -15096,6 +16725,10 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    birthLongitude?: number | null;
+    birthLatitude?: number | null;
+    residenceLongitude?: number | null;
+    residenceLatitude?: number | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -15160,12 +16793,97 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    residenceLongitude?:
+      | NullableFloatFieldUpdateOperationsInput
+      | number
+      | null;
+    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
       | Date
       | string
       | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type LocationCreateInput = {
+    latitude: number;
+    longitude: number;
+    country: string;
+    province: string;
+    city: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    birthProfiles?: ProfileCreateNestedManyWithoutBirthLocationInput;
+    residenceProfiles?: ProfileCreateNestedManyWithoutResidenceLocationInput;
+  };
+
+  export type LocationUncheckedCreateInput = {
+    latitude: number;
+    longitude: number;
+    country: string;
+    province: string;
+    city: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    birthProfiles?: ProfileUncheckedCreateNestedManyWithoutBirthLocationInput;
+    residenceProfiles?: ProfileUncheckedCreateNestedManyWithoutResidenceLocationInput;
+  };
+
+  export type LocationUpdateInput = {
+    latitude?: FloatFieldUpdateOperationsInput | number;
+    longitude?: FloatFieldUpdateOperationsInput | number;
+    country?: StringFieldUpdateOperationsInput | string;
+    province?: StringFieldUpdateOperationsInput | string;
+    city?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    birthProfiles?: ProfileUpdateManyWithoutBirthLocationNestedInput;
+    residenceProfiles?: ProfileUpdateManyWithoutResidenceLocationNestedInput;
+  };
+
+  export type LocationUncheckedUpdateInput = {
+    latitude?: FloatFieldUpdateOperationsInput | number;
+    longitude?: FloatFieldUpdateOperationsInput | number;
+    country?: StringFieldUpdateOperationsInput | string;
+    province?: StringFieldUpdateOperationsInput | string;
+    city?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    birthProfiles?: ProfileUncheckedUpdateManyWithoutBirthLocationNestedInput;
+    residenceProfiles?: ProfileUncheckedUpdateManyWithoutResidenceLocationNestedInput;
+  };
+
+  export type LocationCreateManyInput = {
+    latitude: number;
+    longitude: number;
+    country: string;
+    province: string;
+    city: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type LocationUpdateManyMutationInput = {
+    latitude?: FloatFieldUpdateOperationsInput | number;
+    longitude?: FloatFieldUpdateOperationsInput | number;
+    country?: StringFieldUpdateOperationsInput | string;
+    province?: StringFieldUpdateOperationsInput | string;
+    city?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type LocationUncheckedUpdateManyInput = {
+    latitude?: FloatFieldUpdateOperationsInput | number;
+    longitude?: FloatFieldUpdateOperationsInput | number;
+    country?: StringFieldUpdateOperationsInput | string;
+    province?: StringFieldUpdateOperationsInput | string;
+    city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -15941,10 +17659,26 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null;
   };
 
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    lt?: number | FloatFieldRefInput<$PrismaModel>;
+    lte?: number | FloatFieldRefInput<$PrismaModel>;
+    gt?: number | FloatFieldRefInput<$PrismaModel>;
+    gte?: number | FloatFieldRefInput<$PrismaModel>;
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
+  };
+
   export type MessageListRelationFilter = {
     every?: MessageWhereInput;
     some?: MessageWhereInput;
     none?: MessageWhereInput;
+  };
+
+  export type LocationNullableRelationFilter = {
+    is?: LocationWhereInput | null;
+    isNot?: LocationWhereInput | null;
   };
 
   export type SortOrderInput = {
@@ -15970,6 +17704,10 @@ export namespace Prisma {
     mail?: SortOrder;
     dni?: SortOrder;
     alternativeNames?: SortOrder;
+    birthLongitude?: SortOrder;
+    birthLatitude?: SortOrder;
+    residenceLongitude?: SortOrder;
+    residenceLatitude?: SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrder;
     created_at?: SortOrder;
@@ -15978,6 +17716,10 @@ export namespace Prisma {
 
   export type ProfileAvgOrderByAggregateInput = {
     shortId?: SortOrder;
+    birthLongitude?: SortOrder;
+    birthLatitude?: SortOrder;
+    residenceLongitude?: SortOrder;
+    residenceLatitude?: SortOrder;
   };
 
   export type ProfileMaxOrderByAggregateInput = {
@@ -15993,6 +17735,10 @@ export namespace Prisma {
     instagram?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
+    birthLongitude?: SortOrder;
+    birthLatitude?: SortOrder;
+    residenceLongitude?: SortOrder;
+    residenceLatitude?: SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrder;
     created_at?: SortOrder;
@@ -16012,6 +17758,10 @@ export namespace Prisma {
     instagram?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
+    birthLongitude?: SortOrder;
+    birthLatitude?: SortOrder;
+    residenceLongitude?: SortOrder;
+    residenceLatitude?: SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrder;
     created_at?: SortOrder;
@@ -16020,6 +17770,10 @@ export namespace Prisma {
 
   export type ProfileSumOrderByAggregateInput = {
     shortId?: SortOrder;
+    birthLongitude?: SortOrder;
+    birthLatitude?: SortOrder;
+    residenceLongitude?: SortOrder;
+    residenceLatitude?: SortOrder;
   };
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -16075,6 +17829,104 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>;
     _min?: NestedDateTimeNullableFilter<$PrismaModel>;
     _max?: NestedDateTimeNullableFilter<$PrismaModel>;
+  };
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    lt?: number | FloatFieldRefInput<$PrismaModel>;
+    lte?: number | FloatFieldRefInput<$PrismaModel>;
+    gt?: number | FloatFieldRefInput<$PrismaModel>;
+    gte?: number | FloatFieldRefInput<$PrismaModel>;
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null;
+    _count?: NestedIntNullableFilter<$PrismaModel>;
+    _avg?: NestedFloatNullableFilter<$PrismaModel>;
+    _sum?: NestedFloatNullableFilter<$PrismaModel>;
+    _min?: NestedFloatNullableFilter<$PrismaModel>;
+    _max?: NestedFloatNullableFilter<$PrismaModel>;
+  };
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>;
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>;
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>;
+    lt?: number | FloatFieldRefInput<$PrismaModel>;
+    lte?: number | FloatFieldRefInput<$PrismaModel>;
+    gt?: number | FloatFieldRefInput<$PrismaModel>;
+    gte?: number | FloatFieldRefInput<$PrismaModel>;
+    not?: NestedFloatFilter<$PrismaModel> | number;
+  };
+
+  export type ProfileListRelationFilter = {
+    every?: ProfileWhereInput;
+    some?: ProfileWhereInput;
+    none?: ProfileWhereInput;
+  };
+
+  export type ProfileOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type LocationLatitudeLongitudeCompoundUniqueInput = {
+    latitude: number;
+    longitude: number;
+  };
+
+  export type LocationCountOrderByAggregateInput = {
+    latitude?: SortOrder;
+    longitude?: SortOrder;
+    country?: SortOrder;
+    province?: SortOrder;
+    city?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type LocationAvgOrderByAggregateInput = {
+    latitude?: SortOrder;
+    longitude?: SortOrder;
+  };
+
+  export type LocationMaxOrderByAggregateInput = {
+    latitude?: SortOrder;
+    longitude?: SortOrder;
+    country?: SortOrder;
+    province?: SortOrder;
+    city?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type LocationMinOrderByAggregateInput = {
+    latitude?: SortOrder;
+    longitude?: SortOrder;
+    country?: SortOrder;
+    province?: SortOrder;
+    city?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type LocationSumOrderByAggregateInput = {
+    latitude?: SortOrder;
+    longitude?: SortOrder;
+  };
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>;
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>;
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>;
+    lt?: number | FloatFieldRefInput<$PrismaModel>;
+    lte?: number | FloatFieldRefInput<$PrismaModel>;
+    gt?: number | FloatFieldRefInput<$PrismaModel>;
+    gte?: number | FloatFieldRefInput<$PrismaModel>;
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _avg?: NestedFloatFilter<$PrismaModel>;
+    _sum?: NestedFloatFilter<$PrismaModel>;
+    _min?: NestedFloatFilter<$PrismaModel>;
+    _max?: NestedFloatFilter<$PrismaModel>;
   };
 
   export type AccountRelationFilter = {
@@ -16154,17 +18006,7 @@ export namespace Prisma {
     none?: AccountWhereInput;
   };
 
-  export type ProfileListRelationFilter = {
-    every?: ProfileWhereInput;
-    some?: ProfileWhereInput;
-    none?: ProfileWhereInput;
-  };
-
   export type AccountOrderByRelationAggregateInput = {
-    _count?: SortOrder;
-  };
-
-  export type ProfileOrderByRelationAggregateInput = {
     _count?: SortOrder;
   };
 
@@ -16955,6 +18797,24 @@ export namespace Prisma {
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[];
   };
 
+  export type LocationCreateNestedOneWithoutBirthProfilesInput = {
+    create?: XOR<
+      LocationCreateWithoutBirthProfilesInput,
+      LocationUncheckedCreateWithoutBirthProfilesInput
+    >;
+    connectOrCreate?: LocationCreateOrConnectWithoutBirthProfilesInput;
+    connect?: LocationWhereUniqueInput;
+  };
+
+  export type LocationCreateNestedOneWithoutResidenceProfilesInput = {
+    create?: XOR<
+      LocationCreateWithoutResidenceProfilesInput,
+      LocationUncheckedCreateWithoutResidenceProfilesInput
+    >;
+    connectOrCreate?: LocationCreateOrConnectWithoutResidenceProfilesInput;
+    connect?: LocationWhereUniqueInput;
+  };
+
   export type CommentUncheckedCreateNestedManyWithoutProfileInput = {
     create?:
       | XOR<
@@ -17103,6 +18963,52 @@ export namespace Prisma {
     deleteMany?: TagScalarWhereInput | TagScalarWhereInput[];
   };
 
+  export type LocationUpdateOneWithoutBirthProfilesNestedInput = {
+    create?: XOR<
+      LocationCreateWithoutBirthProfilesInput,
+      LocationUncheckedCreateWithoutBirthProfilesInput
+    >;
+    connectOrCreate?: LocationCreateOrConnectWithoutBirthProfilesInput;
+    upsert?: LocationUpsertWithoutBirthProfilesInput;
+    disconnect?: LocationWhereInput | boolean;
+    delete?: LocationWhereInput | boolean;
+    connect?: LocationWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        LocationUpdateToOneWithWhereWithoutBirthProfilesInput,
+        LocationUpdateWithoutBirthProfilesInput
+      >,
+      LocationUncheckedUpdateWithoutBirthProfilesInput
+    >;
+  };
+
+  export type LocationUpdateOneWithoutResidenceProfilesNestedInput = {
+    create?: XOR<
+      LocationCreateWithoutResidenceProfilesInput,
+      LocationUncheckedCreateWithoutResidenceProfilesInput
+    >;
+    connectOrCreate?: LocationCreateOrConnectWithoutResidenceProfilesInput;
+    upsert?: LocationUpsertWithoutResidenceProfilesInput;
+    disconnect?: LocationWhereInput | boolean;
+    delete?: LocationWhereInput | boolean;
+    connect?: LocationWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        LocationUpdateToOneWithWhereWithoutResidenceProfilesInput,
+        LocationUpdateWithoutResidenceProfilesInput
+      >,
+      LocationUncheckedUpdateWithoutResidenceProfilesInput
+    >;
+  };
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+  };
+
   export type CommentUncheckedUpdateManyWithoutProfileNestedInput = {
     create?:
       | XOR<
@@ -17184,6 +19090,186 @@ export namespace Prisma {
       | TagUpdateManyWithWhereWithoutProfilesInput
       | TagUpdateManyWithWhereWithoutProfilesInput[];
     deleteMany?: TagScalarWhereInput | TagScalarWhereInput[];
+  };
+
+  export type ProfileCreateNestedManyWithoutBirthLocationInput = {
+    create?:
+      | XOR<
+          ProfileCreateWithoutBirthLocationInput,
+          ProfileUncheckedCreateWithoutBirthLocationInput
+        >
+      | ProfileCreateWithoutBirthLocationInput[]
+      | ProfileUncheckedCreateWithoutBirthLocationInput[];
+    connectOrCreate?:
+      | ProfileCreateOrConnectWithoutBirthLocationInput
+      | ProfileCreateOrConnectWithoutBirthLocationInput[];
+    createMany?: ProfileCreateManyBirthLocationInputEnvelope;
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+  };
+
+  export type ProfileCreateNestedManyWithoutResidenceLocationInput = {
+    create?:
+      | XOR<
+          ProfileCreateWithoutResidenceLocationInput,
+          ProfileUncheckedCreateWithoutResidenceLocationInput
+        >
+      | ProfileCreateWithoutResidenceLocationInput[]
+      | ProfileUncheckedCreateWithoutResidenceLocationInput[];
+    connectOrCreate?:
+      | ProfileCreateOrConnectWithoutResidenceLocationInput
+      | ProfileCreateOrConnectWithoutResidenceLocationInput[];
+    createMany?: ProfileCreateManyResidenceLocationInputEnvelope;
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+  };
+
+  export type ProfileUncheckedCreateNestedManyWithoutBirthLocationInput = {
+    create?:
+      | XOR<
+          ProfileCreateWithoutBirthLocationInput,
+          ProfileUncheckedCreateWithoutBirthLocationInput
+        >
+      | ProfileCreateWithoutBirthLocationInput[]
+      | ProfileUncheckedCreateWithoutBirthLocationInput[];
+    connectOrCreate?:
+      | ProfileCreateOrConnectWithoutBirthLocationInput
+      | ProfileCreateOrConnectWithoutBirthLocationInput[];
+    createMany?: ProfileCreateManyBirthLocationInputEnvelope;
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+  };
+
+  export type ProfileUncheckedCreateNestedManyWithoutResidenceLocationInput = {
+    create?:
+      | XOR<
+          ProfileCreateWithoutResidenceLocationInput,
+          ProfileUncheckedCreateWithoutResidenceLocationInput
+        >
+      | ProfileCreateWithoutResidenceLocationInput[]
+      | ProfileUncheckedCreateWithoutResidenceLocationInput[];
+    connectOrCreate?:
+      | ProfileCreateOrConnectWithoutResidenceLocationInput
+      | ProfileCreateOrConnectWithoutResidenceLocationInput[];
+    createMany?: ProfileCreateManyResidenceLocationInputEnvelope;
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+  };
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+  };
+
+  export type ProfileUpdateManyWithoutBirthLocationNestedInput = {
+    create?:
+      | XOR<
+          ProfileCreateWithoutBirthLocationInput,
+          ProfileUncheckedCreateWithoutBirthLocationInput
+        >
+      | ProfileCreateWithoutBirthLocationInput[]
+      | ProfileUncheckedCreateWithoutBirthLocationInput[];
+    connectOrCreate?:
+      | ProfileCreateOrConnectWithoutBirthLocationInput
+      | ProfileCreateOrConnectWithoutBirthLocationInput[];
+    upsert?:
+      | ProfileUpsertWithWhereUniqueWithoutBirthLocationInput
+      | ProfileUpsertWithWhereUniqueWithoutBirthLocationInput[];
+    createMany?: ProfileCreateManyBirthLocationInputEnvelope;
+    set?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    disconnect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    delete?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    update?:
+      | ProfileUpdateWithWhereUniqueWithoutBirthLocationInput
+      | ProfileUpdateWithWhereUniqueWithoutBirthLocationInput[];
+    updateMany?:
+      | ProfileUpdateManyWithWhereWithoutBirthLocationInput
+      | ProfileUpdateManyWithWhereWithoutBirthLocationInput[];
+    deleteMany?: ProfileScalarWhereInput | ProfileScalarWhereInput[];
+  };
+
+  export type ProfileUpdateManyWithoutResidenceLocationNestedInput = {
+    create?:
+      | XOR<
+          ProfileCreateWithoutResidenceLocationInput,
+          ProfileUncheckedCreateWithoutResidenceLocationInput
+        >
+      | ProfileCreateWithoutResidenceLocationInput[]
+      | ProfileUncheckedCreateWithoutResidenceLocationInput[];
+    connectOrCreate?:
+      | ProfileCreateOrConnectWithoutResidenceLocationInput
+      | ProfileCreateOrConnectWithoutResidenceLocationInput[];
+    upsert?:
+      | ProfileUpsertWithWhereUniqueWithoutResidenceLocationInput
+      | ProfileUpsertWithWhereUniqueWithoutResidenceLocationInput[];
+    createMany?: ProfileCreateManyResidenceLocationInputEnvelope;
+    set?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    disconnect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    delete?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    update?:
+      | ProfileUpdateWithWhereUniqueWithoutResidenceLocationInput
+      | ProfileUpdateWithWhereUniqueWithoutResidenceLocationInput[];
+    updateMany?:
+      | ProfileUpdateManyWithWhereWithoutResidenceLocationInput
+      | ProfileUpdateManyWithWhereWithoutResidenceLocationInput[];
+    deleteMany?: ProfileScalarWhereInput | ProfileScalarWhereInput[];
+  };
+
+  export type ProfileUncheckedUpdateManyWithoutBirthLocationNestedInput = {
+    create?:
+      | XOR<
+          ProfileCreateWithoutBirthLocationInput,
+          ProfileUncheckedCreateWithoutBirthLocationInput
+        >
+      | ProfileCreateWithoutBirthLocationInput[]
+      | ProfileUncheckedCreateWithoutBirthLocationInput[];
+    connectOrCreate?:
+      | ProfileCreateOrConnectWithoutBirthLocationInput
+      | ProfileCreateOrConnectWithoutBirthLocationInput[];
+    upsert?:
+      | ProfileUpsertWithWhereUniqueWithoutBirthLocationInput
+      | ProfileUpsertWithWhereUniqueWithoutBirthLocationInput[];
+    createMany?: ProfileCreateManyBirthLocationInputEnvelope;
+    set?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    disconnect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    delete?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    update?:
+      | ProfileUpdateWithWhereUniqueWithoutBirthLocationInput
+      | ProfileUpdateWithWhereUniqueWithoutBirthLocationInput[];
+    updateMany?:
+      | ProfileUpdateManyWithWhereWithoutBirthLocationInput
+      | ProfileUpdateManyWithWhereWithoutBirthLocationInput[];
+    deleteMany?: ProfileScalarWhereInput | ProfileScalarWhereInput[];
+  };
+
+  export type ProfileUncheckedUpdateManyWithoutResidenceLocationNestedInput = {
+    create?:
+      | XOR<
+          ProfileCreateWithoutResidenceLocationInput,
+          ProfileUncheckedCreateWithoutResidenceLocationInput
+        >
+      | ProfileCreateWithoutResidenceLocationInput[]
+      | ProfileUncheckedCreateWithoutResidenceLocationInput[];
+    connectOrCreate?:
+      | ProfileCreateOrConnectWithoutResidenceLocationInput
+      | ProfileCreateOrConnectWithoutResidenceLocationInput[];
+    upsert?:
+      | ProfileUpsertWithWhereUniqueWithoutResidenceLocationInput
+      | ProfileUpsertWithWhereUniqueWithoutResidenceLocationInput[];
+    createMany?: ProfileCreateManyResidenceLocationInputEnvelope;
+    set?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    disconnect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    delete?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[];
+    update?:
+      | ProfileUpdateWithWhereUniqueWithoutResidenceLocationInput
+      | ProfileUpdateWithWhereUniqueWithoutResidenceLocationInput[];
+    updateMany?:
+      | ProfileUpdateManyWithWhereWithoutResidenceLocationInput
+      | ProfileUpdateManyWithWhereWithoutResidenceLocationInput[];
+    deleteMany?: ProfileScalarWhereInput | ProfileScalarWhereInput[];
   };
 
   export type AccountCreateNestedOneWithoutCommentsInput = {
@@ -18168,6 +20254,17 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null;
   };
 
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    lt?: number | FloatFieldRefInput<$PrismaModel>;
+    lte?: number | FloatFieldRefInput<$PrismaModel>;
+    gt?: number | FloatFieldRefInput<$PrismaModel>;
+    gte?: number | FloatFieldRefInput<$PrismaModel>;
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
+  };
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>;
     in?: number[] | ListIntFieldRefInput<$PrismaModel>;
@@ -18248,6 +20345,38 @@ export namespace Prisma {
       _min?: NestedDateTimeNullableFilter<$PrismaModel>;
       _max?: NestedDateTimeNullableFilter<$PrismaModel>;
     };
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    lt?: number | FloatFieldRefInput<$PrismaModel>;
+    lte?: number | FloatFieldRefInput<$PrismaModel>;
+    gt?: number | FloatFieldRefInput<$PrismaModel>;
+    gte?: number | FloatFieldRefInput<$PrismaModel>;
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null;
+    _count?: NestedIntNullableFilter<$PrismaModel>;
+    _avg?: NestedFloatNullableFilter<$PrismaModel>;
+    _sum?: NestedFloatNullableFilter<$PrismaModel>;
+    _min?: NestedFloatNullableFilter<$PrismaModel>;
+    _max?: NestedFloatNullableFilter<$PrismaModel>;
+  };
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>;
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>;
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>;
+    lt?: number | FloatFieldRefInput<$PrismaModel>;
+    lte?: number | FloatFieldRefInput<$PrismaModel>;
+    gt?: number | FloatFieldRefInput<$PrismaModel>;
+    gte?: number | FloatFieldRefInput<$PrismaModel>;
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _avg?: NestedFloatFilter<$PrismaModel>;
+    _sum?: NestedFloatFilter<$PrismaModel>;
+    _min?: NestedFloatFilter<$PrismaModel>;
+    _max?: NestedFloatFilter<$PrismaModel>;
+  };
 
   export type NestedEnumTagTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.TagType | EnumTagTypeFieldRefInput<$PrismaModel>;
@@ -18779,6 +20908,66 @@ export namespace Prisma {
     >;
   };
 
+  export type LocationCreateWithoutBirthProfilesInput = {
+    latitude: number;
+    longitude: number;
+    country: string;
+    province: string;
+    city: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    residenceProfiles?: ProfileCreateNestedManyWithoutResidenceLocationInput;
+  };
+
+  export type LocationUncheckedCreateWithoutBirthProfilesInput = {
+    latitude: number;
+    longitude: number;
+    country: string;
+    province: string;
+    city: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    residenceProfiles?: ProfileUncheckedCreateNestedManyWithoutResidenceLocationInput;
+  };
+
+  export type LocationCreateOrConnectWithoutBirthProfilesInput = {
+    where: LocationWhereUniqueInput;
+    create: XOR<
+      LocationCreateWithoutBirthProfilesInput,
+      LocationUncheckedCreateWithoutBirthProfilesInput
+    >;
+  };
+
+  export type LocationCreateWithoutResidenceProfilesInput = {
+    latitude: number;
+    longitude: number;
+    country: string;
+    province: string;
+    city: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    birthProfiles?: ProfileCreateNestedManyWithoutBirthLocationInput;
+  };
+
+  export type LocationUncheckedCreateWithoutResidenceProfilesInput = {
+    latitude: number;
+    longitude: number;
+    country: string;
+    province: string;
+    city: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    birthProfiles?: ProfileUncheckedCreateNestedManyWithoutBirthLocationInput;
+  };
+
+  export type LocationCreateOrConnectWithoutResidenceProfilesInput = {
+    where: LocationWhereUniqueInput;
+    create: XOR<
+      LocationCreateWithoutResidenceProfilesInput,
+      LocationUncheckedCreateWithoutResidenceProfilesInput
+    >;
+  };
+
   export type CommentUpsertWithWhereUniqueWithoutProfileInput = {
     where: CommentWhereUniqueInput;
     update: XOR<
@@ -18876,6 +21065,301 @@ export namespace Prisma {
     >;
   };
 
+  export type LocationUpsertWithoutBirthProfilesInput = {
+    update: XOR<
+      LocationUpdateWithoutBirthProfilesInput,
+      LocationUncheckedUpdateWithoutBirthProfilesInput
+    >;
+    create: XOR<
+      LocationCreateWithoutBirthProfilesInput,
+      LocationUncheckedCreateWithoutBirthProfilesInput
+    >;
+    where?: LocationWhereInput;
+  };
+
+  export type LocationUpdateToOneWithWhereWithoutBirthProfilesInput = {
+    where?: LocationWhereInput;
+    data: XOR<
+      LocationUpdateWithoutBirthProfilesInput,
+      LocationUncheckedUpdateWithoutBirthProfilesInput
+    >;
+  };
+
+  export type LocationUpdateWithoutBirthProfilesInput = {
+    latitude?: FloatFieldUpdateOperationsInput | number;
+    longitude?: FloatFieldUpdateOperationsInput | number;
+    country?: StringFieldUpdateOperationsInput | string;
+    province?: StringFieldUpdateOperationsInput | string;
+    city?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    residenceProfiles?: ProfileUpdateManyWithoutResidenceLocationNestedInput;
+  };
+
+  export type LocationUncheckedUpdateWithoutBirthProfilesInput = {
+    latitude?: FloatFieldUpdateOperationsInput | number;
+    longitude?: FloatFieldUpdateOperationsInput | number;
+    country?: StringFieldUpdateOperationsInput | string;
+    province?: StringFieldUpdateOperationsInput | string;
+    city?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    residenceProfiles?: ProfileUncheckedUpdateManyWithoutResidenceLocationNestedInput;
+  };
+
+  export type LocationUpsertWithoutResidenceProfilesInput = {
+    update: XOR<
+      LocationUpdateWithoutResidenceProfilesInput,
+      LocationUncheckedUpdateWithoutResidenceProfilesInput
+    >;
+    create: XOR<
+      LocationCreateWithoutResidenceProfilesInput,
+      LocationUncheckedCreateWithoutResidenceProfilesInput
+    >;
+    where?: LocationWhereInput;
+  };
+
+  export type LocationUpdateToOneWithWhereWithoutResidenceProfilesInput = {
+    where?: LocationWhereInput;
+    data: XOR<
+      LocationUpdateWithoutResidenceProfilesInput,
+      LocationUncheckedUpdateWithoutResidenceProfilesInput
+    >;
+  };
+
+  export type LocationUpdateWithoutResidenceProfilesInput = {
+    latitude?: FloatFieldUpdateOperationsInput | number;
+    longitude?: FloatFieldUpdateOperationsInput | number;
+    country?: StringFieldUpdateOperationsInput | string;
+    province?: StringFieldUpdateOperationsInput | string;
+    city?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    birthProfiles?: ProfileUpdateManyWithoutBirthLocationNestedInput;
+  };
+
+  export type LocationUncheckedUpdateWithoutResidenceProfilesInput = {
+    latitude?: FloatFieldUpdateOperationsInput | number;
+    longitude?: FloatFieldUpdateOperationsInput | number;
+    country?: StringFieldUpdateOperationsInput | string;
+    province?: StringFieldUpdateOperationsInput | string;
+    city?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    birthProfiles?: ProfileUncheckedUpdateManyWithoutBirthLocationNestedInput;
+  };
+
+  export type ProfileCreateWithoutBirthLocationInput = {
+    id?: string;
+    shortId: number;
+    phoneNumber: string;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    fistName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    comments?: CommentCreateNestedManyWithoutProfileInput;
+    messages?: MessageCreateNestedManyWithoutProfileInput;
+    tags?: TagCreateNestedManyWithoutProfilesInput;
+    residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
+  };
+
+  export type ProfileUncheckedCreateWithoutBirthLocationInput = {
+    id?: string;
+    shortId: number;
+    phoneNumber: string;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    fistName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    residenceLongitude?: number | null;
+    residenceLatitude?: number | null;
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
+    messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
+    tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
+  };
+
+  export type ProfileCreateOrConnectWithoutBirthLocationInput = {
+    where: ProfileWhereUniqueInput;
+    create: XOR<
+      ProfileCreateWithoutBirthLocationInput,
+      ProfileUncheckedCreateWithoutBirthLocationInput
+    >;
+  };
+
+  export type ProfileCreateManyBirthLocationInputEnvelope = {
+    data:
+      | ProfileCreateManyBirthLocationInput
+      | ProfileCreateManyBirthLocationInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type ProfileCreateWithoutResidenceLocationInput = {
+    id?: string;
+    shortId: number;
+    phoneNumber: string;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    fistName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    comments?: CommentCreateNestedManyWithoutProfileInput;
+    messages?: MessageCreateNestedManyWithoutProfileInput;
+    tags?: TagCreateNestedManyWithoutProfilesInput;
+    birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
+  };
+
+  export type ProfileUncheckedCreateWithoutResidenceLocationInput = {
+    id?: string;
+    shortId: number;
+    phoneNumber: string;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    fistName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    birthLongitude?: number | null;
+    birthLatitude?: number | null;
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
+    messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
+    tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
+  };
+
+  export type ProfileCreateOrConnectWithoutResidenceLocationInput = {
+    where: ProfileWhereUniqueInput;
+    create: XOR<
+      ProfileCreateWithoutResidenceLocationInput,
+      ProfileUncheckedCreateWithoutResidenceLocationInput
+    >;
+  };
+
+  export type ProfileCreateManyResidenceLocationInputEnvelope = {
+    data:
+      | ProfileCreateManyResidenceLocationInput
+      | ProfileCreateManyResidenceLocationInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type ProfileUpsertWithWhereUniqueWithoutBirthLocationInput = {
+    where: ProfileWhereUniqueInput;
+    update: XOR<
+      ProfileUpdateWithoutBirthLocationInput,
+      ProfileUncheckedUpdateWithoutBirthLocationInput
+    >;
+    create: XOR<
+      ProfileCreateWithoutBirthLocationInput,
+      ProfileUncheckedCreateWithoutBirthLocationInput
+    >;
+  };
+
+  export type ProfileUpdateWithWhereUniqueWithoutBirthLocationInput = {
+    where: ProfileWhereUniqueInput;
+    data: XOR<
+      ProfileUpdateWithoutBirthLocationInput,
+      ProfileUncheckedUpdateWithoutBirthLocationInput
+    >;
+  };
+
+  export type ProfileUpdateManyWithWhereWithoutBirthLocationInput = {
+    where: ProfileScalarWhereInput;
+    data: XOR<
+      ProfileUpdateManyMutationInput,
+      ProfileUncheckedUpdateManyWithoutBirthLocationInput
+    >;
+  };
+
+  export type ProfileScalarWhereInput = {
+    AND?: ProfileScalarWhereInput | ProfileScalarWhereInput[];
+    OR?: ProfileScalarWhereInput[];
+    NOT?: ProfileScalarWhereInput | ProfileScalarWhereInput[];
+    id?: StringFilter<'Profile'> | string;
+    shortId?: IntFilter<'Profile'> | number;
+    phoneNumber?: StringFilter<'Profile'> | string;
+    secondaryPhoneNumber?: StringNullableFilter<'Profile'> | string | null;
+    fullName?: StringFilter<'Profile'> | string;
+    fistName?: StringNullableFilter<'Profile'> | string | null;
+    gender?: StringNullableFilter<'Profile'> | string | null;
+    birthDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
+    profilePictureUrl?: StringNullableFilter<'Profile'> | string | null;
+    instagram?: StringNullableFilter<'Profile'> | string | null;
+    mail?: StringNullableFilter<'Profile'> | string | null;
+    dni?: StringNullableFilter<'Profile'> | string | null;
+    alternativeNames?: StringNullableListFilter<'Profile'>;
+    birthLongitude?: FloatNullableFilter<'Profile'> | number | null;
+    birthLatitude?: FloatNullableFilter<'Profile'> | number | null;
+    residenceLongitude?: FloatNullableFilter<'Profile'> | number | null;
+    residenceLatitude?: FloatNullableFilter<'Profile'> | number | null;
+    isInTrash?: BoolFilter<'Profile'> | boolean;
+    movedToTrashDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
+    created_at?: DateTimeFilter<'Profile'> | Date | string;
+    updated_at?: DateTimeFilter<'Profile'> | Date | string;
+  };
+
+  export type ProfileUpsertWithWhereUniqueWithoutResidenceLocationInput = {
+    where: ProfileWhereUniqueInput;
+    update: XOR<
+      ProfileUpdateWithoutResidenceLocationInput,
+      ProfileUncheckedUpdateWithoutResidenceLocationInput
+    >;
+    create: XOR<
+      ProfileCreateWithoutResidenceLocationInput,
+      ProfileUncheckedCreateWithoutResidenceLocationInput
+    >;
+  };
+
+  export type ProfileUpdateWithWhereUniqueWithoutResidenceLocationInput = {
+    where: ProfileWhereUniqueInput;
+    data: XOR<
+      ProfileUpdateWithoutResidenceLocationInput,
+      ProfileUncheckedUpdateWithoutResidenceLocationInput
+    >;
+  };
+
+  export type ProfileUpdateManyWithWhereWithoutResidenceLocationInput = {
+    where: ProfileScalarWhereInput;
+    data: XOR<
+      ProfileUpdateManyMutationInput,
+      ProfileUncheckedUpdateManyWithoutResidenceLocationInput
+    >;
+  };
+
   export type AccountCreateWithoutCommentsInput = {
     id?: string;
     username: string;
@@ -18932,6 +21416,8 @@ export namespace Prisma {
     updated_at?: Date | string;
     messages?: MessageCreateNestedManyWithoutProfileInput;
     tags?: TagCreateNestedManyWithoutProfilesInput;
+    birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
+    residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
   };
 
   export type ProfileUncheckedCreateWithoutCommentsInput = {
@@ -18948,6 +21434,10 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    birthLongitude?: number | null;
+    birthLatitude?: number | null;
+    residenceLongitude?: number | null;
+    residenceLatitude?: number | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -19102,6 +21592,8 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     messages?: MessageUpdateManyWithoutProfileNestedInput;
     tags?: TagUpdateManyWithoutProfilesNestedInput;
+    birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
+    residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutCommentsInput = {
@@ -19128,6 +21620,13 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    residenceLongitude?:
+      | NullableFloatFieldUpdateOperationsInput
+      | number
+      | null;
+    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -19338,6 +21837,8 @@ export namespace Prisma {
     updated_at?: Date | string;
     comments?: CommentCreateNestedManyWithoutProfileInput;
     messages?: MessageCreateNestedManyWithoutProfileInput;
+    birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
+    residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
   };
 
   export type ProfileUncheckedCreateWithoutTagsInput = {
@@ -19354,6 +21855,10 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    birthLongitude?: number | null;
+    birthLatitude?: number | null;
+    residenceLongitude?: number | null;
+    residenceLatitude?: number | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -19604,29 +22109,6 @@ export namespace Prisma {
       ProfileUpdateManyMutationInput,
       ProfileUncheckedUpdateManyWithoutTagsInput
     >;
-  };
-
-  export type ProfileScalarWhereInput = {
-    AND?: ProfileScalarWhereInput | ProfileScalarWhereInput[];
-    OR?: ProfileScalarWhereInput[];
-    NOT?: ProfileScalarWhereInput | ProfileScalarWhereInput[];
-    id?: StringFilter<'Profile'> | string;
-    shortId?: IntFilter<'Profile'> | number;
-    phoneNumber?: StringFilter<'Profile'> | string;
-    secondaryPhoneNumber?: StringNullableFilter<'Profile'> | string | null;
-    fullName?: StringFilter<'Profile'> | string;
-    fistName?: StringNullableFilter<'Profile'> | string | null;
-    gender?: StringNullableFilter<'Profile'> | string | null;
-    birthDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
-    profilePictureUrl?: StringNullableFilter<'Profile'> | string | null;
-    instagram?: StringNullableFilter<'Profile'> | string | null;
-    mail?: StringNullableFilter<'Profile'> | string | null;
-    dni?: StringNullableFilter<'Profile'> | string | null;
-    alternativeNames?: StringNullableListFilter<'Profile'>;
-    isInTrash?: BoolFilter<'Profile'> | boolean;
-    movedToTrashDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
-    created_at?: DateTimeFilter<'Profile'> | Date | string;
-    updated_at?: DateTimeFilter<'Profile'> | Date | string;
   };
 
   export type AccountUpsertWithWhereUniqueWithoutGlobalFilterInput = {
@@ -20191,6 +22673,8 @@ export namespace Prisma {
     updated_at?: Date | string;
     comments?: CommentCreateNestedManyWithoutProfileInput;
     tags?: TagCreateNestedManyWithoutProfilesInput;
+    birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
+    residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
   };
 
   export type ProfileUncheckedCreateWithoutMessagesInput = {
@@ -20207,6 +22691,10 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    birthLongitude?: number | null;
+    birthLatitude?: number | null;
+    residenceLongitude?: number | null;
+    residenceLatitude?: number | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -20277,6 +22765,8 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     comments?: CommentUpdateManyWithoutProfileNestedInput;
     tags?: TagUpdateManyWithoutProfilesNestedInput;
+    birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
+    residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutMessagesInput = {
@@ -20303,6 +22793,13 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    residenceLongitude?:
+      | NullableFloatFieldUpdateOperationsInput
+      | number
+      | null;
+    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -20636,6 +23133,282 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
+  export type ProfileCreateManyBirthLocationInput = {
+    id?: string;
+    shortId: number;
+    phoneNumber: string;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    fistName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    residenceLongitude?: number | null;
+    residenceLatitude?: number | null;
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type ProfileCreateManyResidenceLocationInput = {
+    id?: string;
+    shortId: number;
+    phoneNumber: string;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    fistName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    birthLongitude?: number | null;
+    birthLatitude?: number | null;
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type ProfileUpdateWithoutBirthLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    comments?: CommentUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUpdateManyWithoutProfileNestedInput;
+    tags?: TagUpdateManyWithoutProfilesNestedInput;
+    residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
+  };
+
+  export type ProfileUncheckedUpdateWithoutBirthLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    residenceLongitude?:
+      | NullableFloatFieldUpdateOperationsInput
+      | number
+      | null;
+    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
+    tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
+  };
+
+  export type ProfileUncheckedUpdateManyWithoutBirthLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    residenceLongitude?:
+      | NullableFloatFieldUpdateOperationsInput
+      | number
+      | null;
+    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type ProfileUpdateWithoutResidenceLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    comments?: CommentUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUpdateManyWithoutProfileNestedInput;
+    tags?: TagUpdateManyWithoutProfilesNestedInput;
+    birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
+  };
+
+  export type ProfileUncheckedUpdateWithoutResidenceLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
+    tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
+  };
+
+  export type ProfileUncheckedUpdateManyWithoutResidenceLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
   export type AccountUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     username?: StringFieldUpdateOperationsInput | string;
@@ -20709,6 +23482,8 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     comments?: CommentUpdateManyWithoutProfileNestedInput;
     messages?: MessageUpdateManyWithoutProfileNestedInput;
+    birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
+    residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutTagsInput = {
@@ -20735,6 +23510,13 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    residenceLongitude?:
+      | NullableFloatFieldUpdateOperationsInput
+      | number
+      | null;
+    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -20771,6 +23553,13 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    residenceLongitude?:
+      | NullableFloatFieldUpdateOperationsInput
+      | number
+      | null;
+    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -20978,6 +23767,12 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = ProfileCountOutputTypeDefaultArgs<ExtArgs>;
   /**
+   * @deprecated Use LocationCountOutputTypeDefaultArgs instead
+   */
+  export type LocationCountOutputTypeArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = LocationCountOutputTypeDefaultArgs<ExtArgs>;
+  /**
    * @deprecated Use TagCountOutputTypeDefaultArgs instead
    */
   export type TagCountOutputTypeArgs<
@@ -21013,6 +23808,12 @@ export namespace Prisma {
   export type ProfileArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = ProfileDefaultArgs<ExtArgs>;
+  /**
+   * @deprecated Use LocationDefaultArgs instead
+   */
+  export type LocationArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = LocationDefaultArgs<ExtArgs>;
   /**
    * @deprecated Use CommentDefaultArgs instead
    */

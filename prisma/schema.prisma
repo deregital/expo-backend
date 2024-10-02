@@ -59,6 +59,14 @@ model Profile {
   messages Message[] @relation("PROFILE_X_MESSAGE")
   tags     Tag[]     @relation("PROFILE_X_TAG")
 
+  birthLongitude Float?    @map("birth_longitude")
+  birthLatitude  Float?    @map("birth_latitude")
+  birthLocation  Location? @relation("PROFILE_X_BIRTH_LOCATION", fields: [birthLatitude, birthLongitude], references: [latitude, longitude])
+
+  residenceLongitude Float?    @map("residence_longitude")
+  residenceLatitude  Float?    @map("residence_latitude")
+  residenceLocation  Location? @relation("PROFILE_X_RESIDENCE_LOCATION", fields: [residenceLatitude, residenceLongitude], references: [latitude, longitude])
+
   isInTrash        Boolean   @default(false) @map("is_in_trash")
   movedToTrashDate DateTime? @map("moved_to_trash_date")
 
@@ -66,6 +74,23 @@ model Profile {
   updated_at DateTime @updatedAt
 
   @@map("PROFILE")
+}
+
+model Location {
+  latitude  Float
+  longitude Float
+  country   String
+  province  String
+  city      String
+
+  birthProfiles     Profile[] @relation("PROFILE_X_BIRTH_LOCATION")
+  residenceProfiles Profile[] @relation("PROFILE_X_RESIDENCE_LOCATION")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@id([latitude, longitude])
+  @@map("LOCATION")
 }
 
 model Comment {
