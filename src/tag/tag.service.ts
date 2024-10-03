@@ -27,11 +27,13 @@ export class TagService {
   }
 
   async findAll(): Promise<FindAllTagResponseDto> {
-    return await this.prisma.tag.findMany({
-      include: {
-        group: true,
-      },
-    });
+    return {
+      tags: await this.prisma.tag.findMany({
+        include: {
+          group: true,
+        },
+      }),
+    };
   }
 
   async findById(id: Tag['id']): Promise<FindOneTagResponseDto> {
@@ -71,49 +73,53 @@ export class TagService {
   }
 
   async findByGroup(groupId: string): Promise<FindByGroupTagResponseDto> {
-    return await this.prisma.tag.findMany({
-      where: {
-        groupId: groupId,
-      },
-      include: {
-        group: true,
-      },
-    });
+    return {
+      tags: await this.prisma.tag.findMany({
+        where: {
+          groupId: groupId,
+        },
+        include: {
+          group: true,
+        },
+      }),
+    };
   }
 
   async findAllGrouped(): Promise<FindAllGroupedTagResponseDto> {
-    return await this.prisma.tagGroup.findMany({
-      select: {
-        tags: {
-          include: {
-            _count: {
-              select: {
-                profiles: true,
+    return {
+      groups: await this.prisma.tagGroup.findMany({
+        select: {
+          tags: {
+            include: {
+              _count: {
+                select: {
+                  profiles: true,
+                },
               },
             },
+            orderBy: {
+              name: 'asc',
+            },
           },
-          orderBy: {
-            name: 'asc',
+          _count: {
+            select: {
+              tags: true,
+            },
           },
+          color: true,
+          isExclusive: true,
+          name: true,
+          id: true,
         },
-        _count: {
-          select: {
-            tags: true,
+        orderBy: [
+          {
+            tags: {
+              _count: 'desc',
+            },
           },
-        },
-        color: true,
-        isExclusive: true,
-        name: true,
-        id: true,
-      },
-      orderBy: [
-        {
-          tags: {
-            _count: 'desc',
-          },
-        },
-        { created_at: 'desc' },
-      ],
-    });
+          { created_at: 'desc' },
+        ],
+      }),
+    };
   }
 }

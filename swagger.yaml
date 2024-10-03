@@ -283,13 +283,6 @@ components:
               type: "array"
               items:
                 type: "string"
-          required:
-            - "id"
-            - "username"
-            - "role"
-            - "created_at"
-            - "updated_at"
-            - "globalFilter"
         backendTokens:
           type: "object"
           properties:
@@ -297,9 +290,6 @@ components:
               type: "string"
             refreshToken:
               type: "string"
-          required:
-            - "accessToken"
-            - "refreshToken"
       required:
         - "user"
         - "backendTokens"
@@ -340,33 +330,11 @@ components:
         - "groupId"
         - "type"
     FindAllTagResponseDto:
-      type: "array"
-      items:
-        type: "object"
-        properties:
-          id:
-            type: "string"
-            format: "uuid"
-          name:
-            type: "string"
-            minLength: 1
-          groupId:
-            type: "string"
-            format: "uuid"
-          type:
-            type: "string"
-            enum:
-              - "PROFILE"
-              - "EVENT"
-              - "PARTICIPANT"
-              - "NOT_IN_SYSTEM"
-          created_at:
-            type: "string"
-            format: "date-time"
-          updated_at:
-            type: "string"
-            format: "date-time"
-          group:
+      type: "object"
+      properties:
+        tags:
+          type: "array"
+          items:
             type: "object"
             properties:
               id:
@@ -375,134 +343,144 @@ components:
               name:
                 type: "string"
                 minLength: 1
-              color:
+              groupId:
                 type: "string"
-                minLength: 7
-                maxLength: 7
-              isExclusive:
-                type: "boolean"
+                format: "uuid"
+              type:
+                type: "string"
+                enum:
+                  - "PROFILE"
+                  - "EVENT"
+                  - "PARTICIPANT"
+                  - "NOT_IN_SYSTEM"
               created_at:
                 type: "string"
                 format: "date-time"
               updated_at:
                 type: "string"
                 format: "date-time"
+              group:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                    format: "uuid"
+                  name:
+                    type: "string"
+                    minLength: 1
+                  color:
+                    type: "string"
+                    minLength: 7
+                    maxLength: 7
+                  isExclusive:
+                    type: "boolean"
+                  created_at:
+                    type: "string"
+                    format: "date-time"
+                  updated_at:
+                    type: "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "name"
+                  - "color"
+                  - "isExclusive"
+                  - "created_at"
+                  - "updated_at"
             required:
               - "id"
               - "name"
-              - "color"
-              - "isExclusive"
+              - "groupId"
+              - "type"
               - "created_at"
               - "updated_at"
-        required:
-          - "id"
-          - "name"
-          - "groupId"
-          - "type"
-          - "created_at"
-          - "updated_at"
-          - "group"
+              - "group"
+      required:
+        - "tags"
     FindAllGroupedTagResponseDto:
-      type: "array"
-      items:
-        type: "object"
-        properties:
-          id:
-            type: "string"
-            format: "uuid"
-          name:
-            type: "string"
-            minLength: 1
-          isExclusive:
-            type: "boolean"
-          color:
-            type: "string"
-            minLength: 7
-            maxLength: 7
-          tags:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                id:
-                  type: "string"
-                  format: "uuid"
-                name:
-                  type: "string"
-                  minLength: 1
-                groupId:
-                  type: "string"
-                  format: "uuid"
-                type:
-                  type: "string"
-                  enum:
-                    - "PROFILE"
-                    - "EVENT"
-                    - "PARTICIPANT"
-                    - "NOT_IN_SYSTEM"
-                created_at:
-                  type: "string"
-                  format: "date-time"
-                updated_at:
-                  type: "string"
-                  format: "date-time"
-                _count:
+      type: "object"
+      properties:
+        groups:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              isExclusive:
+                type: "boolean"
+              color:
+                type: "string"
+                minLength: 7
+                maxLength: 7
+              tags:
+                type: "array"
+                items:
                   type: "object"
                   properties:
-                    profiles:
-                      type: "number"
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    groupId:
+                      type: "string"
+                      format: "uuid"
+                    type:
+                      type: "string"
+                      enum:
+                        - "PROFILE"
+                        - "EVENT"
+                        - "PARTICIPANT"
+                        - "NOT_IN_SYSTEM"
+                    created_at:
+                      type: "string"
+                      format: "date-time"
+                    updated_at:
+                      type: "string"
+                      format: "date-time"
+                    _count:
+                      type: "object"
+                      properties:
+                        profiles:
+                          type: "number"
+                      required:
+                        - "profiles"
                   required:
-                    - "profiles"
-              required:
-                - "id"
-                - "name"
-                - "groupId"
-                - "type"
-                - "created_at"
-                - "updated_at"
-                - "_count"
-          _count:
-            type: "object"
-            properties:
-              tags:
-                type: "number"
+                    - "id"
+                    - "name"
+                    - "groupId"
+                    - "type"
+                    - "created_at"
+                    - "updated_at"
+                    - "_count"
+              _count:
+                type: "object"
+                properties:
+                  tags:
+                    type: "number"
+                required:
+                  - "tags"
             required:
+              - "id"
+              - "name"
+              - "isExclusive"
+              - "color"
               - "tags"
-        required:
-          - "id"
-          - "name"
-          - "isExclusive"
-          - "color"
-          - "tags"
-          - "_count"
+              - "_count"
+      required:
+        - "groups"
     FindByGroupTagResponseDto:
-      type: "array"
-      items:
-        type: "object"
-        properties:
-          id:
-            type: "string"
-            format: "uuid"
-          name:
-            type: "string"
-            minLength: 1
-          groupId:
-            type: "string"
-            format: "uuid"
-          type:
-            type: "string"
-            enum:
-              - "PROFILE"
-              - "EVENT"
-              - "PARTICIPANT"
-              - "NOT_IN_SYSTEM"
-          created_at:
-            type: "string"
-            format: "date-time"
-          updated_at:
-            type: "string"
-            format: "date-time"
-          group:
+      type: "object"
+      properties:
+        tags:
+          type: "array"
+          items:
             type: "object"
             properties:
               id:
@@ -511,33 +489,60 @@ components:
               name:
                 type: "string"
                 minLength: 1
-              color:
+              groupId:
                 type: "string"
-                minLength: 7
-                maxLength: 7
-              isExclusive:
-                type: "boolean"
+                format: "uuid"
+              type:
+                type: "string"
+                enum:
+                  - "PROFILE"
+                  - "EVENT"
+                  - "PARTICIPANT"
+                  - "NOT_IN_SYSTEM"
               created_at:
                 type: "string"
                 format: "date-time"
               updated_at:
                 type: "string"
                 format: "date-time"
+              group:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                    format: "uuid"
+                  name:
+                    type: "string"
+                    minLength: 1
+                  color:
+                    type: "string"
+                    minLength: 7
+                    maxLength: 7
+                  isExclusive:
+                    type: "boolean"
+                  created_at:
+                    type: "string"
+                    format: "date-time"
+                  updated_at:
+                    type: "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "name"
+                  - "color"
+                  - "isExclusive"
+                  - "created_at"
+                  - "updated_at"
             required:
               - "id"
               - "name"
-              - "color"
-              - "isExclusive"
+              - "groupId"
+              - "type"
               - "created_at"
               - "updated_at"
-        required:
-          - "id"
-          - "name"
-          - "groupId"
-          - "type"
-          - "created_at"
-          - "updated_at"
-          - "group"
+              - "group"
+      required:
+        - "tags"
     FindOneTagResponseDto:
       type: "object"
       properties:
@@ -584,13 +589,6 @@ components:
             updated_at:
               type: "string"
               format: "date-time"
-          required:
-            - "id"
-            - "name"
-            - "color"
-            - "isExclusive"
-            - "created_at"
-            - "updated_at"
       required:
         - "id"
         - "name"
@@ -608,6 +606,9 @@ components:
         groupId:
           type: "string"
           format: "uuid"
+      required:
+        - "name"
+        - "groupId"
     DeleteTagResponseDto:
       type: "object"
       properties:
@@ -682,6 +683,8 @@ components:
         - "id"
         - "username"
         - "role"
+        - "isGlobalFilterActive"
+        - "fcmToken"
     UpdateGlobalFilterDto:
       type: "object"
       properties:
@@ -694,6 +697,7 @@ components:
             type: "string"
             format: "uuid"
       required:
+        - "active"
         - "tagsIds"
     UpdateGlobalFilterResponseDto:
       type: "object"
@@ -705,7 +709,8 @@ components:
         esAdmin:
           type: "boolean"
         fcmToken:
-          type: "null"
+          type: "string"
+          nullable: true
         filtroBaseActivo:
           type: "boolean"
         filtroBase:
@@ -747,9 +752,6 @@ components:
                   - "type"
                   - "created_at"
                   - "updated_at"
-          required:
-            - "active"
-            - "etiquetas"
       required:
         - "id"
         - "nombreUsuario"
@@ -857,9 +859,6 @@ components:
                 - "group"
             active:
               type: "boolean"
-          required:
-            - "tags"
-            - "active"
         isGlobalFilterActive:
           default: false
           type: "boolean"
@@ -875,3 +874,5 @@ components:
         - "created_at"
         - "updated_at"
         - "globalFilter"
+        - "isGlobalFilterActive"
+        - "fcmToken"
