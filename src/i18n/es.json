@@ -112,6 +112,13 @@
       "delete": {
         "success": "Etiqueta eliminada",
         "not-found": "Etiqueta no encontrada"
+      },
+      "find-by-group": {
+        "success": "Etiquetas obtenidas",
+        "not-found": "Grupo de etiquetas no encontrado"
+      },
+      "find-all-grouped": {
+        "success": "Etiquetas obtenidas"
       }
     }
   }

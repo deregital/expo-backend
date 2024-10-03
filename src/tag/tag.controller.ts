@@ -26,6 +26,8 @@ import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { FindAllTagResponseDto } from '@/tag/dto/find-all-tag.dto';
 import { FindOneTagResponseDto } from '@/exports';
 import { UpdateTagDto } from '@/tag/dto/update-tag.dto';
+import { FindByGroupTagResponseDto } from '@/tag/dto/find-by-group-tag.dto';
+import { FindAllGroupedTagResponseDto } from '@/tag/dto/find-all-grouped-tag.dto';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -92,5 +94,28 @@ export class TagController {
     @Param('id', new ExistingRecord('tag')) id: string,
   ): Promise<DeleteTagResponseDto> {
     return await this.tagService.remove(id);
+  }
+
+  @ApiOkResponse({
+    description: translate('route.tag.find-by-group.success'),
+    type: FindByGroupTagResponseDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.tag.find-by-group.not-found'),
+  })
+  @Get('/find-by-group/:groupId')
+  async findByGroup(
+    @Param('groupId', new ExistingRecord('tagGroup')) groupId: string,
+  ): Promise<FindByGroupTagResponseDto> {
+    return await this.tagService.findByGroup(groupId);
+  }
+
+  @ApiOkResponse({
+    description: translate('route.tag.find-all-grouped.success'),
+    type: FindAllGroupedTagResponseDto,
+  })
+  @Get('/all-grouped')
+  async findAllGrouped(): Promise<FindAllGroupedTagResponseDto> {
+    return await this.tagService.findAllGrouped();
   }
 }
