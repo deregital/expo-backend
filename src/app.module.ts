@@ -7,9 +7,10 @@ import { AuthModule } from 'src/auth/auth.module';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { APP_PIPE } from '@nestjs/core';
 import { ZodValidationPipe } from 'src/filters/zod.pipe';
+import { TagModule } from './tag/tag.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), AuthModule, AccountModule],
+  imports: [ConfigModule.forRoot(), AuthModule, TagModule, AccountModule],
   providers: [
     {
       provide: APP_PIPE,
