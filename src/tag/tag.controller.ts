@@ -53,6 +53,29 @@ export class TagController {
     return await this.tagService.findAll();
   }
 
+  @ApiOkResponse({
+    description: translate('route.tag.find-all-grouped.success'),
+    type: FindAllGroupedTagResponseDto,
+  })
+  @Get('/all-grouped')
+  async findAllGrouped(): Promise<FindAllGroupedTagResponseDto> {
+    return await this.tagService.findAllGrouped();
+  }
+
+  @ApiOkResponse({
+    description: translate('route.tag.find-by-group.success'),
+    type: FindByGroupTagResponseDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.tag.find-by-group.not-found'),
+  })
+  @Get('/find-by-group/:groupId')
+  async findByGroup(
+    @Param('groupId', new ExistingRecord('tagGroup')) groupId: string,
+  ): Promise<FindByGroupTagResponseDto> {
+    return await this.tagService.findByGroup(groupId);
+  }
+
   @Get('/:id')
   @ApiOkResponse({
     description: translate('route.tag.find-one.success'),
@@ -94,28 +117,5 @@ export class TagController {
     @Param('id', new ExistingRecord('tag')) id: string,
   ): Promise<DeleteTagResponseDto> {
     return await this.tagService.remove(id);
-  }
-
-  @ApiOkResponse({
-    description: translate('route.tag.find-by-group.success'),
-    type: FindByGroupTagResponseDto,
-  })
-  @ApiNotFoundResponse({
-    description: translate('route.tag.find-by-group.not-found'),
-  })
-  @Get('/find-by-group/:groupId')
-  async findByGroup(
-    @Param('groupId', new ExistingRecord('tagGroup')) groupId: string,
-  ): Promise<FindByGroupTagResponseDto> {
-    return await this.tagService.findByGroup(groupId);
-  }
-
-  @ApiOkResponse({
-    description: translate('route.tag.find-all-grouped.success'),
-    type: FindAllGroupedTagResponseDto,
-  })
-  @Get('/all-grouped')
-  async findAllGrouped(): Promise<FindAllGroupedTagResponseDto> {
-    return await this.tagService.findAllGrouped();
   }
 }
