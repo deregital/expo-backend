@@ -8,8 +8,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import {
   CreateAccountDto,
   CreateAccountResponseDto,
-} from '@/account/dto/createAccount.dto';
-import { GetGlobalFilterResponseDto } from '@/account/dto/getGlobalFilter.dto';
+} from '@/account/dto/create-account.dto';
+import { GetGlobalFilterResponseDto } from '@/account/dto/get-global-filter.dto';
 import { translate } from '@/i18n/translate';
 import { Account, Tag } from '~/types/prisma-schema';
 

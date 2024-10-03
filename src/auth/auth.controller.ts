@@ -13,8 +13,6 @@ import { RoleGuard } from '@/auth/guards/role.guard';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Roles(Role.ADMIN, Role.USER)
-  @UseGuards(RoleGuard)
   @ApiOkResponse({
     description: 'Cuenta creada',
     type: LoginResponseDto,
