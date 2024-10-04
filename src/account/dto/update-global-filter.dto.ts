@@ -12,17 +12,11 @@ export class UpdateGlobalFilterDto extends createZodDto(
   updateGlobalFilterSchema,
 ) {}
 
-export const updateGlobalFilterResponseSchema = z.object({
-  id: z.string(),
-  nombreUsuario: z.string(),
-  esAdmin: z.boolean(),
-  fcmToken: z.string().nullable(),
-  filtroBaseActivo: z.boolean(),
-  filtroBase: z.object({
-    active: z.boolean(),
-    etiquetas: z.array(tagSchema),
+export const updateGlobalFilterResponseSchema = accountSchema.merge(
+  z.object({
+    globalFilter: z.array(tagSchema),
   }),
-});
+);
 
 export class UpdateGlobalFilterResponseDto extends createZodDto(
   updateGlobalFilterResponseSchema,

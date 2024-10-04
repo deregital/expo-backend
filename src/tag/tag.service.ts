@@ -3,7 +3,7 @@ import { FindOneTagResponseDto } from '@/tag/dto/find-one-tag.dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateTagDto, CreateTagResponseDto } from '@/tag/dto/create-tag.dto';
 import { FindAllTagResponseDto } from '@/tag/dto/find-all-tag.dto';
-import { UpdateTagDto } from '@/tag/dto/update-tag.dto';
+import { UpdateTagDto, UpdateTagResponseDto } from '@/tag/dto/update-tag.dto';
 import { Injectable } from '@nestjs/common';
 import { Tag } from '~/types/prisma-schema';
 import { FindByGroupTagResponseDto } from '@/tag/dto/find-by-group-tag.dto';
@@ -48,7 +48,10 @@ export class TagService {
     return tag!;
   }
 
-  async update(id: Tag['id'], updateTagDto: UpdateTagDto) {
+  async update(
+    id: Tag['id'],
+    updateTagDto: UpdateTagDto,
+  ): Promise<UpdateTagResponseDto> {
     return await this.prisma.tag.update({
       where: {
         id: id,

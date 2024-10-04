@@ -32,7 +32,7 @@ export class RefreshJwtGuard implements CanActivate {
     return true;
   }
 
-  private extractTokenFromHeader(req: Request) {
+  private extractTokenFromHeader(req: Request): string | undefined {
     if (!req.headers.authorization) {
       return undefined;
     }

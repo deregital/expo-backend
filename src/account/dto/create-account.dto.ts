@@ -11,7 +11,6 @@ export class CreateAccountDto extends createZodDto(createAccountSchema) {}
 
 export const createAccountResponseSchema = accountSchema.omit({
   password: true,
-  globalFilter: true,
   created_at: true,
   updated_at: true,
 });

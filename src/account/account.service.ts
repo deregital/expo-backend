@@ -12,6 +12,7 @@ import {
 import { GetGlobalFilterResponseDto } from '@/account/dto/get-global-filter.dto';
 import { translate } from '@/i18n/translate';
 import { Account, Tag } from '~/types/prisma-schema';
+import { UpdateGlobalFilterResponseDto } from '@/account/dto/update-global-filter.dto';
 
 @Injectable()
 export class AccountService {
@@ -75,35 +76,27 @@ export class AccountService {
       active: boolean;
       tagsIds: Array<Tag['id']>;
     },
-  ): Promise<
-    | (Account & {
-        globalFilter: Array<Pick<Tag, 'id' | 'name' | 'type'>>;
-      })
-    | undefined
-  > {
-    try {
-      return await this.prisma.account.update({
-        where: {
-          id: id,
+  ): Promise<UpdateGlobalFilterResponseDto> {
+    const accountUpdated = await this.prisma.account.update({
+      where: {
+        id: id,
+      },
+      data: {
+        isGlobalFilterActive: active,
+        globalFilter: {
+          set: tagsIds ? tagsIds.map((id) => ({ id })) : [],
         },
-        data: {
-          isGlobalFilterActive: active,
-          globalFilter: {
-            set: tagsIds ? tagsIds.map((id) => ({ id })) : [],
-          },
-        },
-        include: {
-          globalFilter: true,
-        },
-      });
-    } catch (e) {
-      throw new ConflictException(
-        translate('route.account.global-filter-patch.conflict'),
-      );
-    }
+      },
+      include: {
+        globalFilter: true,
+      },
+    });
+    return accountUpdated;
   }
 
-  async getFiltroBase(id: Account['id']): Promise<GetGlobalFilterResponseDto> {
+  async getGlobalFilter(
+    id: Account['id'],
+  ): Promise<GetGlobalFilterResponseDto> {
     const cuenta = await this.prisma.account.findUnique({
       where: {
         id: id,
@@ -134,7 +127,7 @@ export class AccountService {
     }
 
     return {
-      active: cuenta.isGlobalFilterActive,
+      isGlobalFilterActive: cuenta.isGlobalFilterActive,
       globalFilter: cuenta.globalFilter.map((tag) => ({
         id: tag.id,
         name: tag.name,

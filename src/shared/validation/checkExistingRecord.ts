@@ -36,7 +36,7 @@ export class ExistingRecord
   async transform<T extends Capitalize<Prisma.ModelName>>(
     value: string,
     metadata: GenericArgumentMetadata<T>,
-  ) {
+  ): Promise<string> {
     if (!metadata.data) {
       throw new Error('Metadata data is required');
     }

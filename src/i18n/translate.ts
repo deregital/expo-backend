@@ -18,6 +18,6 @@ type Translations = Paths<(typeof translations)['es']>;
 export function translate<Keys extends Translations>(
   key: Keys extends `${string}.${string}` ? Keys : never,
   params: TranslateOptions = {},
-) {
+): string {
   return i18n.t(key as Scope, params);
 }
