@@ -283,6 +283,13 @@ components:
               type: "array"
               items:
                 type: "string"
+          required:
+            - "id"
+            - "username"
+            - "role"
+            - "created_at"
+            - "updated_at"
+            - "globalFilter"
         backendTokens:
           type: "object"
           properties:
@@ -290,6 +297,9 @@ components:
               type: "string"
             refreshToken:
               type: "string"
+          required:
+            - "accessToken"
+            - "refreshToken"
       required:
         - "user"
         - "backendTokens"
@@ -589,6 +599,13 @@ components:
             updated_at:
               type: "string"
               format: "date-time"
+          required:
+            - "id"
+            - "name"
+            - "color"
+            - "isExclusive"
+            - "created_at"
+            - "updated_at"
       required:
         - "id"
         - "name"
@@ -606,9 +623,6 @@ components:
         groupId:
           type: "string"
           format: "uuid"
-      required:
-        - "name"
-        - "groupId"
     DeleteTagResponseDto:
       type: "object"
       properties:
@@ -683,8 +697,6 @@ components:
         - "id"
         - "username"
         - "role"
-        - "isGlobalFilterActive"
-        - "fcmToken"
     UpdateGlobalFilterDto:
       type: "object"
       properties:
@@ -697,7 +709,6 @@ components:
             type: "string"
             format: "uuid"
       required:
-        - "active"
         - "tagsIds"
     UpdateGlobalFilterResponseDto:
       type: "object"
@@ -709,8 +720,7 @@ components:
         esAdmin:
           type: "boolean"
         fcmToken:
-          type: "string"
-          nullable: true
+          type: "null"
         filtroBaseActivo:
           type: "boolean"
         filtroBase:
@@ -752,6 +762,9 @@ components:
                   - "type"
                   - "created_at"
                   - "updated_at"
+          required:
+            - "active"
+            - "etiquetas"
       required:
         - "id"
         - "nombreUsuario"
@@ -859,6 +872,9 @@ components:
                 - "group"
             active:
               type: "boolean"
+          required:
+            - "tags"
+            - "active"
         isGlobalFilterActive:
           default: false
           type: "boolean"
@@ -874,5 +890,3 @@ components:
         - "created_at"
         - "updated_at"
         - "globalFilter"
-        - "isGlobalFilterActive"
-        - "fcmToken"
