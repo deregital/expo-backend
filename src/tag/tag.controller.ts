@@ -24,7 +24,7 @@ import {
 import { translate } from '@/i18n/translate';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { FindAllTagResponseDto } from '@/tag/dto/find-all-tag.dto';
-import { FindOneTagResponseDto } from '@/exports';
+import { FindOneTagResponseDto } from '@/tag/dto/find-one-tag.dto';
 import { UpdateTagDto, UpdateTagResponseDto } from '@/tag/dto/update-tag.dto';
 import { FindByGroupTagResponseDto } from '@/tag/dto/find-by-group-tag.dto';
 import { FindAllGroupedTagResponseDto } from '@/tag/dto/find-all-grouped-tag.dto';

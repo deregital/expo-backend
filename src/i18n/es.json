@@ -120,6 +120,26 @@
       "find-all-grouped": {
         "success": "Etiquetas obtenidas"
       }
+    },
+    "tag-group": {
+      "create": {
+        "success": "Grupo de etiquetas creado con éxito"
+      },
+      "find-all": {
+        "success": "Grupos de etiquetas obtenidos"
+      },
+      "find-one": {
+        "success": "Grupo de etiquetas obtenido",
+        "not-found": "Grupo de etiquetas no encontrado"
+      },
+      "update": {
+        "success": "Grupo de etiquetas actualizado",
+        "not-found": "Grupo de etiquetas no encontrado"
+      },
+      "delete": {
+        "success": "Grupo de etiquetas eliminado",
+        "not-found": "Grupo de etiquetas no encontrado"
+      }
     }
   }
 }

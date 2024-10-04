@@ -8,9 +8,16 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { APP_PIPE } from '@nestjs/core';
 import { ZodValidationPipe } from 'src/filters/zod.pipe';
 import { TagModule } from './tag/tag.module';
+import { TagGroupModule } from './tag-group/tag-group.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), AuthModule, TagModule, AccountModule],
+  imports: [
+    ConfigModule.forRoot(),
+    AuthModule,
+    TagModule,
+    AccountModule,
+    TagGroupModule,
+  ],
   providers: [
     {
       provide: APP_PIPE,
