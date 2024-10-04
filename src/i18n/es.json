@@ -93,6 +93,33 @@
       "me": {
         "success": "Cuenta obtenida"
       }
+    },
+    "tag": {
+      "create": {
+        "success": "Etiqueta creada con éxito"
+      },
+      "find-all": {
+        "success": "Etiquetas obtenidas"
+      },
+      "find-one": {
+        "success": "Etiqueta obtenida",
+        "not-found": "Etiqueta no encontrada"
+      },
+      "update": {
+        "success": "Etiqueta actualizada",
+        "not-found": "Etiqueta no encontrada"
+      },
+      "delete": {
+        "success": "Etiqueta eliminada",
+        "not-found": "Etiqueta no encontrada"
+      },
+      "find-by-group": {
+        "success": "Etiquetas obtenidas",
+        "not-found": "Grupo de etiquetas no encontrado"
+      },
+      "find-all-grouped": {
+        "success": "Etiquetas obtenidas"
+      }
     }
   }
 }

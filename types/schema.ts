@@ -36,6 +36,86 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/tag/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['TagController_create'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/tag/all': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['TagController_findAll'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/tag/all-grouped': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['TagController_findAllGrouped'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/tag/find-by-group/{groupId}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['TagController_findByGroup'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/tag/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['TagController_findById'];
+    put?: never;
+    post?: never;
+    delete: operations['TagController_remove'];
+    options?: never;
+    head?: never;
+    patch: operations['TagController_update'];
+    trace?: never;
+  };
   '/account/create': {
     parameters: {
       query?: never;
@@ -45,7 +125,7 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    post: operations['AccountController_createCuenta'];
+    post: operations['AccountController_create'];
     delete?: never;
     options?: never;
     head?: never;
@@ -59,13 +139,13 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    get: operations['AccountController_getFiltroBase'];
+    get: operations['AccountController_getGlobalFilter'];
     put?: never;
     post?: never;
     delete?: never;
     options?: never;
     head?: never;
-    patch: operations['AccountController_updateFiltroBase'];
+    patch: operations['AccountController_updateGlobalFilter'];
     trace?: never;
   };
   '/account/me': {
@@ -127,13 +207,149 @@ export interface components {
         refreshToken?: string;
       };
     };
+    CreateTagDto: {
+      name: string;
+      /** Format: uuid */
+      groupId: string;
+    };
+    CreateTagResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** Format: uuid */
+      groupId: string;
+      /** @enum {string} */
+      type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+    };
+    FindAllTagResponseDto: {
+      tags: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        groupId: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        group: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          color: string;
+          isExclusive: boolean;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        };
+      }[];
+    };
+    FindAllGroupedTagResponseDto: {
+      groups: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        isExclusive: boolean;
+        color: string;
+        tags: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: uuid */
+          groupId: string;
+          /** @enum {string} */
+          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+          _count: {
+            profiles: number;
+          };
+        }[];
+        _count: {
+          tags: number;
+        };
+      }[];
+    };
+    FindByGroupTagResponseDto: {
+      tags: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        groupId: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        group: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          color: string;
+          isExclusive: boolean;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        };
+      }[];
+    };
+    FindOneTagResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** Format: uuid */
+      groupId: string;
+      /** @enum {string} */
+      type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      group: {
+        /** Format: uuid */
+        id?: string;
+        name?: string;
+        color?: string;
+        isExclusive?: boolean;
+        /** Format: date-time */
+        created_at?: string;
+        /** Format: date-time */
+        updated_at?: string;
+      };
+    };
+    UpdateTagDto: {
+      name: string;
+      /** Format: uuid */
+      groupId: string;
+    };
+    DeleteTagResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** Format: uuid */
+      groupId: string;
+      /** @enum {string} */
+      type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
     CreateAccountDto: {
       username: string;
       password: string;
       /** @enum {string} */
       role: 'USER' | 'ADMIN';
     };
-    CreateCuentaResponseDto: {
+    CreateAccountResponseDto: {
       /** Format: uuid */
       id: string;
       username: string;
@@ -267,7 +483,191 @@ export interface operations {
       };
     };
   };
-  AccountController_createCuenta: {
+  TagController_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateTagDto'];
+      };
+    };
+    responses: {
+      /** @description Etiqueta creada con éxito */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateTagResponseDto'];
+        };
+      };
+    };
+  };
+  TagController_findAll: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Etiquetas obtenidas */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllTagResponseDto'];
+        };
+      };
+    };
+  };
+  TagController_findAllGrouped: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Etiquetas obtenidas */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllGroupedTagResponseDto'];
+        };
+      };
+    };
+  };
+  TagController_findByGroup: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        groupId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Etiquetas obtenidas */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindByGroupTagResponseDto'];
+        };
+      };
+      /** @description Grupo de etiquetas no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  TagController_findById: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Etiqueta obtenida */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindOneTagResponseDto'];
+        };
+      };
+      /** @description Etiqueta no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  TagController_remove: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Etiqueta no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Etiqueta eliminada */
+      410: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DeleteTagResponseDto'];
+        };
+      };
+    };
+  };
+  TagController_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateTagDto'];
+      };
+    };
+    responses: {
+      /** @description Etiqueta actualizada */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindOneTagResponseDto'];
+        };
+      };
+      /** @description Etiqueta no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  AccountController_create: {
     parameters: {
       query?: never;
       header?: never;
@@ -286,12 +686,12 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['CreateCuentaResponseDto'];
+          'application/json': components['schemas']['CreateAccountResponseDto'];
         };
       };
     };
   };
-  AccountController_getFiltroBase: {
+  AccountController_getGlobalFilter: {
     parameters: {
       query?: never;
       header?: never;
@@ -311,7 +711,7 @@ export interface operations {
       };
     };
   };
-  AccountController_updateFiltroBase: {
+  AccountController_updateGlobalFilter: {
     parameters: {
       query?: never;
       header?: never;

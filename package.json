@@ -13,8 +13,8 @@
   ],
   "scripts": {
     "ci": "npm install && npx prisma generate && npm run generate-ts-schema && npm run build && npx prisma generate && npm run format && npm run lint && npm run check-exports",
-    "postinstall": "patch-package",
     "build": "nest build",
+    "postinstall": "patch-package",
     "format": "prettier --write \"src/**/*.ts\"",
     "check-format": "prettier --check \"src/**/*.ts\"",
     "check-exports": "attw --pack .",

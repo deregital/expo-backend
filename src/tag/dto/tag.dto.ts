@@ -19,8 +19,8 @@ export const tagSchema = z.object({
   type: z.nativeEnum(TagType, {
     message: translate('model.tag.type.invalid'),
   }),
-  created_at: z.string().datetime(),
-  updated_at: z.string().datetime(),
+  created_at: z.date(),
+  updated_at: z.date(),
 });
 
 export class TagDto extends createZodDto(tagSchema) {}
