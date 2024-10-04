@@ -1,0 +1,190 @@
+generator toDist {
+  output   = "../dist/types/prisma-schema"
+  provider = "prisma-client-js"
+}
+
+generator client {
+  output   = "../types/prisma-schema"
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "foreignKeys"
+}
+
+model Cuenta {
+  id            String  @id @default(uuid())
+  nombreUsuario String  @unique @map("nombre_usuario")
+  contrasena    String
+  esAdmin       Boolean @default(false) @map("es_admin")
+
+  comentarios Comentario[]
+  etiquetas   Etiqueta[]   @relation("CUENTA_X_ETIQUETA")
+
+  created_at       DateTime   @default(now())
+  updated_at       DateTime   @updatedAt
+  filtroBase       Etiqueta[] @relation("FILTRO_BASE_X_ETIQUETA")
+  filtroBaseActivo Boolean    @default(false) @map("filtro_base_activo")
+
+  fcmToken String[] @map("fcm_token")
+
+  @@map("CUENTA")
+}
+
+model Perfil {
+  id        String @id @default(uuid())
+  idLegible Int    @map("id_legible")
+
+  telefono            String    @unique
+  telefonoSecundario  String?   @unique
+  nombreCompleto      String    @map("nombre_completo")
+  nombrePila          String?   @map("nombre_pila")
+  genero              String?
+  fechaNacimiento     DateTime? @map("fecha_nacimiento")
+  fotoUrl             String?   @map("foto_url")
+  instagram           String?
+  mail                String?
+  dni                 String?
+  nombresAlternativos String[]  @map("nombres_alternativos")
+
+  comentarios   Comentario[]
+  mensajes      Mensaje[]    @relation("PERFIL_X_MENSAJE")
+  etiquetas     Etiqueta[]   @relation("PERFIL_X_ETIQUETA")
+  esPapelera    Boolean      @default(false)
+  fechaPapelera DateTime?    @map("fecha_papelera")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("PERFIL")
+}
+
+model Comentario {
+  id        String @id @default(uuid())
+  contenido String
+
+  creadoPor String @map("creado_por")
+  cuenta    Cuenta @relation(fields: [creadoPor], references: [id])
+  perfilId  String @map("perfil_id")
+  perfil    Perfil @relation(fields: [perfilId], references: [id], onDelete: Cascade)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("COMENTARIO")
+}
+
+model Etiqueta {
+  id      String        @id @default(uuid())
+  nombre  String
+  grupoId String        @map("grupo_id")
+  tipo    TipoEtiqueta  @default(PERSONAL)
+  grupo   EtiquetaGrupo @relation(fields: [grupoId], references: [id], onDelete: Cascade)
+
+  eventosAsistidos   Evento[] @relation("EVENTOASISTIDO_X_ETIQUETA")
+  eventosConfirmados Evento[] @relation("EVENTOCONFIRMADO_X_ETIQUETA")
+  cuentas            Cuenta[] @relation("CUENTA_X_ETIQUETA")
+  perfiles           Perfil[] @relation("PERFIL_X_ETIQUETA")
+  cuentasFiltroBase  Cuenta[] @relation("FILTRO_BASE_X_ETIQUETA")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("ETIQUETA")
+}
+
+model EtiquetaGrupo {
+  id          String     @id @default(uuid())
+  nombre      String
+  color       String
+  esExclusivo Boolean    @map("es_exclusivo")
+  etiquetas   Etiqueta[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("GRUPO_ETIQUETA")
+}
+
+model EventosCarpeta {
+  id      String   @id @default(uuid())
+  nombre  String
+  color   String
+  eventos Evento[] @relation("CarpetaEventos_Eventos")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("EVENTOS_CARPETA")
+}
+
+model Evento {
+  id        String          @id @default(uuid())
+  nombre    String
+  fecha     DateTime
+  ubicacion String
+  carpetaId String?         @map("carpeta_id")
+  carpeta   EventosCarpeta? @relation("CarpetaEventos_Eventos", fields: [carpetaId], references: [id], onDelete: Cascade)
+
+  etiquetaAsistioId  String   @map("etiqueta_asistio")
+  etiquetaAsistio    Etiqueta @relation("EVENTOASISTIDO_X_ETIQUETA", fields: [etiquetaAsistioId], references: [id], onDelete: Cascade)
+  etiquetaConfirmoId String   @map("etiqueta_confirmo")
+  etiquetaConfirmo   Etiqueta @relation("EVENTOCONFIRMADO_X_ETIQUETA", fields: [etiquetaConfirmoId], references: [id], onDelete: Cascade)
+  eventoPadreId      String?  @map("evento_padre")
+  eventoPadre        Evento?  @relation("SubEventos", fields: [eventoPadreId], references: [id], onDelete: Cascade)
+  subEventos         Evento[] @relation("SubEventos")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("EVENTO")
+}
+
+model Mensaje {
+  id             String        @id @default(uuid())
+  wamId          String        @unique @map("wam_id")
+  message        Json
+  perfilTelefono String        @map("perfil_telefono")
+  perfil         Perfil        @relation("PERFIL_X_MENSAJE", fields: [perfilTelefono], references: [telefono], onDelete: Cascade)
+  status         MensajeStatus @default(ENVIADO)
+  statusAt       DateTime?     @map("status_at")
+  visto          Boolean       @default(false)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("MENSAJE")
+}
+
+model Enums {
+  id                 String             @id
+  EstadoPlantilla    EstadoPlantilla
+  CategoriaPlantilla CategoriaPlantilla
+}
+
+enum EstadoPlantilla {
+  APRROVED
+  PENDING
+  REJECTED
+}
+
+enum CategoriaPlantilla {
+  MARKETING
+  UTILITY
+  AUTHENTICATION
+}
+
+enum TipoEtiqueta {
+  PERSONAL
+  EVENTO
+  MODELO
+  TENTATIVA
+}
+
+enum MensajeStatus {
+  ENVIADO
+  RECIBIDO
+  LEIDO
+}

@@ -6,14 +6,13 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { Role } from 'src/auth/roles';
-import { CuentaService } from 'src/cuenta/cuenta.service';
+import { AccountService } from '@/account/account.service';
 
 @Injectable()
 export class JwtGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly cuentaService: CuentaService,
+    private readonly cuentaService: AccountService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -34,11 +33,6 @@ export class JwtGuard implements CanActivate {
       if (!user) {
         throw new UnauthorizedException('Usuario no encontrado');
       }
-
-      req['user'] = {
-        ...payload,
-        role: user.esAdmin ? Role.Admin : Role.User,
-      };
     } catch (error) {
       throw new UnauthorizedException('Token inválido');
     }
