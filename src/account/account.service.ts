@@ -26,7 +26,13 @@ export class AccountService {
     });
 
     if (user) {
-      throw new ConflictException(translate('route.account.create.conflict'));
+      throw new ConflictException(
+        translate('prisma.conflict', {
+          field: 'username',
+          model: translate('prisma.model.account'),
+          value: dto.username,
+        }),
+      );
     }
 
     const newUser = await this.prisma.account.create({
