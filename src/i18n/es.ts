@@ -1,0 +1,167 @@
+export default {
+  prisma: {
+    model: {
+      account: 'Cuenta',
+      tag: 'Etiqueta',
+      tagGroup: 'Grupo de etiquetas',
+      event: 'Evento',
+      eventFolder: 'Carpeta de eventos',
+      comment: 'Comentario',
+      profile: 'Perfil',
+      location: 'Ubicación',
+      cannedResponse: 'Respuesta enlatada',
+      message: 'Mensaje',
+    },
+    conflict: `Ya existe un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
+    'not-found': `No se encontró un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
+  },
+  model: {
+    comment: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      content: {
+        min: 'El contenido debe tener al menos 1 caracter',
+      },
+    },
+    account: {
+      id: {
+        required: 'El ID es requerido',
+        uuid: 'El ID debe ser un UUID',
+      },
+      username: {
+        required: 'El nombre de usuario es requerido',
+      },
+      email: {
+        required: 'El email es requerido',
+        email: 'El email debe ser un email válido',
+      },
+      password: {
+        required: 'La contraseña es requerida',
+        min: 'La contraseña debe tener al menos 6 caracteres',
+      },
+      role: {
+        required: 'El rol es requerido',
+        invalid: 'El rol es inválido',
+      },
+    },
+    tag: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      name: {
+        required: 'El nombre es requerido',
+        min: 'El nombre debe tener al menos 1 caracter',
+      },
+      type: {
+        invalid: 'El tipo de etiqueta es inválido',
+      },
+    },
+    event: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      name: {
+        required: 'El nombre es requerido',
+      },
+      date: {
+        required: 'La fecha es requerida',
+        invalid: 'La fecha debe ser una fecha válida',
+      },
+      location: {
+        required: 'La ubicación es requerida',
+      },
+    },
+    tagGroup: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      name: {
+        required: 'El nombre es requerido',
+      },
+      color: {
+        invalid: 'El color debe tener el formato hexadecimal (#ABCDEF)',
+      },
+    },
+    eventFolder: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      color: {
+        invalid: 'El color debe tener el formato hexadecimal (#ABCDEF)',
+      },
+    },
+  },
+  route: {
+    auth: {
+      'invalid-credentials': 'Credenciales inválidas',
+      'no-token': 'No se encontró un token',
+      'invalid-token': 'Token inválido',
+      'user-not-found': 'Usuario no encontrado',
+    },
+    account: {
+      create: {
+        success: 'Cuenta creada con éxito',
+        conflict: 'Cuenta ya existente',
+      },
+      'global-filter-patch': {
+        success: 'Filtro base actualizado',
+        conflict: 'Etiquetas Inválidas',
+      },
+      'global-filter-get': {
+        success: 'Filtro base obtenido',
+        'not-found': 'Cuenta no encontrada',
+      },
+      me: {
+        success: 'Cuenta obtenida',
+      },
+    },
+    tag: {
+      create: {
+        success: 'Etiqueta creada con éxito',
+      },
+      'find-all': {
+        success: 'Etiquetas obtenidas',
+      },
+      'find-one': {
+        success: 'Etiqueta obtenida',
+        'not-found': 'Etiqueta no encontrada',
+      },
+      update: {
+        success: 'Etiqueta actualizada',
+        'not-found': 'Etiqueta no encontrada',
+      },
+      delete: {
+        success: 'Etiqueta eliminada',
+        'not-found': 'Etiqueta no encontrada',
+      },
+      'find-by-group': {
+        success: 'Etiquetas obtenidas',
+        'not-found': 'Grupo de etiquetas no encontrado',
+      },
+      'find-all-grouped': {
+        success: 'Etiquetas obtenidas',
+      },
+    },
+    'tag-group': {
+      create: {
+        success: 'Grupo de etiquetas creado con éxito',
+      },
+      'find-all': {
+        success: 'Grupos de etiquetas obtenidos',
+      },
+      'find-one': {
+        success: 'Grupo de etiquetas obtenido',
+        'not-found': 'Grupo de etiquetas no encontrado',
+      },
+      update: {
+        success: 'Grupo de etiquetas actualizado',
+        'not-found': 'Grupo de etiquetas no encontrado',
+      },
+      delete: {
+        success: 'Grupo de etiquetas eliminado',
+        'not-found': 'Grupo de etiquetas no encontrado',
+      },
+    },
+  },
+} as const;

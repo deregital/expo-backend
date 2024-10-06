@@ -164,6 +164,54 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/tag-group/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['TagGroupController_create'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/tag-group/all': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['TagGroupController_findAll'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/tag-group/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['TagGroupController_findById'];
+    put?: never;
+    post?: never;
+    delete: operations['TagGroupController_delete'];
+    options?: never;
+    head?: never;
+    patch: operations['TagGroupController_update'];
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -179,28 +227,14 @@ export interface components {
         username?: string;
         /** @enum {string} */
         role?: 'USER' | 'ADMIN';
-        /** Format: date-time */
-        created_at?: string;
-        /** Format: date-time */
-        updated_at?: string;
-        globalFilter?: {
-          tags: {
-            /** Format: uuid */
-            id: string;
-            name: string;
-            group: {
-              /** Format: uuid */
-              id: string;
-              color: string;
-              isExclusive: boolean;
-            };
-          };
-          active: boolean;
-        };
         /** @default false */
         isGlobalFilterActive: boolean;
         /** @default [] */
         fcmToken: string[];
+        /** Format: date-time */
+        created_at?: string;
+        /** Format: date-time */
+        updated_at?: string;
       };
       backendTokens: {
         accessToken?: string;
@@ -330,6 +364,19 @@ export interface components {
       /** Format: uuid */
       groupId: string;
     };
+    UpdateTagResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** Format: uuid */
+      groupId: string;
+      /** @enum {string} */
+      type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
     DeleteTagResponseDto: {
       /** Format: uuid */
       id: string;
@@ -366,30 +413,37 @@ export interface components {
       tagsIds: string[];
     };
     UpdateGlobalFilterResponseDto: {
+      /** Format: uuid */
       id: string;
-      nombreUsuario: string;
-      esAdmin: boolean;
-      fcmToken: string | null;
-      filtroBaseActivo: boolean;
-      filtroBase: {
-        active?: boolean;
-        etiquetas?: {
-          /** Format: uuid */
-          id: string;
-          name: string;
-          /** Format: uuid */
-          groupId: string;
-          /** @enum {string} */
-          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
-          /** Format: date-time */
-          created_at: string;
-          /** Format: date-time */
-          updated_at: string;
-        }[];
-      };
+      username: string;
+      password: string;
+      /** @enum {string} */
+      role: 'USER' | 'ADMIN';
+      /** @default false */
+      isGlobalFilterActive: boolean;
+      /** @default [] */
+      fcmToken: string[];
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      globalFilter: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        groupId: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
     };
     GetGlobalFilterResponseDto: {
-      active: boolean;
+      /** @default false */
+      isGlobalFilterActive: boolean;
       globalFilter: {
         /** Format: uuid */
         id: string;
@@ -410,28 +464,120 @@ export interface components {
       username: string;
       /** @enum {string} */
       role: 'USER' | 'ADMIN';
+      /** @default false */
+      isGlobalFilterActive: boolean;
+      /** @default [] */
+      fcmToken: string[];
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
       updated_at: string;
       globalFilter: {
-        tags?: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        group: {
+          /** Format: uuid */
+          id: string;
+          color: string;
+          isExclusive: boolean;
+        };
+      }[];
+    };
+    CreateTagGroupDto: {
+      color: string;
+      name: string;
+      isExclusive: boolean;
+    };
+    CreateTagGroupResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      color: string;
+      isExclusive: boolean;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    FindAllTagGroupResponseDto: {
+      tagGroups: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        color: string;
+        isExclusive: boolean;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        tags: {
           /** Format: uuid */
           id: string;
           name: string;
-          group: {
-            /** Format: uuid */
-            id: string;
-            color: string;
-            isExclusive: boolean;
-          };
-        };
-        active?: boolean;
-      };
-      /** @default false */
-      isGlobalFilterActive: boolean;
-      /** @default [] */
-      fcmToken: string[];
+          /** Format: uuid */
+          groupId: string;
+          /** @enum {string} */
+          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        }[];
+      }[];
+    };
+    FindOneTagGroupResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      color: string;
+      isExclusive: boolean;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      tags: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        groupId: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
+    };
+    UpdateTagGroupDto: {
+      name: string;
+      color: string;
+      isExclusive: boolean;
+    };
+    UpdateTagGroupResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      color: string;
+      isExclusive: boolean;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    DeleteTagGroupResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      color: string;
+      isExclusive: boolean;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
     };
   };
   responses: never;
@@ -655,7 +801,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['FindOneTagResponseDto'];
+          'application/json': components['schemas']['UpdateTagResponseDto'];
         };
       };
       /** @description Etiqueta no encontrada */
@@ -752,6 +898,141 @@ export interface operations {
         content: {
           'application/json': components['schemas']['GetMeResponseDto'];
         };
+      };
+    };
+  };
+  TagGroupController_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateTagGroupDto'];
+      };
+    };
+    responses: {
+      /** @description Grupo de etiquetas creado con éxito */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateTagGroupResponseDto'];
+        };
+      };
+    };
+  };
+  TagGroupController_findAll: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Grupos de etiquetas obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllTagGroupResponseDto'];
+        };
+      };
+    };
+  };
+  TagGroupController_findById: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Grupo de etiquetas obtenido */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindOneTagGroupResponseDto'];
+        };
+      };
+      /** @description Grupo de etiquetas no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  TagGroupController_delete: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Grupo de etiquetas eliminado */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DeleteTagGroupResponseDto'];
+        };
+      };
+      /** @description Grupo de etiquetas no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  TagGroupController_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateTagGroupDto'];
+      };
+    };
+    responses: {
+      /** @description Grupo de etiquetas actualizado */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateTagGroupResponseDto'];
+        };
+      };
+      /** @description Grupo de etiquetas no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
       };
     };
   };

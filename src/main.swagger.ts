@@ -5,7 +5,7 @@ import * as path from 'path';
 import { writeFileSync } from 'fs';
 import * as YAML from 'json-to-pretty-yaml';
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
 
   const options = new DocumentBuilder()

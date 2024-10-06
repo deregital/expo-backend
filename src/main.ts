@@ -5,7 +5,7 @@ import { AppModule } from './app.module';
 import * as fs from 'fs';
 import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()

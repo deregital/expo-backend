@@ -27,7 +27,9 @@ export class AccountController {
     description: translate('route.account.create.success'),
     type: CreateAccountResponseDto,
   })
-  async create(@Body() body: CreateAccountDto) {
+  async create(
+    @Body() body: CreateAccountDto,
+  ): Promise<CreateAccountResponseDto> {
     return await this.accountService.create(body);
   }
 
@@ -41,7 +43,7 @@ export class AccountController {
   async updateGlobalFilter(
     @Body() body: UpdateGlobalFilterDto,
     @User() user: AccountWithoutPassword,
-  ) {
+  ): Promise<UpdateGlobalFilterResponseDto> {
     return await this.accountService.updateGlobalFilter(user.id, body);
   }
 
@@ -52,8 +54,10 @@ export class AccountController {
     description: translate('route.account.global-filter-get.success'),
     type: GetGlobalFilterResponseDto,
   })
-  async getGlobalFilter(@User() user: AccountWithoutPassword) {
-    return await this.accountService.getFiltroBase(user.id);
+  async getGlobalFilter(
+    @User() user: AccountWithoutPassword,
+  ): Promise<GetGlobalFilterResponseDto> {
+    return await this.accountService.getGlobalFilter(user.id);
   }
 
   @Roles(Role.ADMIN, Role.USER)
@@ -63,7 +67,11 @@ export class AccountController {
     description: translate('route.account.me.success'),
     type: GetMeResponseDto,
   })
-  async getMe(@User() user: AccountWithoutPassword) {
-    return user;
+  async getMe(@User() user: AccountWithoutPassword): Promise<GetMeResponseDto> {
+    const myGlobalFilter = await this.accountService.getGlobalFilter(user.id);
+    return {
+      ...user,
+      globalFilter: myGlobalFilter.globalFilter,
+    };
   }
 }

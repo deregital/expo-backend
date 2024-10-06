@@ -18,14 +18,17 @@ export class AuthController {
     type: LoginResponseDto,
   })
   @Post('login')
-  async loginUser(@Body() body: LoginDto) {
+  async loginUser(@Body() body: LoginDto): Promise<LoginResponseDto> {
     return await this.authService.login(body);
   }
 
   @Roles(Role.ADMIN, Role.USER)
   @UseGuards(RoleGuard, RefreshJwtGuard)
   @Post('refresh')
-  async refreshToken(@Request() req: ExpReq) {
+  async refreshToken(@Request() req: ExpReq): Promise<{
+    accessToken: string;
+    refreshToken: string;
+  }> {
     return await this.authService.refreshToken((req as any)['user']);
   }
 }
