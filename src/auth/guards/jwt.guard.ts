@@ -7,6 +7,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { AccountService } from '@/account/account.service';
+import { translate } from '@/i18n/translate';
 
 @Injectable()
 export class JwtGuard implements CanActivate {
@@ -20,7 +21,7 @@ export class JwtGuard implements CanActivate {
     const token = this.extractTokenFromHeader(req);
 
     if (!token) {
-      throw new UnauthorizedException('Token no encontrado');
+      throw new UnauthorizedException(translate('route.auth.no-token'));
     }
 
     try {
@@ -31,10 +32,10 @@ export class JwtGuard implements CanActivate {
       const user = await this.cuentaService.findByUsername(payload.username);
 
       if (!user) {
-        throw new UnauthorizedException('Usuario no encontrado');
+        throw new UnauthorizedException(translate('route.auth.user-not-found'));
       }
     } catch (error) {
-      throw new UnauthorizedException('Token inválido');
+      throw new UnauthorizedException(translate('route.auth.invalid-token'));
     }
 
     return true;

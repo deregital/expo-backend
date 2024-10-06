@@ -4,6 +4,7 @@ import { AccountService } from '@/account/account.service';
 import { JwtService } from '@nestjs/jwt';
 import { type Account } from '~/types/prisma-schema';
 import { compare } from 'bcrypt';
+import { translate } from '@/i18n/translate';
 
 type LoginPayload = {
   user: Omit<Account, 'password'>;
@@ -58,7 +59,9 @@ export class AuthService {
       return user;
     }
 
-    throw new UnauthorizedException('Credenciales inválidas');
+    throw new UnauthorizedException(
+      translate('route.auth.invalid-credentials'),
+    );
   }
 
   async refreshToken(pay: any): Promise<{

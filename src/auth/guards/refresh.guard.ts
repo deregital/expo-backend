@@ -1,3 +1,4 @@
+import { translate } from '@/i18n/translate';
 import {
   CanActivate,
   ExecutionContext,
@@ -16,7 +17,7 @@ export class RefreshJwtGuard implements CanActivate {
     const token = this.extractTokenFromHeader(req);
 
     if (!token) {
-      throw new UnauthorizedException('Token no encontrado');
+      throw new UnauthorizedException(translate('route.auth.no-token'));
     }
 
     try {
@@ -26,7 +27,7 @@ export class RefreshJwtGuard implements CanActivate {
 
       req['user'] = payload;
     } catch (error) {
-      throw new UnauthorizedException('Token inválido');
+      throw new UnauthorizedException(translate('route.auth.invalid-token'));
     }
 
     return true;
