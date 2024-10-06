@@ -332,6 +332,12 @@ components:
             updated_at:
               type: "string"
               format: "date-time"
+          required:
+            - "id"
+            - "username"
+            - "role"
+            - "created_at"
+            - "updated_at"
         backendTokens:
           type: "object"
           properties:
@@ -339,6 +345,9 @@ components:
               type: "string"
             refreshToken:
               type: "string"
+          required:
+            - "accessToken"
+            - "refreshToken"
       required:
         - "user"
         - "backendTokens"
@@ -638,6 +647,13 @@ components:
             updated_at:
               type: "string"
               format: "date-time"
+          required:
+            - "id"
+            - "name"
+            - "color"
+            - "isExclusive"
+            - "created_at"
+            - "updated_at"
       required:
         - "id"
         - "name"
@@ -655,9 +671,6 @@ components:
         groupId:
           type: "string"
           format: "uuid"
-      required:
-        - "name"
-        - "groupId"
     UpdateTagResponseDto:
       type: "object"
       properties:
@@ -764,8 +777,6 @@ components:
         - "id"
         - "username"
         - "role"
-        - "isGlobalFilterActive"
-        - "fcmToken"
     UpdateGlobalFilterDto:
       type: "object"
       properties:
@@ -778,7 +789,6 @@ components:
             type: "string"
             format: "uuid"
       required:
-        - "active"
         - "tagsIds"
     UpdateGlobalFilterResponseDto:
       type: "object"
@@ -849,8 +859,6 @@ components:
         - "username"
         - "password"
         - "role"
-        - "isGlobalFilterActive"
-        - "fcmToken"
         - "created_at"
         - "updated_at"
         - "globalFilter"
@@ -900,7 +908,6 @@ components:
               - "type"
               - "group"
       required:
-        - "isGlobalFilterActive"
         - "globalFilter"
     GetMeResponseDto:
       type: "object"
@@ -968,15 +975,48 @@ components:
               - "name"
               - "type"
               - "group"
+        tags:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              groupId:
+                type: "string"
+                format: "uuid"
+              type:
+                type: "string"
+                enum:
+                  - "PROFILE"
+                  - "EVENT"
+                  - "PARTICIPANT"
+                  - "NOT_IN_SYSTEM"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "name"
+              - "groupId"
+              - "type"
+              - "created_at"
+              - "updated_at"
       required:
         - "id"
         - "username"
         - "role"
-        - "isGlobalFilterActive"
-        - "fcmToken"
         - "created_at"
         - "updated_at"
         - "globalFilter"
+        - "tags"
     CreateTagGroupDto:
       type: "object"
       properties:

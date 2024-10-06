@@ -27,6 +27,7 @@ export const getMeResponseSchema = accountSchema
             }),
           ),
       ),
+      tags: z.array(tagSchema),
     }),
   );
 

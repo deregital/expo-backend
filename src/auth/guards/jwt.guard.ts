@@ -34,6 +34,7 @@ export class JwtGuard implements CanActivate {
       if (!user) {
         throw new UnauthorizedException(translate('route.auth.user-not-found'));
       }
+      req.user = user;
     } catch (error) {
       throw new UnauthorizedException(translate('route.auth.invalid-token'));
     }

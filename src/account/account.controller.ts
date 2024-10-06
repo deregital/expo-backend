@@ -69,8 +69,11 @@ export class AccountController {
   })
   async getMe(@User() user: AccountWithoutPassword): Promise<GetMeResponseDto> {
     const myGlobalFilter = await this.accountService.getGlobalFilter(user.id);
+    const tags = await this.accountService.getTags(user.id);
+
     return {
       ...user,
+      tags,
       globalFilter: myGlobalFilter.globalFilter,
     };
   }

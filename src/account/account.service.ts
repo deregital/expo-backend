@@ -73,6 +73,18 @@ export class AccountService {
     });
   }
 
+  async getTags(id: Account['id']): Promise<Tag[]> {
+    const tags = await this.prisma.account.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        tags: true,
+      },
+    });
+    return tags!.tags;
+  }
+
   async updateGlobalFilter(
     id: Account['id'],
     {
