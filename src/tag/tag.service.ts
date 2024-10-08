@@ -7,7 +7,6 @@ import { UpdateTagDto, UpdateTagResponseDto } from '@/tag/dto/update-tag.dto';
 import { Injectable } from '@nestjs/common';
 import { Tag } from '~/types/prisma-schema';
 import { FindByGroupTagResponseDto } from '@/tag/dto/find-by-group-tag.dto';
-import { FindAllGroupedTagResponseDto } from '@/tag/dto/find-all-grouped-tag.dto';
 
 @Injectable()
 export class TagService {
@@ -84,44 +83,6 @@ export class TagService {
         include: {
           group: true,
         },
-      }),
-    };
-  }
-
-  async findAllGrouped(): Promise<FindAllGroupedTagResponseDto> {
-    return {
-      groups: await this.prisma.tagGroup.findMany({
-        select: {
-          tags: {
-            include: {
-              _count: {
-                select: {
-                  profiles: true,
-                },
-              },
-            },
-            orderBy: {
-              name: 'asc',
-            },
-          },
-          _count: {
-            select: {
-              tags: true,
-            },
-          },
-          color: true,
-          isExclusive: true,
-          name: true,
-          id: true,
-        },
-        orderBy: [
-          {
-            tags: {
-              _count: 'desc',
-            },
-          },
-          { created_at: 'desc' },
-        ],
       }),
     };
   }

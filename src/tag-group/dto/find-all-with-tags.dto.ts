@@ -3,7 +3,7 @@ import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 import { createZodDto } from '@anatine/zod-nestjs';
 import z from 'zod';
 
-export const findAllGroupedTagResponseSchema = z.object({
+export const findAllWithTagsResponseSchema = z.object({
   groups: z.array(
     tagGroupSchema
       .pick({
@@ -31,6 +31,6 @@ export const findAllGroupedTagResponseSchema = z.object({
   ),
 });
 
-export class FindAllGroupedTagResponseDto extends createZodDto(
-  findAllGroupedTagResponseSchema,
+export class FindAllWithTagsResponseDto extends createZodDto(
+  findAllWithTagsResponseSchema,
 ) {}

@@ -27,7 +27,6 @@ import { FindAllTagResponseDto } from '@/tag/dto/find-all-tag.dto';
 import { FindOneTagResponseDto } from '@/tag/dto/find-one-tag.dto';
 import { UpdateTagDto, UpdateTagResponseDto } from '@/tag/dto/update-tag.dto';
 import { FindByGroupTagResponseDto } from '@/tag/dto/find-by-group-tag.dto';
-import { FindAllGroupedTagResponseDto } from '@/tag/dto/find-all-grouped-tag.dto';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -53,15 +52,6 @@ export class TagController {
   })
   async findAll(): Promise<FindAllTagResponseDto> {
     return await this.tagService.findAll();
-  }
-
-  @ApiOkResponse({
-    description: translate('route.tag.find-all-grouped.success'),
-    type: FindAllGroupedTagResponseDto,
-  })
-  @Get('/all-grouped')
-  async findAllGrouped(): Promise<FindAllGroupedTagResponseDto> {
-    return await this.tagService.findAllGrouped();
   }
 
   @ApiOkResponse({

@@ -1,3 +1,4 @@
+import { FindAllWithTagsResponseDto } from '@/exports';
 import { PrismaService } from '@/prisma/prisma.service';
 import {
   CreateTagGroupDto,
@@ -67,5 +68,45 @@ export class TagGroupService {
         id,
       },
     });
+  }
+
+  async findAllWithTags(): Promise<FindAllWithTagsResponseDto> {
+    const groups = await this.prisma.tagGroup.findMany({
+      select: {
+        tags: {
+          include: {
+            _count: {
+              select: {
+                profiles: true,
+              },
+            },
+          },
+          orderBy: {
+            name: 'asc',
+          },
+        },
+        _count: {
+          select: {
+            tags: true,
+          },
+        },
+        color: true,
+        isExclusive: true,
+        name: true,
+        id: true,
+      },
+      orderBy: [
+        {
+          tags: {
+            _count: 'desc',
+          },
+        },
+        { created_at: 'desc' },
+      ],
+    });
+
+    return {
+      groups,
+    };
   }
 }

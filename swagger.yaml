@@ -52,17 +52,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllTagResponseDto"
-  /tag/all-grouped:
-    get:
-      operationId: "TagController_findAllGrouped"
-      parameters: []
-      responses:
-        200:
-          description: "Etiquetas obtenidas"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FindAllGroupedTagResponseDto"
   /tag/find-by-group/{groupId}:
     get:
       operationId: "TagController_findByGroup"
@@ -222,6 +211,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllTagGroupResponseDto"
+  /tag-group/all-with-tags:
+    get:
+      operationId: "TagGroupController_findAllGrouped"
+      parameters: []
+      responses:
+        200:
+          description: "Etiquetas obtenidas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindAllWithTagsResponseDto"
   /tag-group/{id}:
     get:
       operationId: "TagGroupController_findById"
@@ -455,84 +455,6 @@ components:
               - "group"
       required:
         - "tags"
-    FindAllGroupedTagResponseDto:
-      type: "object"
-      properties:
-        groups:
-          type: "array"
-          items:
-            type: "object"
-            properties:
-              id:
-                type: "string"
-                format: "uuid"
-              name:
-                type: "string"
-                minLength: 1
-              isExclusive:
-                type: "boolean"
-              color:
-                type: "string"
-                minLength: 7
-                maxLength: 7
-              tags:
-                type: "array"
-                items:
-                  type: "object"
-                  properties:
-                    id:
-                      type: "string"
-                      format: "uuid"
-                    name:
-                      type: "string"
-                      minLength: 1
-                    groupId:
-                      type: "string"
-                      format: "uuid"
-                    type:
-                      type: "string"
-                      enum:
-                        - "PROFILE"
-                        - "EVENT"
-                        - "PARTICIPANT"
-                        - "NOT_IN_SYSTEM"
-                    created_at:
-                      type: "string"
-                      format: "date-time"
-                    updated_at:
-                      type: "string"
-                      format: "date-time"
-                    _count:
-                      type: "object"
-                      properties:
-                        profiles:
-                          type: "number"
-                      required:
-                        - "profiles"
-                  required:
-                    - "id"
-                    - "name"
-                    - "groupId"
-                    - "type"
-                    - "created_at"
-                    - "updated_at"
-                    - "_count"
-              _count:
-                type: "object"
-                properties:
-                  tags:
-                    type: "number"
-                required:
-                  - "tags"
-            required:
-              - "id"
-              - "name"
-              - "isExclusive"
-              - "color"
-              - "tags"
-              - "_count"
-      required:
-        - "groups"
     FindByGroupTagResponseDto:
       type: "object"
       properties:
@@ -1131,6 +1053,84 @@ components:
               - "tags"
       required:
         - "tagGroups"
+    FindAllWithTagsResponseDto:
+      type: "object"
+      properties:
+        groups:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              isExclusive:
+                type: "boolean"
+              color:
+                type: "string"
+                minLength: 7
+                maxLength: 7
+              tags:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    groupId:
+                      type: "string"
+                      format: "uuid"
+                    type:
+                      type: "string"
+                      enum:
+                        - "PROFILE"
+                        - "EVENT"
+                        - "PARTICIPANT"
+                        - "NOT_IN_SYSTEM"
+                    created_at:
+                      type: "string"
+                      format: "date-time"
+                    updated_at:
+                      type: "string"
+                      format: "date-time"
+                    _count:
+                      type: "object"
+                      properties:
+                        profiles:
+                          type: "number"
+                      required:
+                        - "profiles"
+                  required:
+                    - "id"
+                    - "name"
+                    - "groupId"
+                    - "type"
+                    - "created_at"
+                    - "updated_at"
+                    - "_count"
+              _count:
+                type: "object"
+                properties:
+                  tags:
+                    type: "number"
+                required:
+                  - "tags"
+            required:
+              - "id"
+              - "name"
+              - "isExclusive"
+              - "color"
+              - "tags"
+              - "_count"
+      required:
+        - "groups"
     FindOneTagGroupResponseDto:
       type: "object"
       properties:

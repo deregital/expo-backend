@@ -31,6 +31,7 @@ import {
   UpdateTagGroupResponseDto,
 } from '@/tag-group/dto/update-tag-group.dto';
 import { DeleteTagGroupResponseDto } from '@/tag-group/dto/delete-tag-group.dto';
+import { FindAllWithTagsResponseDto } from '@/exports';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -56,6 +57,15 @@ export class TagGroupController {
   @Get('/all')
   async findAll(): Promise<FindAllTagGroupResponseDto> {
     return await this.tagGroupService.findAll();
+  }
+
+  @ApiOkResponse({
+    description: translate('route.tag-group.find-all-with-tags.success'),
+    type: FindAllWithTagsResponseDto,
+  })
+  @Get('/all-with-tags')
+  async findAllGrouped(): Promise<FindAllWithTagsResponseDto> {
+    return await this.tagGroupService.findAllWithTags();
   }
 
   @ApiOkResponse({
