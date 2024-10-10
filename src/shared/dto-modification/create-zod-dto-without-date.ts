@@ -1,7 +1,7 @@
 import {
   ReplaceDatesWithStrings,
   replaceDatesWithStrings,
-} from '@/shared/dtoModification/zod-without-dates';
+} from '@/shared/dto-modification/zod-without-dates';
 import { createZodDto, ZodDtoStatic } from '@anatine/zod-nestjs';
 import { OpenApiZodAny } from '@anatine/zod-openapi';
 

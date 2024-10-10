@@ -9,6 +9,7 @@
     "dist/types",
     "dist/src/**/*.dto.{js,d.ts,ts}",
     "dist/src/**/exports.{js,d.ts,ts}",
+    "dist/src/shared/dtoModification",
     "dist/src/i18n"
   ],
   "scripts": {

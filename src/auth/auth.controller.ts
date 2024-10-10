@@ -1,6 +1,6 @@
 import { Roles } from '@/auth/decorators/rol.decorator';
 import { RoleGuard } from '@/auth/guards/role.guard';
-import { withoutDates } from '@/shared/dtoModification/without-dates';
+import { withoutDates } from '@/shared/dto-modification/without-dates';
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { Request as ExpReq } from 'express';

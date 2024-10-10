@@ -13,7 +13,7 @@ import { AccountWithoutPassword, User } from '@/auth/decorators/user.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
-import { withoutDates } from '@/shared/dtoModification/without-dates';
+import { withoutDates } from '@/shared/dto-modification/without-dates';
 import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Role } from '~/types/prisma-schema';

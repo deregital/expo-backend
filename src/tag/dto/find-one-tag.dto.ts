@@ -1,4 +1,4 @@
-import { createZodDtoWithoutDate } from '@/shared/dtoModification/create-zod-dto-without-date';
+import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 import { tagSchema } from '@/tag/dto/tag.dto';
 import z from 'zod';

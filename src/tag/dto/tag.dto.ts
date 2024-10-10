@@ -1,5 +1,5 @@
 import { translate } from '@/i18n/translate';
-import { createZodDtoWithoutDate } from '@/shared/dtoModification/create-zod-dto-without-date';
+import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 import { z } from 'zod';
 import { TagType } from '~/types/prisma-schema';

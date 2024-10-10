@@ -2,7 +2,7 @@ import { Roles } from '@/auth/decorators/rol.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
-import { withoutDates } from '@/shared/dtoModification/without-dates';
+import { withoutDates } from '@/shared/dto-modification/without-dates';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { CreateTagDto, CreateTagResponseDto } from '@/tag/dto/create-tag.dto';
 import { DeleteTagResponseDto } from '@/tag/dto/delete-tag.dto';

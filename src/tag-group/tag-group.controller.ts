@@ -3,7 +3,7 @@ import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { FindAllWithTagsResponseDto } from '@/exports';
 import { translate } from '@/i18n/translate';
-import { withoutDates } from '@/shared/dtoModification/without-dates';
+import { withoutDates } from '@/shared/dto-modification/without-dates';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import {
   CreateTagGroupDto,
