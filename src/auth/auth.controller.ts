@@ -1,5 +1,4 @@
-import { Roles } from '@/auth/decorators/rol.decorator';
-import { RoleGuard } from '@/auth/guards/role.guard';
+import { RefreshResponseDto } from '@/auth/dto/refresh.dto';
 import { withoutDates } from '@/shared/dto-modification/without-dates';
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
@@ -7,7 +6,6 @@ import { Request as ExpReq } from 'express';
 import { AuthService } from 'src/auth/auth.service';
 import { LoginDto, LoginResponseDto } from 'src/auth/dto/login.dto';
 import { RefreshJwtGuard } from 'src/auth/guards/refresh.guard';
-import { Role } from '~/types/prisma-schema';
 
 @Controller('auth')
 export class AuthController {
@@ -22,13 +20,13 @@ export class AuthController {
     return withoutDates(await this.authService.login(body));
   }
 
-  @Roles(Role.ADMIN, Role.USER)
-  @UseGuards(RoleGuard, RefreshJwtGuard)
+  @ApiOkResponse({
+    description: 'Token renovado',
+    type: RefreshResponseDto,
+  })
+  @UseGuards(RefreshJwtGuard)
   @Post('refresh')
-  async refreshToken(@Request() req: ExpReq): Promise<{
-    accessToken: string;
-    refreshToken: string;
-  }> {
+  async refreshToken(@Request() req: ExpReq): Promise<RefreshResponseDto> {
     return await this.authService.refreshToken((req as any)['user']);
   }
 }

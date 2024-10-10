@@ -22,8 +22,12 @@ paths:
       operationId: "AuthController_refreshToken"
       parameters: []
       responses:
-        201:
-          description: ""
+        200:
+          description: "Token renovado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RefreshResponseDto"
   /tag/create:
     post:
       operationId: "TagController_create"
@@ -345,12 +349,28 @@ components:
               type: "string"
             refreshToken:
               type: "string"
+            expiresIn:
+              type: "number"
           required:
             - "accessToken"
             - "refreshToken"
+            - "expiresIn"
       required:
         - "user"
         - "backendTokens"
+    RefreshResponseDto:
+      type: "object"
+      properties:
+        refreshToken:
+          type: "string"
+        accessToken:
+          type: "string"
+        expiresIn:
+          type: "number"
+      required:
+        - "refreshToken"
+        - "accessToken"
+        - "expiresIn"
     CreateTagDto:
       type: "object"
       properties:

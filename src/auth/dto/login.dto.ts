@@ -16,6 +16,7 @@ export const loginResponseSchema = z.object({
   backendTokens: z.object({
     accessToken: z.string(),
     refreshToken: z.string(),
+    expiresIn: z.number(),
   }),
 });
 
