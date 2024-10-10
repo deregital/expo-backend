@@ -4,6 +4,7 @@ import { RoleGuard } from '@/auth/guards/role.guard';
 import { FindAllWithTagsResponseDto } from '@/exports';
 import { translate } from '@/i18n/translate';
 import { withoutDates } from '@/shared/dto-modification/without-dates';
+import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import {
   CreateTagGroupDto,
@@ -75,6 +76,7 @@ export class TagGroupController {
   })
   @ApiNotFoundResponse({
     description: translate('route.tag-group.find-one.not-found'),
+    type: ErrorDto,
   })
   @Get('/:id')
   async findById(
@@ -89,6 +91,7 @@ export class TagGroupController {
   })
   @ApiNotFoundResponse({
     description: translate('route.tag-group.update.not-found'),
+    type: ErrorDto,
   })
   @Patch('/:id')
   async update(
@@ -104,6 +107,7 @@ export class TagGroupController {
   })
   @ApiNotFoundResponse({
     description: translate('route.tag-group.delete.not-found'),
+    type: ErrorDto,
   })
   @Delete('/:id')
   async delete(

@@ -1,7 +1,9 @@
 import { RefreshResponseDto } from '@/auth/dto/refresh.dto';
+import { translate } from '@/i18n/translate';
 import { withoutDates } from '@/shared/dto-modification/without-dates';
+import { ErrorDto } from '@/shared/errors/errorType';
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { Request as ExpReq } from 'express';
 import { AuthService } from 'src/auth/auth.service';
 import { LoginDto, LoginResponseDto } from 'src/auth/dto/login.dto';
@@ -11,6 +13,10 @@ import { RefreshJwtGuard } from 'src/auth/guards/refresh.guard';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @ApiUnauthorizedResponse({
+    description: translate('route.auth.invalid-credentials'),
+    type: ErrorDto,
+  })
   @ApiOkResponse({
     description: 'Cuenta creada',
     type: LoginResponseDto,

@@ -17,6 +17,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/LoginResponseDto"
+        401:
+          description: "Credenciales inválidas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /auth/refresh:
     post:
       operationId: "AuthController_refreshToken"
@@ -74,6 +80,10 @@ paths:
                 $ref: "#/components/schemas/FindByGroupTagResponseDto"
         404:
           description: "Grupo de etiquetas no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /tag/{id}:
     get:
       operationId: "TagController_findById"
@@ -92,6 +102,10 @@ paths:
                 $ref: "#/components/schemas/FindOneTagResponseDto"
         404:
           description: "Etiqueta no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
     patch:
       operationId: "TagController_update"
       parameters:
@@ -115,6 +129,10 @@ paths:
                 $ref: "#/components/schemas/UpdateTagResponseDto"
         404:
           description: "Etiqueta no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
     delete:
       operationId: "TagController_remove"
       parameters:
@@ -126,6 +144,10 @@ paths:
       responses:
         404:
           description: "Etiqueta no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
         410:
           description: "Etiqueta eliminada"
           content:
@@ -244,6 +266,10 @@ paths:
                 $ref: "#/components/schemas/FindOneTagGroupResponseDto"
         404:
           description: "Grupo de etiquetas no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
     patch:
       operationId: "TagGroupController_update"
       parameters:
@@ -267,6 +293,10 @@ paths:
                 $ref: "#/components/schemas/UpdateTagGroupResponseDto"
         404:
           description: "Grupo de etiquetas no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
     delete:
       operationId: "TagGroupController_delete"
       parameters:
@@ -284,6 +314,10 @@ paths:
                 $ref: "#/components/schemas/DeleteTagGroupResponseDto"
         404:
           description: "Grupo de etiquetas no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -358,6 +392,19 @@ components:
       required:
         - "user"
         - "backendTokens"
+    ErrorDto:
+      type: "object"
+      properties:
+        message:
+          type: "string"
+        statusCode:
+          type: "number"
+        error:
+          type: "string"
+      required:
+        - "message"
+        - "statusCode"
+        - "error"
     RefreshResponseDto:
       type: "object"
       properties:

@@ -223,23 +223,34 @@ export interface components {
     LoginResponseDto: {
       user: {
         /** Format: uuid */
-        id?: string;
-        username?: string;
+        id: string;
+        username: string;
         /** @enum {string} */
-        role?: 'USER' | 'ADMIN';
+        role: 'USER' | 'ADMIN';
         /** @default false */
         isGlobalFilterActive: boolean;
         /** @default [] */
         fcmToken: string[];
         /** Format: date-time */
-        created_at?: string;
+        created_at: string;
         /** Format: date-time */
-        updated_at?: string;
+        updated_at: string;
       };
       backendTokens: {
-        accessToken?: string;
-        refreshToken?: string;
+        accessToken: string;
+        refreshToken: string;
+        expiresIn: number;
       };
+    };
+    ErrorDto: {
+      message: string;
+      statusCode: number;
+      error: string;
+    };
+    RefreshResponseDto: {
+      refreshToken: string;
+      accessToken: string;
+      expiresIn: number;
     };
     CreateTagDto: {
       name: string;
@@ -321,20 +332,20 @@ export interface components {
       updated_at: string;
       group: {
         /** Format: uuid */
-        id?: string;
-        name?: string;
-        color?: string;
-        isExclusive?: boolean;
+        id: string;
+        name: string;
+        color: string;
+        isExclusive: boolean;
         /** Format: date-time */
-        created_at?: string;
+        created_at: string;
         /** Format: date-time */
-        updated_at?: string;
+        updated_at: string;
       };
     };
     UpdateTagDto: {
-      name: string;
+      name?: string;
       /** Format: uuid */
-      groupId: string;
+      groupId?: string;
     };
     UpdateTagResponseDto: {
       /** Format: uuid */
@@ -623,6 +634,15 @@ export interface operations {
           'application/json': components['schemas']['LoginResponseDto'];
         };
       };
+      /** @description Credenciales inválidas */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
     };
   };
   AuthController_refreshToken: {
@@ -634,11 +654,14 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      201: {
+      /** @description Token renovado */
+      200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['RefreshResponseDto'];
+        };
       };
     };
   };
@@ -711,7 +734,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
       };
     };
   };
@@ -740,7 +765,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
       };
     };
   };
@@ -760,7 +787,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
       };
       /** @description Etiqueta eliminada */
       410: {
@@ -802,7 +831,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
       };
     };
   };
@@ -983,7 +1014,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
       };
     };
   };
@@ -1012,7 +1045,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
       };
     };
   };
@@ -1045,7 +1080,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
       };
     };
   };

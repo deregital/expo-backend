@@ -3,6 +3,7 @@ import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
 import { withoutDates } from '@/shared/dto-modification/without-dates';
+import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { CreateTagDto, CreateTagResponseDto } from '@/tag/dto/create-tag.dto';
 import { DeleteTagResponseDto } from '@/tag/dto/delete-tag.dto';
@@ -61,6 +62,7 @@ export class TagController {
   })
   @ApiNotFoundResponse({
     description: translate('route.tag.find-by-group.not-found'),
+    type: ErrorDto,
   })
   @Get('/find-by-group/:groupId')
   async findByGroup(
@@ -76,6 +78,7 @@ export class TagController {
   })
   @ApiNotFoundResponse({
     description: translate('route.tag.find-one.not-found'),
+    type: ErrorDto,
   })
   async findById(
     @Param('id', new ExistingRecord('tag')) id: string,
@@ -89,6 +92,7 @@ export class TagController {
   })
   @ApiNotFoundResponse({
     description: translate('route.tag.update.not-found'),
+    type: ErrorDto,
   })
   @Patch('/:id')
   async update(
@@ -104,6 +108,7 @@ export class TagController {
   })
   @ApiNotFoundResponse({
     description: translate('route.tag.delete.not-found'),
+    type: ErrorDto,
   })
   @Delete('/:id')
   async remove(
