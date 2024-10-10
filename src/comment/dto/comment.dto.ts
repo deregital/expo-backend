@@ -1,6 +1,6 @@
 import { accountSchema } from '@/account/dto/account.dto';
 import { translate } from '@/i18n/translate';
-import { createZodDto } from '@anatine/zod-nestjs';
+import { createZodDtoWithoutDate } from '@/shared/dtoModification/create-zod-dto-without-date';
 import { z } from 'zod';
 
 export const commentSchema = z.object({
@@ -21,4 +21,4 @@ export const commentSchema = z.object({
   updated_at: z.string().datetime(),
 });
 
-export class CommentDto extends createZodDto(commentSchema) {}
+export class CommentDto extends createZodDtoWithoutDate(commentSchema) {}

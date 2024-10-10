@@ -1,6 +1,6 @@
-import { tagSchema } from '@/tag/dto/tag.dto';
 import { accountSchema } from '@/account/dto/account.dto';
-import { createZodDto } from '@anatine/zod-nestjs';
+import { createZodDtoWithoutDate } from '@/shared/dtoModification/create-zod-dto-without-date';
+import { tagSchema } from '@/tag/dto/tag.dto';
 import { z } from 'zod';
 
 export const updateGlobalFilterSchema = z.object({
@@ -8,7 +8,7 @@ export const updateGlobalFilterSchema = z.object({
   tagsIds: z.array(tagSchema.shape.id),
 });
 
-export class UpdateGlobalFilterDto extends createZodDto(
+export class UpdateGlobalFilterDto extends createZodDtoWithoutDate(
   updateGlobalFilterSchema,
 ) {}
 
@@ -18,6 +18,6 @@ export const updateGlobalFilterResponseSchema = accountSchema.merge(
   }),
 );
 
-export class UpdateGlobalFilterResponseDto extends createZodDto(
+export class UpdateGlobalFilterResponseDto extends createZodDtoWithoutDate(
   updateGlobalFilterResponseSchema,
 ) {}

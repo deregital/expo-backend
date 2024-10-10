@@ -1,5 +1,5 @@
+import { createZodDtoWithoutDate } from '@/shared/dtoModification/create-zod-dto-without-date';
 import { tagSchema } from '@/tag/dto/tag.dto';
-import { createZodDto } from '@anatine/zod-nestjs';
 
 export const updateTagSchema = tagSchema
   .pick({
@@ -8,10 +8,10 @@ export const updateTagSchema = tagSchema
   })
   .partial();
 
-export class UpdateTagDto extends createZodDto(updateTagSchema) {}
+export class UpdateTagDto extends createZodDtoWithoutDate(updateTagSchema) {}
 
 export const updateTagResponseSchema = tagSchema;
 
-export class UpdateTagResponseDto extends createZodDto(
+export class UpdateTagResponseDto extends createZodDtoWithoutDate(
   updateTagResponseSchema,
 ) {}

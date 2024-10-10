@@ -1,8 +1,8 @@
+import { createZodDtoWithoutDate } from '@/shared/dtoModification/create-zod-dto-without-date';
 import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
-import { createZodDto } from '@anatine/zod-nestjs';
 
 export const deleteTagGroupResponseSchema = tagGroupSchema;
 
-export class DeleteTagGroupResponseDto extends createZodDto(
+export class DeleteTagGroupResponseDto extends createZodDtoWithoutDate(
   deleteTagGroupResponseSchema,
 ) {}

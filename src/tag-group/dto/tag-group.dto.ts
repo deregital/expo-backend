@@ -1,5 +1,5 @@
 import { translate } from '@/i18n/translate';
-import { createZodDto } from '@anatine/zod-nestjs';
+import { createZodDtoWithoutDate } from '@/shared/dtoModification/create-zod-dto-without-date';
 import { z } from 'zod';
 
 export const tagGroupSchema = z.object({
@@ -21,4 +21,4 @@ export const tagGroupSchema = z.object({
   updated_at: z.date(),
 });
 
-export class TagGroupDto extends createZodDto(tagGroupSchema) {}
+export class TagGroupDto extends createZodDtoWithoutDate(tagGroupSchema) {}

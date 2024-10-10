@@ -1,6 +1,6 @@
-import { tagSchema } from '@/tag/dto/tag.dto';
+import { createZodDtoWithoutDate } from '@/shared/dtoModification/create-zod-dto-without-date';
 import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
-import { createZodDto } from '@anatine/zod-nestjs';
+import { tagSchema } from '@/tag/dto/tag.dto';
 import z from 'zod';
 
 export const findAllWithTagsResponseSchema = z.object({
@@ -31,6 +31,6 @@ export const findAllWithTagsResponseSchema = z.object({
   ),
 });
 
-export class FindAllWithTagsResponseDto extends createZodDto(
+export class FindAllWithTagsResponseDto extends createZodDtoWithoutDate(
   findAllWithTagsResponseSchema,
 ) {}

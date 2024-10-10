@@ -1,32 +1,33 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  UseGuards,
-  Patch,
-} from '@nestjs/common';
-import { TagService } from './tag.service';
 import { Roles } from '@/auth/decorators/rol.decorator';
-import { Role } from '~/types/prisma-schema';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
+import { translate } from '@/i18n/translate';
+import { withoutDates } from '@/shared/dtoModification/without-dates';
+import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { CreateTagDto, CreateTagResponseDto } from '@/tag/dto/create-tag.dto';
 import { DeleteTagResponseDto } from '@/tag/dto/delete-tag.dto';
+import { FindAllTagResponseDto } from '@/tag/dto/find-all-tag.dto';
+import { FindByGroupTagResponseDto } from '@/tag/dto/find-by-group-tag.dto';
+import { FindOneTagResponseDto } from '@/tag/dto/find-one-tag.dto';
+import { UpdateTagDto, UpdateTagResponseDto } from '@/tag/dto/update-tag.dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiGoneResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
-import { translate } from '@/i18n/translate';
-import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
-import { FindAllTagResponseDto } from '@/tag/dto/find-all-tag.dto';
-import { FindOneTagResponseDto } from '@/tag/dto/find-one-tag.dto';
-import { UpdateTagDto, UpdateTagResponseDto } from '@/tag/dto/update-tag.dto';
-import { FindByGroupTagResponseDto } from '@/tag/dto/find-by-group-tag.dto';
+import { Role } from '~/types/prisma-schema';
+import { TagService } from './tag.service';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -42,7 +43,7 @@ export class TagController {
   async create(
     @Body() createTagDto: CreateTagDto,
   ): Promise<CreateTagResponseDto> {
-    return await this.tagService.create(createTagDto);
+    return withoutDates(await this.tagService.create(createTagDto));
   }
 
   @Get('/all')
@@ -51,7 +52,7 @@ export class TagController {
     type: FindAllTagResponseDto,
   })
   async findAll(): Promise<FindAllTagResponseDto> {
-    return await this.tagService.findAll();
+    return withoutDates(await this.tagService.findAll());
   }
 
   @ApiOkResponse({
@@ -65,7 +66,7 @@ export class TagController {
   async findByGroup(
     @Param('groupId', new ExistingRecord('tagGroup')) groupId: string,
   ): Promise<FindByGroupTagResponseDto> {
-    return await this.tagService.findByGroup(groupId);
+    return withoutDates(await this.tagService.findByGroup(groupId));
   }
 
   @Get('/:id')
@@ -79,7 +80,7 @@ export class TagController {
   async findById(
     @Param('id', new ExistingRecord('tag')) id: string,
   ): Promise<FindOneTagResponseDto> {
-    return await this.tagService.findById(id);
+    return withoutDates(await this.tagService.findById(id));
   }
 
   @ApiOkResponse({
@@ -94,7 +95,7 @@ export class TagController {
     @Param('id', new ExistingRecord('tag')) id: string,
     @Body() updateTagDto: UpdateTagDto,
   ): Promise<UpdateTagResponseDto> {
-    return await this.tagService.update(id, updateTagDto);
+    return withoutDates(await this.tagService.update(id, updateTagDto));
   }
 
   @ApiGoneResponse({
@@ -108,6 +109,6 @@ export class TagController {
   async remove(
     @Param('id', new ExistingRecord('tag')) id: string,
   ): Promise<DeleteTagResponseDto> {
-    return await this.tagService.remove(id);
+    return withoutDates(await this.tagService.remove(id));
   }
 }

@@ -1,6 +1,6 @@
-import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 import { translate } from '@/i18n/translate';
-import { createZodDto } from '@anatine/zod-nestjs';
+import { createZodDtoWithoutDate } from '@/shared/dtoModification/create-zod-dto-without-date';
+import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 import { z } from 'zod';
 import { TagType } from '~/types/prisma-schema';
 
@@ -23,4 +23,4 @@ export const tagSchema = z.object({
   updated_at: z.date(),
 });
 
-export class TagDto extends createZodDto(tagSchema) {}
+export class TagDto extends createZodDtoWithoutDate(tagSchema) {}

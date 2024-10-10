@@ -1,5 +1,5 @@
 import { accountSchema } from '@/account/dto/account.dto';
-import { createZodDto } from '@anatine/zod-nestjs';
+import { createZodDtoWithoutDate } from '@/shared/dtoModification/create-zod-dto-without-date';
 
 export const createAccountSchema = accountSchema.pick({
   username: true,
@@ -7,7 +7,9 @@ export const createAccountSchema = accountSchema.pick({
   role: true,
 });
 
-export class CreateAccountDto extends createZodDto(createAccountSchema) {}
+export class CreateAccountDto extends createZodDtoWithoutDate(
+  createAccountSchema,
+) {}
 
 export const createAccountResponseSchema = accountSchema.omit({
   password: true,
@@ -15,6 +17,6 @@ export const createAccountResponseSchema = accountSchema.omit({
   updated_at: true,
 });
 
-export class CreateAccountResponseDto extends createZodDto(
+export class CreateAccountResponseDto extends createZodDtoWithoutDate(
   createAccountResponseSchema,
 ) {}

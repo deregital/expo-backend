@@ -1,5 +1,5 @@
+import { createZodDtoWithoutDate } from '@/shared/dtoModification/create-zod-dto-without-date';
 import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
-import { createZodDto } from '@anatine/zod-nestjs';
 
 export const updateTagGroupSchema = tagGroupSchema.pick({
   name: true,
@@ -7,10 +7,12 @@ export const updateTagGroupSchema = tagGroupSchema.pick({
   isExclusive: true,
 });
 
-export class UpdateTagGroupDto extends createZodDto(updateTagGroupSchema) {}
+export class UpdateTagGroupDto extends createZodDtoWithoutDate(
+  updateTagGroupSchema,
+) {}
 
 export const updateTagGroupResponseSchema = tagGroupSchema;
 
-export class UpdateTagGroupResponseDto extends createZodDto(
+export class UpdateTagGroupResponseDto extends createZodDtoWithoutDate(
   updateTagGroupResponseSchema,
 ) {}

@@ -1,5 +1,5 @@
 import { translate } from '@/i18n/translate';
-import { createZodDto } from '@anatine/zod-nestjs';
+import { createZodDtoWithoutDate } from '@/shared/dtoModification/create-zod-dto-without-date';
 import { z } from 'zod';
 import { Role } from '~/types/prisma-schema';
 
@@ -29,4 +29,4 @@ export const accountSchema = z.object({
   updated_at: z.date(),
 });
 
-export class CuentaDto extends createZodDto(accountSchema) {}
+export class CuentaDto extends createZodDtoWithoutDate(accountSchema) {}

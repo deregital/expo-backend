@@ -68,22 +68,6 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/tag/all-grouped': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations['TagController_findAllGrouped'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
   '/tag/find-by-group/{groupId}': {
     parameters: {
       query?: never;
@@ -196,6 +180,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/tag-group/all-with-tags': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['TagGroupController_findAllGrouped'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/tag-group/{id}': {
     parameters: {
       query?: never;
@@ -278,34 +278,6 @@ export interface components {
           created_at: string;
           /** Format: date-time */
           updated_at: string;
-        };
-      }[];
-    };
-    FindAllGroupedTagResponseDto: {
-      groups: {
-        /** Format: uuid */
-        id: string;
-        name: string;
-        isExclusive: boolean;
-        color: string;
-        tags: {
-          /** Format: uuid */
-          id: string;
-          name: string;
-          /** Format: uuid */
-          groupId: string;
-          /** @enum {string} */
-          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
-          /** Format: date-time */
-          created_at: string;
-          /** Format: date-time */
-          updated_at: string;
-          _count: {
-            profiles: number;
-          };
-        }[];
-        _count: {
-          tags: number;
         };
       }[];
     };
@@ -485,6 +457,19 @@ export interface components {
           isExclusive: boolean;
         };
       }[];
+      tags: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        groupId: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
     };
     CreateTagGroupDto: {
       color: string;
@@ -526,6 +511,34 @@ export interface components {
           /** Format: date-time */
           updated_at: string;
         }[];
+      }[];
+    };
+    FindAllWithTagsResponseDto: {
+      groups: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        isExclusive: boolean;
+        color: string;
+        tags: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: uuid */
+          groupId: string;
+          /** @enum {string} */
+          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+          _count: {
+            profiles: number;
+          };
+        }[];
+        _count: {
+          tags: number;
+        };
       }[];
     };
     FindOneTagGroupResponseDto: {
@@ -669,26 +682,6 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['FindAllTagResponseDto'];
-        };
-      };
-    };
-  };
-  TagController_findAllGrouped: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Etiquetas obtenidas */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['FindAllGroupedTagResponseDto'];
         };
       };
     };
@@ -941,6 +934,26 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['FindAllTagGroupResponseDto'];
+        };
+      };
+    };
+  };
+  TagGroupController_findAllGrouped: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Etiquetas obtenidas */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllWithTagsResponseDto'];
         };
       };
     };
