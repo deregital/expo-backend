@@ -242,7 +242,11 @@ export interface components {
         expiresIn?: number;
       };
     };
-    ErrorDto: Record<string, never>;
+    ErrorDto: {
+      message: string[];
+      statusCode: number;
+      error: string;
+    };
     RefreshResponseDto: {
       refreshToken: string;
       accessToken: string;

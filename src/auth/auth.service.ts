@@ -75,9 +75,9 @@ export class AuthService {
       return user;
     }
 
-    throw new UnauthorizedException(
+    throw new UnauthorizedException([
       translate('route.auth.invalid-credentials'),
-    );
+    ]);
   }
 
   async refreshToken(account: Account): Promise<{
@@ -87,7 +87,7 @@ export class AuthService {
   }> {
     const user = await this.cuentaService.findByUsername(account.username);
     if (!user) {
-      throw new UnauthorizedException(translate('route.auth.invalid-token'));
+      throw new UnauthorizedException([translate('route.auth.invalid-token')]);
     }
     const payload = this.getPayload(user);
 

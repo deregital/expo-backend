@@ -23,24 +23,26 @@ export const User = createParamDecorator(
     try {
       const token = request.headers.authorization?.split(' ')[1];
       if (!token) {
-        throw new UnauthorizedException(translate('route.auth.no-token'));
+        throw new UnauthorizedException([translate('route.auth.no-token')]);
       }
 
       const decoded = jwtService.decode(token);
       if (!decoded) {
-        throw new UnauthorizedException(translate('route.auth.invalid-token'));
+        throw new UnauthorizedException([
+          translate('route.auth.invalid-token'),
+        ]);
       }
 
       const user = await userService.findById(decoded.id);
       if (!user) {
-        throw new NotFoundException(translate('route.auth.user-not-found'));
+        throw new NotFoundException([translate('route.auth.user-not-found')]);
       }
 
       const { password, ...userWithoutPassword } = user;
 
       return userWithoutPassword;
     } catch (error) {
-      throw new UnauthorizedException(translate('route.auth.invalid-token'));
+      throw new UnauthorizedException([translate('route.auth.invalid-token')]);
     }
   },
 );

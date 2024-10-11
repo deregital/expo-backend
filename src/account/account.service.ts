@@ -29,13 +29,13 @@ export class AccountService {
     });
 
     if (user) {
-      throw new ConflictException(
+      throw new ConflictException([
         translate('prisma.conflict', {
           field: 'username',
           model: translate('prisma.model.account'),
           value: dto.username,
         }),
-      );
+      ]);
     }
 
     const newUser = await this.prisma.account.create({
@@ -142,9 +142,9 @@ export class AccountService {
     });
 
     if (!cuenta) {
-      throw new NotFoundException(
+      throw new NotFoundException([
         translate('route.account.global-filter-get.not-found'),
-      );
+      ]);
     }
 
     return {

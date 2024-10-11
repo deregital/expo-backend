@@ -17,7 +17,7 @@ export class RefreshJwtGuard implements CanActivate {
     const token = this.extractTokenFromHeader(req);
 
     if (!token) {
-      throw new UnauthorizedException(translate('route.auth.no-token'));
+      throw new UnauthorizedException([translate('route.auth.no-token')]);
     }
 
     try {
@@ -27,7 +27,7 @@ export class RefreshJwtGuard implements CanActivate {
 
       req['user'] = payload;
     } catch (error) {
-      throw new UnauthorizedException(translate('route.auth.invalid-token'));
+      throw new UnauthorizedException([translate('route.auth.invalid-token')]);
     }
 
     return true;
