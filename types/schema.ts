@@ -223,30 +223,26 @@ export interface components {
     LoginResponseDto: {
       user: {
         /** Format: uuid */
-        id: string;
-        username: string;
+        id?: string;
+        username?: string;
         /** @enum {string} */
-        role: 'USER' | 'ADMIN';
+        role?: 'USER' | 'ADMIN';
         /** @default false */
         isGlobalFilterActive: boolean;
         /** @default [] */
         fcmToken: string[];
         /** Format: date-time */
-        created_at: string;
+        created_at?: string;
         /** Format: date-time */
-        updated_at: string;
+        updated_at?: string;
       };
       backendTokens: {
-        accessToken: string;
-        refreshToken: string;
-        expiresIn: number;
+        accessToken?: string;
+        refreshToken?: string;
+        expiresIn?: number;
       };
     };
-    ErrorDto: {
-      message: string | string[];
-      statusCode: number;
-      error: string;
-    };
+    ErrorDto: Record<string, never>;
     RefreshResponseDto: {
       refreshToken: string;
       accessToken: string;
@@ -332,20 +328,20 @@ export interface components {
       updated_at: string;
       group: {
         /** Format: uuid */
-        id: string;
-        name: string;
-        color: string;
-        isExclusive: boolean;
+        id?: string;
+        name?: string;
+        color?: string;
+        isExclusive?: boolean;
         /** Format: date-time */
-        created_at: string;
+        created_at?: string;
         /** Format: date-time */
-        updated_at: string;
+        updated_at?: string;
       };
     };
     UpdateTagDto: {
-      name?: string;
+      name: string;
       /** Format: uuid */
-      groupId?: string;
+      groupId: string;
     };
     UpdateTagResponseDto: {
       /** Format: uuid */
