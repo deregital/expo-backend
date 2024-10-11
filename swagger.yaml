@@ -396,7 +396,11 @@ components:
       type: "object"
       properties:
         message:
-          type: "string"
+          oneOf:
+            - type: "string"
+            - type: "array"
+              items:
+                type: "string"
         statusCode:
           type: "number"
         error:

@@ -11,7 +11,9 @@ export const tagGroupSchema = z.object({
   }),
   color: z
     .string()
-    .length(7)
+    .length(7, {
+      message: translate('model.tagGroup.color.invalid'),
+    })
     .startsWith('#', {
       message: translate('model.tagGroup.color.invalid'),
     })

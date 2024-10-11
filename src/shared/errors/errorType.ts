@@ -2,7 +2,7 @@ import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dt
 import z from 'zod';
 
 const errorSchema = z.object({
-  message: z.string(),
+  message: z.union([z.string(), z.array(z.string())]),
   statusCode: z.number(),
   error: z.string(),
 });
