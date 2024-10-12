@@ -1,13 +1,20 @@
-import { RefreshResponseDto } from '@/auth/dto/refresh.dto';
+import { AuthService } from '@/auth/auth.service';
+import {
+  LoginDto,
+  LoginResponseDto,
+  loginResponseSchema,
+} from '@/auth/dto/login.dto';
+import {
+  RefreshResponseDto,
+  refreshResponseSchema,
+} from '@/auth/dto/refresh.dto';
+import { RefreshJwtGuard } from '@/auth/guards/refresh.guard';
 import { translate } from '@/i18n/translate';
-import { withoutDates } from '@/shared/dto-modification/without-dates';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { Request as ExpReq } from 'express';
-import { AuthService } from 'src/auth/auth.service';
-import { LoginDto, LoginResponseDto } from 'src/auth/dto/login.dto';
-import { RefreshJwtGuard } from 'src/auth/guards/refresh.guard';
+import z from 'zod';
 
 @Controller('auth')
 export class AuthController {
@@ -22,8 +29,10 @@ export class AuthController {
     type: LoginResponseDto,
   })
   @Post('login')
-  async loginUser(@Body() body: LoginDto): Promise<LoginResponseDto> {
-    return withoutDates(await this.authService.login(body));
+  async loginUser(
+    @Body() body: LoginDto,
+  ): Promise<z.infer<typeof loginResponseSchema>> {
+    return await this.authService.login(body);
   }
 
   @ApiOkResponse({
@@ -32,7 +41,9 @@ export class AuthController {
   })
   @UseGuards(RefreshJwtGuard)
   @Post('refresh')
-  async refreshToken(@Request() req: ExpReq): Promise<RefreshResponseDto> {
+  async refreshToken(
+    @Request() req: ExpReq,
+  ): Promise<z.infer<typeof refreshResponseSchema>> {
     return await this.authService.refreshToken((req as any)['user']);
   }
 }

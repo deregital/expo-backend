@@ -1,9 +1,9 @@
 import { AccountService } from '@/account/account.service';
+import { LoginDto } from '@/auth/dto/login.dto';
 import { translate } from '@/i18n/translate';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
-import { LoginDto } from 'src/auth/dto/login.dto';
 import { type Account } from '~/types/prisma-schema';
 
 type LoginPayload = {

@@ -2,15 +2,35 @@ import { Roles } from '@/auth/decorators/rol.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
-import { withoutDates } from '@/shared/dto-modification/without-dates';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
-import { CreateTagDto, CreateTagResponseDto } from '@/tag/dto/create-tag.dto';
-import { DeleteTagResponseDto } from '@/tag/dto/delete-tag.dto';
-import { FindAllTagResponseDto } from '@/tag/dto/find-all-tag.dto';
-import { FindByGroupTagResponseDto } from '@/tag/dto/find-by-group-tag.dto';
-import { FindOneTagResponseDto } from '@/tag/dto/find-one-tag.dto';
-import { UpdateTagDto, UpdateTagResponseDto } from '@/tag/dto/update-tag.dto';
+import {
+  CreateTagDto,
+  CreateTagResponseDto,
+  createTagResponseSchema,
+} from '@/tag/dto/create-tag.dto';
+import {
+  DeleteTagResponseDto,
+  deleteTagResponseSchema,
+} from '@/tag/dto/delete-tag.dto';
+import {
+  FindAllTagResponseDto,
+  findAllTagResponseSchema,
+} from '@/tag/dto/find-all-tag.dto';
+import {
+  FindByGroupTagResponseDto,
+  findByGroupTagResponseSchema,
+} from '@/tag/dto/find-by-group-tag.dto';
+import {
+  FindOneTagResponseDto,
+  findOneTagResponseSchema,
+} from '@/tag/dto/find-one-tag.dto';
+import {
+  UpdateTagDto,
+  UpdateTagResponseDto,
+  updateTagResponseSchema,
+} from '@/tag/dto/update-tag.dto';
+import { TagService } from '@/tag/tag.service';
 import {
   Body,
   Controller,
@@ -27,8 +47,8 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
+import z from 'zod';
 import { Role } from '~/types/prisma-schema';
-import { TagService } from './tag.service';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -43,8 +63,8 @@ export class TagController {
   })
   async create(
     @Body() createTagDto: CreateTagDto,
-  ): Promise<CreateTagResponseDto> {
-    return withoutDates(await this.tagService.create(createTagDto));
+  ): Promise<z.infer<typeof createTagResponseSchema>> {
+    return await this.tagService.create(createTagDto);
   }
 
   @Get('/all')
@@ -52,8 +72,8 @@ export class TagController {
     description: translate('route.tag.find-all.success'),
     type: FindAllTagResponseDto,
   })
-  async findAll(): Promise<FindAllTagResponseDto> {
-    return withoutDates(await this.tagService.findAll());
+  async findAll(): Promise<z.infer<typeof findAllTagResponseSchema>> {
+    return await this.tagService.findAll();
   }
 
   @ApiOkResponse({
@@ -67,8 +87,8 @@ export class TagController {
   @Get('/find-by-group/:groupId')
   async findByGroup(
     @Param('groupId', new ExistingRecord('tagGroup')) groupId: string,
-  ): Promise<FindByGroupTagResponseDto> {
-    return withoutDates(await this.tagService.findByGroup(groupId));
+  ): Promise<z.infer<typeof findByGroupTagResponseSchema>> {
+    return await this.tagService.findByGroup(groupId);
   }
 
   @Get('/:id')
@@ -82,8 +102,8 @@ export class TagController {
   })
   async findById(
     @Param('id', new ExistingRecord('tag')) id: string,
-  ): Promise<FindOneTagResponseDto> {
-    return withoutDates(await this.tagService.findById(id));
+  ): Promise<z.infer<typeof findOneTagResponseSchema>> {
+    return await this.tagService.findById(id);
   }
 
   @ApiOkResponse({
@@ -98,8 +118,8 @@ export class TagController {
   async update(
     @Param('id', new ExistingRecord('tag')) id: string,
     @Body() updateTagDto: UpdateTagDto,
-  ): Promise<UpdateTagResponseDto> {
-    return withoutDates(await this.tagService.update(id, updateTagDto));
+  ): Promise<z.infer<typeof updateTagResponseSchema>> {
+    return await this.tagService.update(id, updateTagDto);
   }
 
   @ApiGoneResponse({
@@ -113,7 +133,7 @@ export class TagController {
   @Delete('/:id')
   async remove(
     @Param('id', new ExistingRecord('tag')) id: string,
-  ): Promise<DeleteTagResponseDto> {
-    return withoutDates(await this.tagService.remove(id));
+  ): Promise<z.infer<typeof deleteTagResponseSchema>> {
+    return await this.tagService.remove(id);
   }
 }

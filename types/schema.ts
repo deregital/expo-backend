@@ -187,7 +187,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    get: operations['TagGroupController_findAllGrouped'];
+    get: operations['TagGroupController_findAllWithTags'];
     put?: never;
     post?: never;
     delete?: never;
@@ -969,7 +969,7 @@ export interface operations {
       };
     };
   };
-  TagGroupController_findAllGrouped: {
+  TagGroupController_findAllWithTags: {
     parameters: {
       query?: never;
       header?: never;

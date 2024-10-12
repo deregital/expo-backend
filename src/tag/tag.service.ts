@@ -2,7 +2,7 @@ import { PrismaService } from '@/prisma/prisma.service';
 import { CreateTagDto, CreateTagResponseDto } from '@/tag/dto/create-tag.dto';
 import { deleteTagResponseSchema } from '@/tag/dto/delete-tag.dto';
 import { findAllTagResponseSchema } from '@/tag/dto/find-all-tag.dto';
-import { findByGroupTagResponseDto } from '@/tag/dto/find-by-group-tag.dto';
+import { findByGroupTagResponseSchema } from '@/tag/dto/find-by-group-tag.dto';
 import { findOneTagResponseSchema } from '@/tag/dto/find-one-tag.dto';
 import {
   UpdateTagDto,
@@ -82,7 +82,7 @@ export class TagService {
 
   async findByGroup(
     groupId: string,
-  ): Promise<z.infer<typeof findByGroupTagResponseDto>> {
+  ): Promise<z.infer<typeof findByGroupTagResponseSchema>> {
     return {
       tags: await this.prisma.tag.findMany({
         where: {

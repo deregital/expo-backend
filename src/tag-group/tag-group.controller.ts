@@ -1,22 +1,36 @@
 import { Roles } from '@/auth/decorators/rol.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
-import { FindAllWithTagsResponseDto } from '@/exports';
 import { translate } from '@/i18n/translate';
-import { withoutDates } from '@/shared/dto-modification/without-dates';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import {
   CreateTagGroupDto,
   CreateTagGroupResponseDto,
+  createTagGroupResponseSchema,
 } from '@/tag-group/dto/create-tag-group.dto';
-import { DeleteTagGroupResponseDto } from '@/tag-group/dto/delete-tag-group.dto';
-import { FindAllTagGroupResponseDto } from '@/tag-group/dto/find-all-tag-group.dto';
-import { FindOneTagGroupResponseDto } from '@/tag-group/dto/find-one-tag-group.dto';
+import {
+  DeleteTagGroupResponseDto,
+  deleteTagGroupResponseSchema,
+} from '@/tag-group/dto/delete-tag-group.dto';
+import {
+  FindAllTagGroupResponseDto,
+  findAllTagGroupResponseSchema,
+} from '@/tag-group/dto/find-all-tag-group.dto';
+import {
+  FindAllWithTagsResponseDto,
+  findAllWithTagsResponseSchema,
+} from '@/tag-group/dto/find-all-with-tags.dto';
+import {
+  FindOneTagGroupResponseDto,
+  findOneTagGroupResponseSchema,
+} from '@/tag-group/dto/find-one-tag-group.dto';
 import {
   UpdateTagGroupDto,
   UpdateTagGroupResponseDto,
+  updateTagGroupResponseSchema,
 } from '@/tag-group/dto/update-tag-group.dto';
+import { TagGroupService } from '@/tag-group/tag-group.service';
 import {
   Body,
   Controller,
@@ -32,8 +46,8 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
+import z from 'zod';
 import { Role } from '~/types/prisma-schema';
-import { TagGroupService } from './tag-group.service';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -48,8 +62,8 @@ export class TagGroupController {
   @Post('/create')
   async create(
     @Body() createTagGroupDto: CreateTagGroupDto,
-  ): Promise<CreateTagGroupResponseDto> {
-    return withoutDates(await this.tagGroupService.create(createTagGroupDto));
+  ): Promise<z.infer<typeof createTagGroupResponseSchema>> {
+    return await this.tagGroupService.create(createTagGroupDto);
   }
 
   @ApiOkResponse({
@@ -57,8 +71,8 @@ export class TagGroupController {
     type: FindAllTagGroupResponseDto,
   })
   @Get('/all')
-  async findAll(): Promise<FindAllTagGroupResponseDto> {
-    return withoutDates(await this.tagGroupService.findAll());
+  async findAll(): Promise<z.infer<typeof findAllTagGroupResponseSchema>> {
+    return await this.tagGroupService.findAll();
   }
 
   @ApiOkResponse({
@@ -66,8 +80,10 @@ export class TagGroupController {
     type: FindAllWithTagsResponseDto,
   })
   @Get('/all-with-tags')
-  async findAllGrouped(): Promise<FindAllWithTagsResponseDto> {
-    return withoutDates(await this.tagGroupService.findAllWithTags());
+  async findAllWithTags(): Promise<
+    z.infer<typeof findAllWithTagsResponseSchema>
+  > {
+    return await this.tagGroupService.findAllWithTags();
   }
 
   @ApiOkResponse({
@@ -81,8 +97,8 @@ export class TagGroupController {
   @Get('/:id')
   async findById(
     @Param('id', new ExistingRecord('tagGroup')) id: string,
-  ): Promise<FindOneTagGroupResponseDto> {
-    return withoutDates(await this.tagGroupService.findById(id));
+  ): Promise<z.infer<typeof findOneTagGroupResponseSchema>> {
+    return await this.tagGroupService.findById(id);
   }
 
   @ApiOkResponse({
@@ -97,8 +113,8 @@ export class TagGroupController {
   async update(
     @Param('id', new ExistingRecord('tagGroup')) id: string,
     @Body() dto: UpdateTagGroupDto,
-  ): Promise<UpdateTagGroupResponseDto> {
-    return withoutDates(await this.tagGroupService.update(id, dto));
+  ): Promise<z.infer<typeof updateTagGroupResponseSchema>> {
+    return await this.tagGroupService.update(id, dto);
   }
 
   @ApiOkResponse({
@@ -112,7 +128,7 @@ export class TagGroupController {
   @Delete('/:id')
   async delete(
     @Param('id', new ExistingRecord('tagGroup')) id: string,
-  ): Promise<DeleteTagGroupResponseDto> {
-    return withoutDates(await this.tagGroupService.delete(id));
+  ): Promise<z.infer<typeof deleteTagGroupResponseSchema>> {
+    return await this.tagGroupService.delete(id);
   }
 }

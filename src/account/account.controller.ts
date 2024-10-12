@@ -1,23 +1,31 @@
+import { AccountService } from '@/account/account.service';
 import {
   CreateAccountDto,
   CreateAccountResponseDto,
+  createAccountResponseSchema,
 } from '@/account/dto/create-account.dto';
-import { GetGlobalFilterResponseDto } from '@/account/dto/get-global-filter.dto';
-import { GetMeResponseDto } from '@/account/dto/get-me.dto';
+import {
+  GetGlobalFilterResponseDto,
+  getGlobalFilterResponseSchema,
+} from '@/account/dto/get-global-filter.dto';
+import {
+  GetMeResponseDto,
+  getMeResponseSchema,
+} from '@/account/dto/get-me.dto';
 import {
   UpdateGlobalFilterDto,
   UpdateGlobalFilterResponseDto,
+  updateGlobalFilterResponseSchema,
 } from '@/account/dto/update-global-filter.dto';
 import { Roles } from '@/auth/decorators/rol.decorator';
 import { AccountWithoutPassword, User } from '@/auth/decorators/user.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
-import { withoutDates } from '@/shared/dto-modification/without-dates';
 import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
+import z from 'zod';
 import { Role } from '~/types/prisma-schema';
-import { AccountService } from './account.service';
 
 @Controller('account')
 export class AccountController {
@@ -30,7 +38,7 @@ export class AccountController {
   })
   async create(
     @Body() body: CreateAccountDto,
-  ): Promise<CreateAccountResponseDto> {
+  ): Promise<z.infer<typeof createAccountResponseSchema>> {
     return await this.accountService.create(body);
   }
 
@@ -44,10 +52,8 @@ export class AccountController {
   async updateGlobalFilter(
     @Body() body: UpdateGlobalFilterDto,
     @User() user: AccountWithoutPassword,
-  ): Promise<UpdateGlobalFilterResponseDto> {
-    return withoutDates(
-      await this.accountService.updateGlobalFilter(user.id, body),
-    );
+  ): Promise<z.infer<typeof updateGlobalFilterResponseSchema>> {
+    return await this.accountService.updateGlobalFilter(user.id, body);
   }
 
   @Roles(Role.ADMIN, Role.USER)
@@ -59,7 +65,7 @@ export class AccountController {
   })
   async getGlobalFilter(
     @User() user: AccountWithoutPassword,
-  ): Promise<GetGlobalFilterResponseDto> {
+  ): Promise<z.infer<typeof getGlobalFilterResponseSchema>> {
     return await this.accountService.getGlobalFilter(user.id);
   }
 
@@ -70,14 +76,16 @@ export class AccountController {
     description: translate('route.account.me.success'),
     type: GetMeResponseDto,
   })
-  async getMe(@User() user: AccountWithoutPassword): Promise<GetMeResponseDto> {
+  async getMe(
+    @User() user: AccountWithoutPassword,
+  ): Promise<z.infer<typeof getMeResponseSchema>> {
     const myGlobalFilter = await this.accountService.getGlobalFilter(user.id);
     const tags = await this.accountService.getTags(user.id);
 
-    return withoutDates({
+    return {
       ...user,
       tags,
       globalFilter: myGlobalFilter.globalFilter,
-    });
+    };
   }
 }

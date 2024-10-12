@@ -3,7 +3,7 @@ import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 import { tagSchema } from '@/tag/dto/tag.dto';
 import z from 'zod';
 
-export const findByGroupTagResponseDto = z.object({
+export const findByGroupTagResponseSchema = z.object({
   tags: z.array(
     tagSchema.merge(
       z.object({
@@ -14,5 +14,5 @@ export const findByGroupTagResponseDto = z.object({
 });
 
 export class FindByGroupTagResponseDto extends createZodDtoWithoutDate(
-  findByGroupTagResponseDto,
+  findByGroupTagResponseSchema,
 ) {}

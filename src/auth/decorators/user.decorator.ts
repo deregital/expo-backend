@@ -1,5 +1,6 @@
 import { AccountService } from '@/account/account.service';
 import { translate } from '@/i18n/translate';
+import { PrismaService } from '@/prisma/prisma.service';
 import {
   createParamDecorator,
   ExecutionContext,
@@ -7,7 +8,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { Account } from '~/types/prisma-schema';
 
 export type AccountWithoutPassword = Omit<Account, 'password'>;

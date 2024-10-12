@@ -239,7 +239,7 @@ paths:
                 $ref: "#/components/schemas/FindAllTagGroupResponseDto"
   /tag-group/all-with-tags:
     get:
-      operationId: "TagGroupController_findAllGrouped"
+      operationId: "TagGroupController_findAllWithTags"
       parameters: []
       responses:
         200:
@@ -370,12 +370,6 @@ components:
             updated_at:
               type: "string"
               format: "date-time"
-          required:
-            - "id"
-            - "username"
-            - "role"
-            - "created_at"
-            - "updated_at"
         backendTokens:
           type: "object"
           properties:
@@ -385,10 +379,6 @@ components:
               type: "string"
             expiresIn:
               type: "number"
-          required:
-            - "accessToken"
-            - "refreshToken"
-            - "expiresIn"
       required:
         - "user"
         - "backendTokens"
@@ -638,13 +628,6 @@ components:
             updated_at:
               type: "string"
               format: "date-time"
-          required:
-            - "id"
-            - "name"
-            - "color"
-            - "isExclusive"
-            - "created_at"
-            - "updated_at"
       required:
         - "id"
         - "name"
@@ -662,6 +645,9 @@ components:
         groupId:
           type: "string"
           format: "uuid"
+      required:
+        - "name"
+        - "groupId"
     UpdateTagResponseDto:
       type: "object"
       properties:
@@ -768,6 +754,8 @@ components:
         - "id"
         - "username"
         - "role"
+        - "isGlobalFilterActive"
+        - "fcmToken"
     UpdateGlobalFilterDto:
       type: "object"
       properties:
@@ -780,6 +768,7 @@ components:
             type: "string"
             format: "uuid"
       required:
+        - "active"
         - "tagsIds"
     UpdateGlobalFilterResponseDto:
       type: "object"
@@ -850,6 +839,8 @@ components:
         - "username"
         - "password"
         - "role"
+        - "isGlobalFilterActive"
+        - "fcmToken"
         - "created_at"
         - "updated_at"
         - "globalFilter"
@@ -899,6 +890,7 @@ components:
               - "type"
               - "group"
       required:
+        - "isGlobalFilterActive"
         - "globalFilter"
     GetMeResponseDto:
       type: "object"
@@ -1004,6 +996,8 @@ components:
         - "id"
         - "username"
         - "role"
+        - "isGlobalFilterActive"
+        - "fcmToken"
         - "created_at"
         - "updated_at"
         - "globalFilter"

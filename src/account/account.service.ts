@@ -5,13 +5,13 @@ import {
 import { getGlobalFilterResponseSchema } from '@/account/dto/get-global-filter.dto';
 import { updateGlobalFilterResponseSchema } from '@/account/dto/update-global-filter.dto';
 import { translate } from '@/i18n/translate';
+import { PrismaService } from '@/prisma/prisma.service';
 import {
   ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { hash } from 'bcrypt';
-import { PrismaService } from 'src/prisma/prisma.service';
 import z from 'zod';
 import { Account, Tag } from '~/types/prisma-schema';
 
