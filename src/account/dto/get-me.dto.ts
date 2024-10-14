@@ -1,8 +1,8 @@
+import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
+import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
+import { tagSchema } from '@/tag/dto/tag.dto';
 import z from 'zod';
 import { accountSchema } from './account.dto';
-import { createZodDto } from '@anatine/zod-nestjs';
-import { tagSchema } from '@/tag/dto/tag.dto';
-import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 
 export const getMeResponseSchema = accountSchema
   .omit({
@@ -27,7 +27,10 @@ export const getMeResponseSchema = accountSchema
             }),
           ),
       ),
+      tags: z.array(tagSchema),
     }),
   );
 
-export class GetMeResponseDto extends createZodDto(getMeResponseSchema) {}
+export class GetMeResponseDto extends createZodDtoWithoutDate(
+  getMeResponseSchema,
+) {}

@@ -1,9 +1,9 @@
-import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import * as YAML from 'json-to-pretty-yaml';
-import { AppModule } from './app.module';
-import * as fs from 'fs';
+import { AppModule } from '@/app.module';
 import { patchNestjsSwagger } from '@anatine/zod-nestjs';
+import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as fs from 'fs';
+import * as YAML from 'json-to-pretty-yaml';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);

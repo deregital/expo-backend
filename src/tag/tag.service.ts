@@ -1,13 +1,16 @@
-import { DeleteTagResponseDto } from '@/tag/dto/delete-tag.dto';
-import { FindOneTagResponseDto } from '@/tag/dto/find-one-tag.dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateTagDto, CreateTagResponseDto } from '@/tag/dto/create-tag.dto';
-import { FindAllTagResponseDto } from '@/tag/dto/find-all-tag.dto';
-import { UpdateTagDto, UpdateTagResponseDto } from '@/tag/dto/update-tag.dto';
+import { deleteTagResponseSchema } from '@/tag/dto/delete-tag.dto';
+import { findAllTagResponseSchema } from '@/tag/dto/find-all-tag.dto';
+import { findByGroupTagResponseSchema } from '@/tag/dto/find-by-group-tag.dto';
+import { findOneTagResponseSchema } from '@/tag/dto/find-one-tag.dto';
+import {
+  UpdateTagDto,
+  updateTagResponseSchema,
+} from '@/tag/dto/update-tag.dto';
 import { Injectable } from '@nestjs/common';
+import z from 'zod';
 import { Tag } from '~/types/prisma-schema';
-import { FindByGroupTagResponseDto } from '@/tag/dto/find-by-group-tag.dto';
-import { FindAllGroupedTagResponseDto } from '@/tag/dto/find-all-grouped-tag.dto';
 
 @Injectable()
 export class TagService {
@@ -26,7 +29,7 @@ export class TagService {
     });
   }
 
-  async findAll(): Promise<FindAllTagResponseDto> {
+  async findAll(): Promise<z.infer<typeof findAllTagResponseSchema>> {
     return {
       tags: await this.prisma.tag.findMany({
         include: {
@@ -36,7 +39,9 @@ export class TagService {
     };
   }
 
-  async findById(id: Tag['id']): Promise<FindOneTagResponseDto> {
+  async findById(
+    id: Tag['id'],
+  ): Promise<z.infer<typeof findOneTagResponseSchema>> {
     const tag = await this.prisma.tag.findUnique({
       where: {
         id: id,
@@ -51,7 +56,7 @@ export class TagService {
   async update(
     id: Tag['id'],
     updateTagDto: UpdateTagDto,
-  ): Promise<UpdateTagResponseDto> {
+  ): Promise<z.infer<typeof updateTagResponseSchema>> {
     return await this.prisma.tag.update({
       where: {
         id: id,
@@ -67,7 +72,7 @@ export class TagService {
     });
   }
 
-  async remove(id: string): Promise<DeleteTagResponseDto> {
+  async remove(id: string): Promise<z.infer<typeof deleteTagResponseSchema>> {
     return await this.prisma.tag.delete({
       where: {
         id: id,
@@ -75,7 +80,9 @@ export class TagService {
     });
   }
 
-  async findByGroup(groupId: string): Promise<FindByGroupTagResponseDto> {
+  async findByGroup(
+    groupId: string,
+  ): Promise<z.infer<typeof findByGroupTagResponseSchema>> {
     return {
       tags: await this.prisma.tag.findMany({
         where: {
@@ -84,44 +91,6 @@ export class TagService {
         include: {
           group: true,
         },
-      }),
-    };
-  }
-
-  async findAllGrouped(): Promise<FindAllGroupedTagResponseDto> {
-    return {
-      groups: await this.prisma.tagGroup.findMany({
-        select: {
-          tags: {
-            include: {
-              _count: {
-                select: {
-                  profiles: true,
-                },
-              },
-            },
-            orderBy: {
-              name: 'asc',
-            },
-          },
-          _count: {
-            select: {
-              tags: true,
-            },
-          },
-          color: true,
-          isExclusive: true,
-          name: true,
-          id: true,
-        },
-        orderBy: [
-          {
-            tags: {
-              _count: 'desc',
-            },
-          },
-          { created_at: 'desc' },
-        ],
       }),
     };
   }

@@ -1,10 +1,10 @@
 import { accountSchema } from '@/account/dto/account.dto';
+import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 import { tagSchema } from '@/tag/dto/tag.dto';
-import { createZodDto } from '@anatine/zod-nestjs';
 import z from 'zod';
 
-export const getGlobalFilterResponse = accountSchema
+export const getGlobalFilterResponseSchema = accountSchema
   .pick({
     isGlobalFilterActive: true,
   })
@@ -30,6 +30,6 @@ export const getGlobalFilterResponse = accountSchema
     }),
   );
 
-export class GetGlobalFilterResponseDto extends createZodDto(
-  getGlobalFilterResponse,
+export class GetGlobalFilterResponseDto extends createZodDtoWithoutDate(
+  getGlobalFilterResponseSchema,
 ) {}

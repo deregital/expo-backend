@@ -139,9 +139,6 @@ export default {
         success: 'Etiquetas obtenidas',
         'not-found': 'Grupo de etiquetas no encontrado',
       },
-      'find-all-grouped': {
-        success: 'Etiquetas obtenidas',
-      },
     },
     'tag-group': {
       create: {
@@ -149,6 +146,9 @@ export default {
       },
       'find-all': {
         success: 'Grupos de etiquetas obtenidos',
+      },
+      'find-all-with-tags': {
+        success: 'Etiquetas obtenidas',
       },
       'find-one': {
         success: 'Grupo de etiquetas obtenido',

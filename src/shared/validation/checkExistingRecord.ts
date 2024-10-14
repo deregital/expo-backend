@@ -44,13 +44,13 @@ export class ExistingRecord<Models extends Exclude<Prisma.ModelName, 'Enums'>>
     });
 
     if (!record) {
-      throw new NotFoundException(
+      throw new NotFoundException([
         translate('prisma.not-found', {
           field: 'id',
           model: translate(`prisma.model.${this.modelName}`),
           value,
         }),
-      );
+      ]);
     }
 
     return value;

@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
-import { TagGroupService } from './tag-group.service';
-import { TagGroupController } from './tag-group.controller';
-import { PrismaService } from '@/prisma/prisma.service';
-import { JwtService } from '@nestjs/jwt';
 import { AccountService } from '@/account/account.service';
+import { PrismaService } from '@/prisma/prisma.service';
+import { TagGroupController } from '@/tag-group/tag-group.controller';
+import { TagGroupService } from '@/tag-group/tag-group.service';
+import { Module } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   controllers: [TagGroupController],

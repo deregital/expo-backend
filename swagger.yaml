@@ -17,13 +17,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/LoginResponseDto"
+        401:
+          description: "Credenciales inválidas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /auth/refresh:
     post:
       operationId: "AuthController_refreshToken"
       parameters: []
       responses:
-        201:
-          description: ""
+        200:
+          description: "Token renovado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RefreshResponseDto"
   /tag/create:
     post:
       operationId: "TagController_create"
@@ -52,17 +62,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllTagResponseDto"
-  /tag/all-grouped:
-    get:
-      operationId: "TagController_findAllGrouped"
-      parameters: []
-      responses:
-        200:
-          description: "Etiquetas obtenidas"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FindAllGroupedTagResponseDto"
   /tag/find-by-group/{groupId}:
     get:
       operationId: "TagController_findByGroup"
@@ -81,6 +80,10 @@ paths:
                 $ref: "#/components/schemas/FindByGroupTagResponseDto"
         404:
           description: "Grupo de etiquetas no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /tag/{id}:
     get:
       operationId: "TagController_findById"
@@ -99,6 +102,10 @@ paths:
                 $ref: "#/components/schemas/FindOneTagResponseDto"
         404:
           description: "Etiqueta no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
     patch:
       operationId: "TagController_update"
       parameters:
@@ -122,6 +129,10 @@ paths:
                 $ref: "#/components/schemas/UpdateTagResponseDto"
         404:
           description: "Etiqueta no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
     delete:
       operationId: "TagController_remove"
       parameters:
@@ -133,6 +144,10 @@ paths:
       responses:
         404:
           description: "Etiqueta no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
         410:
           description: "Etiqueta eliminada"
           content:
@@ -222,6 +237,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllTagGroupResponseDto"
+  /tag-group/all-with-tags:
+    get:
+      operationId: "TagGroupController_findAllWithTags"
+      parameters: []
+      responses:
+        200:
+          description: "Etiquetas obtenidas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindAllWithTagsResponseDto"
   /tag-group/{id}:
     get:
       operationId: "TagGroupController_findById"
@@ -240,6 +266,10 @@ paths:
                 $ref: "#/components/schemas/FindOneTagGroupResponseDto"
         404:
           description: "Grupo de etiquetas no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
     patch:
       operationId: "TagGroupController_update"
       parameters:
@@ -263,6 +293,10 @@ paths:
                 $ref: "#/components/schemas/UpdateTagGroupResponseDto"
         404:
           description: "Grupo de etiquetas no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
     delete:
       operationId: "TagGroupController_delete"
       parameters:
@@ -280,6 +314,10 @@ paths:
                 $ref: "#/components/schemas/DeleteTagGroupResponseDto"
         404:
           description: "Grupo de etiquetas no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -339,9 +377,39 @@ components:
               type: "string"
             refreshToken:
               type: "string"
+            expiresIn:
+              type: "number"
       required:
         - "user"
         - "backendTokens"
+    ErrorDto:
+      type: "object"
+      properties:
+        message:
+          type: "array"
+          items:
+            type: "string"
+        statusCode:
+          type: "number"
+        error:
+          type: "string"
+      required:
+        - "message"
+        - "statusCode"
+        - "error"
+    RefreshResponseDto:
+      type: "object"
+      properties:
+        refreshToken:
+          type: "string"
+        accessToken:
+          type: "string"
+        expiresIn:
+          type: "number"
+      required:
+        - "refreshToken"
+        - "accessToken"
+        - "expiresIn"
     CreateTagDto:
       type: "object"
       properties:
@@ -446,84 +514,6 @@ components:
               - "group"
       required:
         - "tags"
-    FindAllGroupedTagResponseDto:
-      type: "object"
-      properties:
-        groups:
-          type: "array"
-          items:
-            type: "object"
-            properties:
-              id:
-                type: "string"
-                format: "uuid"
-              name:
-                type: "string"
-                minLength: 1
-              isExclusive:
-                type: "boolean"
-              color:
-                type: "string"
-                minLength: 7
-                maxLength: 7
-              tags:
-                type: "array"
-                items:
-                  type: "object"
-                  properties:
-                    id:
-                      type: "string"
-                      format: "uuid"
-                    name:
-                      type: "string"
-                      minLength: 1
-                    groupId:
-                      type: "string"
-                      format: "uuid"
-                    type:
-                      type: "string"
-                      enum:
-                        - "PROFILE"
-                        - "EVENT"
-                        - "PARTICIPANT"
-                        - "NOT_IN_SYSTEM"
-                    created_at:
-                      type: "string"
-                      format: "date-time"
-                    updated_at:
-                      type: "string"
-                      format: "date-time"
-                    _count:
-                      type: "object"
-                      properties:
-                        profiles:
-                          type: "number"
-                      required:
-                        - "profiles"
-                  required:
-                    - "id"
-                    - "name"
-                    - "groupId"
-                    - "type"
-                    - "created_at"
-                    - "updated_at"
-                    - "_count"
-              _count:
-                type: "object"
-                properties:
-                  tags:
-                    type: "number"
-                required:
-                  - "tags"
-            required:
-              - "id"
-              - "name"
-              - "isExclusive"
-              - "color"
-              - "tags"
-              - "_count"
-      required:
-        - "groups"
     FindByGroupTagResponseDto:
       type: "object"
       properties:
@@ -968,6 +958,40 @@ components:
               - "name"
               - "type"
               - "group"
+        tags:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              groupId:
+                type: "string"
+                format: "uuid"
+              type:
+                type: "string"
+                enum:
+                  - "PROFILE"
+                  - "EVENT"
+                  - "PARTICIPANT"
+                  - "NOT_IN_SYSTEM"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "name"
+              - "groupId"
+              - "type"
+              - "created_at"
+              - "updated_at"
       required:
         - "id"
         - "username"
@@ -977,6 +1001,7 @@ components:
         - "created_at"
         - "updated_at"
         - "globalFilter"
+        - "tags"
     CreateTagGroupDto:
       type: "object"
       properties:
@@ -1091,6 +1116,84 @@ components:
               - "tags"
       required:
         - "tagGroups"
+    FindAllWithTagsResponseDto:
+      type: "object"
+      properties:
+        groups:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              isExclusive:
+                type: "boolean"
+              color:
+                type: "string"
+                minLength: 7
+                maxLength: 7
+              tags:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    groupId:
+                      type: "string"
+                      format: "uuid"
+                    type:
+                      type: "string"
+                      enum:
+                        - "PROFILE"
+                        - "EVENT"
+                        - "PARTICIPANT"
+                        - "NOT_IN_SYSTEM"
+                    created_at:
+                      type: "string"
+                      format: "date-time"
+                    updated_at:
+                      type: "string"
+                      format: "date-time"
+                    _count:
+                      type: "object"
+                      properties:
+                        profiles:
+                          type: "number"
+                      required:
+                        - "profiles"
+                  required:
+                    - "id"
+                    - "name"
+                    - "groupId"
+                    - "type"
+                    - "created_at"
+                    - "updated_at"
+                    - "_count"
+              _count:
+                type: "object"
+                properties:
+                  tags:
+                    type: "number"
+                required:
+                  - "tags"
+            required:
+              - "id"
+              - "name"
+              - "isExclusive"
+              - "color"
+              - "tags"
+              - "_count"
+      required:
+        - "groups"
     FindOneTagGroupResponseDto:
       type: "object"
       properties:

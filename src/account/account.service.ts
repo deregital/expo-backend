@@ -1,24 +1,27 @@
 import {
+  CreateAccountDto,
+  createAccountResponseSchema,
+} from '@/account/dto/create-account.dto';
+import { getGlobalFilterResponseSchema } from '@/account/dto/get-global-filter.dto';
+import { updateGlobalFilterResponseSchema } from '@/account/dto/update-global-filter.dto';
+import { translate } from '@/i18n/translate';
+import { PrismaService } from '@/prisma/prisma.service';
+import {
   ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { hash } from 'bcrypt';
-import { PrismaService } from 'src/prisma/prisma.service';
-import {
-  CreateAccountDto,
-  CreateAccountResponseDto,
-} from '@/account/dto/create-account.dto';
-import { GetGlobalFilterResponseDto } from '@/account/dto/get-global-filter.dto';
-import { translate } from '@/i18n/translate';
+import z from 'zod';
 import { Account, Tag } from '~/types/prisma-schema';
-import { UpdateGlobalFilterResponseDto } from '@/account/dto/update-global-filter.dto';
 
 @Injectable()
 export class AccountService {
   constructor(private prisma: PrismaService) {}
 
-  async create(dto: CreateAccountDto): Promise<CreateAccountResponseDto> {
+  async create(
+    dto: CreateAccountDto,
+  ): Promise<z.infer<typeof createAccountResponseSchema>> {
     const user = await this.prisma.account.findUnique({
       where: {
         username: dto.username,
@@ -26,13 +29,13 @@ export class AccountService {
     });
 
     if (user) {
-      throw new ConflictException(
+      throw new ConflictException([
         translate('prisma.conflict', {
           field: 'username',
           model: translate('prisma.model.account'),
           value: dto.username,
         }),
-      );
+      ]);
     }
 
     const newUser = await this.prisma.account.create({
@@ -73,6 +76,18 @@ export class AccountService {
     });
   }
 
+  async getTags(id: Account['id']): Promise<Tag[]> {
+    const tags = await this.prisma.account.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        tags: true,
+      },
+    });
+    return tags!.tags;
+  }
+
   async updateGlobalFilter(
     id: Account['id'],
     {
@@ -82,7 +97,7 @@ export class AccountService {
       active: boolean;
       tagsIds: Array<Tag['id']>;
     },
-  ): Promise<UpdateGlobalFilterResponseDto> {
+  ): Promise<z.infer<typeof updateGlobalFilterResponseSchema>> {
     const accountUpdated = await this.prisma.account.update({
       where: {
         id: id,
@@ -102,7 +117,7 @@ export class AccountService {
 
   async getGlobalFilter(
     id: Account['id'],
-  ): Promise<GetGlobalFilterResponseDto> {
+  ): Promise<z.infer<typeof getGlobalFilterResponseSchema>> {
     const cuenta = await this.prisma.account.findUnique({
       where: {
         id: id,
@@ -127,9 +142,9 @@ export class AccountService {
     });
 
     if (!cuenta) {
-      throw new NotFoundException(
+      throw new NotFoundException([
         translate('route.account.global-filter-get.not-found'),
-      );
+      ]);
     }
 
     return {
