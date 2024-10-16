@@ -91,6 +91,24 @@ export default {
         invalid: 'El color debe tener el formato hexadecimal (#ABCDEF)',
       },
     },
+    profile: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      phoneNumber: {
+        required: 'El teléfono es un campo obligatorio',
+        invalid: 'El teléfono no es válido',
+      },
+      secondaryPhoneNumber: {
+        invalid: 'El teléfono secundario no es válido',
+      },
+      fullName: {
+        required: 'El nombre es un campo obligatorio',
+      },
+      profilePictureUrl: {
+        invalid: 'La URL de la imagen de perfil no es válida',
+      },
+    },
   },
   route: {
     auth: {
