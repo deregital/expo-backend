@@ -14,6 +14,6 @@ export const eventFolderSchema = z.object({
     })
     .toLowerCase(),
 
-  created_at: z.string().datetime(),
-  updated_at: z.string().datetime(),
+  created_at: z.date(),
+  updated_at: z.date(),
 });

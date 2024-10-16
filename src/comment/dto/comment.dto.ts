@@ -14,11 +14,11 @@ export const commentSchema = z.object({
 
   isSolvable: z.boolean().default(false),
   isSolved: z.boolean().default(false),
-  solvedAt: z.string().datetime().optional(),
+  solvedAt: z.date().optional(),
   solvedBy: accountSchema.shape.id.optional(),
 
-  created_at: z.string().datetime(),
-  updated_at: z.string().datetime(),
+  created_at: z.date(),
+  updated_at: z.date(),
 });
 
 export class CommentDto extends createZodDtoWithoutDate(commentSchema) {}

@@ -24,6 +24,6 @@ export const eventSchema = z.object({
     })
     .optional(),
 
-  created_at: z.string().datetime(),
-  updated_at: z.string().datetime(),
+  created_at: z.date(),
+  updated_at: z.date(),
 });
