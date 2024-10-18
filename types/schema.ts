@@ -212,6 +212,54 @@ export interface paths {
     patch: operations['TagGroupController_update'];
     trace?: never;
   };
+  '/comment/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['CommentController_createComment'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/comment/get-by-profile/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['CommentController_getCommentsByProfileId'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/comment/toggle-solve/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['CommentController_toggleSolveComment'];
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -598,6 +646,81 @@ export interface components {
       name: string;
       color: string;
       isExclusive: boolean;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    CreateCommentDto: {
+      content: string;
+      /** Format: uuid */
+      profileId: string;
+      /** @default false */
+      isSolvable: boolean;
+    };
+    CreateCommentResponseDto: {
+      /** Format: uuid */
+      id: string;
+      content: string;
+      /** Format: uuid */
+      createdBy: string;
+      /** Format: uuid */
+      profileId: string;
+      /** @default false */
+      isSolvable: boolean;
+      /** @default false */
+      isSolved: boolean;
+      /** Format: date-time */
+      solvedAt: string | null;
+      /** Format: uuid */
+      solvedBy: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    GetByProfileCommentResponseDto: {
+      comments: {
+        /** Format: uuid */
+        id: string;
+        content: string;
+        /** Format: uuid */
+        createdBy: string;
+        /** Format: uuid */
+        profileId: string;
+        /** @default false */
+        isSolvable: boolean;
+        /** @default false */
+        isSolved: boolean;
+        /** Format: date-time */
+        solvedAt: string | null;
+        /** Format: uuid */
+        solvedBy?: string;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        account: {
+          username: string;
+        };
+      }[];
+    };
+    ToggleSolveCommentResponseDto: {
+      /** Format: uuid */
+      id: string;
+      content: string;
+      /** Format: uuid */
+      createdBy: string;
+      /** Format: uuid */
+      profileId: string;
+      /** @default false */
+      isSolvable: boolean;
+      /** @default false */
+      isSolved: boolean;
+      /** Format: date-time */
+      solvedAt: string | null;
+      /** Format: uuid */
+      solvedBy: string;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1077,6 +1200,106 @@ export interface operations {
       };
       /** @description Grupo de etiquetas no encontrado */
       404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  CommentController_createComment: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateCommentDto'];
+      };
+    };
+    responses: {
+      /** @description Comentario creado con éxito */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateCommentResponseDto'];
+        };
+      };
+      /** @description Perfil no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  CommentController_getCommentsByProfileId: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Comentarios obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetByProfileCommentResponseDto'];
+        };
+      };
+      /** @description Perfil no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  CommentController_toggleSolveComment: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Cambio de estado en la resolución del comentario */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ToggleSolveCommentResponseDto'];
+        };
+      };
+      /** @description Comentario no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description El comentario no es resoluble */
+      409: {
         headers: {
           [name: string]: unknown;
         };

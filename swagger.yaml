@@ -318,6 +318,69 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /comment/create:
+    post:
+      operationId: "CommentController_createComment"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCommentDto"
+      responses:
+        201:
+          description: "Comentario creado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCommentResponseDto"
+        404:
+          description: "Perfil no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /comment/get-by-profile/{id}:
+    get:
+      operationId: "CommentController_getCommentsByProfileId"
+      parameters: []
+      responses:
+        200:
+          description: "Comentarios obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetByProfileCommentResponseDto"
+        404:
+          description: "Perfil no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /comment/toggle-solve/{id}:
+    patch:
+      operationId: "CommentController_toggleSolveComment"
+      parameters: []
+      responses:
+        200:
+          description: "Cambio de estado en la resolución del comentario"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ToggleSolveCommentResponseDto"
+        404:
+          description: "Comentario no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "El comentario no es resoluble"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -1327,5 +1390,168 @@ components:
         - "name"
         - "color"
         - "isExclusive"
+        - "created_at"
+        - "updated_at"
+    CreateCommentDto:
+      type: "object"
+      properties:
+        content:
+          type: "string"
+          minLength: 1
+        profileId:
+          type: "string"
+          format: "uuid"
+        isSolvable:
+          default: false
+          type: "boolean"
+      required:
+        - "content"
+        - "profileId"
+        - "isSolvable"
+    CreateCommentResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        content:
+          type: "string"
+          minLength: 1
+        createdBy:
+          type: "string"
+          format: "uuid"
+        profileId:
+          type: "string"
+          format: "uuid"
+        isSolvable:
+          default: false
+          type: "boolean"
+        isSolved:
+          default: false
+          type: "boolean"
+        solvedAt:
+          type: "string"
+          format: "date-time"
+          nullable: true
+        solvedBy:
+          type: "string"
+          format: "uuid"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "content"
+        - "createdBy"
+        - "profileId"
+        - "isSolvable"
+        - "isSolved"
+        - "solvedAt"
+        - "solvedBy"
+        - "created_at"
+        - "updated_at"
+    GetByProfileCommentResponseDto:
+      type: "object"
+      properties:
+        comments:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              content:
+                type: "string"
+                minLength: 1
+              createdBy:
+                type: "string"
+                format: "uuid"
+              profileId:
+                type: "string"
+                format: "uuid"
+              isSolvable:
+                default: false
+                type: "boolean"
+              isSolved:
+                default: false
+                type: "boolean"
+              solvedAt:
+                type: "string"
+                format: "date-time"
+                nullable: true
+              solvedBy:
+                type: "string"
+                format: "uuid"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+              account:
+                type: "object"
+                properties:
+                  username:
+                    type: "string"
+                required:
+                  - "username"
+            required:
+              - "id"
+              - "content"
+              - "createdBy"
+              - "profileId"
+              - "solvedAt"
+              - "created_at"
+              - "updated_at"
+              - "account"
+      required:
+        - "comments"
+    ToggleSolveCommentResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        content:
+          type: "string"
+          minLength: 1
+        createdBy:
+          type: "string"
+          format: "uuid"
+        profileId:
+          type: "string"
+          format: "uuid"
+        isSolvable:
+          default: false
+          type: "boolean"
+        isSolved:
+          default: false
+          type: "boolean"
+        solvedAt:
+          type: "string"
+          format: "date-time"
+          nullable: true
+        solvedBy:
+          type: "string"
+          format: "uuid"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "content"
+        - "createdBy"
+        - "profileId"
+        - "isSolvable"
+        - "isSolved"
+        - "solvedAt"
+        - "solvedBy"
         - "created_at"
         - "updated_at"

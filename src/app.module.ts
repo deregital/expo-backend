@@ -2,6 +2,7 @@ import { AccountModule } from '@/account/account.module';
 import { AppController } from '@/app.controller';
 import { AppService } from '@/app.service';
 import { AuthModule } from '@/auth/auth.module';
+import { CommentModule } from '@/comment/comment.module';
 import { ZodValidationPipe } from '@/filters/zod.pipe';
 import { PrismaService } from '@/prisma/prisma.service';
 import { TagGroupModule } from '@/tag-group/tag-group.module';
@@ -17,6 +18,7 @@ import { APP_PIPE } from '@nestjs/core';
     TagModule,
     AccountModule,
     TagGroupModule,
+    CommentModule,
   ],
   providers: [
     {

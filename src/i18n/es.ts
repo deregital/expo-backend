@@ -23,6 +23,9 @@ export default {
       content: {
         min: 'El contenido debe tener al menos 1 caracter',
       },
+      isSolvable: {
+        required: 'No se indica si el comentario es resoluble',
+      },
     },
     account: {
       id: {
@@ -179,6 +182,21 @@ export default {
       delete: {
         success: 'Grupo de etiquetas eliminado',
         'not-found': 'Grupo de etiquetas no encontrado',
+      },
+    },
+    comment: {
+      create: {
+        success: 'Comentario creado con éxito',
+        'not-found': 'Perfil no encontrado',
+      },
+      'get-by-profile': {
+        success: 'Comentarios obtenidos',
+        'not-found': 'Perfil no encontrado',
+      },
+      'toggle-solve': {
+        success: 'Cambio de estado en la resolución del comentario',
+        'not-found': 'Comentario no encontrado',
+        conflict: 'El comentario no es resoluble',
       },
     },
   },

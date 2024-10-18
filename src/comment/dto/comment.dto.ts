@@ -10,11 +10,17 @@ export const commentSchema = z.object({
   content: z.string().min(1, {
     message: translate('model.comment.content.min'),
   }),
-  createdBy: accountSchema.shape.id,
 
-  isSolvable: z.boolean().default(false),
+  createdBy: accountSchema.shape.id,
+  profileId: accountSchema.shape.id,
+
+  isSolvable: z
+    .boolean({
+      required_error: translate('model.comment.isSolvable.required'),
+    })
+    .default(false),
   isSolved: z.boolean().default(false),
-  solvedAt: z.date().optional(),
+  solvedAt: z.date().nullable(),
   solvedBy: accountSchema.shape.id.optional(),
 
   created_at: z.date(),
