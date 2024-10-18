@@ -17,8 +17,11 @@ import {
   UpdateGlobalFilterResponseDto,
   updateGlobalFilterResponseSchema,
 } from '@/account/dto/update-global-filter.dto';
+import {
+  Account,
+  AccountWithoutPassword,
+} from '@/auth/decorators/account.decorator';
 import { Roles } from '@/auth/decorators/rol.decorator';
-import { AccountWithoutPassword, User } from '@/auth/decorators/user.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
@@ -51,7 +54,7 @@ export class AccountController {
   })
   async updateGlobalFilter(
     @Body() body: UpdateGlobalFilterDto,
-    @User() user: AccountWithoutPassword,
+    @Account() user: AccountWithoutPassword,
   ): Promise<z.infer<typeof updateGlobalFilterResponseSchema>> {
     return await this.accountService.updateGlobalFilter(user.id, body);
   }
@@ -64,7 +67,7 @@ export class AccountController {
     type: GetGlobalFilterResponseDto,
   })
   async getGlobalFilter(
-    @User() user: AccountWithoutPassword,
+    @Account() user: AccountWithoutPassword,
   ): Promise<z.infer<typeof getGlobalFilterResponseSchema>> {
     return await this.accountService.getGlobalFilter(user.id);
   }
@@ -77,7 +80,7 @@ export class AccountController {
     type: GetMeResponseDto,
   })
   async getMe(
-    @User() user: AccountWithoutPassword,
+    @Account() user: AccountWithoutPassword,
   ): Promise<z.infer<typeof getMeResponseSchema>> {
     const myGlobalFilter = await this.accountService.getGlobalFilter(user.id);
     const tags = await this.accountService.getTags(user.id);

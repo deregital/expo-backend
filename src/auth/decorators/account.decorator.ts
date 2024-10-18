@@ -8,11 +8,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Account } from '~/types/prisma-schema';
+import { type Account as AccountType } from '~/types/prisma-schema';
 
-export type AccountWithoutPassword = Omit<Account, 'password'>;
+export type AccountWithoutPassword = Omit<AccountType, 'password'>;
 
-export const User = createParamDecorator(
+export const Account = createParamDecorator(
   async (data: unknown, context: ExecutionContext) => {
     const request = context.switchToHttp().getRequest();
     const jwtService = new JwtService({ secret: process.env.JWT_SECRET });
