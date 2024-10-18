@@ -160,6 +160,12 @@ export default {
         success: 'Etiquetas obtenidas',
         'not-found': 'Grupo de etiquetas no encontrado',
       },
+      'massive-allocation': {
+        success: 'Etiquetas asignadas con éxito',
+      },
+      'massive-deallocation': {
+        success: 'Etiquetas desasignadas con éxito',
+      },
     },
     'tag-group': {
       create: {

@@ -3515,7 +3515,7 @@ export namespace Prisma {
     phoneNumber: string | null;
     secondaryPhoneNumber: string | null;
     fullName: string | null;
-    fistName: string | null;
+    firstName: string | null;
     gender: string | null;
     birthDate: Date | null;
     profilePictureUrl: string | null;
@@ -3538,7 +3538,7 @@ export namespace Prisma {
     phoneNumber: string | null;
     secondaryPhoneNumber: string | null;
     fullName: string | null;
-    fistName: string | null;
+    firstName: string | null;
     gender: string | null;
     birthDate: Date | null;
     profilePictureUrl: string | null;
@@ -3561,7 +3561,7 @@ export namespace Prisma {
     phoneNumber: number;
     secondaryPhoneNumber: number;
     fullName: number;
-    fistName: number;
+    firstName: number;
     gender: number;
     birthDate: number;
     profilePictureUrl: number;
@@ -3602,7 +3602,7 @@ export namespace Prisma {
     phoneNumber?: true;
     secondaryPhoneNumber?: true;
     fullName?: true;
-    fistName?: true;
+    firstName?: true;
     gender?: true;
     birthDate?: true;
     profilePictureUrl?: true;
@@ -3625,7 +3625,7 @@ export namespace Prisma {
     phoneNumber?: true;
     secondaryPhoneNumber?: true;
     fullName?: true;
-    fistName?: true;
+    firstName?: true;
     gender?: true;
     birthDate?: true;
     profilePictureUrl?: true;
@@ -3648,7 +3648,7 @@ export namespace Prisma {
     phoneNumber?: true;
     secondaryPhoneNumber?: true;
     fullName?: true;
-    fistName?: true;
+    firstName?: true;
     gender?: true;
     birthDate?: true;
     profilePictureUrl?: true;
@@ -3764,7 +3764,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber: string | null;
     fullName: string;
-    fistName: string | null;
+    firstName: string | null;
     gender: string | null;
     birthDate: Date | null;
     profilePictureUrl: string | null;
@@ -3809,7 +3809,7 @@ export namespace Prisma {
       phoneNumber?: boolean;
       secondaryPhoneNumber?: boolean;
       fullName?: boolean;
-      fistName?: boolean;
+      firstName?: boolean;
       gender?: boolean;
       birthDate?: boolean;
       profilePictureUrl?: boolean;
@@ -3841,7 +3841,7 @@ export namespace Prisma {
     phoneNumber?: boolean;
     secondaryPhoneNumber?: boolean;
     fullName?: boolean;
-    fistName?: boolean;
+    firstName?: boolean;
     gender?: boolean;
     birthDate?: boolean;
     profilePictureUrl?: boolean;
@@ -3888,7 +3888,7 @@ export namespace Prisma {
         phoneNumber: string;
         secondaryPhoneNumber: string | null;
         fullName: string;
-        fistName: string | null;
+        firstName: string | null;
         gender: string | null;
         birthDate: Date | null;
         profilePictureUrl: string | null;
@@ -4451,7 +4451,7 @@ export namespace Prisma {
     readonly phoneNumber: FieldRef<'Profile', 'String'>;
     readonly secondaryPhoneNumber: FieldRef<'Profile', 'String'>;
     readonly fullName: FieldRef<'Profile', 'String'>;
-    readonly fistName: FieldRef<'Profile', 'String'>;
+    readonly firstName: FieldRef<'Profile', 'String'>;
     readonly gender: FieldRef<'Profile', 'String'>;
     readonly birthDate: FieldRef<'Profile', 'DateTime'>;
     readonly profilePictureUrl: FieldRef<'Profile', 'String'>;
@@ -15185,7 +15185,7 @@ export namespace Prisma {
     phoneNumber: 'phoneNumber';
     secondaryPhoneNumber: 'secondaryPhoneNumber';
     fullName: 'fullName';
-    fistName: 'fistName';
+    firstName: 'firstName';
     gender: 'gender';
     birthDate: 'birthDate';
     profilePictureUrl: 'profilePictureUrl';
@@ -15611,7 +15611,7 @@ export namespace Prisma {
     phoneNumber?: StringFilter<'Profile'> | string;
     secondaryPhoneNumber?: StringNullableFilter<'Profile'> | string | null;
     fullName?: StringFilter<'Profile'> | string;
-    fistName?: StringNullableFilter<'Profile'> | string | null;
+    firstName?: StringNullableFilter<'Profile'> | string | null;
     gender?: StringNullableFilter<'Profile'> | string | null;
     birthDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
     profilePictureUrl?: StringNullableFilter<'Profile'> | string | null;
@@ -15646,7 +15646,7 @@ export namespace Prisma {
     phoneNumber?: SortOrder;
     secondaryPhoneNumber?: SortOrderInput | SortOrder;
     fullName?: SortOrder;
-    fistName?: SortOrderInput | SortOrder;
+    firstName?: SortOrderInput | SortOrder;
     gender?: SortOrderInput | SortOrder;
     birthDate?: SortOrderInput | SortOrder;
     profilePictureUrl?: SortOrderInput | SortOrder;
@@ -15679,7 +15679,7 @@ export namespace Prisma {
       NOT?: ProfileWhereInput | ProfileWhereInput[];
       shortId?: IntFilter<'Profile'> | number;
       fullName?: StringFilter<'Profile'> | string;
-      fistName?: StringNullableFilter<'Profile'> | string | null;
+      firstName?: StringNullableFilter<'Profile'> | string | null;
       gender?: StringNullableFilter<'Profile'> | string | null;
       birthDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
       profilePictureUrl?: StringNullableFilter<'Profile'> | string | null;
@@ -15720,7 +15720,7 @@ export namespace Prisma {
     phoneNumber?: SortOrder;
     secondaryPhoneNumber?: SortOrderInput | SortOrder;
     fullName?: SortOrder;
-    fistName?: SortOrderInput | SortOrder;
+    firstName?: SortOrderInput | SortOrder;
     gender?: SortOrderInput | SortOrder;
     birthDate?: SortOrderInput | SortOrder;
     profilePictureUrl?: SortOrderInput | SortOrder;
@@ -15759,7 +15759,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringWithAggregatesFilter<'Profile'> | string;
-    fistName?: StringNullableWithAggregatesFilter<'Profile'> | string | null;
+    firstName?: StringNullableWithAggregatesFilter<'Profile'> | string | null;
     gender?: StringNullableWithAggregatesFilter<'Profile'> | string | null;
     birthDate?:
       | DateTimeNullableWithAggregatesFilter<'Profile'>
@@ -16582,7 +16582,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -16607,7 +16607,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -16637,7 +16637,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -16676,7 +16676,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -16717,7 +16717,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -16744,7 +16744,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -16778,7 +16778,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -17696,7 +17696,7 @@ export namespace Prisma {
     phoneNumber?: SortOrder;
     secondaryPhoneNumber?: SortOrder;
     fullName?: SortOrder;
-    fistName?: SortOrder;
+    firstName?: SortOrder;
     gender?: SortOrder;
     birthDate?: SortOrder;
     profilePictureUrl?: SortOrder;
@@ -17728,7 +17728,7 @@ export namespace Prisma {
     phoneNumber?: SortOrder;
     secondaryPhoneNumber?: SortOrder;
     fullName?: SortOrder;
-    fistName?: SortOrder;
+    firstName?: SortOrder;
     gender?: SortOrder;
     birthDate?: SortOrder;
     profilePictureUrl?: SortOrder;
@@ -17751,7 +17751,7 @@ export namespace Prisma {
     phoneNumber?: SortOrder;
     secondaryPhoneNumber?: SortOrder;
     fullName?: SortOrder;
-    fistName?: SortOrder;
+    firstName?: SortOrder;
     gender?: SortOrder;
     birthDate?: SortOrder;
     profilePictureUrl?: SortOrder;
@@ -21155,7 +21155,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -21179,7 +21179,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -21219,7 +21219,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -21243,7 +21243,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -21314,7 +21314,7 @@ export namespace Prisma {
     phoneNumber?: StringFilter<'Profile'> | string;
     secondaryPhoneNumber?: StringNullableFilter<'Profile'> | string | null;
     fullName?: StringFilter<'Profile'> | string;
-    fistName?: StringNullableFilter<'Profile'> | string | null;
+    firstName?: StringNullableFilter<'Profile'> | string | null;
     gender?: StringNullableFilter<'Profile'> | string | null;
     birthDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
     profilePictureUrl?: StringNullableFilter<'Profile'> | string | null;
@@ -21402,7 +21402,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -21426,7 +21426,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -21567,7 +21567,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -21605,7 +21605,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -21823,7 +21823,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -21847,7 +21847,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -22659,7 +22659,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -22683,7 +22683,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -22740,7 +22740,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -22778,7 +22778,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23139,7 +23139,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -23161,7 +23161,7 @@ export namespace Prisma {
     phoneNumber: string;
     secondaryPhoneNumber?: string | null;
     fullName: string;
-    fistName?: string | null;
+    firstName?: string | null;
     gender?: string | null;
     birthDate?: Date | string | null;
     profilePictureUrl?: string | null;
@@ -23186,7 +23186,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23224,7 +23224,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23266,7 +23266,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23305,7 +23305,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23343,7 +23343,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23382,7 +23382,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23457,7 +23457,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23495,7 +23495,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23538,7 +23538,7 @@ export namespace Prisma {
       | string
       | null;
     fullName?: StringFieldUpdateOperationsInput | string;
-    fistName?: NullableStringFieldUpdateOperationsInput | string | null;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
     gender?: NullableStringFieldUpdateOperationsInput | string | null;
     birthDate?:
       | NullableDateTimeFieldUpdateOperationsInput

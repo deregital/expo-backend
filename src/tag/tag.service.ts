@@ -5,12 +5,21 @@ import { findAllTagResponseSchema } from '@/tag/dto/find-all-tag.dto';
 import { findByGroupTagResponseSchema } from '@/tag/dto/find-by-group-tag.dto';
 import { findOneTagResponseSchema } from '@/tag/dto/find-one-tag.dto';
 import {
+  MassiveAllocationDto,
+  massiveAllocationResponseSchema,
+} from '@/tag/dto/massive-allocation.dto';
+
+import {
+  MassiveDeallocationDto,
+  massiveDeallocationResponseSchema,
+} from '@/tag/dto/massive-deallocation.dto';
+import {
   UpdateTagDto,
   updateTagResponseSchema,
 } from '@/tag/dto/update-tag.dto';
 import { Injectable } from '@nestjs/common';
 import z from 'zod';
-import { Tag } from '~/types/prisma-schema';
+import { Profile, Tag } from '~/types';
 
 @Injectable()
 export class TagService {
@@ -92,6 +101,68 @@ export class TagService {
           group: true,
         },
       }),
+    };
+  }
+
+  private async tagAllocation(
+    profileId: Profile['id'],
+    tagIds: Tag['id'][],
+  ): Promise<Profile> {
+    return await this.prisma.profile.update({
+      where: {
+        id: profileId,
+      },
+      data: {
+        tags: {
+          connect: tagIds.map((id) => ({
+            id: id,
+          })),
+        },
+      },
+    });
+  }
+
+  private async tagDeallocation(
+    profileId: Profile['id'],
+    tagIds: Tag['id'][],
+  ): Promise<Profile> {
+    return await this.prisma.profile.update({
+      where: {
+        id: profileId,
+      },
+      data: {
+        tags: {
+          disconnect: tagIds.map((id) => ({
+            id: id,
+          })),
+        },
+      },
+    });
+  }
+
+  async massiveAllocation(
+    dto: MassiveAllocationDto,
+  ): Promise<z.infer<typeof massiveAllocationResponseSchema>> {
+    const profiles = await Promise.all(
+      dto.profileIds.map((profileId) =>
+        this.tagAllocation(profileId, dto.tagIds),
+      ),
+    );
+    return {
+      profiles: profiles,
+    };
+  }
+
+  async massiveDeallocation(
+    dto: MassiveDeallocationDto,
+  ): Promise<z.infer<typeof massiveDeallocationResponseSchema>> {
+    const profiles = await Promise.all(
+      dto.profileIds.map((profileId) =>
+        this.tagDeallocation(profileId, dto.tagIds),
+      ),
+    );
+    return {
+      profiles: profiles,
     };
   }
 }

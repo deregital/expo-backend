@@ -100,6 +100,38 @@ export interface paths {
     patch: operations['TagController_update'];
     trace?: never;
   };
+  '/tag/massive-allocation': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['TagController_massiveAllocation'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/tag/massive-deallocation': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['TagController_massiveDeallocation'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/account/create': {
     parameters: {
       query?: never;
@@ -420,6 +452,78 @@ export interface components {
       created_at: string;
       /** Format: date-time */
       updated_at: string;
+    };
+    MassiveAllocationDto: {
+      tagIds: string[];
+      profileIds: string[];
+    };
+    MassiveAllocationResponseDto: {
+      profiles: {
+        /** Format: uuid */
+        id: string;
+        shortId: number;
+        phoneNumber: string;
+        secondaryPhoneNumber: string | null;
+        fullName: string;
+        firstName: string | null;
+        gender: string | null;
+        /** Format: date-time */
+        birthDate: string | null;
+        /** Format: uri */
+        profilePictureUrl: string | null;
+        instagram: string | null;
+        /** Format: email */
+        mail: string | null;
+        dni: string | null;
+        alternativeNames: string[] | null;
+        birthLongitude: number | null;
+        birthLatitude: number | null;
+        residenceLongitude: number | null;
+        residenceLatitude: number | null;
+        isInTrash: boolean;
+        /** Format: date-time */
+        movedToTrashDate: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
+    };
+    MassiveDeallocationDto: {
+      tagIds: string[];
+      profileIds: string[];
+    };
+    MassiveDeallocationResponseDto: {
+      profiles: {
+        /** Format: uuid */
+        id: string;
+        shortId: number;
+        phoneNumber: string;
+        secondaryPhoneNumber: string | null;
+        fullName: string;
+        firstName: string | null;
+        gender: string | null;
+        /** Format: date-time */
+        birthDate: string | null;
+        /** Format: uri */
+        profilePictureUrl: string | null;
+        instagram: string | null;
+        /** Format: email */
+        mail: string | null;
+        dni: string | null;
+        alternativeNames: string[] | null;
+        birthLongitude: number | null;
+        birthLatitude: number | null;
+        residenceLongitude: number | null;
+        residenceLatitude: number | null;
+        isInTrash: boolean;
+        /** Format: date-time */
+        movedToTrashDate: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
     };
     CreateAccountDto: {
       username: string;
@@ -956,6 +1060,54 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  TagController_massiveAllocation: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['MassiveAllocationDto'];
+      };
+    };
+    responses: {
+      /** @description Etiquetas asignadas con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['MassiveAllocationResponseDto'];
+        };
+      };
+    };
+  };
+  TagController_massiveDeallocation: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['MassiveDeallocationDto'];
+      };
+    };
+    responses: {
+      /** @description Etiquetas desasignadas con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['MassiveDeallocationResponseDto'];
         };
       };
     };

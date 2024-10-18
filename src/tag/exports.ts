@@ -3,5 +3,7 @@ export * from './dto/delete-tag.dto';
 export * from './dto/find-all-tag.dto';
 export * from './dto/find-by-group-tag.dto';
 export * from './dto/find-one-tag.dto';
+export * from './dto/massive-allocation.dto';
+export * from './dto/massive-deallocation.dto';
 export * from './dto/tag.dto';
 export * from './dto/update-tag.dto';

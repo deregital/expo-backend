@@ -26,6 +26,16 @@ import {
   findOneTagResponseSchema,
 } from '@/tag/dto/find-one-tag.dto';
 import {
+  MassiveAllocationDto,
+  MassiveAllocationResponseDto,
+  massiveAllocationResponseSchema,
+} from '@/tag/dto/massive-allocation.dto';
+import {
+  MassiveDeallocationDto,
+  MassiveDeallocationResponseDto,
+  massiveDeallocationResponseSchema,
+} from '@/tag/dto/massive-deallocation.dto';
+import {
   UpdateTagDto,
   UpdateTagResponseDto,
   updateTagResponseSchema,
@@ -135,5 +145,27 @@ export class TagController {
     @Param('id', new ExistingRecord('tag')) id: string,
   ): Promise<z.infer<typeof deleteTagResponseSchema>> {
     return await this.tagService.remove(id);
+  }
+
+  @ApiOkResponse({
+    description: translate('route.tag.massive-allocation.success'),
+    type: MassiveAllocationResponseDto,
+  })
+  @Post('/massive-allocation')
+  async massiveAllocation(
+    @Body() massiveAllocationDto: MassiveAllocationDto,
+  ): Promise<z.infer<typeof massiveAllocationResponseSchema>> {
+    return await this.tagService.massiveAllocation(massiveAllocationDto);
+  }
+
+  @ApiOkResponse({
+    description: translate('route.tag.massive-deallocation.success'),
+    type: MassiveDeallocationResponseDto,
+  })
+  @Post('/massive-deallocation')
+  async massiveDeallocation(
+    @Body() massiveDeallocationDto: MassiveDeallocationDto,
+  ): Promise<z.infer<typeof massiveDeallocationResponseSchema>> {
+    return await this.tagService.massiveDeallocation(massiveDeallocationDto);
   }
 }
