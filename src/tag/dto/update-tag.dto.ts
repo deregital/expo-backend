@@ -1,12 +1,10 @@
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagSchema } from '@/tag/dto/tag.dto';
 
-export const updateTagSchema = tagSchema
-  .pick({
-    name: true,
-    groupId: true,
-  })
-  .partial();
+export const updateTagSchema = tagSchema.pick({
+  name: true,
+  groupId: true,
+});
 
 export class UpdateTagDto extends createZodDtoWithoutDate(updateTagSchema) {}
 
