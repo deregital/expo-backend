@@ -1,9 +1,9 @@
-import { tagSchema } from '@/tag/dto/tag.dto';
-import { translate } from '@/i18n/translate';
-import { z } from 'zod';
 import { eventFolderSchema } from '@/event-folder/dto/event-folder.dto';
+import { translate } from '@/i18n/translate';
+import { tagSchema } from '@/tag/dto/tag.dto';
+import { z } from 'zod';
 
-const eventSchemaBase = z.object({
+export const eventSchema = z.object({
   id: z.string().uuid({ message: translate('model.event.id.uuid') }),
   name: z.string().min(1, translate('model.event.name.required')),
   date: z
@@ -17,23 +17,13 @@ const eventSchemaBase = z.object({
   tagAssistedId: tagSchema.shape.id,
   tagConfirmedId: tagSchema.shape.id,
 
-  eventoPadreId: z
+  supraEventId: z
     .string()
     .uuid({
       message: translate('model.event.id.uuid'),
     })
     .optional(),
 
-  created_at: z.string().datetime(),
-  updated_at: z.string().datetime(),
-});
-
-type Event = z.infer<typeof eventSchemaBase> & {
-  supraEvent: z.infer<typeof eventSchemaBase>;
-  subEvents: Array<z.infer<typeof eventSchemaBase>>;
-};
-
-export const eventSchema: z.ZodType<Event> = eventSchemaBase.extend({
-  supraEvent: z.lazy(() => eventSchema),
-  subEvents: z.array(z.lazy(() => eventSchemaBase)),
+  created_at: z.date(),
+  updated_at: z.date(),
 });

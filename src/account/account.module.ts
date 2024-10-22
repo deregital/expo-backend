@@ -1,7 +1,7 @@
+import { AccountController } from '@/account/account.controller';
+import { AccountService } from '@/account/account.service';
+import { PrismaService } from '@/prisma/prisma.service';
 import { Module } from '@nestjs/common';
-import { AccountService } from './account.service';
-import { AccountController } from './account.controller';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 
 @Module({

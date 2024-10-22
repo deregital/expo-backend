@@ -68,22 +68,6 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/tag/all-grouped': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations['TagController_findAllGrouped'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
   '/tag/find-by-group/{groupId}': {
     parameters: {
       query?: never;
@@ -114,6 +98,38 @@ export interface paths {
     options?: never;
     head?: never;
     patch: operations['TagController_update'];
+    trace?: never;
+  };
+  '/tag/massive-allocation': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['TagController_massiveAllocation'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/tag/massive-deallocation': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['TagController_massiveDeallocation'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
     trace?: never;
   };
   '/account/create': {
@@ -164,6 +180,118 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/tag-group/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['TagGroupController_create'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/tag-group/all': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['TagGroupController_findAll'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/tag-group/all-with-tags': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['TagGroupController_findAllWithTags'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/tag-group/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['TagGroupController_findById'];
+    put?: never;
+    post?: never;
+    delete: operations['TagGroupController_delete'];
+    options?: never;
+    head?: never;
+    patch: operations['TagGroupController_update'];
+    trace?: never;
+  };
+  '/comment/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['CommentController_createComment'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/comment/get-by-profile/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['CommentController_getCommentsByProfileId'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/comment/toggle-solve/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['CommentController_toggleSolveComment'];
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -179,33 +307,30 @@ export interface components {
         username?: string;
         /** @enum {string} */
         role?: 'USER' | 'ADMIN';
-        /** Format: date-time */
-        created_at?: string;
-        /** Format: date-time */
-        updated_at?: string;
-        globalFilter?: {
-          tags: {
-            /** Format: uuid */
-            id: string;
-            name: string;
-            group: {
-              /** Format: uuid */
-              id: string;
-              color: string;
-              isExclusive: boolean;
-            };
-          };
-          active: boolean;
-        };
         /** @default false */
         isGlobalFilterActive: boolean;
         /** @default [] */
         fcmToken: string[];
+        /** Format: date-time */
+        created_at?: string;
+        /** Format: date-time */
+        updated_at?: string;
       };
       backendTokens: {
         accessToken?: string;
         refreshToken?: string;
+        expiresIn?: number;
       };
+    };
+    ErrorDto: {
+      message: string[];
+      statusCode: number;
+      error: string;
+    };
+    RefreshResponseDto: {
+      refreshToken: string;
+      accessToken: string;
+      expiresIn: number;
     };
     CreateTagDto: {
       name: string;
@@ -244,34 +369,6 @@ export interface components {
           created_at: string;
           /** Format: date-time */
           updated_at: string;
-        };
-      }[];
-    };
-    FindAllGroupedTagResponseDto: {
-      groups: {
-        /** Format: uuid */
-        id: string;
-        name: string;
-        isExclusive: boolean;
-        color: string;
-        tags: {
-          /** Format: uuid */
-          id: string;
-          name: string;
-          /** Format: uuid */
-          groupId: string;
-          /** @enum {string} */
-          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
-          /** Format: date-time */
-          created_at: string;
-          /** Format: date-time */
-          updated_at: string;
-          _count: {
-            profiles: number;
-          };
-        }[];
-        _count: {
-          tags: number;
         };
       }[];
     };
@@ -330,6 +427,19 @@ export interface components {
       /** Format: uuid */
       groupId: string;
     };
+    UpdateTagResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** Format: uuid */
+      groupId: string;
+      /** @enum {string} */
+      type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
     DeleteTagResponseDto: {
       /** Format: uuid */
       id: string;
@@ -342,6 +452,78 @@ export interface components {
       created_at: string;
       /** Format: date-time */
       updated_at: string;
+    };
+    MassiveAllocationDto: {
+      tagIds: string[];
+      profileIds: string[];
+    };
+    MassiveAllocationResponseDto: {
+      profiles: {
+        /** Format: uuid */
+        id: string;
+        shortId: number;
+        phoneNumber: string;
+        secondaryPhoneNumber: string | null;
+        fullName: string;
+        firstName: string | null;
+        gender: string | null;
+        /** Format: date-time */
+        birthDate: string | null;
+        /** Format: uri */
+        profilePictureUrl: string | null;
+        instagram: string | null;
+        /** Format: email */
+        mail: string | null;
+        dni: string | null;
+        alternativeNames: string[] | null;
+        birthLongitude: number | null;
+        birthLatitude: number | null;
+        residenceLongitude: number | null;
+        residenceLatitude: number | null;
+        isInTrash: boolean;
+        /** Format: date-time */
+        movedToTrashDate: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
+    };
+    MassiveDeallocationDto: {
+      tagIds: string[];
+      profileIds: string[];
+    };
+    MassiveDeallocationResponseDto: {
+      profiles: {
+        /** Format: uuid */
+        id: string;
+        shortId: number;
+        phoneNumber: string;
+        secondaryPhoneNumber: string | null;
+        fullName: string;
+        firstName: string | null;
+        gender: string | null;
+        /** Format: date-time */
+        birthDate: string | null;
+        /** Format: uri */
+        profilePictureUrl: string | null;
+        instagram: string | null;
+        /** Format: email */
+        mail: string | null;
+        dni: string | null;
+        alternativeNames: string[] | null;
+        birthLongitude: number | null;
+        birthLatitude: number | null;
+        residenceLongitude: number | null;
+        residenceLatitude: number | null;
+        isInTrash: boolean;
+        /** Format: date-time */
+        movedToTrashDate: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
     };
     CreateAccountDto: {
       username: string;
@@ -366,30 +548,37 @@ export interface components {
       tagsIds: string[];
     };
     UpdateGlobalFilterResponseDto: {
+      /** Format: uuid */
       id: string;
-      nombreUsuario: string;
-      esAdmin: boolean;
-      fcmToken: string | null;
-      filtroBaseActivo: boolean;
-      filtroBase: {
-        active?: boolean;
-        etiquetas?: {
-          /** Format: uuid */
-          id: string;
-          name: string;
-          /** Format: uuid */
-          groupId: string;
-          /** @enum {string} */
-          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
-          /** Format: date-time */
-          created_at: string;
-          /** Format: date-time */
-          updated_at: string;
-        }[];
-      };
+      username: string;
+      password: string;
+      /** @enum {string} */
+      role: 'USER' | 'ADMIN';
+      /** @default false */
+      isGlobalFilterActive: boolean;
+      /** @default [] */
+      fcmToken: string[];
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      globalFilter: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        groupId: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
     };
     GetGlobalFilterResponseDto: {
-      active: boolean;
+      /** @default false */
+      isGlobalFilterActive: boolean;
       globalFilter: {
         /** Format: uuid */
         id: string;
@@ -410,28 +599,236 @@ export interface components {
       username: string;
       /** @enum {string} */
       role: 'USER' | 'ADMIN';
+      /** @default false */
+      isGlobalFilterActive: boolean;
+      /** @default [] */
+      fcmToken: string[];
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
       updated_at: string;
       globalFilter: {
-        tags?: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        group: {
+          /** Format: uuid */
+          id: string;
+          color: string;
+          isExclusive: boolean;
+        };
+      }[];
+      tags: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        groupId: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
+    };
+    CreateTagGroupDto: {
+      color: string;
+      name: string;
+      isExclusive: boolean;
+    };
+    CreateTagGroupResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      color: string;
+      isExclusive: boolean;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    FindAllTagGroupResponseDto: {
+      tagGroups: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        color: string;
+        isExclusive: boolean;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        tags: {
           /** Format: uuid */
           id: string;
           name: string;
-          group: {
-            /** Format: uuid */
-            id: string;
-            color: string;
-            isExclusive: boolean;
+          /** Format: uuid */
+          groupId: string;
+          /** @enum {string} */
+          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        }[];
+      }[];
+    };
+    FindAllWithTagsResponseDto: {
+      groups: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        isExclusive: boolean;
+        color: string;
+        tags: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: uuid */
+          groupId: string;
+          /** @enum {string} */
+          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+          _count: {
+            profiles: number;
           };
+        }[];
+        _count: {
+          tags: number;
         };
-        active?: boolean;
-      };
+      }[];
+    };
+    FindOneTagGroupResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      color: string;
+      isExclusive: boolean;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      tags: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        groupId: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
+    };
+    UpdateTagGroupDto: {
+      name: string;
+      color: string;
+      isExclusive: boolean;
+    };
+    UpdateTagGroupResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      color: string;
+      isExclusive: boolean;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    DeleteTagGroupResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      color: string;
+      isExclusive: boolean;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    CreateCommentDto: {
+      content: string;
+      /** Format: uuid */
+      profileId: string;
       /** @default false */
-      isGlobalFilterActive: boolean;
-      /** @default [] */
-      fcmToken: string[];
+      isSolvable: boolean;
+    };
+    CreateCommentResponseDto: {
+      /** Format: uuid */
+      id: string;
+      content: string;
+      /** Format: uuid */
+      createdBy: string;
+      /** Format: uuid */
+      profileId: string;
+      /** @default false */
+      isSolvable: boolean;
+      /** @default false */
+      isSolved: boolean;
+      /** Format: date-time */
+      solvedAt: string | null;
+      /** Format: uuid */
+      solvedBy: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    GetByProfileCommentResponseDto: {
+      comments: {
+        /** Format: uuid */
+        id: string;
+        content: string;
+        /** Format: uuid */
+        createdBy: string;
+        /** Format: uuid */
+        profileId: string;
+        /** @default false */
+        isSolvable: boolean;
+        /** @default false */
+        isSolved: boolean;
+        /** Format: date-time */
+        solvedAt: string | null;
+        /** Format: uuid */
+        solvedBy?: string;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        account: {
+          username: string;
+        };
+      }[];
+    };
+    ToggleSolveCommentResponseDto: {
+      /** Format: uuid */
+      id: string;
+      content: string;
+      /** Format: uuid */
+      createdBy: string;
+      /** Format: uuid */
+      profileId: string;
+      /** @default false */
+      isSolvable: boolean;
+      /** @default false */
+      isSolved: boolean;
+      /** Format: date-time */
+      solvedAt: string | null;
+      /** Format: uuid */
+      solvedBy: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
     };
   };
   responses: never;
@@ -464,6 +861,15 @@ export interface operations {
           'application/json': components['schemas']['LoginResponseDto'];
         };
       };
+      /** @description Credenciales inválidas */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
     };
   };
   AuthController_refreshToken: {
@@ -475,11 +881,14 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      201: {
+      /** @description Token renovado */
+      200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['RefreshResponseDto'];
+        };
       };
     };
   };
@@ -527,26 +936,6 @@ export interface operations {
       };
     };
   };
-  TagController_findAllGrouped: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Etiquetas obtenidas */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['FindAllGroupedTagResponseDto'];
-        };
-      };
-    };
-  };
   TagController_findByGroup: {
     parameters: {
       query?: never;
@@ -572,7 +961,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
       };
     };
   };
@@ -601,7 +992,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
       };
     };
   };
@@ -621,7 +1014,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
       };
       /** @description Etiqueta eliminada */
       410: {
@@ -655,7 +1050,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['FindOneTagResponseDto'];
+          'application/json': components['schemas']['UpdateTagResponseDto'];
         };
       };
       /** @description Etiqueta no encontrada */
@@ -663,7 +1058,57 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  TagController_massiveAllocation: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['MassiveAllocationDto'];
+      };
+    };
+    responses: {
+      /** @description Etiquetas asignadas con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['MassiveAllocationResponseDto'];
+        };
+      };
+    };
+  };
+  TagController_massiveDeallocation: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['MassiveDeallocationDto'];
+      };
+    };
+    responses: {
+      /** @description Etiquetas desasignadas con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['MassiveDeallocationResponseDto'];
+        };
       };
     };
   };
@@ -751,6 +1196,267 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['GetMeResponseDto'];
+        };
+      };
+    };
+  };
+  TagGroupController_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateTagGroupDto'];
+      };
+    };
+    responses: {
+      /** @description Grupo de etiquetas creado con éxito */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateTagGroupResponseDto'];
+        };
+      };
+    };
+  };
+  TagGroupController_findAll: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Grupos de etiquetas obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllTagGroupResponseDto'];
+        };
+      };
+    };
+  };
+  TagGroupController_findAllWithTags: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Etiquetas obtenidas */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllWithTagsResponseDto'];
+        };
+      };
+    };
+  };
+  TagGroupController_findById: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Grupo de etiquetas obtenido */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindOneTagGroupResponseDto'];
+        };
+      };
+      /** @description Grupo de etiquetas no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  TagGroupController_delete: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Grupo de etiquetas eliminado */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DeleteTagGroupResponseDto'];
+        };
+      };
+      /** @description Grupo de etiquetas no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  TagGroupController_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateTagGroupDto'];
+      };
+    };
+    responses: {
+      /** @description Grupo de etiquetas actualizado */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateTagGroupResponseDto'];
+        };
+      };
+      /** @description Grupo de etiquetas no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  CommentController_createComment: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateCommentDto'];
+      };
+    };
+    responses: {
+      /** @description Comentario creado con éxito */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateCommentResponseDto'];
+        };
+      };
+      /** @description Perfil no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  CommentController_getCommentsByProfileId: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Comentarios obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetByProfileCommentResponseDto'];
+        };
+      };
+      /** @description Perfil no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  CommentController_toggleSolveComment: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Cambio de estado en la resolución del comentario */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ToggleSolveCommentResponseDto'];
+        };
+      };
+      /** @description Comentario no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description El comentario no es resoluble */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
         };
       };
     };

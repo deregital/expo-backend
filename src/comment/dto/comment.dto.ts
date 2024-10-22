@@ -1,6 +1,6 @@
 import { accountSchema } from '@/account/dto/account.dto';
 import { translate } from '@/i18n/translate';
-import { createZodDto } from '@anatine/zod-nestjs';
+import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { z } from 'zod';
 
 export const commentSchema = z.object({
@@ -10,15 +10,21 @@ export const commentSchema = z.object({
   content: z.string().min(1, {
     message: translate('model.comment.content.min'),
   }),
-  createdBy: accountSchema.shape.id,
 
-  isSolvable: z.boolean().default(false),
+  createdBy: accountSchema.shape.id,
+  profileId: accountSchema.shape.id,
+
+  isSolvable: z
+    .boolean({
+      required_error: translate('model.comment.isSolvable.required'),
+    })
+    .default(false),
   isSolved: z.boolean().default(false),
-  solvedAt: z.string().datetime().optional(),
+  solvedAt: z.date().nullable(),
   solvedBy: accountSchema.shape.id.optional(),
 
-  created_at: z.string().datetime(),
-  updated_at: z.string().datetime(),
+  created_at: z.date(),
+  updated_at: z.date(),
 });
 
-export class CommentDto extends createZodDto(commentSchema) {}
+export class CommentDto extends createZodDtoWithoutDate(commentSchema) {}

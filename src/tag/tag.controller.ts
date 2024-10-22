@@ -1,33 +1,64 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  UseGuards,
-  Patch,
-} from '@nestjs/common';
-import { TagService } from './tag.service';
 import { Roles } from '@/auth/decorators/rol.decorator';
-import { Role } from '~/types/prisma-schema';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
-import { CreateTagDto, CreateTagResponseDto } from '@/tag/dto/create-tag.dto';
-import { DeleteTagResponseDto } from '@/tag/dto/delete-tag.dto';
+import { translate } from '@/i18n/translate';
+import { ErrorDto } from '@/shared/errors/errorType';
+import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
+import {
+  CreateTagDto,
+  CreateTagResponseDto,
+  createTagResponseSchema,
+} from '@/tag/dto/create-tag.dto';
+import {
+  DeleteTagResponseDto,
+  deleteTagResponseSchema,
+} from '@/tag/dto/delete-tag.dto';
+import {
+  FindAllTagResponseDto,
+  findAllTagResponseSchema,
+} from '@/tag/dto/find-all-tag.dto';
+import {
+  FindByGroupTagResponseDto,
+  findByGroupTagResponseSchema,
+} from '@/tag/dto/find-by-group-tag.dto';
+import {
+  FindOneTagResponseDto,
+  findOneTagResponseSchema,
+} from '@/tag/dto/find-one-tag.dto';
+import {
+  MassiveAllocationDto,
+  MassiveAllocationResponseDto,
+  massiveAllocationResponseSchema,
+} from '@/tag/dto/massive-allocation.dto';
+import {
+  MassiveDeallocationDto,
+  MassiveDeallocationResponseDto,
+  massiveDeallocationResponseSchema,
+} from '@/tag/dto/massive-deallocation.dto';
+import {
+  UpdateTagDto,
+  UpdateTagResponseDto,
+  updateTagResponseSchema,
+} from '@/tag/dto/update-tag.dto';
+import { TagService } from '@/tag/tag.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiGoneResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
-import { translate } from '@/i18n/translate';
-import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
-import { FindAllTagResponseDto } from '@/tag/dto/find-all-tag.dto';
-import { FindOneTagResponseDto } from '@/exports';
-import { UpdateTagDto } from '@/tag/dto/update-tag.dto';
-import { FindByGroupTagResponseDto } from '@/tag/dto/find-by-group-tag.dto';
-import { FindAllGroupedTagResponseDto } from '@/tag/dto/find-all-grouped-tag.dto';
+import z from 'zod';
+import { Role } from '~/types/prisma-schema';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -40,7 +71,9 @@ export class TagController {
     description: translate('route.tag.create.success'),
     type: CreateTagResponseDto,
   })
-  async create(@Body() createTagDto: CreateTagDto) {
+  async create(
+    @Body() createTagDto: CreateTagDto,
+  ): Promise<z.infer<typeof createTagResponseSchema>> {
     return await this.tagService.create(createTagDto);
   }
 
@@ -49,17 +82,8 @@ export class TagController {
     description: translate('route.tag.find-all.success'),
     type: FindAllTagResponseDto,
   })
-  async findAll(): Promise<FindAllTagResponseDto> {
+  async findAll(): Promise<z.infer<typeof findAllTagResponseSchema>> {
     return await this.tagService.findAll();
-  }
-
-  @ApiOkResponse({
-    description: translate('route.tag.find-all-grouped.success'),
-    type: FindAllGroupedTagResponseDto,
-  })
-  @Get('/all-grouped')
-  async findAllGrouped(): Promise<FindAllGroupedTagResponseDto> {
-    return await this.tagService.findAllGrouped();
   }
 
   @ApiOkResponse({
@@ -68,11 +92,12 @@ export class TagController {
   })
   @ApiNotFoundResponse({
     description: translate('route.tag.find-by-group.not-found'),
+    type: ErrorDto,
   })
   @Get('/find-by-group/:groupId')
   async findByGroup(
     @Param('groupId', new ExistingRecord('tagGroup')) groupId: string,
-  ): Promise<FindByGroupTagResponseDto> {
+  ): Promise<z.infer<typeof findByGroupTagResponseSchema>> {
     return await this.tagService.findByGroup(groupId);
   }
 
@@ -83,25 +108,27 @@ export class TagController {
   })
   @ApiNotFoundResponse({
     description: translate('route.tag.find-one.not-found'),
+    type: ErrorDto,
   })
   async findById(
     @Param('id', new ExistingRecord('tag')) id: string,
-  ): Promise<FindOneTagResponseDto> {
+  ): Promise<z.infer<typeof findOneTagResponseSchema>> {
     return await this.tagService.findById(id);
   }
 
   @ApiOkResponse({
     description: translate('route.tag.update.success'),
-    type: FindOneTagResponseDto,
+    type: UpdateTagResponseDto,
   })
   @ApiNotFoundResponse({
     description: translate('route.tag.update.not-found'),
+    type: ErrorDto,
   })
   @Patch('/:id')
   async update(
     @Param('id', new ExistingRecord('tag')) id: string,
     @Body() updateTagDto: UpdateTagDto,
-  ) {
+  ): Promise<z.infer<typeof updateTagResponseSchema>> {
     return await this.tagService.update(id, updateTagDto);
   }
 
@@ -111,11 +138,34 @@ export class TagController {
   })
   @ApiNotFoundResponse({
     description: translate('route.tag.delete.not-found'),
+    type: ErrorDto,
   })
   @Delete('/:id')
   async remove(
     @Param('id', new ExistingRecord('tag')) id: string,
-  ): Promise<DeleteTagResponseDto> {
+  ): Promise<z.infer<typeof deleteTagResponseSchema>> {
     return await this.tagService.remove(id);
+  }
+
+  @ApiOkResponse({
+    description: translate('route.tag.massive-allocation.success'),
+    type: MassiveAllocationResponseDto,
+  })
+  @Post('/massive-allocation')
+  async massiveAllocation(
+    @Body() massiveAllocationDto: MassiveAllocationDto,
+  ): Promise<z.infer<typeof massiveAllocationResponseSchema>> {
+    return await this.tagService.massiveAllocation(massiveAllocationDto);
+  }
+
+  @ApiOkResponse({
+    description: translate('route.tag.massive-deallocation.success'),
+    type: MassiveDeallocationResponseDto,
+  })
+  @Post('/massive-deallocation')
+  async massiveDeallocation(
+    @Body() massiveDeallocationDto: MassiveDeallocationDto,
+  ): Promise<z.infer<typeof massiveDeallocationResponseSchema>> {
+    return await this.tagService.massiveDeallocation(massiveDeallocationDto);
   }
 }

@@ -13,4 +13,7 @@ export const eventFolderSchema = z.object({
       message: translate('model.eventFolder.color.invalid'),
     })
     .toLowerCase(),
+
+  created_at: z.date(),
+  updated_at: z.date(),
 });

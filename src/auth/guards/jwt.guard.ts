@@ -1,3 +1,5 @@
+import { AccountService } from '@/account/account.service';
+import { translate } from '@/i18n/translate';
 import {
   CanActivate,
   ExecutionContext,
@@ -6,7 +8,6 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { AccountService } from '@/account/account.service';
 
 @Injectable()
 export class JwtGuard implements CanActivate {
@@ -20,7 +21,7 @@ export class JwtGuard implements CanActivate {
     const token = this.extractTokenFromHeader(req);
 
     if (!token) {
-      throw new UnauthorizedException('Token no encontrado');
+      throw new UnauthorizedException([translate('route.auth.no-token')]);
     }
 
     try {
@@ -31,16 +32,19 @@ export class JwtGuard implements CanActivate {
       const user = await this.cuentaService.findByUsername(payload.username);
 
       if (!user) {
-        throw new UnauthorizedException('Usuario no encontrado');
+        throw new UnauthorizedException([
+          translate('route.auth.user-not-found'),
+        ]);
       }
+      req.user = user;
     } catch (error) {
-      throw new UnauthorizedException('Token inválido');
+      throw new UnauthorizedException([translate('route.auth.invalid-token')]);
     }
 
     return true;
   }
 
-  private extractTokenFromHeader(req: Request) {
+  private extractTokenFromHeader(req: Request): string | undefined {
     if (!req.headers.authorization) {
       return undefined;
     }

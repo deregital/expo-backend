@@ -46,7 +46,7 @@ model Profile {
   phoneNumber          String    @unique @map("phone_number")
   secondaryPhoneNumber String?   @unique @map("secondary_phone_number")
   fullName             String    @map("full_name")
-  fistName             String?   @map("first_name")
+  firstName            String?   @map("first_name")
   gender               String?
   birthDate            DateTime? @map("birth_date")
   profilePictureUrl    String?   @map("profile_picture_url")

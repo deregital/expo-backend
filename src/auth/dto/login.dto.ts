@@ -1,13 +1,13 @@
-import z from 'zod';
-import { createZodDto } from '@anatine/zod-nestjs';
 import { accountSchema } from '@/account/dto/account.dto';
+import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
+import z from 'zod';
 
 export const loginSchema = accountSchema.pick({
   username: true,
   password: true,
 });
 
-export class LoginDto extends createZodDto(loginSchema) {}
+export class LoginDto extends createZodDtoWithoutDate(loginSchema) {}
 
 export const loginResponseSchema = z.object({
   user: accountSchema.omit({
@@ -16,7 +16,10 @@ export const loginResponseSchema = z.object({
   backendTokens: z.object({
     accessToken: z.string(),
     refreshToken: z.string(),
+    expiresIn: z.number(),
   }),
 });
 
-export class LoginResponseDto extends createZodDto(loginResponseSchema) {}
+export class LoginResponseDto extends createZodDtoWithoutDate(
+  loginResponseSchema,
+) {}

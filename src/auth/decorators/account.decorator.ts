@@ -1,3 +1,6 @@
+import { AccountService } from '@/account/account.service';
+import { translate } from '@/i18n/translate';
+import { PrismaService } from '@/prisma/prisma.service';
 import {
   createParamDecorator,
   ExecutionContext,
@@ -5,13 +8,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AccountService } from '@/account/account.service';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { Account } from '~/types/prisma-schema';
+import { type Account as AccountType } from '~/types/prisma-schema';
 
-export type AccountWithoutPassword = Omit<Account, 'password'>;
+export type AccountWithoutPassword = Omit<AccountType, 'password'>;
 
-export const User = createParamDecorator(
+export const Account = createParamDecorator(
   async (data: unknown, context: ExecutionContext) => {
     const request = context.switchToHttp().getRequest();
     const jwtService = new JwtService({ secret: process.env.JWT_SECRET });
@@ -22,24 +23,26 @@ export const User = createParamDecorator(
     try {
       const token = request.headers.authorization?.split(' ')[1];
       if (!token) {
-        throw new UnauthorizedException('No token found');
+        throw new UnauthorizedException([translate('route.auth.no-token')]);
       }
 
       const decoded = jwtService.decode(token);
       if (!decoded) {
-        throw new UnauthorizedException('Invalid token');
+        throw new UnauthorizedException([
+          translate('route.auth.invalid-token'),
+        ]);
       }
 
       const user = await userService.findById(decoded.id);
       if (!user) {
-        throw new NotFoundException('User not found');
+        throw new NotFoundException([translate('route.auth.user-not-found')]);
       }
 
       const { password, ...userWithoutPassword } = user;
 
       return userWithoutPassword;
     } catch (error) {
-      throw new UnauthorizedException('Invalid token');
+      throw new UnauthorizedException([translate('route.auth.invalid-token')]);
     }
   },
 );

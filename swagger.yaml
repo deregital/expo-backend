@@ -17,13 +17,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/LoginResponseDto"
+        401:
+          description: "Credenciales inválidas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /auth/refresh:
     post:
       operationId: "AuthController_refreshToken"
       parameters: []
       responses:
-        201:
-          description: ""
+        200:
+          description: "Token renovado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RefreshResponseDto"
   /tag/create:
     post:
       operationId: "TagController_create"
@@ -52,17 +62,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllTagResponseDto"
-  /tag/all-grouped:
-    get:
-      operationId: "TagController_findAllGrouped"
-      parameters: []
-      responses:
-        200:
-          description: "Etiquetas obtenidas"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FindAllGroupedTagResponseDto"
   /tag/find-by-group/{groupId}:
     get:
       operationId: "TagController_findByGroup"
@@ -81,6 +80,10 @@ paths:
                 $ref: "#/components/schemas/FindByGroupTagResponseDto"
         404:
           description: "Grupo de etiquetas no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /tag/{id}:
     get:
       operationId: "TagController_findById"
@@ -99,6 +102,10 @@ paths:
                 $ref: "#/components/schemas/FindOneTagResponseDto"
         404:
           description: "Etiqueta no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
     patch:
       operationId: "TagController_update"
       parameters:
@@ -119,9 +126,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FindOneTagResponseDto"
+                $ref: "#/components/schemas/UpdateTagResponseDto"
         404:
           description: "Etiqueta no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
     delete:
       operationId: "TagController_remove"
       parameters:
@@ -133,12 +144,50 @@ paths:
       responses:
         404:
           description: "Etiqueta no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
         410:
           description: "Etiqueta eliminada"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteTagResponseDto"
+  /tag/massive-allocation:
+    post:
+      operationId: "TagController_massiveAllocation"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MassiveAllocationDto"
+      responses:
+        200:
+          description: "Etiquetas asignadas con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MassiveAllocationResponseDto"
+  /tag/massive-deallocation:
+    post:
+      operationId: "TagController_massiveDeallocation"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MassiveDeallocationDto"
+      responses:
+        200:
+          description: "Etiquetas desasignadas con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MassiveDeallocationResponseDto"
   /account/create:
     post:
       operationId: "AccountController_create"
@@ -194,6 +243,178 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetMeResponseDto"
+  /tag-group/create:
+    post:
+      operationId: "TagGroupController_create"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTagGroupDto"
+      responses:
+        201:
+          description: "Grupo de etiquetas creado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateTagGroupResponseDto"
+  /tag-group/all:
+    get:
+      operationId: "TagGroupController_findAll"
+      parameters: []
+      responses:
+        200:
+          description: "Grupos de etiquetas obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindAllTagGroupResponseDto"
+  /tag-group/all-with-tags:
+    get:
+      operationId: "TagGroupController_findAllWithTags"
+      parameters: []
+      responses:
+        200:
+          description: "Etiquetas obtenidas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindAllWithTagsResponseDto"
+  /tag-group/{id}:
+    get:
+      operationId: "TagGroupController_findById"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Grupo de etiquetas obtenido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindOneTagGroupResponseDto"
+        404:
+          description: "Grupo de etiquetas no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+    patch:
+      operationId: "TagGroupController_update"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTagGroupDto"
+      responses:
+        200:
+          description: "Grupo de etiquetas actualizado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateTagGroupResponseDto"
+        404:
+          description: "Grupo de etiquetas no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+    delete:
+      operationId: "TagGroupController_delete"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Grupo de etiquetas eliminado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteTagGroupResponseDto"
+        404:
+          description: "Grupo de etiquetas no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /comment/create:
+    post:
+      operationId: "CommentController_createComment"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCommentDto"
+      responses:
+        201:
+          description: "Comentario creado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCommentResponseDto"
+        404:
+          description: "Perfil no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /comment/get-by-profile/{id}:
+    get:
+      operationId: "CommentController_getCommentsByProfileId"
+      parameters: []
+      responses:
+        200:
+          description: "Comentarios obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetByProfileCommentResponseDto"
+        404:
+          description: "Perfil no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /comment/toggle-solve/{id}:
+    patch:
+      operationId: "CommentController_toggleSolveComment"
+      parameters: []
+      responses:
+        200:
+          description: "Cambio de estado en la resolución del comentario"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ToggleSolveCommentResponseDto"
+        404:
+          description: "Comentario no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "El comentario no es resoluble"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -232,49 +453,6 @@ components:
               enum:
                 - "USER"
                 - "ADMIN"
-            created_at:
-              type: "string"
-              format: "date-time"
-            updated_at:
-              type: "string"
-              format: "date-time"
-            globalFilter:
-              type: "object"
-              properties:
-                tags:
-                  type: "object"
-                  properties:
-                    id:
-                      type: "string"
-                      format: "uuid"
-                    name:
-                      type: "string"
-                      minLength: 1
-                    group:
-                      type: "object"
-                      properties:
-                        id:
-                          type: "string"
-                          format: "uuid"
-                        color:
-                          type: "string"
-                          minLength: 7
-                          maxLength: 7
-                        isExclusive:
-                          type: "boolean"
-                      required:
-                        - "id"
-                        - "color"
-                        - "isExclusive"
-                  required:
-                    - "id"
-                    - "name"
-                    - "group"
-                active:
-                  type: "boolean"
-              required:
-                - "tags"
-                - "active"
             isGlobalFilterActive:
               default: false
               type: "boolean"
@@ -283,13 +461,12 @@ components:
               type: "array"
               items:
                 type: "string"
-          required:
-            - "id"
-            - "username"
-            - "role"
-            - "created_at"
-            - "updated_at"
-            - "globalFilter"
+            created_at:
+              type: "string"
+              format: "date-time"
+            updated_at:
+              type: "string"
+              format: "date-time"
         backendTokens:
           type: "object"
           properties:
@@ -297,12 +474,39 @@ components:
               type: "string"
             refreshToken:
               type: "string"
-          required:
-            - "accessToken"
-            - "refreshToken"
+            expiresIn:
+              type: "number"
       required:
         - "user"
         - "backendTokens"
+    ErrorDto:
+      type: "object"
+      properties:
+        message:
+          type: "array"
+          items:
+            type: "string"
+        statusCode:
+          type: "number"
+        error:
+          type: "string"
+      required:
+        - "message"
+        - "statusCode"
+        - "error"
+    RefreshResponseDto:
+      type: "object"
+      properties:
+        refreshToken:
+          type: "string"
+        accessToken:
+          type: "string"
+        expiresIn:
+          type: "number"
+      required:
+        - "refreshToken"
+        - "accessToken"
+        - "expiresIn"
     CreateTagDto:
       type: "object"
       properties:
@@ -407,84 +611,6 @@ components:
               - "group"
       required:
         - "tags"
-    FindAllGroupedTagResponseDto:
-      type: "object"
-      properties:
-        groups:
-          type: "array"
-          items:
-            type: "object"
-            properties:
-              id:
-                type: "string"
-                format: "uuid"
-              name:
-                type: "string"
-                minLength: 1
-              isExclusive:
-                type: "boolean"
-              color:
-                type: "string"
-                minLength: 7
-                maxLength: 7
-              tags:
-                type: "array"
-                items:
-                  type: "object"
-                  properties:
-                    id:
-                      type: "string"
-                      format: "uuid"
-                    name:
-                      type: "string"
-                      minLength: 1
-                    groupId:
-                      type: "string"
-                      format: "uuid"
-                    type:
-                      type: "string"
-                      enum:
-                        - "PROFILE"
-                        - "EVENT"
-                        - "PARTICIPANT"
-                        - "NOT_IN_SYSTEM"
-                    created_at:
-                      type: "string"
-                      format: "date-time"
-                    updated_at:
-                      type: "string"
-                      format: "date-time"
-                    _count:
-                      type: "object"
-                      properties:
-                        profiles:
-                          type: "number"
-                      required:
-                        - "profiles"
-                  required:
-                    - "id"
-                    - "name"
-                    - "groupId"
-                    - "type"
-                    - "created_at"
-                    - "updated_at"
-                    - "_count"
-              _count:
-                type: "object"
-                properties:
-                  tags:
-                    type: "number"
-                required:
-                  - "tags"
-            required:
-              - "id"
-              - "name"
-              - "isExclusive"
-              - "color"
-              - "tags"
-              - "_count"
-      required:
-        - "groups"
     FindByGroupTagResponseDto:
       type: "object"
       properties:
@@ -599,13 +725,6 @@ components:
             updated_at:
               type: "string"
               format: "date-time"
-          required:
-            - "id"
-            - "name"
-            - "color"
-            - "isExclusive"
-            - "created_at"
-            - "updated_at"
       required:
         - "id"
         - "name"
@@ -623,6 +742,41 @@ components:
         groupId:
           type: "string"
           format: "uuid"
+      required:
+        - "name"
+        - "groupId"
+    UpdateTagResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+          minLength: 1
+        groupId:
+          type: "string"
+          format: "uuid"
+        type:
+          type: "string"
+          enum:
+            - "PROFILE"
+            - "EVENT"
+            - "PARTICIPANT"
+            - "NOT_IN_SYSTEM"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "groupId"
+        - "type"
+        - "created_at"
+        - "updated_at"
     DeleteTagResponseDto:
       type: "object"
       properties:
@@ -655,6 +809,254 @@ components:
         - "type"
         - "created_at"
         - "updated_at"
+    MassiveAllocationDto:
+      type: "object"
+      properties:
+        tagIds:
+          type: "array"
+          items:
+            type: "string"
+            format: "uuid"
+        profileIds:
+          type: "array"
+          items:
+            type: "string"
+            format: "uuid"
+      required:
+        - "tagIds"
+        - "profileIds"
+    MassiveAllocationResponseDto:
+      type: "object"
+      properties:
+        profiles:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              shortId:
+                type: "number"
+              phoneNumber:
+                type: "string"
+                minLength: 1
+              secondaryPhoneNumber:
+                type: "string"
+                nullable: true
+              fullName:
+                type: "string"
+                minLength: 1
+              firstName:
+                type: "string"
+                minLength: 1
+                nullable: true
+              gender:
+                type: "string"
+                nullable: true
+              birthDate:
+                type: "string"
+                format: "date-time"
+                nullable: true
+              profilePictureUrl:
+                type: "string"
+                format: "uri"
+                nullable: true
+              instagram:
+                type: "string"
+                nullable: true
+              mail:
+                type: "string"
+                format: "email"
+                nullable: true
+              dni:
+                type: "string"
+                nullable: true
+              alternativeNames:
+                type: "array"
+                items:
+                  type: "string"
+                nullable: true
+              birthLongitude:
+                type: "number"
+                minimum: -180
+                maximum: 180
+                nullable: true
+              birthLatitude:
+                type: "number"
+                minimum: -90
+                maximum: 90
+                nullable: true
+              residenceLongitude:
+                type: "number"
+                minimum: -180
+                maximum: 180
+                nullable: true
+              residenceLatitude:
+                type: "number"
+                minimum: -90
+                maximum: 90
+                nullable: true
+              isInTrash:
+                type: "boolean"
+              movedToTrashDate:
+                type: "string"
+                format: "date-time"
+                nullable: true
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "shortId"
+              - "phoneNumber"
+              - "secondaryPhoneNumber"
+              - "fullName"
+              - "firstName"
+              - "gender"
+              - "birthDate"
+              - "profilePictureUrl"
+              - "instagram"
+              - "mail"
+              - "dni"
+              - "alternativeNames"
+              - "birthLongitude"
+              - "birthLatitude"
+              - "residenceLongitude"
+              - "residenceLatitude"
+              - "isInTrash"
+              - "movedToTrashDate"
+              - "created_at"
+              - "updated_at"
+      required:
+        - "profiles"
+    MassiveDeallocationDto:
+      type: "object"
+      properties:
+        tagIds:
+          type: "array"
+          items:
+            type: "string"
+            format: "uuid"
+        profileIds:
+          type: "array"
+          items:
+            type: "string"
+            format: "uuid"
+      required:
+        - "tagIds"
+        - "profileIds"
+    MassiveDeallocationResponseDto:
+      type: "object"
+      properties:
+        profiles:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              shortId:
+                type: "number"
+              phoneNumber:
+                type: "string"
+                minLength: 1
+              secondaryPhoneNumber:
+                type: "string"
+                nullable: true
+              fullName:
+                type: "string"
+                minLength: 1
+              firstName:
+                type: "string"
+                minLength: 1
+                nullable: true
+              gender:
+                type: "string"
+                nullable: true
+              birthDate:
+                type: "string"
+                format: "date-time"
+                nullable: true
+              profilePictureUrl:
+                type: "string"
+                format: "uri"
+                nullable: true
+              instagram:
+                type: "string"
+                nullable: true
+              mail:
+                type: "string"
+                format: "email"
+                nullable: true
+              dni:
+                type: "string"
+                nullable: true
+              alternativeNames:
+                type: "array"
+                items:
+                  type: "string"
+                nullable: true
+              birthLongitude:
+                type: "number"
+                minimum: -180
+                maximum: 180
+                nullable: true
+              birthLatitude:
+                type: "number"
+                minimum: -90
+                maximum: 90
+                nullable: true
+              residenceLongitude:
+                type: "number"
+                minimum: -180
+                maximum: 180
+                nullable: true
+              residenceLatitude:
+                type: "number"
+                minimum: -90
+                maximum: 90
+                nullable: true
+              isInTrash:
+                type: "boolean"
+              movedToTrashDate:
+                type: "string"
+                format: "date-time"
+                nullable: true
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "shortId"
+              - "phoneNumber"
+              - "secondaryPhoneNumber"
+              - "fullName"
+              - "firstName"
+              - "gender"
+              - "birthDate"
+              - "profilePictureUrl"
+              - "instagram"
+              - "mail"
+              - "dni"
+              - "alternativeNames"
+              - "birthLongitude"
+              - "birthLatitude"
+              - "residenceLongitude"
+              - "residenceLatitude"
+              - "isInTrash"
+              - "movedToTrashDate"
+              - "created_at"
+              - "updated_at"
+      required:
+        - "profiles"
     CreateAccountDto:
       type: "object"
       properties:
@@ -697,6 +1099,8 @@ components:
         - "id"
         - "username"
         - "role"
+        - "isGlobalFilterActive"
+        - "fcmToken"
     UpdateGlobalFilterDto:
       type: "object"
       properties:
@@ -709,73 +1113,87 @@ components:
             type: "string"
             format: "uuid"
       required:
+        - "active"
         - "tagsIds"
     UpdateGlobalFilterResponseDto:
       type: "object"
       properties:
         id:
           type: "string"
-        nombreUsuario:
+          format: "uuid"
+        username:
           type: "string"
-        esAdmin:
+        password:
+          type: "string"
+          minLength: 6
+        role:
+          type: "string"
+          enum:
+            - "USER"
+            - "ADMIN"
+        isGlobalFilterActive:
+          default: false
           type: "boolean"
         fcmToken:
-          type: "null"
-        filtroBaseActivo:
-          type: "boolean"
-        filtroBase:
-          type: "object"
-          properties:
-            active:
-              type: "boolean"
-            etiquetas:
-              type: "array"
-              items:
-                type: "object"
-                properties:
-                  id:
-                    type: "string"
-                    format: "uuid"
-                  name:
-                    type: "string"
-                    minLength: 1
-                  groupId:
-                    type: "string"
-                    format: "uuid"
-                  type:
-                    type: "string"
-                    enum:
-                      - "PROFILE"
-                      - "EVENT"
-                      - "PARTICIPANT"
-                      - "NOT_IN_SYSTEM"
-                  created_at:
-                    type: "string"
-                    format: "date-time"
-                  updated_at:
-                    type: "string"
-                    format: "date-time"
-                required:
-                  - "id"
-                  - "name"
-                  - "groupId"
-                  - "type"
-                  - "created_at"
-                  - "updated_at"
-          required:
-            - "active"
-            - "etiquetas"
+          default: []
+          type: "array"
+          items:
+            type: "string"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+        globalFilter:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              groupId:
+                type: "string"
+                format: "uuid"
+              type:
+                type: "string"
+                enum:
+                  - "PROFILE"
+                  - "EVENT"
+                  - "PARTICIPANT"
+                  - "NOT_IN_SYSTEM"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "name"
+              - "groupId"
+              - "type"
+              - "created_at"
+              - "updated_at"
       required:
         - "id"
-        - "nombreUsuario"
-        - "esAdmin"
+        - "username"
+        - "password"
+        - "role"
+        - "isGlobalFilterActive"
         - "fcmToken"
-        - "filtroBaseActivo"
-        - "filtroBase"
+        - "created_at"
+        - "updated_at"
+        - "globalFilter"
     GetGlobalFilterResponseDto:
       type: "object"
       properties:
-        active:
+        isGlobalFilterActive:
+          default: false
           type: "boolean"
         globalFilter:
           type: "array"
@@ -817,7 +1235,7 @@ components:
               - "type"
               - "group"
       required:
-        - "active"
+        - "isGlobalFilterActive"
         - "globalFilter"
     GetMeResponseDto:
       type: "object"
@@ -832,49 +1250,6 @@ components:
           enum:
             - "USER"
             - "ADMIN"
-        created_at:
-          type: "string"
-          format: "date-time"
-        updated_at:
-          type: "string"
-          format: "date-time"
-        globalFilter:
-          type: "object"
-          properties:
-            tags:
-              type: "object"
-              properties:
-                id:
-                  type: "string"
-                  format: "uuid"
-                name:
-                  type: "string"
-                  minLength: 1
-                group:
-                  type: "object"
-                  properties:
-                    id:
-                      type: "string"
-                      format: "uuid"
-                    color:
-                      type: "string"
-                      minLength: 7
-                      maxLength: 7
-                    isExclusive:
-                      type: "boolean"
-                  required:
-                    - "id"
-                    - "color"
-                    - "isExclusive"
-              required:
-                - "id"
-                - "name"
-                - "group"
-            active:
-              type: "boolean"
-          required:
-            - "tags"
-            - "active"
         isGlobalFilterActive:
           default: false
           type: "boolean"
@@ -883,10 +1258,582 @@ components:
           type: "array"
           items:
             type: "string"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+        globalFilter:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              type:
+                type: "string"
+                enum:
+                  - "PROFILE"
+                  - "EVENT"
+                  - "PARTICIPANT"
+                  - "NOT_IN_SYSTEM"
+              group:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                    format: "uuid"
+                  color:
+                    type: "string"
+                    minLength: 7
+                    maxLength: 7
+                  isExclusive:
+                    type: "boolean"
+                required:
+                  - "id"
+                  - "color"
+                  - "isExclusive"
+            required:
+              - "id"
+              - "name"
+              - "type"
+              - "group"
+        tags:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              groupId:
+                type: "string"
+                format: "uuid"
+              type:
+                type: "string"
+                enum:
+                  - "PROFILE"
+                  - "EVENT"
+                  - "PARTICIPANT"
+                  - "NOT_IN_SYSTEM"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "name"
+              - "groupId"
+              - "type"
+              - "created_at"
+              - "updated_at"
       required:
         - "id"
         - "username"
         - "role"
+        - "isGlobalFilterActive"
+        - "fcmToken"
         - "created_at"
         - "updated_at"
         - "globalFilter"
+        - "tags"
+    CreateTagGroupDto:
+      type: "object"
+      properties:
+        color:
+          type: "string"
+          minLength: 7
+          maxLength: 7
+        name:
+          type: "string"
+          minLength: 1
+        isExclusive:
+          type: "boolean"
+      required:
+        - "color"
+        - "name"
+        - "isExclusive"
+    CreateTagGroupResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+          minLength: 1
+        color:
+          type: "string"
+          minLength: 7
+          maxLength: 7
+        isExclusive:
+          type: "boolean"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "color"
+        - "isExclusive"
+        - "created_at"
+        - "updated_at"
+    FindAllTagGroupResponseDto:
+      type: "object"
+      properties:
+        tagGroups:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              color:
+                type: "string"
+                minLength: 7
+                maxLength: 7
+              isExclusive:
+                type: "boolean"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+              tags:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    groupId:
+                      type: "string"
+                      format: "uuid"
+                    type:
+                      type: "string"
+                      enum:
+                        - "PROFILE"
+                        - "EVENT"
+                        - "PARTICIPANT"
+                        - "NOT_IN_SYSTEM"
+                    created_at:
+                      type: "string"
+                      format: "date-time"
+                    updated_at:
+                      type: "string"
+                      format: "date-time"
+                  required:
+                    - "id"
+                    - "name"
+                    - "groupId"
+                    - "type"
+                    - "created_at"
+                    - "updated_at"
+            required:
+              - "id"
+              - "name"
+              - "color"
+              - "isExclusive"
+              - "created_at"
+              - "updated_at"
+              - "tags"
+      required:
+        - "tagGroups"
+    FindAllWithTagsResponseDto:
+      type: "object"
+      properties:
+        groups:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              isExclusive:
+                type: "boolean"
+              color:
+                type: "string"
+                minLength: 7
+                maxLength: 7
+              tags:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    groupId:
+                      type: "string"
+                      format: "uuid"
+                    type:
+                      type: "string"
+                      enum:
+                        - "PROFILE"
+                        - "EVENT"
+                        - "PARTICIPANT"
+                        - "NOT_IN_SYSTEM"
+                    created_at:
+                      type: "string"
+                      format: "date-time"
+                    updated_at:
+                      type: "string"
+                      format: "date-time"
+                    _count:
+                      type: "object"
+                      properties:
+                        profiles:
+                          type: "number"
+                      required:
+                        - "profiles"
+                  required:
+                    - "id"
+                    - "name"
+                    - "groupId"
+                    - "type"
+                    - "created_at"
+                    - "updated_at"
+                    - "_count"
+              _count:
+                type: "object"
+                properties:
+                  tags:
+                    type: "number"
+                required:
+                  - "tags"
+            required:
+              - "id"
+              - "name"
+              - "isExclusive"
+              - "color"
+              - "tags"
+              - "_count"
+      required:
+        - "groups"
+    FindOneTagGroupResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+          minLength: 1
+        color:
+          type: "string"
+          minLength: 7
+          maxLength: 7
+        isExclusive:
+          type: "boolean"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+        tags:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              groupId:
+                type: "string"
+                format: "uuid"
+              type:
+                type: "string"
+                enum:
+                  - "PROFILE"
+                  - "EVENT"
+                  - "PARTICIPANT"
+                  - "NOT_IN_SYSTEM"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "name"
+              - "groupId"
+              - "type"
+              - "created_at"
+              - "updated_at"
+      required:
+        - "id"
+        - "name"
+        - "color"
+        - "isExclusive"
+        - "created_at"
+        - "updated_at"
+        - "tags"
+    UpdateTagGroupDto:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          minLength: 1
+        color:
+          type: "string"
+          minLength: 7
+          maxLength: 7
+        isExclusive:
+          type: "boolean"
+      required:
+        - "name"
+        - "color"
+        - "isExclusive"
+    UpdateTagGroupResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+          minLength: 1
+        color:
+          type: "string"
+          minLength: 7
+          maxLength: 7
+        isExclusive:
+          type: "boolean"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "color"
+        - "isExclusive"
+        - "created_at"
+        - "updated_at"
+    DeleteTagGroupResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+          minLength: 1
+        color:
+          type: "string"
+          minLength: 7
+          maxLength: 7
+        isExclusive:
+          type: "boolean"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "color"
+        - "isExclusive"
+        - "created_at"
+        - "updated_at"
+    CreateCommentDto:
+      type: "object"
+      properties:
+        content:
+          type: "string"
+          minLength: 1
+        profileId:
+          type: "string"
+          format: "uuid"
+        isSolvable:
+          default: false
+          type: "boolean"
+      required:
+        - "content"
+        - "profileId"
+        - "isSolvable"
+    CreateCommentResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        content:
+          type: "string"
+          minLength: 1
+        createdBy:
+          type: "string"
+          format: "uuid"
+        profileId:
+          type: "string"
+          format: "uuid"
+        isSolvable:
+          default: false
+          type: "boolean"
+        isSolved:
+          default: false
+          type: "boolean"
+        solvedAt:
+          type: "string"
+          format: "date-time"
+          nullable: true
+        solvedBy:
+          type: "string"
+          format: "uuid"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "content"
+        - "createdBy"
+        - "profileId"
+        - "isSolvable"
+        - "isSolved"
+        - "solvedAt"
+        - "solvedBy"
+        - "created_at"
+        - "updated_at"
+    GetByProfileCommentResponseDto:
+      type: "object"
+      properties:
+        comments:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              content:
+                type: "string"
+                minLength: 1
+              createdBy:
+                type: "string"
+                format: "uuid"
+              profileId:
+                type: "string"
+                format: "uuid"
+              isSolvable:
+                default: false
+                type: "boolean"
+              isSolved:
+                default: false
+                type: "boolean"
+              solvedAt:
+                type: "string"
+                format: "date-time"
+                nullable: true
+              solvedBy:
+                type: "string"
+                format: "uuid"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+              account:
+                type: "object"
+                properties:
+                  username:
+                    type: "string"
+                required:
+                  - "username"
+            required:
+              - "id"
+              - "content"
+              - "createdBy"
+              - "profileId"
+              - "solvedAt"
+              - "created_at"
+              - "updated_at"
+              - "account"
+      required:
+        - "comments"
+    ToggleSolveCommentResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        content:
+          type: "string"
+          minLength: 1
+        createdBy:
+          type: "string"
+          format: "uuid"
+        profileId:
+          type: "string"
+          format: "uuid"
+        isSolvable:
+          default: false
+          type: "boolean"
+        isSolved:
+          default: false
+          type: "boolean"
+        solvedAt:
+          type: "string"
+          format: "date-time"
+          nullable: true
+        solvedBy:
+          type: "string"
+          format: "uuid"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "content"
+        - "createdBy"
+        - "profileId"
+        - "isSolvable"
+        - "isSolved"
+        - "solvedAt"
+        - "solvedBy"
+        - "created_at"
+        - "updated_at"

@@ -1,5 +1,5 @@
 import { translate } from '@/i18n/translate';
-import { createZodDto } from '@anatine/zod-nestjs';
+import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { z } from 'zod';
 
 export const tagGroupSchema = z.object({
@@ -11,7 +11,9 @@ export const tagGroupSchema = z.object({
   }),
   color: z
     .string()
-    .length(7)
+    .length(7, {
+      message: translate('model.tagGroup.color.invalid'),
+    })
     .startsWith('#', {
       message: translate('model.tagGroup.color.invalid'),
     })
@@ -21,4 +23,4 @@ export const tagGroupSchema = z.object({
   updated_at: z.date(),
 });
 
-export class TagGroupDto extends createZodDto(tagGroupSchema) {}
+export class TagGroupDto extends createZodDtoWithoutDate(tagGroupSchema) {}

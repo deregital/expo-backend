@@ -1,3 +1,4 @@
+import { translate } from '@/i18n/translate';
 import { PrismaService } from '@/prisma/prisma.service';
 import {
   ArgumentMetadata,
@@ -5,14 +6,7 @@ import {
   NotFoundException,
   PipeTransform,
 } from '@nestjs/common';
-import { Prisma, PrismaClient } from '~/types/prisma-schema';
-
-export type PrismaModels = {
-  [M in Prisma.ModelName]: Exclude<
-    Awaited<ReturnType<PrismaClient[Uncapitalize<M>]['findUnique']>>,
-    null
-  >;
-};
+import { Prisma } from '~/types/prisma-schema';
 
 type FindUniqueFunction = {
   findUnique: (where: Prisma.TagFindUniqueArgs) => Promise<{
@@ -25,18 +19,18 @@ type GenericArgumentMetadata<T> = ArgumentMetadata & {
 };
 
 @Injectable()
-export class ExistingRecord
-  implements PipeTransform<Capitalize<Prisma.ModelName>>
+export class ExistingRecord<Models extends Exclude<Prisma.ModelName, 'Enums'>>
+  implements PipeTransform<Capitalize<Models>>
 {
   constructor(
-    private readonly modelName: Uncapitalize<Prisma.ModelName>,
+    private readonly modelName: Uncapitalize<Models>,
     private readonly prisma: PrismaService = new PrismaService(),
   ) {}
 
-  async transform<T extends Capitalize<Prisma.ModelName>>(
+  async transform<T extends Capitalize<Models>>(
     value: string,
     metadata: GenericArgumentMetadata<T>,
-  ) {
+  ): Promise<string> {
     if (!metadata.data) {
       throw new Error('Metadata data is required');
     }
@@ -50,7 +44,13 @@ export class ExistingRecord
     });
 
     if (!record) {
-      throw new NotFoundException('Record not found');
+      throw new NotFoundException([
+        translate('prisma.not-found', {
+          field: 'id',
+          model: translate(`prisma.model.${this.modelName}`),
+          value,
+        }),
+      ]);
     }
 
     return value;

@@ -1,15 +1,28 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { LoginDto } from 'src/auth/dto/login.dto';
 import { AccountService } from '@/account/account.service';
+import { LoginDto } from '@/auth/dto/login.dto';
+import { translate } from '@/i18n/translate';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { type Account } from '~/types/prisma-schema';
 import { compare } from 'bcrypt';
+import { type Account } from '~/types/prisma-schema';
 
 type LoginPayload = {
   user: Omit<Account, 'password'>;
   backendTokens: {
     accessToken: string;
     refreshToken: string;
+    expiresIn: number;
+  };
+};
+
+const EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000;
+
+type Payload = {
+  username: string;
+  id: string;
+  role: string;
+  sub: {
+    usernname: string;
   };
 };
 
@@ -20,10 +33,8 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async login(dto: LoginDto): Promise<LoginPayload> {
-    const user = await this.validateUser(dto);
-
-    const payload = {
+  private getPayload(user: Account): Payload {
+    return {
       username: user.username,
       id: user.id,
       role: user.role,
@@ -31,7 +42,12 @@ export class AuthService {
         usernname: user.username,
       },
     };
+  }
 
+  async login(dto: LoginDto): Promise<LoginPayload> {
+    const user = await this.validateUser(dto);
+
+    const payload = this.getPayload(user);
     return {
       user,
       backendTokens: {
@@ -43,6 +59,7 @@ export class AuthService {
           expiresIn: '7d',
           secret: process.env.JWT_REFRESH,
         }),
+        expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME),
       },
     };
   }
@@ -58,19 +75,21 @@ export class AuthService {
       return user;
     }
 
-    throw new UnauthorizedException('Credenciales inválidas');
+    throw new UnauthorizedException([
+      translate('route.auth.invalid-credentials'),
+    ]);
   }
 
-  async refreshToken(pay: any): Promise<{
+  async refreshToken(account: Account): Promise<{
     accessToken: string;
     refreshToken: string;
+    expiresIn: number;
   }> {
-    const payload = {
-      username: pay.username,
-      id: pay.id,
-      role: pay.role,
-      sub: pay.sub,
-    };
+    const user = await this.cuentaService.findByUsername(account.username);
+    if (!user) {
+      throw new UnauthorizedException([translate('route.auth.invalid-token')]);
+    }
+    const payload = this.getPayload(user);
 
     return {
       accessToken: await this.jwtService.signAsync(payload, {
@@ -81,6 +100,7 @@ export class AuthService {
         expiresIn: '7d',
         secret: process.env.JWT_REFRESH,
       }),
+      expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME),
     };
   }
 }
