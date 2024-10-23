@@ -218,5 +218,23 @@ export default {
         conflict: 'El comentario no es resoluble',
       },
     },
+    cannedResponse: {
+      create: {
+        success: 'Respuesta enlatada creada con éxito',
+        conflict: 'Error en la creacion de la respuesta',
+      },
+      'get-all': {
+        success: 'Respuestas enlatadas obtenidas con éxito',
+        'not-found': 'No se encontraron respuestas enlatadas',
+      },
+      update: {
+        success: 'Respuesta enlatada actualizada con éxito',
+        'not-found': 'Respuesta enlatada no encontrada',
+      },
+      delete: {
+        success: 'Respuesta enlatada eliminada con éxito',
+        'not-found': 'Respuesta enlatada no encontrada',
+      },
+    },
   },
 } as const;
