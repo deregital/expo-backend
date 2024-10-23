@@ -1,5 +1,6 @@
 export * from './account/exports';
 export * from './auth/exports';
+export * from './cannedResponse/exports';
 export * from './comment/exports';
 export * from './event-folder/exports';
 export * from './event/exports';
