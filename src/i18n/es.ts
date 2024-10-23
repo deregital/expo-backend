@@ -112,6 +112,19 @@ export default {
         invalid: 'La URL de la imagen de perfil no es válida',
       },
     },
+    cannedResponse: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      name: {
+        required: 'El nombre es requerido',
+        min: 'El nombre debe tener al menos 1 caracter',
+      },
+      content: {
+        required: 'El contenido es requerido',
+        min: 'El contenido debe tener al menos 1 caracter',
+      },
+    },
   },
   route: {
     auth: {
