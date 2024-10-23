@@ -1,4 +1,3 @@
-import { accountSchema } from '@/account/dto/account.dto';
 import { translate } from '@/i18n/translate';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { z } from 'zod';
@@ -13,8 +12,6 @@ export const cannedResponseSchema = z.object({
   content: z.string().min(1, {
     message: translate('model.cannedResponse.content.min'),
   }),
-
-  createdBy: accountSchema.shape.id,
 
   created_at: z.date(),
   updated_at: z.date(),
