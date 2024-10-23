@@ -1,1 +1,1 @@
-export const createCommentSchema = {};
+export const createCannedResponseSchema = {};
