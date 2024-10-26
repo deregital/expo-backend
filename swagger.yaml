@@ -378,7 +378,12 @@ paths:
   /comment/get-by-profile/{id}:
     get:
       operationId: "CommentController_getCommentsByProfileId"
-      parameters: []
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
       responses:
         200:
           description: "Comentarios obtenidos"
@@ -395,7 +400,12 @@ paths:
   /comment/toggle-solve/{id}:
     patch:
       operationId: "CommentController_toggleSolveComment"
-      parameters: []
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
       responses:
         200:
           description: "Cambio de estado en la resolución del comentario"
@@ -415,6 +425,98 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /cannedresponse/create:
+    post:
+      operationId: "CannedResponseController_createCannedResponse"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCannedResponseDto"
+      responses:
+        201:
+          description: "Respuesta enlatada creada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCannedResponseResponseDto"
+        409:
+          description: "Error en la creacion de la respuesta"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Canned Responses"
+  /cannedresponse/get-all:
+    get:
+      operationId: "CannedResponseController_getAllCannedResponses"
+      parameters: []
+      responses:
+        200:
+          description: "Respuestas enlatadas obtenidas con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCannedResponseResponseDto"
+      tags:
+        - "Canned Responses"
+  /cannedresponse/update/{id}:
+    patch:
+      operationId: "CannedResponseController_updateCannedResponse"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCannedResponseDto"
+      responses:
+        200:
+          description: "Respuesta enlatada actualizada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateCannedResponseResponseDto"
+        404:
+          description: "Respuesta enlatada no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Canned Responses"
+  /cannedresponse/delete/{id}:
+    delete:
+      operationId: "CannedResponseController_deleteCannedResponse"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Respuesta enlatada eliminada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteCannedResponseResponseDto"
+        404:
+          description: "Respuesta enlatada no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Canned Responses"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -467,6 +569,12 @@ components:
             updated_at:
               type: "string"
               format: "date-time"
+          required:
+            - "id"
+            - "username"
+            - "role"
+            - "created_at"
+            - "updated_at"
         backendTokens:
           type: "object"
           properties:
@@ -476,6 +584,10 @@ components:
               type: "string"
             expiresIn:
               type: "number"
+          required:
+            - "accessToken"
+            - "refreshToken"
+            - "expiresIn"
       required:
         - "user"
         - "backendTokens"
@@ -725,6 +837,13 @@ components:
             updated_at:
               type: "string"
               format: "date-time"
+          required:
+            - "id"
+            - "name"
+            - "color"
+            - "isExclusive"
+            - "created_at"
+            - "updated_at"
       required:
         - "id"
         - "name"
@@ -842,67 +961,53 @@ components:
                 type: "string"
                 minLength: 1
               secondaryPhoneNumber:
-                type: "string"
-                nullable: true
+                type: "null"
               fullName:
                 type: "string"
                 minLength: 1
               firstName:
-                type: "string"
+                type: "null"
                 minLength: 1
-                nullable: true
               gender:
-                type: "string"
-                nullable: true
+                type: "null"
               birthDate:
-                type: "string"
+                type: "null"
                 format: "date-time"
-                nullable: true
               profilePictureUrl:
-                type: "string"
+                type: "null"
                 format: "uri"
-                nullable: true
               instagram:
-                type: "string"
-                nullable: true
+                type: "null"
               mail:
-                type: "string"
+                type: "null"
                 format: "email"
-                nullable: true
               dni:
-                type: "string"
-                nullable: true
+                type: "null"
               alternativeNames:
-                type: "array"
+                type: "null"
                 items:
                   type: "string"
-                nullable: true
               birthLongitude:
-                type: "number"
+                type: "null"
                 minimum: -180
                 maximum: 180
-                nullable: true
               birthLatitude:
-                type: "number"
+                type: "null"
                 minimum: -90
                 maximum: 90
-                nullable: true
               residenceLongitude:
-                type: "number"
+                type: "null"
                 minimum: -180
                 maximum: 180
-                nullable: true
               residenceLatitude:
-                type: "number"
+                type: "null"
                 minimum: -90
                 maximum: 90
-                nullable: true
               isInTrash:
                 type: "boolean"
               movedToTrashDate:
-                type: "string"
+                type: "null"
                 format: "date-time"
-                nullable: true
               created_at:
                 type: "string"
                 format: "date-time"
@@ -966,67 +1071,53 @@ components:
                 type: "string"
                 minLength: 1
               secondaryPhoneNumber:
-                type: "string"
-                nullable: true
+                type: "null"
               fullName:
                 type: "string"
                 minLength: 1
               firstName:
-                type: "string"
+                type: "null"
                 minLength: 1
-                nullable: true
               gender:
-                type: "string"
-                nullable: true
+                type: "null"
               birthDate:
-                type: "string"
+                type: "null"
                 format: "date-time"
-                nullable: true
               profilePictureUrl:
-                type: "string"
+                type: "null"
                 format: "uri"
-                nullable: true
               instagram:
-                type: "string"
-                nullable: true
+                type: "null"
               mail:
-                type: "string"
+                type: "null"
                 format: "email"
-                nullable: true
               dni:
-                type: "string"
-                nullable: true
+                type: "null"
               alternativeNames:
-                type: "array"
+                type: "null"
                 items:
                   type: "string"
-                nullable: true
               birthLongitude:
-                type: "number"
+                type: "null"
                 minimum: -180
                 maximum: 180
-                nullable: true
               birthLatitude:
-                type: "number"
+                type: "null"
                 minimum: -90
                 maximum: 90
-                nullable: true
               residenceLongitude:
-                type: "number"
+                type: "null"
                 minimum: -180
                 maximum: 180
-                nullable: true
               residenceLatitude:
-                type: "number"
+                type: "null"
                 minimum: -90
                 maximum: 90
-                nullable: true
               isInTrash:
                 type: "boolean"
               movedToTrashDate:
-                type: "string"
+                type: "null"
                 format: "date-time"
-                nullable: true
               created_at:
                 type: "string"
                 format: "date-time"
@@ -1099,8 +1190,6 @@ components:
         - "id"
         - "username"
         - "role"
-        - "isGlobalFilterActive"
-        - "fcmToken"
     UpdateGlobalFilterDto:
       type: "object"
       properties:
@@ -1113,7 +1202,6 @@ components:
             type: "string"
             format: "uuid"
       required:
-        - "active"
         - "tagsIds"
     UpdateGlobalFilterResponseDto:
       type: "object"
@@ -1184,8 +1272,6 @@ components:
         - "username"
         - "password"
         - "role"
-        - "isGlobalFilterActive"
-        - "fcmToken"
         - "created_at"
         - "updated_at"
         - "globalFilter"
@@ -1235,7 +1321,6 @@ components:
               - "type"
               - "group"
       required:
-        - "isGlobalFilterActive"
         - "globalFilter"
     GetMeResponseDto:
       type: "object"
@@ -1341,8 +1426,6 @@ components:
         - "id"
         - "username"
         - "role"
-        - "isGlobalFilterActive"
-        - "fcmToken"
         - "created_at"
         - "updated_at"
         - "globalFilter"
@@ -1689,7 +1772,6 @@ components:
       required:
         - "content"
         - "profileId"
-        - "isSolvable"
     CreateCommentResponseDto:
       type: "object"
       properties:
@@ -1712,9 +1794,8 @@ components:
           default: false
           type: "boolean"
         solvedAt:
-          type: "string"
+          type: "null"
           format: "date-time"
-          nullable: true
         solvedBy:
           type: "string"
           format: "uuid"
@@ -1729,10 +1810,7 @@ components:
         - "content"
         - "createdBy"
         - "profileId"
-        - "isSolvable"
-        - "isSolved"
         - "solvedAt"
-        - "solvedBy"
         - "created_at"
         - "updated_at"
     GetByProfileCommentResponseDto:
@@ -1762,9 +1840,8 @@ components:
                 default: false
                 type: "boolean"
               solvedAt:
-                type: "string"
+                type: "null"
                 format: "date-time"
-                nullable: true
               solvedBy:
                 type: "string"
                 format: "uuid"
@@ -1814,9 +1891,8 @@ components:
           default: false
           type: "boolean"
         solvedAt:
-          type: "string"
+          type: "null"
           format: "date-time"
-          nullable: true
         solvedBy:
           type: "string"
           format: "uuid"
@@ -1831,9 +1907,102 @@ components:
         - "content"
         - "createdBy"
         - "profileId"
-        - "isSolvable"
-        - "isSolved"
         - "solvedAt"
-        - "solvedBy"
+        - "created_at"
+        - "updated_at"
+    CreateCannedResponseDto:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          minLength: 1
+        content:
+          type: "string"
+          minLength: 1
+      required:
+        - "name"
+        - "content"
+    CreateCannedResponseResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+          minLength: 1
+        content:
+          type: "string"
+          minLength: 1
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "content"
+        - "created_at"
+        - "updated_at"
+    UpdateCannedResponseDto:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          minLength: 1
+        content:
+          type: "string"
+          minLength: 1
+      required:
+        - "name"
+        - "content"
+    UpdateCannedResponseResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+          minLength: 1
+        content:
+          type: "string"
+          minLength: 1
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "content"
+        - "created_at"
+        - "updated_at"
+    DeleteCannedResponseResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+          minLength: 1
+        content:
+          type: "string"
+          minLength: 1
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "content"
         - "created_at"
         - "updated_at"
