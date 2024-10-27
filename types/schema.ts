@@ -292,6 +292,38 @@ export interface paths {
     patch: operations['CommentController_toggleSolveComment'];
     trace?: never;
   };
+  '/location/all': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['LocationController_findAll'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/location/find-cities-by-province/{province}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['LocationController_findArgCityByProvince'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -476,10 +508,10 @@ export interface components {
         mail: string | null;
         dni: string | null;
         alternativeNames: string[] | null;
-        birthLongitude: number | null;
-        birthLatitude: number | null;
-        residenceLongitude: number | null;
-        residenceLatitude: number | null;
+        /** Format: uuid */
+        birthLocationId: string | null;
+        /** Format: uuid */
+        residenceLocationId: string | null;
         isInTrash: boolean;
         /** Format: date-time */
         movedToTrashDate: string | null;
@@ -512,10 +544,10 @@ export interface components {
         mail: string | null;
         dni: string | null;
         alternativeNames: string[] | null;
-        birthLongitude: number | null;
-        birthLatitude: number | null;
-        residenceLongitude: number | null;
-        residenceLatitude: number | null;
+        /** Format: uuid */
+        birthLocationId: string | null;
+        /** Format: uuid */
+        residenceLocationId: string | null;
         isInTrash: boolean;
         /** Format: date-time */
         movedToTrashDate: string | null;
@@ -829,6 +861,34 @@ export interface components {
       created_at: string;
       /** Format: date-time */
       updated_at: string;
+    };
+    FindAllLocationResponseDto: {
+      birthLocations: {
+        city: string;
+        longitude: number;
+        latitude: number;
+        _count: {
+          birthProfiles: number;
+        };
+      }[];
+      residenceLocations: {
+        city: string;
+        longitude: number;
+        latitude: number;
+        _count: {
+          residenceProfiles: number;
+        };
+      }[];
+    };
+    FindCitiesByProvinceLocationResponseDto: {
+      cities: {
+        id: string;
+        name: string;
+        centroid: {
+          lon: number;
+          lat: number;
+        };
+      }[];
     };
   };
   responses: never;
@@ -1457,6 +1517,48 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  LocationController_findAll: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Ubicaciones obtenidas */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllLocationResponseDto'];
+        };
+      };
+    };
+  };
+  LocationController_findArgCityByProvince: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        province: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Localidades de Argentina obtenidas */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindCitiesByProvinceLocationResponseDto'];
         };
       };
     };

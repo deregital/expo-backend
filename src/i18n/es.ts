@@ -112,6 +112,17 @@ export default {
         invalid: 'La URL de la imagen de perfil no es válida',
       },
     },
+    location: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      latitude: {
+        minmax: 'La latitud debe estar entre -90 y 90',
+      },
+      longitude: {
+        minmax: 'La longitud debe estar entre -180 y 180',
+      },
+    },
   },
   route: {
     auth: {
@@ -203,6 +214,14 @@ export default {
         success: 'Cambio de estado en la resolución del comentario',
         'not-found': 'Comentario no encontrado',
         conflict: 'El comentario no es resoluble',
+      },
+    },
+    location: {
+      'find-all': {
+        success: 'Ubicaciones obtenidas',
+      },
+      'find-cities-by-province': {
+        success: 'Localidades de Argentina obtenidas',
       },
     },
   },
