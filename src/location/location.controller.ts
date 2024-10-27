@@ -9,7 +9,11 @@ import {
 import {
   FindCitiesByProvinceLocationResponseDto,
   findCitiesByProvinceLocationResponseSchema,
-} from '@/location/dto/find-cities-by-province-location.dto';
+} from '@/location/dto/find-cities-by-province.dto';
+import {
+  FindProvincesResponseDto,
+  findProvincesResponseSchema,
+} from '@/location/dto/find-provinces.dto';
 import { LocationService } from '@/location/location.service';
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
@@ -29,6 +33,15 @@ export class LocationController {
   })
   async findAll(): Promise<z.infer<typeof findAllLocationResponseSchema>> {
     return await this.locationService.findAll();
+  }
+
+  @Get('/provinces')
+  @ApiOkResponse({
+    type: FindProvincesResponseDto,
+    description: translate('route.location.provinces.success'),
+  })
+  async findProvinces(): Promise<z.infer<typeof findProvincesResponseSchema>> {
+    return await this.locationService.findProvinces();
   }
 
   @Get('/find-cities-by-province/:province')

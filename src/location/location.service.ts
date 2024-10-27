@@ -1,8 +1,10 @@
 import { ArgCity } from '@/location/dto/arg-city.dto';
 import { findAllLocationResponseSchema } from '@/location/dto/find-all-location.dto';
-import { findCitiesByProvinceLocationResponseSchema } from '@/location/dto/find-cities-by-province-location.dto';
+import { findCitiesByProvinceLocationResponseSchema } from '@/location/dto/find-cities-by-province.dto';
+import { findProvincesResponseSchema } from '@/location/dto/find-provinces.dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import localidades from '@/shared/data/arg-cities.json';
+import provinces from '@/shared/data/arg-provinces.json';
 import { Injectable } from '@nestjs/common';
 import z from 'zod';
 
@@ -79,5 +81,9 @@ export class LocationService {
         }))
         .sort((a, b) => a.name.localeCompare(b.name)),
     };
+  }
+
+  async findProvinces(): Promise<z.infer<typeof findProvincesResponseSchema>> {
+    return { provinces };
   }
 }

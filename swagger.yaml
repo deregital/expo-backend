@@ -426,6 +426,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllLocationResponseDto"
+  /location/provinces:
+    get:
+      operationId: "LocationController_findProvinces"
+      parameters: []
+      responses:
+        200:
+          description: "Provincias de Argentina obtenidas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindProvincesResponseDto"
   /location/find-cities-by-province/{province}:
     get:
       operationId: "LocationController_findArgCityByProvince"
@@ -1896,6 +1907,15 @@ components:
       required:
         - "birthLocations"
         - "residenceLocations"
+    FindProvincesResponseDto:
+      type: "object"
+      properties:
+        provinces:
+          type: "array"
+          items:
+            type: "string"
+      required:
+        - "provinces"
     FindCitiesByProvinceLocationResponseDto:
       type: "object"
       properties:

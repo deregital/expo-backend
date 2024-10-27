@@ -223,6 +223,9 @@ export default {
       'find-cities-by-province': {
         success: 'Localidades de Argentina obtenidas',
       },
+      provinces: {
+        success: 'Provincias de Argentina obtenidas',
+      },
     },
   },
 } as const;

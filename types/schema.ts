@@ -308,6 +308,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/location/provinces': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['LocationController_findProvinces'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/location/find-cities-by-province/{province}': {
     parameters: {
       query?: never;
@@ -879,6 +895,9 @@ export interface components {
           residenceProfiles: number;
         };
       }[];
+    };
+    FindProvincesResponseDto: {
+      provinces: string[];
     };
     FindCitiesByProvinceLocationResponseDto: {
       cities: {
@@ -1537,6 +1556,26 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['FindAllLocationResponseDto'];
+        };
+      };
+    };
+  };
+  LocationController_findProvinces: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Provincias de Argentina obtenidas */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindProvincesResponseDto'];
         };
       };
     };
