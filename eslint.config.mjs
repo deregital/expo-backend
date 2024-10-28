@@ -15,7 +15,7 @@ const compat = new FlatCompat({ resolvePluginsRelativeTo: __dirname });
 export default [
   ...compat.extends('plugin:@typescript-eslint/recommended', 'prettier'),
   {
-    ignores: ['types/*', 'dist/*'],
+    ignores: ['types/*', 'dist/*', './src/shared/data/arg-cities.json'],
   },
   {
     languageOptions: {
