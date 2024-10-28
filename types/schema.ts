@@ -340,6 +340,38 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/location/all-countries': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['LocationController_findAllCountries'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/location/states-by-country/{countryCode}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['LocationController_findStatesByCountry'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -907,6 +939,22 @@ export interface components {
           lon: number;
           lat: number;
         };
+      }[];
+    };
+    FindAllCountriesResponseDto: {
+      countries: {
+        name: string;
+        isoCode: string;
+      }[];
+    };
+    FindAllStatesByCountryResponseDto: {
+      states: {
+        name: string;
+        isoCode: string;
+        countryCode: string;
+        countryName: string;
+        latitude?: string | null;
+        longitude?: string | null;
       }[];
     };
   };
@@ -1598,6 +1646,57 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['FindCitiesByProvinceLocationResponseDto'];
+        };
+      };
+    };
+  };
+  LocationController_findAllCountries: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Países obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllCountriesResponseDto'];
+        };
+      };
+    };
+  };
+  LocationController_findStatesByCountry: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        countryCode: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Estados obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllStatesByCountryResponseDto'];
+        };
+      };
+      /** @description País no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
         };
       };
     };

@@ -73,7 +73,7 @@ export class LocationController {
     return this.locationService.findAllCountries();
   }
 
-  @Get('/states-by-country/:country')
+  @Get('/states-by-country/:countryCode')
   @ApiOkResponse({
     description: translate('route.location.states-by-country.success'),
     type: FindAllStatesByCountryResponseDto,
@@ -83,8 +83,8 @@ export class LocationController {
     description: translate('route.location.states-by-country.not-found'),
   })
   findStatesByCountry(
-    @Param('country') country: string,
+    @Param('countryCode') countryCode: string,
   ): z.infer<typeof findAllStatesByCountryResponseSchema> {
-    return this.locationService.findStatesByCountry(country);
+    return this.locationService.findStatesByCountry(countryCode);
   }
 }
