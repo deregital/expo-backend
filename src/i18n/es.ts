@@ -226,6 +226,14 @@ export default {
       provinces: {
         success: 'Provincias de Argentina obtenidas',
       },
+      'all-countries': {
+        success: 'Países obtenidos',
+      },
+      'states-by-country': {
+        success: 'Estados obtenidos',
+        'not-found-error': `No se encontraron estados para el país \{\{countryCode\}\}`,
+        'not-found': 'País no encontrado',
+      },
     },
   },
 } as const;
