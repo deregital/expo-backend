@@ -66,7 +66,6 @@ export class CannedResponseController {
   ): Promise<z.infer<typeof createCannedResponseResponseSchema>> {
     return await this.cannedResponseService.createCannedResponse(
       createCannedResponseDto,
-      account.id,
     );
   }
 
