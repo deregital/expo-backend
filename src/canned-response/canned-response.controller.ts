@@ -23,7 +23,6 @@ import {
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiTags,
 } from '@nestjs/swagger';
 import z from 'zod';
 import { Role } from '~/types';
@@ -47,10 +46,9 @@ import {
   updateCannedResponseResponseSchema,
 } from './dto/update-canned-response.dto';
 
-@ApiTags('Canned Responses')
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
-@Controller('cannedresponse')
+@Controller('canned-response')
 export class CannedResponseController {
   constructor(private readonly cannedResponseService: CannedResponseService) {}
 
