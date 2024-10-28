@@ -6,6 +6,6 @@ export const getAllCannedResponseResponseSchema = z.object({
   cannedResponses: z.array(cannedResponseSchema),
 });
 
-export class GetAllCannedResponseDto extends createZodDtoWithoutDate(
+export class GetAllCannedResponseResponseDto extends createZodDtoWithoutDate(
   getAllCannedResponseResponseSchema,
 ) {}

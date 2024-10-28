@@ -112,7 +112,7 @@ export default {
         invalid: 'La URL de la imagen de perfil no es válida',
       },
     },
-    cannedResponse: {
+    'canned-response': {
       id: {
         uuid: 'El ID debe ser un UUID',
       },

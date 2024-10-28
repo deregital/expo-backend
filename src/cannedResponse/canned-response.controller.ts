@@ -37,7 +37,10 @@ import {
   DeleteCannedResponseResponseDto,
   deleteCannedResponseResponseSchema,
 } from './dto/delete-canned-response.dto';
-import { getAllCannedResponseResponseSchema } from './dto/get-all-canned-response.dto';
+import {
+  GetAllCannedResponseResponseDto,
+  getAllCannedResponseResponseSchema,
+} from './dto/get-all-canned-response.dto';
 import {
   UpdateCannedResponseDto,
   UpdateCannedResponseResponseDto,
@@ -71,7 +74,7 @@ export class CannedResponseController {
 
   @ApiOkResponse({
     description: translate('route.canned-response.get-all.success'),
-    type: CreateCannedResponseResponseDto,
+    type: GetAllCannedResponseResponseDto,
   })
   @Get('/all')
   async getAllCannedResponses(): Promise<

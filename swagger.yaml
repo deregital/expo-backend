@@ -460,7 +460,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreateCannedResponseResponseDto"
+                $ref: "#/components/schemas/GetAllCannedResponseResponseDto"
       tags:
         - "Canned Responses"
   /cannedresponse/update/{id}:
@@ -1946,6 +1946,37 @@ components:
         - "content"
         - "created_at"
         - "updated_at"
+    GetAllCannedResponseResponseDto:
+      type: "object"
+      properties:
+        cannedResponses:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              content:
+                type: "string"
+                minLength: 1
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "name"
+              - "content"
+              - "created_at"
+              - "updated_at"
+      required:
+        - "cannedResponses"
     UpdateCannedResponseDto:
       type: "object"
       properties:

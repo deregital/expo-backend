@@ -4,13 +4,13 @@ import { z } from 'zod';
 
 export const cannedResponseSchema = z.object({
   id: z.string().uuid({
-    message: translate('model.cannedResponse.id.uuid'),
+    message: translate('model.canned-response.id.uuid'),
   }),
   name: z.string().min(1, {
-    message: translate('model.cannedResponse.name.min'),
+    message: translate('model.canned-response.name.min'),
   }),
   content: z.string().min(1, {
-    message: translate('model.cannedResponse.content.min'),
+    message: translate('model.canned-response.content.min'),
   }),
 
   created_at: z.date(),
