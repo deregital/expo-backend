@@ -1,8 +1,8 @@
-import tsParser from '@typescript-eslint/parser';
+import { FlatCompat } from '@eslint/eslintrc';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
 import unusedImportPlugin from 'eslint-plugin-unused-imports';
 import globals from 'globals';
-import { FlatCompat } from '@eslint/eslintrc';
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -35,8 +35,11 @@ export default [
       '@typescript-eslint/interface-name-prefix': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', caughtErrors: 'none' },
+      ],
       '@typescript-eslint/ban-types': 'off',
       '@typescript-eslint/explicit-function-return-type': 'warn',
     },

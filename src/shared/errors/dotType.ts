@@ -9,11 +9,14 @@ export type Primitive =
 
 type ArrayKey = number;
 
-type IsTuple<T extends readonly any[]> = number extends T['length']
+type IsTuple<T extends readonly unknown[]> = number extends T['length']
   ? false
   : true;
 
-type TupleKeys<T extends readonly any[]> = Exclude<keyof T, keyof any[]>;
+type TupleKeys<T extends readonly unknown[]> = Exclude<
+  keyof T,
+  keyof unknown[]
+>;
 
 export type PathConcat<
   TKey extends string | number,
