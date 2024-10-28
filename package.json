@@ -49,13 +49,11 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "country-state-city": "^3.2.1",
-    "fs": "^0.0.1-security",
     "i18n-js": "^4.4.3",
     "json-to-pretty-yaml": "^1.2.2",
     "openapi3-ts": "^4.4.0",
     "patch-package": "^8.0.0",
     "reflect-metadata": "^0.2.0",
-    "swagger2-postman2-converter": "^0.0.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {
