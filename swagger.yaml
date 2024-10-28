@@ -450,7 +450,7 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Canned Responses"
-  /cannedresponse/get-all:
+  /cannedresponse/all:
     get:
       operationId: "CannedResponseController_getAllCannedResponses"
       parameters: []

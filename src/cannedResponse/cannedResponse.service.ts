@@ -1,14 +1,11 @@
-import {
-  CreateCannedResponseDto,
-  createCannedResponseResponseSchema,
-} from './dto/create-cannedResponse.dto';
+import { CreateCannedResponseDto } from './dto/create-cannedResponse.dto';
 import { deleteCannedResponseResponseSchema } from './dto/delete-cannedResponse.dto';
 import { UpdateCannedResponseDto } from './dto/update-cannedResponse.dto';
 
 import { PrismaService } from '@/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import z from 'zod';
-import { Account, CannedResponse } from '~/types';
+import { Account, CannedResponse, getAllCannedResponseSchema } from '~/types';
 
 @Injectable()
 export class CannedResponseService {
@@ -27,7 +24,7 @@ export class CannedResponseService {
   }
 
   async getAllCannedResponses(): Promise<
-    z.infer<typeof createCannedResponseResponseSchema>
+    z.infer<typeof getAllCannedResponseSchema>
   > {
     const cannedResponses = await this.prisma.cannedResponse.findMany({
       orderBy: {
@@ -35,11 +32,7 @@ export class CannedResponseService {
       },
     });
 
-    const response = createCannedResponseResponseSchema.parse({
-      cannedResponses,
-    });
-
-    return response;
+    return { cannedResponses };
   }
 
   async updateCannedResponse(

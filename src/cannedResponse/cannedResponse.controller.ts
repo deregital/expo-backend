@@ -26,7 +26,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import z from 'zod';
-import { Role } from '~/types';
+import { getAllCannedResponseSchema, Role } from '~/types';
 import { CannedResponseService } from './cannedResponse.service';
 import {
   CreateCannedResponseDto,
@@ -73,9 +73,9 @@ export class CannedResponseController {
     description: translate('route.cannedResponse.get-all.success'),
     type: CreateCannedResponseResponseDto,
   })
-  @Get('/get-all')
+  @Get('/all')
   async getAllCannedResponses(): Promise<
-    z.infer<typeof createCannedResponseResponseSchema>
+    z.infer<typeof getAllCannedResponseSchema>
   > {
     return await this.cannedResponseService.getAllCannedResponses();
   }
