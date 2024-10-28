@@ -30,5 +30,8 @@
     "numericCollation": true,
     "caseFirst": "upper"
   },
-  "vsicons.presets.nestjs": true
+  "vsicons.presets.nestjs": true,
+  "[json]": {
+    "editor.formatOnSave": false
+  }
 }
