@@ -26,7 +26,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import z from 'zod';
-import { getAllCannedResponseSchema, Role } from '~/types';
+import { Role } from '~/types';
 import { CannedResponseService } from './cannedResponse.service';
 import {
   CreateCannedResponseDto,
@@ -37,6 +37,7 @@ import {
   DeleteCannedResponseResponseDto,
   deleteCannedResponseResponseSchema,
 } from './dto/delete-cannedResponse.dto';
+import { getAllCannedResponseSchema } from './dto/get-all-cannedResponse.dto';
 import {
   UpdateCannedResponseDto,
   UpdateCannedResponseResponseDto,
