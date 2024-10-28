@@ -218,7 +218,7 @@ export default {
         conflict: 'El comentario no es resoluble',
       },
     },
-    cannedResponse: {
+    'canned-response': {
       create: {
         success: 'Respuesta enlatada creada con éxito',
         conflict: 'Error en la creacion de la respuesta',

@@ -1,5 +1,5 @@
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
-import { cannedResponseSchema } from './cannedResponse.dto';
+import { cannedResponseSchema } from './canned-response.dto';
 
 export const createCannedResponseSchema = cannedResponseSchema.pick({
   name: true,

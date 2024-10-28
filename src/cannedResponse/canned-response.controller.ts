@@ -27,22 +27,22 @@ import {
 } from '@nestjs/swagger';
 import z from 'zod';
 import { Role } from '~/types';
-import { CannedResponseService } from './cannedResponse.service';
+import { CannedResponseService } from './canned-response.service';
 import {
   CreateCannedResponseDto,
   CreateCannedResponseResponseDto,
   createCannedResponseResponseSchema,
-} from './dto/create-cannedResponse.dto';
+} from './dto/create-canned-response.dto';
 import {
   DeleteCannedResponseResponseDto,
   deleteCannedResponseResponseSchema,
-} from './dto/delete-cannedResponse.dto';
-import { getAllCannedResponseSchema } from './dto/get-all-cannedResponse.dto';
+} from './dto/delete-canned-response.dto';
+import { getAllCannedResponseResponseSchema } from './dto/get-all-canned-response.dto';
 import {
   UpdateCannedResponseDto,
   UpdateCannedResponseResponseDto,
   updateCannedResponseResponseSchema,
-} from './dto/update-cannedResponse.dto';
+} from './dto/update-canned-response.dto';
 
 @ApiTags('Canned Responses')
 @Roles(Role.ADMIN, Role.USER)
@@ -52,11 +52,11 @@ export class CannedResponseController {
   constructor(private readonly cannedResponseService: CannedResponseService) {}
 
   @ApiCreatedResponse({
-    description: translate('route.cannedResponse.create.success'),
+    description: translate('route.canned-response.create.success'),
     type: CreateCannedResponseResponseDto,
   })
   @ApiConflictResponse({
-    description: translate('route.cannedResponse.create.conflict'),
+    description: translate('route.canned-response.create.conflict'),
     type: ErrorDto,
   })
   @Post('/create')
@@ -71,22 +71,22 @@ export class CannedResponseController {
   }
 
   @ApiOkResponse({
-    description: translate('route.cannedResponse.get-all.success'),
+    description: translate('route.canned-response.get-all.success'),
     type: CreateCannedResponseResponseDto,
   })
   @Get('/all')
   async getAllCannedResponses(): Promise<
-    z.infer<typeof getAllCannedResponseSchema>
+    z.infer<typeof getAllCannedResponseResponseSchema>
   > {
     return await this.cannedResponseService.getAllCannedResponses();
   }
 
   @ApiNotFoundResponse({
-    description: translate('route.cannedResponse.update.not-found'),
+    description: translate('route.canned-response.update.not-found'),
     type: ErrorDto,
   })
   @ApiOkResponse({
-    description: translate('route.cannedResponse.update.success'),
+    description: translate('route.canned-response.update.success'),
     type: UpdateCannedResponseResponseDto,
   })
   @Patch('/update/:id')
@@ -101,11 +101,11 @@ export class CannedResponseController {
   }
 
   @ApiNotFoundResponse({
-    description: translate('route.cannedResponse.delete.not-found'),
+    description: translate('route.canned-response.delete.not-found'),
     type: ErrorDto,
   })
   @ApiOkResponse({
-    description: translate('route.cannedResponse.delete.success'),
+    description: translate('route.canned-response.delete.success'),
     type: DeleteCannedResponseResponseDto,
   })
   @Delete('/delete/:id')

@@ -1,11 +1,12 @@
-import { CreateCannedResponseDto } from './dto/create-cannedResponse.dto';
-import { deleteCannedResponseResponseSchema } from './dto/delete-cannedResponse.dto';
-import { UpdateCannedResponseDto } from './dto/update-cannedResponse.dto';
+import { CreateCannedResponseDto } from './dto/create-canned-response.dto';
+import { deleteCannedResponseResponseSchema } from './dto/delete-canned-response.dto';
+import { getAllCannedResponseResponseSchema } from './dto/get-all-canned-response.dto';
+import { UpdateCannedResponseDto } from './dto/update-canned-response.dto';
 
 import { PrismaService } from '@/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import z from 'zod';
-import { Account, CannedResponse, getAllCannedResponseSchema } from '~/types';
+import { CannedResponse } from '~/types';
 
 @Injectable()
 export class CannedResponseService {
@@ -13,7 +14,6 @@ export class CannedResponseService {
 
   async createCannedResponse(
     dto: CreateCannedResponseDto,
-    accountId: Account['id'],
   ): Promise<CannedResponse> {
     return await this.prisma.cannedResponse.create({
       data: {
@@ -24,7 +24,7 @@ export class CannedResponseService {
   }
 
   async getAllCannedResponses(): Promise<
-    z.infer<typeof getAllCannedResponseSchema>
+    z.infer<typeof getAllCannedResponseResponseSchema>
   > {
     const cannedResponses = await this.prisma.cannedResponse.findMany({
       orderBy: {
@@ -54,12 +54,6 @@ export class CannedResponseService {
     const deletedResponse = await this.prisma.cannedResponse.delete({
       where: { id },
     });
-    return {
-      id: deletedResponse.id,
-      name: deletedResponse.name,
-      content: deletedResponse.content,
-      created_at: deletedResponse.created_at,
-      updated_at: deletedResponse.updated_at,
-    };
+    return deletedResponse;
   }
 }
