@@ -4,28 +4,34 @@ import {
   ZodArray,
   ZodDate,
   ZodIntersection,
+  ZodNullable,
   ZodObject,
+  ZodOptional,
   ZodRawShape,
   ZodTypeAny,
   ZodUnion,
 } from 'zod';
 
 export type ReplaceDatesWithStrings<T extends ZodTypeAny> = T extends ZodDate
-  ? ReturnType<typeof z.string> // If it's ZodDate, replace with z.string().datetime()
+  ? ReturnType<typeof z.string> // Replace ZodDate with z.string().datetime()
   : T extends ZodObject<infer Shape>
-    ? ZodObject<{ [k in keyof Shape]: ReplaceDatesWithStrings<Shape[k]> }> // If it's an object, recursively process its shape
+    ? ZodObject<{ [k in keyof Shape]: ReplaceDatesWithStrings<Shape[k]> }> // Recursively process object shape
     : T extends ZodArray<infer Item>
-      ? ZodArray<ReplaceDatesWithStrings<Item>> // If it's an array, process the item type
+      ? ZodArray<ReplaceDatesWithStrings<Item>> // Process array item type
       : T extends ZodUnion<infer Options>
         ? ZodUnion<{
             [k in keyof Options]: ReplaceDatesWithStrings<Options[k]>;
-          }> // If it's a union, process each option
+          }> // Process each option in union
         : T extends ZodIntersection<infer Left, infer Right>
           ? ZodIntersection<
               ReplaceDatesWithStrings<Left>,
               ReplaceDatesWithStrings<Right>
-            > // If it's an intersection, process both sides
-          : T; // Otherwise, return the schema as is
+            > // Process both sides of intersection
+          : T extends ZodNullable<infer Inner>
+            ? ZodNullable<ReplaceDatesWithStrings<Inner>> // Process nullable schema
+            : T extends ZodOptional<infer Inner>
+              ? ZodOptional<ReplaceDatesWithStrings<Inner>> // Process optional schema
+              : T; // Otherwise, return the schema as is
 
 // Function to replace z.date() with z.string().datetime() recursively
 export const replaceDatesWithStrings = <T extends OpenApiZodAny>(

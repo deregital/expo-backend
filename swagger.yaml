@@ -378,7 +378,12 @@ paths:
   /comment/get-by-profile/{id}:
     get:
       operationId: "CommentController_getCommentsByProfileId"
-      parameters: []
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
       responses:
         200:
           description: "Comentarios obtenidos"
@@ -395,7 +400,12 @@ paths:
   /comment/toggle-solve/{id}:
     patch:
       operationId: "CommentController_toggleSolveComment"
-      parameters: []
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
       responses:
         200:
           description: "Cambio de estado en la resolución del comentario"

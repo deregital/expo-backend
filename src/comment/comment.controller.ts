@@ -39,7 +39,7 @@ import {
   ApiOkResponse,
 } from '@nestjs/swagger';
 import z from 'zod';
-import { Comment, Profile, Role } from '~/types';
+import { Role } from '~/types';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -85,7 +85,7 @@ export class CommentController {
   })
   @Get('/get-by-profile/:id')
   async getCommentsByProfileId(
-    @Param('id', new ExistingRecord('profile')) profileId: Profile['id'],
+    @Param('id', new ExistingRecord('profile')) profileId: string,
   ): Promise<z.infer<typeof getByProfileCommentResponseSchema>> {
     return await this.commentService.getCommentsByProfileId(profileId);
   }
@@ -104,7 +104,7 @@ export class CommentController {
   })
   @Patch('/toggle-solve/:id')
   async toggleSolveComment(
-    @Param('id', new ExistingRecord('comment')) id: Comment['id'],
+    @Param('id', new ExistingRecord('comment')) id: string,
     @Account() account: AccountWithoutPassword,
   ): Promise<z.infer<typeof toggleSolveCommentResponseSchema>> {
     const isSolvable = await this.commentService.isCommentSolvable(id);
