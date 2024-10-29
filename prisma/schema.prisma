@@ -79,7 +79,7 @@ model Location {
   latitude  Float
   longitude Float
   country   String
-  province  String
+  state     String
   city      String
 
   birthProfiles     Profile[] @relation("PROFILE_X_BIRTH_LOCATION")

@@ -23,7 +23,7 @@ export const locationSchema = z.object({
     }),
 
   country: z.string(),
-  province: z.string(),
+  state: z.string(),
   city: z.string(),
 
   created_at: z.date(),

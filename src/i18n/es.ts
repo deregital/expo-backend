@@ -220,11 +220,11 @@ export default {
       'find-all': {
         success: 'Ubicaciones obtenidas',
       },
-      'find-cities-by-province': {
+      'find-cities-by-arg-state': {
         success: 'Localidades de Argentina obtenidas',
-        'not-found': `Provincia "\{\{province\}\}" no encontrada`,
+        'not-found': `Provincia "\{\{argState\}\}" no encontrada`,
       },
-      provinces: {
+      'arg-states': {
         success: 'Provincias de Argentina obtenidas',
       },
       'all-countries': {

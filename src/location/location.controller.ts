@@ -11,13 +11,13 @@ import {
   findAllLocationResponseSchema,
 } from '@/location/dto/find-all-location.dto';
 import {
-  FindCitiesByProvinceLocationResponseDto,
-  findCitiesByProvinceLocationResponseSchema,
-} from '@/location/dto/find-cities-by-province.dto';
+  FindArgStatesResponseDto,
+  findArgStatesResponseSchema,
+} from '@/location/dto/find-arg-states.dto';
 import {
-  FindProvincesResponseDto,
-  findProvincesResponseSchema,
-} from '@/location/dto/find-provinces.dto';
+  FindCitiesByArgStateResponseDto,
+  findCitiesByArgStateResponseSchema,
+} from '@/location/dto/find-cities-by-arg-state.dto';
 import {
   FindAllStatesByCountryResponseDto,
   findAllStatesByCountryResponseSchema,
@@ -44,28 +44,28 @@ export class LocationController {
     return await this.locationService.findAll();
   }
 
-  @Get('/provinces')
+  @Get('/arg-states')
   @ApiOkResponse({
-    type: FindProvincesResponseDto,
-    description: translate('route.location.provinces.success'),
+    type: FindArgStatesResponseDto,
+    description: translate('route.location.arg-states.success'),
   })
-  async findProvinces(): Promise<z.infer<typeof findProvincesResponseSchema>> {
-    return await this.locationService.findProvinces();
+  async findArgStates(): Promise<z.infer<typeof findArgStatesResponseSchema>> {
+    return await this.locationService.findArgStates();
   }
 
-  @Get('/find-cities-by-province/:province')
+  @Get('/find-cities-by-arg-state/:argState')
   @ApiOkResponse({
-    type: FindCitiesByProvinceLocationResponseDto,
-    description: translate('route.location.find-cities-by-province.success'),
+    type: FindCitiesByArgStateResponseDto,
+    description: translate('route.location.find-cities-by-arg-state.success'),
   })
   @ApiNotFoundResponse({
     type: ErrorDto,
-    description: translate('route.location.find-cities-by-province.not-found'),
+    description: translate('route.location.find-cities-by-arg-state.not-found'),
   })
-  async findArgCityByProvince(
-    @Param('province') province: string,
-  ): Promise<z.infer<typeof findCitiesByProvinceLocationResponseSchema>> {
-    return await this.locationService.findCitiesByProvince(province);
+  async findCitiesByArgState(
+    @Param('argState') argState: string,
+  ): Promise<z.infer<typeof findCitiesByArgStateResponseSchema>> {
+    return await this.locationService.findCitiesByArgState(argState);
   }
 
   @Get('/all-countries')

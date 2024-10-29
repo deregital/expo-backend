@@ -2,12 +2,12 @@ import { translate } from '@/i18n/translate';
 import { ArgCity } from '@/location/dto/arg-city.dto';
 import { findAllCountriesResponseSchema } from '@/location/dto/find-all-countries.dto';
 import { findAllLocationResponseSchema } from '@/location/dto/find-all-location.dto';
-import { findCitiesByProvinceLocationResponseSchema } from '@/location/dto/find-cities-by-province.dto';
-import { findProvincesResponseSchema } from '@/location/dto/find-provinces.dto';
+import { findArgStatesResponseSchema } from '@/location/dto/find-arg-states.dto';
+import { findCitiesByArgStateResponseSchema } from '@/location/dto/find-cities-by-arg-state.dto';
 import { findAllStatesByCountryResponseSchema } from '@/location/dto/states-by-country.dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import localidades from '@/shared/data/arg-cities.json';
-import provinces from '@/shared/data/arg-provinces.json';
+import argStates from '@/shared/data/arg-states.json';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Country, State } from 'country-state-city';
 import z from 'zod';
@@ -64,23 +64,23 @@ export class LocationService {
     };
   }
 
-  async findCitiesByProvince(
-    province: string,
-  ): Promise<z.infer<typeof findCitiesByProvinceLocationResponseSchema>> {
-    if (!provinces.includes(province)) {
+  async findCitiesByArgState(
+    argState: string,
+  ): Promise<z.infer<typeof findCitiesByArgStateResponseSchema>> {
+    if (!argStates.includes(argState)) {
       throw new NotFoundException([
-        translate('route.location.find-cities-by-province.not-found', {
-          province,
+        translate('route.location.find-cities-by-arg-state.not-found', {
+          argState,
         }),
       ]);
     }
 
-    const citiesByProvince = cities.filter(
-      (city) => city.provincia.nombre === province,
+    const citiesByArgState = cities.filter(
+      (city) => city.provincia.nombre === argState,
     );
 
     return {
-      cities: citiesByProvince
+      cities: citiesByArgState
         .map((city) => ({
           id: city.id,
           name: city.nombre,
@@ -93,8 +93,8 @@ export class LocationService {
     };
   }
 
-  async findProvinces(): Promise<z.infer<typeof findProvincesResponseSchema>> {
-    return { provinces };
+  async findArgStates(): Promise<z.infer<typeof findArgStatesResponseSchema>> {
+    return { states: argStates };
   }
 
   findAllCountries(): z.infer<typeof findAllCountriesResponseSchema> {

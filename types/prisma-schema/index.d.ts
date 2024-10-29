@@ -4924,7 +4924,7 @@ export namespace Prisma {
     latitude: number | null;
     longitude: number | null;
     country: string | null;
-    province: string | null;
+    state: string | null;
     city: string | null;
     created_at: Date | null;
     updated_at: Date | null;
@@ -4935,7 +4935,7 @@ export namespace Prisma {
     latitude: number | null;
     longitude: number | null;
     country: string | null;
-    province: string | null;
+    state: string | null;
     city: string | null;
     created_at: Date | null;
     updated_at: Date | null;
@@ -4946,7 +4946,7 @@ export namespace Prisma {
     latitude: number;
     longitude: number;
     country: number;
-    province: number;
+    state: number;
     city: number;
     created_at: number;
     updated_at: number;
@@ -4968,7 +4968,7 @@ export namespace Prisma {
     latitude?: true;
     longitude?: true;
     country?: true;
-    province?: true;
+    state?: true;
     city?: true;
     created_at?: true;
     updated_at?: true;
@@ -4979,7 +4979,7 @@ export namespace Prisma {
     latitude?: true;
     longitude?: true;
     country?: true;
-    province?: true;
+    state?: true;
     city?: true;
     created_at?: true;
     updated_at?: true;
@@ -4990,7 +4990,7 @@ export namespace Prisma {
     latitude?: true;
     longitude?: true;
     country?: true;
-    province?: true;
+    state?: true;
     city?: true;
     created_at?: true;
     updated_at?: true;
@@ -5093,7 +5093,7 @@ export namespace Prisma {
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at: Date;
     updated_at: Date;
@@ -5125,7 +5125,7 @@ export namespace Prisma {
       latitude?: boolean;
       longitude?: boolean;
       country?: boolean;
-      province?: boolean;
+      state?: boolean;
       city?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
@@ -5141,7 +5141,7 @@ export namespace Prisma {
     latitude?: boolean;
     longitude?: boolean;
     country?: boolean;
-    province?: boolean;
+    state?: boolean;
     city?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
@@ -5169,7 +5169,7 @@ export namespace Prisma {
         latitude: number;
         longitude: number;
         country: string;
-        province: string;
+        state: string;
         city: string;
         created_at: Date;
         updated_at: Date;
@@ -5698,7 +5698,7 @@ export namespace Prisma {
     readonly latitude: FieldRef<'Location', 'Float'>;
     readonly longitude: FieldRef<'Location', 'Float'>;
     readonly country: FieldRef<'Location', 'String'>;
-    readonly province: FieldRef<'Location', 'String'>;
+    readonly state: FieldRef<'Location', 'String'>;
     readonly city: FieldRef<'Location', 'String'>;
     readonly created_at: FieldRef<'Location', 'DateTime'>;
     readonly updated_at: FieldRef<'Location', 'DateTime'>;
@@ -15182,7 +15182,7 @@ export namespace Prisma {
     latitude: 'latitude';
     longitude: 'longitude';
     country: 'country';
-    province: 'province';
+    state: 'state';
     city: 'city';
     created_at: 'created_at';
     updated_at: 'updated_at';
@@ -15764,7 +15764,7 @@ export namespace Prisma {
     latitude?: FloatFilter<'Location'> | number;
     longitude?: FloatFilter<'Location'> | number;
     country?: StringFilter<'Location'> | string;
-    province?: StringFilter<'Location'> | string;
+    state?: StringFilter<'Location'> | string;
     city?: StringFilter<'Location'> | string;
     created_at?: DateTimeFilter<'Location'> | Date | string;
     updated_at?: DateTimeFilter<'Location'> | Date | string;
@@ -15777,7 +15777,7 @@ export namespace Prisma {
     latitude?: SortOrder;
     longitude?: SortOrder;
     country?: SortOrder;
-    province?: SortOrder;
+    state?: SortOrder;
     city?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -15794,7 +15794,7 @@ export namespace Prisma {
       latitude?: FloatFilter<'Location'> | number;
       longitude?: FloatFilter<'Location'> | number;
       country?: StringFilter<'Location'> | string;
-      province?: StringFilter<'Location'> | string;
+      state?: StringFilter<'Location'> | string;
       city?: StringFilter<'Location'> | string;
       created_at?: DateTimeFilter<'Location'> | Date | string;
       updated_at?: DateTimeFilter<'Location'> | Date | string;
@@ -15809,7 +15809,7 @@ export namespace Prisma {
     latitude?: SortOrder;
     longitude?: SortOrder;
     country?: SortOrder;
-    province?: SortOrder;
+    state?: SortOrder;
     city?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -15832,7 +15832,7 @@ export namespace Prisma {
     latitude?: FloatWithAggregatesFilter<'Location'> | number;
     longitude?: FloatWithAggregatesFilter<'Location'> | number;
     country?: StringWithAggregatesFilter<'Location'> | string;
-    province?: StringWithAggregatesFilter<'Location'> | string;
+    state?: StringWithAggregatesFilter<'Location'> | string;
     city?: StringWithAggregatesFilter<'Location'> | string;
     created_at?: DateTimeWithAggregatesFilter<'Location'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Location'> | Date | string;
@@ -16767,7 +16767,7 @@ export namespace Prisma {
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -16780,7 +16780,7 @@ export namespace Prisma {
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -16793,7 +16793,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -16806,7 +16806,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -16819,7 +16819,7 @@ export namespace Prisma {
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -16830,7 +16830,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -16841,7 +16841,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -17791,7 +17791,7 @@ export namespace Prisma {
     latitude?: SortOrder;
     longitude?: SortOrder;
     country?: SortOrder;
-    province?: SortOrder;
+    state?: SortOrder;
     city?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -17807,7 +17807,7 @@ export namespace Prisma {
     latitude?: SortOrder;
     longitude?: SortOrder;
     country?: SortOrder;
-    province?: SortOrder;
+    state?: SortOrder;
     city?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -17818,7 +17818,7 @@ export namespace Prisma {
     latitude?: SortOrder;
     longitude?: SortOrder;
     country?: SortOrder;
-    province?: SortOrder;
+    state?: SortOrder;
     city?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -20794,7 +20794,7 @@ export namespace Prisma {
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -20806,7 +20806,7 @@ export namespace Prisma {
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -20826,7 +20826,7 @@ export namespace Prisma {
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -20838,7 +20838,7 @@ export namespace Prisma {
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -20975,7 +20975,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -20987,7 +20987,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -21019,7 +21019,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -21031,7 +21031,7 @@ export namespace Prisma {
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;

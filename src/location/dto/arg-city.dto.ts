@@ -30,7 +30,7 @@ export type ArgCity = {
 export const argCitySchema = z.object({
   id: z.string(),
   name: z.string(),
-  province: z.object({
+  state: z.object({
     id: z.string(),
     name: z.string(),
   }),
