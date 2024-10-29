@@ -58,6 +58,10 @@ export class LocationController {
     type: FindCitiesByProvinceLocationResponseDto,
     description: translate('route.location.find-cities-by-province.success'),
   })
+  @ApiNotFoundResponse({
+    type: ErrorDto,
+    description: translate('route.location.find-cities-by-province.not-found'),
+  })
   async findArgCityByProvince(
     @Param('province') province: string,
   ): Promise<z.infer<typeof findCitiesByProvinceLocationResponseSchema>> {

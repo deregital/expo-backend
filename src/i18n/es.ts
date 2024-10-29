@@ -222,6 +222,7 @@ export default {
       },
       'find-cities-by-province': {
         success: 'Localidades de Argentina obtenidas',
+        'not-found': `Provincia "\{\{province\}\}" no encontrada`,
       },
       provinces: {
         success: 'Provincias de Argentina obtenidas',

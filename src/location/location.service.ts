@@ -67,6 +67,14 @@ export class LocationService {
   async findCitiesByProvince(
     province: string,
   ): Promise<z.infer<typeof findCitiesByProvinceLocationResponseSchema>> {
+    if (!provinces.includes(province)) {
+      throw new NotFoundException([
+        translate('route.location.find-cities-by-province.not-found', {
+          province,
+        }),
+      ]);
+    }
+
     const citiesByProvince = cities.filter(
       (city) => city.provincia.nombre === province,
     );
