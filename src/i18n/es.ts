@@ -112,6 +112,19 @@ export default {
         invalid: 'La URL de la imagen de perfil no es válida',
       },
     },
+    'canned-response': {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      name: {
+        required: 'El nombre es requerido',
+        min: 'El nombre debe tener al menos 1 caracter',
+      },
+      content: {
+        required: 'El contenido es requerido',
+        min: 'El contenido debe tener al menos 1 caracter',
+      },
+    },
   },
   route: {
     auth: {
@@ -203,6 +216,24 @@ export default {
         success: 'Cambio de estado en la resolución del comentario',
         'not-found': 'Comentario no encontrado',
         conflict: 'El comentario no es resoluble',
+      },
+    },
+    'canned-response': {
+      create: {
+        success: 'Respuesta enlatada creada con éxito',
+        conflict: 'Error en la creacion de la respuesta',
+      },
+      'get-all': {
+        success: 'Respuestas enlatadas obtenidas con éxito',
+        'not-found': 'No se encontraron respuestas enlatadas',
+      },
+      update: {
+        success: 'Respuesta enlatada actualizada con éxito',
+        'not-found': 'Respuesta enlatada no encontrada',
+      },
+      delete: {
+        success: 'Respuesta enlatada eliminada con éxito',
+        'not-found': 'Respuesta enlatada no encontrada',
       },
     },
   },
