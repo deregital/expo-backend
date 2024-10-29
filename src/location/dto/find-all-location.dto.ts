@@ -2,8 +2,11 @@ import { locationSchema } from '@/location/dto/location.dto';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import z from 'zod';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-function locationPickedSchema() {
+function locationPickedSchema(): z.ZodObject<{
+  city: z.ZodString;
+  longitude: z.ZodNumber;
+  latitude: z.ZodNumber;
+}> {
   return locationSchema.pick({
     city: true,
     longitude: true,
