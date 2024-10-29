@@ -2,6 +2,7 @@ import { AccountModule } from '@/account/account.module';
 import { AppController } from '@/app.controller';
 import { AppService } from '@/app.service';
 import { AuthModule } from '@/auth/auth.module';
+import { CannedResponseModule } from '@/canned-response/canned-response.module';
 import { CommentModule } from '@/comment/comment.module';
 import { ZodValidationPipe } from '@/filters/zod.pipe';
 import { PrismaService } from '@/prisma/prisma.service';
@@ -21,6 +22,7 @@ import { LocationModule } from './location/location.module';
     TagGroupModule,
     CommentModule,
     LocationModule,
+    CannedResponseModule,
   ],
   providers: [
     {

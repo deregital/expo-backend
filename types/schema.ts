@@ -372,6 +372,70 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/canned-response/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['CannedResponseController_createCannedResponse'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/canned-response/all': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['CannedResponseController_getAllCannedResponses'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/canned-response/update/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['CannedResponseController_updateCannedResponse'];
+    trace?: never;
+  };
+  '/canned-response/delete/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete: operations['CannedResponseController_deleteCannedResponse'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -957,6 +1021,56 @@ export interface components {
         longitude?: string | null;
       }[];
     };
+    CreateCannedResponseDto: {
+      name: string;
+      content: string;
+    };
+    CreateCannedResponseResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      content: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    GetAllCannedResponseResponseDto: {
+      cannedResponses: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        content: string;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
+    };
+    UpdateCannedResponseDto: {
+      name: string;
+      content: string;
+    };
+    UpdateCannedResponseResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      content: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    DeleteCannedResponseResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      content: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
   };
   responses: never;
   parameters: never;
@@ -1525,7 +1639,9 @@ export interface operations {
     parameters: {
       query?: never;
       header?: never;
-      path?: never;
+      path: {
+        id: string;
+      };
       cookie?: never;
     };
     requestBody?: never;
@@ -1554,7 +1670,9 @@ export interface operations {
     parameters: {
       query?: never;
       header?: never;
-      path?: never;
+      path: {
+        id: string;
+      };
       cookie?: never;
     };
     requestBody?: never;
@@ -1700,6 +1818,125 @@ export interface operations {
         };
       };
       /** @description País no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  CannedResponseController_createCannedResponse: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateCannedResponseDto'];
+      };
+    };
+    responses: {
+      /** @description Respuesta enlatada creada con éxito */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateCannedResponseResponseDto'];
+        };
+      };
+      /** @description Error en la creacion de la respuesta */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  CannedResponseController_getAllCannedResponses: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Respuestas enlatadas obtenidas con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetAllCannedResponseResponseDto'];
+        };
+      };
+    };
+  };
+  CannedResponseController_updateCannedResponse: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateCannedResponseDto'];
+      };
+    };
+    responses: {
+      /** @description Respuesta enlatada actualizada con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateCannedResponseResponseDto'];
+        };
+      };
+      /** @description Respuesta enlatada no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  CannedResponseController_deleteCannedResponse: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Respuesta enlatada eliminada con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DeleteCannedResponseResponseDto'];
+        };
+      };
+      /** @description Respuesta enlatada no encontrada */
       404: {
         headers: {
           [name: string]: unknown;

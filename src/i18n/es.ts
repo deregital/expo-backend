@@ -123,6 +123,19 @@ export default {
         minmax: 'La longitud debe estar entre -180 y 180',
       },
     },
+    'canned-response': {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      name: {
+        required: 'El nombre es requerido',
+        min: 'El nombre debe tener al menos 1 caracter',
+      },
+      content: {
+        required: 'El contenido es requerido',
+        min: 'El contenido debe tener al menos 1 caracter',
+      },
+    },
   },
   route: {
     auth: {
@@ -234,6 +247,24 @@ export default {
         success: 'Estados obtenidos',
         'not-found-error': `No se encontraron estados para el país \{\{countryCode\}\}`,
         'not-found': 'País no encontrado',
+      },
+    },
+    'canned-response': {
+      create: {
+        success: 'Respuesta enlatada creada con éxito',
+        conflict: 'Error en la creacion de la respuesta',
+      },
+      'get-all': {
+        success: 'Respuestas enlatadas obtenidas con éxito',
+        'not-found': 'No se encontraron respuestas enlatadas',
+      },
+      update: {
+        success: 'Respuesta enlatada actualizada con éxito',
+        'not-found': 'Respuesta enlatada no encontrada',
+      },
+      delete: {
+        success: 'Respuesta enlatada eliminada con éxito',
+        'not-found': 'Respuesta enlatada no encontrada',
       },
     },
   },
