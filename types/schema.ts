@@ -308,14 +308,14 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/location/provinces': {
+  '/location/arg-states': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get: operations['LocationController_findProvinces'];
+    get: operations['LocationController_findArgStates'];
     put?: never;
     post?: never;
     delete?: never;
@@ -324,14 +324,14 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/location/find-cities-by-province/{province}': {
+  '/location/find-cities-by-arg-state/{argState}': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get: operations['LocationController_findArgCityByProvince'];
+    get: operations['LocationController_findCitiesByArgState'];
     put?: never;
     post?: never;
     delete?: never;
@@ -928,10 +928,10 @@ export interface components {
         };
       }[];
     };
-    FindProvincesResponseDto: {
-      provinces: string[];
+    FindArgStatesResponseDto: {
+      states: string[];
     };
-    FindCitiesByProvinceLocationResponseDto: {
+    FindCitiesByArgStateResponseDto: {
       cities: {
         id: string;
         name: string;
@@ -1608,7 +1608,7 @@ export interface operations {
       };
     };
   };
-  LocationController_findProvinces: {
+  LocationController_findArgStates: {
     parameters: {
       query?: never;
       header?: never;
@@ -1623,17 +1623,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['FindProvincesResponseDto'];
+          'application/json': components['schemas']['FindArgStatesResponseDto'];
         };
       };
     };
   };
-  LocationController_findArgCityByProvince: {
+  LocationController_findCitiesByArgState: {
     parameters: {
       query?: never;
       header?: never;
       path: {
-        province: string;
+        argState: string;
       };
       cookie?: never;
     };
@@ -1645,7 +1645,16 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['FindCitiesByProvinceLocationResponseDto'];
+          'application/json': components['schemas']['FindCitiesByArgStateResponseDto'];
+        };
+      };
+      /** @description Provincia "[missing "{{argState}}" value]" no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
         };
       };
     };

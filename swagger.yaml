@@ -544,12 +544,6 @@ components:
             updated_at:
               type: "string"
               format: "date-time"
-          required:
-            - "id"
-            - "username"
-            - "role"
-            - "created_at"
-            - "updated_at"
         backendTokens:
           type: "object"
           properties:
@@ -559,10 +553,6 @@ components:
               type: "string"
             expiresIn:
               type: "number"
-          required:
-            - "accessToken"
-            - "refreshToken"
-            - "expiresIn"
       required:
         - "user"
         - "backendTokens"
@@ -812,13 +802,6 @@ components:
             updated_at:
               type: "string"
               format: "date-time"
-          required:
-            - "id"
-            - "name"
-            - "color"
-            - "isExclusive"
-            - "created_at"
-            - "updated_at"
       required:
         - "id"
         - "name"
@@ -936,43 +919,55 @@ components:
                 type: "string"
                 minLength: 1
               secondaryPhoneNumber:
-                type: "null"
+                type: "string"
+                nullable: true
               fullName:
                 type: "string"
                 minLength: 1
               firstName:
-                type: "null"
+                type: "string"
                 minLength: 1
+                nullable: true
               gender:
-                type: "null"
+                type: "string"
+                nullable: true
               birthDate:
-                type: "null"
+                type: "string"
                 format: "date-time"
+                nullable: true
               profilePictureUrl:
-                type: "null"
+                type: "string"
                 format: "uri"
+                nullable: true
               instagram:
-                type: "null"
+                type: "string"
+                nullable: true
               mail:
-                type: "null"
+                type: "string"
                 format: "email"
+                nullable: true
               dni:
-                type: "null"
+                type: "string"
+                nullable: true
               alternativeNames:
-                type: "null"
+                type: "array"
                 items:
                   type: "string"
+                nullable: true
               birthLocationId:
-                type: "null"
+                type: "string"
                 format: "uuid"
+                nullable: true
               residenceLocationId:
-                type: "null"
+                type: "string"
                 format: "uuid"
+                nullable: true
               isInTrash:
                 type: "boolean"
               movedToTrashDate:
-                type: "null"
+                type: "string"
                 format: "date-time"
+                nullable: true
               created_at:
                 type: "string"
                 format: "date-time"
@@ -1034,43 +1029,55 @@ components:
                 type: "string"
                 minLength: 1
               secondaryPhoneNumber:
-                type: "null"
+                type: "string"
+                nullable: true
               fullName:
                 type: "string"
                 minLength: 1
               firstName:
-                type: "null"
+                type: "string"
                 minLength: 1
+                nullable: true
               gender:
-                type: "null"
+                type: "string"
+                nullable: true
               birthDate:
-                type: "null"
+                type: "string"
                 format: "date-time"
+                nullable: true
               profilePictureUrl:
-                type: "null"
+                type: "string"
                 format: "uri"
+                nullable: true
               instagram:
-                type: "null"
+                type: "string"
+                nullable: true
               mail:
-                type: "null"
+                type: "string"
                 format: "email"
+                nullable: true
               dni:
-                type: "null"
+                type: "string"
+                nullable: true
               alternativeNames:
-                type: "null"
+                type: "array"
                 items:
                   type: "string"
+                nullable: true
               birthLocationId:
-                type: "null"
+                type: "string"
                 format: "uuid"
+                nullable: true
               residenceLocationId:
-                type: "null"
+                type: "string"
                 format: "uuid"
+                nullable: true
               isInTrash:
                 type: "boolean"
               movedToTrashDate:
-                type: "null"
+                type: "string"
                 format: "date-time"
+                nullable: true
               created_at:
                 type: "string"
                 format: "date-time"
@@ -1141,6 +1148,8 @@ components:
         - "id"
         - "username"
         - "role"
+        - "isGlobalFilterActive"
+        - "fcmToken"
     UpdateGlobalFilterDto:
       type: "object"
       properties:
@@ -1153,6 +1162,7 @@ components:
             type: "string"
             format: "uuid"
       required:
+        - "active"
         - "tagsIds"
     UpdateGlobalFilterResponseDto:
       type: "object"
@@ -1223,6 +1233,8 @@ components:
         - "username"
         - "password"
         - "role"
+        - "isGlobalFilterActive"
+        - "fcmToken"
         - "created_at"
         - "updated_at"
         - "globalFilter"
@@ -1272,6 +1284,7 @@ components:
               - "type"
               - "group"
       required:
+        - "isGlobalFilterActive"
         - "globalFilter"
     GetMeResponseDto:
       type: "object"
@@ -1377,6 +1390,8 @@ components:
         - "id"
         - "username"
         - "role"
+        - "isGlobalFilterActive"
+        - "fcmToken"
         - "created_at"
         - "updated_at"
         - "globalFilter"
@@ -1723,6 +1738,7 @@ components:
       required:
         - "content"
         - "profileId"
+        - "isSolvable"
     CreateCommentResponseDto:
       type: "object"
       properties:
@@ -1745,8 +1761,9 @@ components:
           default: false
           type: "boolean"
         solvedAt:
-          type: "null"
+          type: "string"
           format: "date-time"
+          nullable: true
         solvedBy:
           type: "string"
           format: "uuid"
@@ -1761,7 +1778,10 @@ components:
         - "content"
         - "createdBy"
         - "profileId"
+        - "isSolvable"
+        - "isSolved"
         - "solvedAt"
+        - "solvedBy"
         - "created_at"
         - "updated_at"
     GetByProfileCommentResponseDto:
@@ -1791,8 +1811,9 @@ components:
                 default: false
                 type: "boolean"
               solvedAt:
-                type: "null"
+                type: "string"
                 format: "date-time"
+                nullable: true
               solvedBy:
                 type: "string"
                 format: "uuid"
@@ -1842,8 +1863,9 @@ components:
           default: false
           type: "boolean"
         solvedAt:
-          type: "null"
+          type: "string"
           format: "date-time"
+          nullable: true
         solvedBy:
           type: "string"
           format: "uuid"
@@ -1858,7 +1880,10 @@ components:
         - "content"
         - "createdBy"
         - "profileId"
+        - "isSolvable"
+        - "isSolved"
         - "solvedAt"
+        - "solvedBy"
         - "created_at"
         - "updated_at"
     FindAllLocationResponseDto:
@@ -1992,9 +2017,11 @@ components:
               countryName:
                 type: "string"
               latitude:
-                type: "null"
+                type: "string"
+                nullable: true
               longitude:
-                type: "null"
+                type: "string"
+                nullable: true
             required:
               - "name"
               - "isoCode"
