@@ -1,7 +1,3 @@
-import {
-  Account,
-  AccountWithoutPassword,
-} from '@/auth/decorators/account.decorator';
 import { Roles } from '@/auth/decorators/rol.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
@@ -63,7 +59,6 @@ export class CannedResponseController {
   @Post('/create')
   async createCannedResponse(
     @Body() createCannedResponseDto: CreateCannedResponseDto,
-    @Account() account: AccountWithoutPassword,
   ): Promise<z.infer<typeof createCannedResponseResponseSchema>> {
     return await this.cannedResponseService.createCannedResponse(
       createCannedResponseDto,

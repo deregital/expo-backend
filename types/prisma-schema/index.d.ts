@@ -3495,18 +3495,10 @@ export namespace Prisma {
 
   export type ProfileAvgAggregateOutputType = {
     shortId: number | null;
-    birthLongitude: number | null;
-    birthLatitude: number | null;
-    residenceLongitude: number | null;
-    residenceLatitude: number | null;
   };
 
   export type ProfileSumAggregateOutputType = {
     shortId: number | null;
-    birthLongitude: number | null;
-    birthLatitude: number | null;
-    residenceLongitude: number | null;
-    residenceLatitude: number | null;
   };
 
   export type ProfileMinAggregateOutputType = {
@@ -3522,10 +3514,8 @@ export namespace Prisma {
     instagram: string | null;
     mail: string | null;
     dni: string | null;
-    birthLongitude: number | null;
-    birthLatitude: number | null;
-    residenceLongitude: number | null;
-    residenceLatitude: number | null;
+    birthLocationId: string | null;
+    residenceLocationId: string | null;
     isInTrash: boolean | null;
     movedToTrashDate: Date | null;
     created_at: Date | null;
@@ -3545,10 +3535,8 @@ export namespace Prisma {
     instagram: string | null;
     mail: string | null;
     dni: string | null;
-    birthLongitude: number | null;
-    birthLatitude: number | null;
-    residenceLongitude: number | null;
-    residenceLatitude: number | null;
+    birthLocationId: string | null;
+    residenceLocationId: string | null;
     isInTrash: boolean | null;
     movedToTrashDate: Date | null;
     created_at: Date | null;
@@ -3569,10 +3557,8 @@ export namespace Prisma {
     mail: number;
     dni: number;
     alternativeNames: number;
-    birthLongitude: number;
-    birthLatitude: number;
-    residenceLongitude: number;
-    residenceLatitude: number;
+    birthLocationId: number;
+    residenceLocationId: number;
     isInTrash: number;
     movedToTrashDate: number;
     created_at: number;
@@ -3582,18 +3568,10 @@ export namespace Prisma {
 
   export type ProfileAvgAggregateInputType = {
     shortId?: true;
-    birthLongitude?: true;
-    birthLatitude?: true;
-    residenceLongitude?: true;
-    residenceLatitude?: true;
   };
 
   export type ProfileSumAggregateInputType = {
     shortId?: true;
-    birthLongitude?: true;
-    birthLatitude?: true;
-    residenceLongitude?: true;
-    residenceLatitude?: true;
   };
 
   export type ProfileMinAggregateInputType = {
@@ -3609,10 +3587,8 @@ export namespace Prisma {
     instagram?: true;
     mail?: true;
     dni?: true;
-    birthLongitude?: true;
-    birthLatitude?: true;
-    residenceLongitude?: true;
-    residenceLatitude?: true;
+    birthLocationId?: true;
+    residenceLocationId?: true;
     isInTrash?: true;
     movedToTrashDate?: true;
     created_at?: true;
@@ -3632,10 +3608,8 @@ export namespace Prisma {
     instagram?: true;
     mail?: true;
     dni?: true;
-    birthLongitude?: true;
-    birthLatitude?: true;
-    residenceLongitude?: true;
-    residenceLatitude?: true;
+    birthLocationId?: true;
+    residenceLocationId?: true;
     isInTrash?: true;
     movedToTrashDate?: true;
     created_at?: true;
@@ -3656,10 +3630,8 @@ export namespace Prisma {
     mail?: true;
     dni?: true;
     alternativeNames?: true;
-    birthLongitude?: true;
-    birthLatitude?: true;
-    residenceLongitude?: true;
-    residenceLatitude?: true;
+    birthLocationId?: true;
+    residenceLocationId?: true;
     isInTrash?: true;
     movedToTrashDate?: true;
     created_at?: true;
@@ -3772,10 +3744,8 @@ export namespace Prisma {
     mail: string | null;
     dni: string | null;
     alternativeNames: string[];
-    birthLongitude: number | null;
-    birthLatitude: number | null;
-    residenceLongitude: number | null;
-    residenceLatitude: number | null;
+    birthLocationId: string | null;
+    residenceLocationId: string | null;
     isInTrash: boolean;
     movedToTrashDate: Date | null;
     created_at: Date;
@@ -3817,10 +3787,8 @@ export namespace Prisma {
       mail?: boolean;
       dni?: boolean;
       alternativeNames?: boolean;
-      birthLongitude?: boolean;
-      birthLatitude?: boolean;
-      residenceLongitude?: boolean;
-      residenceLatitude?: boolean;
+      birthLocationId?: boolean;
+      residenceLocationId?: boolean;
       isInTrash?: boolean;
       movedToTrashDate?: boolean;
       created_at?: boolean;
@@ -3849,10 +3817,8 @@ export namespace Prisma {
     mail?: boolean;
     dni?: boolean;
     alternativeNames?: boolean;
-    birthLongitude?: boolean;
-    birthLatitude?: boolean;
-    residenceLongitude?: boolean;
-    residenceLatitude?: boolean;
+    birthLocationId?: boolean;
+    residenceLocationId?: boolean;
     isInTrash?: boolean;
     movedToTrashDate?: boolean;
     created_at?: boolean;
@@ -3896,10 +3862,8 @@ export namespace Prisma {
         mail: string | null;
         dni: string | null;
         alternativeNames: string[];
-        birthLongitude: number | null;
-        birthLatitude: number | null;
-        residenceLongitude: number | null;
-        residenceLatitude: number | null;
+        birthLocationId: string | null;
+        residenceLocationId: string | null;
         isInTrash: boolean;
         movedToTrashDate: Date | null;
         created_at: Date;
@@ -4459,10 +4423,8 @@ export namespace Prisma {
     readonly mail: FieldRef<'Profile', 'String'>;
     readonly dni: FieldRef<'Profile', 'String'>;
     readonly alternativeNames: FieldRef<'Profile', 'String[]'>;
-    readonly birthLongitude: FieldRef<'Profile', 'Float'>;
-    readonly birthLatitude: FieldRef<'Profile', 'Float'>;
-    readonly residenceLongitude: FieldRef<'Profile', 'Float'>;
-    readonly residenceLatitude: FieldRef<'Profile', 'Float'>;
+    readonly birthLocationId: FieldRef<'Profile', 'String'>;
+    readonly residenceLocationId: FieldRef<'Profile', 'String'>;
     readonly isInTrash: FieldRef<'Profile', 'Boolean'>;
     readonly movedToTrashDate: FieldRef<'Profile', 'DateTime'>;
     readonly created_at: FieldRef<'Profile', 'DateTime'>;
@@ -4958,30 +4920,33 @@ export namespace Prisma {
   };
 
   export type LocationMinAggregateOutputType = {
+    id: string | null;
     latitude: number | null;
     longitude: number | null;
     country: string | null;
-    province: string | null;
+    state: string | null;
     city: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
 
   export type LocationMaxAggregateOutputType = {
+    id: string | null;
     latitude: number | null;
     longitude: number | null;
     country: string | null;
-    province: string | null;
+    state: string | null;
     city: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
 
   export type LocationCountAggregateOutputType = {
+    id: number;
     latitude: number;
     longitude: number;
     country: number;
-    province: number;
+    state: number;
     city: number;
     created_at: number;
     updated_at: number;
@@ -4999,30 +4964,33 @@ export namespace Prisma {
   };
 
   export type LocationMinAggregateInputType = {
+    id?: true;
     latitude?: true;
     longitude?: true;
     country?: true;
-    province?: true;
+    state?: true;
     city?: true;
     created_at?: true;
     updated_at?: true;
   };
 
   export type LocationMaxAggregateInputType = {
+    id?: true;
     latitude?: true;
     longitude?: true;
     country?: true;
-    province?: true;
+    state?: true;
     city?: true;
     created_at?: true;
     updated_at?: true;
   };
 
   export type LocationCountAggregateInputType = {
+    id?: true;
     latitude?: true;
     longitude?: true;
     country?: true;
-    province?: true;
+    state?: true;
     city?: true;
     created_at?: true;
     updated_at?: true;
@@ -5121,10 +5089,11 @@ export namespace Prisma {
   };
 
   export type LocationGroupByOutputType = {
+    id: string;
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at: Date;
     updated_at: Date;
@@ -5152,10 +5121,11 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = $Extensions.GetSelect<
     {
+      id?: boolean;
       latitude?: boolean;
       longitude?: boolean;
       country?: boolean;
-      province?: boolean;
+      state?: boolean;
       city?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
@@ -5167,10 +5137,11 @@ export namespace Prisma {
   >;
 
   export type LocationSelectScalar = {
+    id?: boolean;
     latitude?: boolean;
     longitude?: boolean;
     country?: boolean;
-    province?: boolean;
+    state?: boolean;
     city?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
@@ -5194,10 +5165,11 @@ export namespace Prisma {
     };
     scalars: $Extensions.GetPayloadResult<
       {
+        id: string;
         latitude: number;
         longitude: number;
         country: string;
-        province: string;
+        state: string;
         city: string;
         created_at: Date;
         updated_at: Date;
@@ -5334,8 +5306,8 @@ export namespace Prisma {
      * // Get first 10 Locations
      * const locations = await prisma.location.findMany({ take: 10 })
      *
-     * // Only select the `latitude`
-     * const locationWithLatitudeOnly = await prisma.location.findMany({ select: { latitude: true } })
+     * // Only select the `id`
+     * const locationWithIdOnly = await prisma.location.findMany({ select: { id: true } })
      *
      **/
     findMany<T extends LocationFindManyArgs<ExtArgs>>(
@@ -5391,9 +5363,9 @@ export namespace Prisma {
      *   ]
      * })
      *
-     * // Create many Locations and only return the `latitude`
-     * const locationWithLatitudeOnly = await prisma.location.createManyAndReturn({
-     *   select: { latitude: true },
+     * // Create many Locations and only return the `id`
+     * const locationWithIdOnly = await prisma.location.createManyAndReturn({
+     *   select: { id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -5722,10 +5694,11 @@ export namespace Prisma {
    * Fields of the Location model
    */
   interface LocationFieldRefs {
+    readonly id: FieldRef<'Location', 'String'>;
     readonly latitude: FieldRef<'Location', 'Float'>;
     readonly longitude: FieldRef<'Location', 'Float'>;
     readonly country: FieldRef<'Location', 'String'>;
-    readonly province: FieldRef<'Location', 'String'>;
+    readonly state: FieldRef<'Location', 'String'>;
     readonly city: FieldRef<'Location', 'String'>;
     readonly created_at: FieldRef<'Location', 'DateTime'>;
     readonly updated_at: FieldRef<'Location', 'DateTime'>;
@@ -15193,10 +15166,8 @@ export namespace Prisma {
     mail: 'mail';
     dni: 'dni';
     alternativeNames: 'alternativeNames';
-    birthLongitude: 'birthLongitude';
-    birthLatitude: 'birthLatitude';
-    residenceLongitude: 'residenceLongitude';
-    residenceLatitude: 'residenceLatitude';
+    birthLocationId: 'birthLocationId';
+    residenceLocationId: 'residenceLocationId';
     isInTrash: 'isInTrash';
     movedToTrashDate: 'movedToTrashDate';
     created_at: 'created_at';
@@ -15207,10 +15178,11 @@ export namespace Prisma {
     (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum];
 
   export const LocationScalarFieldEnum: {
+    id: 'id';
     latitude: 'latitude';
     longitude: 'longitude';
     country: 'country';
-    province: 'province';
+    state: 'state';
     city: 'city';
     created_at: 'created_at';
     updated_at: 'updated_at';
@@ -15619,10 +15591,8 @@ export namespace Prisma {
     mail?: StringNullableFilter<'Profile'> | string | null;
     dni?: StringNullableFilter<'Profile'> | string | null;
     alternativeNames?: StringNullableListFilter<'Profile'>;
-    birthLongitude?: FloatNullableFilter<'Profile'> | number | null;
-    birthLatitude?: FloatNullableFilter<'Profile'> | number | null;
-    residenceLongitude?: FloatNullableFilter<'Profile'> | number | null;
-    residenceLatitude?: FloatNullableFilter<'Profile'> | number | null;
+    birthLocationId?: StringNullableFilter<'Profile'> | string | null;
+    residenceLocationId?: StringNullableFilter<'Profile'> | string | null;
     isInTrash?: BoolFilter<'Profile'> | boolean;
     movedToTrashDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
     created_at?: DateTimeFilter<'Profile'> | Date | string;
@@ -15654,10 +15624,8 @@ export namespace Prisma {
     mail?: SortOrderInput | SortOrder;
     dni?: SortOrderInput | SortOrder;
     alternativeNames?: SortOrder;
-    birthLongitude?: SortOrderInput | SortOrder;
-    birthLatitude?: SortOrderInput | SortOrder;
-    residenceLongitude?: SortOrderInput | SortOrder;
-    residenceLatitude?: SortOrderInput | SortOrder;
+    birthLocationId?: SortOrderInput | SortOrder;
+    residenceLocationId?: SortOrderInput | SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
@@ -15687,10 +15655,8 @@ export namespace Prisma {
       mail?: StringNullableFilter<'Profile'> | string | null;
       dni?: StringNullableFilter<'Profile'> | string | null;
       alternativeNames?: StringNullableListFilter<'Profile'>;
-      birthLongitude?: FloatNullableFilter<'Profile'> | number | null;
-      birthLatitude?: FloatNullableFilter<'Profile'> | number | null;
-      residenceLongitude?: FloatNullableFilter<'Profile'> | number | null;
-      residenceLatitude?: FloatNullableFilter<'Profile'> | number | null;
+      birthLocationId?: StringNullableFilter<'Profile'> | string | null;
+      residenceLocationId?: StringNullableFilter<'Profile'> | string | null;
       isInTrash?: BoolFilter<'Profile'> | boolean;
       movedToTrashDate?:
         | DateTimeNullableFilter<'Profile'>
@@ -15728,10 +15694,8 @@ export namespace Prisma {
     mail?: SortOrderInput | SortOrder;
     dni?: SortOrderInput | SortOrder;
     alternativeNames?: SortOrder;
-    birthLongitude?: SortOrderInput | SortOrder;
-    birthLatitude?: SortOrderInput | SortOrder;
-    residenceLongitude?: SortOrderInput | SortOrder;
-    residenceLatitude?: SortOrderInput | SortOrder;
+    birthLocationId?: SortOrderInput | SortOrder;
+    residenceLocationId?: SortOrderInput | SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
@@ -15774,21 +15738,13 @@ export namespace Prisma {
     mail?: StringNullableWithAggregatesFilter<'Profile'> | string | null;
     dni?: StringNullableWithAggregatesFilter<'Profile'> | string | null;
     alternativeNames?: StringNullableListFilter<'Profile'>;
-    birthLongitude?:
-      | FloatNullableWithAggregatesFilter<'Profile'>
-      | number
+    birthLocationId?:
+      | StringNullableWithAggregatesFilter<'Profile'>
+      | string
       | null;
-    birthLatitude?:
-      | FloatNullableWithAggregatesFilter<'Profile'>
-      | number
-      | null;
-    residenceLongitude?:
-      | FloatNullableWithAggregatesFilter<'Profile'>
-      | number
-      | null;
-    residenceLatitude?:
-      | FloatNullableWithAggregatesFilter<'Profile'>
-      | number
+    residenceLocationId?:
+      | StringNullableWithAggregatesFilter<'Profile'>
+      | string
       | null;
     isInTrash?: BoolWithAggregatesFilter<'Profile'> | boolean;
     movedToTrashDate?:
@@ -15804,10 +15760,11 @@ export namespace Prisma {
     AND?: LocationWhereInput | LocationWhereInput[];
     OR?: LocationWhereInput[];
     NOT?: LocationWhereInput | LocationWhereInput[];
+    id?: StringFilter<'Location'> | string;
     latitude?: FloatFilter<'Location'> | number;
     longitude?: FloatFilter<'Location'> | number;
     country?: StringFilter<'Location'> | string;
-    province?: StringFilter<'Location'> | string;
+    state?: StringFilter<'Location'> | string;
     city?: StringFilter<'Location'> | string;
     created_at?: DateTimeFilter<'Location'> | Date | string;
     updated_at?: DateTimeFilter<'Location'> | Date | string;
@@ -15816,10 +15773,11 @@ export namespace Prisma {
   };
 
   export type LocationOrderByWithRelationInput = {
+    id?: SortOrder;
     latitude?: SortOrder;
     longitude?: SortOrder;
     country?: SortOrder;
-    province?: SortOrder;
+    state?: SortOrder;
     city?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -15829,28 +15787,29 @@ export namespace Prisma {
 
   export type LocationWhereUniqueInput = Prisma.AtLeast<
     {
-      latitude_longitude?: LocationLatitudeLongitudeCompoundUniqueInput;
+      id?: string;
       AND?: LocationWhereInput | LocationWhereInput[];
       OR?: LocationWhereInput[];
       NOT?: LocationWhereInput | LocationWhereInput[];
       latitude?: FloatFilter<'Location'> | number;
       longitude?: FloatFilter<'Location'> | number;
       country?: StringFilter<'Location'> | string;
-      province?: StringFilter<'Location'> | string;
+      state?: StringFilter<'Location'> | string;
       city?: StringFilter<'Location'> | string;
       created_at?: DateTimeFilter<'Location'> | Date | string;
       updated_at?: DateTimeFilter<'Location'> | Date | string;
       birthProfiles?: ProfileListRelationFilter;
       residenceProfiles?: ProfileListRelationFilter;
     },
-    'latitude_longitude'
+    'id'
   >;
 
   export type LocationOrderByWithAggregationInput = {
+    id?: SortOrder;
     latitude?: SortOrder;
     longitude?: SortOrder;
     country?: SortOrder;
-    province?: SortOrder;
+    state?: SortOrder;
     city?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -15869,10 +15828,11 @@ export namespace Prisma {
     NOT?:
       | LocationScalarWhereWithAggregatesInput
       | LocationScalarWhereWithAggregatesInput[];
+    id?: StringWithAggregatesFilter<'Location'> | string;
     latitude?: FloatWithAggregatesFilter<'Location'> | number;
     longitude?: FloatWithAggregatesFilter<'Location'> | number;
     country?: StringWithAggregatesFilter<'Location'> | string;
-    province?: StringWithAggregatesFilter<'Location'> | string;
+    state?: StringWithAggregatesFilter<'Location'> | string;
     city?: StringWithAggregatesFilter<'Location'> | string;
     created_at?: DateTimeWithAggregatesFilter<'Location'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Location'> | Date | string;
@@ -16615,10 +16575,8 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
-    birthLongitude?: number | null;
-    birthLatitude?: number | null;
-    residenceLongitude?: number | null;
-    residenceLatitude?: number | null;
+    birthLocationId?: string | null;
+    residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -16691,13 +16649,11 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
-    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    residenceLongitude?:
-      | NullableFloatFieldUpdateOperationsInput
-      | number
+    birthLocationId?: NullableStringFieldUpdateOperationsInput | string | null;
+    residenceLocationId?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
       | null;
-    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -16725,10 +16681,8 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
-    birthLongitude?: number | null;
-    birthLatitude?: number | null;
-    residenceLongitude?: number | null;
-    residenceLatitude?: number | null;
+    birthLocationId?: string | null;
+    residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -16793,13 +16747,11 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
-    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    residenceLongitude?:
-      | NullableFloatFieldUpdateOperationsInput
-      | number
+    birthLocationId?: NullableStringFieldUpdateOperationsInput | string | null;
+    residenceLocationId?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
       | null;
-    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -16811,10 +16763,11 @@ export namespace Prisma {
   };
 
   export type LocationCreateInput = {
+    id?: string;
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -16823,10 +16776,11 @@ export namespace Prisma {
   };
 
   export type LocationUncheckedCreateInput = {
+    id?: string;
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -16835,10 +16789,11 @@ export namespace Prisma {
   };
 
   export type LocationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -16847,10 +16802,11 @@ export namespace Prisma {
   };
 
   export type LocationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -16859,30 +16815,33 @@ export namespace Prisma {
   };
 
   export type LocationCreateManyInput = {
+    id?: string;
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
 
   export type LocationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type LocationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string;
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -17659,17 +17618,6 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null;
   };
 
-  export type FloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    lt?: number | FloatFieldRefInput<$PrismaModel>;
-    lte?: number | FloatFieldRefInput<$PrismaModel>;
-    gt?: number | FloatFieldRefInput<$PrismaModel>;
-    gte?: number | FloatFieldRefInput<$PrismaModel>;
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
-  };
-
   export type MessageListRelationFilter = {
     every?: MessageWhereInput;
     some?: MessageWhereInput;
@@ -17704,10 +17652,8 @@ export namespace Prisma {
     mail?: SortOrder;
     dni?: SortOrder;
     alternativeNames?: SortOrder;
-    birthLongitude?: SortOrder;
-    birthLatitude?: SortOrder;
-    residenceLongitude?: SortOrder;
-    residenceLatitude?: SortOrder;
+    birthLocationId?: SortOrder;
+    residenceLocationId?: SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrder;
     created_at?: SortOrder;
@@ -17716,10 +17662,6 @@ export namespace Prisma {
 
   export type ProfileAvgOrderByAggregateInput = {
     shortId?: SortOrder;
-    birthLongitude?: SortOrder;
-    birthLatitude?: SortOrder;
-    residenceLongitude?: SortOrder;
-    residenceLatitude?: SortOrder;
   };
 
   export type ProfileMaxOrderByAggregateInput = {
@@ -17735,10 +17677,8 @@ export namespace Prisma {
     instagram?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
-    birthLongitude?: SortOrder;
-    birthLatitude?: SortOrder;
-    residenceLongitude?: SortOrder;
-    residenceLatitude?: SortOrder;
+    birthLocationId?: SortOrder;
+    residenceLocationId?: SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrder;
     created_at?: SortOrder;
@@ -17758,10 +17698,8 @@ export namespace Prisma {
     instagram?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
-    birthLongitude?: SortOrder;
-    birthLatitude?: SortOrder;
-    residenceLongitude?: SortOrder;
-    residenceLatitude?: SortOrder;
+    birthLocationId?: SortOrder;
+    residenceLocationId?: SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrder;
     created_at?: SortOrder;
@@ -17770,10 +17708,6 @@ export namespace Prisma {
 
   export type ProfileSumOrderByAggregateInput = {
     shortId?: SortOrder;
-    birthLongitude?: SortOrder;
-    birthLatitude?: SortOrder;
-    residenceLongitude?: SortOrder;
-    residenceLatitude?: SortOrder;
   };
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -17831,22 +17765,6 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>;
   };
 
-  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    lt?: number | FloatFieldRefInput<$PrismaModel>;
-    lte?: number | FloatFieldRefInput<$PrismaModel>;
-    gt?: number | FloatFieldRefInput<$PrismaModel>;
-    gte?: number | FloatFieldRefInput<$PrismaModel>;
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null;
-    _count?: NestedIntNullableFilter<$PrismaModel>;
-    _avg?: NestedFloatNullableFilter<$PrismaModel>;
-    _sum?: NestedFloatNullableFilter<$PrismaModel>;
-    _min?: NestedFloatNullableFilter<$PrismaModel>;
-    _max?: NestedFloatNullableFilter<$PrismaModel>;
-  };
-
   export type FloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>;
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>;
@@ -17868,16 +17786,12 @@ export namespace Prisma {
     _count?: SortOrder;
   };
 
-  export type LocationLatitudeLongitudeCompoundUniqueInput = {
-    latitude: number;
-    longitude: number;
-  };
-
   export type LocationCountOrderByAggregateInput = {
+    id?: SortOrder;
     latitude?: SortOrder;
     longitude?: SortOrder;
     country?: SortOrder;
-    province?: SortOrder;
+    state?: SortOrder;
     city?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -17889,20 +17803,22 @@ export namespace Prisma {
   };
 
   export type LocationMaxOrderByAggregateInput = {
+    id?: SortOrder;
     latitude?: SortOrder;
     longitude?: SortOrder;
     country?: SortOrder;
-    province?: SortOrder;
+    state?: SortOrder;
     city?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
 
   export type LocationMinOrderByAggregateInput = {
+    id?: SortOrder;
     latitude?: SortOrder;
     longitude?: SortOrder;
     country?: SortOrder;
-    province?: SortOrder;
+    state?: SortOrder;
     city?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -18999,14 +18915,6 @@ export namespace Prisma {
       >,
       LocationUncheckedUpdateWithoutResidenceProfilesInput
     >;
-  };
-
-  export type NullableFloatFieldUpdateOperationsInput = {
-    set?: number | null;
-    increment?: number;
-    decrement?: number;
-    multiply?: number;
-    divide?: number;
   };
 
   export type CommentUncheckedUpdateManyWithoutProfileNestedInput = {
@@ -20254,17 +20162,6 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null;
   };
 
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    lt?: number | FloatFieldRefInput<$PrismaModel>;
-    lte?: number | FloatFieldRefInput<$PrismaModel>;
-    gt?: number | FloatFieldRefInput<$PrismaModel>;
-    gte?: number | FloatFieldRefInput<$PrismaModel>;
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
-  };
-
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>;
     in?: number[] | ListIntFieldRefInput<$PrismaModel>;
@@ -20345,22 +20242,6 @@ export namespace Prisma {
       _min?: NestedDateTimeNullableFilter<$PrismaModel>;
       _max?: NestedDateTimeNullableFilter<$PrismaModel>;
     };
-
-  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    lt?: number | FloatFieldRefInput<$PrismaModel>;
-    lte?: number | FloatFieldRefInput<$PrismaModel>;
-    gt?: number | FloatFieldRefInput<$PrismaModel>;
-    gte?: number | FloatFieldRefInput<$PrismaModel>;
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null;
-    _count?: NestedIntNullableFilter<$PrismaModel>;
-    _avg?: NestedFloatNullableFilter<$PrismaModel>;
-    _sum?: NestedFloatNullableFilter<$PrismaModel>;
-    _min?: NestedFloatNullableFilter<$PrismaModel>;
-    _max?: NestedFloatNullableFilter<$PrismaModel>;
-  };
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>;
@@ -20909,10 +20790,11 @@ export namespace Prisma {
   };
 
   export type LocationCreateWithoutBirthProfilesInput = {
+    id?: string;
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -20920,10 +20802,11 @@ export namespace Prisma {
   };
 
   export type LocationUncheckedCreateWithoutBirthProfilesInput = {
+    id?: string;
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -20939,10 +20822,11 @@ export namespace Prisma {
   };
 
   export type LocationCreateWithoutResidenceProfilesInput = {
+    id?: string;
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -20950,10 +20834,11 @@ export namespace Prisma {
   };
 
   export type LocationUncheckedCreateWithoutResidenceProfilesInput = {
+    id?: string;
     latitude: number;
     longitude: number;
     country: string;
-    province: string;
+    state: string;
     city: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -21086,10 +20971,11 @@ export namespace Prisma {
   };
 
   export type LocationUpdateWithoutBirthProfilesInput = {
+    id?: StringFieldUpdateOperationsInput | string;
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -21097,10 +20983,11 @@ export namespace Prisma {
   };
 
   export type LocationUncheckedUpdateWithoutBirthProfilesInput = {
+    id?: StringFieldUpdateOperationsInput | string;
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -21128,10 +21015,11 @@ export namespace Prisma {
   };
 
   export type LocationUpdateWithoutResidenceProfilesInput = {
+    id?: StringFieldUpdateOperationsInput | string;
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -21139,10 +21027,11 @@ export namespace Prisma {
   };
 
   export type LocationUncheckedUpdateWithoutResidenceProfilesInput = {
+    id?: StringFieldUpdateOperationsInput | string;
     latitude?: FloatFieldUpdateOperationsInput | number;
     longitude?: FloatFieldUpdateOperationsInput | number;
     country?: StringFieldUpdateOperationsInput | string;
-    province?: StringFieldUpdateOperationsInput | string;
+    state?: StringFieldUpdateOperationsInput | string;
     city?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -21187,8 +21076,7 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
-    residenceLongitude?: number | null;
-    residenceLatitude?: number | null;
+    residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -21251,8 +21139,7 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
-    birthLongitude?: number | null;
-    birthLatitude?: number | null;
+    birthLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -21322,10 +21209,8 @@ export namespace Prisma {
     mail?: StringNullableFilter<'Profile'> | string | null;
     dni?: StringNullableFilter<'Profile'> | string | null;
     alternativeNames?: StringNullableListFilter<'Profile'>;
-    birthLongitude?: FloatNullableFilter<'Profile'> | number | null;
-    birthLatitude?: FloatNullableFilter<'Profile'> | number | null;
-    residenceLongitude?: FloatNullableFilter<'Profile'> | number | null;
-    residenceLatitude?: FloatNullableFilter<'Profile'> | number | null;
+    birthLocationId?: StringNullableFilter<'Profile'> | string | null;
+    residenceLocationId?: StringNullableFilter<'Profile'> | string | null;
     isInTrash?: BoolFilter<'Profile'> | boolean;
     movedToTrashDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
     created_at?: DateTimeFilter<'Profile'> | Date | string;
@@ -21434,10 +21319,8 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
-    birthLongitude?: number | null;
-    birthLatitude?: number | null;
-    residenceLongitude?: number | null;
-    residenceLatitude?: number | null;
+    birthLocationId?: string | null;
+    residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -21620,13 +21503,11 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
-    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    residenceLongitude?:
-      | NullableFloatFieldUpdateOperationsInput
-      | number
+    birthLocationId?: NullableStringFieldUpdateOperationsInput | string | null;
+    residenceLocationId?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
       | null;
-    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -21855,10 +21736,8 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
-    birthLongitude?: number | null;
-    birthLatitude?: number | null;
-    residenceLongitude?: number | null;
-    residenceLatitude?: number | null;
+    birthLocationId?: string | null;
+    residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -22691,10 +22570,8 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
-    birthLongitude?: number | null;
-    birthLatitude?: number | null;
-    residenceLongitude?: number | null;
-    residenceLatitude?: number | null;
+    birthLocationId?: string | null;
+    residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -22793,13 +22670,11 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
-    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    residenceLongitude?:
-      | NullableFloatFieldUpdateOperationsInput
-      | number
+    birthLocationId?: NullableStringFieldUpdateOperationsInput | string | null;
+    residenceLocationId?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
       | null;
-    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23147,8 +23022,7 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
-    residenceLongitude?: number | null;
-    residenceLatitude?: number | null;
+    residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -23169,8 +23043,7 @@ export namespace Prisma {
     mail?: string | null;
     dni?: string | null;
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
-    birthLongitude?: number | null;
-    birthLatitude?: number | null;
+    birthLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
@@ -23239,11 +23112,10 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
-    residenceLongitude?:
-      | NullableFloatFieldUpdateOperationsInput
-      | number
+    residenceLocationId?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
       | null;
-    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23281,11 +23153,10 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
-    residenceLongitude?:
-      | NullableFloatFieldUpdateOperationsInput
-      | number
+    residenceLocationId?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
       | null;
-    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23358,8 +23229,7 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
-    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    birthLocationId?: NullableStringFieldUpdateOperationsInput | string | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23397,8 +23267,7 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
-    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
+    birthLocationId?: NullableStringFieldUpdateOperationsInput | string | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23510,13 +23379,11 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
-    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    residenceLongitude?:
-      | NullableFloatFieldUpdateOperationsInput
-      | number
+    birthLocationId?: NullableStringFieldUpdateOperationsInput | string | null;
+    residenceLocationId?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
       | null;
-    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput
@@ -23553,13 +23420,11 @@ export namespace Prisma {
     mail?: NullableStringFieldUpdateOperationsInput | string | null;
     dni?: NullableStringFieldUpdateOperationsInput | string | null;
     alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
-    birthLongitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    birthLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
-    residenceLongitude?:
-      | NullableFloatFieldUpdateOperationsInput
-      | number
+    birthLocationId?: NullableStringFieldUpdateOperationsInput | string | null;
+    residenceLocationId?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
       | null;
-    residenceLatitude?: NullableFloatFieldUpdateOperationsInput | number | null;
     isInTrash?: BoolFieldUpdateOperationsInput | boolean;
     movedToTrashDate?:
       | NullableDateTimeFieldUpdateOperationsInput

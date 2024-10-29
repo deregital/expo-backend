@@ -38,6 +38,7 @@ export const Account = createParamDecorator(
         throw new NotFoundException([translate('route.auth.user-not-found')]);
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...userWithoutPassword } = user;
 
       return userWithoutPassword;

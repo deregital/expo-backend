@@ -48,6 +48,7 @@
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "country-state-city": "^3.2.1",
     "i18n-js": "^4.4.3",
     "json-to-pretty-yaml": "^1.2.2",
     "openapi3-ts": "^4.4.0",
@@ -102,9 +103,6 @@
     "**/*.{js,ts,jsx,tsx}": [
       "prettier --write",
       "eslint --fix"
-    ],
-    "*.json": [
-      "prettier --write"
     ]
   }
 }
