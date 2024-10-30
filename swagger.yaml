@@ -586,6 +586,112 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /event-folder/create:
+    post:
+      operationId: "EventFolderController_createEventFolder"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEventFolderDto"
+      responses:
+        201:
+          description: "Carpeta de evento creada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateEventFolderResponseDto"
+        409:
+          description: "Error en la creación de la carpeta de evento"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /event-folder/all:
+    get:
+      operationId: "EventFolderController_getAllEventFolders"
+      parameters: []
+      responses:
+        200:
+          description: "Carpetas de evento obtenidas con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetAllEventFolderResponseDto"
+  /event-folder/{id}:
+    get:
+      operationId: "EventFolderController_getEventFolderById"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Carpeta de evento obtenida con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetByIdEventFolderResponseDto"
+        404:
+          description: "Carpeta de evento no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /event-folder/update/{id}:
+    patch:
+      operationId: "EventFolderController_updateEventFolder"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateEventFolderDto"
+      responses:
+        200:
+          description: "Carpeta de evento actualizada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateEventFolderResponseDto"
+        404:
+          description: "Carpeta de evento no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /event-folder/delete/{id}:
+    delete:
+      operationId: "EventFolderController_deleteEventFolder"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Carpeta de evento eliminada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteEventFolderResponseDto"
+        404:
+          description: "Carpeta de evento no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -2221,5 +2327,254 @@ components:
         - "id"
         - "name"
         - "content"
+        - "created_at"
+        - "updated_at"
+    CreateEventFolderDto:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          minLength: 1
+        color:
+          type: "string"
+          minLength: 7
+          maxLength: 7
+      required:
+        - "name"
+        - "color"
+    CreateEventFolderResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+          minLength: 1
+        color:
+          type: "string"
+          minLength: 7
+          maxLength: 7
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "color"
+        - "created_at"
+        - "updated_at"
+    GetAllEventFolderResponseDto:
+      type: "object"
+      properties:
+        eventFolders:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              color:
+                type: "string"
+                minLength: 7
+                maxLength: 7
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+              events:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    date:
+                      type: "string"
+                      format: "date-time"
+                    location:
+                      type: "string"
+                      minLength: 1
+                    folderId:
+                      type: "null"
+                      format: "uuid"
+                    tagAssistedId:
+                      type: "string"
+                      format: "uuid"
+                    tagConfirmedId:
+                      type: "string"
+                      format: "uuid"
+                    supraEventId:
+                      type: "null"
+                      format: "uuid"
+                    created_at:
+                      type: "string"
+                      format: "date-time"
+                    updated_at:
+                      type: "string"
+                      format: "date-time"
+                  required:
+                    - "id"
+                    - "name"
+                    - "date"
+                    - "location"
+                    - "folderId"
+                    - "tagAssistedId"
+                    - "tagConfirmedId"
+                    - "supraEventId"
+                    - "created_at"
+                    - "updated_at"
+            required:
+              - "id"
+              - "name"
+              - "color"
+              - "created_at"
+              - "updated_at"
+              - "events"
+      required:
+        - "eventFolders"
+    GetByIdEventFolderResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+          minLength: 1
+        color:
+          type: "string"
+          minLength: 7
+          maxLength: 7
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+        events:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              date:
+                type: "string"
+                format: "date-time"
+              location:
+                type: "string"
+                minLength: 1
+              folderId:
+                type: "null"
+                format: "uuid"
+              tagAssistedId:
+                type: "string"
+                format: "uuid"
+              tagConfirmedId:
+                type: "string"
+                format: "uuid"
+              supraEventId:
+                type: "null"
+                format: "uuid"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "name"
+              - "date"
+              - "location"
+              - "folderId"
+              - "tagAssistedId"
+              - "tagConfirmedId"
+              - "supraEventId"
+              - "created_at"
+              - "updated_at"
+      required:
+        - "id"
+        - "name"
+        - "color"
+        - "created_at"
+        - "updated_at"
+        - "events"
+    UpdateEventFolderDto:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          minLength: 1
+        color:
+          type: "string"
+          minLength: 7
+          maxLength: 7
+    UpdateEventFolderResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+          minLength: 1
+        color:
+          type: "string"
+          minLength: 7
+          maxLength: 7
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "color"
+        - "created_at"
+        - "updated_at"
+    DeleteEventFolderResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+          minLength: 1
+        color:
+          type: "string"
+          minLength: 7
+          maxLength: 7
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "color"
         - "created_at"
         - "updated_at"
