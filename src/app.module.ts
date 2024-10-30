@@ -11,6 +11,7 @@ import { TagModule } from '@/tag/tag.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE } from '@nestjs/core';
+import { EventFolderModule } from './event-folder/event-folder.module';
 import { LocationModule } from './location/location.module';
 
 @Module({
@@ -23,6 +24,7 @@ import { LocationModule } from './location/location.module';
     CommentModule,
     LocationModule,
     CannedResponseModule,
+    EventFolderModule,
   ],
   providers: [
     {
