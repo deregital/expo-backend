@@ -1,7 +1,3 @@
-import {
-  Account,
-  AccountWithoutPassword,
-} from '@/auth/decorators/account.decorator';
 import { Roles } from '@/auth/decorators/rol.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
@@ -67,7 +63,6 @@ export class EventFolderController {
   @Post('/create')
   async createEventFolder(
     @Body() createEventFolderDto: CreateEventFolderDto,
-    @Account() account: AccountWithoutPassword,
   ): Promise<z.infer<typeof createEventFolderResponseSchema>> {
     return await this.eventFolderService.createEventFolder(
       createEventFolderDto,

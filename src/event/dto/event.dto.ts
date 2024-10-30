@@ -6,11 +6,9 @@ import { z } from 'zod';
 export const eventSchema = z.object({
   id: z.string().uuid({ message: translate('model.event.id.uuid') }),
   name: z.string().min(1, translate('model.event.name.required')),
-  date: z
-    .string({
-      required_error: translate('model.event.date.required'),
-    })
-    .date(translate('model.event.date.invalid')),
+  date: z.date({
+    invalid_type_error: translate('model.event.date.invalid'),
+  }),
   location: z.string().min(1, translate('model.event.location.required')),
 
   folderId: eventFolderSchema.shape.id,
