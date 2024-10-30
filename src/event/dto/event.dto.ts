@@ -11,7 +11,7 @@ export const eventSchema = z.object({
   }),
   location: z.string().min(1, translate('model.event.location.required')),
 
-  folderId: eventFolderSchema.shape.id,
+  folderId: eventFolderSchema.shape.id.nullable(),
   tagAssistedId: tagSchema.shape.id,
   tagConfirmedId: tagSchema.shape.id,
 
@@ -20,7 +20,7 @@ export const eventSchema = z.object({
     .uuid({
       message: translate('model.event.id.uuid'),
     })
-    .optional(),
+    .nullable(),
 
   created_at: z.date(),
   updated_at: z.date(),

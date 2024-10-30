@@ -1,3 +1,4 @@
+import { translate } from '@/i18n/translate';
 import {
   CreateEventFolderDto,
   createEventFolderResponseSchema,
@@ -11,7 +12,7 @@ import {
 } from './dto/update-event-folder.dto';
 
 import { PrismaService } from '@/prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import z from 'zod';
 
 @Injectable()
@@ -54,6 +55,12 @@ export class EventFolderService {
         events: true,
       },
     });
+
+    if (!eventFolder) {
+      throw new NotFoundException([
+        translate('route.event-folder.get-by-id.not-found'),
+      ]);
+    }
 
     return eventFolder;
   }
