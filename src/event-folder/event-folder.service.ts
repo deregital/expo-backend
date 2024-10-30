@@ -3,6 +3,8 @@ import {
   createEventFolderResponseSchema,
 } from './dto/create-event-folder.dto';
 import { deleteEventFolderResponseSchema } from './dto/delete-event-folder.dto';
+import { getAllEventFolderResponseSchema } from './dto/get-all-event-folder.dto';
+import { getByIdEventFolderResponseSchema } from './dto/get-by-id-event-folder.dto';
 import {
   UpdateEventFolderDto,
   updateEventFolderResponseSchema,
@@ -25,6 +27,34 @@ export class EventFolderService {
         color: dto.color,
       },
     });
+    return eventFolder;
+  }
+
+  async getAllEventFolders(): Promise<
+    z.infer<typeof getAllEventFolderResponseSchema>
+  > {
+    const eventFolders = await this.prisma.eventFolder.findMany({
+      include: {
+        events: true,
+      },
+      orderBy: {
+        updated_at: 'desc',
+      },
+    });
+
+    return { eventFolders };
+  }
+
+  async getEventFolderById(
+    id: string,
+  ): Promise<z.infer<typeof getByIdEventFolderResponseSchema>> {
+    const eventFolder = await this.prisma.eventFolder.findUnique({
+      where: { id },
+      include: {
+        events: true,
+      },
+    });
+
     return eventFolder;
   }
 
