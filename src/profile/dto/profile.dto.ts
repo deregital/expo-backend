@@ -44,11 +44,8 @@ export const profileSchema = z.object({
   dni: z.string().nullable(),
   alternativeNames: z.array(z.string()).nullable(),
 
-  birthLongitude: z.number().min(-180).max(180).nullable(),
-  birthLatitude: z.number().min(-90).max(90).nullable(),
-
-  residenceLongitude: z.number().min(-180).max(180).nullable(),
-  residenceLatitude: z.number().min(-90).max(90).nullable(),
+  birthLocationId: z.string().uuid().nullable(),
+  residenceLocationId: z.string().uuid().nullable(),
 
   isInTrash: z.boolean(),
   movedToTrashDate: z.date().nullable(),

@@ -44,6 +44,7 @@ export class AuthController {
   async refreshToken(
     @Request() req: ExpReq,
   ): Promise<z.infer<typeof refreshResponseSchema>> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return await this.authService.refreshToken((req as any)['user']);
   }
 }

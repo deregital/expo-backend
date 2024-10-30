@@ -292,7 +292,87 @@ export interface paths {
     patch: operations['CommentController_toggleSolveComment'];
     trace?: never;
   };
-  '/cannedresponse/create': {
+  '/location/all': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['LocationController_findAll'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/location/arg-states': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['LocationController_findArgStates'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/location/find-cities-by-arg-state/{argState}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['LocationController_findCitiesByArgState'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/location/all-countries': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['LocationController_findAllCountries'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/location/states-by-country/{countryCode}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['LocationController_findStatesByCountry'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/canned-response/create': {
     parameters: {
       query?: never;
       header?: never;
@@ -308,7 +388,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/cannedresponse/all': {
+  '/canned-response/all': {
     parameters: {
       query?: never;
       header?: never;
@@ -324,7 +404,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/cannedresponse/update/{id}': {
+  '/canned-response/update/{id}': {
     parameters: {
       query?: never;
       header?: never;
@@ -340,7 +420,7 @@ export interface paths {
     patch: operations['CannedResponseController_updateCannedResponse'];
     trace?: never;
   };
-  '/cannedresponse/delete/{id}': {
+  '/canned-response/delete/{id}': {
     parameters: {
       query?: never;
       header?: never;
@@ -540,10 +620,10 @@ export interface components {
         mail: string | null;
         dni: string | null;
         alternativeNames: string[] | null;
-        birthLongitude: number | null;
-        birthLatitude: number | null;
-        residenceLongitude: number | null;
-        residenceLatitude: number | null;
+        /** Format: uuid */
+        birthLocationId: string | null;
+        /** Format: uuid */
+        residenceLocationId: string | null;
         isInTrash: boolean;
         /** Format: date-time */
         movedToTrashDate: string | null;
@@ -576,10 +656,10 @@ export interface components {
         mail: string | null;
         dni: string | null;
         alternativeNames: string[] | null;
-        birthLongitude: number | null;
-        birthLatitude: number | null;
-        residenceLongitude: number | null;
-        residenceLatitude: number | null;
+        /** Format: uuid */
+        birthLocationId: string | null;
+        /** Format: uuid */
+        residenceLocationId: string | null;
         isInTrash: boolean;
         /** Format: date-time */
         movedToTrashDate: string | null;
@@ -893,6 +973,53 @@ export interface components {
       created_at: string;
       /** Format: date-time */
       updated_at: string;
+    };
+    FindAllLocationResponseDto: {
+      birthLocations: {
+        city: string;
+        longitude: number;
+        latitude: number;
+        _count: {
+          birthProfiles: number;
+        };
+      }[];
+      residenceLocations: {
+        city: string;
+        longitude: number;
+        latitude: number;
+        _count: {
+          residenceProfiles: number;
+        };
+      }[];
+    };
+    FindArgStatesResponseDto: {
+      states: string[];
+    };
+    FindCitiesByArgStateResponseDto: {
+      cities: {
+        id: string;
+        name: string;
+        centroid: {
+          lon: number;
+          lat: number;
+        };
+      }[];
+    };
+    FindAllCountriesResponseDto: {
+      countries: {
+        name: string;
+        isoCode: string;
+      }[];
+    };
+    FindAllStatesByCountryResponseDto: {
+      states: {
+        name: string;
+        isoCode: string;
+        countryCode: string;
+        countryName: string;
+        latitude?: string | null;
+        longitude?: string | null;
+      }[];
     };
     CreateCannedResponseDto: {
       name: string;
@@ -1570,6 +1697,128 @@ export interface operations {
       };
       /** @description El comentario no es resoluble */
       409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  LocationController_findAll: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Ubicaciones obtenidas */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllLocationResponseDto'];
+        };
+      };
+    };
+  };
+  LocationController_findArgStates: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Provincias de Argentina obtenidas */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindArgStatesResponseDto'];
+        };
+      };
+    };
+  };
+  LocationController_findCitiesByArgState: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        argState: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Localidades de Argentina obtenidas */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindCitiesByArgStateResponseDto'];
+        };
+      };
+      /** @description Provincia "[missing "{{argState}}" value]" no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  LocationController_findAllCountries: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Países obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllCountriesResponseDto'];
+        };
+      };
+    };
+  };
+  LocationController_findStatesByCountry: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        countryCode: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Estados obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllStatesByCountryResponseDto'];
+        };
+      };
+      /** @description País no encontrado */
+      404: {
         headers: {
           [name: string]: unknown;
         };

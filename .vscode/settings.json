@@ -29,5 +29,9 @@
     "importModuleSpecifier": "non-relative",
     "numericCollation": true,
     "caseFirst": "upper"
+  },
+  "vsicons.presets.nestjs": true,
+  "[json]": {
+    "editor.formatOnSave": false
   }
 }

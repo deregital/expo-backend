@@ -11,6 +11,7 @@ import { TagModule } from '@/tag/tag.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE } from '@nestjs/core';
+import { LocationModule } from './location/location.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { APP_PIPE } from '@nestjs/core';
     AccountModule,
     TagGroupModule,
     CommentModule,
+    LocationModule,
     CannedResponseModule,
   ],
   providers: [

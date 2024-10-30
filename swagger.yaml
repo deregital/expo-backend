@@ -425,7 +425,84 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
-  /cannedresponse/create:
+  /location/all:
+    get:
+      operationId: "LocationController_findAll"
+      parameters: []
+      responses:
+        200:
+          description: "Ubicaciones obtenidas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindAllLocationResponseDto"
+  /location/arg-states:
+    get:
+      operationId: "LocationController_findArgStates"
+      parameters: []
+      responses:
+        200:
+          description: "Provincias de Argentina obtenidas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindArgStatesResponseDto"
+  /location/find-cities-by-arg-state/{argState}:
+    get:
+      operationId: "LocationController_findCitiesByArgState"
+      parameters:
+        - name: "argState"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Localidades de Argentina obtenidas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindCitiesByArgStateResponseDto"
+        404:
+          description: "Provincia \"[missing \"{{argState}}\" value]\" no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /location/all-countries:
+    get:
+      operationId: "LocationController_findAllCountries"
+      parameters: []
+      responses:
+        200:
+          description: "Países obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindAllCountriesResponseDto"
+  /location/states-by-country/{countryCode}:
+    get:
+      operationId: "LocationController_findStatesByCountry"
+      parameters:
+        - name: "countryCode"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Estados obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindAllStatesByCountryResponseDto"
+        404:
+          description: "País no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /canned-response/create:
     post:
       operationId: "CannedResponseController_createCannedResponse"
       parameters: []
@@ -448,9 +525,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
-      tags:
-        - "Canned Responses"
-  /cannedresponse/all:
+  /canned-response/all:
     get:
       operationId: "CannedResponseController_getAllCannedResponses"
       parameters: []
@@ -461,9 +536,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetAllCannedResponseResponseDto"
-      tags:
-        - "Canned Responses"
-  /cannedresponse/update/{id}:
+  /canned-response/update/{id}:
     patch:
       operationId: "CannedResponseController_updateCannedResponse"
       parameters:
@@ -491,9 +564,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
-      tags:
-        - "Canned Responses"
-  /cannedresponse/delete/{id}:
+  /canned-response/delete/{id}:
     delete:
       operationId: "CannedResponseController_deleteCannedResponse"
       parameters:
@@ -515,8 +586,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
-      tags:
-        - "Canned Responses"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -979,25 +1048,13 @@ components:
                 items:
                   type: "string"
                 nullable: true
-              birthLongitude:
-                type: "number"
-                minimum: -180
-                maximum: 180
+              birthLocationId:
+                type: "string"
+                format: "uuid"
                 nullable: true
-              birthLatitude:
-                type: "number"
-                minimum: -90
-                maximum: 90
-                nullable: true
-              residenceLongitude:
-                type: "number"
-                minimum: -180
-                maximum: 180
-                nullable: true
-              residenceLatitude:
-                type: "number"
-                minimum: -90
-                maximum: 90
+              residenceLocationId:
+                type: "string"
+                format: "uuid"
                 nullable: true
               isInTrash:
                 type: "boolean"
@@ -1025,10 +1082,8 @@ components:
               - "mail"
               - "dni"
               - "alternativeNames"
-              - "birthLongitude"
-              - "birthLatitude"
-              - "residenceLongitude"
-              - "residenceLatitude"
+              - "birthLocationId"
+              - "residenceLocationId"
               - "isInTrash"
               - "movedToTrashDate"
               - "created_at"
@@ -1103,25 +1158,13 @@ components:
                 items:
                   type: "string"
                 nullable: true
-              birthLongitude:
-                type: "number"
-                minimum: -180
-                maximum: 180
+              birthLocationId:
+                type: "string"
+                format: "uuid"
                 nullable: true
-              birthLatitude:
-                type: "number"
-                minimum: -90
-                maximum: 90
-                nullable: true
-              residenceLongitude:
-                type: "number"
-                minimum: -180
-                maximum: 180
-                nullable: true
-              residenceLatitude:
-                type: "number"
-                minimum: -90
-                maximum: 90
+              residenceLocationId:
+                type: "string"
+                format: "uuid"
                 nullable: true
               isInTrash:
                 type: "boolean"
@@ -1149,10 +1192,8 @@ components:
               - "mail"
               - "dni"
               - "alternativeNames"
-              - "birthLongitude"
-              - "birthLatitude"
-              - "residenceLongitude"
-              - "residenceLatitude"
+              - "birthLocationId"
+              - "residenceLocationId"
               - "isInTrash"
               - "movedToTrashDate"
               - "created_at"
@@ -1939,6 +1980,149 @@ components:
         - "solvedBy"
         - "created_at"
         - "updated_at"
+    FindAllLocationResponseDto:
+      type: "object"
+      properties:
+        birthLocations:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              city:
+                type: "string"
+              longitude:
+                type: "number"
+                minimum: -180
+                maximum: 180
+              latitude:
+                type: "number"
+                minimum: -90
+                maximum: 90
+              _count:
+                type: "object"
+                properties:
+                  birthProfiles:
+                    type: "number"
+                required:
+                  - "birthProfiles"
+            required:
+              - "city"
+              - "longitude"
+              - "latitude"
+              - "_count"
+        residenceLocations:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              city:
+                type: "string"
+              longitude:
+                type: "number"
+                minimum: -180
+                maximum: 180
+              latitude:
+                type: "number"
+                minimum: -90
+                maximum: 90
+              _count:
+                type: "object"
+                properties:
+                  residenceProfiles:
+                    type: "number"
+                required:
+                  - "residenceProfiles"
+            required:
+              - "city"
+              - "longitude"
+              - "latitude"
+              - "_count"
+      required:
+        - "birthLocations"
+        - "residenceLocations"
+    FindArgStatesResponseDto:
+      type: "object"
+      properties:
+        states:
+          type: "array"
+          items:
+            type: "string"
+      required:
+        - "states"
+    FindCitiesByArgStateResponseDto:
+      type: "object"
+      properties:
+        cities:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+              name:
+                type: "string"
+              centroid:
+                type: "object"
+                properties:
+                  lon:
+                    type: "number"
+                  lat:
+                    type: "number"
+                required:
+                  - "lon"
+                  - "lat"
+            required:
+              - "id"
+              - "name"
+              - "centroid"
+      required:
+        - "cities"
+    FindAllCountriesResponseDto:
+      type: "object"
+      properties:
+        countries:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+              isoCode:
+                type: "string"
+            required:
+              - "name"
+              - "isoCode"
+      required:
+        - "countries"
+    FindAllStatesByCountryResponseDto:
+      type: "object"
+      properties:
+        states:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+              isoCode:
+                type: "string"
+              countryCode:
+                type: "string"
+              countryName:
+                type: "string"
+              latitude:
+                type: "string"
+                nullable: true
+              longitude:
+                type: "string"
+                nullable: true
+            required:
+              - "name"
+              - "isoCode"
+              - "countryCode"
+              - "countryName"
+      required:
+        - "states"
     CreateCannedResponseDto:
       type: "object"
       properties:

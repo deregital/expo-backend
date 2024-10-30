@@ -112,6 +112,17 @@ export default {
         invalid: 'La URL de la imagen de perfil no es válida',
       },
     },
+    location: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      latitude: {
+        minmax: 'La latitud debe estar entre -90 y 90',
+      },
+      longitude: {
+        minmax: 'La longitud debe estar entre -180 y 180',
+      },
+    },
     'canned-response': {
       id: {
         uuid: 'El ID debe ser un UUID',
@@ -216,6 +227,26 @@ export default {
         success: 'Cambio de estado en la resolución del comentario',
         'not-found': 'Comentario no encontrado',
         conflict: 'El comentario no es resoluble',
+      },
+    },
+    location: {
+      'find-all': {
+        success: 'Ubicaciones obtenidas',
+      },
+      'find-cities-by-arg-state': {
+        success: 'Localidades de Argentina obtenidas',
+        'not-found': `Provincia "\{\{argState\}\}" no encontrada`,
+      },
+      'arg-states': {
+        success: 'Provincias de Argentina obtenidas',
+      },
+      'all-countries': {
+        success: 'Países obtenidos',
+      },
+      'states-by-country': {
+        success: 'Estados obtenidos',
+        'not-found-error': `No se encontraron estados para el país \{\{countryCode\}\}`,
+        'not-found': 'País no encontrado',
       },
     },
     'canned-response': {
