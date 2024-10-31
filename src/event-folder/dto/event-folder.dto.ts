@@ -3,14 +3,14 @@ import z from 'zod';
 
 export const eventFolderSchema = z.object({
   id: z.string().uuid({
-    message: translate('model.eventFolder.id.uuid'),
+    message: translate('model.event-folder.id.uuid'),
   }),
   name: z.string().min(1),
   color: z
     .string()
     .length(7)
     .startsWith('#', {
-      message: translate('model.eventFolder.color.invalid'),
+      message: translate('model.event-folder.color.invalid'),
     })
     .toLowerCase(),
 

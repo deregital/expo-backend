@@ -86,7 +86,7 @@ export default {
         invalid: 'El color debe tener el formato hexadecimal (#ABCDEF)',
       },
     },
-    eventFolder: {
+    'event-folder': {
       id: {
         uuid: 'El ID debe ser un UUID',
       },
@@ -265,6 +265,28 @@ export default {
       delete: {
         success: 'Respuesta enlatada eliminada con éxito',
         'not-found': 'Respuesta enlatada no encontrada',
+      },
+    },
+    'event-folder': {
+      create: {
+        success: 'Carpeta de evento creada con éxito',
+        conflict: 'Error en la creación de la carpeta de evento',
+      },
+      'get-all': {
+        success: 'Carpetas de evento obtenidas con éxito',
+        'not-found': 'No se encontraron carpetas de evento',
+      },
+      'get-by-id': {
+        success: 'Carpeta de evento obtenida con éxito',
+        'not-found': 'Carpeta de evento no encontrada',
+      },
+      update: {
+        success: 'Carpeta de evento actualizada con éxito',
+        'not-found': 'Carpeta de evento no encontrada',
+      },
+      delete: {
+        success: 'Carpeta de evento eliminada con éxito',
+        'not-found': 'Carpeta de evento no encontrada',
       },
     },
   },
