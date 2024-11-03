@@ -8,7 +8,6 @@ import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
 import {
   CreateProfileDto,
-  CreateProfileResponseDto,
   createProfileResponseSchema,
   SimilarityProfile,
 } from '@/profile/dto/create-profile.dto';
@@ -38,6 +37,7 @@ import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { normalize } from '@/shared/validation/string';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
+import { generateSchema } from '@anatine/zod-openapi';
 import {
   Body,
   ConflictException,
@@ -137,7 +137,8 @@ export class ProfileController {
   @Roles(Role.ADMIN, Role.FORM)
   @UseGuards(JwtGuard, RoleGuard)
   @ApiOkResponse({
-    type: CreateProfileResponseDto,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- error at handling unions, generateSchma and any fixes it
+    schema: generateSchema(createProfileResponseSchema) as any,
     description: translate('route.profile.create.success'),
   })
   @ApiConflictResponse({
