@@ -5,9 +5,11 @@ import z from 'zod';
 
 export const findByTagGroupsProfileResponseSchema = z.object({
   profiles: z.array(
-    profileSchema.extend({
-      tags: z.array(tagSchema),
-    }),
+    profileSchema.merge(
+      z.object({
+        tags: z.array(tagSchema),
+      }),
+    ),
   ),
 });
 

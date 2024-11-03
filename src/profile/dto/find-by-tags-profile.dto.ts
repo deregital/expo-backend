@@ -6,15 +6,19 @@ import z from 'zod';
 
 export const findByTagsProfileResponseSchema = z.object({
   profiles: z.array(
-    profileSchema.extend({
-      tags: z.array(
-        tagSchema.extend({
-          group: tagGroupSchema.pick({
-            isExclusive: true,
-          }),
-        }),
-      ),
-    }),
+    profileSchema.merge(
+      z.object({
+        tags: z.array(
+          tagSchema.merge(
+            z.object({
+              group: tagGroupSchema.pick({
+                isExclusive: true,
+              }),
+            }),
+          ),
+        ),
+      }),
+    ),
   ),
 });
 

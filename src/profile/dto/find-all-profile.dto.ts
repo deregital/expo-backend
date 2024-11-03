@@ -6,16 +6,20 @@ import z from 'zod';
 
 export const findAllProfileResponseSchema = z.object({
   profiles: z.array(
-    profileSchema.extend({
-      tags: z.array(
-        tagSchema.extend({
-          group: tagGroupSchema.pick({
-            color: true,
-            isExclusive: true,
-          }),
-        }),
-      ),
-    }),
+    profileSchema.merge(
+      z.object({
+        tags: z.array(
+          tagSchema.merge(
+            z.object({
+              group: tagGroupSchema.pick({
+                color: true,
+                isExclusive: true,
+              }),
+            }),
+          ),
+        ),
+      }),
+    ),
   ),
 });
 
