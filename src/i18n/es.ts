@@ -293,6 +293,10 @@ export default {
       'find-all': {
         success: 'Perfiles obtenidos',
       },
+      'find-by-id': {
+        'not-found': 'Perfil no encontrado',
+        success: 'Perfil obtenido',
+      },
     },
   },
 } as const;

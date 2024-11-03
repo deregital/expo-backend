@@ -1,5 +1,6 @@
 import { PrismaService } from '@/prisma/prisma.service';
 import { findAllProfileResponseSchema } from '@/profile/dto/find-all-profile.dto';
+import { findByIdProfileResponseSchema } from '@/profile/dto/find-by-id-profile.dto';
 import { VisibleTagsType } from '@/shared/decorators/visible-tags.decorator';
 import { Injectable } from '@nestjs/common';
 import z from 'zod';
@@ -35,5 +36,38 @@ export class ProfileService {
     });
 
     return { profiles };
+  }
+
+  async findById(
+    id: string,
+    visibleTags: VisibleTagsType,
+  ): Promise<z.infer<typeof findByIdProfileResponseSchema>> {
+    const profile = await this.prisma.profile.findUnique({
+      where: {
+        id: id,
+        tags: {
+          some: {
+            id: { in: visibleTags },
+          },
+        },
+      },
+      include: {
+        tags: {
+          include: {
+            group: {
+              select: {
+                id: true,
+                color: true,
+                isExclusive: true,
+              },
+            },
+          },
+        },
+        residenceLocation: true,
+        birthLocation: true,
+      },
+    });
+
+    return profile!;
   }
 }
