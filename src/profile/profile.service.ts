@@ -1,9 +1,11 @@
 import { PrismaService } from '@/prisma/prisma.service';
 import { findAllProfileResponseSchema } from '@/profile/dto/find-all-profile.dto';
 import { findByIdProfileResponseSchema } from '@/profile/dto/find-by-id-profile.dto';
+import { findByTagsProfileResponseSchema } from '@/profile/dto/find-by-tags-profile.dto';
 import { VisibleTagsType } from '@/shared/decorators/visible-tags.decorator';
 import { Injectable } from '@nestjs/common';
 import z from 'zod';
+import { Tag } from '~/types';
 
 @Injectable()
 export class ProfileService {
@@ -69,5 +71,45 @@ export class ProfileService {
     });
 
     return profile!;
+  }
+
+  async findByTags(
+    tagsId: Tag['id'][],
+    visibleTags: VisibleTagsType,
+  ): Promise<z.infer<typeof findByTagsProfileResponseSchema>> {
+    const profiles = await this.prisma.profile.findMany({
+      where: {
+        isInTrash: false,
+        AND: [
+          {
+            tags: {
+              some: {
+                id: { in: tagsId },
+              },
+            },
+          },
+          {
+            tags: {
+              some: {
+                id: { in: visibleTags },
+              },
+            },
+          },
+        ],
+      },
+      include: {
+        tags: {
+          include: {
+            group: {
+              select: {
+                isExclusive: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return { profiles };
   }
 }

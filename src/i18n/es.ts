@@ -297,6 +297,11 @@ export default {
         'not-found': 'Perfil no encontrado',
         success: 'Perfil obtenido',
       },
+      'find-by-tag': {
+        'not-found': 'Perfil no encontrado',
+        'tags-not-found': 'Alguna de las etiquetas no existe',
+        success: 'Perfiles obtenidos',
+      },
     },
   },
 } as const;

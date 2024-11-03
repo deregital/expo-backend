@@ -10,6 +10,10 @@ import {
   FindByIdProfileResponseDto,
   findByIdProfileResponseSchema,
 } from '@/profile/dto/find-by-id-profile.dto';
+import {
+  FindByTagsProfileResponseDto,
+  findByTagsProfileResponseSchema,
+} from '@/profile/dto/find-by-tags-profile.dto';
 import { ProfileService } from '@/profile/profile.service';
 import {
   VisibleTags,
@@ -17,7 +21,16 @@ import {
 } from '@/shared/decorators/visible-tags.decorator';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { TagService } from '@/tag/tag.service';
+import {
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  ParseArrayPipe,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import z from 'zod';
 import { Role } from '~/types';
@@ -26,7 +39,10 @@ import { Role } from '~/types';
 @UseGuards(JwtGuard, RoleGuard)
 @Controller('profile')
 export class ProfileController {
-  constructor(private readonly profileService: ProfileService) {}
+  constructor(
+    private readonly profileService: ProfileService,
+    private readonly tagService: TagService,
+  ) {}
 
   @ApiOkResponse({
     type: FindAllProfileResponseDto,
@@ -40,6 +56,29 @@ export class ProfileController {
   }
 
   // TODO: all-with-in-chat requires a prisma extension
+  @ApiNotFoundResponse({
+    description: translate('route.profile.find-by-tag.not-found'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    type: FindByTagsProfileResponseDto,
+    description: translate('route.profile.find-by-tag.success'),
+  })
+  @Get('/find-by-tags')
+  async findByTag(
+    @Query('tags', new ParseArrayPipe({ items: String, separator: ',' }))
+    tagsId: string[],
+    @VisibleTags() visibleTags: VisibleTagsType,
+  ): Promise<z.infer<typeof findByTagsProfileResponseSchema>> {
+    const allTags = (await this.tagService.findAll()).tags;
+    if (tagsId.some((tagId) => !allTags.some((tag) => tag.id === tagId))) {
+      throw new NotFoundException(
+        translate('route.profile.find-by-tag.tags-not-found'),
+      );
+    }
+
+    return await this.profileService.findByTags(tagsId, visibleTags);
+  }
 
   @ApiOkResponse({
     type: FindByIdProfileResponseDto,
