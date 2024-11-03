@@ -289,5 +289,10 @@ export default {
         'not-found': 'Carpeta de evento no encontrada',
       },
     },
+    profile: {
+      'find-all': {
+        success: 'Perfiles obtenidos',
+      },
+    },
   },
 } as const;
