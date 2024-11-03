@@ -751,6 +751,29 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /profile/create:
+    post:
+      operationId: "ProfileController_create"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProfileDto"
+      responses:
+        200:
+          description: "Perfil creado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateProfileResponseDto"
+        409:
+          description: "Error en la creación del perfil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /profile/{id}:
     get:
       operationId: "ProfileController_findById"
@@ -811,6 +834,7 @@ components:
               enum:
                 - "USER"
                 - "ADMIN"
+                - "FORM"
             isGlobalFilterActive:
               default: false
               type: "boolean"
@@ -1228,7 +1252,6 @@ components:
                 type: "null"
               birthDate:
                 type: "null"
-                format: "date-time"
               profilePictureUrl:
                 type: "null"
                 format: "uri"
@@ -1326,7 +1349,6 @@ components:
                 type: "null"
               birthDate:
                 type: "null"
-                format: "date-time"
               profilePictureUrl:
                 type: "null"
                 format: "uri"
@@ -1393,6 +1415,7 @@ components:
           enum:
             - "USER"
             - "ADMIN"
+            - "FORM"
       required:
         - "username"
         - "password"
@@ -1410,6 +1433,7 @@ components:
           enum:
             - "USER"
             - "ADMIN"
+            - "FORM"
         isGlobalFilterActive:
           default: false
           type: "boolean"
@@ -1451,6 +1475,7 @@ components:
           enum:
             - "USER"
             - "ADMIN"
+            - "FORM"
         isGlobalFilterActive:
           default: false
           type: "boolean"
@@ -1567,6 +1592,7 @@ components:
           enum:
             - "USER"
             - "ADMIN"
+            - "FORM"
         isGlobalFilterActive:
           default: false
           type: "boolean"
@@ -2690,7 +2716,6 @@ components:
                 type: "null"
               birthDate:
                 type: "null"
-                format: "date-time"
               profilePictureUrl:
                 type: "null"
                 format: "uri"
@@ -2820,7 +2845,6 @@ components:
                 type: "null"
               birthDate:
                 type: "null"
-                format: "date-time"
               profilePictureUrl:
                 type: "null"
                 format: "uri"
@@ -2945,7 +2969,6 @@ components:
                 type: "null"
               birthDate:
                 type: "null"
-                format: "date-time"
               profilePictureUrl:
                 type: "null"
                 format: "uri"
@@ -3034,6 +3057,176 @@ components:
               - "tags"
       required:
         - "profiles"
+    CreateProfileDto:
+      type: "object"
+      properties:
+        profile:
+          type: "object"
+          properties:
+            alternativeNames:
+              type: "null"
+              items:
+                type: "string"
+            birthDate:
+              type: "null"
+            dni:
+              type: "null"
+            fullName:
+              type: "string"
+              minLength: 1
+            gender:
+              type: "null"
+            instagram:
+              type: "null"
+            mail:
+              type: "null"
+              format: "email"
+            phoneNumber:
+              type: "string"
+              minLength: 1
+            profilePictureUrl:
+              type: "null"
+              format: "uri"
+            secondaryPhoneNumber:
+              type: "null"
+            comments:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  content:
+                    type: "string"
+                    minLength: 1
+                  isSolvable:
+                    default: false
+                    type: "boolean"
+                required:
+                  - "content"
+            residence:
+              type: "object"
+              properties:
+                city:
+                  type: "string"
+                country:
+                  type: "string"
+                latitude:
+                  type: "number"
+                  minimum: -90
+                  maximum: 90
+                longitude:
+                  type: "number"
+                  minimum: -180
+                  maximum: 180
+                state:
+                  type: "string"
+              required:
+                - "city"
+                - "country"
+                - "latitude"
+                - "longitude"
+                - "state"
+            birth:
+              type: "object"
+              properties:
+                city:
+                  type: "string"
+                country:
+                  type: "string"
+                latitude:
+                  type: "number"
+                  minimum: -90
+                  maximum: 90
+                longitude:
+                  type: "number"
+                  minimum: -180
+                  maximum: 180
+                state:
+                  type: "string"
+              required:
+                - "city"
+                - "country"
+                - "latitude"
+                - "longitude"
+                - "state"
+            tags:
+              type: "array"
+              items:
+                type: "string"
+                format: "uuid"
+          required:
+            - "alternativeNames"
+            - "birthDate"
+            - "dni"
+            - "fullName"
+            - "gender"
+            - "instagram"
+            - "mail"
+            - "phoneNumber"
+            - "profilePictureUrl"
+            - "secondaryPhoneNumber"
+        checkForSimilarity:
+          type: "boolean"
+      required:
+        - "profile"
+    CreateProfileResponseDto:
+      type: "object"
+      properties:
+        response:
+          discriminator:
+            propertyName: "type"
+          oneOf:
+            - type: "object"
+              properties:
+                type:
+                  type: "string"
+                  enum:
+                    - "similar"
+                similarProfiles:
+                  type: "array"
+                  items:
+                    type: "object"
+                    properties:
+                      profile:
+                        type: "object"
+                        properties:
+                          fullName:
+                            type: "string"
+                            minLength: 1
+                          phoneNumber:
+                            type: "string"
+                            minLength: 1
+                          id:
+                            type: "string"
+                            format: "uuid"
+                        required:
+                          - "fullName"
+                          - "phoneNumber"
+                          - "id"
+                      similarityPhoneNumberPercentage:
+                        type: "number"
+                      similarityFullNamePercentage:
+                        type: "number"
+                    required:
+                      - "profile"
+                      - "similarityPhoneNumberPercentage"
+                      - "similarityFullNamePercentage"
+              required:
+                - "type"
+                - "similarProfiles"
+            - type: "object"
+              properties:
+                type:
+                  type: "string"
+                  enum:
+                    - "created"
+                id:
+                  type: "string"
+                  format: "uuid"
+              required:
+                - "type"
+                - "id"
+      required:
+        - "response"
     FindByIdProfileResponseDto:
       type: "object"
       properties:
@@ -3057,7 +3250,6 @@ components:
           type: "null"
         birthDate:
           type: "null"
-          format: "date-time"
         profilePictureUrl:
           type: "null"
           format: "uri"

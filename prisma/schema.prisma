@@ -37,6 +37,7 @@ model Account {
 enum Role {
   USER
   ADMIN
+  FORM
 }
 
 model Profile {
@@ -88,6 +89,7 @@ model Location {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  @@unique([latitude, longitude])
   @@map("LOCATION")
 }
 

@@ -19,9 +19,15 @@ export const profileSchema = z.object({
   secondaryPhoneNumber: z
     .string()
     .nullable()
-    .refine(validator.isMobilePhone, {
-      message: translate('model.profile.secondaryPhoneNumber.invalid'),
-    }),
+    .refine(
+      (value) => {
+        if (value === null) return true;
+        return validator.isMobilePhone(value);
+      },
+      {
+        message: translate('model.profile.secondaryPhoneNumber.invalid'),
+      },
+    ),
   fullName: z.string().min(1, {
     message: translate('model.profile.fullName.required'),
   }),
@@ -32,7 +38,7 @@ export const profileSchema = z.object({
     })
     .nullable(),
   gender: z.string().nullable(),
-  birthDate: z.date().nullable(),
+  birthDate: z.string().pipe(z.coerce.date()).nullable(),
   profilePictureUrl: z
     .string()
     .url({

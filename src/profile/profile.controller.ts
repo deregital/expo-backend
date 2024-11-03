@@ -1,7 +1,17 @@
+import {
+  Account,
+  AccountWithoutPassword,
+} from '@/auth/decorators/account.decorator';
 import { Roles } from '@/auth/decorators/rol.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
+import {
+  CreateProfileDto,
+  CreateProfileResponseDto,
+  createProfileResponseSchema,
+  SimilarityProfile,
+} from '@/profile/dto/create-profile.dto';
 import {
   FindAllProfileResponseDto,
   findAllProfileResponseSchema,
@@ -25,20 +35,29 @@ import {
 } from '@/shared/decorators/visible-tags.decorator';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
+import { normalize } from '@/shared/validation/string';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
 import {
+  Body,
+  ConflictException,
   Controller,
   Get,
   NotFoundException,
   Param,
   ParseArrayPipe,
+  Post,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
+import {
+  ApiConflictResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
+import levenshtein from 'string-comparison';
 import z from 'zod';
-import { Role } from '~/types';
+import { Profile, Role } from '~/types';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -115,6 +134,122 @@ export class ProfileController {
     return await this.profileService.findByTagGroups(tagGroups, visibleTags);
   }
 
+  @Roles(Role.ADMIN, Role.FORM)
+  @UseGuards(JwtGuard, RoleGuard)
+  @ApiOkResponse({
+    type: CreateProfileResponseDto,
+    description: translate('route.profile.create.success'),
+  })
+  @ApiConflictResponse({
+    description: translate('route.profile.create.conflict'),
+    type: ErrorDto,
+  })
+  @Post('/create')
+  async create(
+    @Body() body: CreateProfileDto,
+    @Account() account: AccountWithoutPassword,
+  ): Promise<z.infer<typeof createProfileResponseSchema>> {
+    const { checkForSimilarity, profile } = body;
+
+    const participantTag = await this.tagService.findParticipantTag();
+
+    if (!participantTag) {
+      throw new NotFoundException(
+        translate('route.profile.create.participant-tag-not-found'),
+      );
+    }
+
+    const phoneNumber = this.phoneNumberWithoutSpaces(profile.phoneNumber);
+    const secondaryPhoneNumber =
+      this.phoneNumberWithoutSpaces(profile.secondaryPhoneNumber || '') || null;
+
+    const existingProfile = await this.profileService.alreadyExistingProfile({
+      phoneNumber,
+      secondaryPhoneNumber,
+      dni: profile.dni,
+    });
+
+    if (existingProfile) {
+      if (
+        phoneNumber === existingProfile.phoneNumber ||
+        phoneNumber === existingProfile.secondaryPhoneNumber
+      ) {
+        throw new ConflictException([
+          translate('route.profile.create.phone-number-already-exists'),
+        ]);
+      } else if (
+        (secondaryPhoneNumber &&
+          secondaryPhoneNumber === existingProfile.phoneNumber) ||
+        secondaryPhoneNumber === existingProfile.secondaryPhoneNumber
+      ) {
+        throw new ConflictException([
+          translate(
+            'route.profile.create.secondary-phone-number-already-exists',
+          ),
+        ]);
+      } else if (profile.dni === existingProfile.dni) {
+        throw new ConflictException([
+          translate('route.profile.create.dni-already-exists'),
+        ]);
+      }
+    }
+
+    if (checkForSimilarity) {
+      const similarityProfiles: SimilarityProfile[] = [];
+      const allTags = (await this.tagService.findAll()).tags.map(
+        (tag) => tag.id,
+      );
+      const allProfiles = (await this.profileService.findAll(allTags)).profiles;
+
+      allProfiles.forEach(async (profileCompare) => {
+        if (profileCompare.phoneNumber === phoneNumber) {
+          throw new ConflictException([
+            translate('route.profile.create.phone-number-already-exists'),
+          ]);
+        }
+        const similarityPhoneNumber = levenshtein.levenshtein.similarity(
+          profileCompare.phoneNumber,
+          phoneNumber,
+        );
+        const similarityFullName = levenshtein.levenshtein.similarity(
+          normalize(profileCompare.fullName),
+          normalize(profile.fullName),
+        );
+
+        if (similarityPhoneNumber >= 0.75 || similarityFullName >= 0.75) {
+          similarityProfiles.push({
+            similarityPhoneNumberPercentage: similarityPhoneNumber,
+            similarityFullNamePercentage: similarityFullName,
+            profile: {
+              ...profileCompare,
+            },
+          });
+        }
+      });
+      if (similarityProfiles.length > 0) {
+        return {
+          response: {
+            type: 'similar',
+            similarProfiles: similarityProfiles,
+          },
+        };
+      }
+    }
+
+    const profileCreated = await this.profileService.create(
+      profile,
+      participantTag.id,
+      account.id,
+    );
+
+    return {
+      response: {
+        type: 'created',
+        id: profileCreated.id,
+      },
+    };
+  }
+
   @ApiOkResponse({
     type: FindByIdProfileResponseDto,
     description: translate('route.profile.find-by-id.success'),
@@ -129,5 +264,11 @@ export class ProfileController {
     @VisibleTags() visibleTags: VisibleTagsType,
   ): Promise<z.infer<typeof findByIdProfileResponseSchema>> {
     return await this.profileService.findById(id, visibleTags);
+  }
+
+  private phoneNumberWithoutSpaces(
+    phoneNumber: Profile['phoneNumber'],
+  ): Profile['phoneNumber'] {
+    return phoneNumber.replace(/\s+/g, '');
   }
 }

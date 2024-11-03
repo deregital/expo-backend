@@ -1,3 +1,4 @@
+export * from './dto/create-profile.dto';
 export * from './dto/find-all-profile.dto';
 export * from './dto/find-by-id-profile.dto';
 export * from './dto/find-by-tag-groups-profile.dto';

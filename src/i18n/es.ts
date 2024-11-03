@@ -307,6 +307,16 @@ export default {
         'tag-groups-not-found': 'Alguno de los grupos de etiquetas no existe',
         success: 'Perfiles obtenidos',
       },
+      create: {
+        'participant-tag-not-found':
+          'No se encontró la etiqueta de participante',
+        success: 'Perfil creado con éxito',
+        'dni-already-exists': 'Ya existe un perfil con ese DNI',
+        'phone-number-already-exists': 'Ya existe un perfil con ese teléfono',
+        'secondary-phone-number-already-exists':
+          'Ya existe un perfil con ese teléfono secundario',
+        conflict: 'Error en la creación del perfil',
+      },
     },
   },
 } as const;
