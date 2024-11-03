@@ -302,6 +302,11 @@ export default {
         'tags-not-found': 'Alguna de las etiquetas no existe',
         success: 'Perfiles obtenidos',
       },
+      'find-by-tag-groups': {
+        'not-found': 'Perfil no encontrado',
+        'tag-groups-not-found': 'Alguno de los grupos de etiquetas no existe',
+        success: 'Perfiles obtenidos',
+      },
     },
   },
 } as const;

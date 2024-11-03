@@ -11,6 +11,10 @@ import {
   findByIdProfileResponseSchema,
 } from '@/profile/dto/find-by-id-profile.dto';
 import {
+  FindByTagGroupsProfileResponseDto,
+  findByTagGroupsProfileResponseSchema,
+} from '@/profile/dto/find-by-tag-groups-profile.dto';
+import {
   FindByTagsProfileResponseDto,
   findByTagsProfileResponseSchema,
 } from '@/profile/dto/find-by-tags-profile.dto';
@@ -21,6 +25,7 @@ import {
 } from '@/shared/decorators/visible-tags.decorator';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
+import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
 import {
   Controller,
@@ -42,6 +47,7 @@ export class ProfileController {
   constructor(
     private readonly profileService: ProfileService,
     private readonly tagService: TagService,
+    private readonly tagGroupService: TagGroupService,
   ) {}
 
   @ApiOkResponse({
@@ -78,6 +84,35 @@ export class ProfileController {
     }
 
     return await this.profileService.findByTags(tagsId, visibleTags);
+  }
+
+  @ApiNotFoundResponse({
+    description: translate('route.profile.find-by-tag-groups.not-found'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    type: FindByTagGroupsProfileResponseDto,
+    description: translate('route.profile.find-by-tag-groups.success'),
+  })
+  @Get('/find-by-tag-groups')
+  async findByTagGroups(
+    @Query('tagGroups', new ParseArrayPipe({ items: String, separator: ',' }))
+    tagGroups: string[],
+    @VisibleTags() visibleTags: VisibleTagsType,
+  ): Promise<z.infer<typeof findByTagGroupsProfileResponseSchema>> {
+    const allTagGroups = (await this.tagGroupService.findAll()).tagGroups;
+    if (
+      tagGroups.some(
+        (tagGroupId) =>
+          !allTagGroups.some((tagGroup) => tagGroup.id === tagGroupId),
+      )
+    ) {
+      throw new NotFoundException(
+        translate('route.profile.find-by-tag-groups.tag-groups-not-found'),
+      );
+    }
+
+    return await this.profileService.findByTagGroups(tagGroups, visibleTags);
   }
 
   @ApiOkResponse({
