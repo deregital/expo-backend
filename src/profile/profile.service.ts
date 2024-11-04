@@ -1,9 +1,11 @@
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateProfileDto } from '@/profile/dto/create-profile.dto';
 import { findAllProfileResponseSchema } from '@/profile/dto/find-all-profile.dto';
+import { findByDateRangeSchema } from '@/profile/dto/find-by-date-range-profile.dto';
 import { findByIdProfileResponseSchema } from '@/profile/dto/find-by-id-profile.dto';
 import { findByTagGroupsProfileResponseSchema } from '@/profile/dto/find-by-tag-groups-profile.dto';
 import { findByTagsProfileResponseSchema } from '@/profile/dto/find-by-tags-profile.dto';
+import { UpdateProfileDto } from '@/profile/dto/update-profile.dto';
 import { VisibleTagsType } from '@/shared/decorators/visible-tags.decorator';
 import { Injectable } from '@nestjs/common';
 import z from 'zod';
@@ -206,6 +208,118 @@ export class ProfileService {
     });
 
     return profileCreated;
+  }
+
+  async delete(id: Profile['id']): Promise<Profile> {
+    const profileDeleted = await this.prisma.profile.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return profileDeleted;
+  }
+
+  async update(
+    id: Profile['id'],
+    dto: UpdateProfileDto,
+    participantTagId: Tag['id'],
+  ): Promise<Profile> {
+    const profileUpdated = await this.prisma.profile.update({
+      where: {
+        id: id,
+      },
+      data: {
+        fullName: dto.fullName,
+        firstName: dto.fullName.split(' ')[0],
+        phoneNumber: dto.phoneNumber,
+        secondaryPhoneNumber: dto.secondaryPhoneNumber,
+        alternativeNames: dto.alternativeNames ?? undefined,
+        dni: dto.dni,
+        mail: dto.mail,
+        gender: dto.gender,
+        profilePictureUrl: dto.profilePictureUrl,
+        instagram: dto.instagram,
+        isInTrash: dto.isInTrash,
+        movedToTrashDate:
+          dto.movedToTrashDate === null
+            ? null
+            : dto.movedToTrashDate
+              ? new Date(dto.movedToTrashDate)
+              : undefined,
+        birthDate: dto.birthDate ? new Date(dto.birthDate) : undefined,
+        residenceLocation: dto.residence
+          ? {
+              connectOrCreate: {
+                where: {
+                  latitude_longitude: {
+                    latitude: dto.residence.latitude,
+                    longitude: dto.residence.longitude,
+                  },
+                },
+                create: dto.residence,
+              },
+            }
+          : undefined,
+        birthLocation: dto.birth
+          ? {
+              connectOrCreate: {
+                where: {
+                  latitude_longitude: {
+                    latitude: dto.birth.latitude,
+                    longitude: dto.birth.longitude,
+                  },
+                },
+                create: dto.birth,
+              },
+            }
+          : undefined,
+        tags: {
+          set: [participantTagId, ...(dto.tags ?? [])].map((id) => ({
+            id: id,
+          })),
+        },
+      },
+    });
+
+    return profileUpdated;
+  }
+
+  async findByDateRange(
+    from: Date,
+    to: Date,
+    visibleTags: VisibleTagsType,
+  ): Promise<z.infer<typeof findByDateRangeSchema.shape.profiles>> {
+    const profiles = await this.prisma.profile.findMany({
+      where: {
+        isInTrash: false,
+        created_at: {
+          gte: from,
+          lte: to,
+        },
+        tags: {
+          some: {
+            id: { in: visibleTags },
+          },
+        },
+      },
+      orderBy: {
+        created_at: 'asc',
+      },
+      include: {
+        tags: {
+          include: {
+            group: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return profiles;
   }
 
   async alreadyExistingProfile({

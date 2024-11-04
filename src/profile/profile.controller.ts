@@ -8,13 +8,22 @@ import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
 import {
   CreateProfileDto,
+  CreateProfileResponseDto,
   createProfileResponseSchema,
   SimilarityProfile,
 } from '@/profile/dto/create-profile.dto';
 import {
+  DeleteProfileResponseDto,
+  deleteProfileResponseSchema,
+} from '@/profile/dto/delete-profile.dto';
+import {
   FindAllProfileResponseDto,
   findAllProfileResponseSchema,
 } from '@/profile/dto/find-all-profile.dto';
+import {
+  FindByDateRangeResponseDto,
+  findByDateRangeResponseSchema,
+} from '@/profile/dto/find-by-date-range-profile.dto';
 import {
   FindByIdProfileResponseDto,
   findByIdProfileResponseSchema,
@@ -27,6 +36,10 @@ import {
   FindByTagsProfileResponseDto,
   findByTagsProfileResponseSchema,
 } from '@/profile/dto/find-by-tags-profile.dto';
+import {
+  UpdateProfileDto,
+  updateProfileResponseSchema,
+} from '@/profile/dto/update-profile.dto';
 import { ProfileService } from '@/profile/profile.service';
 import {
   VisibleTags,
@@ -34,18 +47,20 @@ import {
 } from '@/shared/decorators/visible-tags.decorator';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
+import { ParseDateIsoPipe } from '@/shared/validation/parse-date-iso.pipe';
 import { normalize } from '@/shared/validation/string';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
-import { generateSchema } from '@anatine/zod-openapi';
 import {
   Body,
   ConflictException,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
   ParseArrayPipe,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -54,10 +69,11 @@ import {
   ApiConflictResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
+  ApiPreconditionFailedResponse,
 } from '@nestjs/swagger';
 import levenshtein from 'string-comparison';
 import z from 'zod';
-import { Profile, Role } from '~/types';
+import { Prisma, Profile, Role } from '~/types';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -134,15 +150,43 @@ export class ProfileController {
     return await this.profileService.findByTagGroups(tagGroups, visibleTags);
   }
 
+  @ApiOkResponse({
+    type: FindByDateRangeResponseDto,
+    description: translate('route.profile.find-by-date-range.success'),
+  })
+  @ApiPreconditionFailedResponse({
+    description: translate('route.profile.find-by-date-range.invalid-date'),
+    type: ErrorDto,
+  })
+  @Get('/find-by-date-range')
+  async findByDateRange(
+    @Query('from', ParseDateIsoPipe) from: string,
+    @Query('to', ParseDateIsoPipe) to: string,
+    @VisibleTags() visibleTags: VisibleTagsType,
+  ): Promise<z.infer<typeof findByDateRangeResponseSchema>> {
+    const profiles = await this.profileService.findByDateRange(
+      new Date(from),
+      new Date(to),
+      visibleTags,
+    );
+
+    const grouped = this.groupedProfiles(profiles);
+
+    return grouped;
+  }
+
   @Roles(Role.ADMIN, Role.FORM)
   @UseGuards(JwtGuard, RoleGuard)
   @ApiOkResponse({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- error at handling unions, generateSchma and any fixes it
-    schema: generateSchema(createProfileResponseSchema) as any,
+    type: CreateProfileResponseDto,
     description: translate('route.profile.create.success'),
   })
   @ApiConflictResponse({
     description: translate('route.profile.create.conflict'),
+    type: ErrorDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.profile.create.participant-tag-not-found'),
     type: ErrorDto,
   })
   @Post('/create')
@@ -160,80 +204,36 @@ export class ProfileController {
       );
     }
 
-    const phoneNumber = this.phoneNumberWithoutSpaces(profile.phoneNumber);
-    const secondaryPhoneNumber =
-      this.phoneNumberWithoutSpaces(profile.secondaryPhoneNumber || '') || null;
-
-    const existingProfile = await this.profileService.alreadyExistingProfile({
-      phoneNumber,
-      secondaryPhoneNumber,
-      dni: profile.dni,
-    });
-
-    if (existingProfile) {
-      if (
-        phoneNumber === existingProfile.phoneNumber ||
-        phoneNumber === existingProfile.secondaryPhoneNumber
-      ) {
-        throw new ConflictException([
-          translate('route.profile.create.phone-number-already-exists'),
-        ]);
-      } else if (
-        (secondaryPhoneNumber &&
-          secondaryPhoneNumber === existingProfile.phoneNumber) ||
-        secondaryPhoneNumber === existingProfile.secondaryPhoneNumber
-      ) {
-        throw new ConflictException([
-          translate(
-            'route.profile.create.secondary-phone-number-already-exists',
-          ),
-        ]);
-      } else if (profile.dni === existingProfile.dni) {
-        throw new ConflictException([
-          translate('route.profile.create.dni-already-exists'),
-        ]);
-      }
+    try {
+      await this.checkForSameProfile(
+        {
+          phoneNumber: profile.phoneNumber,
+          secondaryPhoneNumber: profile.secondaryPhoneNumber,
+          dni: profile.dni,
+        },
+        {
+          isUpdating: false,
+        },
+      );
+    } catch (error) {
+      throw error;
     }
 
     if (checkForSimilarity) {
-      const similarityProfiles: SimilarityProfile[] = [];
-      const allTags = (await this.tagService.findAll()).tags.map(
-        (tag) => tag.id,
-      );
-      const allProfiles = (await this.profileService.findAll(allTags)).profiles;
-
-      allProfiles.forEach(async (profileCompare) => {
-        if (profileCompare.phoneNumber === phoneNumber) {
-          throw new ConflictException([
-            translate('route.profile.create.phone-number-already-exists'),
-          ]);
-        }
-        const similarityPhoneNumber = levenshtein.levenshtein.similarity(
-          profileCompare.phoneNumber,
+      try {
+        const phoneNumber = this.phoneNumberWithoutSpaces(profile.phoneNumber);
+        const similarityProfiles = await this.similarityCheck(
+          profile.fullName,
           phoneNumber,
         );
-        const similarityFullName = levenshtein.levenshtein.similarity(
-          normalize(profileCompare.fullName),
-          normalize(profile.fullName),
-        );
-
-        if (similarityPhoneNumber >= 0.75 || similarityFullName >= 0.75) {
-          similarityProfiles.push({
-            similarityPhoneNumberPercentage: similarityPhoneNumber,
-            similarityFullNamePercentage: similarityFullName,
-            profile: {
-              ...profileCompare,
-            },
-          });
-        }
-      });
-      if (similarityProfiles.length > 0) {
         return {
           response: {
             type: 'similar',
             similarProfiles: similarityProfiles,
           },
         };
+      } catch (error) {
+        throw error;
       }
     }
 
@@ -267,9 +267,194 @@ export class ProfileController {
     return await this.profileService.findById(id, visibleTags);
   }
 
+  @ApiNotFoundResponse({
+    description: translate('route.profile.delete.not-found'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    description: translate('route.profile.delete.success'),
+    type: DeleteProfileResponseDto,
+  })
+  @Delete('/:id')
+  async delete(
+    @Param('id', new ExistingRecord('profile')) id: string,
+  ): Promise<z.infer<typeof deleteProfileResponseSchema>> {
+    return await this.profileService.delete(id);
+  }
+
+  @ApiNotFoundResponse({
+    type: ErrorDto,
+    description: translate('route.profile.update.not-found'),
+  })
+  @ApiConflictResponse({
+    type: ErrorDto,
+    description: translate('route.profile.update.conflict'),
+  })
+  @ApiOkResponse({
+    type: UpdateProfileDto,
+    description: translate('route.profile.update.success'),
+  })
+  @Patch('/:id')
+  async update(
+    @Param('id', new ExistingRecord('profile')) id: string,
+    @Body() body: UpdateProfileDto,
+  ): Promise<z.infer<typeof updateProfileResponseSchema>> {
+    const participantTag = await this.tagService.findParticipantTag();
+
+    if (!participantTag) {
+      throw new NotFoundException(
+        translate('route.profile.create.participant-tag-not-found'),
+      );
+    }
+
+    try {
+      await this.checkForSameProfile(
+        {
+          phoneNumber: body.phoneNumber,
+          secondaryPhoneNumber: body.secondaryPhoneNumber,
+          dni: body.dni,
+        },
+        {
+          isUpdating: true,
+          id,
+        },
+      );
+    } catch (error) {
+      throw error;
+    }
+
+    return await this.profileService.update(id, body, participantTag.id);
+  }
+
   private phoneNumberWithoutSpaces(
     phoneNumber: Profile['phoneNumber'],
   ): Profile['phoneNumber'] {
     return phoneNumber.replace(/\s+/g, '');
+  }
+
+  private async similarityCheck(
+    profileFullName: Profile['fullName'],
+    phoneNumber: Profile['phoneNumber'],
+  ): Promise<SimilarityProfile[]> {
+    const similarities: SimilarityProfile[] = [];
+    const allTags = (await this.tagService.findAll()).tags.map((tag) => tag.id);
+    const allProfiles = (await this.profileService.findAll(allTags)).profiles;
+
+    allProfiles.forEach(async (profileCompare) => {
+      if (profileCompare.phoneNumber === phoneNumber) {
+        throw new ConflictException([
+          translate('route.profile.create.phone-number-already-exists'),
+        ]);
+      }
+      const similarityPhoneNumber = levenshtein.levenshtein.similarity(
+        profileCompare.phoneNumber,
+        phoneNumber,
+      );
+      const similarityFullName = levenshtein.levenshtein.similarity(
+        normalize(profileCompare.fullName),
+        normalize(profileFullName),
+      );
+
+      if (similarityPhoneNumber >= 0.75 || similarityFullName >= 0.75) {
+        similarities.push({
+          similarityPhoneNumberPercentage: similarityPhoneNumber,
+          similarityFullNamePercentage: similarityFullName,
+          profile: {
+            ...profileCompare,
+          },
+        });
+      }
+    });
+    if (similarities.length > 0) {
+      return similarities;
+    } else {
+      return [];
+    }
+  }
+
+  private async checkForSameProfile(
+    profile: {
+      phoneNumber: Profile['phoneNumber'];
+      secondaryPhoneNumber: Profile['secondaryPhoneNumber'];
+      dni: Profile['dni'];
+    },
+    {
+      isUpdating,
+      id,
+    }:
+      | { isUpdating: true; id?: Profile['id'] }
+      | {
+          isUpdating: false;
+          id?: never;
+        } = {
+      isUpdating: false,
+    },
+  ): Promise<void> {
+    const phoneNumber = this.phoneNumberWithoutSpaces(profile.phoneNumber);
+    const secondaryPhoneNumber =
+      this.phoneNumberWithoutSpaces(profile.secondaryPhoneNumber || '') || null;
+
+    const existingProfile = await this.profileService.alreadyExistingProfile({
+      phoneNumber,
+      secondaryPhoneNumber,
+      dni: profile.dni,
+    });
+
+    if (isUpdating && existingProfile?.id === id) {
+      return;
+    }
+
+    if (existingProfile) {
+      if (
+        phoneNumber === existingProfile.phoneNumber ||
+        phoneNumber === existingProfile.secondaryPhoneNumber
+      ) {
+        throw new ConflictException([
+          translate('route.profile.create.phone-number-already-exists'),
+        ]);
+      } else if (
+        (secondaryPhoneNumber &&
+          secondaryPhoneNumber === existingProfile.phoneNumber) ||
+        secondaryPhoneNumber === existingProfile.secondaryPhoneNumber
+      ) {
+        throw new ConflictException([
+          translate(
+            'route.profile.create.secondary-phone-number-already-exists',
+          ),
+        ]);
+      } else if (profile.dni === existingProfile.dni) {
+        throw new ConflictException([
+          translate('route.profile.create.dni-already-exists'),
+        ]);
+      }
+    }
+  }
+
+  private groupedProfiles(
+    profiles: Prisma.ProfileGetPayload<{
+      include: {
+        tags: {
+          include: {
+            group: {
+              select: {
+                id: true;
+              };
+            };
+          };
+        };
+      };
+    }>[],
+  ): Record<string, typeof profiles> {
+    return profiles.reduce(
+      (acc, profile) => {
+        const date = profile.created_at.toISOString().split('T')[0]!;
+        if (!acc[date]) {
+          acc[date] = [];
+        }
+        acc[date]!.push(profile);
+        return acc;
+      },
+      {} as Record<string, typeof profiles>,
+    );
   }
 }

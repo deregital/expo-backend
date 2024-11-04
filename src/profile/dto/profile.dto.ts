@@ -48,7 +48,7 @@ export const profileSchema = z.object({
   instagram: z.string().nullable(),
   mail: z.string().email().nullable(),
   dni: z.string().nullable(),
-  alternativeNames: z.array(z.string()).nullable(),
+  alternativeNames: z.array(z.string()),
 
   birthLocationId: z.string().uuid().nullable(),
   residenceLocationId: z.string().uuid().nullable(),

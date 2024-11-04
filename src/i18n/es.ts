@@ -317,6 +317,19 @@ export default {
           'Ya existe un perfil con ese teléfono secundario',
         conflict: 'Error en la creación del perfil',
       },
+      delete: {
+        success: 'Perfil eliminado con éxito',
+        'not-found': 'Perfil no encontrado',
+      },
+      update: {
+        success: 'Perfil actualizado con éxito',
+        'not-found': 'Perfil no encontrado',
+        conflict: 'Error en la actualización del perfil',
+      },
+      'find-by-date-range': {
+        success: 'Perfiles obtenidos',
+        'invalid-date': 'Fecha inválida',
+      },
     },
   },
 } as const;
