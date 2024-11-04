@@ -12,6 +12,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE } from '@nestjs/core';
 import { EventFolderModule } from './event-folder/event-folder.module';
+import { EventModule } from './event/event.module';
 import { LocationModule } from './location/location.module';
 
 @Module({
@@ -25,6 +26,7 @@ import { LocationModule } from './location/location.module';
     LocationModule,
     CannedResponseModule,
     EventFolderModule,
+    EventModule,
   ],
   providers: [
     {
