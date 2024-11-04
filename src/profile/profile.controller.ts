@@ -41,6 +41,10 @@ import {
   findByTagsProfileResponseSchema,
 } from '@/profile/dto/find-by-tags-profile.dto';
 import {
+  FindTrashResponseDto,
+  findTrashResponseSchema,
+} from '@/profile/dto/find-trash.dto';
+import {
   UpdateProfileDto,
   updateProfileResponseSchema,
 } from '@/profile/dto/update-profile.dto';
@@ -187,7 +191,7 @@ export class ProfileController {
     type: FindByPhoneNumberResponseDto,
     description: translate('route.profile.find-by-phone-number.success'),
   })
-  @Get('find-by-phone-number/:phoneNumber')
+  @Get('/find-by-phone-number/:phoneNumber')
   async findByPhoneNumber(
     @Param('phoneNumber') phoneNumber: string,
     @VisibleTags() visibleTags: VisibleTagsType,
@@ -204,6 +208,21 @@ export class ProfileController {
     }
 
     return profile;
+  }
+
+  @ApiOkResponse({
+    type: FindTrashResponseDto,
+    description: translate('route.profile.find-trash.success'),
+  })
+  @Get('/find-trash')
+  async findTrashCan(
+    @VisibleTags() visibleTags: VisibleTagsType,
+  ): Promise<z.infer<typeof findTrashResponseSchema>> {
+    const profiles = await this.profileService.findTrash(visibleTags);
+
+    return {
+      profiles,
+    };
   }
 
   @Roles(Role.ADMIN, Role.FORM)

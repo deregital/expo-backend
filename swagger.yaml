@@ -800,6 +800,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /profile/find-trash:
+    get:
+      operationId: "ProfileController_findTrashCan"
+      parameters: []
+      responses:
+        200:
+          description: "Perfiles obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindTrashResponseDto"
   /profile/create:
     post:
       operationId: "ProfileController_create"
@@ -3362,6 +3373,44 @@ components:
         - "movedToTrashDate"
         - "created_at"
         - "updated_at"
+    FindTrashResponseDto:
+      type: "object"
+      properties:
+        profiles:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              fullName:
+                type: "string"
+                minLength: 1
+              profilePictureUrl:
+                type: "null"
+                format: "uri"
+              created_at:
+                type: "string"
+                format: "date-time"
+              isInTrash:
+                type: "boolean"
+              phoneNumber:
+                type: "string"
+                minLength: 1
+              movedToTrashDate:
+                type: "null"
+                format: "date-time"
+            required:
+              - "id"
+              - "fullName"
+              - "profilePictureUrl"
+              - "created_at"
+              - "isInTrash"
+              - "phoneNumber"
+              - "movedToTrashDate"
+      required:
+        - "profiles"
     CreateProfileDto:
       type: "object"
       properties:

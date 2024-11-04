@@ -5,6 +5,7 @@ import { findByDateRangeSchema } from '@/profile/dto/find-by-date-range-profile.
 import { findByIdProfileResponseSchema } from '@/profile/dto/find-by-id-profile.dto';
 import { findByTagGroupsProfileResponseSchema } from '@/profile/dto/find-by-tag-groups-profile.dto';
 import { findByTagsProfileResponseSchema } from '@/profile/dto/find-by-tags-profile.dto';
+import { findTrashResponseSchema } from '@/profile/dto/find-trash.dto';
 import { UpdateProfileDto } from '@/profile/dto/update-profile.dto';
 import { VisibleTagsType } from '@/shared/decorators/visible-tags.decorator';
 import { Injectable } from '@nestjs/common';
@@ -339,6 +340,32 @@ export class ProfileService {
     });
 
     return profile;
+  }
+
+  async findTrash(
+    visibleTags: VisibleTagsType,
+  ): Promise<z.infer<typeof findTrashResponseSchema.shape.profiles>> {
+    const profiles = await this.prisma.profile.findMany({
+      where: {
+        isInTrash: true,
+        tags: {
+          some: {
+            id: { in: visibleTags },
+          },
+        },
+      },
+      select: {
+        id: true,
+        fullName: true,
+        profilePictureUrl: true,
+        created_at: true,
+        isInTrash: true,
+        phoneNumber: true,
+        movedToTrashDate: true,
+      },
+    });
+
+    return profiles;
   }
 
   async alreadyExistingProfile({

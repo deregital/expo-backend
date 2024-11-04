@@ -580,6 +580,38 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/profile/find-by-phone-number/{phoneNumber}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProfileController_findByPhoneNumber'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/profile/find-trash': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProfileController_findTrashCan'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/profile/create': {
     parameters: {
       query?: never;
@@ -1533,6 +1565,50 @@ export interface components {
             }[];
           }[]
         | undefined;
+    };
+    FindByPhoneNumberResponseDto: {
+      /** Format: uuid */
+      id: string;
+      shortId: number;
+      phoneNumber: string;
+      secondaryPhoneNumber: null;
+      fullName: string;
+      firstName: null;
+      gender: null;
+      birthDate: null;
+      /** Format: uri */
+      profilePictureUrl: null;
+      instagram: null;
+      /** Format: email */
+      mail: null;
+      dni: null;
+      alternativeNames: string[];
+      /** Format: uuid */
+      birthLocationId: null;
+      /** Format: uuid */
+      residenceLocationId: null;
+      isInTrash: boolean;
+      /** Format: date-time */
+      movedToTrashDate: null;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    FindTrashResponseDto: {
+      profiles: {
+        /** Format: uuid */
+        id: string;
+        fullName: string;
+        /** Format: uri */
+        profilePictureUrl: null;
+        /** Format: date-time */
+        created_at: string;
+        isInTrash: boolean;
+        phoneNumber: string;
+        /** Format: date-time */
+        movedToTrashDate: null;
+      }[];
     };
     CreateProfileDto: {
       profile: {
@@ -2841,6 +2917,57 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProfileController_findByPhoneNumber: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        phoneNumber: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Perfil obtenido */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindByPhoneNumberResponseDto'];
+        };
+      };
+      /** @description Perfil no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProfileController_findTrashCan: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Perfiles obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindTrashResponseDto'];
         };
       };
     };

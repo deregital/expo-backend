@@ -334,6 +334,9 @@ export default {
         success: 'Perfil obtenido',
         'not-found': 'Perfil no encontrado',
       },
+      'find-trash': {
+        success: 'Perfiles obtenidos',
+      },
     },
   },
 } as const;
