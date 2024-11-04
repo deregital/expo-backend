@@ -42,13 +42,14 @@ export class EventService {
   }
 
   async findAll(): Promise<z.infer<typeof getAllEventsResponseSchema>> {
-    return await this.prisma.event.findMany({
+    const events = await this.prisma.event.findMany({
       include: {
         folder: true,
         tagAssisted: true,
         tagConfirmed: true,
       },
     });
+    return { events };
   }
 
   async findById(
