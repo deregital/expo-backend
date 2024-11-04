@@ -778,6 +778,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /profile/find-by-phone-number/{phoneNumber}:
+    get:
+      operationId: "ProfileController_findByPhoneNumber"
+      parameters:
+        - name: "phoneNumber"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Perfil obtenido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByPhoneNumberResponseDto"
+        404:
+          description: "Perfil no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /profile/create:
     post:
       operationId: "ProfileController_create"
@@ -3266,6 +3288,80 @@ components:
             - "created_at"
             - "updated_at"
             - "tags"
+    FindByPhoneNumberResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        shortId:
+          type: "number"
+        phoneNumber:
+          type: "string"
+          minLength: 1
+        secondaryPhoneNumber:
+          type: "null"
+        fullName:
+          type: "string"
+          minLength: 1
+        firstName:
+          type: "null"
+          minLength: 1
+        gender:
+          type: "null"
+        birthDate:
+          type: "null"
+        profilePictureUrl:
+          type: "null"
+          format: "uri"
+        instagram:
+          type: "null"
+        mail:
+          type: "null"
+          format: "email"
+        dni:
+          type: "null"
+        alternativeNames:
+          type: "array"
+          items:
+            type: "string"
+        birthLocationId:
+          type: "null"
+          format: "uuid"
+        residenceLocationId:
+          type: "null"
+          format: "uuid"
+        isInTrash:
+          type: "boolean"
+        movedToTrashDate:
+          type: "null"
+          format: "date-time"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "shortId"
+        - "phoneNumber"
+        - "secondaryPhoneNumber"
+        - "fullName"
+        - "firstName"
+        - "gender"
+        - "birthDate"
+        - "profilePictureUrl"
+        - "instagram"
+        - "mail"
+        - "dni"
+        - "alternativeNames"
+        - "birthLocationId"
+        - "residenceLocationId"
+        - "isInTrash"
+        - "movedToTrashDate"
+        - "created_at"
+        - "updated_at"
     CreateProfileDto:
       type: "object"
       properties:

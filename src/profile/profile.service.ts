@@ -322,6 +322,25 @@ export class ProfileService {
     return profiles;
   }
 
+  async findByPhoneNumber(
+    phoneNumber: Profile['phoneNumber'],
+    visibleTags: VisibleTagsType,
+  ): Promise<Profile | null> {
+    const profile = await this.prisma.profile.findUnique({
+      where: {
+        phoneNumber: phoneNumber,
+        isInTrash: false,
+        tags: {
+          some: {
+            id: { in: visibleTags },
+          },
+        },
+      },
+    });
+
+    return profile;
+  }
+
   async alreadyExistingProfile({
     phoneNumber,
     secondaryPhoneNumber,

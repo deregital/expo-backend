@@ -29,6 +29,10 @@ import {
   findByIdProfileResponseSchema,
 } from '@/profile/dto/find-by-id-profile.dto';
 import {
+  FindByPhoneNumberResponseDto,
+  findByPhoneNumberResponseSchema,
+} from '@/profile/dto/find-by-phone-number.dto';
+import {
   FindByTagGroupsProfileResponseDto,
   findByTagGroupsProfileResponseSchema,
 } from '@/profile/dto/find-by-tag-groups-profile.dto';
@@ -173,6 +177,33 @@ export class ProfileController {
     const grouped = this.groupedProfiles(profiles);
 
     return grouped;
+  }
+
+  @ApiNotFoundResponse({
+    description: translate('route.profile.find-by-phone-number.not-found'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    type: FindByPhoneNumberResponseDto,
+    description: translate('route.profile.find-by-phone-number.success'),
+  })
+  @Get('find-by-phone-number/:phoneNumber')
+  async findByPhoneNumber(
+    @Param('phoneNumber') phoneNumber: string,
+    @VisibleTags() visibleTags: VisibleTagsType,
+  ): Promise<z.infer<typeof findByPhoneNumberResponseSchema>> {
+    const profile = await this.profileService.findByPhoneNumber(
+      phoneNumber,
+      visibleTags,
+    );
+
+    if (!profile) {
+      throw new NotFoundException(
+        translate('route.profile.find-by-phone-number.not-found'),
+      );
+    }
+
+    return profile;
   }
 
   @Roles(Role.ADMIN, Role.FORM)

@@ -330,6 +330,10 @@ export default {
         success: 'Perfiles obtenidos',
         'invalid-date': 'Fecha inválida',
       },
+      'find-by-phone-number': {
+        success: 'Perfil obtenido',
+        'not-found': 'Perfil no encontrado',
+      },
     },
   },
 } as const;
