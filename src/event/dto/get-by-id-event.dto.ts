@@ -6,7 +6,7 @@ import z from 'zod';
 
 export const getByIdEventResponseSchema = eventSchema.merge(
   z.object({
-    folder: eventFolderSchema,
+    folder: eventFolderSchema.nullable(),
   }),
 );
 

@@ -53,8 +53,8 @@ export class EventService {
 
   async findById(
     id: Event['id'],
-  ): Promise<z.infer<typeof getByIdEventResponseSchema> | null> {
-    return await this.prisma.event.findUnique({
+  ): Promise<z.infer<typeof getByIdEventResponseSchema>> {
+    const event = await this.prisma.event.findUnique({
       where: { id },
       include: {
         folder: true,
@@ -62,6 +62,7 @@ export class EventService {
         tagConfirmed: true,
       },
     });
+    return event!;
   }
 
   async update(

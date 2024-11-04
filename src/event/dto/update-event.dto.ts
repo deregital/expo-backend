@@ -7,6 +7,8 @@ export const updateEventSchema = eventSchema.pick({
   date: true,
   location: true,
   supraEventId: true,
+  tagAssistedId: true,
+  tagConfirmedId: true,
 });
 
 export class UpdateEventDto extends createZodDtoWithoutDate(
