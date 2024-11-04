@@ -289,5 +289,27 @@ export default {
         'not-found': 'Carpeta de evento no encontrada',
       },
     },
+    event: {
+      create: {
+        success: 'Evento creado con éxito',
+        conflict: 'Error en la creación del evento',
+      },
+      'get-all': {
+        success: 'Eventos obtenidos con éxito',
+        'not-found': 'No se encontraron eventos',
+      },
+      'get-by-id': {
+        success: 'Evento obtenido con éxito',
+        'not-found': 'Evento no encontrado',
+      },
+      update: {
+        success: 'Evento actualizado con éxito',
+        'not-found': 'Evento no encontrado',
+      },
+      delete: {
+        success: 'Evento eliminado con éxito',
+        'not-found': 'Evento no encontrado',
+      },
+    },
   },
 } as const;
