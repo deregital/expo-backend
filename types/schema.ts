@@ -436,6 +436,214 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/event-folder/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['EventFolderController_createEventFolder'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/event-folder/all': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['EventFolderController_getAllEventFolders'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/event-folder/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['EventFolderController_getEventFolderById'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/event-folder/update/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['EventFolderController_updateEventFolder'];
+    trace?: never;
+  };
+  '/event-folder/delete/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete: operations['EventFolderController_deleteEventFolder'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/profile/all': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProfileController_findAll'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/profile/find-by-tags': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProfileController_findByTag'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/profile/find-by-tag-groups': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProfileController_findByTagGroups'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/profile/find-by-date-range': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProfileController_findByDateRange'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/profile/find-by-phone-number/{phoneNumber}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProfileController_findByPhoneNumber'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/profile/find-trash': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProfileController_findTrashCan'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/profile/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['ProfileController_create'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/profile/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProfileController_findById'];
+    put?: never;
+    post?: never;
+    delete: operations['ProfileController_delete'];
+    options?: never;
+    head?: never;
+    patch: operations['ProfileController_update'];
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -447,23 +655,23 @@ export interface components {
     LoginResponseDto: {
       user: {
         /** Format: uuid */
-        id?: string;
-        username?: string;
+        id: string;
+        username: string;
         /** @enum {string} */
-        role?: 'USER' | 'ADMIN';
+        role: 'USER' | 'ADMIN' | 'FORM';
         /** @default false */
         isGlobalFilterActive: boolean;
         /** @default [] */
         fcmToken: string[];
         /** Format: date-time */
-        created_at?: string;
+        created_at: string;
         /** Format: date-time */
-        updated_at?: string;
+        updated_at: string;
       };
       backendTokens: {
-        accessToken?: string;
-        refreshToken?: string;
-        expiresIn?: number;
+        accessToken: string;
+        refreshToken: string;
+        expiresIn: number;
       };
     };
     ErrorDto: {
@@ -556,14 +764,14 @@ export interface components {
       updated_at: string;
       group: {
         /** Format: uuid */
-        id?: string;
-        name?: string;
-        color?: string;
-        isExclusive?: boolean;
+        id: string;
+        name: string;
+        color: string;
+        isExclusive: boolean;
         /** Format: date-time */
-        created_at?: string;
+        created_at: string;
         /** Format: date-time */
-        updated_at?: string;
+        updated_at: string;
       };
     };
     UpdateTagDto: {
@@ -607,26 +815,25 @@ export interface components {
         id: string;
         shortId: number;
         phoneNumber: string;
-        secondaryPhoneNumber: string | null;
+        secondaryPhoneNumber: null;
         fullName: string;
-        firstName: string | null;
-        gender: string | null;
-        /** Format: date-time */
-        birthDate: string | null;
+        firstName: null;
+        gender: null;
+        birthDate: null;
         /** Format: uri */
-        profilePictureUrl: string | null;
-        instagram: string | null;
+        profilePictureUrl: null;
+        instagram: null;
         /** Format: email */
-        mail: string | null;
-        dni: string | null;
-        alternativeNames: string[] | null;
+        mail: null;
+        dni: null;
+        alternativeNames: string[];
         /** Format: uuid */
-        birthLocationId: string | null;
+        birthLocationId: null;
         /** Format: uuid */
-        residenceLocationId: string | null;
+        residenceLocationId: null;
         isInTrash: boolean;
         /** Format: date-time */
-        movedToTrashDate: string | null;
+        movedToTrashDate: null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -643,26 +850,25 @@ export interface components {
         id: string;
         shortId: number;
         phoneNumber: string;
-        secondaryPhoneNumber: string | null;
+        secondaryPhoneNumber: null;
         fullName: string;
-        firstName: string | null;
-        gender: string | null;
-        /** Format: date-time */
-        birthDate: string | null;
+        firstName: null;
+        gender: null;
+        birthDate: null;
         /** Format: uri */
-        profilePictureUrl: string | null;
-        instagram: string | null;
+        profilePictureUrl: null;
+        instagram: null;
         /** Format: email */
-        mail: string | null;
-        dni: string | null;
-        alternativeNames: string[] | null;
+        mail: null;
+        dni: null;
+        alternativeNames: string[];
         /** Format: uuid */
-        birthLocationId: string | null;
+        birthLocationId: null;
         /** Format: uuid */
-        residenceLocationId: string | null;
+        residenceLocationId: null;
         isInTrash: boolean;
         /** Format: date-time */
-        movedToTrashDate: string | null;
+        movedToTrashDate: null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -673,14 +879,14 @@ export interface components {
       username: string;
       password: string;
       /** @enum {string} */
-      role: 'USER' | 'ADMIN';
+      role: 'USER' | 'ADMIN' | 'FORM';
     };
     CreateAccountResponseDto: {
       /** Format: uuid */
       id: string;
       username: string;
       /** @enum {string} */
-      role: 'USER' | 'ADMIN';
+      role: 'USER' | 'ADMIN' | 'FORM';
       /** @default false */
       isGlobalFilterActive: boolean;
       /** @default [] */
@@ -697,7 +903,7 @@ export interface components {
       username: string;
       password: string;
       /** @enum {string} */
-      role: 'USER' | 'ADMIN';
+      role: 'USER' | 'ADMIN' | 'FORM';
       /** @default false */
       isGlobalFilterActive: boolean;
       /** @default [] */
@@ -742,7 +948,7 @@ export interface components {
       id: string;
       username: string;
       /** @enum {string} */
-      role: 'USER' | 'ADMIN';
+      role: 'USER' | 'ADMIN' | 'FORM';
       /** @default false */
       isGlobalFilterActive: boolean;
       /** @default [] */
@@ -919,9 +1125,9 @@ export interface components {
       /** @default false */
       isSolved: boolean;
       /** Format: date-time */
-      solvedAt: string | null;
+      solvedAt: null;
       /** Format: uuid */
-      solvedBy: string;
+      solvedBy?: string;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -941,7 +1147,7 @@ export interface components {
         /** @default false */
         isSolved: boolean;
         /** Format: date-time */
-        solvedAt: string | null;
+        solvedAt: null;
         /** Format: uuid */
         solvedBy?: string;
         /** Format: date-time */
@@ -966,9 +1172,9 @@ export interface components {
       /** @default false */
       isSolved: boolean;
       /** Format: date-time */
-      solvedAt: string | null;
+      solvedAt: null;
       /** Format: uuid */
-      solvedBy: string;
+      solvedBy?: string;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1017,8 +1223,8 @@ export interface components {
         isoCode: string;
         countryCode: string;
         countryName: string;
-        latitude?: string | null;
-        longitude?: string | null;
+        latitude?: null;
+        longitude?: null;
       }[];
     };
     CreateCannedResponseDto: {
@@ -1070,6 +1276,510 @@ export interface components {
       created_at: string;
       /** Format: date-time */
       updated_at: string;
+    };
+    CreateEventFolderDto: {
+      name: string;
+      color: string;
+    };
+    CreateEventFolderResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      color: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    GetAllEventFolderResponseDto: {
+      eventFolders: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        color: string;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        events: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: date-time */
+          date: string;
+          location: string;
+          /** Format: uuid */
+          folderId: null;
+          /** Format: uuid */
+          tagAssistedId: string;
+          /** Format: uuid */
+          tagConfirmedId: string;
+          /** Format: uuid */
+          supraEventId: null;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        }[];
+      }[];
+    };
+    GetByIdEventFolderResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      color: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      events: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: date-time */
+        date: string;
+        location: string;
+        /** Format: uuid */
+        folderId: null;
+        /** Format: uuid */
+        tagAssistedId: string;
+        /** Format: uuid */
+        tagConfirmedId: string;
+        /** Format: uuid */
+        supraEventId: null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
+    };
+    UpdateEventFolderDto: {
+      name: string;
+      color: string;
+    };
+    UpdateEventFolderResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      color: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    DeleteEventFolderResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      color: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    FindAllProfileResponseDto: {
+      profiles: {
+        /** Format: uuid */
+        id: string;
+        shortId: number;
+        phoneNumber: string;
+        secondaryPhoneNumber: null;
+        fullName: string;
+        firstName: null;
+        gender: null;
+        birthDate: null;
+        /** Format: uri */
+        profilePictureUrl: null;
+        instagram: null;
+        /** Format: email */
+        mail: null;
+        dni: null;
+        alternativeNames: string[];
+        /** Format: uuid */
+        birthLocationId: null;
+        /** Format: uuid */
+        residenceLocationId: null;
+        isInTrash: boolean;
+        /** Format: date-time */
+        movedToTrashDate: null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        tags: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: uuid */
+          groupId: string;
+          /** @enum {string} */
+          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+          group: {
+            color: string;
+            isExclusive: boolean;
+          };
+        }[];
+      }[];
+    };
+    FindByTagsProfileResponseDto: {
+      profiles: {
+        /** Format: uuid */
+        id: string;
+        shortId: number;
+        phoneNumber: string;
+        secondaryPhoneNumber: null;
+        fullName: string;
+        firstName: null;
+        gender: null;
+        birthDate: null;
+        /** Format: uri */
+        profilePictureUrl: null;
+        instagram: null;
+        /** Format: email */
+        mail: null;
+        dni: null;
+        alternativeNames: string[];
+        /** Format: uuid */
+        birthLocationId: null;
+        /** Format: uuid */
+        residenceLocationId: null;
+        isInTrash: boolean;
+        /** Format: date-time */
+        movedToTrashDate: null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        tags: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: uuid */
+          groupId: string;
+          /** @enum {string} */
+          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+          group: {
+            isExclusive: boolean;
+          };
+        }[];
+      }[];
+    };
+    FindByTagGroupsProfileResponseDto: {
+      profiles: {
+        /** Format: uuid */
+        id: string;
+        shortId: number;
+        phoneNumber: string;
+        secondaryPhoneNumber: null;
+        fullName: string;
+        firstName: null;
+        gender: null;
+        birthDate: null;
+        /** Format: uri */
+        profilePictureUrl: null;
+        instagram: null;
+        /** Format: email */
+        mail: null;
+        dni: null;
+        alternativeNames: string[];
+        /** Format: uuid */
+        birthLocationId: null;
+        /** Format: uuid */
+        residenceLocationId: null;
+        isInTrash: boolean;
+        /** Format: date-time */
+        movedToTrashDate: null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        tags: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: uuid */
+          groupId: string;
+          /** @enum {string} */
+          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        }[];
+      }[];
+    };
+    FindByDateRangeResponseDto: {
+      [key: string]:
+        | {
+            /** Format: uuid */
+            id: string;
+            shortId: number;
+            phoneNumber: string;
+            secondaryPhoneNumber: null;
+            fullName: string;
+            firstName: null;
+            gender: null;
+            birthDate: null;
+            /** Format: uri */
+            profilePictureUrl: null;
+            instagram: null;
+            /** Format: email */
+            mail: null;
+            dni: null;
+            alternativeNames: string[];
+            /** Format: uuid */
+            birthLocationId: null;
+            /** Format: uuid */
+            residenceLocationId: null;
+            isInTrash: boolean;
+            /** Format: date-time */
+            movedToTrashDate: null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            tags: {
+              /** Format: uuid */
+              id: string;
+              name: string;
+              /** Format: uuid */
+              groupId: string;
+              /** @enum {string} */
+              type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+              /** Format: date-time */
+              created_at: string;
+              /** Format: date-time */
+              updated_at: string;
+              group: {
+                /** Format: uuid */
+                id: string;
+              };
+            }[];
+          }[]
+        | undefined;
+    };
+    FindByPhoneNumberResponseDto: {
+      /** Format: uuid */
+      id: string;
+      shortId: number;
+      phoneNumber: string;
+      secondaryPhoneNumber: null;
+      fullName: string;
+      firstName: null;
+      gender: null;
+      birthDate: null;
+      /** Format: uri */
+      profilePictureUrl: null;
+      instagram: null;
+      /** Format: email */
+      mail: null;
+      dni: null;
+      alternativeNames: string[];
+      /** Format: uuid */
+      birthLocationId: null;
+      /** Format: uuid */
+      residenceLocationId: null;
+      isInTrash: boolean;
+      /** Format: date-time */
+      movedToTrashDate: null;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    FindTrashResponseDto: {
+      profiles: {
+        /** Format: uuid */
+        id: string;
+        fullName: string;
+        /** Format: uri */
+        profilePictureUrl: null;
+        /** Format: date-time */
+        created_at: string;
+        isInTrash: boolean;
+        phoneNumber: string;
+        /** Format: date-time */
+        movedToTrashDate: null;
+      }[];
+    };
+    CreateProfileDto: {
+      profile: {
+        alternativeNames: string[];
+        birthDate: null;
+        dni: null;
+        fullName: string;
+        gender: null;
+        instagram: null;
+        /** Format: email */
+        mail: null;
+        phoneNumber: string;
+        /** Format: uri */
+        profilePictureUrl: null;
+        secondaryPhoneNumber: null;
+        comments?: {
+          content: string;
+          /** @default false */
+          isSolvable: boolean;
+        }[];
+        residence?: {
+          city: string;
+          country: string;
+          latitude: number;
+          longitude: number;
+          state: string;
+        };
+        birth?: {
+          city: string;
+          country: string;
+          latitude: number;
+          longitude: number;
+          state: string;
+        };
+        tags?: string[];
+      };
+      checkForSimilarity?: boolean;
+    };
+    CreateProfileResponseDto: {
+      response:
+        | {
+            /** @enum {string} */
+            type: 'similar';
+            similarProfiles: {
+              profile: {
+                fullName: string;
+                phoneNumber: string;
+                /** Format: uuid */
+                id: string;
+              };
+              similarityPhoneNumberPercentage: number;
+              similarityFullNamePercentage: number;
+            }[];
+          }
+        | {
+            /** @enum {string} */
+            type: 'created';
+            /** Format: uuid */
+            id: string;
+          };
+    };
+    FindByIdProfileResponseDto: {
+      /** Format: uuid */
+      id: string;
+      shortId: number;
+      phoneNumber: string;
+      secondaryPhoneNumber: null;
+      fullName: string;
+      firstName: null;
+      gender: null;
+      birthDate: null;
+      /** Format: uri */
+      profilePictureUrl: null;
+      instagram: null;
+      /** Format: email */
+      mail: null;
+      dni: null;
+      alternativeNames: string[];
+      /** Format: uuid */
+      birthLocationId: null;
+      /** Format: uuid */
+      residenceLocationId: null;
+      isInTrash: boolean;
+      /** Format: date-time */
+      movedToTrashDate: null;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      residenceLocation: null;
+      birthLocation: null;
+      tags: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        groupId: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        group: {
+          /** Format: uuid */
+          id: string;
+          color: string;
+          isExclusive: boolean;
+        };
+      }[];
+    };
+    DeleteProfileResponseDto: {
+      /** Format: uuid */
+      id: string;
+      shortId: number;
+      phoneNumber: string;
+      secondaryPhoneNumber: null;
+      fullName: string;
+      firstName: null;
+      gender: null;
+      birthDate: null;
+      /** Format: uri */
+      profilePictureUrl: null;
+      instagram: null;
+      /** Format: email */
+      mail: null;
+      dni: null;
+      alternativeNames: string[];
+      /** Format: uuid */
+      birthLocationId: null;
+      /** Format: uuid */
+      residenceLocationId: null;
+      isInTrash: boolean;
+      /** Format: date-time */
+      movedToTrashDate: null;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    UpdateProfileDto: {
+      alternativeNames: string[];
+      birthDate: null;
+      dni: null;
+      fullName: string;
+      gender: null;
+      instagram: null;
+      /** Format: email */
+      mail: null;
+      phoneNumber: string;
+      /** Format: uri */
+      profilePictureUrl: null;
+      secondaryPhoneNumber: null;
+      isInTrash: boolean;
+      /** Format: date-time */
+      movedToTrashDate: null;
+      residence?: {
+        city: string;
+        country: string;
+        latitude: number;
+        longitude: number;
+        state: string;
+      };
+      birth?: {
+        city: string;
+        country: string;
+        latitude: number;
+        longitude: number;
+        state: string;
+      };
+      tags?: string[];
     };
   };
   responses: never;
@@ -1938,6 +2648,469 @@ export interface operations {
       };
       /** @description Respuesta enlatada no encontrada */
       404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  EventFolderController_createEventFolder: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateEventFolderDto'];
+      };
+    };
+    responses: {
+      /** @description Carpeta de evento creada con éxito */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateEventFolderResponseDto'];
+        };
+      };
+      /** @description Error en la creación de la carpeta de evento */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  EventFolderController_getAllEventFolders: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Carpetas de evento obtenidas con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetAllEventFolderResponseDto'];
+        };
+      };
+    };
+  };
+  EventFolderController_getEventFolderById: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Carpeta de evento obtenida con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetByIdEventFolderResponseDto'];
+        };
+      };
+      /** @description Carpeta de evento no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  EventFolderController_updateEventFolder: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateEventFolderDto'];
+      };
+    };
+    responses: {
+      /** @description Carpeta de evento actualizada con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateEventFolderResponseDto'];
+        };
+      };
+      /** @description Carpeta de evento no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  EventFolderController_deleteEventFolder: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Carpeta de evento eliminada con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DeleteEventFolderResponseDto'];
+        };
+      };
+      /** @description Carpeta de evento no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProfileController_findAll: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Perfiles obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllProfileResponseDto'];
+        };
+      };
+    };
+  };
+  ProfileController_findByTag: {
+    parameters: {
+      query: {
+        tags: string[];
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Perfiles obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindByTagsProfileResponseDto'];
+        };
+      };
+      /** @description Perfil no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProfileController_findByTagGroups: {
+    parameters: {
+      query: {
+        tagGroups: string[];
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Perfiles obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindByTagGroupsProfileResponseDto'];
+        };
+      };
+      /** @description Perfil no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProfileController_findByDateRange: {
+    parameters: {
+      query: {
+        from: string;
+        to: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Perfiles obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindByDateRangeResponseDto'];
+        };
+      };
+      /** @description Fecha inválida */
+      412: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProfileController_findByPhoneNumber: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        phoneNumber: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Perfil obtenido */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindByPhoneNumberResponseDto'];
+        };
+      };
+      /** @description Perfil no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProfileController_findTrashCan: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Perfiles obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindTrashResponseDto'];
+        };
+      };
+    };
+  };
+  ProfileController_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateProfileDto'];
+      };
+    };
+    responses: {
+      /** @description Perfil creado con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateProfileResponseDto'];
+        };
+      };
+      /** @description No se encontró la etiqueta de participante */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error en la creación del perfil */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProfileController_findById: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Perfil obtenido */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindByIdProfileResponseDto'];
+        };
+      };
+      /** @description Perfil no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProfileController_delete: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Perfil eliminado con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DeleteProfileResponseDto'];
+        };
+      };
+      /** @description Perfil no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProfileController_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateProfileDto'];
+      };
+    };
+    responses: {
+      /** @description Perfil actualizado con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateProfileDto'];
+        };
+      };
+      /** @description Perfil no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error en la actualización del perfil */
+      409: {
         headers: {
           [name: string]: unknown;
         };

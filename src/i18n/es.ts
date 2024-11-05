@@ -289,5 +289,54 @@ export default {
         'not-found': 'Carpeta de evento no encontrada',
       },
     },
+    profile: {
+      'find-all': {
+        success: 'Perfiles obtenidos',
+      },
+      'find-by-id': {
+        'not-found': 'Perfil no encontrado',
+        success: 'Perfil obtenido',
+      },
+      'find-by-tag': {
+        'not-found': 'Perfil no encontrado',
+        'tags-not-found': 'Alguna de las etiquetas no existe',
+        success: 'Perfiles obtenidos',
+      },
+      'find-by-tag-groups': {
+        'not-found': 'Perfil no encontrado',
+        'tag-groups-not-found': 'Alguno de los grupos de etiquetas no existe',
+        success: 'Perfiles obtenidos',
+      },
+      create: {
+        'participant-tag-not-found':
+          'No se encontró la etiqueta de participante',
+        success: 'Perfil creado con éxito',
+        'dni-already-exists': 'Ya existe un perfil con ese DNI',
+        'phone-number-already-exists': 'Ya existe un perfil con ese teléfono',
+        'secondary-phone-number-already-exists':
+          'Ya existe un perfil con ese teléfono secundario',
+        conflict: 'Error en la creación del perfil',
+      },
+      delete: {
+        success: 'Perfil eliminado con éxito',
+        'not-found': 'Perfil no encontrado',
+      },
+      update: {
+        success: 'Perfil actualizado con éxito',
+        'not-found': 'Perfil no encontrado',
+        conflict: 'Error en la actualización del perfil',
+      },
+      'find-by-date-range': {
+        success: 'Perfiles obtenidos',
+        'invalid-date': 'Fecha inválida',
+      },
+      'find-by-phone-number': {
+        success: 'Perfil obtenido',
+        'not-found': 'Perfil no encontrado',
+      },
+      'find-trash': {
+        success: 'Perfiles obtenidos',
+      },
+    },
   },
 } as const;

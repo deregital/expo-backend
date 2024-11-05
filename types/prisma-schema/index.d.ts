@@ -75,6 +75,7 @@ export namespace $Enums {
   export const Role: {
     USER: 'USER';
     ADMIN: 'ADMIN';
+    FORM: 'FORM';
   };
 
   export type Role = (typeof Role)[keyof typeof Role];
@@ -15788,6 +15789,7 @@ export namespace Prisma {
   export type LocationWhereUniqueInput = Prisma.AtLeast<
     {
       id?: string;
+      latitude_longitude?: LocationLatitudeLongitudeCompoundUniqueInput;
       AND?: LocationWhereInput | LocationWhereInput[];
       OR?: LocationWhereInput[];
       NOT?: LocationWhereInput | LocationWhereInput[];
@@ -15801,7 +15803,7 @@ export namespace Prisma {
       birthProfiles?: ProfileListRelationFilter;
       residenceProfiles?: ProfileListRelationFilter;
     },
-    'id'
+    'id' | 'latitude_longitude'
   >;
 
   export type LocationOrderByWithAggregationInput = {
@@ -17784,6 +17786,11 @@ export namespace Prisma {
 
   export type ProfileOrderByRelationAggregateInput = {
     _count?: SortOrder;
+  };
+
+  export type LocationLatitudeLongitudeCompoundUniqueInput = {
+    latitude: number;
+    longitude: number;
   };
 
   export type LocationCountOrderByAggregateInput = {

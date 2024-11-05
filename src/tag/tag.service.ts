@@ -19,7 +19,7 @@ import {
 } from '@/tag/dto/update-tag.dto';
 import { Injectable } from '@nestjs/common';
 import z from 'zod';
-import { Profile, Tag } from '~/types';
+import { Profile, Tag, TagType } from '~/types';
 
 @Injectable()
 export class TagService {
@@ -164,5 +164,13 @@ export class TagService {
     return {
       profiles: profiles,
     };
+  }
+
+  async findParticipantTag(): Promise<Tag | null> {
+    return await this.prisma.tag.findFirst({
+      where: {
+        type: TagType.PARTICIPANT,
+      },
+    });
   }
 }
