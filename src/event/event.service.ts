@@ -8,10 +8,11 @@ import {
   UpdateEventDto,
   updateEventResponseSchema,
 } from '@/event/dto/update-event.dto';
+import { translate } from '@/i18n/translate';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { z } from 'zod';
-import { Event } from '~/types';
+import { Event, TagType } from '~/types';
 import { deleteEventResponseSchema } from './dto/delete-event.dto';
 
 @Injectable()
@@ -19,7 +20,11 @@ export class EventService {
   constructor(private prisma: PrismaService) {}
 
   async create(
-    dto: CreateEventDto,
+    dto: Omit<CreateEventDto, 'subEvents' | 'folderId'> & {
+      tagGroupId: string;
+      folderId?: string;
+      subEvents?: { id: string }[];
+    },
   ): Promise<z.infer<typeof createEventResponseSchema>> {
     return await this.prisma.event.create({
       data: {
@@ -27,16 +32,33 @@ export class EventService {
         date: dto.date,
         location: dto.location,
         folder: dto.folderId ? { connect: { id: dto.folderId } } : undefined,
-        tagAssisted: { connect: { id: dto.tagAssistedId } },
-        tagConfirmed: { connect: { id: dto.tagConfirmedId } },
-        supraEvent: dto.supraEventId
-          ? { connect: { id: dto.supraEventId } }
+        tagAssisted: {
+          create: {
+            group: {
+              connect: {
+                id: dto.tagGroupId,
+              },
+            },
+            name: `${dto.name} - ${translate('prisma.tag.assisted')}`,
+            type: TagType.EVENT,
+          },
+        },
+        tagConfirmed: {
+          create: {
+            group: {
+              connect: {
+                id: dto.tagGroupId,
+              },
+            },
+            name: `${dto.name} - ${translate('prisma.tag.confirmed')}`,
+            type: TagType.EVENT,
+          },
+        },
+        subEvents: dto.subEvents
+          ? {
+              connect: dto.subEvents.map((subEvent) => ({ id: subEvent.id })),
+            }
           : undefined,
-      },
-      include: {
-        folder: true,
-        tagAssisted: true,
-        tagConfirmed: true,
       },
     });
   }

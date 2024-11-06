@@ -1,3 +1,4 @@
+import { EventFolder } from '~/types';
 import {
   CreateEventFolderDto,
   createEventFolderResponseSchema,
@@ -79,5 +80,11 @@ export class EventFolderService {
       where: { id },
     });
     return deletedEventFolder;
+  }
+
+  async getById(id: string): Promise<EventFolder | null> {
+    return await this.prisma.eventFolder.findUnique({
+      where: { id },
+    });
   }
 }

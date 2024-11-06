@@ -12,6 +12,10 @@ export default {
       cannedResponse: 'Respuesta enlatada',
       message: 'Mensaje',
     },
+    tag: {
+      assisted: 'Asistió',
+      confirmed: 'Confirmó asistencia',
+    },
     conflict: `Ya existe un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
     'not-found': `No se encontró un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
   },
@@ -293,6 +297,7 @@ export default {
       create: {
         success: 'Evento creado con éxito',
         conflict: 'Error en la creación del evento',
+        'folder-not-found': 'Carpeta de evento no encontrada',
       },
       'get-all': {
         success: 'Eventos obtenidos con éxito',

@@ -2703,23 +2703,30 @@ components:
         folderId:
           type: "null"
           format: "uuid"
-        tagAssistedId:
-          type: "string"
-          format: "uuid"
-        tagConfirmedId:
-          type: "string"
-          format: "uuid"
-        supraEventId:
-          type: "null"
-          format: "uuid"
+        subEvents:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+                minLength: 1
+              date:
+                type: "string"
+                format: "date-time"
+              location:
+                type: "string"
+                minLength: 1
+            required:
+              - "name"
+              - "date"
+              - "location"
       required:
         - "name"
         - "date"
         - "location"
         - "folderId"
-        - "tagAssistedId"
-        - "tagConfirmedId"
-        - "supraEventId"
+        - "subEvents"
     CreateEventResponseDto:
       type: "object"
       properties:

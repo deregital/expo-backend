@@ -1,6 +1,7 @@
 import { Roles } from '@/auth/decorators/rol.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
+import { EventFolderService } from '@/event-folder/event-folder.service';
 import {
   CreateEventDto,
   CreateEventResponseDto,
@@ -27,11 +28,13 @@ import { EventService } from '@/event/event.service';
 import { translate } from '@/i18n/translate';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
+import { TagGroupService } from '@/tag-group/tag-group.service';
 import {
   Body,
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -51,9 +54,12 @@ import { Role } from '~/types/prisma-schema';
 @UseGuards(JwtGuard, RoleGuard)
 @Controller('event')
 export class EventController {
-  constructor(private readonly eventService: EventService) {}
+  constructor(
+    private readonly eventService: EventService,
+    private readonly eventFolderService: EventFolderService,
+    private readonly tagGroupService: TagGroupService,
+  ) {}
 
-  @Post('/create')
   @ApiCreatedResponse({
     description: translate('route.event.create.success'),
     type: CreateEventResponseDto,
@@ -62,10 +68,49 @@ export class EventController {
     description: translate('route.event.create.conflict'),
     type: ErrorDto,
   })
+  @Post('/create')
   async create(
     @Body() createEventDto: CreateEventDto,
   ): Promise<z.infer<typeof createEventResponseSchema>> {
-    return await this.eventService.create(createEventDto);
+    const eventTagGroup = await this.tagGroupService.create({
+      color: '#666666',
+      isExclusive: true,
+      name: createEventDto.name,
+    });
+
+    if (createEventDto.folderId) {
+      const eventFolder = await this.eventFolderService.getById(
+        createEventDto.folderId,
+      );
+
+      if (!eventFolder) {
+        throw new NotFoundException([
+          translate('route.event.create.folder-not-found'),
+        ]);
+      }
+    }
+
+    const subEvents = await Promise.all(
+      createEventDto.subEvents.map(async (subEvent) => {
+        const tagGroup = await this.tagGroupService.create({
+          color: '#666666',
+          isExclusive: true,
+          name: subEvent.name,
+        });
+
+        return await this.eventService.create({
+          ...subEvent,
+          tagGroupId: tagGroup.id,
+        });
+      }),
+    );
+
+    return await this.eventService.create({
+      ...createEventDto,
+      folderId: createEventDto.folderId ?? undefined,
+      tagGroupId: eventTagGroup.id,
+      subEvents: subEvents.map((subEvent) => ({ id: subEvent.id })),
+    });
   }
 
   @Get('/all')
