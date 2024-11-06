@@ -310,6 +310,7 @@ export default {
       update: {
         success: 'Evento actualizado con éxito',
         'not-found': 'Evento no encontrado',
+        'subevent-not-found': 'Subevento no encontrado',
       },
       delete: {
         success: 'Evento eliminado con éxito',

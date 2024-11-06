@@ -3,7 +3,10 @@ import {
   createEventResponseSchema,
 } from '@/event/dto/create-event.dto';
 import { getAllEventsResponseSchema } from '@/event/dto/get-all-event.dto';
-import { getByIdEventResponseSchema } from '@/event/dto/get-by-id-event.dto';
+import {
+  getByIdEventResponseSchema,
+  getBySupraEventResponseSchema,
+} from '@/event/dto/get-by-id-event.dto';
 import {
   UpdateEventDto,
   updateEventResponseSchema,
@@ -12,7 +15,7 @@ import { translate } from '@/i18n/translate';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { z } from 'zod';
-import { Event, TagType } from '~/types';
+import { Event, TagGroup, TagType } from '~/types';
 import { deleteEventResponseSchema } from './dto/delete-event.dto';
 
 @Injectable()
@@ -105,6 +108,21 @@ export class EventService {
     return event!;
   }
 
+  async findBySupraEventId(
+    id: Event['id'],
+  ): Promise<z.infer<typeof getBySupraEventResponseSchema>> {
+    const events = await this.prisma.event.findMany({
+      where: {
+        supraEventId: id,
+      },
+      include: {
+        tagAssisted: true,
+        tagConfirmed: true,
+      },
+    });
+    return events;
+  }
+
   async update(
     id: Event['id'],
     updateEventDto: UpdateEventDto,
@@ -118,18 +136,73 @@ export class EventService {
         folder: updateEventDto.folderId
           ? { connect: { id: updateEventDto.folderId } }
           : { disconnect: true },
-        tagAssisted: { connect: { id: updateEventDto.tagAssistedId } },
-        tagConfirmed: { connect: { id: updateEventDto.tagConfirmedId } },
       },
       include: {
-        folder: true,
-        tagAssisted: true,
-        tagConfirmed: true,
+        tagAssisted: {
+          include: {
+            group: true,
+          },
+        },
       },
     });
   }
 
-  async remove(id: string): Promise<z.infer<typeof deleteEventResponseSchema>> {
+  async upsert({
+    id,
+    event,
+    supraEventId,
+    tagGroupId,
+  }: {
+    id: Event['id'];
+    event: Pick<Event, 'date' | 'location' | 'name'>;
+    supraEventId: Event['id'];
+    tagGroupId: TagGroup['id'];
+  }): Promise<Event> {
+    return await this.prisma.event.upsert({
+      where: {
+        id,
+      },
+      update: {
+        date: event.date,
+        location: event.location,
+        name: event.name,
+      },
+      create: {
+        date: event.date,
+        location: event.location,
+        name: event.name,
+        supraEvent: {
+          connect: {
+            id: supraEventId,
+          },
+        },
+        tagAssisted: {
+          create: {
+            group: {
+              connect: {
+                id: tagGroupId,
+              },
+            },
+            name: `${event.name} - ${translate('prisma.tag.assisted')}`,
+            type: TagType.EVENT,
+          },
+        },
+        tagConfirmed: {
+          create: {
+            group: {
+              connect: {
+                id: tagGroupId,
+              },
+            },
+            name: `${event.name} - ${translate('prisma.tag.confirmed')}`,
+            type: TagType.EVENT,
+          },
+        },
+      },
+    });
+  }
+
+  async delete(id: string): Promise<z.infer<typeof deleteEventResponseSchema>> {
     const deletedEvent = await this.prisma.event.delete({
       where: { id },
     });
