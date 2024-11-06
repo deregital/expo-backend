@@ -1214,7 +1214,7 @@ export interface components {
       updated_at: string;
     };
     GetAllEventFolderResponseDto: {
-      eventFolders: {
+      folders: {
         /** Format: uuid */
         id: string;
         name: string;
@@ -1306,12 +1306,12 @@ export interface components {
       location: string;
       /** Format: uuid */
       folderId: string | null;
-      /** Format: uuid */
-      tagAssistedId: string;
-      /** Format: uuid */
-      tagConfirmedId: string;
-      /** Format: uuid */
-      supraEventId: string | null;
+      subEvents: {
+        name: string;
+        /** Format: date-time */
+        date: string;
+        location: string;
+      }[];
     };
     CreateEventResponseDto: {
       /** Format: uuid */
@@ -1334,7 +1334,77 @@ export interface components {
       updated_at: string;
     };
     GetAllEventsResponseDto: {
-      events: {
+      folders: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        color: string;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        events: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: date-time */
+          date: string;
+          location: string;
+          /** Format: uuid */
+          folderId: string | null;
+          /** Format: uuid */
+          tagAssistedId: string;
+          /** Format: uuid */
+          tagConfirmedId: string;
+          /** Format: uuid */
+          supraEventId: string | null;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+          supraEvent: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            /** Format: date-time */
+            date: string;
+            location: string;
+            /** Format: uuid */
+            folderId: string | null;
+            /** Format: uuid */
+            tagAssistedId: string;
+            /** Format: uuid */
+            tagConfirmedId: string;
+            /** Format: uuid */
+            supraEventId: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+          } | null;
+          subEvents: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            /** Format: date-time */
+            date: string;
+            location: string;
+            /** Format: uuid */
+            folderId: string | null;
+            /** Format: uuid */
+            tagAssistedId: string;
+            /** Format: uuid */
+            tagConfirmedId: string;
+            /** Format: uuid */
+            supraEventId: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+          }[];
+        }[];
+      }[];
+      withoutFolder: {
         /** Format: uuid */
         id: string;
         name: string;
@@ -1353,16 +1423,46 @@ export interface components {
         created_at: string;
         /** Format: date-time */
         updated_at: string;
-        folder: {
+        supraEvent: {
           /** Format: uuid */
           id: string;
           name: string;
-          color: string;
+          /** Format: date-time */
+          date: string;
+          location: string;
+          /** Format: uuid */
+          folderId: string | null;
+          /** Format: uuid */
+          tagAssistedId: string;
+          /** Format: uuid */
+          tagConfirmedId: string;
+          /** Format: uuid */
+          supraEventId: string | null;
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
           updated_at: string;
         } | null;
+        subEvents: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: date-time */
+          date: string;
+          location: string;
+          /** Format: uuid */
+          folderId: string | null;
+          /** Format: uuid */
+          tagAssistedId: string;
+          /** Format: uuid */
+          tagConfirmedId: string;
+          /** Format: uuid */
+          supraEventId: string | null;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        }[];
       }[];
     };
     GetByIdEventResponseDto: {
@@ -1384,11 +1484,41 @@ export interface components {
       created_at: string;
       /** Format: date-time */
       updated_at: string;
-      folder: {
+      subEvents: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: date-time */
+        date: string;
+        location: string;
+        /** Format: uuid */
+        folderId: string | null;
+        /** Format: uuid */
+        tagAssistedId: string;
+        /** Format: uuid */
+        tagConfirmedId: string;
+        /** Format: uuid */
+        supraEventId: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
+      supraEvent: {
         /** Format: uuid */
         id?: string;
         name?: string;
-        color?: string;
+        /** Format: date-time */
+        date?: string;
+        location?: string;
+        /** Format: uuid */
+        folderId?: string | null;
+        /** Format: uuid */
+        tagAssistedId?: string;
+        /** Format: uuid */
+        tagConfirmedId?: string;
+        /** Format: uuid */
+        supraEventId?: string | null;
         /** Format: date-time */
         created_at?: string;
         /** Format: date-time */
@@ -1402,12 +1532,13 @@ export interface components {
       /** Format: date-time */
       date: string;
       location: string;
-      /** Format: uuid */
-      supraEventId: string | null;
-      /** Format: uuid */
-      tagAssistedId: string;
-      /** Format: uuid */
-      tagConfirmedId: string;
+      subEvents: {
+        name: string;
+        location: string;
+        /** Format: date-time */
+        date: string;
+        id: string | '';
+      }[];
     };
     UpdateEventResponseDto: {
       /** Format: uuid */
@@ -1428,6 +1559,30 @@ export interface components {
       created_at: string;
       /** Format: date-time */
       updated_at: string;
+      tagAssisted: {
+        /** Format: uuid */
+        id?: string;
+        name?: string;
+        /** Format: uuid */
+        groupId?: string;
+        /** @enum {string} */
+        type?: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        /** Format: date-time */
+        created_at?: string;
+        /** Format: date-time */
+        updated_at?: string;
+        group?: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          color: string;
+          isExclusive: boolean;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        };
+      };
     };
     DeleteEventResponseDto: {
       /** Format: uuid */
