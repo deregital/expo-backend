@@ -123,7 +123,12 @@ export class EventController {
     type: ErrorDto,
   })
   async findAll(): Promise<z.infer<typeof getAllEventsResponseSchema>> {
-    return await this.eventService.findAll();
+    const eventsWithFolder = await this.eventFolderService.getAllNested();
+    const eventsWithoutFolder = await this.eventService.findWithoutFolder();
+    return {
+      folders: eventsWithFolder,
+      withoutFolder: eventsWithoutFolder,
+    };
   }
 
   @Get('/:id')

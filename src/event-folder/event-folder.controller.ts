@@ -77,7 +77,7 @@ export class EventFolderController {
   async getAllEventFolders(): Promise<
     z.infer<typeof getAllEventFolderResponseSchema>
   > {
-    return await this.eventFolderService.getAllEventFolders();
+    return await this.eventFolderService.getAll();
   }
 
   @ApiOkResponse({
@@ -92,7 +92,7 @@ export class EventFolderController {
   async getEventFolderById(
     @Param('id', new ExistingRecord('eventFolder')) id: string,
   ): Promise<z.infer<typeof getByIdEventFolderResponseSchema>> {
-    return await this.eventFolderService.getEventFolderById(id);
+    return await this.eventFolderService.getById(id);
   }
 
   @ApiNotFoundResponse({

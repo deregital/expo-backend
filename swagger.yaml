@@ -2480,7 +2480,7 @@ components:
     GetAllEventFolderResponseDto:
       type: "object"
       properties:
-        eventFolders:
+        folders:
           type: "array"
           items:
             type: "object"
@@ -2555,7 +2555,7 @@ components:
               - "updated_at"
               - "events"
       required:
-        - "eventFolders"
+        - "folders"
     GetByIdEventFolderResponseDto:
       type: "object"
       properties:
@@ -2774,7 +2774,173 @@ components:
     GetAllEventsResponseDto:
       type: "object"
       properties:
-        events:
+        folders:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              color:
+                type: "string"
+                minLength: 7
+                maxLength: 7
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+              events:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    date:
+                      type: "string"
+                      format: "date-time"
+                    location:
+                      type: "string"
+                      minLength: 1
+                    folderId:
+                      type: "null"
+                      format: "uuid"
+                    tagAssistedId:
+                      type: "string"
+                      format: "uuid"
+                    tagConfirmedId:
+                      type: "string"
+                      format: "uuid"
+                    supraEventId:
+                      type: "null"
+                      format: "uuid"
+                    created_at:
+                      type: "string"
+                      format: "date-time"
+                    updated_at:
+                      type: "string"
+                      format: "date-time"
+                    supraEvent:
+                      type: "null"
+                      properties:
+                        id:
+                          type: "string"
+                          format: "uuid"
+                        name:
+                          type: "string"
+                          minLength: 1
+                        date:
+                          type: "string"
+                          format: "date-time"
+                        location:
+                          type: "string"
+                          minLength: 1
+                        folderId:
+                          type: "null"
+                          format: "uuid"
+                        tagAssistedId:
+                          type: "string"
+                          format: "uuid"
+                        tagConfirmedId:
+                          type: "string"
+                          format: "uuid"
+                        supraEventId:
+                          type: "null"
+                          format: "uuid"
+                        created_at:
+                          type: "string"
+                          format: "date-time"
+                        updated_at:
+                          type: "string"
+                          format: "date-time"
+                      required:
+                        - "id"
+                        - "name"
+                        - "date"
+                        - "location"
+                        - "folderId"
+                        - "tagAssistedId"
+                        - "tagConfirmedId"
+                        - "supraEventId"
+                        - "created_at"
+                        - "updated_at"
+                    subEvents:
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties:
+                          id:
+                            type: "string"
+                            format: "uuid"
+                          name:
+                            type: "string"
+                            minLength: 1
+                          date:
+                            type: "string"
+                            format: "date-time"
+                          location:
+                            type: "string"
+                            minLength: 1
+                          folderId:
+                            type: "null"
+                            format: "uuid"
+                          tagAssistedId:
+                            type: "string"
+                            format: "uuid"
+                          tagConfirmedId:
+                            type: "string"
+                            format: "uuid"
+                          supraEventId:
+                            type: "null"
+                            format: "uuid"
+                          created_at:
+                            type: "string"
+                            format: "date-time"
+                          updated_at:
+                            type: "string"
+                            format: "date-time"
+                        required:
+                          - "id"
+                          - "name"
+                          - "date"
+                          - "location"
+                          - "folderId"
+                          - "tagAssistedId"
+                          - "tagConfirmedId"
+                          - "supraEventId"
+                          - "created_at"
+                          - "updated_at"
+                  required:
+                    - "id"
+                    - "name"
+                    - "date"
+                    - "location"
+                    - "folderId"
+                    - "tagAssistedId"
+                    - "tagConfirmedId"
+                    - "supraEventId"
+                    - "created_at"
+                    - "updated_at"
+                    - "supraEvent"
+                    - "subEvents"
+            required:
+              - "id"
+              - "name"
+              - "color"
+              - "created_at"
+              - "updated_at"
+              - "events"
+        withoutFolder:
           type: "array"
           items:
             type: "object"
@@ -2809,7 +2975,7 @@ components:
               updated_at:
                 type: "string"
                 format: "date-time"
-              folder:
+              supraEvent:
                 type: "null"
                 properties:
                   id:
@@ -2818,10 +2984,24 @@ components:
                   name:
                     type: "string"
                     minLength: 1
-                  color:
+                  date:
                     type: "string"
-                    minLength: 7
-                    maxLength: 7
+                    format: "date-time"
+                  location:
+                    type: "string"
+                    minLength: 1
+                  folderId:
+                    type: "null"
+                    format: "uuid"
+                  tagAssistedId:
+                    type: "string"
+                    format: "uuid"
+                  tagConfirmedId:
+                    type: "string"
+                    format: "uuid"
+                  supraEventId:
+                    type: "null"
+                    format: "uuid"
                   created_at:
                     type: "string"
                     format: "date-time"
@@ -2831,9 +3011,60 @@ components:
                 required:
                   - "id"
                   - "name"
-                  - "color"
+                  - "date"
+                  - "location"
+                  - "folderId"
+                  - "tagAssistedId"
+                  - "tagConfirmedId"
+                  - "supraEventId"
                   - "created_at"
                   - "updated_at"
+              subEvents:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    date:
+                      type: "string"
+                      format: "date-time"
+                    location:
+                      type: "string"
+                      minLength: 1
+                    folderId:
+                      type: "null"
+                      format: "uuid"
+                    tagAssistedId:
+                      type: "string"
+                      format: "uuid"
+                    tagConfirmedId:
+                      type: "string"
+                      format: "uuid"
+                    supraEventId:
+                      type: "null"
+                      format: "uuid"
+                    created_at:
+                      type: "string"
+                      format: "date-time"
+                    updated_at:
+                      type: "string"
+                      format: "date-time"
+                  required:
+                    - "id"
+                    - "name"
+                    - "date"
+                    - "location"
+                    - "folderId"
+                    - "tagAssistedId"
+                    - "tagConfirmedId"
+                    - "supraEventId"
+                    - "created_at"
+                    - "updated_at"
             required:
               - "id"
               - "name"
@@ -2845,9 +3076,11 @@ components:
               - "supraEventId"
               - "created_at"
               - "updated_at"
-              - "folder"
+              - "supraEvent"
+              - "subEvents"
       required:
-        - "events"
+        - "folders"
+        - "withoutFolder"
     GetByIdEventResponseDto:
       type: "object"
       properties:

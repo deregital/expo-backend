@@ -4,10 +4,25 @@ import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dt
 import z from 'zod';
 
 export const getAllEventsResponseSchema = z.object({
-  events: z.array(
+  folders: z.array(
+    eventFolderSchema.merge(
+      z.object({
+        events: z.array(
+          eventSchema.merge(
+            z.object({
+              supraEvent: eventSchema.nullable(),
+              subEvents: z.array(eventSchema),
+            }),
+          ),
+        ),
+      }),
+    ),
+  ),
+  withoutFolder: z.array(
     eventSchema.merge(
       z.object({
-        folder: eventFolderSchema.nullable(),
+        supraEvent: eventSchema.nullable(),
+        subEvents: z.array(eventSchema),
       }),
     ),
   ),

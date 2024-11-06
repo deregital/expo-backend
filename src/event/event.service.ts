@@ -63,15 +63,33 @@ export class EventService {
     });
   }
 
-  async findAll(): Promise<z.infer<typeof getAllEventsResponseSchema>> {
+  async findAll(): Promise<
+    z.infer<typeof getAllEventsResponseSchema.shape.withoutFolder>
+  > {
     const events = await this.prisma.event.findMany({
       include: {
         folder: true,
         tagAssisted: true,
         tagConfirmed: true,
+        subEvents: true,
+        supraEvent: true,
       },
     });
-    return { events };
+    return events;
+  }
+
+  async findWithoutFolder(): Promise<
+    Array<Event & { subEvents: Event[]; supraEvent: Event | null }>
+  > {
+    return await this.prisma.event.findMany({
+      where: {
+        folderId: null,
+      },
+      include: {
+        subEvents: true,
+        supraEvent: true,
+      },
+    });
   }
 
   async findById(
