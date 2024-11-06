@@ -3114,7 +3114,53 @@ components:
         updated_at:
           type: "string"
           format: "date-time"
-        folder:
+        subEvents:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              date:
+                type: "string"
+                format: "date-time"
+              location:
+                type: "string"
+                minLength: 1
+              folderId:
+                type: "null"
+                format: "uuid"
+              tagAssistedId:
+                type: "string"
+                format: "uuid"
+              tagConfirmedId:
+                type: "string"
+                format: "uuid"
+              supraEventId:
+                type: "null"
+                format: "uuid"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "name"
+              - "date"
+              - "location"
+              - "folderId"
+              - "tagAssistedId"
+              - "tagConfirmedId"
+              - "supraEventId"
+              - "created_at"
+              - "updated_at"
+        supraEvent:
           type: "null"
           properties:
             id:
@@ -3123,10 +3169,24 @@ components:
             name:
               type: "string"
               minLength: 1
-            color:
+            date:
               type: "string"
-              minLength: 7
-              maxLength: 7
+              format: "date-time"
+            location:
+              type: "string"
+              minLength: 1
+            folderId:
+              type: "null"
+              format: "uuid"
+            tagAssistedId:
+              type: "string"
+              format: "uuid"
+            tagConfirmedId:
+              type: "string"
+              format: "uuid"
+            supraEventId:
+              type: "null"
+              format: "uuid"
             created_at:
               type: "string"
               format: "date-time"
@@ -3136,7 +3196,12 @@ components:
           required:
             - "id"
             - "name"
-            - "color"
+            - "date"
+            - "location"
+            - "folderId"
+            - "tagAssistedId"
+            - "tagConfirmedId"
+            - "supraEventId"
             - "created_at"
             - "updated_at"
       required:
@@ -3150,7 +3215,8 @@ components:
         - "supraEventId"
         - "created_at"
         - "updated_at"
-        - "folder"
+        - "subEvents"
+        - "supraEvent"
     UpdateEventDto:
       type: "object"
       properties:
