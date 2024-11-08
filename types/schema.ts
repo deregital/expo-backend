@@ -879,25 +879,25 @@ export interface components {
         id: string;
         shortId: number;
         phoneNumber: string;
-        secondaryPhoneNumber: null;
+        secondaryPhoneNumber: string | null;
         fullName: string;
-        firstName: null;
-        gender: null;
-        birthDate: null;
+        firstName: string | null;
+        gender: string | null;
+        birthDate: string | null;
         /** Format: uri */
-        profilePictureUrl: null;
-        instagram: null;
+        profilePictureUrl: string | null;
+        instagram: string | null;
         /** Format: email */
-        mail: null;
-        dni: null;
+        mail: string | null;
+        dni: string | null;
         alternativeNames: string[];
         /** Format: uuid */
-        birthLocationId: null;
+        birthLocationId: string | null;
         /** Format: uuid */
-        residenceLocationId: null;
+        residenceLocationId: string | null;
         isInTrash: boolean;
         /** Format: date-time */
-        movedToTrashDate: null;
+        movedToTrashDate: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -914,25 +914,25 @@ export interface components {
         id: string;
         shortId: number;
         phoneNumber: string;
-        secondaryPhoneNumber: null;
+        secondaryPhoneNumber: string | null;
         fullName: string;
-        firstName: null;
-        gender: null;
-        birthDate: null;
+        firstName: string | null;
+        gender: string | null;
+        birthDate: string | null;
         /** Format: uri */
-        profilePictureUrl: null;
-        instagram: null;
+        profilePictureUrl: string | null;
+        instagram: string | null;
         /** Format: email */
-        mail: null;
-        dni: null;
+        mail: string | null;
+        dni: string | null;
         alternativeNames: string[];
         /** Format: uuid */
-        birthLocationId: null;
+        birthLocationId: string | null;
         /** Format: uuid */
-        residenceLocationId: null;
+        residenceLocationId: string | null;
         isInTrash: boolean;
         /** Format: date-time */
-        movedToTrashDate: null;
+        movedToTrashDate: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1189,7 +1189,7 @@ export interface components {
       /** @default false */
       isSolved: boolean;
       /** Format: date-time */
-      solvedAt: null;
+      solvedAt: string | null;
       /** Format: uuid */
       solvedBy?: string;
       /** Format: date-time */
@@ -1211,7 +1211,7 @@ export interface components {
         /** @default false */
         isSolved: boolean;
         /** Format: date-time */
-        solvedAt: null;
+        solvedAt: string | null;
         /** Format: uuid */
         solvedBy?: string;
         /** Format: date-time */
@@ -1236,7 +1236,7 @@ export interface components {
       /** @default false */
       isSolved: boolean;
       /** Format: date-time */
-      solvedAt: null;
+      solvedAt: string | null;
       /** Format: uuid */
       solvedBy?: string;
       /** Format: date-time */
@@ -1287,8 +1287,8 @@ export interface components {
         isoCode: string;
         countryCode: string;
         countryName: string;
-        latitude?: null;
-        longitude?: null;
+        latitude?: string | null;
+        longitude?: string | null;
       }[];
     };
     CreateCannedResponseDto: {
@@ -1373,13 +1373,13 @@ export interface components {
           date: string;
           location: string;
           /** Format: uuid */
-          folderId: null;
+          folderId: string | null;
           /** Format: uuid */
           tagAssistedId: string;
           /** Format: uuid */
           tagConfirmedId: string;
           /** Format: uuid */
-          supraEventId: null;
+          supraEventId: string | null;
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -1404,13 +1404,13 @@ export interface components {
         date: string;
         location: string;
         /** Format: uuid */
-        folderId: null;
+        folderId: string | null;
         /** Format: uuid */
         tagAssistedId: string;
         /** Format: uuid */
         tagConfirmedId: string;
         /** Format: uuid */
-        supraEventId: null;
+        supraEventId: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1447,7 +1447,7 @@ export interface components {
       date: string;
       location: string;
       /** Format: uuid */
-      folderId: null;
+      folderId: string | null;
       subEvents?: {
         name: string;
         /** Format: date-time */
@@ -1463,13 +1463,13 @@ export interface components {
       date: string;
       location: string;
       /** Format: uuid */
-      folderId: null;
+      folderId: string | null;
       /** Format: uuid */
       tagAssistedId: string;
       /** Format: uuid */
       tagConfirmedId: string;
       /** Format: uuid */
-      supraEventId: null;
+      supraEventId: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1493,18 +1493,37 @@ export interface components {
           date: string;
           location: string;
           /** Format: uuid */
-          folderId: null;
+          folderId: string | null;
           /** Format: uuid */
           tagAssistedId: string;
           /** Format: uuid */
           tagConfirmedId: string;
           /** Format: uuid */
-          supraEventId: null;
+          supraEventId: string | null;
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
           updated_at: string;
-          supraEvent: null;
+          supraEvent: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            /** Format: date-time */
+            date: string;
+            location: string;
+            /** Format: uuid */
+            folderId: string | null;
+            /** Format: uuid */
+            tagAssistedId: string;
+            /** Format: uuid */
+            tagConfirmedId: string;
+            /** Format: uuid */
+            supraEventId: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+          } | null;
           subEvents: {
             /** Format: uuid */
             id: string;
@@ -1513,13 +1532,13 @@ export interface components {
             date: string;
             location: string;
             /** Format: uuid */
-            folderId: null;
+            folderId: string | null;
             /** Format: uuid */
             tagAssistedId: string;
             /** Format: uuid */
             tagConfirmedId: string;
             /** Format: uuid */
-            supraEventId: null;
+            supraEventId: string | null;
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -1535,18 +1554,37 @@ export interface components {
         date: string;
         location: string;
         /** Format: uuid */
-        folderId: null;
+        folderId: string | null;
         /** Format: uuid */
         tagAssistedId: string;
         /** Format: uuid */
         tagConfirmedId: string;
         /** Format: uuid */
-        supraEventId: null;
+        supraEventId: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
         updated_at: string;
-        supraEvent: null;
+        supraEvent: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: date-time */
+          date: string;
+          location: string;
+          /** Format: uuid */
+          folderId: string | null;
+          /** Format: uuid */
+          tagAssistedId: string;
+          /** Format: uuid */
+          tagConfirmedId: string;
+          /** Format: uuid */
+          supraEventId: string | null;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        } | null;
         subEvents: {
           /** Format: uuid */
           id: string;
@@ -1555,13 +1593,13 @@ export interface components {
           date: string;
           location: string;
           /** Format: uuid */
-          folderId: null;
+          folderId: string | null;
           /** Format: uuid */
           tagAssistedId: string;
           /** Format: uuid */
           tagConfirmedId: string;
           /** Format: uuid */
-          supraEventId: null;
+          supraEventId: string | null;
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -1577,13 +1615,13 @@ export interface components {
       date: string;
       location: string;
       /** Format: uuid */
-      folderId: null;
+      folderId: string | null;
       /** Format: uuid */
       tagAssistedId: string;
       /** Format: uuid */
       tagConfirmedId: string;
       /** Format: uuid */
-      supraEventId: null;
+      supraEventId: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1596,24 +1634,43 @@ export interface components {
         date: string;
         location: string;
         /** Format: uuid */
-        folderId: null;
+        folderId: string | null;
         /** Format: uuid */
         tagAssistedId: string;
         /** Format: uuid */
         tagConfirmedId: string;
         /** Format: uuid */
-        supraEventId: null;
+        supraEventId: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
         updated_at: string;
       }[];
-      supraEvent: null;
+      supraEvent: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: date-time */
+        date: string;
+        location: string;
+        /** Format: uuid */
+        folderId: string | null;
+        /** Format: uuid */
+        tagAssistedId: string;
+        /** Format: uuid */
+        tagConfirmedId: string;
+        /** Format: uuid */
+        supraEventId: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      } | null;
     };
     UpdateEventDto: {
       name: string;
       /** Format: uuid */
-      folderId: null;
+      folderId: string | null;
       /** Format: date-time */
       date: string;
       location: string;
@@ -1633,13 +1690,13 @@ export interface components {
       date: string;
       location: string;
       /** Format: uuid */
-      folderId: null;
+      folderId: string | null;
       /** Format: uuid */
       tagAssistedId: string;
       /** Format: uuid */
       tagConfirmedId: string;
       /** Format: uuid */
-      supraEventId: null;
+      supraEventId: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1677,13 +1734,13 @@ export interface components {
       date: string;
       location: string;
       /** Format: uuid */
-      folderId: null;
+      folderId: string | null;
       /** Format: uuid */
       tagAssistedId: string;
       /** Format: uuid */
       tagConfirmedId: string;
       /** Format: uuid */
-      supraEventId: null;
+      supraEventId: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1695,25 +1752,25 @@ export interface components {
         id: string;
         shortId: number;
         phoneNumber: string;
-        secondaryPhoneNumber: null;
+        secondaryPhoneNumber: string | null;
         fullName: string;
-        firstName: null;
-        gender: null;
-        birthDate: null;
+        firstName: string | null;
+        gender: string | null;
+        birthDate: string | null;
         /** Format: uri */
-        profilePictureUrl: null;
-        instagram: null;
+        profilePictureUrl: string | null;
+        instagram: string | null;
         /** Format: email */
-        mail: null;
-        dni: null;
+        mail: string | null;
+        dni: string | null;
         alternativeNames: string[];
         /** Format: uuid */
-        birthLocationId: null;
+        birthLocationId: string | null;
         /** Format: uuid */
-        residenceLocationId: null;
+        residenceLocationId: string | null;
         isInTrash: boolean;
         /** Format: date-time */
-        movedToTrashDate: null;
+        movedToTrashDate: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1743,25 +1800,25 @@ export interface components {
         id: string;
         shortId: number;
         phoneNumber: string;
-        secondaryPhoneNumber: null;
+        secondaryPhoneNumber: string | null;
         fullName: string;
-        firstName: null;
-        gender: null;
-        birthDate: null;
+        firstName: string | null;
+        gender: string | null;
+        birthDate: string | null;
         /** Format: uri */
-        profilePictureUrl: null;
-        instagram: null;
+        profilePictureUrl: string | null;
+        instagram: string | null;
         /** Format: email */
-        mail: null;
-        dni: null;
+        mail: string | null;
+        dni: string | null;
         alternativeNames: string[];
         /** Format: uuid */
-        birthLocationId: null;
+        birthLocationId: string | null;
         /** Format: uuid */
-        residenceLocationId: null;
+        residenceLocationId: string | null;
         isInTrash: boolean;
         /** Format: date-time */
-        movedToTrashDate: null;
+        movedToTrashDate: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1815,25 +1872,25 @@ export interface components {
         id: string;
         shortId: number;
         phoneNumber: string;
-        secondaryPhoneNumber: null;
+        secondaryPhoneNumber: string | null;
         fullName: string;
-        firstName: null;
-        gender: null;
-        birthDate: null;
+        firstName: string | null;
+        gender: string | null;
+        birthDate: string | null;
         /** Format: uri */
-        profilePictureUrl: null;
-        instagram: null;
+        profilePictureUrl: string | null;
+        instagram: string | null;
         /** Format: email */
-        mail: null;
-        dni: null;
+        mail: string | null;
+        dni: string | null;
         alternativeNames: string[];
         /** Format: uuid */
-        birthLocationId: null;
+        birthLocationId: string | null;
         /** Format: uuid */
-        residenceLocationId: null;
+        residenceLocationId: string | null;
         isInTrash: boolean;
         /** Format: date-time */
-        movedToTrashDate: null;
+        movedToTrashDate: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1862,25 +1919,25 @@ export interface components {
         id: string;
         shortId: number;
         phoneNumber: string;
-        secondaryPhoneNumber: null;
+        secondaryPhoneNumber: string | null;
         fullName: string;
-        firstName: null;
-        gender: null;
-        birthDate: null;
+        firstName: string | null;
+        gender: string | null;
+        birthDate: string | null;
         /** Format: uri */
-        profilePictureUrl: null;
-        instagram: null;
+        profilePictureUrl: string | null;
+        instagram: string | null;
         /** Format: email */
-        mail: null;
-        dni: null;
+        mail: string | null;
+        dni: string | null;
         alternativeNames: string[];
         /** Format: uuid */
-        birthLocationId: null;
+        birthLocationId: string | null;
         /** Format: uuid */
-        residenceLocationId: null;
+        residenceLocationId: string | null;
         isInTrash: boolean;
         /** Format: date-time */
-        movedToTrashDate: null;
+        movedToTrashDate: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1907,25 +1964,25 @@ export interface components {
             id: string;
             shortId: number;
             phoneNumber: string;
-            secondaryPhoneNumber: null;
+            secondaryPhoneNumber: string | null;
             fullName: string;
-            firstName: null;
-            gender: null;
-            birthDate: null;
+            firstName: string | null;
+            gender: string | null;
+            birthDate: string | null;
             /** Format: uri */
-            profilePictureUrl: null;
-            instagram: null;
+            profilePictureUrl: string | null;
+            instagram: string | null;
             /** Format: email */
-            mail: null;
-            dni: null;
+            mail: string | null;
+            dni: string | null;
             alternativeNames: string[];
             /** Format: uuid */
-            birthLocationId: null;
+            birthLocationId: string | null;
             /** Format: uuid */
-            residenceLocationId: null;
+            residenceLocationId: string | null;
             isInTrash: boolean;
             /** Format: date-time */
-            movedToTrashDate: null;
+            movedToTrashDate: string | null;
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -1955,25 +2012,25 @@ export interface components {
       id: string;
       shortId: number;
       phoneNumber: string;
-      secondaryPhoneNumber: null;
+      secondaryPhoneNumber: string | null;
       fullName: string;
-      firstName: null;
-      gender: null;
-      birthDate: null;
+      firstName: string | null;
+      gender: string | null;
+      birthDate: string | null;
       /** Format: uri */
-      profilePictureUrl: null;
-      instagram: null;
+      profilePictureUrl: string | null;
+      instagram: string | null;
       /** Format: email */
-      mail: null;
-      dni: null;
+      mail: string | null;
+      dni: string | null;
       alternativeNames: string[];
       /** Format: uuid */
-      birthLocationId: null;
+      birthLocationId: string | null;
       /** Format: uuid */
-      residenceLocationId: null;
+      residenceLocationId: string | null;
       isInTrash: boolean;
       /** Format: date-time */
-      movedToTrashDate: null;
+      movedToTrashDate: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1985,29 +2042,29 @@ export interface components {
         id: string;
         fullName: string;
         /** Format: uri */
-        profilePictureUrl: null;
+        profilePictureUrl: string | null;
         /** Format: date-time */
         created_at: string;
         isInTrash: boolean;
         phoneNumber: string;
         /** Format: date-time */
-        movedToTrashDate: null;
+        movedToTrashDate: string | null;
       }[];
     };
     CreateProfileDto: {
       profile: {
         alternativeNames: string[];
-        birthDate: null;
-        dni: null;
+        birthDate: string | null;
+        dni: string | null;
         fullName: string;
-        gender: null;
-        instagram: null;
+        gender: string | null;
+        instagram: string | null;
         /** Format: email */
-        mail: null;
+        mail: string | null;
         phoneNumber: string;
         /** Format: uri */
-        profilePictureUrl: null;
-        secondaryPhoneNumber: null;
+        profilePictureUrl: string | null;
+        secondaryPhoneNumber: string | null;
         comments?: {
           content: string;
           /** @default false */
@@ -2034,8 +2091,6 @@ export interface components {
     CreateProfileResponseDto: {
       response:
         | {
-            /** @enum {string} */
-            type: 'similar';
             similarProfiles: {
               profile: {
                 fullName: string;
@@ -2046,12 +2101,14 @@ export interface components {
               similarityPhoneNumberPercentage: number;
               similarityFullNamePercentage: number;
             }[];
+            /** @enum {string} */
+            type: 'similar';
           }
         | {
-            /** @enum {string} */
-            type: 'created';
             /** Format: uuid */
             id: string;
+            /** @enum {string} */
+            type: 'created';
           };
     };
     FindByIdProfileResponseDto: {
@@ -2059,31 +2116,55 @@ export interface components {
       id: string;
       shortId: number;
       phoneNumber: string;
-      secondaryPhoneNumber: null;
+      secondaryPhoneNumber: string | null;
       fullName: string;
-      firstName: null;
-      gender: null;
-      birthDate: null;
+      firstName: string | null;
+      gender: string | null;
+      birthDate: string | null;
       /** Format: uri */
-      profilePictureUrl: null;
-      instagram: null;
+      profilePictureUrl: string | null;
+      instagram: string | null;
       /** Format: email */
-      mail: null;
-      dni: null;
+      mail: string | null;
+      dni: string | null;
       alternativeNames: string[];
       /** Format: uuid */
-      birthLocationId: null;
+      birthLocationId: string | null;
       /** Format: uuid */
-      residenceLocationId: null;
+      residenceLocationId: string | null;
       isInTrash: boolean;
       /** Format: date-time */
-      movedToTrashDate: null;
+      movedToTrashDate: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
       updated_at: string;
-      residenceLocation: null;
-      birthLocation: null;
+      residenceLocation: {
+        /** Format: uuid */
+        id: string;
+        latitude: number;
+        longitude: number;
+        country: string;
+        state: string;
+        city: string;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      } | null;
+      birthLocation: {
+        /** Format: uuid */
+        id: string;
+        latitude: number;
+        longitude: number;
+        country: string;
+        state: string;
+        city: string;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      } | null;
       tags: {
         /** Format: uuid */
         id: string;
@@ -2109,25 +2190,25 @@ export interface components {
       id: string;
       shortId: number;
       phoneNumber: string;
-      secondaryPhoneNumber: null;
+      secondaryPhoneNumber: string | null;
       fullName: string;
-      firstName: null;
-      gender: null;
-      birthDate: null;
+      firstName: string | null;
+      gender: string | null;
+      birthDate: string | null;
       /** Format: uri */
-      profilePictureUrl: null;
-      instagram: null;
+      profilePictureUrl: string | null;
+      instagram: string | null;
       /** Format: email */
-      mail: null;
-      dni: null;
+      mail: string | null;
+      dni: string | null;
       alternativeNames: string[];
       /** Format: uuid */
-      birthLocationId: null;
+      birthLocationId: string | null;
       /** Format: uuid */
-      residenceLocationId: null;
+      residenceLocationId: string | null;
       isInTrash: boolean;
       /** Format: date-time */
-      movedToTrashDate: null;
+      movedToTrashDate: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -2135,20 +2216,20 @@ export interface components {
     };
     UpdateProfileDto: {
       alternativeNames: string[];
-      birthDate: null;
-      dni: null;
+      birthDate: string | null;
+      dni: string | null;
       fullName: string;
-      gender: null;
-      instagram: null;
+      gender: string | null;
+      instagram: string | null;
       /** Format: email */
-      mail: null;
+      mail: string | null;
       phoneNumber: string;
       /** Format: uri */
-      profilePictureUrl: null;
-      secondaryPhoneNumber: null;
+      profilePictureUrl: string | null;
+      secondaryPhoneNumber: string | null;
       isInTrash: boolean;
       /** Format: date-time */
-      movedToTrashDate: null;
+      movedToTrashDate: string | null;
       residence?: {
         city: string;
         country: string;

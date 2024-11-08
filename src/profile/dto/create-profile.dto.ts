@@ -67,14 +67,20 @@ const similarProfileSchema = z.object({
   similarityFullNamePercentage: z.number(),
 });
 
+const similarityProfileSchema = z.object({
+  similarProfiles: z.array(similarProfileSchema),
+});
+
+const createdProfileSchema = z.object({
+  id: profileSchema.shape.id,
+});
+
 const createProfileResponseSchemaBase = z.discriminatedUnion('type', [
-  z.object({
+  similarityProfileSchema.extend({
     type: z.literal('similar'),
-    similarProfiles: z.array(similarProfileSchema),
   }),
-  z.object({
+  createdProfileSchema.extend({
     type: z.literal('created'),
-    id: profileSchema.shape.id,
   }),
 ]);
 

@@ -1049,46 +1049,59 @@ servers: []
 components:
   schemas:
     LoginDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         username:
-          type: "string"
+          type:
+            - "string"
         password:
-          type: "string"
+          type:
+            - "string"
           minLength: 6
       required:
         - "username"
         - "password"
     LoginResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         user:
-          type: "object"
+          type:
+            - "object"
           properties:
             id:
-              type: "string"
+              type:
+                - "string"
               format: "uuid"
             username:
-              type: "string"
+              type:
+                - "string"
             role:
-              type: "string"
+              type:
+                - "string"
               enum:
                 - "USER"
                 - "ADMIN"
                 - "FORM"
             isGlobalFilterActive:
               default: false
-              type: "boolean"
+              type:
+                - "boolean"
             fcmToken:
               default: []
-              type: "array"
+              type:
+                - "array"
               items:
-                type: "string"
+                type:
+                  - "string"
             created_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
             updated_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
           required:
             - "id"
@@ -1097,14 +1110,18 @@ components:
             - "created_at"
             - "updated_at"
         backendTokens:
-          type: "object"
+          type:
+            - "object"
           properties:
             accessToken:
-              type: "string"
+              type:
+                - "string"
             refreshToken:
-              type: "string"
+              type:
+                - "string"
             expiresIn:
-              type: "number"
+              type:
+                - "number"
           required:
             - "accessToken"
             - "refreshToken"
@@ -1113,59 +1130,76 @@ components:
         - "user"
         - "backendTokens"
     ErrorDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         message:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
         statusCode:
-          type: "number"
+          type:
+            - "number"
         error:
-          type: "string"
+          type:
+            - "string"
       required:
         - "message"
         - "statusCode"
         - "error"
     RefreshResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         refreshToken:
-          type: "string"
+          type:
+            - "string"
         accessToken:
-          type: "string"
+          type:
+            - "string"
         expiresIn:
-          type: "number"
+          type:
+            - "number"
       required:
         - "refreshToken"
         - "accessToken"
         - "expiresIn"
     CreateTagDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         groupId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
       required:
         - "name"
         - "groupId"
     CreateTagResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         groupId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         type:
-          type: "string"
+          type:
+            - "string"
           enum:
             - "PROFILE"
             - "EVENT"
@@ -1177,55 +1211,71 @@ components:
         - "groupId"
         - "type"
     FindAllTagResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         tags:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               groupId:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               type:
-                type: "string"
+                type:
+                  - "string"
                 enum:
                   - "PROFILE"
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               group:
-                type: "object"
+                type:
+                  - "object"
                 properties:
                   id:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "uuid"
                   name:
-                    type: "string"
+                    type:
+                      - "string"
                     minLength: 1
                   color:
-                    type: "string"
+                    type:
+                      - "string"
                     minLength: 7
                     maxLength: 7
                   isExclusive:
-                    type: "boolean"
+                    type:
+                      - "boolean"
                   created_at:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "date-time"
                   updated_at:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "date-time"
                 required:
                   - "id"
@@ -1245,55 +1295,71 @@ components:
       required:
         - "tags"
     FindByGroupTagResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         tags:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               groupId:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               type:
-                type: "string"
+                type:
+                  - "string"
                 enum:
                   - "PROFILE"
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               group:
-                type: "object"
+                type:
+                  - "object"
                 properties:
                   id:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "uuid"
                   name:
-                    type: "string"
+                    type:
+                      - "string"
                     minLength: 1
                   color:
-                    type: "string"
+                    type:
+                      - "string"
                     minLength: 7
                     maxLength: 7
                   isExclusive:
-                    type: "boolean"
+                    type:
+                      - "boolean"
                   created_at:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "date-time"
                   updated_at:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "date-time"
                 required:
                   - "id"
@@ -1313,50 +1379,64 @@ components:
       required:
         - "tags"
     FindOneTagResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         groupId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         type:
-          type: "string"
+          type:
+            - "string"
           enum:
             - "PROFILE"
             - "EVENT"
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         group:
-          type: "object"
+          type:
+            - "object"
           properties:
             id:
-              type: "string"
+              type:
+                - "string"
               format: "uuid"
             name:
-              type: "string"
+              type:
+                - "string"
               minLength: 1
             color:
-              type: "string"
+              type:
+                - "string"
               minLength: 7
               maxLength: 7
             isExclusive:
-              type: "boolean"
+              type:
+                - "boolean"
             created_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
             updated_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
           required:
             - "id"
@@ -1374,41 +1454,51 @@ components:
         - "updated_at"
         - "group"
     UpdateTagDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         groupId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
       required:
         - "name"
         - "groupId"
     UpdateTagResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         groupId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         type:
-          type: "string"
+          type:
+            - "string"
           enum:
             - "PROFILE"
             - "EVENT"
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -1418,29 +1508,36 @@ components:
         - "created_at"
         - "updated_at"
     DeleteTagResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         groupId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         type:
-          type: "string"
+          type:
+            - "string"
           enum:
             - "PROFILE"
             - "EVENT"
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -1450,79 +1547,118 @@ components:
         - "created_at"
         - "updated_at"
     MassiveAllocationDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         tagIds:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
             format: "uuid"
         profileIds:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
             format: "uuid"
       required:
         - "tagIds"
         - "profileIds"
     MassiveAllocationResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         profiles:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               shortId:
-                type: "number"
+                type:
+                  - "number"
               phoneNumber:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               secondaryPhoneNumber:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               fullName:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               firstName:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 minLength: 1
               gender:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               birthDate:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               profilePictureUrl:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uri"
               instagram:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               mail:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "email"
               dni:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               alternativeNames:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "string"
+                  type:
+                    - "string"
               birthLocationId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               residenceLocationId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               isInTrash:
-                type: "boolean"
+                type:
+                  - "boolean"
               movedToTrashDate:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "date-time"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
             required:
               - "id"
@@ -1547,79 +1683,118 @@ components:
       required:
         - "profiles"
     MassiveDeallocationDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         tagIds:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
             format: "uuid"
         profileIds:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
             format: "uuid"
       required:
         - "tagIds"
         - "profileIds"
     MassiveDeallocationResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         profiles:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               shortId:
-                type: "number"
+                type:
+                  - "number"
               phoneNumber:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               secondaryPhoneNumber:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               fullName:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               firstName:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 minLength: 1
               gender:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               birthDate:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               profilePictureUrl:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uri"
               instagram:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               mail:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "email"
               dni:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               alternativeNames:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "string"
+                  type:
+                    - "string"
               birthLocationId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               residenceLocationId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               isInTrash:
-                type: "boolean"
+                type:
+                  - "boolean"
               movedToTrashDate:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "date-time"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
             required:
               - "id"
@@ -1644,15 +1819,19 @@ components:
       required:
         - "profiles"
     CreateAccountDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         username:
-          type: "string"
+          type:
+            - "string"
         password:
-          type: "string"
+          type:
+            - "string"
           minLength: 6
         role:
-          type: "string"
+          type:
+            - "string"
           enum:
             - "USER"
             - "ADMIN"
@@ -1662,101 +1841,130 @@ components:
         - "password"
         - "role"
     CreateAccountResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         username:
-          type: "string"
+          type:
+            - "string"
         role:
-          type: "string"
+          type:
+            - "string"
           enum:
             - "USER"
             - "ADMIN"
             - "FORM"
         isGlobalFilterActive:
           default: false
-          type: "boolean"
+          type:
+            - "boolean"
         fcmToken:
           default: []
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
       required:
         - "id"
         - "username"
         - "role"
     UpdateGlobalFilterDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         active:
           default: false
-          type: "boolean"
+          type:
+            - "boolean"
         tagsIds:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
             format: "uuid"
       required:
         - "tagsIds"
     UpdateGlobalFilterResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         username:
-          type: "string"
+          type:
+            - "string"
         password:
-          type: "string"
+          type:
+            - "string"
           minLength: 6
         role:
-          type: "string"
+          type:
+            - "string"
           enum:
             - "USER"
             - "ADMIN"
             - "FORM"
         isGlobalFilterActive:
           default: false
-          type: "boolean"
+          type:
+            - "boolean"
         fcmToken:
           default: []
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         globalFilter:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               groupId:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               type:
-                type: "string"
+                type:
+                  - "string"
                 enum:
                   - "PROFILE"
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
             required:
               - "id"
@@ -1774,41 +1982,52 @@ components:
         - "updated_at"
         - "globalFilter"
     GetGlobalFilterResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         isGlobalFilterActive:
           default: false
-          type: "boolean"
+          type:
+            - "boolean"
         globalFilter:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               type:
-                type: "string"
+                type:
+                  - "string"
                 enum:
                   - "PROFILE"
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
               group:
-                type: "object"
+                type:
+                  - "object"
                 properties:
                   id:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "uuid"
                   color:
-                    type: "string"
+                    type:
+                      - "string"
                     minLength: 7
                     maxLength: 7
                   isExclusive:
-                    type: "boolean"
+                    type:
+                      - "boolean"
                 required:
                   - "id"
                   - "color"
@@ -1821,63 +2040,81 @@ components:
       required:
         - "globalFilter"
     GetMeResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         username:
-          type: "string"
+          type:
+            - "string"
         role:
-          type: "string"
+          type:
+            - "string"
           enum:
             - "USER"
             - "ADMIN"
             - "FORM"
         isGlobalFilterActive:
           default: false
-          type: "boolean"
+          type:
+            - "boolean"
         fcmToken:
           default: []
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         globalFilter:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               type:
-                type: "string"
+                type:
+                  - "string"
                 enum:
                   - "PROFILE"
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
               group:
-                type: "object"
+                type:
+                  - "object"
                 properties:
                   id:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "uuid"
                   color:
-                    type: "string"
+                    type:
+                      - "string"
                     minLength: 7
                     maxLength: 7
                   isExclusive:
-                    type: "boolean"
+                    type:
+                      - "boolean"
                 required:
                   - "id"
                   - "color"
@@ -1888,31 +2125,39 @@ components:
               - "type"
               - "group"
         tags:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               groupId:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               type:
-                type: "string"
+                type:
+                  - "string"
                 enum:
                   - "PROFILE"
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
             required:
               - "id"
@@ -1930,41 +2175,52 @@ components:
         - "globalFilter"
         - "tags"
     CreateTagGroupDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         color:
-          type: "string"
+          type:
+            - "string"
           minLength: 7
           maxLength: 7
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         isExclusive:
-          type: "boolean"
+          type:
+            - "boolean"
       required:
         - "color"
         - "name"
         - "isExclusive"
     CreateTagGroupResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         color:
-          type: "string"
+          type:
+            - "string"
           minLength: 7
           maxLength: 7
         isExclusive:
-          type: "boolean"
+          type:
+            - "boolean"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -1974,57 +2230,74 @@ components:
         - "created_at"
         - "updated_at"
     FindAllTagGroupResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         tagGroups:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               color:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 7
                 maxLength: 7
               isExclusive:
-                type: "boolean"
+                type:
+                  - "boolean"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               tags:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "object"
+                  type:
+                    - "object"
                   properties:
                     id:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     name:
-                      type: "string"
+                      type:
+                        - "string"
                       minLength: 1
                     groupId:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     type:
-                      type: "string"
+                      type:
+                        - "string"
                       enum:
                         - "PROFILE"
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                     created_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     updated_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                   required:
                     - "id"
@@ -2044,57 +2317,74 @@ components:
       required:
         - "tagGroups"
     FindAllWithTagsResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         groups:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               isExclusive:
-                type: "boolean"
+                type:
+                  - "boolean"
               color:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 7
                 maxLength: 7
               tags:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "object"
+                  type:
+                    - "object"
                   properties:
                     id:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     name:
-                      type: "string"
+                      type:
+                        - "string"
                       minLength: 1
                     groupId:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     type:
-                      type: "string"
+                      type:
+                        - "string"
                       enum:
                         - "PROFILE"
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                     created_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     updated_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     _count:
-                      type: "object"
+                      type:
+                        - "object"
                       properties:
                         profiles:
-                          type: "number"
+                          type:
+                            - "number"
                       required:
                         - "profiles"
                   required:
@@ -2106,10 +2396,12 @@ components:
                     - "updated_at"
                     - "_count"
               _count:
-                type: "object"
+                type:
+                  - "object"
                 properties:
                   tags:
-                    type: "number"
+                    type:
+                      - "number"
                 required:
                   - "tags"
             required:
@@ -2122,52 +2414,67 @@ components:
       required:
         - "groups"
     FindOneTagGroupResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         color:
-          type: "string"
+          type:
+            - "string"
           minLength: 7
           maxLength: 7
         isExclusive:
-          type: "boolean"
+          type:
+            - "boolean"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         tags:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               groupId:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               type:
-                type: "string"
+                type:
+                  - "string"
                 enum:
                   - "PROFILE"
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
             required:
               - "id"
@@ -2185,41 +2492,52 @@ components:
         - "updated_at"
         - "tags"
     UpdateTagGroupDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         color:
-          type: "string"
+          type:
+            - "string"
           minLength: 7
           maxLength: 7
         isExclusive:
-          type: "boolean"
+          type:
+            - "boolean"
       required:
         - "name"
         - "color"
         - "isExclusive"
     UpdateTagGroupResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         color:
-          type: "string"
+          type:
+            - "string"
           minLength: 7
           maxLength: 7
         isExclusive:
-          type: "boolean"
+          type:
+            - "boolean"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -2229,25 +2547,32 @@ components:
         - "created_at"
         - "updated_at"
     DeleteTagGroupResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         color:
-          type: "string"
+          type:
+            - "string"
           minLength: 7
           maxLength: 7
         isExclusive:
-          type: "boolean"
+          type:
+            - "boolean"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -2257,52 +2582,68 @@ components:
         - "created_at"
         - "updated_at"
     CreateCommentDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         content:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         profileId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         isSolvable:
           default: false
-          type: "boolean"
+          type:
+            - "boolean"
       required:
         - "content"
         - "profileId"
     CreateCommentResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         content:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         createdBy:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         profileId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         isSolvable:
           default: false
-          type: "boolean"
+          type:
+            - "boolean"
         isSolved:
           default: false
-          type: "boolean"
+          type:
+            - "boolean"
         solvedAt:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "date-time"
         solvedBy:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -2313,48 +2654,64 @@ components:
         - "created_at"
         - "updated_at"
     GetByProfileCommentResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         comments:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               content:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               createdBy:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               profileId:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               isSolvable:
                 default: false
-                type: "boolean"
+                type:
+                  - "boolean"
               isSolved:
                 default: false
-                type: "boolean"
+                type:
+                  - "boolean"
               solvedAt:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "date-time"
               solvedBy:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               account:
-                type: "object"
+                type:
+                  - "object"
                 properties:
                   username:
-                    type: "string"
+                    type:
+                      - "string"
                 required:
                   - "username"
             required:
@@ -2369,37 +2726,49 @@ components:
       required:
         - "comments"
     ToggleSolveCommentResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         content:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         createdBy:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         profileId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         isSolvable:
           default: false
-          type: "boolean"
+          type:
+            - "boolean"
         isSolved:
           default: false
-          type: "boolean"
+          type:
+            - "boolean"
         solvedAt:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "date-time"
         solvedBy:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -2410,28 +2779,36 @@ components:
         - "created_at"
         - "updated_at"
     FindAllLocationResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         birthLocations:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               city:
-                type: "string"
+                type:
+                  - "string"
               longitude:
-                type: "number"
+                type:
+                  - "number"
                 minimum: -180
                 maximum: 180
               latitude:
-                type: "number"
+                type:
+                  - "number"
                 minimum: -90
                 maximum: 90
               _count:
-                type: "object"
+                type:
+                  - "object"
                 properties:
                   birthProfiles:
-                    type: "number"
+                    type:
+                      - "number"
                 required:
                   - "birthProfiles"
             required:
@@ -2440,25 +2817,32 @@ components:
               - "latitude"
               - "_count"
         residenceLocations:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               city:
-                type: "string"
+                type:
+                  - "string"
               longitude:
-                type: "number"
+                type:
+                  - "number"
                 minimum: -180
                 maximum: 180
               latitude:
-                type: "number"
+                type:
+                  - "number"
                 minimum: -90
                 maximum: 90
               _count:
-                type: "object"
+                type:
+                  - "object"
                 properties:
                   residenceProfiles:
-                    type: "number"
+                    type:
+                      - "number"
                 required:
                   - "residenceProfiles"
             required:
@@ -2470,33 +2854,44 @@ components:
         - "birthLocations"
         - "residenceLocations"
     FindArgStatesResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         states:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
       required:
         - "states"
     FindCitiesByArgStateResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         cities:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
               name:
-                type: "string"
+                type:
+                  - "string"
               centroid:
-                type: "object"
+                type:
+                  - "object"
                 properties:
                   lon:
-                    type: "number"
+                    type:
+                      - "number"
                   lat:
-                    type: "number"
+                    type:
+                      - "number"
                 required:
                   - "lon"
                   - "lat"
@@ -2507,42 +2902,58 @@ components:
       required:
         - "cities"
     FindAllCountriesResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         countries:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               name:
-                type: "string"
+                type:
+                  - "string"
               isoCode:
-                type: "string"
+                type:
+                  - "string"
             required:
               - "name"
               - "isoCode"
       required:
         - "countries"
     FindAllStatesByCountryResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         states:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               name:
-                type: "string"
+                type:
+                  - "string"
               isoCode:
-                type: "string"
+                type:
+                  - "string"
               countryCode:
-                type: "string"
+                type:
+                  - "string"
               countryName:
-                type: "string"
+                type:
+                  - "string"
               latitude:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               longitude:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
             required:
               - "name"
               - "isoCode"
@@ -2551,34 +2962,43 @@ components:
       required:
         - "states"
     CreateCannedResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         content:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
       required:
         - "name"
         - "content"
     CreateCannedResponseResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         content:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -2587,27 +3007,35 @@ components:
         - "created_at"
         - "updated_at"
     GetAllCannedResponseResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         cannedResponses:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               content:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
             required:
               - "id"
@@ -2618,34 +3046,43 @@ components:
       required:
         - "cannedResponses"
     UpdateCannedResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         content:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
       required:
         - "name"
         - "content"
     UpdateCannedResponseResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         content:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -2654,22 +3091,28 @@ components:
         - "created_at"
         - "updated_at"
     DeleteCannedResponseResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         content:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -2678,36 +3121,45 @@ components:
         - "created_at"
         - "updated_at"
     CreateEventFolderDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         color:
-          type: "string"
+          type:
+            - "string"
           minLength: 7
           maxLength: 7
       required:
         - "name"
         - "color"
     CreateEventFolderResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         color:
-          type: "string"
+          type:
+            - "string"
           minLength: 7
           maxLength: 7
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -2716,63 +3168,85 @@ components:
         - "created_at"
         - "updated_at"
     GetAllEventFolderResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         folders:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               color:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 7
                 maxLength: 7
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               events:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "object"
+                  type:
+                    - "object"
                   properties:
                     id:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     name:
-                      type: "string"
+                      type:
+                        - "string"
                       minLength: 1
                     date:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     location:
-                      type: "string"
+                      type:
+                        - "string"
                       minLength: 1
                     folderId:
-                      type: "null"
+                      type:
+                        - "string"
+                        - "null"
                       format: "uuid"
                     tagAssistedId:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     tagConfirmedId:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     supraEventId:
-                      type: "null"
+                      type:
+                        - "string"
+                        - "null"
                       format: "uuid"
                     created_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     updated_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                   required:
                     - "id"
@@ -2795,58 +3269,78 @@ components:
       required:
         - "folders"
     GetByIdEventFolderResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         color:
-          type: "string"
+          type:
+            - "string"
           minLength: 7
           maxLength: 7
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         events:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               date:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               location:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               folderId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               tagAssistedId:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               tagConfirmedId:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               supraEventId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
             required:
               - "id"
@@ -2867,36 +3361,45 @@ components:
         - "updated_at"
         - "events"
     UpdateEventFolderDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         color:
-          type: "string"
+          type:
+            - "string"
           minLength: 7
           maxLength: 7
       required:
         - "name"
         - "color"
     UpdateEventFolderResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         color:
-          type: "string"
+          type:
+            - "string"
           minLength: 7
           maxLength: 7
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -2905,23 +3408,29 @@ components:
         - "created_at"
         - "updated_at"
     DeleteEventFolderResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         color:
-          type: "string"
+          type:
+            - "string"
           minLength: 7
           maxLength: 7
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -2930,33 +3439,44 @@ components:
         - "created_at"
         - "updated_at"
     CreateEventDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         date:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         location:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         folderId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         subEvents:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               date:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               location:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
             required:
               - "name"
@@ -2968,37 +3488,50 @@ components:
         - "location"
         - "folderId"
     CreateEventResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         date:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         location:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         folderId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         tagAssistedId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         tagConfirmedId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         supraEventId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -3012,96 +3545,132 @@ components:
         - "created_at"
         - "updated_at"
     GetAllEventsResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         folders:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               color:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 7
                 maxLength: 7
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               events:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "object"
+                  type:
+                    - "object"
                   properties:
                     id:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     name:
-                      type: "string"
+                      type:
+                        - "string"
                       minLength: 1
                     date:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     location:
-                      type: "string"
+                      type:
+                        - "string"
                       minLength: 1
                     folderId:
-                      type: "null"
+                      type:
+                        - "string"
+                        - "null"
                       format: "uuid"
                     tagAssistedId:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     tagConfirmedId:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     supraEventId:
-                      type: "null"
+                      type:
+                        - "string"
+                        - "null"
                       format: "uuid"
                     created_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     updated_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     supraEvent:
-                      type: "null"
+                      type:
+                        - "object"
+                        - "null"
                       properties:
                         id:
-                          type: "string"
+                          type:
+                            - "string"
                           format: "uuid"
                         name:
-                          type: "string"
+                          type:
+                            - "string"
                           minLength: 1
                         date:
-                          type: "string"
+                          type:
+                            - "string"
                           format: "date-time"
                         location:
-                          type: "string"
+                          type:
+                            - "string"
                           minLength: 1
                         folderId:
-                          type: "null"
+                          type:
+                            - "string"
+                            - "null"
                           format: "uuid"
                         tagAssistedId:
-                          type: "string"
+                          type:
+                            - "string"
                           format: "uuid"
                         tagConfirmedId:
-                          type: "string"
+                          type:
+                            - "string"
                           format: "uuid"
                         supraEventId:
-                          type: "null"
+                          type:
+                            - "string"
+                            - "null"
                           format: "uuid"
                         created_at:
-                          type: "string"
+                          type:
+                            - "string"
                           format: "date-time"
                         updated_at:
-                          type: "string"
+                          type:
+                            - "string"
                           format: "date-time"
                       required:
                         - "id"
@@ -3115,39 +3684,53 @@ components:
                         - "created_at"
                         - "updated_at"
                     subEvents:
-                      type: "array"
+                      type:
+                        - "array"
                       items:
-                        type: "object"
+                        type:
+                          - "object"
                         properties:
                           id:
-                            type: "string"
+                            type:
+                              - "string"
                             format: "uuid"
                           name:
-                            type: "string"
+                            type:
+                              - "string"
                             minLength: 1
                           date:
-                            type: "string"
+                            type:
+                              - "string"
                             format: "date-time"
                           location:
-                            type: "string"
+                            type:
+                              - "string"
                             minLength: 1
                           folderId:
-                            type: "null"
+                            type:
+                              - "string"
+                              - "null"
                             format: "uuid"
                           tagAssistedId:
-                            type: "string"
+                            type:
+                              - "string"
                             format: "uuid"
                           tagConfirmedId:
-                            type: "string"
+                            type:
+                              - "string"
                             format: "uuid"
                           supraEventId:
-                            type: "null"
+                            type:
+                              - "string"
+                              - "null"
                             format: "uuid"
                           created_at:
-                            type: "string"
+                            type:
+                              - "string"
                             format: "date-time"
                           updated_at:
-                            type: "string"
+                            type:
+                              - "string"
                             format: "date-time"
                         required:
                           - "id"
@@ -3181,72 +3764,100 @@ components:
               - "updated_at"
               - "events"
         withoutFolder:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               date:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               location:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               folderId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               tagAssistedId:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               tagConfirmedId:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               supraEventId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               supraEvent:
-                type: "null"
+                type:
+                  - "object"
+                  - "null"
                 properties:
                   id:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "uuid"
                   name:
-                    type: "string"
+                    type:
+                      - "string"
                     minLength: 1
                   date:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "date-time"
                   location:
-                    type: "string"
+                    type:
+                      - "string"
                     minLength: 1
                   folderId:
-                    type: "null"
+                    type:
+                      - "string"
+                      - "null"
                     format: "uuid"
                   tagAssistedId:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "uuid"
                   tagConfirmedId:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "uuid"
                   supraEventId:
-                    type: "null"
+                    type:
+                      - "string"
+                      - "null"
                     format: "uuid"
                   created_at:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "date-time"
                   updated_at:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "date-time"
                 required:
                   - "id"
@@ -3260,39 +3871,53 @@ components:
                   - "created_at"
                   - "updated_at"
               subEvents:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "object"
+                  type:
+                    - "object"
                   properties:
                     id:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     name:
-                      type: "string"
+                      type:
+                        - "string"
                       minLength: 1
                     date:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     location:
-                      type: "string"
+                      type:
+                        - "string"
                       minLength: 1
                     folderId:
-                      type: "null"
+                      type:
+                        - "string"
+                        - "null"
                       format: "uuid"
                     tagAssistedId:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     tagConfirmedId:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     supraEventId:
-                      type: "null"
+                      type:
+                        - "string"
+                        - "null"
                       format: "uuid"
                     created_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     updated_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                   required:
                     - "id"
@@ -3322,72 +3947,99 @@ components:
         - "folders"
         - "withoutFolder"
     GetByIdEventResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         date:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         location:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         folderId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         tagAssistedId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         tagConfirmedId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         supraEventId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         subEvents:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               date:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               location:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               folderId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               tagAssistedId:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               tagConfirmedId:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               supraEventId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
             required:
               - "id"
@@ -3401,37 +4053,51 @@ components:
               - "created_at"
               - "updated_at"
         supraEvent:
-          type: "null"
+          type:
+            - "object"
+            - "null"
           properties:
             id:
-              type: "string"
+              type:
+                - "string"
               format: "uuid"
             name:
-              type: "string"
+              type:
+                - "string"
               minLength: 1
             date:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
             location:
-              type: "string"
+              type:
+                - "string"
               minLength: 1
             folderId:
-              type: "null"
+              type:
+                - "string"
+                - "null"
               format: "uuid"
             tagAssistedId:
-              type: "string"
+              type:
+                - "string"
               format: "uuid"
             tagConfirmedId:
-              type: "string"
+              type:
+                - "string"
               format: "uuid"
             supraEventId:
-              type: "null"
+              type:
+                - "string"
+                - "null"
               format: "uuid"
             created_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
             updated_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
           required:
             - "id"
@@ -3458,39 +4124,52 @@ components:
         - "subEvents"
         - "supraEvent"
     UpdateEventDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         folderId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         date:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         location:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         subEvents:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               location:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               date:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               id:
                 oneOf:
-                  - type: "string"
+                  - type:
+                      - "string"
                     format: "uuid"
-                  - type: "string"
+                  - type:
+                      - "string"
                     enum:
                       - ""
             required:
@@ -3505,83 +4184,110 @@ components:
         - "location"
         - "subEvents"
     UpdateEventResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         date:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         location:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         folderId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         tagAssistedId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         tagConfirmedId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         supraEventId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         tagAssisted:
-          type: "object"
+          type:
+            - "object"
           properties:
             id:
-              type: "string"
+              type:
+                - "string"
               format: "uuid"
             name:
-              type: "string"
+              type:
+                - "string"
               minLength: 1
             groupId:
-              type: "string"
+              type:
+                - "string"
               format: "uuid"
             type:
-              type: "string"
+              type:
+                - "string"
               enum:
                 - "PROFILE"
                 - "EVENT"
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
             created_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
             updated_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
             group:
-              type: "object"
+              type:
+                - "object"
               properties:
                 id:
-                  type: "string"
+                  type:
+                    - "string"
                   format: "uuid"
                 name:
-                  type: "string"
+                  type:
+                    - "string"
                   minLength: 1
                 color:
-                  type: "string"
+                  type:
+                    - "string"
                   minLength: 7
                   maxLength: 7
                 isExclusive:
-                  type: "boolean"
+                  type:
+                    - "boolean"
                 created_at:
-                  type: "string"
+                  type:
+                    - "string"
                   format: "date-time"
                 updated_at:
-                  type: "string"
+                  type:
+                    - "string"
                   format: "date-time"
               required:
                 - "id"
@@ -3611,37 +4317,50 @@ components:
         - "updated_at"
         - "tagAssisted"
     DeleteEventResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         name:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         date:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         location:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         folderId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         tagAssistedId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         tagConfirmedId:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         supraEventId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -3655,100 +4374,145 @@ components:
         - "created_at"
         - "updated_at"
     FindAllProfileResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         profiles:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               shortId:
-                type: "number"
+                type:
+                  - "number"
               phoneNumber:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               secondaryPhoneNumber:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               fullName:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               firstName:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 minLength: 1
               gender:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               birthDate:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               profilePictureUrl:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uri"
               instagram:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               mail:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "email"
               dni:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               alternativeNames:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "string"
+                  type:
+                    - "string"
               birthLocationId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               residenceLocationId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               isInTrash:
-                type: "boolean"
+                type:
+                  - "boolean"
               movedToTrashDate:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "date-time"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               tags:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "object"
+                  type:
+                    - "object"
                   properties:
                     id:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     name:
-                      type: "string"
+                      type:
+                        - "string"
                       minLength: 1
                     groupId:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     type:
-                      type: "string"
+                      type:
+                        - "string"
                       enum:
                         - "PROFILE"
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                     created_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     updated_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     group:
-                      type: "object"
+                      type:
+                        - "object"
                       properties:
                         color:
-                          type: "string"
+                          type:
+                            - "string"
                           minLength: 7
                           maxLength: 7
                         isExclusive:
-                          type: "boolean"
+                          type:
+                            - "boolean"
                       required:
                         - "color"
                         - "isExclusive"
@@ -3784,90 +4548,132 @@ components:
       required:
         - "profiles"
     FindWithActiveChatResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         profiles:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               shortId:
-                type: "number"
+                type:
+                  - "number"
               phoneNumber:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               secondaryPhoneNumber:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               fullName:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               firstName:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 minLength: 1
               gender:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               birthDate:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               profilePictureUrl:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uri"
               instagram:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               mail:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "email"
               dni:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               alternativeNames:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "string"
+                  type:
+                    - "string"
               birthLocationId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               residenceLocationId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               isInTrash:
-                type: "boolean"
+                type:
+                  - "boolean"
               movedToTrashDate:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "date-time"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               tags:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "object"
+                  type:
+                    - "object"
                   properties:
                     id:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     name:
-                      type: "string"
+                      type:
+                        - "string"
                       minLength: 1
                     groupId:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     type:
-                      type: "string"
+                      type:
+                        - "string"
                       enum:
                         - "PROFILE"
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                     created_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     updated_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                   required:
                     - "id"
@@ -3877,14 +4683,18 @@ components:
                     - "created_at"
                     - "updated_at"
               inChat:
-                type: "boolean"
+                type:
+                  - "boolean"
               messages:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "object"
+                  type:
+                    - "object"
                   properties:
                     state:
-                      type: "string"
+                      type:
+                        - "string"
                       enum:
                         - "SENT"
                         - "RECEIVED"
@@ -3893,25 +4703,33 @@ components:
                       discriminator:
                         propertyName: "type"
                       oneOf:
-                        - type: "object"
+                        - type:
+                            - "object"
                           properties:
                             id:
-                              type: "string"
+                              type:
+                                - "string"
                             from:
-                              type: "string"
+                              type:
+                                - "string"
                             to:
-                              type: "string"
+                              type:
+                                - "string"
                             timestamp:
-                              type: "number"
+                              type:
+                                - "number"
                             text:
-                              type: "object"
+                              type:
+                                - "object"
                               properties:
                                 body:
-                                  type: "string"
+                                  type:
+                                    - "string"
                               required:
                                 - "body"
                             type:
-                              type: "string"
+                              type:
+                                - "string"
                               enum:
                                 - "text"
                           required:
@@ -3919,20 +4737,27 @@ components:
                             - "timestamp"
                             - "text"
                             - "type"
-                        - type: "object"
+                        - type:
+                            - "object"
                           properties:
                             id:
-                              type: "string"
+                              type:
+                                - "string"
                             from:
-                              type: "string"
+                              type:
+                                - "string"
                             to:
-                              type: "string"
+                              type:
+                                - "string"
                             timestamp:
-                              type: "number"
+                              type:
+                                - "number"
                             templateName:
-                              type: "string"
+                              type:
+                                - "string"
                             type:
-                              type: "string"
+                              type:
+                                - "string"
                               enum:
                                 - "template"
                           required:
@@ -3941,7 +4766,8 @@ components:
                             - "templateName"
                             - "type"
                     created_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                   required:
                     - "state"
@@ -3973,96 +4799,140 @@ components:
       required:
         - "profiles"
     FindByTagsProfileResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         profiles:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               shortId:
-                type: "number"
+                type:
+                  - "number"
               phoneNumber:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               secondaryPhoneNumber:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               fullName:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               firstName:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 minLength: 1
               gender:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               birthDate:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               profilePictureUrl:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uri"
               instagram:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               mail:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "email"
               dni:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               alternativeNames:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "string"
+                  type:
+                    - "string"
               birthLocationId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               residenceLocationId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               isInTrash:
-                type: "boolean"
+                type:
+                  - "boolean"
               movedToTrashDate:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "date-time"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               tags:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "object"
+                  type:
+                    - "object"
                   properties:
                     id:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     name:
-                      type: "string"
+                      type:
+                        - "string"
                       minLength: 1
                     groupId:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     type:
-                      type: "string"
+                      type:
+                        - "string"
                       enum:
                         - "PROFILE"
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                     created_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     updated_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     group:
-                      type: "object"
+                      type:
+                        - "object"
                       properties:
                         isExclusive:
-                          type: "boolean"
+                          type:
+                            - "boolean"
                       required:
                         - "isExclusive"
                   required:
@@ -4097,90 +4967,132 @@ components:
       required:
         - "profiles"
     FindByTagGroupsProfileResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         profiles:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               shortId:
-                type: "number"
+                type:
+                  - "number"
               phoneNumber:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               secondaryPhoneNumber:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               fullName:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               firstName:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 minLength: 1
               gender:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               birthDate:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               profilePictureUrl:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uri"
               instagram:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               mail:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "email"
               dni:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
               alternativeNames:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "string"
+                  type:
+                    - "string"
               birthLocationId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               residenceLocationId:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uuid"
               isInTrash:
-                type: "boolean"
+                type:
+                  - "boolean"
               movedToTrashDate:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "date-time"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               tags:
-                type: "array"
+                type:
+                  - "array"
                 items:
-                  type: "object"
+                  type:
+                    - "object"
                   properties:
                     id:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     name:
-                      type: "string"
+                      type:
+                        - "string"
                       minLength: 1
                     groupId:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "uuid"
                     type:
-                      type: "string"
+                      type:
+                        - "string"
                       enum:
                         - "PROFILE"
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                     created_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                     updated_at:
-                      type: "string"
+                      type:
+                        - "string"
                       format: "date-time"
                   required:
                     - "id"
@@ -4213,95 +5125,139 @@ components:
       required:
         - "profiles"
     FindByDateRangeResponseDto:
-      type: "object"
+      type:
+        - "object"
       additionalProperties:
-        type: "array"
+        type:
+          - "array"
         items:
-          type: "object"
+          type:
+            - "object"
           properties:
             id:
-              type: "string"
+              type:
+                - "string"
               format: "uuid"
             shortId:
-              type: "number"
+              type:
+                - "number"
             phoneNumber:
-              type: "string"
+              type:
+                - "string"
               minLength: 1
             secondaryPhoneNumber:
-              type: "null"
+              type:
+                - "string"
+                - "null"
             fullName:
-              type: "string"
+              type:
+                - "string"
               minLength: 1
             firstName:
-              type: "null"
+              type:
+                - "string"
+                - "null"
               minLength: 1
             gender:
-              type: "null"
+              type:
+                - "string"
+                - "null"
             birthDate:
-              type: "null"
+              type:
+                - "string"
+                - "null"
             profilePictureUrl:
-              type: "null"
+              type:
+                - "string"
+                - "null"
               format: "uri"
             instagram:
-              type: "null"
+              type:
+                - "string"
+                - "null"
             mail:
-              type: "null"
+              type:
+                - "string"
+                - "null"
               format: "email"
             dni:
-              type: "null"
+              type:
+                - "string"
+                - "null"
             alternativeNames:
-              type: "array"
+              type:
+                - "array"
               items:
-                type: "string"
+                type:
+                  - "string"
             birthLocationId:
-              type: "null"
+              type:
+                - "string"
+                - "null"
               format: "uuid"
             residenceLocationId:
-              type: "null"
+              type:
+                - "string"
+                - "null"
               format: "uuid"
             isInTrash:
-              type: "boolean"
+              type:
+                - "boolean"
             movedToTrashDate:
-              type: "null"
+              type:
+                - "string"
+                - "null"
               format: "date-time"
             created_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
             updated_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
             tags:
-              type: "array"
+              type:
+                - "array"
               items:
-                type: "object"
+                type:
+                  - "object"
                 properties:
                   id:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "uuid"
                   name:
-                    type: "string"
+                    type:
+                      - "string"
                     minLength: 1
                   groupId:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "uuid"
                   type:
-                    type: "string"
+                    type:
+                      - "string"
                     enum:
                       - "PROFILE"
                       - "EVENT"
                       - "PARTICIPANT"
                       - "NOT_IN_SYSTEM"
                   created_at:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "date-time"
                   updated_at:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "date-time"
                   group:
-                    type: "object"
+                    type:
+                      - "object"
                     properties:
                       id:
-                        type: "string"
+                        type:
+                          - "string"
                         format: "uuid"
                     required:
                       - "id"
@@ -4335,58 +5291,90 @@ components:
             - "updated_at"
             - "tags"
     FindByPhoneNumberResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         shortId:
-          type: "number"
+          type:
+            - "number"
         phoneNumber:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         secondaryPhoneNumber:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         fullName:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         firstName:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           minLength: 1
         gender:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         birthDate:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         profilePictureUrl:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uri"
         instagram:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         mail:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "email"
         dni:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         alternativeNames:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
         birthLocationId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         residenceLocationId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         isInTrash:
-          type: "boolean"
+          type:
+            - "boolean"
         movedToTrashDate:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "date-time"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -4409,32 +5397,44 @@ components:
         - "created_at"
         - "updated_at"
     FindTrashResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         profiles:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               fullName:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               profilePictureUrl:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "uri"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               isInTrash:
-                type: "boolean"
+                type:
+                  - "boolean"
               phoneNumber:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               movedToTrashDate:
-                type: "null"
+                type:
+                  - "string"
+                  - "null"
                 format: "date-time"
             required:
               - "id"
@@ -4447,67 +5447,97 @@ components:
       required:
         - "profiles"
     CreateProfileDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         profile:
-          type: "object"
+          type:
+            - "object"
           properties:
             alternativeNames:
-              type: "array"
+              type:
+                - "array"
               items:
-                type: "string"
+                type:
+                  - "string"
             birthDate:
-              type: "null"
+              type:
+                - "string"
+                - "null"
             dni:
-              type: "null"
+              type:
+                - "string"
+                - "null"
             fullName:
-              type: "string"
+              type:
+                - "string"
               minLength: 1
             gender:
-              type: "null"
+              type:
+                - "string"
+                - "null"
             instagram:
-              type: "null"
+              type:
+                - "string"
+                - "null"
             mail:
-              type: "null"
+              type:
+                - "string"
+                - "null"
               format: "email"
             phoneNumber:
-              type: "string"
+              type:
+                - "string"
               minLength: 1
             profilePictureUrl:
-              type: "null"
+              type:
+                - "string"
+                - "null"
               format: "uri"
             secondaryPhoneNumber:
-              type: "null"
+              type:
+                - "string"
+                - "null"
             comments:
-              type: "array"
+              type:
+                - "array"
               items:
-                type: "object"
+                type:
+                  - "object"
                 properties:
                   content:
-                    type: "string"
+                    type:
+                      - "string"
                     minLength: 1
                   isSolvable:
                     default: false
-                    type: "boolean"
+                    type:
+                      - "boolean"
                 required:
                   - "content"
             residence:
-              type: "object"
+              type:
+                - "object"
               properties:
                 city:
-                  type: "string"
+                  type:
+                    - "string"
                 country:
-                  type: "string"
+                  type:
+                    - "string"
                 latitude:
-                  type: "number"
+                  type:
+                    - "number"
                   minimum: -90
                   maximum: 90
                 longitude:
-                  type: "number"
+                  type:
+                    - "number"
                   minimum: -180
                   maximum: 180
                 state:
-                  type: "string"
+                  type:
+                    - "string"
               required:
                 - "city"
                 - "country"
@@ -4515,22 +5545,28 @@ components:
                 - "longitude"
                 - "state"
             birth:
-              type: "object"
+              type:
+                - "object"
               properties:
                 city:
-                  type: "string"
+                  type:
+                    - "string"
                 country:
-                  type: "string"
+                  type:
+                    - "string"
                 latitude:
-                  type: "number"
+                  type:
+                    - "number"
                   minimum: -90
                   maximum: 90
                 longitude:
-                  type: "number"
+                  type:
+                    - "number"
                   minimum: -180
                   maximum: 180
                 state:
-                  type: "string"
+                  type:
+                    - "string"
               required:
                 - "city"
                 - "country"
@@ -4538,9 +5574,11 @@ components:
                 - "longitude"
                 - "state"
             tags:
-              type: "array"
+              type:
+                - "array"
               items:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
           required:
             - "alternativeNames"
@@ -4554,147 +5592,204 @@ components:
             - "profilePictureUrl"
             - "secondaryPhoneNumber"
         checkForSimilarity:
-          type: "boolean"
+          type:
+            - "boolean"
       required:
         - "profile"
     CreateProfileResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         response:
           discriminator:
             propertyName: "type"
           oneOf:
-            - type: "object"
+            - type:
+                - "object"
               properties:
-                type:
-                  type: "string"
-                  enum:
-                    - "similar"
                 similarProfiles:
-                  type: "array"
+                  type:
+                    - "array"
                   items:
-                    type: "object"
+                    type:
+                      - "object"
                     properties:
                       profile:
-                        type: "object"
+                        type:
+                          - "object"
                         properties:
                           fullName:
-                            type: "string"
+                            type:
+                              - "string"
                             minLength: 1
                           phoneNumber:
-                            type: "string"
+                            type:
+                              - "string"
                             minLength: 1
                           id:
-                            type: "string"
+                            type:
+                              - "string"
                             format: "uuid"
                         required:
                           - "fullName"
                           - "phoneNumber"
                           - "id"
                       similarityPhoneNumberPercentage:
-                        type: "number"
+                        type:
+                          - "number"
                       similarityFullNamePercentage:
-                        type: "number"
+                        type:
+                          - "number"
                     required:
                       - "profile"
                       - "similarityPhoneNumberPercentage"
                       - "similarityFullNamePercentage"
-              required:
-                - "type"
-                - "similarProfiles"
-            - type: "object"
-              properties:
                 type:
-                  type: "string"
+                  type:
+                    - "string"
+                  enum:
+                    - "similar"
+              required:
+                - "similarProfiles"
+                - "type"
+            - type:
+                - "object"
+              properties:
+                id:
+                  type:
+                    - "string"
+                  format: "uuid"
+                type:
+                  type:
+                    - "string"
                   enum:
                     - "created"
-                id:
-                  type: "string"
-                  format: "uuid"
               required:
-                - "type"
                 - "id"
+                - "type"
       required:
         - "response"
     FindByIdProfileResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         shortId:
-          type: "number"
+          type:
+            - "number"
         phoneNumber:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         secondaryPhoneNumber:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         fullName:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         firstName:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           minLength: 1
         gender:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         birthDate:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         profilePictureUrl:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uri"
         instagram:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         mail:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "email"
         dni:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         alternativeNames:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
         birthLocationId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         residenceLocationId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         isInTrash:
-          type: "boolean"
+          type:
+            - "boolean"
         movedToTrashDate:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "date-time"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         residenceLocation:
-          type: "null"
+          type:
+            - "object"
+            - "null"
           properties:
             id:
-              type: "string"
+              type:
+                - "string"
               format: "uuid"
             latitude:
-              type: "number"
+              type:
+                - "number"
               minimum: -90
               maximum: 90
             longitude:
-              type: "number"
+              type:
+                - "number"
               minimum: -180
               maximum: 180
             country:
-              type: "string"
+              type:
+                - "string"
             state:
-              type: "string"
+              type:
+                - "string"
             city:
-              type: "string"
+              type:
+                - "string"
             created_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
             updated_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
           required:
             - "id"
@@ -4706,30 +5801,40 @@ components:
             - "created_at"
             - "updated_at"
         birthLocation:
-          type: "null"
+          type:
+            - "object"
+            - "null"
           properties:
             id:
-              type: "string"
+              type:
+                - "string"
               format: "uuid"
             latitude:
-              type: "number"
+              type:
+                - "number"
               minimum: -90
               maximum: 90
             longitude:
-              type: "number"
+              type:
+                - "number"
               minimum: -180
               maximum: 180
             country:
-              type: "string"
+              type:
+                - "string"
             state:
-              type: "string"
+              type:
+                - "string"
             city:
-              type: "string"
+              type:
+                - "string"
             created_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
             updated_at:
-              type: "string"
+              type:
+                - "string"
               format: "date-time"
           required:
             - "id"
@@ -4741,44 +5846,56 @@ components:
             - "created_at"
             - "updated_at"
         tags:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "object"
+            type:
+              - "object"
             properties:
               id:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               name:
-                type: "string"
+                type:
+                  - "string"
                 minLength: 1
               groupId:
-                type: "string"
+                type:
+                  - "string"
                 format: "uuid"
               type:
-                type: "string"
+                type:
+                  - "string"
                 enum:
                   - "PROFILE"
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
               created_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               updated_at:
-                type: "string"
+                type:
+                  - "string"
                 format: "date-time"
               group:
-                type: "object"
+                type:
+                  - "object"
                 properties:
                   id:
-                    type: "string"
+                    type:
+                      - "string"
                     format: "uuid"
                   color:
-                    type: "string"
+                    type:
+                      - "string"
                     minLength: 7
                     maxLength: 7
                   isExclusive:
-                    type: "boolean"
+                    type:
+                      - "boolean"
                 required:
                   - "id"
                   - "color"
@@ -4815,58 +5932,90 @@ components:
         - "birthLocation"
         - "tags"
     DeleteProfileResponseDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         id:
-          type: "string"
+          type:
+            - "string"
           format: "uuid"
         shortId:
-          type: "number"
+          type:
+            - "number"
         phoneNumber:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         secondaryPhoneNumber:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         fullName:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         firstName:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           minLength: 1
         gender:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         birthDate:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         profilePictureUrl:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uri"
         instagram:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         mail:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "email"
         dni:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         alternativeNames:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
         birthLocationId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         residenceLocationId:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uuid"
         isInTrash:
-          type: "boolean"
+          type:
+            - "boolean"
         movedToTrashDate:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "date-time"
         created_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
         updated_at:
-          type: "string"
+          type:
+            - "string"
           format: "date-time"
       required:
         - "id"
@@ -4889,56 +6038,84 @@ components:
         - "created_at"
         - "updated_at"
     UpdateProfileDto:
-      type: "object"
+      type:
+        - "object"
       properties:
         alternativeNames:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
         birthDate:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         dni:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         fullName:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         gender:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         instagram:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         mail:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "email"
         phoneNumber:
-          type: "string"
+          type:
+            - "string"
           minLength: 1
         profilePictureUrl:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "uri"
         secondaryPhoneNumber:
-          type: "null"
+          type:
+            - "string"
+            - "null"
         isInTrash:
-          type: "boolean"
+          type:
+            - "boolean"
         movedToTrashDate:
-          type: "null"
+          type:
+            - "string"
+            - "null"
           format: "date-time"
         residence:
-          type: "object"
+          type:
+            - "object"
           properties:
             city:
-              type: "string"
+              type:
+                - "string"
             country:
-              type: "string"
+              type:
+                - "string"
             latitude:
-              type: "number"
+              type:
+                - "number"
               minimum: -90
               maximum: 90
             longitude:
-              type: "number"
+              type:
+                - "number"
               minimum: -180
               maximum: 180
             state:
-              type: "string"
+              type:
+                - "string"
           required:
             - "city"
             - "country"
@@ -4946,22 +6123,28 @@ components:
             - "longitude"
             - "state"
         birth:
-          type: "object"
+          type:
+            - "object"
           properties:
             city:
-              type: "string"
+              type:
+                - "string"
             country:
-              type: "string"
+              type:
+                - "string"
             latitude:
-              type: "number"
+              type:
+                - "number"
               minimum: -90
               maximum: 90
             longitude:
-              type: "number"
+              type:
+                - "number"
               minimum: -180
               maximum: 180
             state:
-              type: "string"
+              type:
+                - "string"
           required:
             - "city"
             - "country"
@@ -4969,9 +6152,11 @@ components:
             - "longitude"
             - "state"
         tags:
-          type: "array"
+          type:
+            - "array"
           items:
-            type: "string"
+            type:
+              - "string"
             format: "uuid"
       required:
         - "alternativeNames"
