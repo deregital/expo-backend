@@ -53,7 +53,7 @@ export class TagGroupService {
 
   async update(
     id: string,
-    dto: CreateTagGroupDto,
+    dto: Partial<CreateTagGroupDto>,
   ): Promise<z.infer<typeof updateTagGroupResponseSchema>> {
     return await this.prisma.tagGroup.update({
       where: {

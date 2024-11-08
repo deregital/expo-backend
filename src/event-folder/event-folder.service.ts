@@ -1,3 +1,4 @@
+import { getAllEventsResponseSchema } from '@/event/dto/get-all-event.dto';
 import {
   CreateEventFolderDto,
   createEventFolderResponseSchema,
@@ -30,10 +31,8 @@ export class EventFolderService {
     return eventFolder;
   }
 
-  async getAllEventFolders(): Promise<
-    z.infer<typeof getAllEventFolderResponseSchema>
-  > {
-    const eventFolders = await this.prisma.eventFolder.findMany({
+  async getAll(): Promise<z.infer<typeof getAllEventFolderResponseSchema>> {
+    const folders = await this.prisma.eventFolder.findMany({
       include: {
         events: true,
       },
@@ -42,10 +41,30 @@ export class EventFolderService {
       },
     });
 
-    return { eventFolders };
+    return { folders };
   }
 
-  async getEventFolderById(
+  async getAllNested(): Promise<
+    z.infer<typeof getAllEventsResponseSchema.shape.folders>
+  > {
+    const folders = await this.prisma.eventFolder.findMany({
+      include: {
+        events: {
+          include: {
+            subEvents: true,
+            supraEvent: true,
+          },
+        },
+      },
+      orderBy: {
+        updated_at: 'desc',
+      },
+    });
+
+    return folders;
+  }
+
+  async getById(
     id: string,
   ): Promise<z.infer<typeof getByIdEventFolderResponseSchema>> {
     const eventFolder = await this.prisma.eventFolder.findUnique({

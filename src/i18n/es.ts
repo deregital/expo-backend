@@ -12,6 +12,10 @@ export default {
       cannedResponse: 'Respuesta enlatada',
       message: 'Mensaje',
     },
+    tag: {
+      assisted: 'Asistió',
+      confirmed: 'Confirmó asistencia',
+    },
     conflict: `Ya existe un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
     'not-found': `No se encontró un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
   },
@@ -89,6 +93,9 @@ export default {
     'event-folder': {
       id: {
         uuid: 'El ID debe ser un UUID',
+      },
+      name: {
+        min: 'El nombre debe tener al menos 1 caracter',
       },
       color: {
         invalid: 'El color debe tener el formato hexadecimal (#ABCDEF)',
@@ -287,6 +294,30 @@ export default {
       delete: {
         success: 'Carpeta de evento eliminada con éxito',
         'not-found': 'Carpeta de evento no encontrada',
+      },
+    },
+    event: {
+      create: {
+        success: 'Evento creado con éxito',
+        conflict: 'Error en la creación del evento',
+        'folder-not-found': 'Carpeta de evento no encontrada',
+      },
+      'get-all': {
+        success: 'Eventos obtenidos con éxito',
+        'not-found': 'No se encontraron eventos',
+      },
+      'get-by-id': {
+        success: 'Evento obtenido con éxito',
+        'not-found': 'Evento no encontrado',
+      },
+      update: {
+        success: 'Evento actualizado con éxito',
+        'not-found': 'Evento no encontrado',
+        'subevent-not-found': 'Subevento no encontrado',
+      },
+      delete: {
+        success: 'Evento eliminado con éxito',
+        'not-found': 'Evento no encontrado',
       },
     },
     profile: {
