@@ -11,13 +11,15 @@ export const createEventSchema = eventSchema
   })
   .merge(
     z.object({
-      subEvents: z.array(
-        eventSchema.pick({
-          name: true,
-          date: true,
-          location: true,
-        }),
-      ),
+      subEvents: z
+        .array(
+          eventSchema.pick({
+            name: true,
+            date: true,
+            location: true,
+          }),
+        )
+        .optional(),
     }),
   );
 

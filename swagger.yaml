@@ -854,6 +854,12 @@ components:
             updated_at:
               type: "string"
               format: "date-time"
+          required:
+            - "id"
+            - "username"
+            - "role"
+            - "created_at"
+            - "updated_at"
         backendTokens:
           type: "object"
           properties:
@@ -863,6 +869,10 @@ components:
               type: "string"
             expiresIn:
               type: "number"
+          required:
+            - "accessToken"
+            - "refreshToken"
+            - "expiresIn"
       required:
         - "user"
         - "backendTokens"
@@ -1112,6 +1122,13 @@ components:
             updated_at:
               type: "string"
               format: "date-time"
+          required:
+            - "id"
+            - "name"
+            - "color"
+            - "isExclusive"
+            - "created_at"
+            - "updated_at"
       required:
         - "id"
         - "name"
@@ -1229,55 +1246,43 @@ components:
                 type: "string"
                 minLength: 1
               secondaryPhoneNumber:
-                type: "string"
-                nullable: true
+                type: "null"
               fullName:
                 type: "string"
                 minLength: 1
               firstName:
-                type: "string"
+                type: "null"
                 minLength: 1
-                nullable: true
               gender:
-                type: "string"
-                nullable: true
+                type: "null"
               birthDate:
-                type: "string"
+                type: "null"
                 format: "date-time"
-                nullable: true
               profilePictureUrl:
-                type: "string"
+                type: "null"
                 format: "uri"
-                nullable: true
               instagram:
-                type: "string"
-                nullable: true
+                type: "null"
               mail:
-                type: "string"
+                type: "null"
                 format: "email"
-                nullable: true
               dni:
-                type: "string"
-                nullable: true
+                type: "null"
               alternativeNames:
-                type: "array"
+                type: "null"
                 items:
                   type: "string"
-                nullable: true
               birthLocationId:
-                type: "string"
+                type: "null"
                 format: "uuid"
-                nullable: true
               residenceLocationId:
-                type: "string"
+                type: "null"
                 format: "uuid"
-                nullable: true
               isInTrash:
                 type: "boolean"
               movedToTrashDate:
-                type: "string"
+                type: "null"
                 format: "date-time"
-                nullable: true
               created_at:
                 type: "string"
                 format: "date-time"
@@ -1339,55 +1344,43 @@ components:
                 type: "string"
                 minLength: 1
               secondaryPhoneNumber:
-                type: "string"
-                nullable: true
+                type: "null"
               fullName:
                 type: "string"
                 minLength: 1
               firstName:
-                type: "string"
+                type: "null"
                 minLength: 1
-                nullable: true
               gender:
-                type: "string"
-                nullable: true
+                type: "null"
               birthDate:
-                type: "string"
+                type: "null"
                 format: "date-time"
-                nullable: true
               profilePictureUrl:
-                type: "string"
+                type: "null"
                 format: "uri"
-                nullable: true
               instagram:
-                type: "string"
-                nullable: true
+                type: "null"
               mail:
-                type: "string"
+                type: "null"
                 format: "email"
-                nullable: true
               dni:
-                type: "string"
-                nullable: true
+                type: "null"
               alternativeNames:
-                type: "array"
+                type: "null"
                 items:
                   type: "string"
-                nullable: true
               birthLocationId:
-                type: "string"
+                type: "null"
                 format: "uuid"
-                nullable: true
               residenceLocationId:
-                type: "string"
+                type: "null"
                 format: "uuid"
-                nullable: true
               isInTrash:
                 type: "boolean"
               movedToTrashDate:
-                type: "string"
+                type: "null"
                 format: "date-time"
-                nullable: true
               created_at:
                 type: "string"
                 format: "date-time"
@@ -1458,8 +1451,6 @@ components:
         - "id"
         - "username"
         - "role"
-        - "isGlobalFilterActive"
-        - "fcmToken"
     UpdateGlobalFilterDto:
       type: "object"
       properties:
@@ -1472,7 +1463,6 @@ components:
             type: "string"
             format: "uuid"
       required:
-        - "active"
         - "tagsIds"
     UpdateGlobalFilterResponseDto:
       type: "object"
@@ -1543,8 +1533,6 @@ components:
         - "username"
         - "password"
         - "role"
-        - "isGlobalFilterActive"
-        - "fcmToken"
         - "created_at"
         - "updated_at"
         - "globalFilter"
@@ -1594,7 +1582,6 @@ components:
               - "type"
               - "group"
       required:
-        - "isGlobalFilterActive"
         - "globalFilter"
     GetMeResponseDto:
       type: "object"
@@ -1700,8 +1687,6 @@ components:
         - "id"
         - "username"
         - "role"
-        - "isGlobalFilterActive"
-        - "fcmToken"
         - "created_at"
         - "updated_at"
         - "globalFilter"
@@ -2048,7 +2033,6 @@ components:
       required:
         - "content"
         - "profileId"
-        - "isSolvable"
     CreateCommentResponseDto:
       type: "object"
       properties:
@@ -2071,9 +2055,8 @@ components:
           default: false
           type: "boolean"
         solvedAt:
-          type: "string"
+          type: "null"
           format: "date-time"
-          nullable: true
         solvedBy:
           type: "string"
           format: "uuid"
@@ -2088,10 +2071,7 @@ components:
         - "content"
         - "createdBy"
         - "profileId"
-        - "isSolvable"
-        - "isSolved"
         - "solvedAt"
-        - "solvedBy"
         - "created_at"
         - "updated_at"
     GetByProfileCommentResponseDto:
@@ -2121,9 +2101,8 @@ components:
                 default: false
                 type: "boolean"
               solvedAt:
-                type: "string"
+                type: "null"
                 format: "date-time"
-                nullable: true
               solvedBy:
                 type: "string"
                 format: "uuid"
@@ -2173,9 +2152,8 @@ components:
           default: false
           type: "boolean"
         solvedAt:
-          type: "string"
+          type: "null"
           format: "date-time"
-          nullable: true
         solvedBy:
           type: "string"
           format: "uuid"
@@ -2190,10 +2168,7 @@ components:
         - "content"
         - "createdBy"
         - "profileId"
-        - "isSolvable"
-        - "isSolved"
         - "solvedAt"
-        - "solvedBy"
         - "created_at"
         - "updated_at"
     FindAllLocationResponseDto:
@@ -2327,11 +2302,9 @@ components:
               countryName:
                 type: "string"
               latitude:
-                type: "string"
-                nullable: true
+                type: "null"
               longitude:
-                type: "string"
-                nullable: true
+                type: "null"
             required:
               - "name"
               - "isoCode"
@@ -2546,9 +2519,8 @@ components:
                       type: "string"
                       minLength: 1
                     folderId:
-                      type: "string"
+                      type: "null"
                       format: "uuid"
-                      nullable: true
                     tagAssistedId:
                       type: "string"
                       format: "uuid"
@@ -2556,9 +2528,8 @@ components:
                       type: "string"
                       format: "uuid"
                     supraEventId:
-                      type: "string"
+                      type: "null"
                       format: "uuid"
-                      nullable: true
                     created_at:
                       type: "string"
                       format: "date-time"
@@ -2622,9 +2593,8 @@ components:
                 type: "string"
                 minLength: 1
               folderId:
-                type: "string"
+                type: "null"
                 format: "uuid"
-                nullable: true
               tagAssistedId:
                 type: "string"
                 format: "uuid"
@@ -2632,9 +2602,8 @@ components:
                 type: "string"
                 format: "uuid"
               supraEventId:
-                type: "string"
+                type: "null"
                 format: "uuid"
-                nullable: true
               created_at:
                 type: "string"
                 format: "date-time"
@@ -2669,9 +2638,6 @@ components:
           type: "string"
           minLength: 7
           maxLength: 7
-      required:
-        - "name"
-        - "color"
     UpdateEventFolderResponseDto:
       type: "object"
       properties:
@@ -2735,9 +2701,8 @@ components:
           type: "string"
           minLength: 1
         folderId:
-          type: "string"
+          type: "null"
           format: "uuid"
-          nullable: true
         subEvents:
           type: "array"
           items:
@@ -2761,7 +2726,6 @@ components:
         - "date"
         - "location"
         - "folderId"
-        - "subEvents"
     CreateEventResponseDto:
       type: "object"
       properties:
@@ -2778,9 +2742,8 @@ components:
           type: "string"
           minLength: 1
         folderId:
-          type: "string"
+          type: "null"
           format: "uuid"
-          nullable: true
         tagAssistedId:
           type: "string"
           format: "uuid"
@@ -2788,9 +2751,8 @@ components:
           type: "string"
           format: "uuid"
         supraEventId:
-          type: "string"
+          type: "null"
           format: "uuid"
-          nullable: true
         created_at:
           type: "string"
           format: "date-time"
@@ -2850,9 +2812,8 @@ components:
                       type: "string"
                       minLength: 1
                     folderId:
-                      type: "string"
+                      type: "null"
                       format: "uuid"
-                      nullable: true
                     tagAssistedId:
                       type: "string"
                       format: "uuid"
@@ -2860,9 +2821,8 @@ components:
                       type: "string"
                       format: "uuid"
                     supraEventId:
-                      type: "string"
+                      type: "null"
                       format: "uuid"
-                      nullable: true
                     created_at:
                       type: "string"
                       format: "date-time"
@@ -2870,7 +2830,7 @@ components:
                       type: "string"
                       format: "date-time"
                     supraEvent:
-                      type: "object"
+                      type: "null"
                       properties:
                         id:
                           type: "string"
@@ -2885,9 +2845,8 @@ components:
                           type: "string"
                           minLength: 1
                         folderId:
-                          type: "string"
+                          type: "null"
                           format: "uuid"
-                          nullable: true
                         tagAssistedId:
                           type: "string"
                           format: "uuid"
@@ -2895,9 +2854,8 @@ components:
                           type: "string"
                           format: "uuid"
                         supraEventId:
-                          type: "string"
+                          type: "null"
                           format: "uuid"
-                          nullable: true
                         created_at:
                           type: "string"
                           format: "date-time"
@@ -2915,7 +2873,6 @@ components:
                         - "supraEventId"
                         - "created_at"
                         - "updated_at"
-                      nullable: true
                     subEvents:
                       type: "array"
                       items:
@@ -2934,9 +2891,8 @@ components:
                             type: "string"
                             minLength: 1
                           folderId:
-                            type: "string"
+                            type: "null"
                             format: "uuid"
-                            nullable: true
                           tagAssistedId:
                             type: "string"
                             format: "uuid"
@@ -2944,9 +2900,8 @@ components:
                             type: "string"
                             format: "uuid"
                           supraEventId:
-                            type: "string"
+                            type: "null"
                             format: "uuid"
-                            nullable: true
                           created_at:
                             type: "string"
                             format: "date-time"
@@ -3002,9 +2957,8 @@ components:
                 type: "string"
                 minLength: 1
               folderId:
-                type: "string"
+                type: "null"
                 format: "uuid"
-                nullable: true
               tagAssistedId:
                 type: "string"
                 format: "uuid"
@@ -3012,9 +2966,8 @@ components:
                 type: "string"
                 format: "uuid"
               supraEventId:
-                type: "string"
+                type: "null"
                 format: "uuid"
-                nullable: true
               created_at:
                 type: "string"
                 format: "date-time"
@@ -3022,7 +2975,7 @@ components:
                 type: "string"
                 format: "date-time"
               supraEvent:
-                type: "object"
+                type: "null"
                 properties:
                   id:
                     type: "string"
@@ -3037,9 +2990,8 @@ components:
                     type: "string"
                     minLength: 1
                   folderId:
-                    type: "string"
+                    type: "null"
                     format: "uuid"
-                    nullable: true
                   tagAssistedId:
                     type: "string"
                     format: "uuid"
@@ -3047,9 +2999,8 @@ components:
                     type: "string"
                     format: "uuid"
                   supraEventId:
-                    type: "string"
+                    type: "null"
                     format: "uuid"
-                    nullable: true
                   created_at:
                     type: "string"
                     format: "date-time"
@@ -3067,7 +3018,6 @@ components:
                   - "supraEventId"
                   - "created_at"
                   - "updated_at"
-                nullable: true
               subEvents:
                 type: "array"
                 items:
@@ -3086,9 +3036,8 @@ components:
                       type: "string"
                       minLength: 1
                     folderId:
-                      type: "string"
+                      type: "null"
                       format: "uuid"
-                      nullable: true
                     tagAssistedId:
                       type: "string"
                       format: "uuid"
@@ -3096,9 +3045,8 @@ components:
                       type: "string"
                       format: "uuid"
                     supraEventId:
-                      type: "string"
+                      type: "null"
                       format: "uuid"
-                      nullable: true
                     created_at:
                       type: "string"
                       format: "date-time"
@@ -3148,9 +3096,8 @@ components:
           type: "string"
           minLength: 1
         folderId:
-          type: "string"
+          type: "null"
           format: "uuid"
-          nullable: true
         tagAssistedId:
           type: "string"
           format: "uuid"
@@ -3158,9 +3105,8 @@ components:
           type: "string"
           format: "uuid"
         supraEventId:
-          type: "string"
+          type: "null"
           format: "uuid"
-          nullable: true
         created_at:
           type: "string"
           format: "date-time"
@@ -3185,9 +3131,8 @@ components:
                 type: "string"
                 minLength: 1
               folderId:
-                type: "string"
+                type: "null"
                 format: "uuid"
-                nullable: true
               tagAssistedId:
                 type: "string"
                 format: "uuid"
@@ -3195,9 +3140,8 @@ components:
                 type: "string"
                 format: "uuid"
               supraEventId:
-                type: "string"
+                type: "null"
                 format: "uuid"
-                nullable: true
               created_at:
                 type: "string"
                 format: "date-time"
@@ -3216,7 +3160,7 @@ components:
               - "created_at"
               - "updated_at"
         supraEvent:
-          type: "object"
+          type: "null"
           properties:
             id:
               type: "string"
@@ -3231,9 +3175,8 @@ components:
               type: "string"
               minLength: 1
             folderId:
-              type: "string"
+              type: "null"
               format: "uuid"
-              nullable: true
             tagAssistedId:
               type: "string"
               format: "uuid"
@@ -3241,16 +3184,25 @@ components:
               type: "string"
               format: "uuid"
             supraEventId:
-              type: "string"
+              type: "null"
               format: "uuid"
-              nullable: true
             created_at:
               type: "string"
               format: "date-time"
             updated_at:
               type: "string"
               format: "date-time"
-          nullable: true
+          required:
+            - "id"
+            - "name"
+            - "date"
+            - "location"
+            - "folderId"
+            - "tagAssistedId"
+            - "tagConfirmedId"
+            - "supraEventId"
+            - "created_at"
+            - "updated_at"
       required:
         - "id"
         - "name"
@@ -3271,9 +3223,8 @@ components:
           type: "string"
           minLength: 1
         folderId:
-          type: "string"
+          type: "null"
           format: "uuid"
-          nullable: true
         date:
           type: "string"
           format: "date-time"
@@ -3328,9 +3279,8 @@ components:
           type: "string"
           minLength: 1
         folderId:
-          type: "string"
+          type: "null"
           format: "uuid"
-          nullable: true
         tagAssistedId:
           type: "string"
           format: "uuid"
@@ -3338,9 +3288,8 @@ components:
           type: "string"
           format: "uuid"
         supraEventId:
-          type: "string"
+          type: "null"
           format: "uuid"
-          nullable: true
         created_at:
           type: "string"
           format: "date-time"
@@ -3400,6 +3349,14 @@ components:
                 - "isExclusive"
                 - "created_at"
                 - "updated_at"
+          required:
+            - "id"
+            - "name"
+            - "groupId"
+            - "type"
+            - "created_at"
+            - "updated_at"
+            - "group"
       required:
         - "id"
         - "name"
@@ -3428,9 +3385,8 @@ components:
           type: "string"
           minLength: 1
         folderId:
-          type: "string"
+          type: "null"
           format: "uuid"
-          nullable: true
         tagAssistedId:
           type: "string"
           format: "uuid"
@@ -3438,9 +3394,8 @@ components:
           type: "string"
           format: "uuid"
         supraEventId:
-          type: "string"
+          type: "null"
           format: "uuid"
-          nullable: true
         created_at:
           type: "string"
           format: "date-time"

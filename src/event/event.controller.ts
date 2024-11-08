@@ -92,20 +92,24 @@ export class EventController {
       }
     }
 
-    const subEvents = await Promise.all(
-      createEventDto.subEvents.map(async (subEvent) => {
-        const tagGroup = await this.tagGroupService.create({
-          color: '#666666',
-          isExclusive: true,
-          name: subEvent.name,
-        });
+    let subEvents: Event[] = [];
 
-        return await this.eventService.create({
-          ...subEvent,
-          tagGroupId: tagGroup.id,
-        });
-      }),
-    );
+    if (createEventDto.subEvents) {
+      subEvents = await Promise.all(
+        createEventDto.subEvents.map(async (subEvent) => {
+          const tagGroup = await this.tagGroupService.create({
+            color: '#666666',
+            isExclusive: true,
+            name: subEvent.name,
+          });
+
+          return await this.eventService.create({
+            ...subEvent,
+            tagGroupId: tagGroup.id,
+          });
+        }),
+      );
+    }
 
     return await this.eventService.create({
       ...createEventDto,
