@@ -1,4 +1,5 @@
 import { AppModule } from '@/app.module';
+import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { writeFileSync } from 'fs';
@@ -14,6 +15,9 @@ async function bootstrap(): Promise<void> {
     .setVersion('1.0')
     .addTag('expo-backend')
     .build();
+
+  patchNestjsSwagger();
+
   const document = SwaggerModule.createDocument(app, options);
   const outputPath = path.resolve(process.cwd(), 'swagger.yaml');
   writeFileSync(outputPath, YAML.stringify(document), { encoding: 'utf8' });

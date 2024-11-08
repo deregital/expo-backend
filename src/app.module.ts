@@ -14,6 +14,7 @@ import { APP_PIPE } from '@nestjs/core';
 import { EventFolderModule } from './event-folder/event-folder.module';
 import { EventModule } from './event/event.module';
 import { LocationModule } from './location/location.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { LocationModule } from './location/location.module';
     CannedResponseModule,
     EventFolderModule,
     EventModule,
+    ProfileModule,
   ],
   providers: [
     {

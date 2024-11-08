@@ -802,6 +802,230 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteEventResponseDto"
+  /profile/all:
+    get:
+      operationId: "ProfileController_findAll"
+      parameters: []
+      responses:
+        200:
+          description: "Perfiles obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindAllProfileResponseDto"
+  /profile/find-by-tags:
+    get:
+      operationId: "ProfileController_findByTag"
+      parameters:
+        - name: "tags"
+          required: true
+          in: "query"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+      responses:
+        200:
+          description: "Perfiles obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByTagsProfileResponseDto"
+        404:
+          description: "Perfil no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /profile/find-by-tag-groups:
+    get:
+      operationId: "ProfileController_findByTagGroups"
+      parameters:
+        - name: "tagGroups"
+          required: true
+          in: "query"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+      responses:
+        200:
+          description: "Perfiles obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByTagGroupsProfileResponseDto"
+        404:
+          description: "Perfil no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /profile/find-by-date-range:
+    get:
+      operationId: "ProfileController_findByDateRange"
+      parameters:
+        - name: "from"
+          required: true
+          in: "query"
+          schema:
+            type: "string"
+        - name: "to"
+          required: true
+          in: "query"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Perfiles obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByDateRangeResponseDto"
+        412:
+          description: "Fecha inválida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /profile/find-by-phone-number/{phoneNumber}:
+    get:
+      operationId: "ProfileController_findByPhoneNumber"
+      parameters:
+        - name: "phoneNumber"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Perfil obtenido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByPhoneNumberResponseDto"
+        404:
+          description: "Perfil no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /profile/find-trash:
+    get:
+      operationId: "ProfileController_findTrashCan"
+      parameters: []
+      responses:
+        200:
+          description: "Perfiles obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindTrashResponseDto"
+  /profile/create:
+    post:
+      operationId: "ProfileController_create"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProfileDto"
+      responses:
+        200:
+          description: "Perfil creado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateProfileResponseDto"
+        404:
+          description: "No se encontró la etiqueta de participante"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "Error en la creación del perfil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /profile/{id}:
+    get:
+      operationId: "ProfileController_findById"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Perfil obtenido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByIdProfileResponseDto"
+        404:
+          description: "Perfil no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+    delete:
+      operationId: "ProfileController_delete"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Perfil eliminado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteProfileResponseDto"
+        404:
+          description: "Perfil no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+    patch:
+      operationId: "ProfileController_update"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProfileDto"
+      responses:
+        200:
+          description: "Perfil actualizado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateProfileDto"
+        404:
+          description: "Perfil no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "Error en la actualización del perfil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -840,6 +1064,7 @@ components:
               enum:
                 - "USER"
                 - "ADMIN"
+                - "FORM"
             isGlobalFilterActive:
               default: false
               type: "boolean"
@@ -1257,7 +1482,6 @@ components:
                 type: "null"
               birthDate:
                 type: "null"
-                format: "date-time"
               profilePictureUrl:
                 type: "null"
                 format: "uri"
@@ -1269,7 +1493,7 @@ components:
               dni:
                 type: "null"
               alternativeNames:
-                type: "null"
+                type: "array"
                 items:
                   type: "string"
               birthLocationId:
@@ -1355,7 +1579,6 @@ components:
                 type: "null"
               birthDate:
                 type: "null"
-                format: "date-time"
               profilePictureUrl:
                 type: "null"
                 format: "uri"
@@ -1367,7 +1590,7 @@ components:
               dni:
                 type: "null"
               alternativeNames:
-                type: "null"
+                type: "array"
                 items:
                   type: "string"
               birthLocationId:
@@ -1422,6 +1645,7 @@ components:
           enum:
             - "USER"
             - "ADMIN"
+            - "FORM"
       required:
         - "username"
         - "password"
@@ -1439,6 +1663,7 @@ components:
           enum:
             - "USER"
             - "ADMIN"
+            - "FORM"
         isGlobalFilterActive:
           default: false
           type: "boolean"
@@ -1480,6 +1705,7 @@ components:
           enum:
             - "USER"
             - "ADMIN"
+            - "FORM"
         isGlobalFilterActive:
           default: false
           type: "boolean"
@@ -1596,6 +1822,7 @@ components:
           enum:
             - "USER"
             - "ADMIN"
+            - "FORM"
         isGlobalFilterActive:
           default: false
           type: "boolean"
@@ -2638,6 +2865,9 @@ components:
           type: "string"
           minLength: 7
           maxLength: 7
+      required:
+        - "name"
+        - "color"
     UpdateEventFolderResponseDto:
       type: "object"
       properties:
@@ -3413,3 +3643,1146 @@ components:
         - "supraEventId"
         - "created_at"
         - "updated_at"
+    FindAllProfileResponseDto:
+      type: "object"
+      properties:
+        profiles:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              shortId:
+                type: "number"
+              phoneNumber:
+                type: "string"
+                minLength: 1
+              secondaryPhoneNumber:
+                type: "null"
+              fullName:
+                type: "string"
+                minLength: 1
+              firstName:
+                type: "null"
+                minLength: 1
+              gender:
+                type: "null"
+              birthDate:
+                type: "null"
+              profilePictureUrl:
+                type: "null"
+                format: "uri"
+              instagram:
+                type: "null"
+              mail:
+                type: "null"
+                format: "email"
+              dni:
+                type: "null"
+              alternativeNames:
+                type: "array"
+                items:
+                  type: "string"
+              birthLocationId:
+                type: "null"
+                format: "uuid"
+              residenceLocationId:
+                type: "null"
+                format: "uuid"
+              isInTrash:
+                type: "boolean"
+              movedToTrashDate:
+                type: "null"
+                format: "date-time"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+              tags:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    groupId:
+                      type: "string"
+                      format: "uuid"
+                    type:
+                      type: "string"
+                      enum:
+                        - "PROFILE"
+                        - "EVENT"
+                        - "PARTICIPANT"
+                        - "NOT_IN_SYSTEM"
+                    created_at:
+                      type: "string"
+                      format: "date-time"
+                    updated_at:
+                      type: "string"
+                      format: "date-time"
+                    group:
+                      type: "object"
+                      properties:
+                        color:
+                          type: "string"
+                          minLength: 7
+                          maxLength: 7
+                        isExclusive:
+                          type: "boolean"
+                      required:
+                        - "color"
+                        - "isExclusive"
+                  required:
+                    - "id"
+                    - "name"
+                    - "groupId"
+                    - "type"
+                    - "created_at"
+                    - "updated_at"
+                    - "group"
+            required:
+              - "id"
+              - "shortId"
+              - "phoneNumber"
+              - "secondaryPhoneNumber"
+              - "fullName"
+              - "firstName"
+              - "gender"
+              - "birthDate"
+              - "profilePictureUrl"
+              - "instagram"
+              - "mail"
+              - "dni"
+              - "alternativeNames"
+              - "birthLocationId"
+              - "residenceLocationId"
+              - "isInTrash"
+              - "movedToTrashDate"
+              - "created_at"
+              - "updated_at"
+              - "tags"
+      required:
+        - "profiles"
+    FindByTagsProfileResponseDto:
+      type: "object"
+      properties:
+        profiles:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              shortId:
+                type: "number"
+              phoneNumber:
+                type: "string"
+                minLength: 1
+              secondaryPhoneNumber:
+                type: "null"
+              fullName:
+                type: "string"
+                minLength: 1
+              firstName:
+                type: "null"
+                minLength: 1
+              gender:
+                type: "null"
+              birthDate:
+                type: "null"
+              profilePictureUrl:
+                type: "null"
+                format: "uri"
+              instagram:
+                type: "null"
+              mail:
+                type: "null"
+                format: "email"
+              dni:
+                type: "null"
+              alternativeNames:
+                type: "array"
+                items:
+                  type: "string"
+              birthLocationId:
+                type: "null"
+                format: "uuid"
+              residenceLocationId:
+                type: "null"
+                format: "uuid"
+              isInTrash:
+                type: "boolean"
+              movedToTrashDate:
+                type: "null"
+                format: "date-time"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+              tags:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    groupId:
+                      type: "string"
+                      format: "uuid"
+                    type:
+                      type: "string"
+                      enum:
+                        - "PROFILE"
+                        - "EVENT"
+                        - "PARTICIPANT"
+                        - "NOT_IN_SYSTEM"
+                    created_at:
+                      type: "string"
+                      format: "date-time"
+                    updated_at:
+                      type: "string"
+                      format: "date-time"
+                    group:
+                      type: "object"
+                      properties:
+                        isExclusive:
+                          type: "boolean"
+                      required:
+                        - "isExclusive"
+                  required:
+                    - "id"
+                    - "name"
+                    - "groupId"
+                    - "type"
+                    - "created_at"
+                    - "updated_at"
+                    - "group"
+            required:
+              - "id"
+              - "shortId"
+              - "phoneNumber"
+              - "secondaryPhoneNumber"
+              - "fullName"
+              - "firstName"
+              - "gender"
+              - "birthDate"
+              - "profilePictureUrl"
+              - "instagram"
+              - "mail"
+              - "dni"
+              - "alternativeNames"
+              - "birthLocationId"
+              - "residenceLocationId"
+              - "isInTrash"
+              - "movedToTrashDate"
+              - "created_at"
+              - "updated_at"
+              - "tags"
+      required:
+        - "profiles"
+    FindByTagGroupsProfileResponseDto:
+      type: "object"
+      properties:
+        profiles:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              shortId:
+                type: "number"
+              phoneNumber:
+                type: "string"
+                minLength: 1
+              secondaryPhoneNumber:
+                type: "null"
+              fullName:
+                type: "string"
+                minLength: 1
+              firstName:
+                type: "null"
+                minLength: 1
+              gender:
+                type: "null"
+              birthDate:
+                type: "null"
+              profilePictureUrl:
+                type: "null"
+                format: "uri"
+              instagram:
+                type: "null"
+              mail:
+                type: "null"
+                format: "email"
+              dni:
+                type: "null"
+              alternativeNames:
+                type: "array"
+                items:
+                  type: "string"
+              birthLocationId:
+                type: "null"
+                format: "uuid"
+              residenceLocationId:
+                type: "null"
+                format: "uuid"
+              isInTrash:
+                type: "boolean"
+              movedToTrashDate:
+                type: "null"
+                format: "date-time"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+              tags:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    groupId:
+                      type: "string"
+                      format: "uuid"
+                    type:
+                      type: "string"
+                      enum:
+                        - "PROFILE"
+                        - "EVENT"
+                        - "PARTICIPANT"
+                        - "NOT_IN_SYSTEM"
+                    created_at:
+                      type: "string"
+                      format: "date-time"
+                    updated_at:
+                      type: "string"
+                      format: "date-time"
+                  required:
+                    - "id"
+                    - "name"
+                    - "groupId"
+                    - "type"
+                    - "created_at"
+                    - "updated_at"
+            required:
+              - "id"
+              - "shortId"
+              - "phoneNumber"
+              - "secondaryPhoneNumber"
+              - "fullName"
+              - "firstName"
+              - "gender"
+              - "birthDate"
+              - "profilePictureUrl"
+              - "instagram"
+              - "mail"
+              - "dni"
+              - "alternativeNames"
+              - "birthLocationId"
+              - "residenceLocationId"
+              - "isInTrash"
+              - "movedToTrashDate"
+              - "created_at"
+              - "updated_at"
+              - "tags"
+      required:
+        - "profiles"
+    FindByDateRangeResponseDto:
+      type: "object"
+      additionalProperties:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            id:
+              type: "string"
+              format: "uuid"
+            shortId:
+              type: "number"
+            phoneNumber:
+              type: "string"
+              minLength: 1
+            secondaryPhoneNumber:
+              type: "null"
+            fullName:
+              type: "string"
+              minLength: 1
+            firstName:
+              type: "null"
+              minLength: 1
+            gender:
+              type: "null"
+            birthDate:
+              type: "null"
+            profilePictureUrl:
+              type: "null"
+              format: "uri"
+            instagram:
+              type: "null"
+            mail:
+              type: "null"
+              format: "email"
+            dni:
+              type: "null"
+            alternativeNames:
+              type: "array"
+              items:
+                type: "string"
+            birthLocationId:
+              type: "null"
+              format: "uuid"
+            residenceLocationId:
+              type: "null"
+              format: "uuid"
+            isInTrash:
+              type: "boolean"
+            movedToTrashDate:
+              type: "null"
+              format: "date-time"
+            created_at:
+              type: "string"
+              format: "date-time"
+            updated_at:
+              type: "string"
+              format: "date-time"
+            tags:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                    format: "uuid"
+                  name:
+                    type: "string"
+                    minLength: 1
+                  groupId:
+                    type: "string"
+                    format: "uuid"
+                  type:
+                    type: "string"
+                    enum:
+                      - "PROFILE"
+                      - "EVENT"
+                      - "PARTICIPANT"
+                      - "NOT_IN_SYSTEM"
+                  created_at:
+                    type: "string"
+                    format: "date-time"
+                  updated_at:
+                    type: "string"
+                    format: "date-time"
+                  group:
+                    type: "object"
+                    properties:
+                      id:
+                        type: "string"
+                        format: "uuid"
+                    required:
+                      - "id"
+                required:
+                  - "id"
+                  - "name"
+                  - "groupId"
+                  - "type"
+                  - "created_at"
+                  - "updated_at"
+                  - "group"
+          required:
+            - "id"
+            - "shortId"
+            - "phoneNumber"
+            - "secondaryPhoneNumber"
+            - "fullName"
+            - "firstName"
+            - "gender"
+            - "birthDate"
+            - "profilePictureUrl"
+            - "instagram"
+            - "mail"
+            - "dni"
+            - "alternativeNames"
+            - "birthLocationId"
+            - "residenceLocationId"
+            - "isInTrash"
+            - "movedToTrashDate"
+            - "created_at"
+            - "updated_at"
+            - "tags"
+    FindByPhoneNumberResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        shortId:
+          type: "number"
+        phoneNumber:
+          type: "string"
+          minLength: 1
+        secondaryPhoneNumber:
+          type: "null"
+        fullName:
+          type: "string"
+          minLength: 1
+        firstName:
+          type: "null"
+          minLength: 1
+        gender:
+          type: "null"
+        birthDate:
+          type: "null"
+        profilePictureUrl:
+          type: "null"
+          format: "uri"
+        instagram:
+          type: "null"
+        mail:
+          type: "null"
+          format: "email"
+        dni:
+          type: "null"
+        alternativeNames:
+          type: "array"
+          items:
+            type: "string"
+        birthLocationId:
+          type: "null"
+          format: "uuid"
+        residenceLocationId:
+          type: "null"
+          format: "uuid"
+        isInTrash:
+          type: "boolean"
+        movedToTrashDate:
+          type: "null"
+          format: "date-time"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "shortId"
+        - "phoneNumber"
+        - "secondaryPhoneNumber"
+        - "fullName"
+        - "firstName"
+        - "gender"
+        - "birthDate"
+        - "profilePictureUrl"
+        - "instagram"
+        - "mail"
+        - "dni"
+        - "alternativeNames"
+        - "birthLocationId"
+        - "residenceLocationId"
+        - "isInTrash"
+        - "movedToTrashDate"
+        - "created_at"
+        - "updated_at"
+    FindTrashResponseDto:
+      type: "object"
+      properties:
+        profiles:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              fullName:
+                type: "string"
+                minLength: 1
+              profilePictureUrl:
+                type: "null"
+                format: "uri"
+              created_at:
+                type: "string"
+                format: "date-time"
+              isInTrash:
+                type: "boolean"
+              phoneNumber:
+                type: "string"
+                minLength: 1
+              movedToTrashDate:
+                type: "null"
+                format: "date-time"
+            required:
+              - "id"
+              - "fullName"
+              - "profilePictureUrl"
+              - "created_at"
+              - "isInTrash"
+              - "phoneNumber"
+              - "movedToTrashDate"
+      required:
+        - "profiles"
+    CreateProfileDto:
+      type: "object"
+      properties:
+        profile:
+          type: "object"
+          properties:
+            alternativeNames:
+              type: "array"
+              items:
+                type: "string"
+            birthDate:
+              type: "null"
+            dni:
+              type: "null"
+            fullName:
+              type: "string"
+              minLength: 1
+            gender:
+              type: "null"
+            instagram:
+              type: "null"
+            mail:
+              type: "null"
+              format: "email"
+            phoneNumber:
+              type: "string"
+              minLength: 1
+            profilePictureUrl:
+              type: "null"
+              format: "uri"
+            secondaryPhoneNumber:
+              type: "null"
+            comments:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  content:
+                    type: "string"
+                    minLength: 1
+                  isSolvable:
+                    default: false
+                    type: "boolean"
+                required:
+                  - "content"
+            residence:
+              type: "object"
+              properties:
+                city:
+                  type: "string"
+                country:
+                  type: "string"
+                latitude:
+                  type: "number"
+                  minimum: -90
+                  maximum: 90
+                longitude:
+                  type: "number"
+                  minimum: -180
+                  maximum: 180
+                state:
+                  type: "string"
+              required:
+                - "city"
+                - "country"
+                - "latitude"
+                - "longitude"
+                - "state"
+            birth:
+              type: "object"
+              properties:
+                city:
+                  type: "string"
+                country:
+                  type: "string"
+                latitude:
+                  type: "number"
+                  minimum: -90
+                  maximum: 90
+                longitude:
+                  type: "number"
+                  minimum: -180
+                  maximum: 180
+                state:
+                  type: "string"
+              required:
+                - "city"
+                - "country"
+                - "latitude"
+                - "longitude"
+                - "state"
+            tags:
+              type: "array"
+              items:
+                type: "string"
+                format: "uuid"
+          required:
+            - "alternativeNames"
+            - "birthDate"
+            - "dni"
+            - "fullName"
+            - "gender"
+            - "instagram"
+            - "mail"
+            - "phoneNumber"
+            - "profilePictureUrl"
+            - "secondaryPhoneNumber"
+        checkForSimilarity:
+          type: "boolean"
+      required:
+        - "profile"
+    CreateProfileResponseDto:
+      type: "object"
+      properties:
+        response:
+          discriminator:
+            propertyName: "type"
+          oneOf:
+            - type: "object"
+              properties:
+                type:
+                  type: "string"
+                  enum:
+                    - "similar"
+                similarProfiles:
+                  type: "array"
+                  items:
+                    type: "object"
+                    properties:
+                      profile:
+                        type: "object"
+                        properties:
+                          fullName:
+                            type: "string"
+                            minLength: 1
+                          phoneNumber:
+                            type: "string"
+                            minLength: 1
+                          id:
+                            type: "string"
+                            format: "uuid"
+                        required:
+                          - "fullName"
+                          - "phoneNumber"
+                          - "id"
+                      similarityPhoneNumberPercentage:
+                        type: "number"
+                      similarityFullNamePercentage:
+                        type: "number"
+                    required:
+                      - "profile"
+                      - "similarityPhoneNumberPercentage"
+                      - "similarityFullNamePercentage"
+              required:
+                - "type"
+                - "similarProfiles"
+            - type: "object"
+              properties:
+                type:
+                  type: "string"
+                  enum:
+                    - "created"
+                id:
+                  type: "string"
+                  format: "uuid"
+              required:
+                - "type"
+                - "id"
+      required:
+        - "response"
+    FindByIdProfileResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        shortId:
+          type: "number"
+        phoneNumber:
+          type: "string"
+          minLength: 1
+        secondaryPhoneNumber:
+          type: "null"
+        fullName:
+          type: "string"
+          minLength: 1
+        firstName:
+          type: "null"
+          minLength: 1
+        gender:
+          type: "null"
+        birthDate:
+          type: "null"
+        profilePictureUrl:
+          type: "null"
+          format: "uri"
+        instagram:
+          type: "null"
+        mail:
+          type: "null"
+          format: "email"
+        dni:
+          type: "null"
+        alternativeNames:
+          type: "array"
+          items:
+            type: "string"
+        birthLocationId:
+          type: "null"
+          format: "uuid"
+        residenceLocationId:
+          type: "null"
+          format: "uuid"
+        isInTrash:
+          type: "boolean"
+        movedToTrashDate:
+          type: "null"
+          format: "date-time"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+        residenceLocation:
+          type: "null"
+          properties:
+            id:
+              type: "string"
+              format: "uuid"
+            latitude:
+              type: "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type: "number"
+              minimum: -180
+              maximum: 180
+            country:
+              type: "string"
+            state:
+              type: "string"
+            city:
+              type: "string"
+            created_at:
+              type: "string"
+              format: "date-time"
+            updated_at:
+              type: "string"
+              format: "date-time"
+          required:
+            - "id"
+            - "latitude"
+            - "longitude"
+            - "country"
+            - "state"
+            - "city"
+            - "created_at"
+            - "updated_at"
+        birthLocation:
+          type: "null"
+          properties:
+            id:
+              type: "string"
+              format: "uuid"
+            latitude:
+              type: "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type: "number"
+              minimum: -180
+              maximum: 180
+            country:
+              type: "string"
+            state:
+              type: "string"
+            city:
+              type: "string"
+            created_at:
+              type: "string"
+              format: "date-time"
+            updated_at:
+              type: "string"
+              format: "date-time"
+          required:
+            - "id"
+            - "latitude"
+            - "longitude"
+            - "country"
+            - "state"
+            - "city"
+            - "created_at"
+            - "updated_at"
+        tags:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              name:
+                type: "string"
+                minLength: 1
+              groupId:
+                type: "string"
+                format: "uuid"
+              type:
+                type: "string"
+                enum:
+                  - "PROFILE"
+                  - "EVENT"
+                  - "PARTICIPANT"
+                  - "NOT_IN_SYSTEM"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+              group:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                    format: "uuid"
+                  color:
+                    type: "string"
+                    minLength: 7
+                    maxLength: 7
+                  isExclusive:
+                    type: "boolean"
+                required:
+                  - "id"
+                  - "color"
+                  - "isExclusive"
+            required:
+              - "id"
+              - "name"
+              - "groupId"
+              - "type"
+              - "created_at"
+              - "updated_at"
+              - "group"
+      required:
+        - "id"
+        - "shortId"
+        - "phoneNumber"
+        - "secondaryPhoneNumber"
+        - "fullName"
+        - "firstName"
+        - "gender"
+        - "birthDate"
+        - "profilePictureUrl"
+        - "instagram"
+        - "mail"
+        - "dni"
+        - "alternativeNames"
+        - "birthLocationId"
+        - "residenceLocationId"
+        - "isInTrash"
+        - "movedToTrashDate"
+        - "created_at"
+        - "updated_at"
+        - "residenceLocation"
+        - "birthLocation"
+        - "tags"
+    DeleteProfileResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        shortId:
+          type: "number"
+        phoneNumber:
+          type: "string"
+          minLength: 1
+        secondaryPhoneNumber:
+          type: "null"
+        fullName:
+          type: "string"
+          minLength: 1
+        firstName:
+          type: "null"
+          minLength: 1
+        gender:
+          type: "null"
+        birthDate:
+          type: "null"
+        profilePictureUrl:
+          type: "null"
+          format: "uri"
+        instagram:
+          type: "null"
+        mail:
+          type: "null"
+          format: "email"
+        dni:
+          type: "null"
+        alternativeNames:
+          type: "array"
+          items:
+            type: "string"
+        birthLocationId:
+          type: "null"
+          format: "uuid"
+        residenceLocationId:
+          type: "null"
+          format: "uuid"
+        isInTrash:
+          type: "boolean"
+        movedToTrashDate:
+          type: "null"
+          format: "date-time"
+        created_at:
+          type: "string"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "shortId"
+        - "phoneNumber"
+        - "secondaryPhoneNumber"
+        - "fullName"
+        - "firstName"
+        - "gender"
+        - "birthDate"
+        - "profilePictureUrl"
+        - "instagram"
+        - "mail"
+        - "dni"
+        - "alternativeNames"
+        - "birthLocationId"
+        - "residenceLocationId"
+        - "isInTrash"
+        - "movedToTrashDate"
+        - "created_at"
+        - "updated_at"
+    UpdateProfileDto:
+      type: "object"
+      properties:
+        alternativeNames:
+          type: "array"
+          items:
+            type: "string"
+        birthDate:
+          type: "null"
+        dni:
+          type: "null"
+        fullName:
+          type: "string"
+          minLength: 1
+        gender:
+          type: "null"
+        instagram:
+          type: "null"
+        mail:
+          type: "null"
+          format: "email"
+        phoneNumber:
+          type: "string"
+          minLength: 1
+        profilePictureUrl:
+          type: "null"
+          format: "uri"
+        secondaryPhoneNumber:
+          type: "null"
+        isInTrash:
+          type: "boolean"
+        movedToTrashDate:
+          type: "null"
+          format: "date-time"
+        residence:
+          type: "object"
+          properties:
+            city:
+              type: "string"
+            country:
+              type: "string"
+            latitude:
+              type: "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type: "number"
+              minimum: -180
+              maximum: 180
+            state:
+              type: "string"
+          required:
+            - "city"
+            - "country"
+            - "latitude"
+            - "longitude"
+            - "state"
+        birth:
+          type: "object"
+          properties:
+            city:
+              type: "string"
+            country:
+              type: "string"
+            latitude:
+              type: "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type: "number"
+              minimum: -180
+              maximum: 180
+            state:
+              type: "string"
+          required:
+            - "city"
+            - "country"
+            - "latitude"
+            - "longitude"
+            - "state"
+        tags:
+          type: "array"
+          items:
+            type: "string"
+            format: "uuid"
+      required:
+        - "alternativeNames"
+        - "birthDate"
+        - "dni"
+        - "fullName"
+        - "gender"
+        - "instagram"
+        - "mail"
+        - "phoneNumber"
+        - "profilePictureUrl"
+        - "secondaryPhoneNumber"
+        - "isInTrash"
+        - "movedToTrashDate"
