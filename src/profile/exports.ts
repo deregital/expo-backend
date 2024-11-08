@@ -7,5 +7,6 @@ export * from './dto/find-by-phone-number.dto';
 export * from './dto/find-by-tag-groups-profile.dto';
 export * from './dto/find-by-tags-profile.dto';
 export * from './dto/find-trash.dto';
+export * from './dto/find-with-active-chat.dto';
 export * from './dto/profile.dto';
 export * from './dto/update-profile.dto';

@@ -191,7 +191,7 @@ model EventFolder {
 model Message {
   id      String @id @default(uuid())
   wamId   String @unique @map("wam_id")
-  message Json
+  message Json   @db.JsonB
 
   profilePhoneNumber String  @map("profile_phone_number")
   profile            Profile @relation("PROFILE_X_MESSAGE", fields: [profilePhoneNumber], references: [phoneNumber], onDelete: Cascade)

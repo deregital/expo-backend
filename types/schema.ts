@@ -580,6 +580,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/profile/all-with-active-chat': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProfileController_findAllWithActiveChat'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/profile/find-by-tags': {
     parameters: {
       query?: never;
@@ -1718,6 +1734,78 @@ export interface components {
             color: string;
             isExclusive: boolean;
           };
+        }[];
+      }[];
+    };
+    FindWithActiveChatResponseDto: {
+      profiles: {
+        /** Format: uuid */
+        id: string;
+        shortId: number;
+        phoneNumber: string;
+        secondaryPhoneNumber: null;
+        fullName: string;
+        firstName: null;
+        gender: null;
+        birthDate: null;
+        /** Format: uri */
+        profilePictureUrl: null;
+        instagram: null;
+        /** Format: email */
+        mail: null;
+        dni: null;
+        alternativeNames: string[];
+        /** Format: uuid */
+        birthLocationId: null;
+        /** Format: uuid */
+        residenceLocationId: null;
+        isInTrash: boolean;
+        /** Format: date-time */
+        movedToTrashDate: null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        tags: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: uuid */
+          groupId: string;
+          /** @enum {string} */
+          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        }[];
+        inChat: boolean;
+        messages: {
+          /** @enum {string} */
+          state: 'SENT' | 'RECEIVED' | 'SEEN';
+          message:
+            | {
+                id: string;
+                from?: string;
+                to?: string;
+                timestamp: number;
+                text: {
+                  body: string;
+                };
+                /** @enum {string} */
+                type: 'text';
+              }
+            | {
+                id: string;
+                from?: string;
+                to?: string;
+                timestamp: number;
+                templateName: string;
+                /** @enum {string} */
+                type: 'template';
+              };
+          /** Format: date-time */
+          created_at: string;
         }[];
       }[];
     };
@@ -3278,6 +3366,26 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['FindAllProfileResponseDto'];
+        };
+      };
+    };
+  };
+  ProfileController_findAllWithActiveChat: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Perfiles obtenido */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindWithActiveChatResponseDto'];
         };
       };
     };

@@ -143,6 +143,11 @@ export default {
         min: 'El contenido debe tener al menos 1 caracter',
       },
     },
+    message: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+    },
   },
   route: {
     auth: {
@@ -367,6 +372,9 @@ export default {
       },
       'find-trash': {
         success: 'Perfiles obtenidos',
+      },
+      'find-all-with-active-chat': {
+        success: 'Perfiles obtenido',
       },
     },
   },

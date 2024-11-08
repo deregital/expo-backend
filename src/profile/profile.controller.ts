@@ -45,6 +45,10 @@ import {
   findTrashResponseSchema,
 } from '@/profile/dto/find-trash.dto';
 import {
+  FindWithActiveChatResponseDto,
+  findWithActiveChatResponseSchema,
+} from '@/profile/dto/find-with-active-chat.dto';
+import {
   UpdateProfileDto,
   updateProfileResponseSchema,
 } from '@/profile/dto/update-profile.dto';
@@ -104,7 +108,18 @@ export class ProfileController {
     return await this.profileService.findAll(visibleTags);
   }
 
-  // TODO: all-with-in-chat requires a prisma extension
+  // TODO: all-with-active-chat requires a prisma extension
+  @ApiOkResponse({
+    type: FindWithActiveChatResponseDto,
+    description: translate('route.profile.find-all-with-active-chat.success'),
+  })
+  @Get('/all-with-active-chat')
+  async findAllWithActiveChat(
+    @VisibleTags() visibleTags: VisibleTagsType,
+  ): Promise<z.infer<typeof findWithActiveChatResponseSchema>> {
+    return await this.profileService.findAllWithActiveChat(visibleTags);
+  }
+
   @ApiNotFoundResponse({
     description: translate('route.profile.find-by-tag.not-found'),
     type: ErrorDto,
@@ -287,8 +302,16 @@ export class ProfileController {
       }
     }
 
+    const profileNormalized = {
+      ...profile,
+      phoneNumber: this.phoneNumberWithoutSpaces(profile.phoneNumber),
+      secondaryPhoneNumber: profile.secondaryPhoneNumber
+        ? this.phoneNumberWithoutSpaces(profile.secondaryPhoneNumber)
+        : null,
+    };
+
     const profileCreated = await this.profileService.create(
-      profile,
+      profileNormalized,
       participantTag.id,
       account.id,
     );
@@ -379,7 +402,7 @@ export class ProfileController {
   private phoneNumberWithoutSpaces(
     phoneNumber: Profile['phoneNumber'],
   ): Profile['phoneNumber'] {
-    return phoneNumber.replace(/\s+/g, '');
+    return phoneNumber.replace(/\s+/g, '').replace(/\+/g, '');
   }
 
   private async similarityCheck(
