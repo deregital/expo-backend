@@ -94,6 +94,9 @@ export default {
       id: {
         uuid: 'El ID debe ser un UUID',
       },
+      name: {
+        min: 'El nombre debe tener al menos 1 caracter',
+      },
       color: {
         invalid: 'El color debe tener el formato hexadecimal (#ABCDEF)',
       },

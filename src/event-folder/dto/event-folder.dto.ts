@@ -5,7 +5,9 @@ export const eventFolderSchema = z.object({
   id: z.string().uuid({
     message: translate('model.event-folder.id.uuid'),
   }),
-  name: z.string().min(1),
+  name: z.string().min(1, {
+    message: translate('model.event-folder.name.min'),
+  }),
   color: z
     .string()
     .length(7)
