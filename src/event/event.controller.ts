@@ -165,6 +165,18 @@ export class EventController {
     @Param('id', new ExistingRecord('event')) id: string,
     @Body() updateEventDto: UpdateEventDto,
   ): Promise<z.infer<typeof updateEventResponseSchema>> {
+    if (updateEventDto.folderId) {
+      const eventFolder = await this.eventFolderService.getById(
+        updateEventDto.folderId,
+      );
+
+      if (!eventFolder) {
+        throw new NotFoundException([
+          translate('route.event.create.folder-not-found'),
+        ]);
+      }
+    }
+
     const event = await this.eventService.update(id, updateEventDto);
     await this.updateEventTags({
       assistedTagId: event.tagAssistedId,
