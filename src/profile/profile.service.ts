@@ -6,11 +6,13 @@ import { findByIdProfileResponseSchema } from '@/profile/dto/find-by-id-profile.
 import { findByTagGroupsProfileResponseSchema } from '@/profile/dto/find-by-tag-groups-profile.dto';
 import { findByTagsProfileResponseSchema } from '@/profile/dto/find-by-tags-profile.dto';
 import { findTrashResponseSchema } from '@/profile/dto/find-trash.dto';
+import { findWithActiveChatResponseSchema } from '@/profile/dto/find-with-active-chat.dto';
 import { UpdateProfileDto } from '@/profile/dto/update-profile.dto';
 import { VisibleTagsType } from '@/shared/decorators/visible-tags.decorator';
 import { Injectable } from '@nestjs/common';
+import { subDays } from 'date-fns';
 import z from 'zod';
-import { Account, Profile, Tag, TagGroup } from '~/types';
+import { Account, JsonMessage, Message, Profile, Tag, TagGroup } from '~/types';
 
 @Injectable()
 export class ProfileService {
@@ -366,6 +368,58 @@ export class ProfileService {
     });
 
     return profiles;
+  }
+
+  async findAllWithActiveChat(
+    visibleTags: VisibleTagsType,
+  ): Promise<z.infer<typeof findWithActiveChatResponseSchema>> {
+    const profiles = (await this.prisma
+      .$extends({
+        result: {
+          profile: {
+            inChat: {
+              compute(
+                data: Profile & {
+                  messages: (Message & { message: JsonMessage })[];
+                },
+              ) {
+                return (
+                  data.messages.length > 0 &&
+                  data.messages.some(
+                    (m) =>
+                      m.created_at > subDays(new Date(), 1) &&
+                      m.message.from === data.phoneNumber,
+                  )
+                );
+              },
+            },
+          },
+        },
+      })
+      .profile.findMany({
+        where: {
+          isInTrash: false,
+          tags: {
+            some: {
+              id: { in: visibleTags },
+            },
+          },
+        },
+        include: {
+          tags: true,
+          messages: {
+            select: {
+              state: true,
+              message: true,
+              created_at: true,
+            },
+          },
+        },
+      })) as unknown as z.infer<
+      typeof findWithActiveChatResponseSchema.shape.profiles
+    >;
+
+    return { profiles };
   }
 
   async alreadyExistingProfile({

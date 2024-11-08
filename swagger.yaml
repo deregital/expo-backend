@@ -703,6 +703,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllProfileResponseDto"
+  /profile/all-with-active-chat:
+    get:
+      operationId: "ProfileController_findAllWithActiveChat"
+      parameters: []
+      responses:
+        200:
+          description: "Perfiles obtenido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindWithActiveChatResponseDto"
   /profile/find-by-tags:
     get:
       operationId: "ProfileController_findByTag"
@@ -2935,6 +2946,195 @@ components:
               - "created_at"
               - "updated_at"
               - "tags"
+      required:
+        - "profiles"
+    FindWithActiveChatResponseDto:
+      type: "object"
+      properties:
+        profiles:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              shortId:
+                type: "number"
+              phoneNumber:
+                type: "string"
+                minLength: 1
+              secondaryPhoneNumber:
+                type: "null"
+              fullName:
+                type: "string"
+                minLength: 1
+              firstName:
+                type: "null"
+                minLength: 1
+              gender:
+                type: "null"
+              birthDate:
+                type: "null"
+              profilePictureUrl:
+                type: "null"
+                format: "uri"
+              instagram:
+                type: "null"
+              mail:
+                type: "null"
+                format: "email"
+              dni:
+                type: "null"
+              alternativeNames:
+                type: "array"
+                items:
+                  type: "string"
+              birthLocationId:
+                type: "null"
+                format: "uuid"
+              residenceLocationId:
+                type: "null"
+                format: "uuid"
+              isInTrash:
+                type: "boolean"
+              movedToTrashDate:
+                type: "null"
+                format: "date-time"
+              created_at:
+                type: "string"
+                format: "date-time"
+              updated_at:
+                type: "string"
+                format: "date-time"
+              tags:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string"
+                      format: "uuid"
+                    name:
+                      type: "string"
+                      minLength: 1
+                    groupId:
+                      type: "string"
+                      format: "uuid"
+                    type:
+                      type: "string"
+                      enum:
+                        - "PROFILE"
+                        - "EVENT"
+                        - "PARTICIPANT"
+                        - "NOT_IN_SYSTEM"
+                    created_at:
+                      type: "string"
+                      format: "date-time"
+                    updated_at:
+                      type: "string"
+                      format: "date-time"
+                  required:
+                    - "id"
+                    - "name"
+                    - "groupId"
+                    - "type"
+                    - "created_at"
+                    - "updated_at"
+              inChat:
+                type: "boolean"
+              messages:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    state:
+                      type: "string"
+                      enum:
+                        - "SENT"
+                        - "RECEIVED"
+                        - "SEEN"
+                    message:
+                      discriminator:
+                        propertyName: "type"
+                      oneOf:
+                        - type: "object"
+                          properties:
+                            id:
+                              type: "string"
+                            from:
+                              type: "string"
+                            to:
+                              type: "string"
+                            timestamp:
+                              type: "number"
+                            text:
+                              type: "object"
+                              properties:
+                                body:
+                                  type: "string"
+                              required:
+                                - "body"
+                            type:
+                              type: "string"
+                              enum:
+                                - "text"
+                          required:
+                            - "id"
+                            - "timestamp"
+                            - "text"
+                            - "type"
+                        - type: "object"
+                          properties:
+                            id:
+                              type: "string"
+                            from:
+                              type: "string"
+                            to:
+                              type: "string"
+                            timestamp:
+                              type: "number"
+                            templateName:
+                              type: "string"
+                            type:
+                              type: "string"
+                              enum:
+                                - "template"
+                          required:
+                            - "id"
+                            - "timestamp"
+                            - "templateName"
+                            - "type"
+                    created_at:
+                      type: "string"
+                      format: "date-time"
+                  required:
+                    - "state"
+                    - "message"
+                    - "created_at"
+            required:
+              - "id"
+              - "shortId"
+              - "phoneNumber"
+              - "secondaryPhoneNumber"
+              - "fullName"
+              - "firstName"
+              - "gender"
+              - "birthDate"
+              - "profilePictureUrl"
+              - "instagram"
+              - "mail"
+              - "dni"
+              - "alternativeNames"
+              - "birthLocationId"
+              - "residenceLocationId"
+              - "isInTrash"
+              - "movedToTrashDate"
+              - "created_at"
+              - "updated_at"
+              - "tags"
+              - "inChat"
+              - "messages"
       required:
         - "profiles"
     FindByTagsProfileResponseDto:
