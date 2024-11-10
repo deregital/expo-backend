@@ -5,9 +5,11 @@ import {
 import { getGlobalFilterResponseSchema } from '@/account/dto/get-global-filter.dto';
 import { updateGlobalFilterResponseSchema } from '@/account/dto/update-global-filter.dto';
 import { translate } from '@/i18n/translate';
+import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import {
   ConflictException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -17,7 +19,7 @@ import { Account, Tag } from '~/types/prisma-schema';
 
 @Injectable()
 export class AccountService {
-  constructor(private prisma: PrismaService) {}
+  constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
   async create(
     dto: CreateAccountDto,

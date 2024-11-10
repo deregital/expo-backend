@@ -54,7 +54,7 @@ export const profileSchema = z.object({
   residenceLocationId: z.string().uuid().nullable(),
 
   isInTrash: z.boolean(),
-  movedToTrashDate: z.date().nullable(),
+  movedToTrashDate: z.coerce.date().nullable(),
 
   created_at: z.date(),
   updated_at: z.date(),

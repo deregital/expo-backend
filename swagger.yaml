@@ -2918,9 +2918,17 @@ components:
               isoCode:
                 type:
                   - "string"
+              latitude:
+                type:
+                  - "number"
+              longitude:
+                type:
+                  - "number"
             required:
               - "name"
               - "isoCode"
+              - "latitude"
+              - "longitude"
       required:
         - "countries"
     FindAllStatesByCountryResponseDto:
@@ -6158,16 +6166,3 @@ components:
             type:
               - "string"
             format: "uuid"
-      required:
-        - "alternativeNames"
-        - "birthDate"
-        - "dni"
-        - "fullName"
-        - "gender"
-        - "instagram"
-        - "mail"
-        - "phoneNumber"
-        - "profilePictureUrl"
-        - "secondaryPhoneNumber"
-        - "isInTrash"
-        - "movedToTrashDate"

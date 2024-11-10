@@ -361,6 +361,7 @@ export default {
         success: 'Perfil actualizado con éxito',
         'not-found': 'Perfil no encontrado',
         conflict: 'Error en la actualización del perfil',
+        'exclusive-tags': `Las etiquetas \{\{tag1\}\} y \{\{tag2\}\} son exclusivas del mismo grupo`,
       },
       'find-by-date-range': {
         success: 'Perfiles obtenidos',

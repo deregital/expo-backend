@@ -1,4 +1,5 @@
 import { getAllEventsResponseSchema } from '@/event/dto/get-all-event.dto';
+import { PRISMA_SERVICE } from '@/prisma/constants';
 import {
   CreateEventFolderDto,
   createEventFolderResponseSchema,
@@ -12,12 +13,12 @@ import {
 } from './dto/update-event-folder.dto';
 
 import { PrismaService } from '@/prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import z from 'zod';
 
 @Injectable()
 export class EventFolderService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
   async createEventFolder(
     dto: CreateEventFolderDto,

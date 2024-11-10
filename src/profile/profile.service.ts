@@ -1,3 +1,4 @@
+import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateProfileDto } from '@/profile/dto/create-profile.dto';
 import { findAllProfileResponseSchema } from '@/profile/dto/find-all-profile.dto';
@@ -9,14 +10,14 @@ import { findTrashResponseSchema } from '@/profile/dto/find-trash.dto';
 import { findWithActiveChatResponseSchema } from '@/profile/dto/find-with-active-chat.dto';
 import { UpdateProfileDto } from '@/profile/dto/update-profile.dto';
 import { VisibleTagsType } from '@/shared/decorators/visible-tags.decorator';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { subDays } from 'date-fns';
 import z from 'zod';
 import { Account, JsonMessage, Message, Profile, Tag, TagGroup } from '~/types';
 
 @Injectable()
 export class ProfileService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
   async findAll(
     visibleTags: VisibleTagsType,
@@ -234,7 +235,7 @@ export class ProfileService {
       },
       data: {
         fullName: dto.fullName,
-        firstName: dto.fullName.split(' ')[0],
+        firstName: dto.fullName?.split(' ')[0] ?? undefined,
         phoneNumber: dto.phoneNumber,
         secondaryPhoneNumber: dto.secondaryPhoneNumber,
         alternativeNames: dto.alternativeNames ?? undefined,
@@ -277,11 +278,13 @@ export class ProfileService {
               },
             }
           : undefined,
-        tags: {
-          set: [participantTagId, ...(dto.tags ?? [])].map((id) => ({
-            id: id,
-          })),
-        },
+        tags: dto.tags
+          ? {
+              set: [participantTagId, ...(dto.tags ?? [])].map((tagId) => ({
+                id: tagId,
+              })),
+            }
+          : undefined,
       },
     });
 

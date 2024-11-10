@@ -1,3 +1,4 @@
+import { PRISMA_SERVICE } from '@/prisma/constants';
 import {
   CreateCannedResponseDto,
   createCannedResponseResponseSchema,
@@ -10,12 +11,12 @@ import {
 } from './dto/update-canned-response.dto';
 
 import { PrismaService } from '@/prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import z from 'zod';
 
 @Injectable()
 export class CannedResponseService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
   async createCannedResponse(
     dto: CreateCannedResponseDto,

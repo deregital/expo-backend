@@ -8,14 +8,10 @@ import { type Account as AccountType } from '~/types/prisma-schema';
 export type AccountWithoutPassword = Omit<AccountType, 'password'>;
 
 export const Account = createParamDecoratorWithInjections(
-  async (
-    data: unknown,
-    context: ExecutionContext,
-    { prismaService: _prismaService },
-  ) => {
+  async (data: unknown, context: ExecutionContext, { prismaService }) => {
     const request = context.switchToHttp().getRequest<Request>();
     try {
-      const account = await getAccountFromReq(request);
+      const account = await getAccountFromReq(request, prismaService);
 
       return account;
     } catch (error) {

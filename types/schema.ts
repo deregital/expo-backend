@@ -1279,6 +1279,8 @@ export interface components {
       countries: {
         name: string;
         isoCode: string;
+        latitude: number;
+        longitude: number;
       }[];
     };
     FindAllStatesByCountryResponseDto: {
@@ -2215,21 +2217,21 @@ export interface components {
       updated_at: string;
     };
     UpdateProfileDto: {
-      alternativeNames: string[];
-      birthDate: string | null;
-      dni: string | null;
-      fullName: string;
-      gender: string | null;
-      instagram: string | null;
+      alternativeNames?: string[];
+      birthDate?: string | null;
+      dni?: string | null;
+      fullName?: string;
+      gender?: string | null;
+      instagram?: string | null;
       /** Format: email */
-      mail: string | null;
-      phoneNumber: string;
+      mail?: string | null;
+      phoneNumber?: string;
       /** Format: uri */
-      profilePictureUrl: string | null;
-      secondaryPhoneNumber: string | null;
-      isInTrash: boolean;
+      profilePictureUrl?: string | null;
+      secondaryPhoneNumber?: string | null;
+      isInTrash?: boolean;
       /** Format: date-time */
-      movedToTrashDate: string | null;
+      movedToTrashDate?: string | null;
       residence?: {
         city: string;
         country: string;

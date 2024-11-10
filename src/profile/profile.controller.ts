@@ -373,6 +373,9 @@ export class ProfileController {
     @Body() body: UpdateProfileDto,
   ): Promise<z.infer<typeof updateProfileResponseSchema>> {
     const participantTag = await this.tagService.findParticipantTag();
+    const allTags = (await this.tagService.findAll()).tags.filter((tag) =>
+      body.tags?.some((t) => t === tag.id),
+    );
 
     if (!participantTag) {
       throw new NotFoundException(
@@ -380,12 +383,28 @@ export class ProfileController {
       );
     }
 
+    allTags?.forEach((tag) => {
+      if (tag.group.isExclusive) {
+        const exclusivity = allTags?.filter(
+          (t) => t.group.id === tag.group.id && t.id !== tag.id,
+        );
+        if (exclusivity && exclusivity.length > 0) {
+          throw new ConflictException([
+            translate('route.profile.update.exclusive-tags', {
+              tag1: tag.name,
+              tag2: exclusivity[0]!.name,
+            }),
+          ]);
+        }
+      }
+    });
+
     try {
       await this.checkForSameProfile(
         {
-          phoneNumber: body.phoneNumber,
-          secondaryPhoneNumber: body.secondaryPhoneNumber,
-          dni: body.dni,
+          phoneNumber: body.phoneNumber || '',
+          secondaryPhoneNumber: body.secondaryPhoneNumber || '',
+          dni: body.dni || '',
         },
         {
           isUpdating: true,

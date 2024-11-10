@@ -5,17 +5,18 @@ import { findAllLocationResponseSchema } from '@/location/dto/find-all-location.
 import { findArgStatesResponseSchema } from '@/location/dto/find-arg-states.dto';
 import { findCitiesByArgStateResponseSchema } from '@/location/dto/find-cities-by-arg-state.dto';
 import { findAllStatesByCountryResponseSchema } from '@/location/dto/states-by-country.dto';
+import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import localidades from '@/shared/data/arg-cities.json';
 import argStates from '@/shared/data/arg-states.json';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Country, State } from 'country-state-city';
 import z from 'zod';
 
 const cities = localidades.localidades as ArgCity[];
 @Injectable()
 export class LocationService {
-  constructor(private prisma: PrismaService) {}
+  constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
   async findAll(): Promise<z.infer<typeof findAllLocationResponseSchema>> {
     const birthLocations = await this.prisma.location.findMany({
@@ -101,6 +102,8 @@ export class LocationService {
     const countries = Country.getAllCountries().map((country) => ({
       name: country.name,
       isoCode: country.isoCode,
+      latitude: Number(country.latitude),
+      longitude: Number(country.longitude),
     }));
     return { countries };
   }
