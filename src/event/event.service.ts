@@ -12,15 +12,16 @@ import {
   updateEventResponseSchema,
 } from '@/event/dto/update-event.dto';
 import { translate } from '@/i18n/translate';
+import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { z } from 'zod';
 import { Event, TagGroup, TagType } from '~/types';
 import { deleteEventResponseSchema } from './dto/delete-event.dto';
 
 @Injectable()
 export class EventService {
-  constructor(private prisma: PrismaService) {}
+  constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
   async create(
     dto: Omit<CreateEventDto, 'subEvents' | 'folderId'> & {
