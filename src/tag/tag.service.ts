@@ -65,7 +65,7 @@ export class TagService {
 
   async update(
     id: Tag['id'],
-    updateTagDto: UpdateTagDto,
+    updateTagDto: Partial<UpdateTagDto>,
   ): Promise<z.infer<typeof updateTagResponseSchema>> {
     return await this.prisma.tag.update({
       where: {
@@ -73,11 +73,13 @@ export class TagService {
       },
       data: {
         name: updateTagDto.name,
-        group: {
-          connect: {
-            id: updateTagDto.groupId,
-          },
-        },
+        group: updateTagDto.groupId
+          ? {
+              connect: {
+                id: updateTagDto.groupId,
+              },
+            }
+          : undefined,
       },
     });
   }

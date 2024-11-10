@@ -4,7 +4,7 @@ import z from 'zod';
 import { eventFolderSchema } from './event-folder.dto';
 
 export const getAllEventFolderResponseSchema = z.object({
-  eventFolders: z.array(
+  folders: z.array(
     eventFolderSchema.merge(
       z.object({
         events: z.array(eventSchema),

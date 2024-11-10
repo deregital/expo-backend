@@ -516,6 +516,54 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/event/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['EventController_create'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/event/all': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['EventController_findAll'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/event/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['EventController_findById'];
+    put?: never;
+    post?: never;
+    delete: operations['EventController_remove'];
+    options?: never;
+    head?: never;
+    patch: operations['EventController_update'];
+    trace?: never;
+  };
   '/profile/all': {
     parameters: {
       query?: never;
@@ -1310,7 +1358,7 @@ export interface components {
       updated_at: string;
     };
     GetAllEventFolderResponseDto: {
-      eventFolders: {
+      folders: {
         /** Format: uuid */
         id: string;
         name: string;
@@ -1390,6 +1438,311 @@ export interface components {
       id: string;
       name: string;
       color: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    CreateEventDto: {
+      name: string;
+      /** Format: date-time */
+      date: string;
+      location: string;
+      /** Format: uuid */
+      folderId: string | null;
+      subEvents?: {
+        name: string;
+        /** Format: date-time */
+        date: string;
+        location: string;
+      }[];
+    };
+    CreateEventResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** Format: date-time */
+      date: string;
+      location: string;
+      /** Format: uuid */
+      folderId: string | null;
+      /** Format: uuid */
+      tagAssistedId: string;
+      /** Format: uuid */
+      tagConfirmedId: string;
+      /** Format: uuid */
+      supraEventId: string | null;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    GetAllEventsResponseDto: {
+      folders: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        color: string;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        events: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: date-time */
+          date: string;
+          location: string;
+          /** Format: uuid */
+          folderId: string | null;
+          /** Format: uuid */
+          tagAssistedId: string;
+          /** Format: uuid */
+          tagConfirmedId: string;
+          /** Format: uuid */
+          supraEventId: string | null;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+          supraEvent: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            /** Format: date-time */
+            date: string;
+            location: string;
+            /** Format: uuid */
+            folderId: string | null;
+            /** Format: uuid */
+            tagAssistedId: string;
+            /** Format: uuid */
+            tagConfirmedId: string;
+            /** Format: uuid */
+            supraEventId: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+          } | null;
+          subEvents: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            /** Format: date-time */
+            date: string;
+            location: string;
+            /** Format: uuid */
+            folderId: string | null;
+            /** Format: uuid */
+            tagAssistedId: string;
+            /** Format: uuid */
+            tagConfirmedId: string;
+            /** Format: uuid */
+            supraEventId: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+          }[];
+        }[];
+      }[];
+      withoutFolder: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: date-time */
+        date: string;
+        location: string;
+        /** Format: uuid */
+        folderId: string | null;
+        /** Format: uuid */
+        tagAssistedId: string;
+        /** Format: uuid */
+        tagConfirmedId: string;
+        /** Format: uuid */
+        supraEventId: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        supraEvent: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: date-time */
+          date: string;
+          location: string;
+          /** Format: uuid */
+          folderId: string | null;
+          /** Format: uuid */
+          tagAssistedId: string;
+          /** Format: uuid */
+          tagConfirmedId: string;
+          /** Format: uuid */
+          supraEventId: string | null;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        } | null;
+        subEvents: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: date-time */
+          date: string;
+          location: string;
+          /** Format: uuid */
+          folderId: string | null;
+          /** Format: uuid */
+          tagAssistedId: string;
+          /** Format: uuid */
+          tagConfirmedId: string;
+          /** Format: uuid */
+          supraEventId: string | null;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        }[];
+      }[];
+    };
+    GetByIdEventResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** Format: date-time */
+      date: string;
+      location: string;
+      /** Format: uuid */
+      folderId: string | null;
+      /** Format: uuid */
+      tagAssistedId: string;
+      /** Format: uuid */
+      tagConfirmedId: string;
+      /** Format: uuid */
+      supraEventId: string | null;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      subEvents: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: date-time */
+        date: string;
+        location: string;
+        /** Format: uuid */
+        folderId: string | null;
+        /** Format: uuid */
+        tagAssistedId: string;
+        /** Format: uuid */
+        tagConfirmedId: string;
+        /** Format: uuid */
+        supraEventId: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
+      supraEvent: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: date-time */
+        date: string;
+        location: string;
+        /** Format: uuid */
+        folderId: string | null;
+        /** Format: uuid */
+        tagAssistedId: string;
+        /** Format: uuid */
+        tagConfirmedId: string;
+        /** Format: uuid */
+        supraEventId: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      } | null;
+    };
+    UpdateEventDto: {
+      name: string;
+      /** Format: uuid */
+      folderId: string | null;
+      /** Format: date-time */
+      date: string;
+      location: string;
+      subEvents: {
+        name: string;
+        location: string;
+        /** Format: date-time */
+        date: string;
+        id: string | '';
+      }[];
+    };
+    UpdateEventResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** Format: date-time */
+      date: string;
+      location: string;
+      /** Format: uuid */
+      folderId: string | null;
+      /** Format: uuid */
+      tagAssistedId: string;
+      /** Format: uuid */
+      tagConfirmedId: string;
+      /** Format: uuid */
+      supraEventId: string | null;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      tagAssisted: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        groupId: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        group: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          color: string;
+          isExclusive: boolean;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        };
+      };
+    };
+    DeleteEventResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** Format: date-time */
+      date: string;
+      location: string;
+      /** Format: uuid */
+      folderId: string | null;
+      /** Format: uuid */
+      tagAssistedId: string;
+      /** Format: uuid */
+      tagConfirmedId: string;
+      /** Format: uuid */
+      supraEventId: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1740,8 +2093,6 @@ export interface components {
     CreateProfileResponseDto: {
       response:
         | {
-            /** @enum {string} */
-            type: 'similar';
             similarProfiles: {
               profile: {
                 fullName: string;
@@ -1752,12 +2103,14 @@ export interface components {
               similarityPhoneNumberPercentage: number;
               similarityFullNamePercentage: number;
             }[];
+            /** @enum {string} */
+            type: 'similar';
           }
         | {
-            /** @enum {string} */
-            type: 'created';
             /** Format: uuid */
             id: string;
+            /** @enum {string} */
+            type: 'created';
           };
     };
     FindByIdProfileResponseDto: {
@@ -2911,6 +3264,165 @@ export interface operations {
         };
       };
       /** @description Carpeta de evento no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  EventController_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateEventDto'];
+      };
+    };
+    responses: {
+      /** @description Evento creado con éxito */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateEventResponseDto'];
+        };
+      };
+      /** @description Error en la creación del evento */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  EventController_findAll: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Eventos obtenidos con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetAllEventsResponseDto'];
+        };
+      };
+      /** @description No se encontraron eventos */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  EventController_findById: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Evento obtenido con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetByIdEventResponseDto'];
+        };
+      };
+      /** @description Evento no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  EventController_remove: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Evento no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Evento eliminado con éxito */
+      410: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DeleteEventResponseDto'];
+        };
+      };
+    };
+  };
+  EventController_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateEventDto'];
+      };
+    };
+    responses: {
+      /** @description Evento actualizado con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateEventResponseDto'];
+        };
+      };
+      /** @description Evento no encontrado */
       404: {
         headers: {
           [name: string]: unknown;

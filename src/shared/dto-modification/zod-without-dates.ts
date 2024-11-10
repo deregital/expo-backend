@@ -1,4 +1,4 @@
-import { OpenApiZodAny } from '@anatine/zod-openapi';
+import { type OpenApiZodAny } from '@anatine/zod-openapi';
 import {
   z,
   ZodArray,
