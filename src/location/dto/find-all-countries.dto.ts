@@ -6,6 +6,8 @@ export const findAllCountriesResponseSchema = z.object({
     z.object({
       name: z.string(),
       isoCode: z.string(),
+      latitude: z.number(),
+      longitude: z.number(),
     }),
   ),
 });

@@ -1,3 +1,4 @@
+import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateTagDto, CreateTagResponseDto } from '@/tag/dto/create-tag.dto';
 import { deleteTagResponseSchema } from '@/tag/dto/delete-tag.dto';
@@ -17,13 +18,13 @@ import {
   UpdateTagDto,
   updateTagResponseSchema,
 } from '@/tag/dto/update-tag.dto';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import z from 'zod';
 import { Profile, Tag, TagType } from '~/types';
 
 @Injectable()
 export class TagService {
-  constructor(private prisma: PrismaService) {}
+  constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
   async create(dto: CreateTagDto): Promise<CreateTagResponseDto> {
     return await this.prisma.tag.create({

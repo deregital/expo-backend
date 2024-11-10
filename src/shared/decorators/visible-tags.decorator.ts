@@ -13,10 +13,10 @@ export const VisibleTags = createParamDecoratorWithInjections(
   async (
     data: unknown,
     context: ExecutionContext,
-    { accountService, tagService },
+    { accountService, tagService, prismaService },
   ) => {
     const request = context.switchToHttp().getRequest<Request>();
-    const account = await getAccountFromReq(request);
+    const account = await getAccountFromReq(request, prismaService);
 
     let visibleTags: VisibleTagsType = [];
 

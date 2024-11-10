@@ -1,4 +1,5 @@
 import { findAllWithTagsResponseSchema } from '@/exports';
+import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import {
   CreateTagGroupDto,
@@ -8,12 +9,12 @@ import { deleteTagGroupResponseSchema } from '@/tag-group/dto/delete-tag-group.d
 import { findAllTagGroupResponseSchema } from '@/tag-group/dto/find-all-tag-group.dto';
 import { findOneTagGroupResponseSchema } from '@/tag-group/dto/find-one-tag-group.dto';
 import { updateTagGroupResponseSchema } from '@/tag-group/dto/update-tag-group.dto';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import z from 'zod';
 
 @Injectable()
 export class TagGroupService {
-  constructor(private prisma: PrismaService) {}
+  constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
   async create(
     dto: CreateTagGroupDto,

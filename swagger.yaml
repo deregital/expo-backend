@@ -2808,9 +2808,17 @@ components:
               isoCode:
                 type:
                   - "string"
+              latitude:
+                type:
+                  - "number"
+              longitude:
+                type:
+                  - "number"
             required:
               - "name"
               - "isoCode"
+              - "latitude"
+              - "longitude"
       required:
         - "countries"
     FindAllStatesByCountryResponseDto:

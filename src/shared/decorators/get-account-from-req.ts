@@ -8,10 +8,9 @@ import { type Request } from 'express';
 
 export async function getAccountFromReq(
   request: Request,
+  prismaService: PrismaService,
 ): Promise<AccountWithoutPassword> {
   const jwtService = new JwtService({ secret: process.env.JWT_SECRET });
-
-  const prismaService = new PrismaService();
   const userService = new AccountService(prismaService);
 
   try {

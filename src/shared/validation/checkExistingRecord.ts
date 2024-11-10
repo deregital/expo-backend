@@ -1,4 +1,5 @@
 import { translate } from '@/i18n/translate';
+import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import {
   ArgumentMetadata,
@@ -6,6 +7,7 @@ import {
   NotFoundException,
   PipeTransform,
 } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
 import { Prisma } from '~/types/prisma-schema';
 
 type FindUniqueFunction = {
@@ -22,10 +24,30 @@ type GenericArgumentMetadata<T> = ArgumentMetadata & {
 export class ExistingRecord<Models extends Exclude<Prisma.ModelName, 'Enums'>>
   implements PipeTransform<Capitalize<Models>>
 {
-  constructor(
-    private readonly modelName: Uncapitalize<Models>,
-    private readonly prisma: PrismaService = new PrismaService(),
-  ) {}
+  private static moduleRef: ModuleRef;
+  private prisma: PrismaService;
+  private modelName: Uncapitalize<Models>;
+
+  constructor(modelName: Uncapitalize<Models>) {
+    this.modelName = modelName;
+  }
+
+  static registerModuleRef(moduleRef: ModuleRef): void {
+    ExistingRecord.moduleRef = moduleRef;
+  }
+
+  private getPrismaService(): PrismaService {
+    if (!this.prisma) {
+      // Cache the PrismaService instance after the first retrieval
+      this.prisma = ExistingRecord.moduleRef.get<PrismaService>(
+        PRISMA_SERVICE,
+        {
+          strict: false,
+        },
+      );
+    }
+    return this.prisma;
+  }
 
   async transform<T extends Capitalize<Models>>(
     value: string,
@@ -35,12 +57,12 @@ export class ExistingRecord<Models extends Exclude<Prisma.ModelName, 'Enums'>>
       throw new Error('Metadata data is required');
     }
 
+    const prisma = this.getPrismaService();
+
     const record = await (
-      this.prisma[this.modelName] as unknown as FindUniqueFunction
+      prisma[this.modelName] as unknown as FindUniqueFunction
     ).findUnique({
-      where: {
-        id: value,
-      },
+      where: { id: value },
     });
 
     if (!record) {

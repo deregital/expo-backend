@@ -1,13 +1,14 @@
 import { CreateCommentDto } from '@/comment/dto/create-comment.dto';
 import { getByProfileCommentResponseSchema } from '@/comment/dto/get-by-profile-comment.dto';
+import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import z from 'zod';
 import { Account, Comment } from '~/types';
 
 @Injectable()
 export class CommentService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
   async createComment(
     dto: CreateCommentDto,
