@@ -16,7 +16,7 @@ async function bootstrap(): Promise<void> {
     .addTag('expo-backend')
     .build();
 
-  patchNestjsSwagger();
+  patchNestjsSwagger(undefined, '3.1');
 
   const document = SwaggerModule.createDocument(app, options);
   const outputPath = path.resolve(process.cwd(), 'swagger.yaml');
