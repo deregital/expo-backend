@@ -234,7 +234,7 @@ export class ProfileService {
       },
       data: {
         fullName: dto.fullName,
-        firstName: dto.fullName.split(' ')[0],
+        firstName: dto.fullName?.split(' ')[0] ?? undefined,
         phoneNumber: dto.phoneNumber,
         secondaryPhoneNumber: dto.secondaryPhoneNumber,
         alternativeNames: dto.alternativeNames ?? undefined,
@@ -278,8 +278,8 @@ export class ProfileService {
             }
           : undefined,
         tags: {
-          set: [participantTagId, ...(dto.tags ?? [])].map((id) => ({
-            id: id,
+          set: [participantTagId, ...(dto.tags ?? [])].map((tagId) => ({
+            id: tagId,
           })),
         },
       },

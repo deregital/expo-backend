@@ -4138,16 +4138,3 @@ components:
           items:
             type: "string"
             format: "uuid"
-      required:
-        - "alternativeNames"
-        - "birthDate"
-        - "dni"
-        - "fullName"
-        - "gender"
-        - "instagram"
-        - "mail"
-        - "phoneNumber"
-        - "profilePictureUrl"
-        - "secondaryPhoneNumber"
-        - "isInTrash"
-        - "movedToTrashDate"

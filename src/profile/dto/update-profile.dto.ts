@@ -19,6 +19,7 @@ export const updateProfileSchema = profileSchema
     isInTrash: true,
     movedToTrashDate: true,
   })
+  .partial()
   .merge(
     z.object({
       residence: locationSchema
