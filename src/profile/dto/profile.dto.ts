@@ -46,7 +46,12 @@ export const profileSchema = z.object({
     })
     .nullable(),
   instagram: z.string().nullable(),
-  mail: z.string().email().nullable(),
+  mail: z
+    .string()
+    .email({
+      message: translate('model.profile.mail.invalid'),
+    })
+    .nullable(),
   dni: z.string().nullable(),
   alternativeNames: z.array(z.string()),
 

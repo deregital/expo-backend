@@ -118,6 +118,10 @@ export default {
       profilePictureUrl: {
         invalid: 'La URL de la imagen de perfil no es válida',
       },
+      mail: {
+        invalid:
+          'El email no es válido. Debe tener el formato "algo@dominio.algo"',
+      },
     },
     location: {
       id: {
