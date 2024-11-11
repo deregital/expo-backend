@@ -148,6 +148,12 @@ export default {
         uuid: 'El ID debe ser un UUID',
       },
     },
+    csv: {
+      password: {
+        required: 'La contraseña es obligatoria',
+        empty: 'La contraseña no puede estar vacía',
+      },
+    },
   },
   route: {
     auth: {
