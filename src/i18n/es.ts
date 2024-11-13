@@ -384,5 +384,18 @@ export default {
         success: 'Perfiles obtenido',
       },
     },
+    csv: {
+      downloadModelos: {
+        success: 'CSV de modelos descargado con éxito',
+        unauthorized:
+          'No tienes autorización para descargar el archivo de modelos',
+        error: 'Error al descargar el archivo CSV de modelos',
+      },
+      downloadAllTables: {
+        success: 'CSV de todas las tablas descargado con éxito',
+        unauthorized: 'No tienes autorización para descargar todas las tablas',
+        error: 'Error al descargar el archivo CSV de todas las tablas',
+      },
+    },
   },
 } as const;
