@@ -1048,12 +1048,26 @@ paths:
             schema:
               $ref: "#/components/schemas/DownloadProfilesDto"
       responses:
-        200:
-          description: "CSV de modelos descargado con éxito"
         409:
           description: "No tienes autorización para descargar el archivo de modelos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al descargar el archivo CSV de modelos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        default:
+          description: "CSV de modelos descargado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StreamableFile"
   /csv/download-all-tables:
-    post:
+    get:
       operationId: "CsvController_downloadAllTables"
       parameters: []
       requestBody:
@@ -1063,10 +1077,18 @@ paths:
             schema:
               $ref: "#/components/schemas/DownloadAllTablesDto"
       responses:
-        200:
-          description: "CSV de todas las tablas descargado con éxito"
         409:
           description: "No tienes autorización para descargar todas las tablas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        default:
+          description: "CSV de todas las tablas descargado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Buffer"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -6206,6 +6228,9 @@ components:
           minLength: 1
       required:
         - "password"
+    StreamableFile:
+      type: "object"
+      properties: {}
     DownloadAllTablesDto:
       type:
         - "object"
@@ -6216,3 +6241,6 @@ components:
           minLength: 1
       required:
         - "password"
+    Buffer:
+      type: "object"
+      properties: {}

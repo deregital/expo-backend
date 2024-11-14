@@ -12,9 +12,7 @@ export class DownloadAllTablesDto extends createZodDtoWithoutDate(
   downloadAllTablesSchema,
 ) {}
 
-export const downloadAllTablesResponseSchema = z.object({
-  zipData: z.instanceof(Buffer),
-});
+export const downloadAllTablesResponseSchema = z.instanceof(Buffer);
 
 export class DownloadAllTablesResponseDto extends createZodDtoWithoutDate(
   downloadAllTablesResponseSchema,
