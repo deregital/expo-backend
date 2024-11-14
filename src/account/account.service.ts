@@ -13,7 +13,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { hash } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 import z from 'zod';
 import { Account, Tag } from '~/types/prisma-schema';
 
@@ -162,5 +162,37 @@ export class AccountService {
         },
       })),
     };
+  }
+
+  async checkPassword(
+    accountId: Account['id'],
+    password: string,
+  ): Promise<void> {
+    const acc = await this.prisma.account.findUnique({
+      where: {
+        id: accountId,
+      },
+    });
+
+    if (!acc) {
+      throw new NotFoundException([
+        translate('route.account.check-password.not-found'),
+      ]);
+    }
+
+    const isPasswordValid = await this.comparePassword(acc, password);
+
+    if (!isPasswordValid) {
+      throw new ConflictException([
+        translate('route.account.check-password.invalid-password'),
+      ]);
+    }
+  }
+
+  private async comparePassword(
+    account: Account,
+    password: string,
+  ): Promise<boolean> {
+    return await compare(password, account.password);
   }
 }

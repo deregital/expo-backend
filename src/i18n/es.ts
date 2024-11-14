@@ -178,6 +178,10 @@ export default {
       me: {
         success: 'Cuenta obtenida',
       },
+      'check-password': {
+        'not-found': 'Cuenta no encontrada',
+        'invalid-password': 'Contraseña inválida',
+      },
     },
     tag: {
       create: {

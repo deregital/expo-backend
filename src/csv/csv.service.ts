@@ -1,119 +1,83 @@
 import { translate } from '@/i18n/translate';
+import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import ExcelJS from 'exceljs';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import * as fastCsv from 'fast-csv';
-import JSZip from 'jszip';
-import { Account, Profile } from '~/types/prisma-schema';
+import { Readable } from 'stream';
 
 @Injectable()
 export class CsvService {
-  constructor(private prisma: PrismaService) {}
+  constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
-  private async validateUserPassword(
-    password: string,
-  ): Promise<Account | null> {
-    const user = await this.prisma.account.findFirst({
-      where: { password },
-    });
-    return user;
-  }
-
-  async exportModelosToCsv(password: string): Promise<string> {
-    const user = await this.validateUserPassword(password);
-
-    if (!user) {
-      throw new HttpException(
-        translate('route.csv.downloadModelos.unauthorized'),
-        HttpStatus.UNAUTHORIZED,
-      );
-    }
-
+  async exportModelosToCsv(): Promise<Readable> {
     try {
-      const modelos = await this.prisma.profile.findMany();
-      let csvData = '';
-
+      const profiles = await this.prisma.profile.findMany();
       const csvStream = fastCsv.format({ headers: true });
-      csvStream.on('data', (chunk: Buffer) => {
-        csvData += chunk.toString();
-      });
+      const readableStream = new Readable().wrap(csvStream);
 
-      modelos.forEach((row: Profile) => {
-        csvStream.write(row);
-      });
+      profiles.forEach((row) => csvStream.write(row));
       csvStream.end();
 
-      await new Promise<void>((resolve) => {
-        csvStream.on('end', () => {
-          resolve();
-        });
-      });
-
-      return csvData;
+      return readableStream;
     } catch (error) {
-      console.error('Error exporting models to CSV:', error);
-      throw new HttpException(
+      throw new InternalServerErrorException([
         translate('route.csv.downloadModelos.error'),
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      ]);
     }
   }
 
-  async exportAllTablesToZip(password: string): Promise<Buffer> {
-    const user = await this.validateUserPassword(password);
+  // async exportAllTablesToZip(): Promise<Buffer> {
+  //   try {
+  //     const today = new Date().toISOString().replace(/[:.]/g, '-');
+  //     const zip = new JSZip();
+  //     const workbook = new ExcelJS.Workbook();
 
-    if (!user) {
-      throw new HttpException(
-        translate('route.csv.downloadAllTables.unauthorized'),
-        HttpStatus.UNAUTHORIZED,
-      );
-    }
+  //     for (const table in this.prisma) {
+  //       if (table.charAt(0) === '_' || table.charAt(0) === '$') {
+  //         continue;
+  //       }
+  //       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //       const tableData = ((await this.prisma[table]) as any).findMany();
 
-    try {
-      const today = new Date().toISOString().replace(/[:.]/g, '-');
-      const zip = new JSZip();
-      const workbook = new ExcelJS.Workbook();
+  //       let csvData = '';
+  //       const worksheet = workbook.addWorksheet(table);
 
-      for (const table in this.prisma) {
-        if (table.startsWith('_') || table.startsWith('$')) continue;
+  //       if (tableData.length > 0) {
+  //         worksheet.addRow(Object.keys(tableData[0]));
+  //         tableData.forEach((row: Record<string, unknown>) => {
+  //           csvStream.write(row);
+  //           worksheet.addRow(Object.values(row));
+  //         });
 
-        const tableData = await this.prisma[table].findMany();
+  //         const csvStream = fastCsv.format({ headers: true });
+  //         csvStream.on('data', (chunk: Buffer) => {
+  //           csvData += chunk.toString();
+  //         });
+  //         csvStream.end();
 
-        let csvData = '';
-        const worksheet = workbook.addWorksheet(table);
+  //         await new Promise<void>((resolve) => {
+  //           csvStream.on('end', resolve);
+  //         });
 
-        if (tableData.length > 0) {
-          worksheet.addRow(Object.keys(tableData[0]));
-          tableData.forEach((row: Record<string, unknown>) => {
-            csvStream.write(row);
-            worksheet.addRow(Object.values(row));
-          });
+  //         zip.file(`${today}-${table}.csv`, csvData);
+  //       }
+  //     }
 
-          const csvStream = fastCsv.format({ headers: true });
-          csvStream.on('data', (chunk: Buffer) => {
-            csvData += chunk.toString();
-          });
-          csvStream.end();
+  //     const excelBuffer = await workbook.xlsx.writeBuffer();
+  //     zip.file(`${today}_Database.xlsx`, excelBuffer);
 
-          await new Promise<void>((resolve) => {
-            csvStream.on('end', resolve);
-          });
-
-          zip.file(`${today}-${table}.csv`, csvData);
-        }
-      }
-
-      const excelBuffer = await workbook.xlsx.writeBuffer();
-      zip.file(`${today}_Database.xlsx`, excelBuffer);
-
-      const zipBlob = await zip.generateAsync({ type: 'nodebuffer' });
-      return Buffer.from(zipBlob);
-    } catch (error) {
-      console.error('Error exporting to ZIP:', error);
-      throw new HttpException(
-        translate('route.csv.downloadAllTables.error'),
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-  }
+  //     const zipBlob = await zip.generateAsync({ type: 'nodebuffer' });
+  //     return Buffer.from(zipBlob);
+  //   } catch (error) {
+  //     console.error('Error exporting to ZIP:', error);
+  //     throw new HttpException(
+  //       translate('route.csv.downloadAllTables.error'),
+  //       HttpStatus.INTERNAL_SERVER_ERROR,
+  //     );
+  //   }
+  // }
 }

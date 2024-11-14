@@ -1037,6 +1037,36 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /csv/download-profiles:
+    get:
+      operationId: "CsvController_downloadProfiles"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DownloadProfilesDto"
+      responses:
+        200:
+          description: "CSV de modelos descargado con éxito"
+        409:
+          description: "No tienes autorización para descargar el archivo de modelos"
+  /csv/download-all-tables:
+    post:
+      operationId: "CsvController_downloadAllTables"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DownloadAllTablesDto"
+      responses:
+        200:
+          description: "CSV de todas las tablas descargado con éxito"
+        409:
+          description: "No tienes autorización para descargar todas las tablas"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -6166,3 +6196,23 @@ components:
             type:
               - "string"
             format: "uuid"
+    DownloadProfilesDto:
+      type:
+        - "object"
+      properties:
+        password:
+          type:
+            - "string"
+          minLength: 1
+      required:
+        - "password"
+    DownloadAllTablesDto:
+      type:
+        - "object"
+      properties:
+        password:
+          type:
+            - "string"
+          minLength: 1
+      required:
+        - "password"
