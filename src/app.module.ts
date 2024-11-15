@@ -14,6 +14,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE, ModuleRef } from '@nestjs/core';
 import { EventFolderModule } from './event-folder/event-folder.module';
 import { EventModule } from './event/event.module';
+import { ImageModule } from './image/image.module';
 import { LocationModule } from './location/location.module';
 import { ProfileModule } from './profile/profile.module';
 
@@ -31,6 +32,7 @@ import { ProfileModule } from './profile/profile.module';
     EventModule,
     ProfileModule,
     PrismaModule,
+    ImageModule,
   ],
   providers: [
     {
