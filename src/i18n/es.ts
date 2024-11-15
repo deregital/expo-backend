@@ -152,6 +152,14 @@ export default {
         uuid: 'El ID debe ser un UUID',
       },
     },
+    image: {
+      id: {
+        uuid: 'El formato del ID de la imagen es inválido.',
+      },
+      url: {
+        url: 'Por favor, proporcione una URL válida para la imagen.',
+      },
+    },
   },
   route: {
     auth: {
@@ -380,6 +388,16 @@ export default {
       },
       'find-all-with-active-chat': {
         success: 'Perfiles obtenido',
+      },
+    },
+    image: {
+      update: {
+        success: 'Imagen actualizada exitosamente',
+        conflict: 'Conflicto al actualizar la imagen',
+      },
+      delete: {
+        success: 'Imagen eliminada exitosamente',
+        'not-found': 'Imagen no encontrada',
       },
     },
   },
