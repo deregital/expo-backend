@@ -1,3 +1,4 @@
+import { AccountService } from '@/account/account.service';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateProfileDto } from '@/profile/dto/create-profile.dto';
@@ -15,13 +16,82 @@ import { subDays } from 'date-fns';
 import z from 'zod';
 import { Account, JsonMessage, Message, Profile, Tag, TagGroup } from '~/types';
 
+// CONSIDERACIONES:
+// - No olvidarse de pedir el accountId (como objeto en el último parámetro) en todos los métodos y poner `await this.extendPrisma(accountId);` al principio de cada método
+
 @Injectable()
 export class ProfileService {
-  constructor(@Inject(PRISMA_SERVICE) private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(PRISMA_SERVICE) private prisma: PrismaService,
+    private readonly accountService: AccountService,
+  ) {}
+
+  private async extendPrisma(accountId: Account['id']): Promise<void> {
+    const { globalFilter, isGlobalFilterActive } =
+      await this.accountService.getGlobalFilter(accountId);
+
+    if (!isGlobalFilterActive) {
+      this.prisma = this.prisma.$extends({
+        query: {},
+      }) as PrismaService;
+      return;
+    }
+
+    this.prisma = this.prisma.$extends({
+      query: {
+        profile: {
+          async findMany({ args, query }) {
+            const andArray = Array.isArray(args.where?.AND)
+              ? args.where.AND
+              : args.where?.AND
+                ? [args.where.AND]
+                : [];
+            args.where = {
+              ...args.where,
+              AND: [
+                ...andArray,
+                ...globalFilter.map(({ id: tagId }) => ({
+                  tags: {
+                    some: {
+                      id: tagId,
+                    },
+                  },
+                })),
+              ],
+            };
+            return query(args);
+          },
+          async findUnique({ args, query }) {
+            const andArray = Array.isArray(args.where?.AND)
+              ? args.where.AND
+              : args.where?.AND
+                ? [args.where.AND]
+                : [];
+            args.where = {
+              ...args.where,
+              AND: [
+                ...andArray,
+                ...globalFilter.map(({ id: tagId }) => ({
+                  tags: {
+                    some: {
+                      id: tagId,
+                    },
+                  },
+                })),
+              ],
+            };
+            return query(args);
+          },
+        },
+      },
+    }) as PrismaService;
+  }
 
   async findAll(
     visibleTags: VisibleTagsType,
+    { accountId }: { accountId: Account['id'] },
   ): Promise<z.infer<typeof findAllProfileResponseSchema>> {
+    await this.extendPrisma(accountId);
     const profiles = await this.prisma.profile.findMany({
       where: {
         isInTrash: false,
@@ -51,7 +121,9 @@ export class ProfileService {
   async findById(
     id: string,
     visibleTags: VisibleTagsType,
+    { accountId }: { accountId: Account['id'] },
   ): Promise<z.infer<typeof findByIdProfileResponseSchema>> {
+    await this.extendPrisma(accountId);
     const profile = await this.prisma.profile.findUnique({
       where: {
         id: id,
@@ -84,7 +156,9 @@ export class ProfileService {
   async findByTags(
     tagsId: Tag['id'][],
     visibleTags: VisibleTagsType,
+    { accountId }: { accountId: Account['id'] },
   ): Promise<z.infer<typeof findByTagsProfileResponseSchema>> {
+    await this.extendPrisma(accountId);
     const profiles = await this.prisma.profile.findMany({
       where: {
         isInTrash: false,
@@ -124,7 +198,9 @@ export class ProfileService {
   async findByTagGroups(
     tagGroups: TagGroup['id'][],
     visibleTags: VisibleTagsType,
+    { accountId }: { accountId: Account['id'] },
   ): Promise<z.infer<typeof findByTagGroupsProfileResponseSchema>> {
+    await this.extendPrisma(accountId);
     const profiles = await this.prisma.profile.findMany({
       where: {
         isInTrash: false,
@@ -152,6 +228,7 @@ export class ProfileService {
     participantTagId: Tag['id'],
     accountId: Account['id'],
   ): Promise<Profile> {
+    await this.extendPrisma(accountId);
     const highestShortId = await this.getHighestShortId();
 
     const profileCreated = await this.prisma.profile.create({
@@ -214,7 +291,11 @@ export class ProfileService {
     return profileCreated;
   }
 
-  async delete(id: Profile['id']): Promise<Profile> {
+  async delete(
+    id: Profile['id'],
+    { accountId }: { accountId: Account['id'] },
+  ): Promise<Profile> {
+    await this.extendPrisma(accountId);
     const profileDeleted = await this.prisma.profile.delete({
       where: {
         id: id,
@@ -228,7 +309,9 @@ export class ProfileService {
     id: Profile['id'],
     dto: UpdateProfileDto,
     participantTagId: Tag['id'],
+    { accountId }: { accountId: Account['id'] },
   ): Promise<Profile> {
+    await this.extendPrisma(accountId);
     const profileUpdated = await this.prisma.profile.update({
       where: {
         id: id,
@@ -295,7 +378,9 @@ export class ProfileService {
     from: Date,
     to: Date,
     visibleTags: VisibleTagsType,
+    { accountId }: { accountId: Account['id'] },
   ): Promise<z.infer<typeof findByDateRangeSchema.shape.profiles>> {
+    await this.extendPrisma(accountId);
     const profiles = await this.prisma.profile.findMany({
       where: {
         isInTrash: false,
@@ -331,7 +416,9 @@ export class ProfileService {
   async findByPhoneNumber(
     phoneNumber: Profile['phoneNumber'],
     visibleTags: VisibleTagsType,
+    { accountId }: { accountId: Account['id'] },
   ): Promise<Profile | null> {
+    await this.extendPrisma(accountId);
     const profile = await this.prisma.profile.findUnique({
       where: {
         phoneNumber: phoneNumber,
@@ -349,7 +436,9 @@ export class ProfileService {
 
   async findTrash(
     visibleTags: VisibleTagsType,
+    { accountId }: { accountId: Account['id'] },
   ): Promise<z.infer<typeof findTrashResponseSchema.shape.profiles>> {
+    await this.extendPrisma(accountId);
     const profiles = await this.prisma.profile.findMany({
       where: {
         isInTrash: true,
@@ -375,7 +464,9 @@ export class ProfileService {
 
   async findAllWithActiveChat(
     visibleTags: VisibleTagsType,
+    { accountId }: { accountId: Account['id'] },
   ): Promise<z.infer<typeof findWithActiveChatResponseSchema>> {
+    await this.extendPrisma(accountId);
     const profiles = (await this.prisma
       .$extends({
         result: {
