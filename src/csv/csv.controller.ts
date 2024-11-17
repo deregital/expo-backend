@@ -40,15 +40,15 @@ export class CsvController {
   @Roles(Role.ADMIN, Role.USER)
   @ApiResponse({
     type: StreamableFile,
-    description: translate('route.csv.downloadModelos.success'),
+    description: translate('route.csv.download-profiles.success'),
   })
   @ApiConflictResponse({
     type: ErrorDto,
-    description: translate('route.csv.downloadModelos.unauthorized'),
+    description: translate('route.csv.download-profiles.unauthorized'),
   })
   @ApiInternalServerErrorResponse({
     type: ErrorDto,
-    description: translate('route.csv.downloadModelos.error'),
+    description: translate('route.csv.download-profiles.error'),
   })
   @Header('Content-Type', 'text/csv')
   @Get('/download-profiles')
@@ -63,12 +63,7 @@ export class CsvController {
       const csvStream = await this.csvService.exportModelosToCsv();
 
       // Generate timestamped filename
-      const now = new Date();
-      const timestamp = now
-        .toISOString()
-        .slice(0, 19)
-        .replace(/:/g, '-')
-        .replace('T', '_');
+      const timestamp = this.csvService.generateTimestamp();
       const filename = `PerfilModelos_${timestamp}.csv`;
 
       csvStream.on('data', (chunk) => res.write(chunk));
@@ -82,7 +77,7 @@ export class CsvController {
       return new StreamableFile(csvStream);
     } catch (error) {
       throw new InternalServerErrorException([
-        translate('route.csv.downloadModelos.error'),
+        translate('route.csv.download-profiles.error'),
       ]);
     }
   }
@@ -90,11 +85,11 @@ export class CsvController {
   @Roles(Role.ADMIN, Role.USER)
   @ApiResponse({
     type: Buffer,
-    description: translate('route.csv.downloadAllTables.success'),
+    description: translate('route.csv.download-all-tables.success'),
   })
   @ApiConflictResponse({
     type: ErrorDto,
-    description: translate('route.csv.downloadAllTables.unauthorized'),
+    description: translate('route.csv.download-all-tables.unauthorized'),
   })
   @Header('Content-Type', 'application/zip')
   @Get('download-all-tables')
@@ -108,10 +103,8 @@ export class CsvController {
     try {
       const zipData = await this.csvService.exportAllTables();
 
-      const today =
-        new Date().toISOString().split('.')[0]!.replaceAll(':', '_') + 'Z';
-      const filename = `${today}-todas_las_tablas.zip`;
-      console.log('filename', filename);
+      const timestamp = this.csvService.generateTimestamp();
+      const filename = `${timestamp}-todas_las_tablas.zip`;
 
       res.set({
         type: 'application/zip',
@@ -121,7 +114,7 @@ export class CsvController {
       return zipData;
     } catch (error) {
       throw new InternalServerErrorException([
-        translate('route.csv.downloadAllTables.error'),
+        translate('route.csv.download-all-tables.error'),
       ]);
     }
   }

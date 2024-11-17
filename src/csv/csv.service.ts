@@ -27,15 +27,14 @@ export class CsvService {
       return readableStream;
     } catch (error) {
       throw new InternalServerErrorException([
-        translate('route.csv.downloadModelos.error'),
+        translate('route.csv.download-profiles.error'),
       ]);
     }
   }
 
   async exportAllTables(): Promise<Buffer> {
     try {
-      const today =
-        new Date().toISOString().split('.')[0]!.replaceAll(':', '_') + 'Z';
+      const timestamp = this.generateTimestamp();
       const zip = new JSZip();
       const workbook = new ExcelJS.Workbook();
 
@@ -99,20 +98,24 @@ export class CsvService {
             });
           });
 
-          zip.file(`${today}-${dataTables[i + 1]}.csv`, csvData);
+          zip.file(`${timestamp}-${dataTables[i + 1]}.csv`, csvData);
         }
       }
 
       const excelBuffer = await workbook.xlsx.writeBuffer();
-      zip.file(`${today}_Database.xlsx`, excelBuffer);
+      zip.file(`${timestamp}_Database.xlsx`, excelBuffer);
       const zipBlob = await zip.generateAsync({ type: 'blob' });
       const zipData = await zipBlob.arrayBuffer();
       return Buffer.from(zipData);
     } catch (error) {
-      console.error('Error exporting to ZIP:', error);
       throw new InternalServerErrorException([
-        translate('route.csv.downloadAllTables.error'),
+        translate('route.csv.download-all-tables.error'),
       ]);
     }
+  }
+
+  generateTimestamp(): string {
+    const now = new Date();
+    return now.toISOString().slice(0, 19).replace(/:/g, '-').replace('T', '_');
   }
 }
