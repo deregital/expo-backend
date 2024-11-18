@@ -52,6 +52,7 @@
     "date-fns": "^4.1.0",
     "i18n-js": "^4.4.3",
     "json-to-pretty-yaml": "^1.2.2",
+    "next": "^15.0.3",
     "openapi3-ts": "^4.4.0",
     "patch-package": "^8.0.0",
     "reflect-metadata": "^0.2.0",
