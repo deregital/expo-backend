@@ -1,6 +1,6 @@
 import { translate } from '@/i18n/translate';
 import { PRISMA_SERVICE } from '@/prisma/constants';
-import { PrismaService } from '@/prisma/prisma.service';
+import { PrismaService, TableNames } from '@/prisma/prisma.service';
 import {
   ArgumentMetadata,
   Injectable,
@@ -21,7 +21,7 @@ type GenericArgumentMetadata<T> = ArgumentMetadata & {
 };
 
 @Injectable()
-export class ExistingRecord<Models extends Exclude<Prisma.ModelName, 'Enums'>>
+export class ExistingRecord<Models extends TableNames>
   implements PipeTransform<Capitalize<Models>>
 {
   private static moduleRef: ModuleRef;
@@ -60,7 +60,7 @@ export class ExistingRecord<Models extends Exclude<Prisma.ModelName, 'Enums'>>
     const prisma = this.getPrismaService();
 
     const record = await (
-      prisma[this.modelName] as unknown as FindUniqueFunction
+      prisma.getTable(this.modelName) as unknown as FindUniqueFunction
     ).findUnique({
       where: { id: value },
     });

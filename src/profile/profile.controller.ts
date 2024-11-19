@@ -53,6 +53,7 @@ import {
   updateProfileResponseSchema,
 } from '@/profile/dto/update-profile.dto';
 import { ProfileService } from '@/profile/profile.service';
+import { GlobalFilterInterceptor } from '@/shared/decorators/global-filter.interceptor';
 import {
   VisibleTags,
   VisibleTagsType,
@@ -76,6 +77,7 @@ import {
   Post,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiConflictResponse,
@@ -85,11 +87,9 @@ import {
 } from '@nestjs/swagger';
 import levenshtein from 'string-comparison';
 import z from 'zod';
-import { Account as AccountType, Prisma, Profile, Role } from '~/types';
+import { Prisma, Profile, Role } from '~/types';
 
-// CONSIDERACIONES:
-// - No olvidarse de poner el decorador @Account() en los parametros de todos los metodos para poderle pasar el ID al service
-
+@UseInterceptors(GlobalFilterInterceptor)
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
 @Controller('profile')
@@ -107,11 +107,8 @@ export class ProfileController {
   @Get('/all')
   async findAll(
     @VisibleTags() visibleTags: VisibleTagsType,
-    @Account() account: AccountWithoutPassword,
   ): Promise<z.infer<typeof findAllProfileResponseSchema>> {
-    return await this.profileService.findAll(visibleTags, {
-      accountId: account.id,
-    });
+    return await this.profileService.findAll(visibleTags);
   }
 
   @ApiOkResponse({
@@ -121,11 +118,8 @@ export class ProfileController {
   @Get('/all-with-active-chat')
   async findAllWithActiveChat(
     @VisibleTags() visibleTags: VisibleTagsType,
-    @Account() account: AccountWithoutPassword,
   ): Promise<z.infer<typeof findWithActiveChatResponseSchema>> {
-    return await this.profileService.findAllWithActiveChat(visibleTags, {
-      accountId: account.id,
-    });
+    return await this.profileService.findAllWithActiveChat(visibleTags);
   }
 
   @ApiNotFoundResponse({
@@ -141,7 +135,6 @@ export class ProfileController {
     @Query('tags', new ParseArrayPipe({ items: String, separator: ',' }))
     tagsId: string[],
     @VisibleTags() visibleTags: VisibleTagsType,
-    @Account() account: AccountWithoutPassword,
   ): Promise<z.infer<typeof findByTagsProfileResponseSchema>> {
     const allTags = (await this.tagService.findAll()).tags;
     if (tagsId.some((tagId) => !allTags.some((tag) => tag.id === tagId))) {
@@ -150,9 +143,7 @@ export class ProfileController {
       );
     }
 
-    return await this.profileService.findByTags(tagsId, visibleTags, {
-      accountId: account.id,
-    });
+    return await this.profileService.findByTags(tagsId, visibleTags);
   }
 
   @ApiNotFoundResponse({
@@ -168,7 +159,6 @@ export class ProfileController {
     @Query('tagGroups', new ParseArrayPipe({ items: String, separator: ',' }))
     tagGroups: string[],
     @VisibleTags() visibleTags: VisibleTagsType,
-    @Account() account: AccountWithoutPassword,
   ): Promise<z.infer<typeof findByTagGroupsProfileResponseSchema>> {
     const allTagGroups = (await this.tagGroupService.findAll()).tagGroups;
     if (
@@ -182,9 +172,7 @@ export class ProfileController {
       );
     }
 
-    return await this.profileService.findByTagGroups(tagGroups, visibleTags, {
-      accountId: account.id,
-    });
+    return await this.profileService.findByTagGroups(tagGroups, visibleTags);
   }
 
   @ApiOkResponse({
@@ -200,13 +188,11 @@ export class ProfileController {
     @Query('from', ParseDateIsoPipe) from: string,
     @Query('to', ParseDateIsoPipe) to: string,
     @VisibleTags() visibleTags: VisibleTagsType,
-    @Account() account: AccountWithoutPassword,
   ): Promise<z.infer<typeof findByDateRangeResponseSchema>> {
     const profiles = await this.profileService.findByDateRange(
       new Date(from),
       new Date(to),
       visibleTags,
-      { accountId: account.id },
     );
 
     const grouped = this.groupedProfiles(profiles);
@@ -226,12 +212,10 @@ export class ProfileController {
   async findByPhoneNumber(
     @Param('phoneNumber') phoneNumber: string,
     @VisibleTags() visibleTags: VisibleTagsType,
-    @Account() account: AccountWithoutPassword,
   ): Promise<z.infer<typeof findByPhoneNumberResponseSchema>> {
     const profile = await this.profileService.findByPhoneNumber(
       phoneNumber,
       visibleTags,
-      { accountId: account.id },
     );
 
     if (!profile) {
@@ -250,11 +234,8 @@ export class ProfileController {
   @Get('/find-trash')
   async findTrashCan(
     @VisibleTags() visibleTags: VisibleTagsType,
-    @Account() account: AccountWithoutPassword,
   ): Promise<z.infer<typeof findTrashResponseSchema>> {
-    const profiles = await this.profileService.findTrash(visibleTags, {
-      accountId: account.id,
-    });
+    const profiles = await this.profileService.findTrash(visibleTags);
 
     return {
       profiles,
@@ -311,7 +292,6 @@ export class ProfileController {
         const similarityProfiles = await this.similarityCheck(
           profile.fullName,
           phoneNumber,
-          account.id,
         );
         return {
           response: {
@@ -358,11 +338,8 @@ export class ProfileController {
   async findById(
     @Param('id', new ExistingRecord('profile')) id: string,
     @VisibleTags() visibleTags: VisibleTagsType,
-    @Account() account: AccountWithoutPassword,
   ): Promise<z.infer<typeof findByIdProfileResponseSchema>> {
-    return await this.profileService.findById(id, visibleTags, {
-      accountId: account.id,
-    });
+    return await this.profileService.findById(id, visibleTags);
   }
 
   @ApiNotFoundResponse({
@@ -376,11 +353,8 @@ export class ProfileController {
   @Delete('/:id')
   async delete(
     @Param('id', new ExistingRecord('profile')) id: string,
-    @Account() account: AccountWithoutPassword,
   ): Promise<z.infer<typeof deleteProfileResponseSchema>> {
-    return await this.profileService.delete(id, {
-      accountId: account.id,
-    });
+    return await this.profileService.delete(id);
   }
 
   @ApiNotFoundResponse({
@@ -399,7 +373,6 @@ export class ProfileController {
   async update(
     @Param('id', new ExistingRecord('profile')) id: string,
     @Body() body: UpdateProfileDto,
-    @Account() account: AccountWithoutPassword,
   ): Promise<z.infer<typeof updateProfileResponseSchema>> {
     const participantTag = await this.tagService.findParticipantTag();
     const allTags = (await this.tagService.findAll()).tags.filter((tag) =>
@@ -444,9 +417,7 @@ export class ProfileController {
       throw error;
     }
 
-    return await this.profileService.update(id, body, participantTag.id, {
-      accountId: account.id,
-    });
+    return await this.profileService.update(id, body, participantTag.id);
   }
 
   private phoneNumberWithoutSpaces(
@@ -458,15 +429,10 @@ export class ProfileController {
   private async similarityCheck(
     profileFullName: Profile['fullName'],
     phoneNumber: Profile['phoneNumber'],
-    accountId: AccountType['id'],
   ): Promise<SimilarityProfile[]> {
     const similarities: SimilarityProfile[] = [];
     const allTags = (await this.tagService.findAll()).tags.map((tag) => tag.id);
-    const allProfiles = (
-      await this.profileService.findAll(allTags, {
-        accountId: accountId,
-      })
-    ).profiles;
+    const allProfiles = (await this.profileService.findAll(allTags)).profiles;
 
     allProfiles.forEach(async (profileCompare) => {
       if (profileCompare.phoneNumber === phoneNumber) {
