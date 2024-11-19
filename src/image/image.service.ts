@@ -1,3 +1,4 @@
+import { translate } from '@/i18n/translate';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Inject, Injectable } from '@nestjs/common';
@@ -13,7 +14,9 @@ export class ImageService {
     const profile = await this.prisma.profile.findUnique({ where: { id } });
 
     if (!profile || !profile.profilePictureUrl) {
-      return new NextResponse('Profile or photo not found', { status: 404 });
+      return new NextResponse(translate('route.image.delete.not-found'), {
+        status: 404,
+      });
     }
 
     const currentFotoUrl = profile.profilePictureUrl;
@@ -31,7 +34,7 @@ export class ImageService {
       response.on('data', (chunk) => {});
       response.on('end', async () => {
         if (response.statusCode !== 200 && response.statusCode !== 201) {
-          return new NextResponse('Error deleting file from CDN', {
+          return new NextResponse(translate('route.image.delete.error'), {
             status: 500,
           });
         }
@@ -41,18 +44,24 @@ export class ImageService {
           data: { profilePictureUrl: null },
         });
 
-        return new NextResponse('File deleted successfully', { status: 200 });
+        return new NextResponse(translate('route.image.delete.success'), {
+          status: 200,
+        });
       });
     });
 
     reqCDN.on('error', (error) => {
       console.error('Error deleting file from CDN:', error);
-      return new NextResponse('Error deleting file from CDN', { status: 500 });
+      return new NextResponse(translate('route.image.delete.error'), {
+        status: 500,
+      });
     });
 
     reqCDN.end();
 
-    return new NextResponse('File deletion initiated', { status: 200 });
+    return new NextResponse(translate('route.image.delete.initiated'), {
+      status: 200,
+    });
   }
 
   async updateImage(
@@ -62,7 +71,9 @@ export class ImageService {
     const { url, description, title } = updateImageDto;
 
     if (!url || !id) {
-      return new NextResponse('Invalid parameters', { status: 400 });
+      return new NextResponse(translate('route.image.update.invalid'), {
+        status: 400,
+      });
     }
 
     const filePath = `/${process.env.BUNNY_STORAGE_ZONE_NAME}/${id}-${new URL(url).pathname.split('/').pop()}`;
@@ -82,7 +93,7 @@ export class ImageService {
       response.on('data', (chunk) => {});
       response.on('end', async () => {
         if (response.statusCode !== 200 && response.statusCode !== 201) {
-          return new NextResponse('Error uploading image to CDN', {
+          return new NextResponse(translate('route.image.update.error'), {
             status: 500,
           });
         }
@@ -94,13 +105,17 @@ export class ImageService {
           },
         });
 
-        return new NextResponse('Image updated successfully', { status: 200 });
+        return new NextResponse(translate('route.image.update.success'), {
+          status: 200,
+        });
       });
     });
 
     reqCDN.on('error', (error) => {
       console.error('Error uploading image to CDN:', error);
-      return new NextResponse('Error uploading image to CDN', { status: 500 });
+      return new NextResponse(translate('route.image.update.error'), {
+        status: 500,
+      });
     });
 
     const fileBuffer = Buffer.from(
@@ -109,7 +124,9 @@ export class ImageService {
     const stream = this.bufferToStream(fileBuffer);
     stream.pipe(reqCDN);
 
-    return new NextResponse('Image update initiated', { status: 200 });
+    return new NextResponse(translate('route.image.update.success'), {
+      status: 200,
+    });
   }
 
   private bufferToStream(myBuffer: Buffer) {
