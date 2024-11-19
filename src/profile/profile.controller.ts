@@ -114,7 +114,6 @@ export class ProfileController {
     });
   }
 
-  // TODO: all-with-active-chat requires a prisma extension
   @ApiOkResponse({
     type: FindWithActiveChatResponseDto,
     description: translate('route.profile.find-all-with-active-chat.success'),
