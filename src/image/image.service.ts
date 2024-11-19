@@ -1,17 +1,22 @@
-import { prisma } from '@/server/db';
+import { PRISMA_SERVICE } from '@/prisma/constants';
+import { PrismaService } from '@/prisma/prisma.service';
+import { Inject, Injectable } from '@nestjs/common';
 import * as https from 'https';
 import { NextResponse } from 'next/server';
 import { Duplex } from 'stream';
 
+@Injectable()
 export class ImageService {
-  async deleteImage(id: string): Promise<NextResponse> {
-    const profile = await prisma?.profile.findUnique({ where: { id } });
+  constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
-    if (!profile || !profile.fotoUrl) {
+  async deleteImage(id: string): Promise<NextResponse> {
+    const profile = await this.prisma.profile.findUnique({ where: { id } });
+
+    if (!profile || !profile.profilePictureUrl) {
       return new NextResponse('Profile or photo not found', { status: 404 });
     }
 
-    const currentFotoUrl = profile.fotoUrl;
+    const currentFotoUrl = profile.profilePictureUrl;
 
     const options = {
       hostname: process.env.BUNNY_HOSTNAME,
@@ -31,9 +36,9 @@ export class ImageService {
           });
         }
 
-        await prisma?.profile.update({
+        await this.prisma.profile.update({
           where: { id },
-          data: { fotoUrl: null },
+          data: { profilePictureUrl: null },
         });
 
         return new NextResponse('File deleted successfully', { status: 200 });
@@ -61,7 +66,7 @@ export class ImageService {
     }
 
     const filePath = `/${process.env.BUNNY_STORAGE_ZONE_NAME}/${id}-${new URL(url).pathname.split('/').pop()}`;
-    const fotoUrl = `https://${process.env.BUNNY_CDN}/${filePath}`;
+    const profilePictureUrl = `https://${process.env.BUNNY_CDN}/${filePath}`;
 
     const options = {
       hostname: process.env.BUNNY_HOSTNAME,
@@ -82,12 +87,10 @@ export class ImageService {
           });
         }
 
-        await prisma?.profile.update({
+        await this.prisma.profile.update({
           where: { id },
           data: {
-            fotoUrl,
-            description,
-            title,
+            profilePictureUrl,
           },
         });
 
