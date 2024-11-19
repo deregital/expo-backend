@@ -6,7 +6,7 @@ import { z } from 'zod';
 export const eventSchema = z.object({
   id: z.string().uuid({ message: translate('model.event.id.uuid') }),
   name: z.string().min(1, translate('model.event.name.required')),
-  date: z.date({
+  date: z.coerce.date({
     required_error: translate('model.event.date.required'),
     invalid_type_error: translate('model.event.date.invalid'),
   }),
