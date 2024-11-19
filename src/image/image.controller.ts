@@ -17,17 +17,9 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
-import z from 'zod';
 import { Role } from '~/types';
-import {
-  DeleteImageDto,
-  deleteImageResponseSchema,
-} from './dto/delete-image.dto';
-import {
-  UpdateImageDto,
-  UpdateImageResponseDto,
-  updateImageResponseSchema,
-} from './dto/update-image.dto';
+import { DeleteImageDto } from './dto/delete-image.dto';
+import { UpdateImageDto, UpdateImageResponseDto } from './dto/update-image.dto';
 import { ImageService } from './image.service';
 
 @Roles(Role.ADMIN, Role.USER)
@@ -48,7 +40,7 @@ export class ImageController {
   async updateImage(
     @Param('id', new ExistingRecord('profile')) id: string,
     @Body() updateImageDto: UpdateImageDto,
-  ): Promise<z.infer<typeof updateImageResponseSchema>> {
+  ): Promise<UpdateImageResponseDto> {
     return await this.imageService.updateImage(id, updateImageDto);
   }
 
@@ -63,7 +55,7 @@ export class ImageController {
   @Delete('/delete/:id')
   async deleteImage(
     @Param('id', new ExistingRecord('profile')) id: string,
-  ): Promise<z.infer<typeof deleteImageResponseSchema>> {
+  ): Promise<DeleteImageDto> {
     return await this.imageService.deleteImage(id);
   }
 }
