@@ -394,10 +394,14 @@ export default {
       update: {
         success: 'Imagen actualizada exitosamente',
         conflict: 'Conflicto al actualizar la imagen',
+        invalid: 'Parámetros inválidos para actualizar la imagen',
+        error: 'Error al subir la imagen al CDN',
       },
       delete: {
         success: 'Imagen eliminada exitosamente',
-        'not-found': 'Imagen no encontrada',
+        'not-found': 'Perfil o foto no encontrados',
+        initiated: 'Eliminación de imagen iniciada',
+        error: 'Error al eliminar la imagen del CDN',
       },
     },
   },
