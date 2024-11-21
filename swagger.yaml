@@ -1089,6 +1089,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Buffer"
+  /message/create-template:
+    post:
+      operationId: "MessageController_createTemplate"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTemplateDto"
+      responses:
+        201:
+          description: "Plantilla creada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateTemplateResponseDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -6244,3 +6261,37 @@ components:
     Buffer:
       type: "object"
       properties: {}
+    CreateTemplateDto:
+      type:
+        - "object"
+      properties:
+        name:
+          type:
+            - "string"
+          minLength: 1
+          maxLength: 512
+        content:
+          type:
+            - "string"
+          maxLength: 768
+          minLength: 1
+        buttons:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+            maxLength: 25
+      required:
+        - "name"
+        - "content"
+        - "buttons"
+    CreateTemplateResponseDto:
+      type:
+        - "object"
+      properties:
+        message:
+          type:
+            - "string"
+      required:
+        - "message"

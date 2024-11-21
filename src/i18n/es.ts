@@ -158,6 +158,20 @@ export default {
         empty: 'La contraseña no puede estar vacía',
       },
     },
+    template: {
+      name: {
+        min: 'El nombre debe tener al menos 1 caracter',
+        max: 'El nombre debe tener como máximo 512 caracteres',
+      },
+      content: {
+        max: 'El contenido debe tener como máximo 768 caracteres',
+        min: 'El contenido debe tener al menos 1 caracter',
+      },
+      buttons: {
+        max: 'No se pueden tener más de 10 botones',
+        'max-length': 'Los botones no pueden tener más de 25 caracteres',
+      },
+    },
   },
   route: {
     auth: {
@@ -403,6 +417,19 @@ export default {
         success: 'CSV de todas las tablas descargado con éxito',
         unauthorized: 'No tienes autorización para descargar todas las tablas',
         error: 'Error al descargar el archivo CSV de todas las tablas',
+      },
+    },
+    message: {
+      'create-template': {
+        success: 'Plantilla creada con éxito',
+        error: 'Error al crear la plantilla',
+      },
+      'find-templates': {
+        success: 'Plantillas encontradas',
+      },
+      'find-template-by-id': {
+        error: 'Error al encontrar la plantilla',
+        success: 'Plantilla encontrada',
       },
     },
   },

@@ -16,10 +16,8 @@ import { CsvModule } from './csv/csv.module';
 import { EventFolderModule } from './event-folder/event-folder.module';
 import { EventModule } from './event/event.module';
 import { LocationModule } from './location/location.module';
-import { ProfileModule } from './profile/profile.module';
-import { MessageService } from './message/message.service';
-import { MessageController } from './message/message.controller';
 import { MessageModule } from './message/message.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -44,9 +42,8 @@ import { MessageModule } from './message/message.module';
       useClass: ZodValidationPipe,
     },
     AppService,
-    MessageService,
   ],
-  controllers: [AppController, MessageController],
+  controllers: [AppController],
 })
 export class AppModule {
   constructor(private readonly moduleRef: ModuleRef) {
