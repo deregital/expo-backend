@@ -17,6 +17,9 @@ import { EventFolderModule } from './event-folder/event-folder.module';
 import { EventModule } from './event/event.module';
 import { LocationModule } from './location/location.module';
 import { ProfileModule } from './profile/profile.module';
+import { MessageService } from './message/message.service';
+import { MessageController } from './message/message.controller';
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [
@@ -33,6 +36,7 @@ import { ProfileModule } from './profile/profile.module';
     ProfileModule,
     PrismaModule,
     CsvModule,
+    MessageModule,
   ],
   providers: [
     {
@@ -40,8 +44,9 @@ import { ProfileModule } from './profile/profile.module';
       useClass: ZodValidationPipe,
     },
     AppService,
+    MessageService,
   ],
-  controllers: [AppController],
+  controllers: [AppController, MessageController],
 })
 export class AppModule {
   constructor(private readonly moduleRef: ModuleRef) {
