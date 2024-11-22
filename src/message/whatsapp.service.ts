@@ -27,7 +27,7 @@ export class WhatsappService {
       name: dto.name,
       category: 'UTILITY',
       allow_category_change: true,
-      language: 'ES_AR',
+      language: 'es_AR',
       components: [
         {
           type: 'BODY',
@@ -57,7 +57,7 @@ export class WhatsappService {
     }
 
     const res: FindTemplatesResponseDto['templates'][number] = await fetch(
-      `https://graph.facebook.com/v21.0/${process.env.META_WHATSAPP_BUSINESS_ID}/message_templates`,
+      `https://graph.facebook.com/v19.0/${process.env.META_WHATSAPP_BUSINESS_ID}/message_templates`,
       {
         method: 'POST',
         headers: {
@@ -73,6 +73,8 @@ export class WhatsappService {
         message: translate('route.message.create-template.success'),
       };
     } else {
+      console.log(res);
+
       throw new InternalServerErrorException([
         translate('route.message.create-template.error'),
       ]);

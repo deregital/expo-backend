@@ -162,6 +162,8 @@ export default {
       name: {
         min: 'El nombre debe tener al menos 1 caracter',
         max: 'El nombre debe tener como máximo 512 caracteres',
+        invalid:
+          'El nombre debe ser una cadena con letras minúsculas y guiones bajos',
       },
       content: {
         max: 'El contenido debe tener como máximo 768 caracteres',

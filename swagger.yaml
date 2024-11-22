@@ -1106,6 +1106,33 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CreateTemplateResponseDto"
+  /message/templates:
+    get:
+      operationId: "MessageController_findTemplates"
+      parameters: []
+      responses:
+        200:
+          description: "Plantillas encontradas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindTemplatesResponseDto"
+  /message/template/{id}:
+    get:
+      operationId: "MessageController_findTemplateById"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Plantilla encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindTemplateByIdResponseDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -6295,3 +6322,20 @@ components:
             - "string"
       required:
         - "message"
+    FindTemplatesResponseDto:
+      type:
+        - "object"
+      properties:
+        templates:
+          type:
+            - "array"
+          items: {}
+      required:
+        - "templates"
+    FindTemplateByIdResponseDto:
+      type:
+        - "object"
+      properties:
+        template: {}
+      required:
+        - "template"

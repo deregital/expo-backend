@@ -31,7 +31,15 @@ export const templateSchema = z.object({
       message: translate('model.template.name.max'),
     })
     .toLowerCase()
-    .trim(),
+    .trim()
+    .refine(
+      (value) => {
+        return /^[a-z_]*$/.test(value);
+      },
+      {
+        message: translate('model.template.name.invalid'),
+      },
+    ),
   content: z
     .string()
     .max(768, {
