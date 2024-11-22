@@ -6,14 +6,9 @@ export const imageSchema = z.object({
   id: z.string().uuid({
     message: translate('model.image.id.uuid'),
   }),
-  url: z
-    .string()
-    .url({
-      message: translate('model.image.url.url'),
-    })
-    .optional(),
-  title: z.string().optional(),
-  description: z.string().optional(),
+  url: z.string().url({
+    message: translate('model.image.url.url'),
+  }),
 });
 
 export class ImageDto extends createZodDtoWithoutDate(imageSchema) {}

@@ -227,7 +227,7 @@ export class ProfileService {
   async update(
     id: Profile['id'],
     dto: UpdateProfileDto,
-    participantTagId: Tag['id'],
+    participantTagId: Tag['id'] | undefined,
   ): Promise<Profile> {
     const profileUpdated = await this.prisma.profile.update({
       where: {
@@ -447,6 +447,16 @@ export class ProfileService {
     });
 
     return existingProfile;
+  }
+
+  async getProfilePictureUrl(id: Profile['id']): Promise<string | null> {
+    const profile = await this.prisma.profile.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    return profile?.profilePictureUrl ?? null;
   }
 
   private async getHighestShortId(): Promise<number> {

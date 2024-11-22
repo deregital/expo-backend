@@ -1,29 +1,18 @@
 import { translate } from '@/i18n/translate';
-import { PRISMA_SERVICE } from '@/prisma/constants';
-import { PrismaService } from '@/prisma/prisma.service';
-import { Inject, Injectable } from '@nestjs/common';
+import { IMAGE_EXTENSIONS } from '@/image/constants';
+import { DeleteImageResponseDto } from '@/image/exports';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import * as https from 'https';
-import { NextResponse } from 'next/server';
 import { Duplex } from 'stream';
 
 @Injectable()
 export class ImageService {
-  constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
+  constructor() {}
 
-  async deleteImage(id: string): Promise<NextResponse> {
-    const profile = await this.prisma.profile.findUnique({ where: { id } });
-
-    if (!profile || !profile.profilePictureUrl) {
-      return new NextResponse(translate('route.image.delete.not-found'), {
-        status: 404,
-      });
-    }
-
-    const currentFotoUrl = profile.profilePictureUrl;
-
+  async deleteImage(pictureUrl: string): Promise<DeleteImageResponseDto> {
     const options = {
       hostname: process.env.BUNNY_HOSTNAME,
-      path: `/${process.env.BUNNY_STORAGE_ZONE_NAME}${new URL(currentFotoUrl).pathname}`,
+      path: `/${process.env.BUNNY_STORAGE_ZONE_NAME}${new URL(pictureUrl).pathname}`,
       method: 'DELETE',
       headers: {
         AccessKey: process.env.BUNNY_ACCESS_KEY_CRUD,
@@ -31,57 +20,38 @@ export class ImageService {
     };
 
     const reqCDN = https.request(options, (response) => {
-      response.on('data', (chunk) => {});
+      response.on('data', (_chunk) => {});
       response.on('end', async () => {
         if (response.statusCode !== 200 && response.statusCode !== 201) {
-          return new NextResponse(translate('route.image.delete.error'), {
-            status: 500,
-          });
+          return new InternalServerErrorException([
+            translate('route.image.delete.error'),
+          ]);
         }
-
-        await this.prisma.profile.update({
-          where: { id },
-          data: { profilePictureUrl: null },
-        });
-
-        return new NextResponse(translate('route.image.delete.success'), {
-          status: 200,
-        });
+        return;
       });
     });
 
-    reqCDN.on('error', (error) => {
-      console.error('Error deleting file from CDN:', error);
-      return new NextResponse(translate('route.image.delete.error'), {
-        status: 500,
-      });
+    reqCDN.on('error', (_error) => {
+      return new InternalServerErrorException([
+        translate('route.image.delete.error'),
+      ]);
     });
 
     reqCDN.end();
 
-    return new NextResponse(translate('route.image.delete.initiated'), {
-      status: 200,
-    });
+    return {
+      message: translate('route.image.delete.success'),
+    };
   }
 
-  async updateImage(
-    id: string,
-    updateImageDto: { url: string; description?: string; title?: string },
-  ): Promise<NextResponse> {
-    const { url, description, title } = updateImageDto;
-
-    if (!url || !id) {
-      return new NextResponse(translate('route.image.update.invalid'), {
-        status: 400,
-      });
-    }
-
-    const filePath = `/${process.env.BUNNY_STORAGE_ZONE_NAME}/${id}-${new URL(url).pathname.split('/').pop()}`;
-    const profilePictureUrl = `https://${process.env.BUNNY_CDN}/${filePath}`;
+  async updateImage(id: string, file: Express.Multer.File): Promise<string> {
+    const fileStream = this.bufferToStream(file.buffer);
+    const path = `/${process.env.BUNNY_STORAGE_ZONE_NAME}/${id}.${IMAGE_EXTENSIONS[file.mimetype as keyof typeof IMAGE_EXTENSIONS]}`;
+    const pictureUrl = `https://${process.env.BUNNY_CDN}/${id}.${IMAGE_EXTENSIONS[file.mimetype as keyof typeof IMAGE_EXTENSIONS]}`;
 
     const options = {
       hostname: process.env.BUNNY_HOSTNAME,
-      path: filePath,
+      path: path,
       method: 'PUT',
       headers: {
         AccessKey: process.env.BUNNY_ACCESS_KEY_CRUD,
@@ -90,46 +60,49 @@ export class ImageService {
     };
 
     const reqCDN = https.request(options, (response) => {
-      response.on('data', (chunk) => {});
+      response.on('data', (_chunk) => {});
       response.on('end', async () => {
         if (response.statusCode !== 200 && response.statusCode !== 201) {
-          return new NextResponse(translate('route.image.update.error'), {
-            status: 500,
-          });
+          throw new InternalServerErrorException([
+            translate('route.image.update.error'),
+          ]);
         }
 
-        await this.prisma.profile.update({
-          where: { id },
-          data: {
-            profilePictureUrl,
+        const options = {
+          method: 'POST',
+          headers: {
+            AccessKey: process.env.BUNNY_ACCESS_KEY_PURGE!,
           },
-        });
+        };
+        const resPurge = await fetch(
+          'https://api.bunny.net/purge?' +
+            new URLSearchParams({ url: pictureUrl, async: 'false' }),
+          options,
+        );
 
-        return new NextResponse(translate('route.image.update.success'), {
-          status: 200,
-        });
+        if (!resPurge.ok) {
+          throw new InternalServerErrorException([
+            translate('route.image.update.purge-error'),
+          ]);
+        }
+
+        return translate('route.image.update.success');
       });
     });
 
-    reqCDN.on('error', (error) => {
-      console.error('Error uploading image to CDN:', error);
-      return new NextResponse(translate('route.image.update.error'), {
-        status: 500,
-      });
+    reqCDN.on('error', (_error) => {
+      // console.error('Error uploading image to CDN:', error);
+      throw new InternalServerErrorException([
+        translate('route.image.update.error'),
+      ]);
     });
 
-    const fileBuffer = Buffer.from(
-      await fetch(url).then((res) => res.arrayBuffer()),
-    );
-    const stream = this.bufferToStream(fileBuffer);
-    stream.pipe(reqCDN);
+    fileStream.pipe(reqCDN);
 
-    return new NextResponse(translate('route.image.update.success'), {
-      status: 200,
-    });
+    return pictureUrl;
   }
 
-  private bufferToStream(myBuffer: Buffer) {
+  private bufferToStream(myBuffer: Buffer): Duplex {
     const tmp = new Duplex();
     tmp.push(myBuffer);
     tmp.push(null);

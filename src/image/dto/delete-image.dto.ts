@@ -1,12 +1,9 @@
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { z } from 'zod';
-import { imageSchema } from './image.dto';
 
-export const deleteImageSchema = z.object({
-  id: z.string(),
+export const deleteImageResponseSchema = z.object({
+  message: z.string(),
 });
-
-export const deleteImageResponseSchema = imageSchema;
-export class DeleteImageDto extends createZodDtoWithoutDate(
-  deleteImageSchema,
+export class DeleteImageResponseDto extends createZodDtoWithoutDate(
+  deleteImageResponseSchema,
 ) {}

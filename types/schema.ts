@@ -708,6 +708,38 @@ export interface paths {
     patch: operations['ProfileController_update'];
     trace?: never;
   };
+  '/image/update/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['ImageController_updateImage'];
+    trace?: never;
+  };
+  '/image/delete/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete: operations['ImageController_deleteImage'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -2248,6 +2280,12 @@ export interface components {
       };
       tags?: string[];
     };
+    UpdateImageResponseDto: {
+      message: string;
+    };
+    DeleteImageResponseDto: {
+      message: string;
+    };
   };
   responses: never;
   parameters: never;
@@ -3757,6 +3795,95 @@ export interface operations {
       };
       /** @description Error en la actualización del perfil */
       409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ImageController_updateImage: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Imagen actualizada exitosamente */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateImageResponseDto'];
+        };
+      };
+      /** @description Conflicto al actualizar la imagen */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description La imagen no es válida, debe ser un archivo de imagen */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error al subir la imagen al CDN */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ImageController_deleteImage: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Imagen eliminada exitosamente */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DeleteImageResponseDto'];
+        };
+      };
+      /** @description Perfil o foto no encontrados */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error al eliminar la imagen del CDN */
+      500: {
         headers: {
           [name: string]: unknown;
         };

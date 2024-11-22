@@ -396,6 +396,9 @@ export default {
         conflict: 'Conflicto al actualizar la imagen',
         invalid: 'Parámetros inválidos para actualizar la imagen',
         error: 'Error al subir la imagen al CDN',
+        'purge-error': 'Error al purgar la imagen del CDN',
+        'unprocessable-entity':
+          'La imagen no es válida, debe ser un archivo de imagen',
       },
       delete: {
         success: 'Imagen eliminada exitosamente',
