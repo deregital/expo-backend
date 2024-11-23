@@ -28,7 +28,7 @@ export class MessageService {
           to: phoneTo,
           timestamp: new Date().getTime(),
         },
-        state: MessageState.SEEN,
+        state: MessageState.SENT,
         wamId: messageId,
         profile: {
           connect: {
@@ -43,10 +43,21 @@ export class MessageService {
     await this.prisma.message.createMany({
       data: messages.map((message) => ({
         message: message,
-        state: MessageState.SEEN,
+        state: MessageState.SENT,
         wamId: message.id,
         profilePhoneNumber: message.to!,
       })),
+    });
+  }
+
+  async findByPhone(phone: string): Promise<Message[]> {
+    return await this.prisma.message.findMany({
+      where: {
+        profilePhoneNumber: phone,
+      },
+      orderBy: {
+        created_at: 'asc',
+      },
     });
   }
 }

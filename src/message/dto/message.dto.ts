@@ -7,7 +7,7 @@ const whatsappMessageSchema = z.object({
   // from or to are exclusive
   from: z.string().optional(),
   to: z.string().optional(),
-  timestamp: z.coerce.number(),
+  timestamp: z.string(),
 });
 
 const textMessageSchema = whatsappMessageSchema.merge(

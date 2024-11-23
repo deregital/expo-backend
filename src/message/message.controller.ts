@@ -8,6 +8,7 @@ import {
   createTemplateResponseSchema,
 } from '@/message/dto/create-template.dto';
 import { DeleteTemplateResponseDto } from '@/message/dto/delete-template.dto';
+import { FindMessagesByPhoneNumberResponseDto } from '@/message/dto/find-messages-by-phone.dto';
 import {
   FindTemplateByIdResponseDto,
   findTemplateByIdResponseSchema,
@@ -16,7 +17,7 @@ import {
   FindTemplatesResponseDto,
   findTemplatesResponseSchema,
 } from '@/message/dto/find-templates.dto';
-import { TemplateMessage } from '@/message/dto/message-types';
+import { MessageJson, TemplateMessage } from '@/message/dto/message-types';
 import {
   SendMessageToPhoneDto,
   SendMessageToPhoneResponseDto,
@@ -52,6 +53,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
+import { subDays } from 'date-fns/subDays';
 import z from 'zod';
 import { Role } from '~/types';
 
@@ -214,5 +216,28 @@ export class MessageController {
     await this.messageService.createTemplateMessages(messagesToCreate);
 
     return { success: true };
+  }
+
+  @Get('/find-messages-by-phone/:phone')
+  async findMessagesByPhone(
+    @Param('phone') phone: string,
+  ): Promise<FindMessagesByPhoneNumberResponseDto> {
+    const messages = await this.messageService.findByPhone(phone);
+
+    return {
+      inChat:
+        messages.length > 0 &&
+        messages.some(
+          (m) =>
+            m.created_at > subDays(new Date(), 1) &&
+            (m.message as MessageJson).from === phone,
+        ),
+      messages: messages.map((m) => ({
+        ...m,
+        message: m.message as MessageJson,
+        created_at: m.created_at.toISOString(),
+        updated_at: m.updated_at.toISOString(),
+      })),
+    };
   }
 }

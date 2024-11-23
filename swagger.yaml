@@ -1222,6 +1222,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SendTemplateToTagsResponseDto"
+  /message/find-messages-by-phone/{phone}:
+    get:
+      operationId: "MessageController_findMessagesByPhone"
+      parameters:
+        - name: "phone"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: ""
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -4910,7 +4922,7 @@ components:
                                 - "string"
                             timestamp:
                               type:
-                                - "number"
+                                - "string"
                             text:
                               type:
                                 - "object"
@@ -4944,7 +4956,7 @@ components:
                                 - "string"
                             timestamp:
                               type:
-                                - "number"
+                                - "string"
                             templateName:
                               type:
                                 - "string"

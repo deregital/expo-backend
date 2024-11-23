@@ -6,8 +6,18 @@ export type MessageJson = {
   timestamp: string;
   to?: string;
   from?: string;
-  type: 'text' | 'template';
-};
+} & (
+  | {
+      type: 'text';
+      text: {
+        body: string;
+      };
+    }
+  | {
+      type: 'template';
+      templateName: string;
+    }
+);
 
 export type TextMessage = MessageJson & {
   type: 'text';
