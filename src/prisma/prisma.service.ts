@@ -140,4 +140,8 @@ export class PrismaService implements OnModuleInit {
   get location(): PrismaClient['location'] {
     return this.db.location;
   }
+
+  get message(): PrismaClient['message'] {
+    return this.db.message;
+  }
 }

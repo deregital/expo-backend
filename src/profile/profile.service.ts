@@ -405,6 +405,26 @@ export class ProfileService {
     return { profiles };
   }
 
+  async findPhonesByTags(
+    tagsId: Tag['id'][],
+  ): Promise<Profile['phoneNumber'][]> {
+    const phones = await this.prisma.profile.findMany({
+      where: {
+        isInTrash: false,
+        tags: {
+          some: {
+            id: { in: tagsId },
+          },
+        },
+      },
+      select: {
+        phoneNumber: true,
+      },
+    });
+
+    return phones.map((p) => p.phoneNumber);
+  }
+
   async alreadyExistingProfile({
     phoneNumber,
     secondaryPhoneNumber,

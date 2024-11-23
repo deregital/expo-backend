@@ -16,17 +16,30 @@ import {
   FindTemplatesResponseDto,
   findTemplatesResponseSchema,
 } from '@/message/dto/find-templates.dto';
+import { TemplateMessage } from '@/message/dto/message-types';
+import {
+  SendMessageToPhoneDto,
+  SendMessageToPhoneResponseDto,
+} from '@/message/dto/send-message-to-phone.dto';
+
+import {
+  SendTemplateToTagsDto,
+  SendTemplateToTagsResponseDto,
+} from '@/message/dto/send-template-to-tags.dto';
 import {
   UpdateTemplateDto,
   updateTemplateResponseSchema,
 } from '@/message/dto/update-template-dto';
+import { MessageService } from '@/message/message.service';
 import { WhatsappService } from '@/message/whatsapp.service';
+import { ProfileService } from '@/profile/profile.service';
 import { ErrorDto } from '@/shared/errors/errorType';
 import {
   Body,
   Controller,
   Delete,
   Get,
+  InternalServerErrorException,
   NotFoundException,
   Param,
   Patch,
@@ -35,6 +48,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
@@ -45,7 +59,11 @@ import { Role } from '~/types';
 @UseGuards(JwtGuard, RoleGuard)
 @Controller('message')
 export class MessageController {
-  constructor(private readonly whatsappService: WhatsappService) {}
+  constructor(
+    private readonly whatsappService: WhatsappService,
+    private readonly messageService: MessageService,
+    private readonly profileService: ProfileService,
+  ) {}
 
   @ApiCreatedResponse({
     type: CreateTemplateResponseDto,
@@ -128,5 +146,73 @@ export class MessageController {
     }
 
     return await this.whatsappService.deleteTemplate(metaId);
+  }
+
+  @ApiInternalServerErrorResponse({
+    type: ErrorDto,
+    description: translate('route.message.send-message-to-phone.error'),
+  })
+  @ApiOkResponse({
+    type: SendMessageToPhoneResponseDto,
+    description: translate('route.message.send-message-to-phone.success'),
+  })
+  @Post('/send-message-to-phone')
+  async sendMessageToPhone(
+    @Body() sendMessageToPhoneDto: SendMessageToPhoneDto,
+  ): Promise<SendMessageToPhoneResponseDto> {
+    const { messageId } = await this.whatsappService.sendMessageToPhone(
+      sendMessageToPhoneDto,
+    );
+
+    try {
+      await this.messageService.createMessage({
+        messageId,
+        text: sendMessageToPhoneDto.message,
+        phoneTo: sendMessageToPhoneDto.phone,
+      });
+
+      return { success: true };
+    } catch (e) {
+      console.error(e);
+      throw new InternalServerErrorException([
+        translate('route.message.send-message-to-phone.error'),
+      ]);
+    }
+  }
+
+  @ApiOkResponse({
+    type: SendTemplateToTagsResponseDto,
+    description: translate('route.message.send-template-to-tags.success'),
+  })
+  @Post('/send-template-to-tags')
+  async sendTemplateToTags(
+    @Body() sendTemplateToTagsDto: SendTemplateToTagsDto,
+  ): Promise<SendTemplateToTagsResponseDto> {
+    const phones = await this.profileService.findPhonesByTags(
+      sendTemplateToTagsDto.tags,
+    );
+
+    const messagesToCreate: TemplateMessage[] = [];
+
+    await Promise.all(
+      phones.map(async (phone) => {
+        const { messageId } = await this.whatsappService.sendTemplateToPhone({
+          phone,
+          templateName: sendTemplateToTagsDto.templateName,
+        });
+
+        messagesToCreate.push({
+          id: messageId,
+          templateName: sendTemplateToTagsDto.templateName,
+          timestamp: new Date().getTime().toString(),
+          type: 'template',
+          to: phone,
+        });
+      }),
+    );
+
+    await this.messageService.createTemplateMessages(messagesToCreate);
+
+    return { success: true };
   }
 }

@@ -1182,6 +1182,46 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /message/send-message-to-phone:
+    post:
+      operationId: "MessageController_sendMessageToPhone"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendMessageToPhoneDto"
+      responses:
+        200:
+          description: "Mensaje enviado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendMessageToPhoneResponseDto"
+        500:
+          description: "Error al enviar el mensaje"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /message/send-template-to-tags:
+    post:
+      operationId: "MessageController_sendTemplateToTags"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendTemplateToTagsDto"
+      responses:
+        200:
+          description: "Plantilla enviada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendTemplateToTagsResponseDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -6408,6 +6448,55 @@ components:
         - "content"
         - "buttons"
     DeleteTemplateResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+      required:
+        - "success"
+    SendMessageToPhoneDto:
+      type:
+        - "object"
+      properties:
+        phone:
+          type:
+            - "string"
+          minLength: 1
+        message:
+          type:
+            - "string"
+      required:
+        - "phone"
+        - "message"
+    SendMessageToPhoneResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+      required:
+        - "success"
+    SendTemplateToTagsDto:
+      type:
+        - "object"
+      properties:
+        tags:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+            format: "uuid"
+        templateName:
+          type:
+            - "string"
+      required:
+        - "tags"
+        - "templateName"
+    SendTemplateToTagsResponseDto:
       type:
         - "object"
       properties:

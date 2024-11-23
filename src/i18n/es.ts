@@ -443,6 +443,14 @@ export default {
         error: 'Error al eliminar la plantilla',
         'not-found': 'Plantilla no encontrada',
       },
+      'send-message-to-phone': {
+        success: 'Mensaje enviado',
+        error: 'Error al enviar el mensaje',
+      },
+      'send-template-to-tags': {
+        success: 'Plantilla enviada',
+        error: 'Error al enviar la plantilla',
+      },
     },
   },
 } as const;

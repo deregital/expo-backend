@@ -10,6 +10,7 @@ import {
   findTemplatesResponseSchema,
 } from '@/message/dto/find-templates.dto';
 import { GetTemplateResponse } from '@/message/dto/message-types';
+import { SendMessageToPhoneDto } from '@/message/dto/send-message-to-phone.dto';
 import {
   Components,
   type Buttons,
@@ -213,5 +214,98 @@ export class WhatsappService {
         translate('route.message.delete-template.error'),
       ]);
     }
+  }
+
+  async sendMessageToPhone({ phone, message }: SendMessageToPhoneDto): Promise<{
+    messageId: string;
+  }> {
+    const res = await fetch(
+      `https://graph.facebook.com/v21.0/${process.env.META_WHATSAPP_API_PHONE_NUMBER_ID}/messages`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.META_TOKEN}`,
+        },
+        body: JSON.stringify({
+          messaging_product: 'whatsapp',
+          to: `${phone}`,
+          type: 'text',
+          recipient_type: 'individual',
+          text: {
+            body: `${message}`,
+          },
+        }),
+      },
+    );
+
+    if (!res.ok) {
+      console.log(await res.text());
+
+      throw new InternalServerErrorException([
+        translate('route.message.send-message-to-phone.error'),
+      ]);
+    }
+
+    const resJson = await res.json();
+    const messageId = (
+      resJson as {
+        messages: { id: string }[];
+      }
+    ).messages[0]?.id;
+
+    if (!messageId) {
+      throw new InternalServerErrorException([
+        translate('route.message.send-message-to-phone.error'),
+      ]);
+    }
+
+    return {
+      messageId,
+    };
+  }
+
+  async sendTemplateToPhone({
+    templateName,
+    phone,
+  }: {
+    templateName: string;
+    phone: string;
+  }): Promise<{
+    messageId: string;
+  }> {
+    const res = await fetch(
+      `https://graph.facebook.com/v19.0/${process.env.META_WHATSAPP_API_PHONE_NUMBER_ID}/messages`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.META_TOKEN}`,
+        },
+        body: JSON.stringify({
+          messaging_product: 'whatsapp',
+          to: `${phone}`,
+          type: 'template',
+          template: {
+            name: `${templateName}`,
+            language: {
+              code: 'es_AR',
+            },
+          },
+        }),
+      },
+    );
+
+    if (!res.ok) {
+      console.log(await res.text());
+
+      throw new InternalServerErrorException([
+        translate('route.message.send-message-to-phone.error'),
+      ]);
+    }
+
+    const resJson: { messages: [{ id: string }] } = await res.json();
+
+    return { messageId: resJson.messages[0].id };
   }
 }
