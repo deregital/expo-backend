@@ -451,6 +451,11 @@ export default {
         success: 'Plantilla enviada',
         error: 'Error al enviar la plantilla',
       },
+      'find-messages-by-phone': {
+        success: 'Mensajes encontrados',
+        error: 'Error al encontrar los mensajes',
+        'not-found': 'No se encontró el perfil',
+      },
     },
   },
 } as const;

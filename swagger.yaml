@@ -1233,7 +1233,17 @@ paths:
             type: "string"
       responses:
         200:
-          description: ""
+          description: "Mensajes encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindMessagesByPhoneNumberResponseDto"
+        404:
+          description: "No se encontró el perfil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -6517,3 +6527,101 @@ components:
             - "boolean"
       required:
         - "success"
+    FindMessagesByPhoneNumberResponseDto:
+      type:
+        - "object"
+      properties:
+        inChat:
+          type:
+            - "boolean"
+        messages:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              message:
+                discriminator:
+                  propertyName: "type"
+                oneOf:
+                  - type:
+                      - "object"
+                    properties:
+                      id:
+                        type:
+                          - "string"
+                      from:
+                        type:
+                          - "string"
+                      to:
+                        type:
+                          - "string"
+                      timestamp:
+                        type:
+                          - "string"
+                      text:
+                        type:
+                          - "object"
+                        properties:
+                          body:
+                            type:
+                              - "string"
+                        required:
+                          - "body"
+                      type:
+                        type:
+                          - "string"
+                        enum:
+                          - "text"
+                    required:
+                      - "id"
+                      - "timestamp"
+                      - "text"
+                      - "type"
+                  - type:
+                      - "object"
+                    properties:
+                      id:
+                        type:
+                          - "string"
+                      from:
+                        type:
+                          - "string"
+                      to:
+                        type:
+                          - "string"
+                      timestamp:
+                        type:
+                          - "string"
+                      templateName:
+                        type:
+                          - "string"
+                      type:
+                        type:
+                          - "string"
+                        enum:
+                          - "template"
+                    required:
+                      - "id"
+                      - "timestamp"
+                      - "templateName"
+                      - "type"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              state:
+                type:
+                  - "string"
+                enum:
+                  - "SENT"
+                  - "RECEIVED"
+                  - "SEEN"
+            required:
+              - "message"
+              - "created_at"
+              - "state"
+      required:
+        - "inChat"
+        - "messages"

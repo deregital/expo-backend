@@ -34,6 +34,10 @@ import {
 import { MessageService } from '@/message/message.service';
 import { WhatsappService } from '@/message/whatsapp.service';
 import { ProfileService } from '@/profile/profile.service';
+import {
+  VisibleTags,
+  VisibleTagsType,
+} from '@/shared/decorators/visible-tags.decorator';
 import { ErrorDto } from '@/shared/errors/errorType';
 import {
   Body,
@@ -218,10 +222,27 @@ export class MessageController {
     return { success: true };
   }
 
+  @ApiOkResponse({
+    type: FindMessagesByPhoneNumberResponseDto,
+    description: translate('route.message.find-messages-by-phone.success'),
+  })
+  @ApiNotFoundResponse({
+    type: ErrorDto,
+    description: translate('route.message.find-messages-by-phone.not-found'),
+  })
   @Get('/find-messages-by-phone/:phone')
   async findMessagesByPhone(
     @Param('phone') phone: string,
+    @VisibleTags() tags: VisibleTagsType,
   ): Promise<FindMessagesByPhoneNumberResponseDto> {
+    const exists = await this.profileService.findByPhoneNumber(phone, tags);
+
+    if (!exists) {
+      throw new NotFoundException([
+        translate('route.message.find-messages-by-phone.not-found'),
+      ]);
+    }
+
     const messages = await this.messageService.findByPhone(phone);
 
     return {
@@ -240,4 +261,8 @@ export class MessageController {
       })),
     };
   }
+
+  // read-messages
+  // getLastMessageTimestamp
+  // non-read-messages
 }
