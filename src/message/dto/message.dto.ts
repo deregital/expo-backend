@@ -1,6 +1,11 @@
 import { translate } from '@/i18n/translate';
+import { Components } from '@/message/dto/template.dto';
 import z from 'zod';
-import { MessageState } from '~/types/prisma-schema';
+import {
+  MessageState,
+  type TemplateCategory,
+  type TemplateStatus,
+} from '~/types/prisma-schema';
 
 const whatsappMessageSchema = z.object({
   id: z.string(),
@@ -42,3 +47,37 @@ export const messageSchema = z.object({
   created_at: z.date(),
   updated_at: z.date(),
 });
+
+export type MessageJson = {
+  id: string;
+  timestamp: string;
+  to?: string;
+  from?: string;
+} & (
+  | {
+      type: 'text';
+      text: {
+        body: string;
+      };
+    }
+  | {
+      type: 'template';
+      templateName: string;
+    }
+);
+
+export type TemplateMessage = MessageJson & {
+  type: 'template';
+  templateName: string;
+};
+
+export type GetTemplateResponse = {
+  data: {
+    name: string;
+    components: Components[];
+    language: string;
+    status: TemplateStatus;
+    category: TemplateCategory;
+    id: string;
+  }[];
+};

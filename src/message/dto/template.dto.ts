@@ -1,6 +1,6 @@
 import { translate } from '@/i18n/translate';
 import z from 'zod';
-import { TemplateCategory, TemplateStatus } from '~/types';
+import { TemplateCategory, TemplateStatus } from '~/types/prisma-schema';
 
 const buttonsSchema = z.object({
   type: z.literal('BUTTONS'),
@@ -58,11 +58,11 @@ export const templateSchema = z.object({
       message: translate('model.template.buttons.max'),
     }),
   id: z.string(),
-  status: z.nativeEnum(TemplateStatus),
   language: z.string(),
   components: z.array(componentSchema),
-  category: z.nativeEnum(TemplateCategory),
   allow_category_change: z.boolean(),
+  category: z.nativeEnum(TemplateCategory),
+  status: z.nativeEnum(TemplateStatus),
 });
 
 export type Buttons = z.infer<typeof buttonsSchema>;

@@ -6440,14 +6440,121 @@ components:
         templates:
           type:
             - "array"
-          items: {}
+          items:
+            type:
+              - "object"
+            properties:
+              name:
+                type:
+                  - "string"
+                minLength: 1
+                maxLength: 512
+              id:
+                type:
+                  - "string"
+              status:
+                type:
+                  - "string"
+                enum:
+                  - "APRROVED"
+                  - "PENDING"
+                  - "REJECTED"
+            required:
+              - "name"
+              - "id"
+              - "status"
       required:
         - "templates"
     FindTemplateByIdResponseDto:
       type:
         - "object"
       properties:
-        template: {}
+        template:
+          type:
+            - "object"
+          properties:
+            name:
+              type:
+                - "string"
+              minLength: 1
+              maxLength: 512
+            language:
+              type:
+                - "string"
+            status:
+              type:
+                - "string"
+              enum:
+                - "APRROVED"
+                - "PENDING"
+                - "REJECTED"
+            id:
+              type:
+                - "string"
+            category:
+              type:
+                - "string"
+              enum:
+                - "MARKETING"
+                - "UTILITY"
+                - "AUTHENTICATION"
+            components:
+              type:
+                - "array"
+              items:
+                discriminator:
+                  propertyName: "type"
+                oneOf:
+                  - type:
+                      - "object"
+                    properties:
+                      type:
+                        type:
+                          - "string"
+                        enum:
+                          - "BODY"
+                      text:
+                        type:
+                          - "string"
+                    required:
+                      - "type"
+                      - "text"
+                  - type:
+                      - "object"
+                    properties:
+                      type:
+                        type:
+                          - "string"
+                        enum:
+                          - "BUTTONS"
+                      buttons:
+                        type:
+                          - "array"
+                        items:
+                          type:
+                            - "object"
+                          properties:
+                            text:
+                              type:
+                                - "string"
+                            type:
+                              type:
+                                - "string"
+                              enum:
+                                - "QUICK_REPLY"
+                          required:
+                            - "text"
+                            - "type"
+                    required:
+                      - "type"
+                      - "buttons"
+          required:
+            - "name"
+            - "language"
+            - "status"
+            - "id"
+            - "category"
+            - "components"
       required:
         - "template"
     UpdateTemplateDto:

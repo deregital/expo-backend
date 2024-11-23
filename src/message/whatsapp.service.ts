@@ -9,7 +9,7 @@ import {
   FindTemplatesResponseDto,
   findTemplatesResponseSchema,
 } from '@/message/dto/find-templates.dto';
-import { GetTemplateResponse } from '@/message/dto/message-types';
+import { GetTemplateResponse } from '@/message/dto/message.dto';
 import { SendMessageToPhoneDto } from '@/message/dto/send-message-to-phone.dto';
 import {
   Components,
@@ -19,7 +19,7 @@ import {
 import {
   UpdateTemplateDto,
   updateTemplateResponseSchema,
-} from '@/message/dto/update-template-dto';
+} from '@/message/dto/update-template.dto';
 import {
   BadRequestException,
   Injectable,

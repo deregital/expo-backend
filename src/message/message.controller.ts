@@ -17,7 +17,7 @@ import {
   FindTemplatesResponseDto,
   findTemplatesResponseSchema,
 } from '@/message/dto/find-templates.dto';
-import { MessageJson, TemplateMessage } from '@/message/dto/message-types';
+import { MessageJson, TemplateMessage } from '@/message/dto/message.dto';
 import {
   SendMessageToPhoneDto,
   SendMessageToPhoneResponseDto,
@@ -30,7 +30,7 @@ import {
 import {
   UpdateTemplateDto,
   updateTemplateResponseSchema,
-} from '@/message/dto/update-template-dto';
+} from '@/message/dto/update-template.dto';
 import { MessageService } from '@/message/message.service';
 import { WhatsappService } from '@/message/whatsapp.service';
 import { ProfileService } from '@/profile/profile.service';

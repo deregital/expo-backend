@@ -1,4 +1,4 @@
-import { TemplateMessage } from '@/message/dto/message-types';
+import { TemplateMessage } from '@/message/dto/message.dto';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Inject, Injectable } from '@nestjs/common';

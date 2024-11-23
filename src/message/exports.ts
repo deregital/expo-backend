@@ -7,4 +7,4 @@ export * from './dto/message.dto';
 export * from './dto/send-message-to-phone.dto';
 export * from './dto/send-template-to-tags.dto';
 export * from './dto/template.dto';
-export * from './dto/update-template-dto';
+export * from './dto/update-template.dto';
