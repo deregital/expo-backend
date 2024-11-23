@@ -7,6 +7,7 @@ import {
   CreateTemplateResponseDto,
   createTemplateResponseSchema,
 } from '@/message/dto/create-template.dto';
+import { DeleteTemplateResponseDto } from '@/message/dto/delete-template.dto';
 import {
   FindTemplateByIdResponseDto,
   findTemplateByIdResponseSchema,
@@ -24,6 +25,7 @@ import { ErrorDto } from '@/shared/errors/errorType';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
@@ -103,5 +105,28 @@ export class MessageController {
       template.id,
       updateTemplateDto,
     );
+  }
+
+  @ApiOkResponse({
+    type: DeleteTemplateResponseDto,
+    description: translate('route.message.delete-template.success'),
+  })
+  @ApiNotFoundResponse({
+    type: ErrorDto,
+    description: translate('route.message.delete-template.not-found'),
+  })
+  @Delete('/template/:metaId')
+  async deleteTemplate(
+    @Param('metaId') metaId: string,
+  ): Promise<DeleteTemplateResponseDto> {
+    const { template } = await this.whatsappService.findTemplateById(metaId);
+
+    if (!template) {
+      throw new NotFoundException([
+        translate('route.message.delete-template.not-found'),
+      ]);
+    }
+
+    return await this.whatsappService.deleteTemplate(metaId);
   }
 }

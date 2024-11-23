@@ -1161,6 +1161,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+    delete:
+      operationId: "MessageController_deleteTemplate"
+      parameters:
+        - name: "metaId"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Plantilla eliminada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteTemplateResponseDto"
+        404:
+          description: "Plantilla no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -6386,3 +6407,12 @@ components:
       required:
         - "content"
         - "buttons"
+    DeleteTemplateResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+      required:
+        - "success"

@@ -438,6 +438,11 @@ export default {
         error: 'Error al actualizar la plantilla',
         'not-found': 'Plantilla no encontrada',
       },
+      'delete-template': {
+        success: 'Plantilla eliminada',
+        error: 'Error al eliminar la plantilla',
+        'not-found': 'Plantilla no encontrada',
+      },
     },
   },
 } as const;

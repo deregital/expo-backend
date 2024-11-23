@@ -3,6 +3,7 @@ import {
   CreateTemplateDto,
   createTemplateResponseSchema,
 } from '@/message/dto/create-template.dto';
+import { DeleteTemplateResponseDto } from '@/message/dto/delete-template.dto';
 import { findTemplateByIdResponseSchema } from '@/message/dto/find-template-by-id.dto';
 import {
   FindTemplatesResponseDto,
@@ -188,6 +189,28 @@ export class WhatsappService {
 
       throw new BadRequestException([
         translate('route.message.update-template.error'),
+      ]);
+    }
+  }
+
+  async deleteTemplate(metaId: string): Promise<DeleteTemplateResponseDto> {
+    const res = await fetch(
+      `https://graph.facebook.com/v21.0/${process.env.META_WHATSAPP_BUSINESS_ID}/message_templates?name=${metaId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${process.env.META_TOKEN}`,
+        },
+      },
+    ).then((res) => res.json());
+
+    if (res.success === true) {
+      return res;
+    } else {
+      console.log(res);
+
+      throw new BadRequestException([
+        translate('route.message.delete-template.error'),
       ]);
     }
   }
