@@ -9,8 +9,20 @@ import {
   findTemplatesResponseSchema,
 } from '@/message/dto/find-templates.dto';
 import { GetTemplateResponse } from '@/message/dto/message-types';
-import { type Buttons, type TemplateType } from '@/message/dto/template.dto';
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Components,
+  type Buttons,
+  type TemplateType,
+} from '@/message/dto/template.dto';
+import {
+  UpdateTemplateDto,
+  updateTemplateResponseSchema,
+} from '@/message/dto/update-template-dto';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import z from 'zod';
 
 @Injectable()
@@ -57,7 +69,7 @@ export class WhatsappService {
     }
 
     const res: FindTemplatesResponseDto['templates'][number] = await fetch(
-      `https://graph.facebook.com/v19.0/${process.env.META_WHATSAPP_BUSINESS_ID}/message_templates`,
+      `https://graph.facebook.com/v21.0/${process.env.META_WHATSAPP_BUSINESS_ID}/message_templates`,
       {
         method: 'POST',
         headers: {
@@ -100,7 +112,7 @@ export class WhatsappService {
     id: string,
   ): Promise<z.infer<typeof findTemplateByIdResponseSchema>> {
     const res = await fetch(
-      `https://graph.facebook.com/v19.0/${process.env.META_WHATSAPP_BUSINESS_ID}/message_templates?name=${id}`,
+      `https://graph.facebook.com/v21.0/${process.env.META_WHATSAPP_BUSINESS_ID}/message_templates?name=${id}`,
       {
         method: 'GET',
         headers: {
@@ -122,5 +134,61 @@ export class WhatsappService {
     }
 
     return { template };
+  }
+
+  async updateTemplate(
+    metaId: string,
+    dto: UpdateTemplateDto,
+  ): Promise<z.infer<typeof updateTemplateResponseSchema>> {
+    const content: {
+      components: Components[];
+    } = {
+      components: [
+        {
+          type: 'BODY',
+          text: `${dto.content}`,
+        },
+      ],
+    };
+
+    const buttons_json: Buttons = {
+      buttons: [],
+      type: 'BUTTONS',
+    };
+
+    if (dto.buttons.length > 0) {
+      dto.buttons.forEach((button) => {
+        if (button !== '') {
+          const each_button = {
+            text: `${button}`,
+            type: 'QUICK_REPLY',
+          } satisfies Buttons['buttons'][number];
+          buttons_json.buttons.push(each_button);
+        }
+      });
+    }
+    if (buttons_json.buttons.length > 0) {
+      content.components.push(buttons_json);
+    }
+
+    const res: {
+      success: boolean;
+    } = await fetch(`https://graph.facebook.com/v21.0/${metaId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.META_TOKEN}`,
+      },
+      body: JSON.stringify(content),
+    }).then((res) => res.json());
+    if (res.success === true) {
+      return res;
+    } else {
+      console.log(res);
+
+      throw new BadRequestException([
+        translate('route.message.update-template.error'),
+      ]);
+    }
   }
 }

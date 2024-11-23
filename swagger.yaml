@@ -1133,6 +1133,34 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindTemplateByIdResponseDto"
+  /message/template/{metaId}:
+    patch:
+      operationId: "MessageController_updateTemplate"
+      parameters:
+        - name: "metaId"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTemplateDto"
+      responses:
+        200:
+          description: "Plantilla actualizada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateTemplateDto"
+        404:
+          description: "Plantilla no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -6339,3 +6367,22 @@ components:
         template: {}
       required:
         - "template"
+    UpdateTemplateDto:
+      type:
+        - "object"
+      properties:
+        content:
+          type:
+            - "string"
+          maxLength: 768
+          minLength: 1
+        buttons:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+            maxLength: 25
+      required:
+        - "content"
+        - "buttons"

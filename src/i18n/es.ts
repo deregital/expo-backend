@@ -433,6 +433,11 @@ export default {
         error: 'Error al encontrar la plantilla',
         success: 'Plantilla encontrada',
       },
+      'update-template': {
+        success: 'Plantilla actualizada',
+        error: 'Error al actualizar la plantilla',
+        'not-found': 'Plantilla no encontrada',
+      },
     },
   },
 } as const;
