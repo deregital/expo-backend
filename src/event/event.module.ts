@@ -1,6 +1,5 @@
 import { AccountService } from '@/account/account.service';
 import { EventFolderService } from '@/event-folder/event-folder.service';
-import { PrismaService } from '@/prisma/prisma.service';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
 import { Module } from '@nestjs/common';
@@ -11,7 +10,6 @@ import { EventService } from './event.service';
 @Module({
   providers: [
     EventService,
-    PrismaService,
     JwtService,
     AccountService,
     TagGroupService,

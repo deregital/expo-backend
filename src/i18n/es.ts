@@ -160,6 +160,12 @@ export default {
         url: 'Por favor, proporcione una URL válida para la imagen.',
       },
     },
+    csv: {
+      password: {
+        required: 'La contraseña es obligatoria',
+        empty: 'La contraseña no puede estar vacía',
+      },
+    },
   },
   route: {
     auth: {
@@ -183,6 +189,10 @@ export default {
       },
       me: {
         success: 'Cuenta obtenida',
+      },
+      'check-password': {
+        'not-found': 'Cuenta no encontrada',
+        'invalid-password': 'Contraseña inválida',
       },
     },
     tag: {
@@ -405,6 +415,19 @@ export default {
         'not-found': 'Perfil o foto no encontrados',
         initiated: 'Eliminación de imagen iniciada',
         error: 'Error al eliminar la imagen del CDN',
+      },
+    },
+    csv: {
+      'download-profiles': {
+        success: 'CSV de modelos descargado con éxito',
+        unauthorized:
+          'No tienes autorización para descargar el archivo de modelos',
+        error: 'Error al descargar el archivo CSV de modelos',
+      },
+      'download-all-tables': {
+        success: 'CSV de todas las tablas descargado con éxito',
+        unauthorized: 'No tienes autorización para descargar todas las tablas',
+        error: 'Error al descargar el archivo CSV de todas las tablas',
       },
     },
   },

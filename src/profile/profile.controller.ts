@@ -53,6 +53,7 @@ import {
   updateProfileResponseSchema,
 } from '@/profile/dto/update-profile.dto';
 import { ProfileService } from '@/profile/profile.service';
+import { GlobalFilterInterceptor } from '@/shared/decorators/global-filter.interceptor';
 import {
   VisibleTags,
   VisibleTagsType,
@@ -76,6 +77,7 @@ import {
   Post,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiConflictResponse,
@@ -87,6 +89,7 @@ import levenshtein from 'string-comparison';
 import z from 'zod';
 import { Prisma, Profile, Role } from '~/types';
 
+@UseInterceptors(GlobalFilterInterceptor)
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
 @Controller('profile')
@@ -108,7 +111,6 @@ export class ProfileController {
     return await this.profileService.findAll(visibleTags);
   }
 
-  // TODO: all-with-active-chat requires a prisma extension
   @ApiOkResponse({
     type: FindWithActiveChatResponseDto,
     description: translate('route.profile.find-all-with-active-chat.success'),

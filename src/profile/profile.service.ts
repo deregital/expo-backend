@@ -1,3 +1,4 @@
+import { AccountService } from '@/account/account.service';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateProfileDto } from '@/profile/dto/create-profile.dto';
@@ -11,13 +12,15 @@ import { findWithActiveChatResponseSchema } from '@/profile/dto/find-with-active
 import { UpdateProfileDto } from '@/profile/dto/update-profile.dto';
 import { VisibleTagsType } from '@/shared/decorators/visible-tags.decorator';
 import { Inject, Injectable } from '@nestjs/common';
-import { subDays } from 'date-fns';
 import z from 'zod';
-import { Account, JsonMessage, Message, Profile, Tag, TagGroup } from '~/types';
+import { Account, Profile, Tag, TagGroup } from '~/types';
 
 @Injectable()
 export class ProfileService {
-  constructor(@Inject(PRISMA_SERVICE) private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(PRISMA_SERVICE) private prisma: PrismaService,
+    private readonly accountService: AccountService,
+  ) {}
 
   async findAll(
     visibleTags: VisibleTagsType,
@@ -376,49 +379,26 @@ export class ProfileService {
   async findAllWithActiveChat(
     visibleTags: VisibleTagsType,
   ): Promise<z.infer<typeof findWithActiveChatResponseSchema>> {
-    const profiles = (await this.prisma
-      .$extends({
-        result: {
-          profile: {
-            inChat: {
-              compute(
-                data: Profile & {
-                  messages: (Message & { message: JsonMessage })[];
-                },
-              ) {
-                return (
-                  data.messages.length > 0 &&
-                  data.messages.some(
-                    (m) =>
-                      m.created_at > subDays(new Date(), 1) &&
-                      m.message.from === data.phoneNumber,
-                  )
-                );
-              },
-            },
+    const profiles = (await this.prisma.extendWithChat().profile.findMany({
+      where: {
+        isInTrash: false,
+        tags: {
+          some: {
+            id: { in: visibleTags },
           },
         },
-      })
-      .profile.findMany({
-        where: {
-          isInTrash: false,
-          tags: {
-            some: {
-              id: { in: visibleTags },
-            },
+      },
+      include: {
+        tags: true,
+        messages: {
+          select: {
+            state: true,
+            message: true,
+            created_at: true,
           },
         },
-        include: {
-          tags: true,
-          messages: {
-            select: {
-              state: true,
-              message: true,
-              created_at: true,
-            },
-          },
-        },
-      })) as unknown as z.infer<
+      },
+    })) as unknown as z.infer<
       typeof findWithActiveChatResponseSchema.shape.profiles
     >;
 

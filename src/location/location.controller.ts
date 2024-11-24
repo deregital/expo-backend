@@ -29,7 +29,7 @@ import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import z from 'zod';
 import { Role } from '~/types';
 
-@Roles(Role.ADMIN, Role.USER)
+@Roles(Role.ADMIN, Role.USER, Role.FORM)
 @UseGuards(JwtGuard, RoleGuard)
 @Controller('location')
 export class LocationController {

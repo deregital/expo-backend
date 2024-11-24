@@ -1099,6 +1099,58 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /csv/download-profiles:
+    get:
+      operationId: "CsvController_downloadProfiles"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DownloadProfilesDto"
+      responses:
+        409:
+          description: "No tienes autorización para descargar el archivo de modelos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al descargar el archivo CSV de modelos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        default:
+          description: "CSV de modelos descargado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StreamableFile"
+  /csv/download-all-tables:
+    get:
+      operationId: "CsvController_downloadAllTables"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DownloadAllTablesDto"
+      responses:
+        409:
+          description: "No tienes autorización para descargar todas las tablas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        default:
+          description: "CSV de todas las tablas descargado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Buffer"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -6246,3 +6298,29 @@ components:
             - "string"
       required:
         - "message"
+    DownloadProfilesDto:
+      type:
+        - "object"
+      properties:
+        password:
+          type:
+            - "string"
+          minLength: 1
+      required:
+        - "password"
+    StreamableFile:
+      type: "object"
+      properties: {}
+    DownloadAllTablesDto:
+      type:
+        - "object"
+      properties:
+        password:
+          type:
+            - "string"
+          minLength: 1
+      required:
+        - "password"
+    Buffer:
+      type: "object"
+      properties: {}

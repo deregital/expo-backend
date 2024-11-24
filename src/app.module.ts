@@ -12,11 +12,12 @@ import { TagModule } from '@/tag/tag.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE, ModuleRef } from '@nestjs/core';
-import { EventFolderModule } from './event-folder/event-folder.module';
-import { EventModule } from './event/event.module';
-import { ImageModule } from './image/image.module';
-import { LocationModule } from './location/location.module';
-import { ProfileModule } from './profile/profile.module';
+import { CsvModule } from '@/csv/csv.module';
+import { EventFolderModule } from '@/event-folder/event-folder.module';
+import { EventModule } from '@/event/event.module';
+import { ImageModule } from '@/image/image.module';
+import { LocationModule } from '@/location/location.module';
+import { ProfileModule } from '@/profile/profile.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ProfileModule } from './profile/profile.module';
     ProfileModule,
     PrismaModule,
     ImageModule,
+    CsvModule,
   ],
   providers: [
     {

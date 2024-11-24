@@ -130,6 +130,10 @@ export class LocationService {
       longitude: state.longitude,
     }));
 
-    return { states };
+    return {
+      states: states.filter(
+        (state) => state.latitude !== null && state.longitude !== null,
+      ),
+    };
   }
 }
