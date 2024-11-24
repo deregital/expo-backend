@@ -456,6 +456,18 @@ export default {
         error: 'Error al encontrar los mensajes',
         'not-found': 'No se encontró el perfil',
       },
+      'read-messages': {
+        success: 'Mensajes leídos',
+        error: 'Error al leer los mensajes',
+      },
+      'non-read-messages': {
+        success: 'Mensajes no leídos encontrados',
+        error: 'Error al encontrar los mensajes no leídos',
+      },
+      'last-message-timestamp': {
+        success: 'Último mensaje obtenido',
+        error: 'Error al obtener el último mensaje',
+      },
     },
   },
 } as const;

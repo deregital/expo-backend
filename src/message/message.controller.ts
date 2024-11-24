@@ -17,7 +17,19 @@ import {
   FindTemplatesResponseDto,
   findTemplatesResponseSchema,
 } from '@/message/dto/find-templates.dto';
+import {
+  GetLastMessageTimestampResponseDto,
+  getLastMessageTimestampResponseSchema,
+} from '@/message/dto/get-last-message-timestamp.dto';
 import { MessageJson, TemplateMessage } from '@/message/dto/message.dto';
+import {
+  NonReadMessagesDto,
+  nonReadMessagesSchema,
+} from '@/message/dto/non-read-messages.dto';
+import {
+  ReadMessagesResponseDto,
+  readMessagesResponseSchema,
+} from '@/message/dto/read-messages.dto';
 import {
   SendMessageToPhoneDto,
   SendMessageToPhoneResponseDto,
@@ -262,7 +274,42 @@ export class MessageController {
     };
   }
 
-  // read-messages
-  // getLastMessageTimestamp
+  @ApiOkResponse({
+    type: ReadMessagesResponseDto,
+    description: translate('route.message.read-messages.success'),
+  })
+  @ApiInternalServerErrorResponse({
+    type: ErrorDto,
+    description: translate('route.message.read-messages.error'),
+  })
+  @Post('/read-messages/:phone')
+  async readMessages(
+    @Param('phone') phone: string,
+  ): Promise<z.infer<typeof readMessagesResponseSchema>> {
+    await this.messageService.readMessages(phone);
+    return { success: true };
+  }
+
   // non-read-messages
+  @ApiOkResponse({
+    type: NonReadMessagesDto,
+    description: translate('route.message.non-read-messages.success'),
+  })
+  @Get('/non-read-messages')
+  async nonReadMessages(): Promise<z.infer<typeof nonReadMessagesSchema>> {
+    return await this.messageService.findNonReadMessages();
+  }
+
+  // getLastMessageTimestamp
+  @ApiOkResponse({
+    type: GetLastMessageTimestampResponseDto,
+    description: translate('route.message.last-message-timestamp.success'),
+  })
+  @Get('/last-message-timestamp/:phone')
+  async getLastMessageTimestamp(
+    @Param('phone') phone: string,
+  ): Promise<z.infer<typeof getLastMessageTimestampResponseSchema>> {
+    const timestamp = await this.messageService.getLastMessageTimestamp(phone);
+    return { timestamp };
+  }
 }

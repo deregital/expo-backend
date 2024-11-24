@@ -1244,6 +1244,55 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /message/read-messages/{phone}:
+    post:
+      operationId: "MessageController_readMessages"
+      parameters:
+        - name: "phone"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Mensajes leídos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReadMessagesResponseDto"
+        500:
+          description: "Error al leer los mensajes"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /message/non-read-messages:
+    get:
+      operationId: "MessageController_nonReadMessages"
+      parameters: []
+      responses:
+        200:
+          description: "Mensajes no leídos encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NonReadMessagesDto"
+  /message/last-message-timestamp/{phone}:
+    get:
+      operationId: "MessageController_getLastMessageTimestamp"
+      parameters:
+        - name: "phone"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Último mensaje obtenido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetLastMessageTimestampResponseDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -6732,3 +6781,50 @@ components:
       required:
         - "inChat"
         - "messages"
+    ReadMessagesResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+      required:
+        - "success"
+    NonReadMessagesDto:
+      type:
+        - "object"
+      properties:
+        messages:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              profilePhoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              _count:
+                type:
+                  - "object"
+                properties:
+                  id:
+                    type:
+                      - "number"
+                required:
+                  - "id"
+            required:
+              - "profilePhoneNumber"
+              - "_count"
+      required:
+        - "messages"
+    GetLastMessageTimestampResponseDto:
+      type:
+        - "object"
+      properties:
+        timestamp:
+          type:
+            - "number"
+      required:
+        - "timestamp"

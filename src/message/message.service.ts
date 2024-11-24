@@ -1,7 +1,16 @@
+import { translate } from '@/i18n/translate';
 import { TemplateMessage } from '@/message/dto/message.dto';
+import { nonReadMessagesSchema } from '@/message/dto/non-read-messages.dto';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import fs from 'fs';
+import { join as pathJoin } from 'path';
+import z from 'zod';
 import { Message, MessageState } from '~/types/prisma-schema';
 
 @Injectable()
@@ -59,5 +68,64 @@ export class MessageService {
         created_at: 'asc',
       },
     });
+  }
+
+  async readMessages(phone: string): Promise<void> {
+    try {
+      await this.prisma.message.updateMany({
+        where: {
+          profilePhoneNumber: phone,
+          state: {
+            equals: MessageState.SENT,
+          },
+        },
+        data: {
+          state: MessageState.SEEN,
+        },
+      });
+    } catch (e) {
+      console.error(e);
+      throw new InternalServerErrorException([
+        translate('route.message.read-messages.error'),
+      ]);
+    }
+  }
+
+  async findNonReadMessages(): Promise<z.infer<typeof nonReadMessagesSchema>> {
+    const messages = await this.prisma.message.groupBy({
+      by: ['profilePhoneNumber'],
+      where: {
+        state: MessageState.RECEIVED,
+      },
+      _count: {
+        id: true,
+      },
+    });
+    return { messages };
+  }
+
+  async getLastMessageTimestamp(phone: string): Promise<number> {
+    const path =
+      process.env.NODE_ENV === 'production'
+        ? '/tmp/storeLastMessage.json'
+        : pathJoin(process.cwd(), '/src/message/storeLastMessage.json');
+
+    const doesFileExist = fs.existsSync(path);
+
+    if (!doesFileExist) {
+      fs.writeFileSync(path, '[]', 'utf8');
+    }
+
+    const file = fs.readFileSync(path, 'utf-8');
+
+    const myEntry = JSON.parse(file).find(
+      (entry: { waId: string }) => entry.waId === phone,
+    );
+
+    if (!myEntry) {
+      return new Date().getTime();
+    }
+
+    return myEntry.timestamp as number;
   }
 }
