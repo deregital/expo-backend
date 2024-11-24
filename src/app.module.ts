@@ -18,6 +18,7 @@ import { EventModule } from './event/event.module';
 import { LocationModule } from './location/location.module';
 import { MessageModule } from './message/message.module';
 import { ProfileModule } from './profile/profile.module';
+import { WebhookModule } from './webhook/webhook.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ProfileModule } from './profile/profile.module';
     PrismaModule,
     CsvModule,
     MessageModule,
+    WebhookModule,
   ],
   providers: [
     {

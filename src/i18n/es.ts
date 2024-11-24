@@ -469,5 +469,20 @@ export default {
         error: 'Error al obtener el último mensaje',
       },
     },
+    webhook: {
+      get: {
+        success: 'Webhook verificado',
+        forbidden: 'Prohibido',
+        'bad-request': 'Solicitud incorrecta',
+      },
+      post: {
+        unauthorized: 'No autorizado',
+        'bad-request': 'Solicitud incorrecta',
+        'no-secret': 'No se encontró un secreto de META_APP',
+        error: 'Error al procesar el webhook',
+        'tag-not-found': 'Etiqueta no encontrada',
+        'profile-not-found': 'Perfil no encontrado',
+      },
+    },
   },
 } as const;

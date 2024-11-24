@@ -1293,6 +1293,47 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetLastMessageTimestampResponseDto"
+  /webhook:
+    get:
+      operationId: "WebhookController_verify"
+      parameters:
+        - name: "hub.mode"
+          required: true
+          in: "query"
+          schema:
+            type: "string"
+        - name: "hub.verify_token"
+          required: true
+          in: "query"
+          schema:
+            type: "string"
+        - name: "hub.challenge"
+          required: true
+          in: "query"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Webhook verificado"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        400:
+          description: "Solicitud incorrecta"
+        403:
+          description: "Prohibido"
+    post:
+      operationId: "WebhookController_receiveMessage"
+      parameters:
+        - name: "x-hub-signature-256"
+          required: true
+          in: "header"
+          schema:
+            type: "string"
+      responses:
+        201:
+          description: ""
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"

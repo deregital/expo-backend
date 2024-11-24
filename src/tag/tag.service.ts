@@ -176,4 +176,12 @@ export class TagService {
       },
     });
   }
+
+  async findNotInSystemTag(): Promise<Tag | null> {
+    return await this.prisma.tag.findFirst({
+      where: {
+        type: TagType.NOT_IN_SYSTEM,
+      },
+    });
+  }
 }

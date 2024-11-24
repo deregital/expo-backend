@@ -308,4 +308,19 @@ export class WhatsappService {
 
     return { messageId: resJson.messages[0].id };
   }
+
+  async sendAutomaticResponse({
+    phone,
+    name,
+  }: {
+    phone: string;
+    name: string;
+  }): Promise<void> {
+    const message = `¡Hola ${name}! Muchas gracias por participar de Expo Desfiles. ¡Ya estás dentro! En los próximos días vas a recibir más información acerca de los próximos desfiles. Podés seguirnos en nuestro Instagram @expodesfiles para enterarte de todas las novedades. ¡Saludos!`;
+
+    await this.sendMessageToPhone({
+      phone,
+      message,
+    });
+  }
 }

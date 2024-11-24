@@ -3,15 +3,25 @@ import { TemplateMessage } from '@/message/dto/message.dto';
 import { nonReadMessagesSchema } from '@/message/dto/non-read-messages.dto';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
+import { getLastMessageTimestampFile } from '@/shared/utils/utils';
+import {
+  Contact,
+  StatusChange,
+  WebhookMessage,
+} from '@/webhook/dto/webhook.dto';
 import {
   Inject,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import fs from 'fs';
-import { join as pathJoin } from 'path';
 import z from 'zod';
-import { Message, MessageState } from '~/types/prisma-schema';
+import {
+  Message,
+  MessageState,
+  Prisma,
+  Profile,
+  Tag,
+} from '~/types/prisma-schema';
 
 @Injectable()
 export class MessageService {
@@ -105,18 +115,7 @@ export class MessageService {
   }
 
   async getLastMessageTimestamp(phone: string): Promise<number> {
-    const path =
-      process.env.NODE_ENV === 'production'
-        ? '/tmp/storeLastMessage.json'
-        : pathJoin(process.cwd(), '/src/message/storeLastMessage.json');
-
-    const doesFileExist = fs.existsSync(path);
-
-    if (!doesFileExist) {
-      fs.writeFileSync(path, '[]', 'utf8');
-    }
-
-    const file = fs.readFileSync(path, 'utf-8');
+    const file = getLastMessageTimestampFile();
 
     const myEntry = JSON.parse(file).find(
       (entry: { waId: string }) => entry.waId === phone,
@@ -127,5 +126,116 @@ export class MessageService {
     }
 
     return myEntry.timestamp as number;
+  }
+
+  async findMessageByWamId(wamId: string): Promise<Message | null> {
+    return await this.prisma.message.findFirst({
+      where: {
+        wamId: wamId,
+      },
+    });
+  }
+
+  async createMessageFromWebhook({
+    message,
+    messageText,
+    highestShortId,
+    contact,
+    notInSystemTagId,
+  }: {
+    message: WebhookMessage;
+    messageText: string;
+    highestShortId: Profile['shortId'];
+    contact: Contact;
+    notInSystemTagId: Tag['id'];
+  }): Promise<
+    Prisma.MessageGetPayload<{
+      include: {
+        profile: {
+          select: {
+            firstName: boolean;
+            fullName: boolean;
+            _count: {
+              select: {
+                messages: boolean;
+              };
+            };
+          };
+        };
+      };
+    }>
+  > {
+    return await this.prisma.message.create({
+      data: {
+        wamId: message.id,
+        message: {
+          ...message,
+          type: 'text',
+          text: {
+            body: messageText,
+          },
+        },
+        profile: {
+          connectOrCreate: {
+            where: {
+              phoneNumber: message.from,
+            },
+            create: {
+              shortId: highestShortId + 1,
+              fullName: contact.profile.name,
+              firstName: contact.profile.name.split(' ')[0],
+              phoneNumber: contact.wa_id,
+              tags: {
+                connect: {
+                  id: notInSystemTagId,
+                },
+              },
+            },
+          },
+        },
+      },
+      include: {
+        profile: {
+          select: {
+            firstName: true,
+            fullName: true,
+            _count: {
+              select: {
+                messages: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
+  async updateMessageStatus(value: StatusChange): Promise<Message | undefined> {
+    const status = value.statuses[0];
+    if (!status || status.status === 'failed') return;
+
+    const doesMessageExist = await this.prisma.message.findFirst({
+      where: {
+        wamId: status.id,
+      },
+    });
+
+    if (!doesMessageExist) {
+      return;
+    }
+
+    return await this.prisma.message.update({
+      where: {
+        wamId: status.id,
+      },
+      data: {
+        state:
+          status.status === 'delivered'
+            ? MessageState.RECEIVED
+            : status.status === 'read'
+              ? MessageState.SEEN
+              : MessageState.SENT,
+      },
+    });
   }
 }
