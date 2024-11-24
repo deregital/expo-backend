@@ -482,6 +482,7 @@ export default {
         error: 'Error al procesar el webhook',
         'tag-not-found': 'Etiqueta no encontrada',
         'profile-not-found': 'Perfil no encontrado',
+        'no-body': 'No se encontró el cuerpo del webhook',
       },
     },
   },

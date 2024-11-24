@@ -16,6 +16,7 @@ import {
   NotFoundException,
   Post,
   Query,
+  RawBodyRequest,
   Req,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -67,12 +68,17 @@ export class WebhookController {
   @Post()
   async receiveMessage(
     @Headers('x-hub-signature-256') xHubSignature256: string,
-    @Req() req: ExpReq,
+    @Req() req: RawBodyRequest<ExpReq>,
   ): Promise<void> {
-    const reqText: string = req.body;
+    const reqText = req.rawBody?.toString('utf-8');
+
+    if (!reqText) {
+      throw new BadRequestException([translate('route.webhook.post.no-body')]);
+    }
+
     if (
       !xHubSignature256 ||
-      !this.webhookService.verifySignature(xHubSignature256, reqText)
+      !(await this.webhookService.verifySignature(xHubSignature256, reqText))
     ) {
       console.warn(`Invalid signature: ${xHubSignature256}`);
       throw new UnauthorizedException([
@@ -81,8 +87,6 @@ export class WebhookController {
     }
 
     const webhookBody = JSON.parse(reqText) as WebHookRequest;
-
-    console.dir(webhookBody, { depth: null });
 
     try {
       if (webhookBody.entry.length > 0) {
@@ -103,11 +107,17 @@ export class WebhookController {
                 messageCreated &&
                 messageCreated.profile._count.messages === 1
               ) {
-                await this.whatsappService.sendAutomaticResponse({
-                  phone: value.contacts[0].wa_id,
-                  name:
-                    messageCreated.profile.firstName ??
-                    messageCreated.profile.fullName,
+                const { messageId, text: automaticResponseText } =
+                  await this.whatsappService.sendAutomaticResponse({
+                    phone: value.contacts[0].wa_id,
+                    name:
+                      messageCreated.profile.firstName ??
+                      messageCreated.profile.fullName,
+                  });
+                await this.messageService.createMessage({
+                  phoneTo: value.contacts[0].wa_id,
+                  text: automaticResponseText,
+                  messageId,
                 });
               }
               this.webhookService.updateJSONFile(
@@ -189,8 +199,6 @@ export class WebhookController {
     } else {
       messageText = 'Mensaje no soportado';
     }
-
-    console.log('Message text:', messageText);
 
     const messageCreated = await this.messageService.createMessageFromWebhook({
       contact,

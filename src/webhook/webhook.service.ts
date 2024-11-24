@@ -23,6 +23,7 @@ export class WebhookService {
 
     const hmac = crypto.createHmac('sha256', process.env.META_APP_SECRET);
     const messageHash = hmac.update(message).digest('hex');
+
     return sigWithoutPrefix === messageHash;
   }
 

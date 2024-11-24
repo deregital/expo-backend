@@ -852,6 +852,70 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/message/read-messages/{phone}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MessageController_readMessages'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/message/non-read-messages': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['MessageController_nonReadMessages'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/message/last-message-timestamp/{phone}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['MessageController_getLastMessageTimestamp'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/webhook': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['WebhookController_verify'];
+    put?: never;
+    post: operations['WebhookController_receiveMessage'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -2493,6 +2557,20 @@ export interface components {
         /** @enum {string} */
         state: 'SENT' | 'RECEIVED' | 'SEEN';
       }[];
+    };
+    ReadMessagesResponseDto: {
+      success: boolean;
+    };
+    NonReadMessagesDto: {
+      messages: {
+        profilePhoneNumber: string;
+        _count: {
+          id: number;
+        };
+      }[];
+    };
+    GetLastMessageTimestampResponseDto: {
+      timestamp: number;
     };
   };
   responses: never;
@@ -4304,6 +4382,136 @@ export interface operations {
         content: {
           'application/json': components['schemas']['ErrorDto'];
         };
+      };
+    };
+  };
+  MessageController_readMessages: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        phone: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Mensajes leídos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ReadMessagesResponseDto'];
+        };
+      };
+      /** @description Error al leer los mensajes */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  MessageController_nonReadMessages: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Mensajes no leídos encontrados */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['NonReadMessagesDto'];
+        };
+      };
+    };
+  };
+  MessageController_getLastMessageTimestamp: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        phone: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Último mensaje obtenido */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetLastMessageTimestampResponseDto'];
+        };
+      };
+    };
+  };
+  WebhookController_verify: {
+    parameters: {
+      query: {
+        'hub.mode': string;
+        'hub.verify_token': string;
+        'hub.challenge': string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Webhook verificado */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': string;
+        };
+      };
+      /** @description Solicitud incorrecta */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Prohibido */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  WebhookController_receiveMessage: {
+    parameters: {
+      query?: never;
+      header: {
+        'x-hub-signature-256': string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
       };
     };
   };

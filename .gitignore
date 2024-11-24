@@ -61,3 +61,4 @@ types/prisma-schema/runtime/*
 !/types/prisma-schema/index.d.ts
 
 estructura.md
+src/message/storeLastMessage.json

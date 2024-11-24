@@ -105,7 +105,9 @@ export class MessageService {
     const messages = await this.prisma.message.groupBy({
       by: ['profilePhoneNumber'],
       where: {
-        state: MessageState.RECEIVED,
+        state: {
+          not: MessageState.SEEN,
+        },
       },
       _count: {
         id: true,

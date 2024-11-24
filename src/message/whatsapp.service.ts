@@ -87,8 +87,6 @@ export class WhatsappService {
         message: translate('route.message.create-template.success'),
       };
     } else {
-      console.log(res);
-
       throw new InternalServerErrorException([
         translate('route.message.create-template.error'),
       ]);
@@ -186,8 +184,6 @@ export class WhatsappService {
     if (res.success === true) {
       return res;
     } else {
-      console.log(res);
-
       throw new BadRequestException([
         translate('route.message.update-template.error'),
       ]);
@@ -208,8 +204,6 @@ export class WhatsappService {
     if (res.success === true) {
       return res;
     } else {
-      console.log(res);
-
       throw new BadRequestException([
         translate('route.message.delete-template.error'),
       ]);
@@ -240,8 +234,6 @@ export class WhatsappService {
     );
 
     if (!res.ok) {
-      console.log(await res.text());
-
       throw new InternalServerErrorException([
         translate('route.message.send-message-to-phone.error'),
       ]);
@@ -297,8 +289,6 @@ export class WhatsappService {
     );
 
     if (!res.ok) {
-      console.log(await res.text());
-
       throw new InternalServerErrorException([
         translate('route.message.send-message-to-phone.error'),
       ]);
@@ -315,12 +305,20 @@ export class WhatsappService {
   }: {
     phone: string;
     name: string;
-  }): Promise<void> {
+  }): Promise<{
+    messageId: string;
+    text: string;
+  }> {
     const message = `¡Hola ${name}! Muchas gracias por participar de Expo Desfiles. ¡Ya estás dentro! En los próximos días vas a recibir más información acerca de los próximos desfiles. Podés seguirnos en nuestro Instagram @expodesfiles para enterarte de todas las novedades. ¡Saludos!`;
 
-    await this.sendMessageToPhone({
+    const { messageId } = await this.sendMessageToPhone({
       phone,
       message,
     });
+
+    return {
+      messageId,
+      text: message,
+    };
   }
 }
