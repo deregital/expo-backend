@@ -1037,6 +1037,68 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /image/update/{id}:
+    patch:
+      operationId: "ImageController_updateImage"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Imagen actualizada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateImageResponseDto"
+        409:
+          description: "Conflicto al actualizar la imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        422:
+          description: "La imagen no es válida, debe ser un archivo de imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al subir la imagen al CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /image/delete/{id}:
+    delete:
+      operationId: "ImageController_deleteImage"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Imagen eliminada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteImageResponseDto"
+        404:
+          description: "Perfil o foto no encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al eliminar la imagen del CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /csv/download-profiles:
     get:
       operationId: "CsvController_downloadProfiles"
@@ -6218,6 +6280,24 @@ components:
             type:
               - "string"
             format: "uuid"
+    UpdateImageResponseDto:
+      type:
+        - "object"
+      properties:
+        message:
+          type:
+            - "string"
+      required:
+        - "message"
+    DeleteImageResponseDto:
+      type:
+        - "object"
+      properties:
+        message:
+          type:
+            - "string"
+      required:
+        - "message"
     DownloadProfilesDto:
       type:
         - "object"
