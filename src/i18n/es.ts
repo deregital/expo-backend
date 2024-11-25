@@ -152,6 +152,14 @@ export default {
         uuid: 'El ID debe ser un UUID',
       },
     },
+    image: {
+      id: {
+        uuid: 'El formato del ID de la imagen es inválido.',
+      },
+      url: {
+        url: 'Por favor, proporcione una URL válida para la imagen.',
+      },
+    },
     csv: {
       password: {
         required: 'La contraseña es obligatoria',
@@ -406,6 +414,23 @@ export default {
       },
       'find-all-with-active-chat': {
         success: 'Perfiles obtenido',
+      },
+    },
+    image: {
+      update: {
+        success: 'Imagen actualizada exitosamente',
+        conflict: 'Conflicto al actualizar la imagen',
+        invalid: 'Parámetros inválidos para actualizar la imagen',
+        error: 'Error al subir la imagen al CDN',
+        'purge-error': 'Error al purgar la imagen del CDN',
+        'unprocessable-entity':
+          'La imagen no es válida, debe ser un archivo de imagen',
+      },
+      delete: {
+        success: 'Imagen eliminada exitosamente',
+        'not-found': 'Perfil o foto no encontrados',
+        initiated: 'Eliminación de imagen iniciada',
+        error: 'Error al eliminar la imagen del CDN',
       },
     },
     csv: {
