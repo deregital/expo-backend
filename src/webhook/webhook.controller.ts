@@ -143,7 +143,7 @@ export class WebhookController {
   }
 
   private async createMessage(value: ReceivedMessage): Promise<{
-    profile: Profile;
+    profile: Profile | null;
     messageCreated: Awaited<
       ReturnType<typeof MessageService.prototype.createMessageFromWebhook>
     > | null;
@@ -164,15 +164,15 @@ export class WebhookController {
       undefined,
     );
 
-    if (!profile) {
-      throw new NotFoundException([
-        translate('route.webhook.post.profile-not-found'),
-      ]);
-    }
+    // if (!profile) {
+    //   throw new NotFoundException([
+    //     translate('route.webhook.post.profile-not-found'),
+    //   ]);
+    // }
 
     if (!message || !['text', 'button', 'template'].includes(message.type)) {
       return {
-        profile,
+        profile: profile ?? null,
         messageCreated: null,
       };
     }
