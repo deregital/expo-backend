@@ -120,13 +120,13 @@ export class WebhookController {
                   messageId,
                 });
               }
-              this.webhookService.updateJSONFile(
+              this.webhookService.updateLastTimestampFile(
                 value.contacts[0].wa_id,
                 value.messages[0]!.timestamp,
               );
             } else if ('statuses' in value) {
               await this.messageService.updateMessageStatus(value);
-              this.webhookService.updateJSONFile(
+              this.webhookService.updateLastTimestampFile(
                 value.metadata.display_phone_number,
                 value.statuses[0].timestamp,
               );

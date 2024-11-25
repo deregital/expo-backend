@@ -27,7 +27,7 @@ export class WebhookService {
     return sigWithoutPrefix === messageHash;
   }
 
-  updateJSONFile(waId: string, timestamp: string): void {
+  updateLastTimestampFile(waId: string, timestamp: string): void {
     const data = {
       waId: waId,
       timestamp: timestamp,
