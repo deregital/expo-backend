@@ -267,7 +267,7 @@ export class WhatsappService {
     messageId: string;
   }> {
     const res = await fetch(
-      `https://graph.facebook.com/v19.0/${process.env.META_WHATSAPP_API_PHONE_NUMBER_ID}/messages`,
+      `https://graph.facebook.com/v21.0/${process.env.META_WHATSAPP_API_PHONE_NUMBER_ID}/messages`,
       {
         method: 'POST',
         headers: {
@@ -309,7 +309,9 @@ export class WhatsappService {
     messageId: string;
     text: string;
   }> {
-    const message = `¡Hola ${name}! Muchas gracias por participar de Expo Desfiles. ¡Ya estás dentro! En los próximos días vas a recibir más información acerca de los próximos desfiles. Podés seguirnos en nuestro Instagram @expodesfiles para enterarte de todas las novedades. ¡Saludos!`;
+    const message = translate('route.webhook.send-automatic-response', {
+      name,
+    });
 
     const { messageId } = await this.sendMessageToPhone({
       phone,

@@ -160,7 +160,7 @@ export default {
     },
     template: {
       name: {
-        min: 'El nombre debe tener al menos 1 caracter',
+        min: 'El nombre de la plantilla debe tener al menos 1 caracter',
         max: 'El nombre debe tener como máximo 512 caracteres',
         invalid:
           'El nombre debe ser una cadena con letras minúsculas y guiones bajos',
@@ -170,8 +170,8 @@ export default {
         min: 'El contenido debe tener al menos 1 caracter',
       },
       buttons: {
-        max: 'No se pueden tener más de 10 botones',
-        'max-length': 'Los botones no pueden tener más de 25 caracteres',
+        max: 'No se pueden tener más de 3 botones',
+        'max-length': 'Los botones no pueden tener más de 20 caracteres',
       },
     },
   },
@@ -484,6 +484,7 @@ export default {
         'profile-not-found': 'Perfil no encontrado',
         'no-body': 'No se encontró el cuerpo del webhook',
       },
+      'send-automatic-response': `¡Hola \{\{name\}\}! Muchas gracias por participar de Expo Desfiles. ¡Ya estás dentro! En los próximos días vas a recibir más información acerca de los próximos desfiles. Podés seguirnos en nuestro Instagram @expodesfiles para enterarte de todas las novedades. ¡Saludos!`,
     },
   },
 } as const;

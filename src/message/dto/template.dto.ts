@@ -50,11 +50,11 @@ export const templateSchema = z.object({
     }),
   buttons: z
     .array(
-      z.string().max(25, {
+      z.string().max(20, {
         message: translate('model.template.buttons.max-length'),
       }),
     )
-    .max(10, {
+    .max(3, {
       message: translate('model.template.buttons.max'),
     }),
   id: z.string(),

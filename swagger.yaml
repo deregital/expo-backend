@@ -6509,7 +6509,7 @@ components:
           items:
             type:
               - "string"
-            maxLength: 25
+            maxLength: 20
       required:
         - "name"
         - "content"
@@ -6662,7 +6662,7 @@ components:
           items:
             type:
               - "string"
-            maxLength: 25
+            maxLength: 20
       required:
         - "content"
         - "buttons"
