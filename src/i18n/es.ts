@@ -166,6 +166,22 @@ export default {
         empty: 'La contraseña no puede estar vacía',
       },
     },
+    template: {
+      name: {
+        min: 'El nombre de la plantilla debe tener al menos 1 caracter',
+        max: 'El nombre debe tener como máximo 512 caracteres',
+        invalid:
+          'El nombre debe ser una cadena con letras minúsculas y guiones bajos',
+      },
+      content: {
+        max: 'El contenido debe tener como máximo 768 caracteres',
+        min: 'El contenido debe tener al menos 1 caracter',
+      },
+      buttons: {
+        max: 'No se pueden tener más de 3 botones',
+        'max-length': 'Los botones no pueden tener más de 20 caracteres',
+      },
+    },
   },
   route: {
     auth: {
@@ -429,6 +445,71 @@ export default {
         unauthorized: 'No tienes autorización para descargar todas las tablas',
         error: 'Error al descargar el archivo CSV de todas las tablas',
       },
+    },
+    message: {
+      'create-template': {
+        success: 'Plantilla creada con éxito',
+        error: 'Error al crear la plantilla',
+      },
+      'find-templates': {
+        success: 'Plantillas encontradas',
+      },
+      'find-template-by-id': {
+        error: 'Error al encontrar la plantilla',
+        success: 'Plantilla encontrada',
+      },
+      'update-template': {
+        success: 'Plantilla actualizada',
+        error: 'Error al actualizar la plantilla',
+        'not-found': 'Plantilla no encontrada',
+      },
+      'delete-template': {
+        success: 'Plantilla eliminada',
+        error: 'Error al eliminar la plantilla',
+        'not-found': 'Plantilla no encontrada',
+      },
+      'send-message-to-phone': {
+        success: 'Mensaje enviado',
+        error: 'Error al enviar el mensaje',
+      },
+      'send-template-to-tags': {
+        success: 'Plantilla enviada',
+        error: 'Error al enviar la plantilla',
+      },
+      'find-messages-by-phone': {
+        success: 'Mensajes encontrados',
+        error: 'Error al encontrar los mensajes',
+        'not-found': 'No se encontró el perfil',
+      },
+      'read-messages': {
+        success: 'Mensajes leídos',
+        error: 'Error al leer los mensajes',
+      },
+      'non-read-messages': {
+        success: 'Mensajes no leídos encontrados',
+        error: 'Error al encontrar los mensajes no leídos',
+      },
+      'last-message-timestamp': {
+        success: 'Último mensaje obtenido',
+        error: 'Error al obtener el último mensaje',
+      },
+    },
+    webhook: {
+      get: {
+        success: 'Webhook verificado',
+        forbidden: 'Prohibido',
+        'bad-request': 'Solicitud incorrecta',
+      },
+      post: {
+        unauthorized: 'No autorizado',
+        'bad-request': 'Solicitud incorrecta',
+        'no-secret': 'No se encontró un secreto de META_APP',
+        error: 'Error al procesar el webhook',
+        'tag-not-found': 'Etiqueta no encontrada',
+        'profile-not-found': 'Perfil no encontrado',
+        'no-body': 'No se encontró el cuerpo del webhook',
+      },
+      'send-automatic-response': `¡Hola \{\{name\}\}! Muchas gracias por participar de Expo Desfiles. ¡Ya estás dentro! En los próximos días vas a recibir más información acerca de los próximos desfiles. Podés seguirnos en nuestro Instagram @expodesfiles para enterarte de todas las novedades. ¡Saludos!`,
     },
   },
 } as const;

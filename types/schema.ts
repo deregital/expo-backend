@@ -708,23 +708,87 @@ export interface paths {
     patch: operations['ProfileController_update'];
     trace?: never;
   };
-  '/image/update/{id}': {
+  '/csv/download-profiles': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get?: never;
+    get: operations['CsvController_downloadProfiles'];
     put?: never;
     post?: never;
     delete?: never;
     options?: never;
     head?: never;
-    patch: operations['ImageController_updateImage'];
+    patch?: never;
     trace?: never;
   };
-  '/image/delete/{id}': {
+  '/csv/download-all-tables': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['CsvController_downloadAllTables'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/message/create-template': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MessageController_createTemplate'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/message/templates': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['MessageController_findTemplates'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/message/template/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['MessageController_findTemplateById'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/message/template/{metaId}': {
     parameters: {
       query?: never;
       header?: never;
@@ -734,7 +798,119 @@ export interface paths {
     get?: never;
     put?: never;
     post?: never;
-    delete: operations['ImageController_deleteImage'];
+    delete: operations['MessageController_deleteTemplate'];
+    options?: never;
+    head?: never;
+    patch: operations['MessageController_updateTemplate'];
+    trace?: never;
+  };
+  '/message/send-message-to-phone': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MessageController_sendMessageToPhone'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/message/send-template-to-tags': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MessageController_sendTemplateToTags'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/message/find-messages-by-phone/{phone}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['MessageController_findMessagesByPhone'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/message/read-messages/{phone}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MessageController_readMessages'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/message/non-read-messages': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['MessageController_nonReadMessages'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/message/last-message-timestamp/{phone}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['MessageController_getLastMessageTimestamp'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/webhook': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['WebhookController_verify'];
+    put?: never;
+    post: operations['WebhookController_receiveMessage'];
+    delete?: never;
     options?: never;
     head?: never;
     patch?: never;
@@ -1879,7 +2055,7 @@ export interface components {
                 id: string;
                 from?: string;
                 to?: string;
-                timestamp: number;
+                timestamp: string;
                 text: {
                   body: string;
                 };
@@ -1890,7 +2066,7 @@ export interface components {
                 id: string;
                 from?: string;
                 to?: string;
-                timestamp: number;
+                timestamp: string;
                 templateName: string;
                 /** @enum {string} */
                 type: 'template';
@@ -2280,11 +2456,121 @@ export interface components {
       };
       tags?: string[];
     };
-    UpdateImageResponseDto: {
+    DownloadProfilesDto: {
+      password: string;
+    };
+    StreamableFile: Record<string, never>;
+    DownloadAllTablesDto: {
+      password: string;
+    };
+    Buffer: Record<string, never>;
+    CreateTemplateDto: {
+      name: string;
+      content: string;
+      buttons: string[];
+    };
+    CreateTemplateResponseDto: {
       message: string;
     };
-    DeleteImageResponseDto: {
+    FindTemplatesResponseDto: {
+      templates: {
+        name: string;
+        id: string;
+        /** @enum {string} */
+        status: 'APRROVED' | 'PENDING' | 'REJECTED';
+      }[];
+    };
+    FindTemplateByIdResponseDto: {
+      template: {
+        name: string;
+        language: string;
+        /** @enum {string} */
+        status: 'APRROVED' | 'PENDING' | 'REJECTED';
+        id: string;
+        /** @enum {string} */
+        category: 'MARKETING' | 'UTILITY' | 'AUTHENTICATION';
+        components: (
+          | {
+              /** @enum {string} */
+              type: 'BODY';
+              text: string;
+            }
+          | {
+              /** @enum {string} */
+              type: 'BUTTONS';
+              buttons: {
+                text: string;
+                /** @enum {string} */
+                type: 'QUICK_REPLY';
+              }[];
+            }
+        )[];
+      };
+    };
+    UpdateTemplateDto: {
+      content: string;
+      buttons: string[];
+    };
+    DeleteTemplateResponseDto: {
+      success: boolean;
+    };
+    SendMessageToPhoneDto: {
+      phone: string;
       message: string;
+    };
+    SendMessageToPhoneResponseDto: {
+      success: boolean;
+    };
+    SendTemplateToTagsDto: {
+      tags: string[];
+      templateName: string;
+    };
+    SendTemplateToTagsResponseDto: {
+      success: boolean;
+    };
+    FindMessagesByPhoneNumberResponseDto: {
+      inChat: boolean;
+      messages: {
+        message:
+          | {
+              id: string;
+              from?: string;
+              to?: string;
+              timestamp: string;
+              text: {
+                body: string;
+              };
+              /** @enum {string} */
+              type: 'text';
+            }
+          | {
+              id: string;
+              from?: string;
+              to?: string;
+              timestamp: string;
+              templateName: string;
+              /** @enum {string} */
+              type: 'template';
+            };
+        /** Format: date-time */
+        created_at: string;
+        /** @enum {string} */
+        state: 'SENT' | 'RECEIVED' | 'SEEN';
+      }[];
+    };
+    ReadMessagesResponseDto: {
+      success: boolean;
+    };
+    NonReadMessagesDto: {
+      messages: {
+        profilePhoneNumber: string;
+        _count: {
+          id: number;
+        };
+      }[];
+    };
+    GetLastMessageTimestampResponseDto: {
+      timestamp: number;
     };
   };
   responses: never;
@@ -3804,7 +4090,126 @@ export interface operations {
       };
     };
   };
-  ImageController_updateImage: {
+  CsvController_downloadProfiles: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['DownloadProfilesDto'];
+      };
+    };
+    responses: {
+      /** @description No tienes autorización para descargar el archivo de modelos */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error al descargar el archivo CSV de modelos */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description CSV de modelos descargado con éxito */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['StreamableFile'];
+        };
+      };
+    };
+  };
+  CsvController_downloadAllTables: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['DownloadAllTablesDto'];
+      };
+    };
+    responses: {
+      /** @description No tienes autorización para descargar todas las tablas */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description CSV de todas las tablas descargado con éxito */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['Buffer'];
+        };
+      };
+    };
+  };
+  MessageController_createTemplate: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateTemplateDto'];
+      };
+    };
+    responses: {
+      /** @description Plantilla creada con éxito */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateTemplateResponseDto'];
+        };
+      };
+    };
+  };
+  MessageController_findTemplates: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Plantillas encontradas */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindTemplatesResponseDto'];
+        };
+      };
+    };
+  };
+  MessageController_findTemplateById: {
     parameters: {
       query?: never;
       header?: never;
@@ -3815,17 +4220,39 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description Imagen actualizada exitosamente */
+      /** @description Plantilla encontrada */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['UpdateImageResponseDto'];
+          'application/json': components['schemas']['FindTemplateByIdResponseDto'];
         };
       };
-      /** @description Conflicto al actualizar la imagen */
-      409: {
+    };
+  };
+  MessageController_deleteTemplate: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        metaId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Plantilla eliminada */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DeleteTemplateResponseDto'];
+        };
+      };
+      /** @description Plantilla no encontrada */
+      404: {
         headers: {
           [name: string]: unknown;
         };
@@ -3833,8 +4260,34 @@ export interface operations {
           'application/json': components['schemas']['ErrorDto'];
         };
       };
-      /** @description La imagen no es válida, debe ser un archivo de imagen */
-      422: {
+    };
+  };
+  MessageController_updateTemplate: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        metaId: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateTemplateDto'];
+      };
+    };
+    responses: {
+      /** @description Plantilla actualizada */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateTemplateDto'];
+        };
+      };
+      /** @description Plantilla no encontrada */
+      404: {
         headers: {
           [name: string]: unknown;
         };
@@ -3842,7 +4295,31 @@ export interface operations {
           'application/json': components['schemas']['ErrorDto'];
         };
       };
-      /** @description Error al subir la imagen al CDN */
+    };
+  };
+  MessageController_sendMessageToPhone: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['SendMessageToPhoneDto'];
+      };
+    };
+    responses: {
+      /** @description Mensaje enviado */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['SendMessageToPhoneResponseDto'];
+        };
+      };
+      /** @description Error al enviar el mensaje */
       500: {
         headers: {
           [name: string]: unknown;
@@ -3853,27 +4330,51 @@ export interface operations {
       };
     };
   };
-  ImageController_deleteImage: {
+  MessageController_sendTemplateToTags: {
     parameters: {
       query?: never;
       header?: never;
-      path: {
-        id: string;
-      };
+      path?: never;
       cookie?: never;
     };
-    requestBody?: never;
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['SendTemplateToTagsDto'];
+      };
+    };
     responses: {
-      /** @description Imagen eliminada exitosamente */
+      /** @description Plantilla enviada */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['DeleteImageResponseDto'];
+          'application/json': components['schemas']['SendTemplateToTagsResponseDto'];
         };
       };
-      /** @description Perfil o foto no encontrados */
+    };
+  };
+  MessageController_findMessagesByPhone: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        phone: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Mensajes encontrados */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindMessagesByPhoneNumberResponseDto'];
+        };
+      };
+      /** @description No se encontró el perfil */
       404: {
         headers: {
           [name: string]: unknown;
@@ -3882,7 +4383,29 @@ export interface operations {
           'application/json': components['schemas']['ErrorDto'];
         };
       };
-      /** @description Error al eliminar la imagen del CDN */
+    };
+  };
+  MessageController_readMessages: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        phone: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Mensajes leídos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ReadMessagesResponseDto'];
+        };
+      };
+      /** @description Error al leer los mensajes */
       500: {
         headers: {
           [name: string]: unknown;
@@ -3890,6 +4413,105 @@ export interface operations {
         content: {
           'application/json': components['schemas']['ErrorDto'];
         };
+      };
+    };
+  };
+  MessageController_nonReadMessages: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Mensajes no leídos encontrados */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['NonReadMessagesDto'];
+        };
+      };
+    };
+  };
+  MessageController_getLastMessageTimestamp: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        phone: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Último mensaje obtenido */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetLastMessageTimestampResponseDto'];
+        };
+      };
+    };
+  };
+  WebhookController_verify: {
+    parameters: {
+      query: {
+        'hub.mode': string;
+        'hub.verify_token': string;
+        'hub.challenge': string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Webhook verificado */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': string;
+        };
+      };
+      /** @description Solicitud incorrecta */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Prohibido */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  WebhookController_receiveMessage: {
+    parameters: {
+      query?: never;
+      header: {
+        'x-hub-signature-256': string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
       };
     };
   };

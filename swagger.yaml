@@ -1151,6 +1151,251 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Buffer"
+  /message/create-template:
+    post:
+      operationId: "MessageController_createTemplate"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTemplateDto"
+      responses:
+        201:
+          description: "Plantilla creada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateTemplateResponseDto"
+  /message/templates:
+    get:
+      operationId: "MessageController_findTemplates"
+      parameters: []
+      responses:
+        200:
+          description: "Plantillas encontradas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindTemplatesResponseDto"
+  /message/template/{id}:
+    get:
+      operationId: "MessageController_findTemplateById"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Plantilla encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindTemplateByIdResponseDto"
+  /message/template/{metaId}:
+    patch:
+      operationId: "MessageController_updateTemplate"
+      parameters:
+        - name: "metaId"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTemplateDto"
+      responses:
+        200:
+          description: "Plantilla actualizada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateTemplateDto"
+        404:
+          description: "Plantilla no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+    delete:
+      operationId: "MessageController_deleteTemplate"
+      parameters:
+        - name: "metaId"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Plantilla eliminada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteTemplateResponseDto"
+        404:
+          description: "Plantilla no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /message/send-message-to-phone:
+    post:
+      operationId: "MessageController_sendMessageToPhone"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendMessageToPhoneDto"
+      responses:
+        200:
+          description: "Mensaje enviado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendMessageToPhoneResponseDto"
+        500:
+          description: "Error al enviar el mensaje"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /message/send-template-to-tags:
+    post:
+      operationId: "MessageController_sendTemplateToTags"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendTemplateToTagsDto"
+      responses:
+        200:
+          description: "Plantilla enviada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendTemplateToTagsResponseDto"
+  /message/find-messages-by-phone/{phone}:
+    get:
+      operationId: "MessageController_findMessagesByPhone"
+      parameters:
+        - name: "phone"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Mensajes encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindMessagesByPhoneNumberResponseDto"
+        404:
+          description: "No se encontró el perfil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /message/read-messages/{phone}:
+    post:
+      operationId: "MessageController_readMessages"
+      parameters:
+        - name: "phone"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Mensajes leídos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReadMessagesResponseDto"
+        500:
+          description: "Error al leer los mensajes"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /message/non-read-messages:
+    get:
+      operationId: "MessageController_nonReadMessages"
+      parameters: []
+      responses:
+        200:
+          description: "Mensajes no leídos encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NonReadMessagesDto"
+  /message/last-message-timestamp/{phone}:
+    get:
+      operationId: "MessageController_getLastMessageTimestamp"
+      parameters:
+        - name: "phone"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Último mensaje obtenido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetLastMessageTimestampResponseDto"
+  /webhook:
+    get:
+      operationId: "WebhookController_verify"
+      parameters:
+        - name: "hub.mode"
+          required: true
+          in: "query"
+          schema:
+            type: "string"
+        - name: "hub.verify_token"
+          required: true
+          in: "query"
+          schema:
+            type: "string"
+        - name: "hub.challenge"
+          required: true
+          in: "query"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Webhook verificado"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        400:
+          description: "Solicitud incorrecta"
+        403:
+          description: "Prohibido"
+    post:
+      operationId: "WebhookController_receiveMessage"
+      parameters:
+        - name: "x-hub-signature-256"
+          required: true
+          in: "header"
+          schema:
+            type: "string"
+      responses:
+        201:
+          description: ""
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -4839,7 +5084,7 @@ components:
                                 - "string"
                             timestamp:
                               type:
-                                - "number"
+                                - "string"
                             text:
                               type:
                                 - "object"
@@ -4873,7 +5118,7 @@ components:
                                 - "string"
                             timestamp:
                               type:
-                                - "number"
+                                - "string"
                             templateName:
                               type:
                                 - "string"
@@ -6324,3 +6569,383 @@ components:
     Buffer:
       type: "object"
       properties: {}
+    CreateTemplateDto:
+      type:
+        - "object"
+      properties:
+        name:
+          type:
+            - "string"
+          minLength: 1
+          maxLength: 512
+        content:
+          type:
+            - "string"
+          maxLength: 768
+          minLength: 1
+        buttons:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+            maxLength: 20
+      required:
+        - "name"
+        - "content"
+        - "buttons"
+    CreateTemplateResponseDto:
+      type:
+        - "object"
+      properties:
+        message:
+          type:
+            - "string"
+      required:
+        - "message"
+    FindTemplatesResponseDto:
+      type:
+        - "object"
+      properties:
+        templates:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              name:
+                type:
+                  - "string"
+                minLength: 1
+                maxLength: 512
+              id:
+                type:
+                  - "string"
+              status:
+                type:
+                  - "string"
+                enum:
+                  - "APRROVED"
+                  - "PENDING"
+                  - "REJECTED"
+            required:
+              - "name"
+              - "id"
+              - "status"
+      required:
+        - "templates"
+    FindTemplateByIdResponseDto:
+      type:
+        - "object"
+      properties:
+        template:
+          type:
+            - "object"
+          properties:
+            name:
+              type:
+                - "string"
+              minLength: 1
+              maxLength: 512
+            language:
+              type:
+                - "string"
+            status:
+              type:
+                - "string"
+              enum:
+                - "APRROVED"
+                - "PENDING"
+                - "REJECTED"
+            id:
+              type:
+                - "string"
+            category:
+              type:
+                - "string"
+              enum:
+                - "MARKETING"
+                - "UTILITY"
+                - "AUTHENTICATION"
+            components:
+              type:
+                - "array"
+              items:
+                discriminator:
+                  propertyName: "type"
+                oneOf:
+                  - type:
+                      - "object"
+                    properties:
+                      type:
+                        type:
+                          - "string"
+                        enum:
+                          - "BODY"
+                      text:
+                        type:
+                          - "string"
+                    required:
+                      - "type"
+                      - "text"
+                  - type:
+                      - "object"
+                    properties:
+                      type:
+                        type:
+                          - "string"
+                        enum:
+                          - "BUTTONS"
+                      buttons:
+                        type:
+                          - "array"
+                        items:
+                          type:
+                            - "object"
+                          properties:
+                            text:
+                              type:
+                                - "string"
+                            type:
+                              type:
+                                - "string"
+                              enum:
+                                - "QUICK_REPLY"
+                          required:
+                            - "text"
+                            - "type"
+                    required:
+                      - "type"
+                      - "buttons"
+          required:
+            - "name"
+            - "language"
+            - "status"
+            - "id"
+            - "category"
+            - "components"
+      required:
+        - "template"
+    UpdateTemplateDto:
+      type:
+        - "object"
+      properties:
+        content:
+          type:
+            - "string"
+          maxLength: 768
+          minLength: 1
+        buttons:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+            maxLength: 20
+      required:
+        - "content"
+        - "buttons"
+    DeleteTemplateResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+      required:
+        - "success"
+    SendMessageToPhoneDto:
+      type:
+        - "object"
+      properties:
+        phone:
+          type:
+            - "string"
+          minLength: 1
+        message:
+          type:
+            - "string"
+      required:
+        - "phone"
+        - "message"
+    SendMessageToPhoneResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+      required:
+        - "success"
+    SendTemplateToTagsDto:
+      type:
+        - "object"
+      properties:
+        tags:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+            format: "uuid"
+        templateName:
+          type:
+            - "string"
+      required:
+        - "tags"
+        - "templateName"
+    SendTemplateToTagsResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+      required:
+        - "success"
+    FindMessagesByPhoneNumberResponseDto:
+      type:
+        - "object"
+      properties:
+        inChat:
+          type:
+            - "boolean"
+        messages:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              message:
+                discriminator:
+                  propertyName: "type"
+                oneOf:
+                  - type:
+                      - "object"
+                    properties:
+                      id:
+                        type:
+                          - "string"
+                      from:
+                        type:
+                          - "string"
+                      to:
+                        type:
+                          - "string"
+                      timestamp:
+                        type:
+                          - "string"
+                      text:
+                        type:
+                          - "object"
+                        properties:
+                          body:
+                            type:
+                              - "string"
+                        required:
+                          - "body"
+                      type:
+                        type:
+                          - "string"
+                        enum:
+                          - "text"
+                    required:
+                      - "id"
+                      - "timestamp"
+                      - "text"
+                      - "type"
+                  - type:
+                      - "object"
+                    properties:
+                      id:
+                        type:
+                          - "string"
+                      from:
+                        type:
+                          - "string"
+                      to:
+                        type:
+                          - "string"
+                      timestamp:
+                        type:
+                          - "string"
+                      templateName:
+                        type:
+                          - "string"
+                      type:
+                        type:
+                          - "string"
+                        enum:
+                          - "template"
+                    required:
+                      - "id"
+                      - "timestamp"
+                      - "templateName"
+                      - "type"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              state:
+                type:
+                  - "string"
+                enum:
+                  - "SENT"
+                  - "RECEIVED"
+                  - "SEEN"
+            required:
+              - "message"
+              - "created_at"
+              - "state"
+      required:
+        - "inChat"
+        - "messages"
+    ReadMessagesResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+      required:
+        - "success"
+    NonReadMessagesDto:
+      type:
+        - "object"
+      properties:
+        messages:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              profilePhoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              _count:
+                type:
+                  - "object"
+                properties:
+                  id:
+                    type:
+                      - "number"
+                required:
+                  - "id"
+            required:
+              - "profilePhoneNumber"
+              - "_count"
+      required:
+        - "messages"
+    GetLastMessageTimestampResponseDto:
+      type:
+        - "object"
+      properties:
+        timestamp:
+          type:
+            - "number"
+      required:
+        - "timestamp"

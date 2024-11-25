@@ -6,7 +6,9 @@ import * as fs from 'fs';
 import * as YAML from 'json-to-pretty-yaml';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    rawBody: true,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Expo Backend')

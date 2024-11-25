@@ -1,4 +1,3 @@
-import { findAllWithTagsResponseSchema } from '@/exports';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import {
@@ -7,6 +6,7 @@ import {
 } from '@/tag-group/dto/create-tag-group.dto';
 import { deleteTagGroupResponseSchema } from '@/tag-group/dto/delete-tag-group.dto';
 import { findAllTagGroupResponseSchema } from '@/tag-group/dto/find-all-tag-group.dto';
+import { findAllWithTagsResponseSchema } from '@/tag-group/dto/find-all-with-tags.dto';
 import { findOneTagGroupResponseSchema } from '@/tag-group/dto/find-one-tag-group.dto';
 import { updateTagGroupResponseSchema } from '@/tag-group/dto/update-tag-group.dto';
 import { Inject, Injectable } from '@nestjs/common';

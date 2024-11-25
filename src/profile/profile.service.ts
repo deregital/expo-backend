@@ -333,17 +333,19 @@ export class ProfileService {
 
   async findByPhoneNumber(
     phoneNumber: Profile['phoneNumber'],
-    visibleTags: VisibleTagsType,
+    visibleTags: VisibleTagsType | undefined,
   ): Promise<Profile | null> {
     const profile = await this.prisma.profile.findUnique({
       where: {
         phoneNumber: phoneNumber,
         isInTrash: false,
-        tags: {
-          some: {
-            id: { in: visibleTags },
-          },
-        },
+        tags: visibleTags
+          ? {
+              some: {
+                id: { in: visibleTags },
+              },
+            }
+          : undefined,
       },
     });
 
@@ -405,6 +407,26 @@ export class ProfileService {
     return { profiles };
   }
 
+  async findPhonesByTags(
+    tagsId: Tag['id'][],
+  ): Promise<Profile['phoneNumber'][]> {
+    const phones = await this.prisma.profile.findMany({
+      where: {
+        isInTrash: false,
+        tags: {
+          some: {
+            id: { in: tagsId },
+          },
+        },
+      },
+      select: {
+        phoneNumber: true,
+      },
+    });
+
+    return phones.map((p) => p.phoneNumber);
+  }
+
   async alreadyExistingProfile({
     phoneNumber,
     secondaryPhoneNumber,
@@ -439,7 +461,7 @@ export class ProfileService {
     return profile?.profilePictureUrl ?? null;
   }
 
-  private async getHighestShortId(): Promise<number> {
+  async getHighestShortId(): Promise<number> {
     const profileHighestShortId = await this.prisma.profile.findFirst({
       orderBy: {
         shortId: 'desc',
