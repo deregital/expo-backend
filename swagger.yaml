@@ -6626,7 +6626,7 @@ components:
                 type:
                   - "string"
                 enum:
-                  - "APRROVED"
+                  - "APPROVED"
                   - "PENDING"
                   - "REJECTED"
             required:
@@ -6655,7 +6655,7 @@ components:
               type:
                 - "string"
               enum:
-                - "APRROVED"
+                - "APPROVED"
                 - "PENDING"
                 - "REJECTED"
             id:

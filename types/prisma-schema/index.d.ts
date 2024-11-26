@@ -98,7 +98,7 @@ export namespace $Enums {
   export type MessageState = (typeof MessageState)[keyof typeof MessageState];
 
   export const TemplateStatus: {
-    APRROVED: 'APRROVED';
+    APPROVED: 'APPROVED';
     PENDING: 'PENDING';
     REJECTED: 'REJECTED';
   };
