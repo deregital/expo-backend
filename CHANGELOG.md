@@ -1,5 +1,72 @@
 # expo-backend-types
 
+## 0.0.48
+
+### Patch Changes
+
+- 700dea7: check exports
+
+## 0.0.47
+
+### Patch Changes
+
+- da784b1: dto as separate subroute
+
+## 0.0.46
+
+### Patch Changes
+
+- 7481aa6: fix: src instead of ../..
+
+## 0.0.45
+
+### Patch Changes
+
+- 70899f3: include .js in files
+
+## 0.0.44
+
+### Patch Changes
+
+- 9fa6774: added things
+
+## 0.0.43
+
+### Patch Changes
+
+- 55224fe: test
+- 1c7be8e: more tests
+
+## 0.0.42
+
+### Patch Changes
+
+- f418567: dto
+
+## 0.0.36
+
+### Patch Changes
+
+- d925507: revert
+
+## 0.0.35
+
+### Patch Changes
+
+- 4c7f035: add dto to exported files
+
+## 0.0.34
+
+### Patch Changes
+
+- d51fc0e: support for zod in openapi
+
+## 0.0.33
+
+### Patch Changes
+
+- 290484c: Basic auth and cuenta
+
 ## 0.0.32
 
 ### Patch Changes

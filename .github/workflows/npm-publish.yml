@@ -1,0 +1,121 @@
+name: Node.js Package
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - expo-*
+      - EXPO-*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install # Install dependencies
+
+      - run: npx prisma generate # Generate Prisma Client
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      # - run: ls -la types/prisma-schema # Debug step to list contents
+
+      - run: npm run generate-ts-schema # Generate TypeScript schema
+        env:
+          NODE_ENV: development
+
+      - run: npm run build # Build the project
+
+      - run: npx prisma generate # Generate Prisma Client
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - run: npm run format # Format code
+      - run: npm run lint # Lint code
+
+      - run: npm run check-exports # Custom script to check exports
+
+  bump-version:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+          node-version: 20
+
+      - name: Get branch name
+        id: get_branch
+        run: |
+          BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          echo "Branch name is $BRANCH_NAME"
+
+      - name: Get latest version
+        id: get_latest_version
+        run: |
+          set -e
+          # Get the latest version tag in SemVer format
+          LATEST_VERSION=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 | cut -c2- || echo "0.0.0")
+
+          echo "Latest version found: '$LATEST_VERSION'"
+
+          # Split the version into major, minor, and patch
+          MAJOR=$(echo "$LATEST_VERSION" | cut -d. -f1 || echo "0")
+          MINOR=$(echo "$LATEST_VERSION" | cut -d. -f2 || echo "0")
+          PATCH=$(echo "$LATEST_VERSION" | cut -d. -f3 || echo "0")
+
+          # Determine the new version based on the branch
+          if [ "$BRANCH_NAME" = "dev" ]; then
+            # Increment the minor version for dev branch
+            MINOR=$((MINOR + 1))
+            PATCH=0
+            NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
+          elif [ "$BRANCH_NAME" = "main" ]; then
+            # Increment the major version for prod branch
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+            NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
+          else
+            # Use the latest major.minor.patch and append the branch with an increment
+            LAST_BRANCH_VERSION=$(git tag --list "v${MAJOR}.${MINOR}.${PATCH}-${BRANCH_NAME}.*" --sort=-v:refname | head -n 1 | grep -o '[0-9]\+$' || echo "0")
+            echo "Last Branch Version: $LAST_BRANCH_VERSION"
+            NEW_INCREMENT=$((LAST_BRANCH_VERSION + 1))
+            NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}-${BRANCH_NAME}.${NEW_INCREMENT}"
+          fi
+
+          echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo "New version: $NEW_VERSION"
+
+      - name: Bump version
+        run: |
+          set -e
+          # Ensure the tag is created and check its existence
+          echo "Tagging version: $VERSION"
+          git tag "$VERSION"
+          git show-ref --tags | grep "$VERSION" || exit 1
+          echo "Tag $VERSION created successfully."
+
+          # Update the version in package.json without creating a git tag
+          npm version "$VERSION" --no-git-tag-version
+          echo "Updated package.json to version $VERSION"
+
+          # Set up Git user and push the new version tag
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git push origin "$VERSION"
+
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          DATABASE_URL: ${{ secrets.PROD_DATABASE_URL }}

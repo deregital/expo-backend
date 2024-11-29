@@ -1,20 +1,27 @@
+import { AppModule } from '@/app.module';
+import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import * as YAML from 'json-to-pretty-yaml';
-import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as fs from 'fs';
+import * as YAML from 'json-to-pretty-yaml';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+async function bootstrap(): Promise<void> {
+  const app = await NestFactory.create(AppModule, {
+    rawBody: true,
+  });
 
   const config = new DocumentBuilder()
-    .setTitle('NestJS API')
-    .setDescription('The NestJS API description')
+    .setTitle('Expo Backend')
+    .setDescription('Backend de las aplicaciones de Expo')
     .setVersion('1.0')
-    .addTag('nestjs')
+    .addTag('expo-backend')
     .build();
 
+  patchNestjsSwagger(undefined, '3.1');
+
   const document = SwaggerModule.createDocument(app, config);
+
+  SwaggerModule.setup('api', app, document);
 
   fs.writeFileSync('./swagger.yaml', YAML.stringify(document));
 

@@ -1,19 +1,23 @@
+import { AppModule } from '@/app.module';
+import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { AppModule } from './app.module';
-import * as path from 'path';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { writeFileSync } from 'fs';
 import * as YAML from 'json-to-pretty-yaml';
+import * as path from 'path';
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
 
   const options = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Expo Backend')
+    .setDescription('Backend de las aplicaciones de Expo')
     .setVersion('1.0')
-    .addTag('cats')
+    .addTag('expo-backend')
     .build();
+
+  patchNestjsSwagger(undefined, '3.1');
+
   const document = SwaggerModule.createDocument(app, options);
   const outputPath = path.resolve(process.cwd(), 'swagger.yaml');
   writeFileSync(outputPath, YAML.stringify(document), { encoding: 'utf8' });

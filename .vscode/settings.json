@@ -12,16 +12,26 @@
   "prettier.singleQuote": true,
   "prettier.useTabs": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": "always"
+    "source.fixAll": "always",
+    "source.organizeImports": "always",
+    "source.removeUnusedImports": "always"
   },
   "eslint.validate": [
     "javascript",
     "javascriptreact",
-    "astro", // Enable .astro
     "typescript", // Enable .ts
     "typescriptreact" // Enable .tsx
   ],
   "eslint.lintTask.enable": true,
   "editor.indentSize": "tabSize",
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "typescript.preferences.organizeImports": {
+    "importModuleSpecifier": "non-relative",
+    "numericCollation": true,
+    "caseFirst": "upper"
+  },
+  "vsicons.presets.nestjs": true,
+  "[json]": {
+    "editor.formatOnSave": false
+  }
 }
