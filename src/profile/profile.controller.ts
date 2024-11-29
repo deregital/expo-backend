@@ -507,9 +507,10 @@ export class ProfileController {
           translate('route.profile.create.phone-number-already-exists'),
         ]);
       } else if (
-        (secondaryPhoneNumber &&
-          secondaryPhoneNumber === existingProfile.phoneNumber) ||
-        secondaryPhoneNumber === existingProfile.secondaryPhoneNumber
+        secondaryPhoneNumber !== null &&
+        secondaryPhoneNumber !== '' &&
+        (secondaryPhoneNumber === existingProfile.phoneNumber ||
+          secondaryPhoneNumber === existingProfile.secondaryPhoneNumber)
       ) {
         throw new ConflictException([
           translate(
