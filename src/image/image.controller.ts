@@ -6,6 +6,7 @@ import { ProfileService } from '@/profile/profile.service';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import {
+  Body,
   ConflictException,
   Controller,
   Delete,
@@ -21,6 +22,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiConflictResponse,
+  ApiConsumes,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -28,7 +30,7 @@ import {
 } from '@nestjs/swagger';
 import { Role } from '~/types';
 import { DeleteImageResponseDto } from './dto/delete-image.dto';
-import { UpdateImageResponseDto } from './dto/update-image.dto';
+import { UpdateImageDto, UpdateImageResponseDto } from './dto/update-image.dto';
 import { ImageService } from './image.service';
 
 @Roles(Role.ADMIN, Role.USER)
@@ -57,9 +59,11 @@ export class ImageController {
     type: ErrorDto,
   })
   @UseInterceptors(FileInterceptor('image'))
+  @ApiConsumes('multipart/form-data')
   @Patch('/update/:id')
   async updateImage(
     @Param('id', new ExistingRecord('profile')) id: string,
+    @Body() body: UpdateImageDto,
     @UploadedFile(
       new ParseFilePipeBuilder()
         .addFileTypeValidator({
@@ -76,6 +80,9 @@ export class ImageController {
     if (currentPictureUrl) {
       await this.imageService.deleteImage(currentPictureUrl);
     }
+
+    console.log('file', file);
+
     const pictureUrl = await this.imageService.updateImage(id, file);
 
     if (!pictureUrl) {
