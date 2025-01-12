@@ -6536,7 +6536,7 @@ components:
         - "object"
       properties:
         image:
-          type: "string"
+          type: "object"
           format: "binary"
     UpdateImageResponseDto:
       type:

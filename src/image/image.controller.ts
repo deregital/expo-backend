@@ -77,6 +77,7 @@ export class ImageController {
   ): Promise<UpdateImageResponseDto> {
     const currentPictureUrl =
       await this.profileService.getProfilePictureUrl(id);
+
     if (currentPictureUrl) {
       await this.imageService.deleteImage(currentPictureUrl);
     }
