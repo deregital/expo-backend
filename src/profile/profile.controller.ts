@@ -87,7 +87,7 @@ import {
 } from '@nestjs/swagger';
 import levenshtein from 'string-comparison';
 import z from 'zod';
-import { Prisma, Profile, Role } from '~/types';
+import { Prisma, Profile, Role, Tag } from '~/types';
 
 @UseInterceptors(GlobalFilterInterceptor)
 @Roles(Role.ADMIN, Role.USER)
@@ -293,29 +293,37 @@ export class ProfileController {
           profile.fullName,
           phoneNumber,
         );
-        return {
-          response: {
-            type: 'similar',
-            similarProfiles: similarityProfiles,
-          },
-        };
+
+        if (similarityProfiles.length === 0) {
+          const profileCreated = await this.normalizeAndCreateProfile(
+            profile,
+            participantTag,
+            account,
+          );
+
+          return {
+            response: {
+              type: 'created',
+              id: profileCreated.id,
+            },
+          };
+        } else {
+          return {
+            response: {
+              type: 'similar',
+              similarProfiles: similarityProfiles,
+            },
+          };
+        }
       } catch (error) {
         throw error;
       }
     }
 
-    const profileNormalized = {
-      ...profile,
-      phoneNumber: this.phoneNumberWithoutSpaces(profile.phoneNumber),
-      secondaryPhoneNumber: profile.secondaryPhoneNumber
-        ? this.phoneNumberWithoutSpaces(profile.secondaryPhoneNumber)
-        : null,
-    };
-
-    const profileCreated = await this.profileService.create(
-      profileNormalized,
-      participantTag.id,
-      account.id,
+    const profileCreated = await this.normalizeAndCreateProfile(
+      profile,
+      participantTag,
+      account,
     );
 
     return {
@@ -551,5 +559,27 @@ export class ProfileController {
       },
       {} as Record<string, typeof profiles>,
     );
+  }
+
+  private async normalizeAndCreateProfile(
+    profile: CreateProfileDto['profile'],
+    participantTag: Tag,
+    account: AccountWithoutPassword,
+  ): Promise<Profile> {
+    const profileNormalized = {
+      ...profile,
+      phoneNumber: this.phoneNumberWithoutSpaces(profile.phoneNumber),
+      secondaryPhoneNumber: profile.secondaryPhoneNumber
+        ? this.phoneNumberWithoutSpaces(profile.secondaryPhoneNumber)
+        : null,
+    };
+
+    const profileCreated = await this.profileService.create(
+      profileNormalized,
+      participantTag.id,
+      account.id,
+    );
+
+    return profileCreated;
   }
 }
