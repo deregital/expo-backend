@@ -1046,6 +1046,12 @@ paths:
           in: "path"
           schema:
             type: "string"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UpdateImageDto"
       responses:
         200:
           description: "Imagen actualizada exitosamente"
@@ -6525,6 +6531,13 @@ components:
             type:
               - "string"
             format: "uuid"
+    UpdateImageDto:
+      type:
+        - "object"
+      properties:
+        image:
+          type: "object"
+          format: "binary"
     UpdateImageResponseDto:
       type:
         - "object"

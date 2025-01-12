@@ -2488,6 +2488,10 @@ export interface components {
       };
       tags?: string[];
     };
+    UpdateImageDto: {
+      /** Format: binary */
+      image?: string;
+    };
     UpdateImageResponseDto: {
       message: string;
     };
@@ -4137,7 +4141,11 @@ export interface operations {
       };
       cookie?: never;
     };
-    requestBody?: never;
+    requestBody: {
+      content: {
+        'multipart/form-data': components['schemas']['UpdateImageDto'];
+      };
+    };
     responses: {
       /** @description Imagen actualizada exitosamente */
       200: {
