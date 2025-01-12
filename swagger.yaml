@@ -6538,8 +6538,6 @@ components:
         image:
           type: "object"
           format: "binary"
-      required:
-        - "image"
     UpdateImageResponseDto:
       type:
         - "object"
