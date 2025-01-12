@@ -81,8 +81,6 @@ export class ImageController {
       await this.imageService.deleteImage(currentPictureUrl);
     }
 
-    console.log('file', file);
-
     const pictureUrl = await this.imageService.updateImage(id, file);
 
     if (!pictureUrl) {
