@@ -6536,8 +6536,10 @@ components:
         - "object"
       properties:
         image:
-          type: "string"
+          type: "object"
           format: "binary"
+      required:
+        - "image"
     UpdateImageResponseDto:
       type:
         - "object"

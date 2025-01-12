@@ -5,9 +5,7 @@ import z from 'zod';
 extendZodWithOpenApi(z);
 
 export const updateImageSchema = z.object({
-  image: z
-    .custom<Express.Multer.File>()
-    .openapi({ type: 'string', format: 'binary' }),
+  image: z.instanceof(FormData).openapi({ type: 'object', format: 'binary' }),
 });
 
 export class UpdateImageDto extends createZodDtoWithoutDate(
