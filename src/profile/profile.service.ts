@@ -333,7 +333,7 @@ export class ProfileService {
 
   async findByPhoneNumber(
     phoneNumber: Profile['phoneNumber'],
-    visibleTags: VisibleTagsType | undefined,
+    visibleTags: VisibleTagsType | undefined = undefined,
   ): Promise<Profile | null> {
     const profile = await this.prisma.profile.findUnique({
       where: {
@@ -469,5 +469,20 @@ export class ProfileService {
     });
     const shortId = profileHighestShortId?.shortId ?? 0;
     return shortId;
+  }
+
+  async verifyPhoneNumber(
+    phoneNumber: Profile['phoneNumber'],
+  ): Promise<Profile> {
+    const profile = await this.prisma.profile.update({
+      where: {
+        phoneNumber: phoneNumber,
+      },
+      data: {
+        isPhoneVerified: true,
+      },
+    });
+
+    return profile;
   }
 }

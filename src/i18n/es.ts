@@ -11,6 +11,7 @@ export default {
       location: 'Ubicación',
       cannedResponse: 'Respuesta enlatada',
       message: 'Mensaje',
+      otp: 'OTP',
     },
     tag: {
       assisted: 'Asistió',
@@ -510,6 +511,24 @@ export default {
         'no-body': 'No se encontró el cuerpo del webhook',
       },
       'send-automatic-response': `¡Hola \{\{name\}\}! Muchas gracias por participar de Expo Desfiles. ¡Ya estás dentro! En los próximos días vas a recibir más información acerca de los próximos desfiles. Podés seguirnos en nuestro Instagram @expodesfiles para enterarte de todas las novedades. ¡Saludos!`,
+    },
+    otp: {
+      'secret-not-found': 'El secreto de OTP no se encontró',
+      'already-exists': 'El código de verificación ya fue enviado',
+      'phone-already-verified': 'El teléfono ya fue verificado',
+      send: {
+        error: 'Error al enviar el código de verificación',
+        'phone-already-verified': 'El teléfono ya fue verificado',
+        'profile-not-found':
+          'No se encontró un perfil asociado al teléfono. Por favor registrate',
+      },
+      verify: {
+        'error-format': 'El código debe tener 6 dígitos',
+        'invalid-otp': 'Error al verificar el código',
+        'no-otp-found': 'No se encontró un código de verificación',
+        'otp-expired':
+          'El código de verificación expiró. Por favor solicita uno nuevo',
+      },
     },
   },
 } as const;

@@ -22,6 +22,11 @@ export type Account = $Result.DefaultSelection<Prisma.$AccountPayload>;
  */
 export type Profile = $Result.DefaultSelection<Prisma.$ProfilePayload>;
 /**
+ * Model Otp
+ *
+ */
+export type Otp = $Result.DefaultSelection<Prisma.$OtpPayload>;
+/**
  * Model Location
  *
  */
@@ -311,6 +316,16 @@ export class PrismaClient<
    * ```
    */
   get profile(): Prisma.ProfileDelegate<ExtArgs>;
+
+  /**
+   * `prisma.otp`: Exposes CRUD operations for the **Otp** model.
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more Otps
+   * const otps = await prisma.otp.findMany()
+   * ```
+   */
+  get otp(): Prisma.OtpDelegate<ExtArgs>;
 
   /**
    * `prisma.location`: Exposes CRUD operations for the **Location** model.
@@ -862,6 +877,7 @@ export namespace Prisma {
   export const ModelName: {
     Account: 'Account';
     Profile: 'Profile';
+    Otp: 'Otp';
     Location: 'Location';
     Comment: 'Comment';
     Tag: 'Tag';
@@ -898,6 +914,7 @@ export namespace Prisma {
       modelProps:
         | 'account'
         | 'profile'
+        | 'otp'
         | 'location'
         | 'comment'
         | 'tag'
@@ -1047,6 +1064,76 @@ export namespace Prisma {
           count: {
             args: Prisma.ProfileCountArgs<ExtArgs>;
             result: $Utils.Optional<ProfileCountAggregateOutputType> | number;
+          };
+        };
+      };
+      Otp: {
+        payload: Prisma.$OtpPayload<ExtArgs>;
+        fields: Prisma.OtpFieldRefs;
+        operations: {
+          findUnique: {
+            args: Prisma.OtpFindUniqueArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OtpPayload> | null;
+          };
+          findUniqueOrThrow: {
+            args: Prisma.OtpFindUniqueOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OtpPayload>;
+          };
+          findFirst: {
+            args: Prisma.OtpFindFirstArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OtpPayload> | null;
+          };
+          findFirstOrThrow: {
+            args: Prisma.OtpFindFirstOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OtpPayload>;
+          };
+          findMany: {
+            args: Prisma.OtpFindManyArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OtpPayload>[];
+          };
+          create: {
+            args: Prisma.OtpCreateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OtpPayload>;
+          };
+          createMany: {
+            args: Prisma.OtpCreateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          createManyAndReturn: {
+            args: Prisma.OtpCreateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OtpPayload>[];
+          };
+          delete: {
+            args: Prisma.OtpDeleteArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OtpPayload>;
+          };
+          update: {
+            args: Prisma.OtpUpdateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OtpPayload>;
+          };
+          deleteMany: {
+            args: Prisma.OtpDeleteManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateMany: {
+            args: Prisma.OtpUpdateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          upsert: {
+            args: Prisma.OtpUpsertArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$OtpPayload>;
+          };
+          aggregate: {
+            args: Prisma.OtpAggregateArgs<ExtArgs>;
+            result: $Utils.Optional<AggregateOtp>;
+          };
+          groupBy: {
+            args: Prisma.OtpGroupByArgs<ExtArgs>;
+            result: $Utils.Optional<OtpGroupByOutputType>[];
+          };
+          count: {
+            args: Prisma.OtpCountArgs<ExtArgs>;
+            result: $Utils.Optional<OtpCountAggregateOutputType> | number;
           };
         };
       };
@@ -1932,6 +2019,7 @@ export namespace Prisma {
    */
 
   export type ProfileCountOutputType = {
+    otp: number;
     comments: number;
     messages: number;
     tags: number;
@@ -1940,6 +2028,7 @@ export namespace Prisma {
   export type ProfileCountOutputTypeSelect<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
+    otp?: boolean | ProfileCountOutputTypeCountOtpArgs;
     comments?: boolean | ProfileCountOutputTypeCountCommentsArgs;
     messages?: boolean | ProfileCountOutputTypeCountMessagesArgs;
     tags?: boolean | ProfileCountOutputTypeCountTagsArgs;
@@ -1956,6 +2045,15 @@ export namespace Prisma {
      * Select specific fields to fetch from the ProfileCountOutputType
      */
     select?: ProfileCountOutputTypeSelect<ExtArgs> | null;
+  };
+
+  /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeCountOtpArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: OtpWhereInput;
   };
 
   /**
@@ -3467,7 +3565,9 @@ export namespace Prisma {
   export type ProfileMinAggregateOutputType = {
     id: string | null;
     shortId: number | null;
+    firstTimeMiExpo: boolean | null;
     phoneNumber: string | null;
+    isPhoneVerified: boolean | null;
     secondaryPhoneNumber: string | null;
     fullName: string | null;
     firstName: string | null;
@@ -3488,7 +3588,9 @@ export namespace Prisma {
   export type ProfileMaxAggregateOutputType = {
     id: string | null;
     shortId: number | null;
+    firstTimeMiExpo: boolean | null;
     phoneNumber: string | null;
+    isPhoneVerified: boolean | null;
     secondaryPhoneNumber: string | null;
     fullName: string | null;
     firstName: string | null;
@@ -3509,7 +3611,9 @@ export namespace Prisma {
   export type ProfileCountAggregateOutputType = {
     id: number;
     shortId: number;
+    firstTimeMiExpo: number;
     phoneNumber: number;
+    isPhoneVerified: number;
     secondaryPhoneNumber: number;
     fullName: number;
     firstName: number;
@@ -3540,7 +3644,9 @@ export namespace Prisma {
   export type ProfileMinAggregateInputType = {
     id?: true;
     shortId?: true;
+    firstTimeMiExpo?: true;
     phoneNumber?: true;
+    isPhoneVerified?: true;
     secondaryPhoneNumber?: true;
     fullName?: true;
     firstName?: true;
@@ -3561,7 +3667,9 @@ export namespace Prisma {
   export type ProfileMaxAggregateInputType = {
     id?: true;
     shortId?: true;
+    firstTimeMiExpo?: true;
     phoneNumber?: true;
+    isPhoneVerified?: true;
     secondaryPhoneNumber?: true;
     fullName?: true;
     firstName?: true;
@@ -3582,7 +3690,9 @@ export namespace Prisma {
   export type ProfileCountAggregateInputType = {
     id?: true;
     shortId?: true;
+    firstTimeMiExpo?: true;
     phoneNumber?: true;
+    isPhoneVerified?: true;
     secondaryPhoneNumber?: true;
     fullName?: true;
     firstName?: true;
@@ -3696,7 +3806,9 @@ export namespace Prisma {
   export type ProfileGroupByOutputType = {
     id: string;
     shortId: number;
+    firstTimeMiExpo: boolean;
     phoneNumber: string;
+    isPhoneVerified: boolean;
     secondaryPhoneNumber: string | null;
     fullName: string;
     firstName: string | null;
@@ -3739,7 +3851,9 @@ export namespace Prisma {
     {
       id?: boolean;
       shortId?: boolean;
+      firstTimeMiExpo?: boolean;
       phoneNumber?: boolean;
+      isPhoneVerified?: boolean;
       secondaryPhoneNumber?: boolean;
       fullName?: boolean;
       firstName?: boolean;
@@ -3756,6 +3870,7 @@ export namespace Prisma {
       movedToTrashDate?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
+      otp?: boolean | Profile$otpArgs<ExtArgs>;
       comments?: boolean | Profile$commentsArgs<ExtArgs>;
       messages?: boolean | Profile$messagesArgs<ExtArgs>;
       tags?: boolean | Profile$tagsArgs<ExtArgs>;
@@ -3772,7 +3887,9 @@ export namespace Prisma {
     {
       id?: boolean;
       shortId?: boolean;
+      firstTimeMiExpo?: boolean;
       phoneNumber?: boolean;
+      isPhoneVerified?: boolean;
       secondaryPhoneNumber?: boolean;
       fullName?: boolean;
       firstName?: boolean;
@@ -3798,7 +3915,9 @@ export namespace Prisma {
   export type ProfileSelectScalar = {
     id?: boolean;
     shortId?: boolean;
+    firstTimeMiExpo?: boolean;
     phoneNumber?: boolean;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: boolean;
     fullName?: boolean;
     firstName?: boolean;
@@ -3820,6 +3939,7 @@ export namespace Prisma {
   export type ProfileInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
+    otp?: boolean | Profile$otpArgs<ExtArgs>;
     comments?: boolean | Profile$commentsArgs<ExtArgs>;
     messages?: boolean | Profile$messagesArgs<ExtArgs>;
     tags?: boolean | Profile$tagsArgs<ExtArgs>;
@@ -3839,6 +3959,7 @@ export namespace Prisma {
   > = {
     name: 'Profile';
     objects: {
+      otp: Prisma.$OtpPayload<ExtArgs>[];
       comments: Prisma.$CommentPayload<ExtArgs>[];
       messages: Prisma.$MessagePayload<ExtArgs>[];
       tags: Prisma.$TagPayload<ExtArgs>[];
@@ -3849,7 +3970,9 @@ export namespace Prisma {
       {
         id: string;
         shortId: number;
+        firstTimeMiExpo: boolean;
         phoneNumber: string;
+        isPhoneVerified: boolean;
         secondaryPhoneNumber: string | null;
         fullName: string;
         firstName: string | null;
@@ -4325,6 +4448,11 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
+    otp<T extends Profile$otpArgs<ExtArgs> = {}>(
+      args?: Subset<T, Profile$otpArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, 'findMany'> | Null
+    >;
     comments<T extends Profile$commentsArgs<ExtArgs> = {}>(
       args?: Subset<T, Profile$commentsArgs<ExtArgs>>,
     ): Prisma.PrismaPromise<
@@ -4404,7 +4532,9 @@ export namespace Prisma {
   interface ProfileFieldRefs {
     readonly id: FieldRef<'Profile', 'String'>;
     readonly shortId: FieldRef<'Profile', 'Int'>;
+    readonly firstTimeMiExpo: FieldRef<'Profile', 'Boolean'>;
     readonly phoneNumber: FieldRef<'Profile', 'String'>;
+    readonly isPhoneVerified: FieldRef<'Profile', 'Boolean'>;
     readonly secondaryPhoneNumber: FieldRef<'Profile', 'String'>;
     readonly fullName: FieldRef<'Profile', 'String'>;
     readonly firstName: FieldRef<'Profile', 'String'>;
@@ -4770,6 +4900,28 @@ export namespace Prisma {
   };
 
   /**
+   * Profile.otp
+   */
+  export type Profile$otpArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Otp
+     */
+    select?: OtpSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtpInclude<ExtArgs> | null;
+    where?: OtpWhereInput;
+    orderBy?: OtpOrderByWithRelationInput | OtpOrderByWithRelationInput[];
+    cursor?: OtpWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: OtpScalarFieldEnum | OtpScalarFieldEnum[];
+  };
+
+  /**
    * Profile.comments
    */
   export type Profile$commentsArgs<
@@ -4887,6 +5039,1096 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ProfileInclude<ExtArgs> | null;
+  };
+
+  /**
+   * Model Otp
+   */
+
+  export type AggregateOtp = {
+    _count: OtpCountAggregateOutputType | null;
+    _min: OtpMinAggregateOutputType | null;
+    _max: OtpMaxAggregateOutputType | null;
+  };
+
+  export type OtpMinAggregateOutputType = {
+    id: string | null;
+    code: string | null;
+    ownerPhoneNumber: string | null;
+    expiresAt: Date | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type OtpMaxAggregateOutputType = {
+    id: string | null;
+    code: string | null;
+    ownerPhoneNumber: string | null;
+    expiresAt: Date | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type OtpCountAggregateOutputType = {
+    id: number;
+    code: number;
+    ownerPhoneNumber: number;
+    expiresAt: number;
+    created_at: number;
+    updated_at: number;
+    _all: number;
+  };
+
+  export type OtpMinAggregateInputType = {
+    id?: true;
+    code?: true;
+    ownerPhoneNumber?: true;
+    expiresAt?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type OtpMaxAggregateInputType = {
+    id?: true;
+    code?: true;
+    ownerPhoneNumber?: true;
+    expiresAt?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type OtpCountAggregateInputType = {
+    id?: true;
+    code?: true;
+    ownerPhoneNumber?: true;
+    expiresAt?: true;
+    created_at?: true;
+    updated_at?: true;
+    _all?: true;
+  };
+
+  export type OtpAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which Otp to aggregate.
+     */
+    where?: OtpWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Otps to fetch.
+     */
+    orderBy?: OtpOrderByWithRelationInput | OtpOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: OtpWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Otps from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Otps.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned Otps
+     **/
+    _count?: true | OtpCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+     **/
+    _min?: OtpMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+     **/
+    _max?: OtpMaxAggregateInputType;
+  };
+
+  export type GetOtpAggregateType<T extends OtpAggregateArgs> = {
+    [P in keyof T & keyof AggregateOtp]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOtp[P]>
+      : GetScalarType<T[P], AggregateOtp[P]>;
+  };
+
+  export type OtpGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: OtpWhereInput;
+    orderBy?: OtpOrderByWithAggregationInput | OtpOrderByWithAggregationInput[];
+    by: OtpScalarFieldEnum[] | OtpScalarFieldEnum;
+    having?: OtpScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: OtpCountAggregateInputType | true;
+    _min?: OtpMinAggregateInputType;
+    _max?: OtpMaxAggregateInputType;
+  };
+
+  export type OtpGroupByOutputType = {
+    id: string;
+    code: string;
+    ownerPhoneNumber: string;
+    expiresAt: Date;
+    created_at: Date;
+    updated_at: Date;
+    _count: OtpCountAggregateOutputType | null;
+    _min: OtpMinAggregateOutputType | null;
+    _max: OtpMaxAggregateOutputType | null;
+  };
+
+  type GetOtpGroupByPayload<T extends OtpGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OtpGroupByOutputType, T['by']> & {
+        [P in keyof T & keyof OtpGroupByOutputType]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
+            : GetScalarType<T[P], OtpGroupByOutputType[P]>
+          : GetScalarType<T[P], OtpGroupByOutputType[P]>;
+      }
+    >
+  >;
+
+  export type OtpSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      code?: boolean;
+      ownerPhoneNumber?: boolean;
+      expiresAt?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      owner?: boolean | ProfileDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['otp']
+  >;
+
+  export type OtpSelectCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      code?: boolean;
+      ownerPhoneNumber?: boolean;
+      expiresAt?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      owner?: boolean | ProfileDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['otp']
+  >;
+
+  export type OtpSelectScalar = {
+    id?: boolean;
+    code?: boolean;
+    ownerPhoneNumber?: boolean;
+    expiresAt?: boolean;
+    created_at?: boolean;
+    updated_at?: boolean;
+  };
+
+  export type OtpInclude<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    owner?: boolean | ProfileDefaultArgs<ExtArgs>;
+  };
+  export type OtpIncludeCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    owner?: boolean | ProfileDefaultArgs<ExtArgs>;
+  };
+
+  export type $OtpPayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    name: 'Otp';
+    objects: {
+      owner: Prisma.$ProfilePayload<ExtArgs>;
+    };
+    scalars: $Extensions.GetPayloadResult<
+      {
+        id: string;
+        code: string;
+        ownerPhoneNumber: string;
+        expiresAt: Date;
+        created_at: Date;
+        updated_at: Date;
+      },
+      ExtArgs['result']['otp']
+    >;
+    composites: {};
+  };
+
+  type OtpGetPayload<S extends boolean | null | undefined | OtpDefaultArgs> =
+    $Result.GetResult<Prisma.$OtpPayload, S>;
+
+  type OtpCountArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = Omit<OtpFindManyArgs, 'select' | 'include' | 'distinct'> & {
+    select?: OtpCountAggregateInputType | true;
+  };
+
+  export interface OtpDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['Otp'];
+      meta: { name: 'Otp' };
+    };
+    /**
+     * Find zero or one Otp that matches the filter.
+     * @param {OtpFindUniqueArgs} args - Arguments to find a Otp
+     * @example
+     * // Get one Otp
+     * const otp = await prisma.otp.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OtpFindUniqueArgs>(
+      args: SelectSubset<T, OtpFindUniqueArgs<ExtArgs>>,
+    ): Prisma__OtpClient<
+      $Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, 'findUnique'> | null,
+      null,
+      ExtArgs
+    >;
+
+    /**
+     * Find one Otp that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OtpFindUniqueOrThrowArgs} args - Arguments to find a Otp
+     * @example
+     * // Get one Otp
+     * const otp = await prisma.otp.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OtpFindUniqueOrThrowArgs>(
+      args: SelectSubset<T, OtpFindUniqueOrThrowArgs<ExtArgs>>,
+    ): Prisma__OtpClient<
+      $Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, 'findUniqueOrThrow'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Find the first Otp that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtpFindFirstArgs} args - Arguments to find a Otp
+     * @example
+     * // Get one Otp
+     * const otp = await prisma.otp.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OtpFindFirstArgs>(
+      args?: SelectSubset<T, OtpFindFirstArgs<ExtArgs>>,
+    ): Prisma__OtpClient<
+      $Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, 'findFirst'> | null,
+      null,
+      ExtArgs
+    >;
+
+    /**
+     * Find the first Otp that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtpFindFirstOrThrowArgs} args - Arguments to find a Otp
+     * @example
+     * // Get one Otp
+     * const otp = await prisma.otp.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OtpFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, OtpFindFirstOrThrowArgs<ExtArgs>>,
+    ): Prisma__OtpClient<
+      $Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, 'findFirstOrThrow'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Find zero or more Otps that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtpFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Otps
+     * const otps = await prisma.otp.findMany()
+     *
+     * // Get first 10 Otps
+     * const otps = await prisma.otp.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const otpWithIdOnly = await prisma.otp.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends OtpFindManyArgs>(
+      args?: SelectSubset<T, OtpFindManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, 'findMany'>
+    >;
+
+    /**
+     * Create a Otp.
+     * @param {OtpCreateArgs} args - Arguments to create a Otp.
+     * @example
+     * // Create one Otp
+     * const Otp = await prisma.otp.create({
+     *   data: {
+     *     // ... data to create a Otp
+     *   }
+     * })
+     *
+     */
+    create<T extends OtpCreateArgs>(
+      args: SelectSubset<T, OtpCreateArgs<ExtArgs>>,
+    ): Prisma__OtpClient<
+      $Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, 'create'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Create many Otps.
+     * @param {OtpCreateManyArgs} args - Arguments to create many Otps.
+     * @example
+     * // Create many Otps
+     * const otp = await prisma.otp.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends OtpCreateManyArgs>(
+      args?: SelectSubset<T, OtpCreateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create many Otps and returns the data saved in the database.
+     * @param {OtpCreateManyAndReturnArgs} args - Arguments to create many Otps.
+     * @example
+     * // Create many Otps
+     * const otp = await prisma.otp.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many Otps and only return the `id`
+     * const otpWithIdOnly = await prisma.otp.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends OtpCreateManyAndReturnArgs>(
+      args?: SelectSubset<T, OtpCreateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, 'createManyAndReturn'>
+    >;
+
+    /**
+     * Delete a Otp.
+     * @param {OtpDeleteArgs} args - Arguments to delete one Otp.
+     * @example
+     * // Delete one Otp
+     * const Otp = await prisma.otp.delete({
+     *   where: {
+     *     // ... filter to delete one Otp
+     *   }
+     * })
+     *
+     */
+    delete<T extends OtpDeleteArgs>(
+      args: SelectSubset<T, OtpDeleteArgs<ExtArgs>>,
+    ): Prisma__OtpClient<
+      $Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, 'delete'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Update one Otp.
+     * @param {OtpUpdateArgs} args - Arguments to update one Otp.
+     * @example
+     * // Update one Otp
+     * const otp = await prisma.otp.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends OtpUpdateArgs>(
+      args: SelectSubset<T, OtpUpdateArgs<ExtArgs>>,
+    ): Prisma__OtpClient<
+      $Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, 'update'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Delete zero or more Otps.
+     * @param {OtpDeleteManyArgs} args - Arguments to filter Otps to delete.
+     * @example
+     * // Delete a few Otps
+     * const { count } = await prisma.otp.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends OtpDeleteManyArgs>(
+      args?: SelectSubset<T, OtpDeleteManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more Otps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtpUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Otps
+     * const otp = await prisma.otp.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends OtpUpdateManyArgs>(
+      args: SelectSubset<T, OtpUpdateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create or update one Otp.
+     * @param {OtpUpsertArgs} args - Arguments to update or create a Otp.
+     * @example
+     * // Update or create a Otp
+     * const otp = await prisma.otp.upsert({
+     *   create: {
+     *     // ... data to create a Otp
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Otp we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OtpUpsertArgs>(
+      args: SelectSubset<T, OtpUpsertArgs<ExtArgs>>,
+    ): Prisma__OtpClient<
+      $Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, 'upsert'>,
+      never,
+      ExtArgs
+    >;
+
+    /**
+     * Count the number of Otps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtpCountArgs} args - Arguments to filter Otps to count.
+     * @example
+     * // Count the number of Otps
+     * const count = await prisma.otp.count({
+     *   where: {
+     *     // ... the filter for the Otps we want to count
+     *   }
+     * })
+     **/
+    count<T extends OtpCountArgs>(
+      args?: Subset<T, OtpCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OtpCountAggregateOutputType>
+        : number
+    >;
+
+    /**
+     * Allows you to perform aggregations operations on a Otp.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtpAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+     **/
+    aggregate<T extends OtpAggregateArgs>(
+      args: Subset<T, OtpAggregateArgs>,
+    ): Prisma.PrismaPromise<GetOtpAggregateType<T>>;
+
+    /**
+     * Group by Otp.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtpGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+     **/
+    groupBy<
+      T extends OtpGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OtpGroupByArgs['orderBy'] }
+        : { orderBy?: OtpGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<
+        Keys<MaybeTupleToUnion<T['orderBy']>>
+      >,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ];
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields],
+    >(
+      args: SubsetIntersection<T, OtpGroupByArgs, OrderByArg> & InputErrors,
+    ): {} extends InputErrors
+      ? GetOtpGroupByPayload<T>
+      : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the Otp model
+     */
+    readonly fields: OtpFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Otp.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OtpClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    owner<T extends ProfileDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, ProfileDefaultArgs<ExtArgs>>,
+    ): Prisma__ProfileClient<
+      | $Result.GetResult<
+          Prisma.$ProfilePayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow'
+        >
+      | Null,
+      Null,
+      ExtArgs
+    >;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?:
+        | ((value: T) => TResult1 | PromiseLike<TResult1>)
+        | undefined
+        | null,
+      onrejected?:
+        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?:
+        | ((reason: any) => TResult | PromiseLike<TResult>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+  /**
+   * Fields of the Otp model
+   */
+  interface OtpFieldRefs {
+    readonly id: FieldRef<'Otp', 'String'>;
+    readonly code: FieldRef<'Otp', 'String'>;
+    readonly ownerPhoneNumber: FieldRef<'Otp', 'String'>;
+    readonly expiresAt: FieldRef<'Otp', 'DateTime'>;
+    readonly created_at: FieldRef<'Otp', 'DateTime'>;
+    readonly updated_at: FieldRef<'Otp', 'DateTime'>;
+  }
+
+  // Custom InputTypes
+  /**
+   * Otp findUnique
+   */
+  export type OtpFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Otp
+     */
+    select?: OtpSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtpInclude<ExtArgs> | null;
+    /**
+     * Filter, which Otp to fetch.
+     */
+    where: OtpWhereUniqueInput;
+  };
+
+  /**
+   * Otp findUniqueOrThrow
+   */
+  export type OtpFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Otp
+     */
+    select?: OtpSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtpInclude<ExtArgs> | null;
+    /**
+     * Filter, which Otp to fetch.
+     */
+    where: OtpWhereUniqueInput;
+  };
+
+  /**
+   * Otp findFirst
+   */
+  export type OtpFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Otp
+     */
+    select?: OtpSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtpInclude<ExtArgs> | null;
+    /**
+     * Filter, which Otp to fetch.
+     */
+    where?: OtpWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Otps to fetch.
+     */
+    orderBy?: OtpOrderByWithRelationInput | OtpOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Otps.
+     */
+    cursor?: OtpWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Otps from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Otps.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Otps.
+     */
+    distinct?: OtpScalarFieldEnum | OtpScalarFieldEnum[];
+  };
+
+  /**
+   * Otp findFirstOrThrow
+   */
+  export type OtpFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Otp
+     */
+    select?: OtpSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtpInclude<ExtArgs> | null;
+    /**
+     * Filter, which Otp to fetch.
+     */
+    where?: OtpWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Otps to fetch.
+     */
+    orderBy?: OtpOrderByWithRelationInput | OtpOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Otps.
+     */
+    cursor?: OtpWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Otps from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Otps.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Otps.
+     */
+    distinct?: OtpScalarFieldEnum | OtpScalarFieldEnum[];
+  };
+
+  /**
+   * Otp findMany
+   */
+  export type OtpFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Otp
+     */
+    select?: OtpSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtpInclude<ExtArgs> | null;
+    /**
+     * Filter, which Otps to fetch.
+     */
+    where?: OtpWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Otps to fetch.
+     */
+    orderBy?: OtpOrderByWithRelationInput | OtpOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing Otps.
+     */
+    cursor?: OtpWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Otps from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Otps.
+     */
+    skip?: number;
+    distinct?: OtpScalarFieldEnum | OtpScalarFieldEnum[];
+  };
+
+  /**
+   * Otp create
+   */
+  export type OtpCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Otp
+     */
+    select?: OtpSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtpInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a Otp.
+     */
+    data: XOR<OtpCreateInput, OtpUncheckedCreateInput>;
+  };
+
+  /**
+   * Otp createMany
+   */
+  export type OtpCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to create many Otps.
+     */
+    data: OtpCreateManyInput | OtpCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * Otp createManyAndReturn
+   */
+  export type OtpCreateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Otp
+     */
+    select?: OtpSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * The data used to create many Otps.
+     */
+    data: OtpCreateManyInput | OtpCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtpIncludeCreateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * Otp update
+   */
+  export type OtpUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Otp
+     */
+    select?: OtpSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtpInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a Otp.
+     */
+    data: XOR<OtpUpdateInput, OtpUncheckedUpdateInput>;
+    /**
+     * Choose, which Otp to update.
+     */
+    where: OtpWhereUniqueInput;
+  };
+
+  /**
+   * Otp updateMany
+   */
+  export type OtpUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to update Otps.
+     */
+    data: XOR<OtpUpdateManyMutationInput, OtpUncheckedUpdateManyInput>;
+    /**
+     * Filter which Otps to update
+     */
+    where?: OtpWhereInput;
+  };
+
+  /**
+   * Otp upsert
+   */
+  export type OtpUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Otp
+     */
+    select?: OtpSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtpInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the Otp to update in case it exists.
+     */
+    where: OtpWhereUniqueInput;
+    /**
+     * In case the Otp found by the `where` argument doesn't exist, create a new Otp with this data.
+     */
+    create: XOR<OtpCreateInput, OtpUncheckedCreateInput>;
+    /**
+     * In case the Otp was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OtpUpdateInput, OtpUncheckedUpdateInput>;
+  };
+
+  /**
+   * Otp delete
+   */
+  export type OtpDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Otp
+     */
+    select?: OtpSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtpInclude<ExtArgs> | null;
+    /**
+     * Filter which Otp to delete.
+     */
+    where: OtpWhereUniqueInput;
+  };
+
+  /**
+   * Otp deleteMany
+   */
+  export type OtpDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which Otps to delete
+     */
+    where?: OtpWhereInput;
+  };
+
+  /**
+   * Otp without action
+   */
+  export type OtpDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Otp
+     */
+    select?: OtpSelect<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtpInclude<ExtArgs> | null;
   };
 
   /**
@@ -15280,7 +16522,9 @@ export namespace Prisma {
   export const ProfileScalarFieldEnum: {
     id: 'id';
     shortId: 'shortId';
+    firstTimeMiExpo: 'firstTimeMiExpo';
     phoneNumber: 'phoneNumber';
+    isPhoneVerified: 'isPhoneVerified';
     secondaryPhoneNumber: 'secondaryPhoneNumber';
     fullName: 'fullName';
     firstName: 'firstName';
@@ -15301,6 +16545,18 @@ export namespace Prisma {
 
   export type ProfileScalarFieldEnum =
     (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum];
+
+  export const OtpScalarFieldEnum: {
+    id: 'id';
+    code: 'code';
+    ownerPhoneNumber: 'ownerPhoneNumber';
+    expiresAt: 'expiresAt';
+    created_at: 'created_at';
+    updated_at: 'updated_at';
+  };
+
+  export type OtpScalarFieldEnum =
+    (typeof OtpScalarFieldEnum)[keyof typeof OtpScalarFieldEnum];
 
   export const LocationScalarFieldEnum: {
     id: 'id';
@@ -15705,7 +16961,9 @@ export namespace Prisma {
     NOT?: ProfileWhereInput | ProfileWhereInput[];
     id?: StringFilter<'Profile'> | string;
     shortId?: IntFilter<'Profile'> | number;
+    firstTimeMiExpo?: BoolFilter<'Profile'> | boolean;
     phoneNumber?: StringFilter<'Profile'> | string;
+    isPhoneVerified?: BoolFilter<'Profile'> | boolean;
     secondaryPhoneNumber?: StringNullableFilter<'Profile'> | string | null;
     fullName?: StringFilter<'Profile'> | string;
     firstName?: StringNullableFilter<'Profile'> | string | null;
@@ -15722,6 +16980,7 @@ export namespace Prisma {
     movedToTrashDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
     created_at?: DateTimeFilter<'Profile'> | Date | string;
     updated_at?: DateTimeFilter<'Profile'> | Date | string;
+    otp?: OtpListRelationFilter;
     comments?: CommentListRelationFilter;
     messages?: MessageListRelationFilter;
     tags?: TagListRelationFilter;
@@ -15738,7 +16997,9 @@ export namespace Prisma {
   export type ProfileOrderByWithRelationInput = {
     id?: SortOrder;
     shortId?: SortOrder;
+    firstTimeMiExpo?: SortOrder;
     phoneNumber?: SortOrder;
+    isPhoneVerified?: SortOrder;
     secondaryPhoneNumber?: SortOrderInput | SortOrder;
     fullName?: SortOrder;
     firstName?: SortOrderInput | SortOrder;
@@ -15755,6 +17016,7 @@ export namespace Prisma {
     movedToTrashDate?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
+    otp?: OtpOrderByRelationAggregateInput;
     comments?: CommentOrderByRelationAggregateInput;
     messages?: MessageOrderByRelationAggregateInput;
     tags?: TagOrderByRelationAggregateInput;
@@ -15771,6 +17033,8 @@ export namespace Prisma {
       OR?: ProfileWhereInput[];
       NOT?: ProfileWhereInput | ProfileWhereInput[];
       shortId?: IntFilter<'Profile'> | number;
+      firstTimeMiExpo?: BoolFilter<'Profile'> | boolean;
+      isPhoneVerified?: BoolFilter<'Profile'> | boolean;
       fullName?: StringFilter<'Profile'> | string;
       firstName?: StringNullableFilter<'Profile'> | string | null;
       gender?: StringNullableFilter<'Profile'> | string | null;
@@ -15790,6 +17054,7 @@ export namespace Prisma {
         | null;
       created_at?: DateTimeFilter<'Profile'> | Date | string;
       updated_at?: DateTimeFilter<'Profile'> | Date | string;
+      otp?: OtpListRelationFilter;
       comments?: CommentListRelationFilter;
       messages?: MessageListRelationFilter;
       tags?: TagListRelationFilter;
@@ -15808,7 +17073,9 @@ export namespace Prisma {
   export type ProfileOrderByWithAggregationInput = {
     id?: SortOrder;
     shortId?: SortOrder;
+    firstTimeMiExpo?: SortOrder;
     phoneNumber?: SortOrder;
+    isPhoneVerified?: SortOrder;
     secondaryPhoneNumber?: SortOrderInput | SortOrder;
     fullName?: SortOrder;
     firstName?: SortOrderInput | SortOrder;
@@ -15842,7 +17109,9 @@ export namespace Prisma {
       | ProfileScalarWhereWithAggregatesInput[];
     id?: StringWithAggregatesFilter<'Profile'> | string;
     shortId?: IntWithAggregatesFilter<'Profile'> | number;
+    firstTimeMiExpo?: BoolWithAggregatesFilter<'Profile'> | boolean;
     phoneNumber?: StringWithAggregatesFilter<'Profile'> | string;
+    isPhoneVerified?: BoolWithAggregatesFilter<'Profile'> | boolean;
     secondaryPhoneNumber?:
       | StringNullableWithAggregatesFilter<'Profile'>
       | string
@@ -15879,6 +17148,73 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeWithAggregatesFilter<'Profile'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Profile'> | Date | string;
+  };
+
+  export type OtpWhereInput = {
+    AND?: OtpWhereInput | OtpWhereInput[];
+    OR?: OtpWhereInput[];
+    NOT?: OtpWhereInput | OtpWhereInput[];
+    id?: StringFilter<'Otp'> | string;
+    code?: StringFilter<'Otp'> | string;
+    ownerPhoneNumber?: StringFilter<'Otp'> | string;
+    expiresAt?: DateTimeFilter<'Otp'> | Date | string;
+    created_at?: DateTimeFilter<'Otp'> | Date | string;
+    updated_at?: DateTimeFilter<'Otp'> | Date | string;
+    owner?: XOR<ProfileRelationFilter, ProfileWhereInput>;
+  };
+
+  export type OtpOrderByWithRelationInput = {
+    id?: SortOrder;
+    code?: SortOrder;
+    ownerPhoneNumber?: SortOrder;
+    expiresAt?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    owner?: ProfileOrderByWithRelationInput;
+  };
+
+  export type OtpWhereUniqueInput = Prisma.AtLeast<
+    {
+      id?: string;
+      AND?: OtpWhereInput | OtpWhereInput[];
+      OR?: OtpWhereInput[];
+      NOT?: OtpWhereInput | OtpWhereInput[];
+      code?: StringFilter<'Otp'> | string;
+      ownerPhoneNumber?: StringFilter<'Otp'> | string;
+      expiresAt?: DateTimeFilter<'Otp'> | Date | string;
+      created_at?: DateTimeFilter<'Otp'> | Date | string;
+      updated_at?: DateTimeFilter<'Otp'> | Date | string;
+      owner?: XOR<ProfileRelationFilter, ProfileWhereInput>;
+    },
+    'id'
+  >;
+
+  export type OtpOrderByWithAggregationInput = {
+    id?: SortOrder;
+    code?: SortOrder;
+    ownerPhoneNumber?: SortOrder;
+    expiresAt?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    _count?: OtpCountOrderByAggregateInput;
+    _max?: OtpMaxOrderByAggregateInput;
+    _min?: OtpMinOrderByAggregateInput;
+  };
+
+  export type OtpScalarWhereWithAggregatesInput = {
+    AND?:
+      | OtpScalarWhereWithAggregatesInput
+      | OtpScalarWhereWithAggregatesInput[];
+    OR?: OtpScalarWhereWithAggregatesInput[];
+    NOT?:
+      | OtpScalarWhereWithAggregatesInput
+      | OtpScalarWhereWithAggregatesInput[];
+    id?: StringWithAggregatesFilter<'Otp'> | string;
+    code?: StringWithAggregatesFilter<'Otp'> | string;
+    ownerPhoneNumber?: StringWithAggregatesFilter<'Otp'> | string;
+    expiresAt?: DateTimeWithAggregatesFilter<'Otp'> | Date | string;
+    created_at?: DateTimeWithAggregatesFilter<'Otp'> | Date | string;
+    updated_at?: DateTimeWithAggregatesFilter<'Otp'> | Date | string;
   };
 
   export type LocationWhereInput = {
@@ -16665,7 +18001,9 @@ export namespace Prisma {
   export type ProfileCreateInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -16680,6 +18018,7 @@ export namespace Prisma {
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
+    otp?: OtpCreateNestedManyWithoutOwnerInput;
     comments?: CommentCreateNestedManyWithoutProfileInput;
     messages?: MessageCreateNestedManyWithoutProfileInput;
     tags?: TagCreateNestedManyWithoutProfilesInput;
@@ -16690,7 +18029,9 @@ export namespace Prisma {
   export type ProfileUncheckedCreateInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -16707,6 +18048,7 @@ export namespace Prisma {
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
+    otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
     messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
     tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
@@ -16715,7 +18057,9 @@ export namespace Prisma {
   export type ProfileUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -16744,6 +18088,7 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUpdateManyWithoutOwnerNestedInput;
     comments?: CommentUpdateManyWithoutProfileNestedInput;
     messages?: MessageUpdateManyWithoutProfileNestedInput;
     tags?: TagUpdateManyWithoutProfilesNestedInput;
@@ -16754,7 +18099,9 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -16788,6 +18135,7 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
     tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
@@ -16796,7 +18144,9 @@ export namespace Prisma {
   export type ProfileCreateManyInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -16818,7 +18168,9 @@ export namespace Prisma {
   export type ProfileUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -16852,7 +18204,9 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -16884,6 +18238,68 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type OtpCreateInput = {
+    id?: string;
+    code: string;
+    expiresAt: Date | string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    owner: ProfileCreateNestedOneWithoutOtpInput;
+  };
+
+  export type OtpUncheckedCreateInput = {
+    id?: string;
+    code: string;
+    ownerPhoneNumber: string;
+    expiresAt: Date | string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type OtpUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    code?: StringFieldUpdateOperationsInput | string;
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    owner?: ProfileUpdateOneRequiredWithoutOtpNestedInput;
+  };
+
+  export type OtpUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    code?: StringFieldUpdateOperationsInput | string;
+    ownerPhoneNumber?: StringFieldUpdateOperationsInput | string;
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type OtpCreateManyInput = {
+    id?: string;
+    code: string;
+    ownerPhoneNumber: string;
+    expiresAt: Date | string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type OtpUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    code?: StringFieldUpdateOperationsInput | string;
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type OtpUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    code?: StringFieldUpdateOperationsInput | string;
+    ownerPhoneNumber?: StringFieldUpdateOperationsInput | string;
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -17744,6 +19160,12 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null;
   };
 
+  export type OtpListRelationFilter = {
+    every?: OtpWhereInput;
+    some?: OtpWhereInput;
+    none?: OtpWhereInput;
+  };
+
   export type MessageListRelationFilter = {
     every?: MessageWhereInput;
     some?: MessageWhereInput;
@@ -17760,6 +19182,10 @@ export namespace Prisma {
     nulls?: NullsOrder;
   };
 
+  export type OtpOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
   export type MessageOrderByRelationAggregateInput = {
     _count?: SortOrder;
   };
@@ -17767,7 +19193,9 @@ export namespace Prisma {
   export type ProfileCountOrderByAggregateInput = {
     id?: SortOrder;
     shortId?: SortOrder;
+    firstTimeMiExpo?: SortOrder;
     phoneNumber?: SortOrder;
+    isPhoneVerified?: SortOrder;
     secondaryPhoneNumber?: SortOrder;
     fullName?: SortOrder;
     firstName?: SortOrder;
@@ -17793,7 +19221,9 @@ export namespace Prisma {
   export type ProfileMaxOrderByAggregateInput = {
     id?: SortOrder;
     shortId?: SortOrder;
+    firstTimeMiExpo?: SortOrder;
     phoneNumber?: SortOrder;
+    isPhoneVerified?: SortOrder;
     secondaryPhoneNumber?: SortOrder;
     fullName?: SortOrder;
     firstName?: SortOrder;
@@ -17814,7 +19244,9 @@ export namespace Prisma {
   export type ProfileMinOrderByAggregateInput = {
     id?: SortOrder;
     shortId?: SortOrder;
+    firstTimeMiExpo?: SortOrder;
     phoneNumber?: SortOrder;
+    isPhoneVerified?: SortOrder;
     secondaryPhoneNumber?: SortOrder;
     fullName?: SortOrder;
     firstName?: SortOrder;
@@ -17889,6 +19321,38 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>;
     _min?: NestedDateTimeNullableFilter<$PrismaModel>;
     _max?: NestedDateTimeNullableFilter<$PrismaModel>;
+  };
+
+  export type ProfileRelationFilter = {
+    is?: ProfileWhereInput;
+    isNot?: ProfileWhereInput;
+  };
+
+  export type OtpCountOrderByAggregateInput = {
+    id?: SortOrder;
+    code?: SortOrder;
+    ownerPhoneNumber?: SortOrder;
+    expiresAt?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type OtpMaxOrderByAggregateInput = {
+    id?: SortOrder;
+    code?: SortOrder;
+    ownerPhoneNumber?: SortOrder;
+    expiresAt?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type OtpMinOrderByAggregateInput = {
+    id?: SortOrder;
+    code?: SortOrder;
+    ownerPhoneNumber?: SortOrder;
+    expiresAt?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
   };
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -17979,11 +19443,6 @@ export namespace Prisma {
   export type AccountRelationFilter = {
     is?: AccountWhereInput;
     isNot?: AccountWhereInput;
-  };
-
-  export type ProfileRelationFilter = {
-    is?: ProfileWhereInput;
-    isNot?: ProfileWhereInput;
   };
 
   export type AccountNullableRelationFilter = {
@@ -18800,6 +20259,18 @@ export namespace Prisma {
     set: string[];
   };
 
+  export type OtpCreateNestedManyWithoutOwnerInput = {
+    create?:
+      | XOR<OtpCreateWithoutOwnerInput, OtpUncheckedCreateWithoutOwnerInput>
+      | OtpCreateWithoutOwnerInput[]
+      | OtpUncheckedCreateWithoutOwnerInput[];
+    connectOrCreate?:
+      | OtpCreateOrConnectWithoutOwnerInput
+      | OtpCreateOrConnectWithoutOwnerInput[];
+    createMany?: OtpCreateManyOwnerInputEnvelope;
+    connect?: OtpWhereUniqueInput | OtpWhereUniqueInput[];
+  };
+
   export type CommentCreateNestedManyWithoutProfileInput = {
     create?:
       | XOR<
@@ -18860,6 +20331,18 @@ export namespace Prisma {
     >;
     connectOrCreate?: LocationCreateOrConnectWithoutResidenceProfilesInput;
     connect?: LocationWhereUniqueInput;
+  };
+
+  export type OtpUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?:
+      | XOR<OtpCreateWithoutOwnerInput, OtpUncheckedCreateWithoutOwnerInput>
+      | OtpCreateWithoutOwnerInput[]
+      | OtpUncheckedCreateWithoutOwnerInput[];
+    connectOrCreate?:
+      | OtpCreateOrConnectWithoutOwnerInput
+      | OtpCreateOrConnectWithoutOwnerInput[];
+    createMany?: OtpCreateManyOwnerInputEnvelope;
+    connect?: OtpWhereUniqueInput | OtpWhereUniqueInput[];
   };
 
   export type CommentUncheckedCreateNestedManyWithoutProfileInput = {
@@ -18925,6 +20408,31 @@ export namespace Prisma {
   export type ProfileUpdatealternativeNamesInput = {
     set?: string[];
     push?: string | string[];
+  };
+
+  export type OtpUpdateManyWithoutOwnerNestedInput = {
+    create?:
+      | XOR<OtpCreateWithoutOwnerInput, OtpUncheckedCreateWithoutOwnerInput>
+      | OtpCreateWithoutOwnerInput[]
+      | OtpUncheckedCreateWithoutOwnerInput[];
+    connectOrCreate?:
+      | OtpCreateOrConnectWithoutOwnerInput
+      | OtpCreateOrConnectWithoutOwnerInput[];
+    upsert?:
+      | OtpUpsertWithWhereUniqueWithoutOwnerInput
+      | OtpUpsertWithWhereUniqueWithoutOwnerInput[];
+    createMany?: OtpCreateManyOwnerInputEnvelope;
+    set?: OtpWhereUniqueInput | OtpWhereUniqueInput[];
+    disconnect?: OtpWhereUniqueInput | OtpWhereUniqueInput[];
+    delete?: OtpWhereUniqueInput | OtpWhereUniqueInput[];
+    connect?: OtpWhereUniqueInput | OtpWhereUniqueInput[];
+    update?:
+      | OtpUpdateWithWhereUniqueWithoutOwnerInput
+      | OtpUpdateWithWhereUniqueWithoutOwnerInput[];
+    updateMany?:
+      | OtpUpdateManyWithWhereWithoutOwnerInput
+      | OtpUpdateManyWithWhereWithoutOwnerInput[];
+    deleteMany?: OtpScalarWhereInput | OtpScalarWhereInput[];
   };
 
   export type CommentUpdateManyWithoutProfileNestedInput = {
@@ -19048,6 +20556,31 @@ export namespace Prisma {
     >;
   };
 
+  export type OtpUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?:
+      | XOR<OtpCreateWithoutOwnerInput, OtpUncheckedCreateWithoutOwnerInput>
+      | OtpCreateWithoutOwnerInput[]
+      | OtpUncheckedCreateWithoutOwnerInput[];
+    connectOrCreate?:
+      | OtpCreateOrConnectWithoutOwnerInput
+      | OtpCreateOrConnectWithoutOwnerInput[];
+    upsert?:
+      | OtpUpsertWithWhereUniqueWithoutOwnerInput
+      | OtpUpsertWithWhereUniqueWithoutOwnerInput[];
+    createMany?: OtpCreateManyOwnerInputEnvelope;
+    set?: OtpWhereUniqueInput | OtpWhereUniqueInput[];
+    disconnect?: OtpWhereUniqueInput | OtpWhereUniqueInput[];
+    delete?: OtpWhereUniqueInput | OtpWhereUniqueInput[];
+    connect?: OtpWhereUniqueInput | OtpWhereUniqueInput[];
+    update?:
+      | OtpUpdateWithWhereUniqueWithoutOwnerInput
+      | OtpUpdateWithWhereUniqueWithoutOwnerInput[];
+    updateMany?:
+      | OtpUpdateManyWithWhereWithoutOwnerInput
+      | OtpUpdateManyWithWhereWithoutOwnerInput[];
+    deleteMany?: OtpScalarWhereInput | OtpScalarWhereInput[];
+  };
+
   export type CommentUncheckedUpdateManyWithoutProfileNestedInput = {
     create?:
       | XOR<
@@ -19129,6 +20662,32 @@ export namespace Prisma {
       | TagUpdateManyWithWhereWithoutProfilesInput
       | TagUpdateManyWithWhereWithoutProfilesInput[];
     deleteMany?: TagScalarWhereInput | TagScalarWhereInput[];
+  };
+
+  export type ProfileCreateNestedOneWithoutOtpInput = {
+    create?: XOR<
+      ProfileCreateWithoutOtpInput,
+      ProfileUncheckedCreateWithoutOtpInput
+    >;
+    connectOrCreate?: ProfileCreateOrConnectWithoutOtpInput;
+    connect?: ProfileWhereUniqueInput;
+  };
+
+  export type ProfileUpdateOneRequiredWithoutOtpNestedInput = {
+    create?: XOR<
+      ProfileCreateWithoutOtpInput,
+      ProfileUncheckedCreateWithoutOtpInput
+    >;
+    connectOrCreate?: ProfileCreateOrConnectWithoutOtpInput;
+    upsert?: ProfileUpsertWithoutOtpInput;
+    connect?: ProfileWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        ProfileUpdateToOneWithWhereWithoutOtpInput,
+        ProfileUpdateWithoutOtpInput
+      >,
+      ProfileUncheckedUpdateWithoutOtpInput
+    >;
   };
 
   export type ProfileCreateNestedManyWithoutBirthLocationInput = {
@@ -20818,6 +22377,35 @@ export namespace Prisma {
     >;
   };
 
+  export type OtpCreateWithoutOwnerInput = {
+    id?: string;
+    code: string;
+    expiresAt: Date | string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type OtpUncheckedCreateWithoutOwnerInput = {
+    id?: string;
+    code: string;
+    expiresAt: Date | string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type OtpCreateOrConnectWithoutOwnerInput = {
+    where: OtpWhereUniqueInput;
+    create: XOR<
+      OtpCreateWithoutOwnerInput,
+      OtpUncheckedCreateWithoutOwnerInput
+    >;
+  };
+
+  export type OtpCreateManyOwnerInputEnvelope = {
+    data: OtpCreateManyOwnerInput | OtpCreateManyOwnerInput[];
+    skipDuplicates?: boolean;
+  };
+
   export type CommentCreateWithoutProfileInput = {
     id?: string;
     content: string;
@@ -20982,6 +22570,43 @@ export namespace Prisma {
       LocationCreateWithoutResidenceProfilesInput,
       LocationUncheckedCreateWithoutResidenceProfilesInput
     >;
+  };
+
+  export type OtpUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: OtpWhereUniqueInput;
+    update: XOR<
+      OtpUpdateWithoutOwnerInput,
+      OtpUncheckedUpdateWithoutOwnerInput
+    >;
+    create: XOR<
+      OtpCreateWithoutOwnerInput,
+      OtpUncheckedCreateWithoutOwnerInput
+    >;
+  };
+
+  export type OtpUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: OtpWhereUniqueInput;
+    data: XOR<OtpUpdateWithoutOwnerInput, OtpUncheckedUpdateWithoutOwnerInput>;
+  };
+
+  export type OtpUpdateManyWithWhereWithoutOwnerInput = {
+    where: OtpScalarWhereInput;
+    data: XOR<
+      OtpUpdateManyMutationInput,
+      OtpUncheckedUpdateManyWithoutOwnerInput
+    >;
+  };
+
+  export type OtpScalarWhereInput = {
+    AND?: OtpScalarWhereInput | OtpScalarWhereInput[];
+    OR?: OtpScalarWhereInput[];
+    NOT?: OtpScalarWhereInput | OtpScalarWhereInput[];
+    id?: StringFilter<'Otp'> | string;
+    code?: StringFilter<'Otp'> | string;
+    ownerPhoneNumber?: StringFilter<'Otp'> | string;
+    expiresAt?: DateTimeFilter<'Otp'> | Date | string;
+    created_at?: DateTimeFilter<'Otp'> | Date | string;
+    updated_at?: DateTimeFilter<'Otp'> | Date | string;
   };
 
   export type CommentUpsertWithWhereUniqueWithoutProfileInput = {
@@ -21169,10 +22794,12 @@ export namespace Prisma {
     birthProfiles?: ProfileUncheckedUpdateManyWithoutBirthLocationNestedInput;
   };
 
-  export type ProfileCreateWithoutBirthLocationInput = {
+  export type ProfileCreateWithoutOtpInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -21190,13 +22817,183 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutProfileInput;
     messages?: MessageCreateNestedManyWithoutProfileInput;
     tags?: TagCreateNestedManyWithoutProfilesInput;
+    birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
+    residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
+  };
+
+  export type ProfileUncheckedCreateWithoutOtpInput = {
+    id?: string;
+    shortId: number;
+    firstTimeMiExpo?: boolean;
+    phoneNumber: string;
+    isPhoneVerified?: boolean;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    firstName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    birthLocationId?: string | null;
+    residenceLocationId?: string | null;
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
+    messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
+    tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
+  };
+
+  export type ProfileCreateOrConnectWithoutOtpInput = {
+    where: ProfileWhereUniqueInput;
+    create: XOR<
+      ProfileCreateWithoutOtpInput,
+      ProfileUncheckedCreateWithoutOtpInput
+    >;
+  };
+
+  export type ProfileUpsertWithoutOtpInput = {
+    update: XOR<
+      ProfileUpdateWithoutOtpInput,
+      ProfileUncheckedUpdateWithoutOtpInput
+    >;
+    create: XOR<
+      ProfileCreateWithoutOtpInput,
+      ProfileUncheckedCreateWithoutOtpInput
+    >;
+    where?: ProfileWhereInput;
+  };
+
+  export type ProfileUpdateToOneWithWhereWithoutOtpInput = {
+    where?: ProfileWhereInput;
+    data: XOR<
+      ProfileUpdateWithoutOtpInput,
+      ProfileUncheckedUpdateWithoutOtpInput
+    >;
+  };
+
+  export type ProfileUpdateWithoutOtpInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    comments?: CommentUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUpdateManyWithoutProfileNestedInput;
+    tags?: TagUpdateManyWithoutProfilesNestedInput;
+    birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
+    residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
+  };
+
+  export type ProfileUncheckedUpdateWithoutOtpInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    birthLocationId?: NullableStringFieldUpdateOperationsInput | string | null;
+    residenceLocationId?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
+    tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
+  };
+
+  export type ProfileCreateWithoutBirthLocationInput = {
+    id?: string;
+    shortId: number;
+    firstTimeMiExpo?: boolean;
+    phoneNumber: string;
+    isPhoneVerified?: boolean;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    firstName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    otp?: OtpCreateNestedManyWithoutOwnerInput;
+    comments?: CommentCreateNestedManyWithoutProfileInput;
+    messages?: MessageCreateNestedManyWithoutProfileInput;
+    tags?: TagCreateNestedManyWithoutProfilesInput;
     residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
   };
 
   export type ProfileUncheckedCreateWithoutBirthLocationInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -21212,6 +23009,7 @@ export namespace Prisma {
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
+    otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
     messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
     tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
@@ -21235,7 +23033,9 @@ export namespace Prisma {
   export type ProfileCreateWithoutResidenceLocationInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -21250,6 +23050,7 @@ export namespace Prisma {
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
+    otp?: OtpCreateNestedManyWithoutOwnerInput;
     comments?: CommentCreateNestedManyWithoutProfileInput;
     messages?: MessageCreateNestedManyWithoutProfileInput;
     tags?: TagCreateNestedManyWithoutProfilesInput;
@@ -21259,7 +23060,9 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutResidenceLocationInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -21275,6 +23078,7 @@ export namespace Prisma {
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
+    otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
     messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
     tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
@@ -21329,7 +23133,9 @@ export namespace Prisma {
     NOT?: ProfileScalarWhereInput | ProfileScalarWhereInput[];
     id?: StringFilter<'Profile'> | string;
     shortId?: IntFilter<'Profile'> | number;
+    firstTimeMiExpo?: BoolFilter<'Profile'> | boolean;
     phoneNumber?: StringFilter<'Profile'> | string;
+    isPhoneVerified?: BoolFilter<'Profile'> | boolean;
     secondaryPhoneNumber?: StringNullableFilter<'Profile'> | string | null;
     fullName?: StringFilter<'Profile'> | string;
     firstName?: StringNullableFilter<'Profile'> | string | null;
@@ -21415,7 +23221,9 @@ export namespace Prisma {
   export type ProfileCreateWithoutCommentsInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -21430,6 +23238,7 @@ export namespace Prisma {
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
+    otp?: OtpCreateNestedManyWithoutOwnerInput;
     messages?: MessageCreateNestedManyWithoutProfileInput;
     tags?: TagCreateNestedManyWithoutProfilesInput;
     birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
@@ -21439,7 +23248,9 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutCommentsInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -21456,6 +23267,7 @@ export namespace Prisma {
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
+    otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
     messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
     tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
   };
@@ -21575,7 +23387,9 @@ export namespace Prisma {
   export type ProfileUpdateWithoutCommentsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -21604,6 +23418,7 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUpdateManyWithoutOwnerNestedInput;
     messages?: MessageUpdateManyWithoutProfileNestedInput;
     tags?: TagUpdateManyWithoutProfilesNestedInput;
     birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
@@ -21613,7 +23428,9 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutCommentsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -21647,6 +23464,7 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
     tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
   };
@@ -21832,7 +23650,9 @@ export namespace Prisma {
   export type ProfileCreateWithoutTagsInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -21847,6 +23667,7 @@ export namespace Prisma {
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
+    otp?: OtpCreateNestedManyWithoutOwnerInput;
     comments?: CommentCreateNestedManyWithoutProfileInput;
     messages?: MessageCreateNestedManyWithoutProfileInput;
     birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
@@ -21856,7 +23677,9 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutTagsInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -21873,6 +23696,7 @@ export namespace Prisma {
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
+    otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
     messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
   };
@@ -22666,7 +24490,9 @@ export namespace Prisma {
   export type ProfileCreateWithoutMessagesInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -22681,6 +24507,7 @@ export namespace Prisma {
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
+    otp?: OtpCreateNestedManyWithoutOwnerInput;
     comments?: CommentCreateNestedManyWithoutProfileInput;
     tags?: TagCreateNestedManyWithoutProfilesInput;
     birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
@@ -22690,7 +24517,9 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutMessagesInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -22707,6 +24536,7 @@ export namespace Prisma {
     movedToTrashDate?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
+    otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
     tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
   };
@@ -22742,7 +24572,9 @@ export namespace Prisma {
   export type ProfileUpdateWithoutMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -22771,6 +24603,7 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUpdateManyWithoutOwnerNestedInput;
     comments?: CommentUpdateManyWithoutProfileNestedInput;
     tags?: TagUpdateManyWithoutProfilesNestedInput;
     birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
@@ -22780,7 +24613,9 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -22814,6 +24649,7 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
     tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
   };
@@ -23008,6 +24844,14 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
+  export type OtpCreateManyOwnerInput = {
+    id?: string;
+    code: string;
+    expiresAt: Date | string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
   export type CommentCreateManyProfileInput = {
     id?: string;
     content: string;
@@ -23027,6 +24871,30 @@ export namespace Prisma {
     state?: $Enums.MessageState;
     created_at?: Date | string;
     updated_at?: Date | string;
+  };
+
+  export type OtpUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    code?: StringFieldUpdateOperationsInput | string;
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type OtpUncheckedUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    code?: StringFieldUpdateOperationsInput | string;
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type OtpUncheckedUpdateManyWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    code?: StringFieldUpdateOperationsInput | string;
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type CommentUpdateWithoutProfileInput = {
@@ -23142,7 +25010,9 @@ export namespace Prisma {
   export type ProfileCreateManyBirthLocationInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -23163,7 +25033,9 @@ export namespace Prisma {
   export type ProfileCreateManyResidenceLocationInput = {
     id?: string;
     shortId: number;
+    firstTimeMiExpo?: boolean;
     phoneNumber: string;
+    isPhoneVerified?: boolean;
     secondaryPhoneNumber?: string | null;
     fullName: string;
     firstName?: string | null;
@@ -23184,7 +25056,9 @@ export namespace Prisma {
   export type ProfileUpdateWithoutBirthLocationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -23213,6 +25087,7 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUpdateManyWithoutOwnerNestedInput;
     comments?: CommentUpdateManyWithoutProfileNestedInput;
     messages?: MessageUpdateManyWithoutProfileNestedInput;
     tags?: TagUpdateManyWithoutProfilesNestedInput;
@@ -23222,7 +25097,9 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutBirthLocationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -23255,6 +25132,7 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
     tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
@@ -23263,7 +25141,9 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateManyWithoutBirthLocationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -23301,7 +25181,9 @@ export namespace Prisma {
   export type ProfileUpdateWithoutResidenceLocationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -23330,6 +25212,7 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUpdateManyWithoutOwnerNestedInput;
     comments?: CommentUpdateManyWithoutProfileNestedInput;
     messages?: MessageUpdateManyWithoutProfileNestedInput;
     tags?: TagUpdateManyWithoutProfilesNestedInput;
@@ -23339,7 +25222,9 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutResidenceLocationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -23369,6 +25254,7 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
     tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
@@ -23377,7 +25263,9 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateManyWithoutResidenceLocationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -23451,7 +25339,9 @@ export namespace Prisma {
   export type ProfileUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -23480,6 +25370,7 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUpdateManyWithoutOwnerNestedInput;
     comments?: CommentUpdateManyWithoutProfileNestedInput;
     messages?: MessageUpdateManyWithoutProfileNestedInput;
     birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
@@ -23489,7 +25380,9 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -23523,6 +25416,7 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
   };
@@ -23530,7 +25424,9 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateManyWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
     secondaryPhoneNumber?:
       | NullableStringFieldUpdateOperationsInput
       | string
@@ -23804,6 +25700,12 @@ export namespace Prisma {
   export type ProfileArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = ProfileDefaultArgs<ExtArgs>;
+  /**
+   * @deprecated Use OtpDefaultArgs instead
+   */
+  export type OtpArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = OtpDefaultArgs<ExtArgs>;
   /**
    * @deprecated Use LocationDefaultArgs instead
    */

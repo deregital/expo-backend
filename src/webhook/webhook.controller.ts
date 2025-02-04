@@ -159,10 +159,7 @@ export class WebhookController {
       ]);
     }
 
-    const profile = await this.profileService.findByPhoneNumber(
-      contact.wa_id,
-      undefined,
-    );
+    const profile = await this.profileService.findByPhoneNumber(contact.wa_id);
 
     // if (!profile) {
     //   throw new NotFoundException([

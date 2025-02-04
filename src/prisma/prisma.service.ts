@@ -144,4 +144,8 @@ export class PrismaService implements OnModuleInit {
   get message(): PrismaClient['message'] {
     return this.db.message;
   }
+
+  get otp(): PrismaClient['otp'] {
+    return this.db.otp;
+  }
 }

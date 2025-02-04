@@ -16,6 +16,8 @@ export const profileSchema = z.object({
     .refine(validator.isMobilePhone, {
       message: translate('model.profile.phoneNumber.invalid'),
     }),
+  isPhoneVerified: z.boolean(),
+
   secondaryPhoneNumber: z
     .string()
     .nullable()
@@ -60,6 +62,8 @@ export const profileSchema = z.object({
 
   isInTrash: z.boolean(),
   movedToTrashDate: z.coerce.date().nullable(),
+
+  firstTimeMiExpo: z.boolean(),
 
   created_at: z.date(),
   updated_at: z.date(),
