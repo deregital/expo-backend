@@ -29,55 +29,18 @@ type Payload = {
 @Injectable()
 export class AuthService {
   constructor(
-    private cuentaService: AccountService,
+    private accountService: AccountService,
     private jwtService: JwtService,
   ) {}
-
-  private getPayload(user: Account): Payload {
-    return {
-      username: user.username,
-      id: user.id,
-      role: user.role,
-      sub: {
-        usernname: user.username,
-      },
-    };
-  }
 
   async login(dto: LoginDto): Promise<LoginPayload> {
     const user = await this.validateUser(dto);
 
-    const payload = this.getPayload(user);
+    const backendTokens = await this.generateToken(user);
     return {
       user,
-      backendTokens: {
-        accessToken: await this.jwtService.signAsync(payload, {
-          expiresIn: '1d',
-          secret: process.env.JWT_SECRET,
-        }),
-        refreshToken: await this.jwtService.signAsync(payload, {
-          expiresIn: '7d',
-          secret: process.env.JWT_REFRESH,
-        }),
-        expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME),
-      },
+      backendTokens,
     };
-  }
-
-  private async validateUser(dto: LoginDto): Promise<Account> {
-    const user = await this.cuentaService.findByUsername(dto.username);
-
-    if (
-      user &&
-      (await compare(dto.password, user.password)) //TODO: CUANDO LO TENGAMOS CON HASH
-      // dto.password === user.password
-    ) {
-      return user;
-    }
-
-    throw new UnauthorizedException([
-      translate('route.auth.invalid-credentials'),
-    ]);
   }
 
   async refreshToken(account: Account): Promise<{
@@ -85,10 +48,21 @@ export class AuthService {
     refreshToken: string;
     expiresIn: number;
   }> {
-    const user = await this.cuentaService.findByUsername(account.username);
+    const user = await this.accountService.findByUsername(account.username);
     if (!user) {
       throw new UnauthorizedException([translate('route.auth.invalid-token')]);
     }
+
+    const backendTokens = await this.generateToken(user);
+
+    return {
+      ...backendTokens,
+    };
+  }
+
+  private async generateToken(
+    user: Account,
+  ): Promise<LoginPayload['backendTokens']> {
     const payload = this.getPayload(user);
 
     return {
@@ -102,5 +76,28 @@ export class AuthService {
       }),
       expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME),
     };
+  }
+
+  private getPayload(user: Account): Payload {
+    return {
+      username: user.username,
+      id: user.id,
+      role: user.role,
+      sub: {
+        usernname: user.username,
+      },
+    };
+  }
+
+  private async validateUser(dto: LoginDto): Promise<Account> {
+    const user = await this.accountService.findByUsername(dto.username);
+
+    if (user && (await compare(dto.password, user.password))) {
+      return user;
+    }
+
+    throw new UnauthorizedException([
+      translate('route.auth.invalid-credentials'),
+    ]);
   }
 }

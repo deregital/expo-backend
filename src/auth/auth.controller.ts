@@ -25,7 +25,7 @@ export class AuthController {
     type: ErrorDto,
   })
   @ApiOkResponse({
-    description: 'Cuenta creada',
+    description: 'Sesión iniciada',
     type: LoginResponseDto,
   })
   @Post('login')
