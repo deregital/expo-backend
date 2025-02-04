@@ -16,12 +16,6 @@ export class OtpService {
   constructor(@Inject(PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
   async createOTP(phoneNumber: Profile['phoneNumber']): Promise<string> {
-    if (!process.env.OTP_SECRET) {
-      throw new InternalServerErrorException([
-        translate('route.otp.secret-not-found'),
-      ]);
-    }
-
     const profile = await this.prisma.profile.findFirst({
       where: {
         phoneNumber,
