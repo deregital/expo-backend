@@ -1,6 +1,22 @@
 import { translate } from '@/i18n/translate';
-import validator from 'validator';
+import parsePhoneNumber, {
+  type PhoneNumber,
+  isValidPhoneNumber,
+} from 'libphonenumber-js';
 import z from 'zod';
+
+function formatArgNumber(phoneNumber: PhoneNumber, value: string): string {
+  const prefixes9 = ['11', '15'];
+  const prefix = prefixes9.includes(
+    phoneNumber?.nationalNumber?.slice(0, 2) ?? '',
+  )
+    ? '9'
+    : '';
+  if (phoneNumber?.country === 'AR') {
+    return `${phoneNumber.countryCallingCode}${prefix}${phoneNumber.nationalNumber}`;
+  }
+  return value;
+}
 
 export const profileSchema = z.object({
   id: z.string().uuid({
@@ -13,8 +29,23 @@ export const profileSchema = z.object({
     .min(1, {
       message: translate('model.profile.phoneNumber.required'),
     })
-    .refine(validator.isMobilePhone, {
+    .refine((value) => isValidPhoneNumber(value, 'AR'), {
       message: translate('model.profile.phoneNumber.invalid'),
+    })
+
+    .transform((value, ctx) => {
+      if (!value) return value;
+      const phoneNumber = parsePhoneNumber(value, {
+        defaultCountry: 'AR',
+      });
+      if (!phoneNumber) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: translate('model.profile.phoneNumber.invalid'),
+        });
+        return value;
+      }
+      return formatArgNumber(phoneNumber, value);
     }),
   isPhoneVerified: z.boolean(),
 
@@ -24,12 +55,26 @@ export const profileSchema = z.object({
     .refine(
       (value) => {
         if (value === null) return true;
-        return validator.isMobilePhone(value);
+        return isValidPhoneNumber(value, 'AR');
       },
       {
         message: translate('model.profile.secondaryPhoneNumber.invalid'),
       },
-    ),
+    )
+    .transform((value, ctx) => {
+      if (!value) return value;
+      const phoneNumber = parsePhoneNumber(value, {
+        defaultCountry: 'AR',
+      });
+      if (!phoneNumber) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: translate('model.profile.phoneNumber.invalid'),
+        });
+        return value;
+      }
+      return formatArgNumber(phoneNumber, value);
+    }),
   fullName: z.string().min(1, {
     message: translate('model.profile.fullName.required'),
   }),

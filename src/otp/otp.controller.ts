@@ -69,7 +69,7 @@ export class OtpController {
 
     const code = await this.otpService.createOTP(body.phoneNumber);
 
-    // await this.whatsappService.sendOTP(body.phoneNumber, code);
+    await this.whatsappService.sendOTP(body.phoneNumber, code);
 
     return {
       success: true,

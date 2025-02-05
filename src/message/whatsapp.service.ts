@@ -294,26 +294,26 @@ export class WhatsappService {
             language: {
               code: 'es_AR',
             },
+            ...(isOTP && {
+              components: [
+                {
+                  type: 'body',
+                  parameters: [{ type: 'text', text: OTP }],
+                },
+                {
+                  type: 'button',
+                  sub_type: 'url',
+                  index: '0',
+                  parameters: [
+                    {
+                      type: 'text',
+                      text: OTP,
+                    },
+                  ],
+                },
+              ],
+            }),
           },
-          ...(isOTP && {
-            components: [
-              {
-                type: 'body',
-                parameters: [{ type: 'text', text: OTP }],
-              },
-              {
-                type: 'button',
-                sub_type: 'url',
-                index: '0',
-                parameters: [
-                  {
-                    type: 'text',
-                    text: OTP,
-                  },
-                ],
-              },
-            ],
-          }),
         }),
       },
     );
