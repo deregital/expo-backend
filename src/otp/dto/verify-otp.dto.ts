@@ -1,5 +1,5 @@
 import { translate } from '@/i18n/translate';
-import { OTP_LENGTH } from '@/otp/otp.service';
+import { OTP_LENGTH } from '@/otp/constants';
 import { profileSchema } from '@/profile/dto/profile.dto';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import z from 'zod';

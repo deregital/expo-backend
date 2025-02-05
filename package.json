@@ -8,6 +8,7 @@
   "files": [
     "dist/types",
     "dist/src/**/*.dto.{js,d.ts,ts}",
+    "dist/src/**/constants.{js,d.ts,ts}",
     "dist/src/**/exports.{js,d.ts,ts}",
     "dist/src/shared/dto-modification",
     "dist/src/i18n"

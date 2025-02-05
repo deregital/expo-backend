@@ -1,4 +1,5 @@
 import { translate } from '@/i18n/translate';
+import { OTP_LENGTH } from '@/otp/constants';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import {
@@ -9,7 +10,6 @@ import {
 import { Otp, Profile } from '~/types/prisma-schema';
 
 const OTP_EXPIRES_IN = 60 * 5;
-export const OTP_LENGTH = 6;
 
 @Injectable()
 export class OtpService {
