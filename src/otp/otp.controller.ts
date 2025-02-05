@@ -1,12 +1,18 @@
 import { translate } from '@/i18n/translate';
 import { WhatsappService } from '@/message/whatsapp.service';
-import { SendOtpDto, sendOtpResponseSchema } from '@/otp/dto/send-otp.dto';
+import {
+  SendOtpDto,
+  SendOtpResponseDto,
+  sendOtpResponseSchema,
+} from '@/otp/dto/send-otp.dto';
 import {
   VerifyOtpDto,
+  VerifyOtpResponseDto,
   verifyOtpResponseSchema,
 } from '@/otp/dto/verify-otp.dto';
 import { OtpService } from '@/otp/otp.service';
 import { ProfileService } from '@/profile/profile.service';
+import { ErrorDto } from '@/shared/errors/errorType';
 import {
   BadRequestException,
   Body,
@@ -14,6 +20,11 @@ import {
   NotFoundException,
   Post,
 } from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 import z from 'zod';
 
 @Controller('otp')
@@ -24,6 +35,18 @@ export class OtpController {
     private readonly profileService: ProfileService,
   ) {}
 
+  @ApiOkResponse({
+    description: translate('route.otp.send.success'),
+    type: SendOtpResponseDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.otp.send.profile-not-found'),
+    type: ErrorDto,
+  })
+  @ApiBadRequestResponse({
+    description: translate('route.otp.send.phone-already-verified'),
+    type: ErrorDto,
+  })
   @Post('send')
   async sendOtp(
     @Body() body: SendOtpDto,
@@ -53,6 +76,18 @@ export class OtpController {
     };
   }
 
+  @ApiOkResponse({
+    description: translate('route.otp.verify.success'),
+    type: VerifyOtpResponseDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.otp.verify.no-otp-found'),
+    type: ErrorDto,
+  })
+  @ApiBadRequestResponse({
+    description: translate('route.otp.verify.otp-expired'),
+    type: ErrorDto,
+  })
   @Post('verify')
   async verifyOtp(
     @Body() body: VerifyOtpDto,

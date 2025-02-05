@@ -1413,8 +1413,24 @@ paths:
             schema:
               $ref: "#/components/schemas/SendOtpDto"
       responses:
-        201:
-          description: ""
+        200:
+          description: "Código de verificación enviado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendOtpResponseDto"
+        400:
+          description: "El teléfono ya fue verificado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        404:
+          description: "No se encontró un perfil asociado al teléfono. Por favor registrate"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /otp/verify:
     post:
       operationId: "OtpController_verifyOtp"
@@ -1426,8 +1442,24 @@ paths:
             schema:
               $ref: "#/components/schemas/VerifyOtpDto"
       responses:
-        201:
-          description: ""
+        200:
+          description: "Código de verificación verificado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VerifyOtpResponseDto"
+        400:
+          description: "El código de verificación expiró. Por favor solicita uno nuevo"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        404:
+          description: "No se encontró un código de verificación"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -7078,6 +7110,15 @@ components:
           minLength: 1
       required:
         - "phoneNumber"
+    SendOtpResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+      required:
+        - "success"
     VerifyOtpDto:
       type:
         - "object"
@@ -7094,3 +7135,127 @@ components:
       required:
         - "phoneNumber"
         - "code"
+    VerifyOtpResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+        profile:
+          type:
+            - "object"
+          properties:
+            id:
+              type:
+                - "string"
+              format: "uuid"
+            shortId:
+              type:
+                - "number"
+            phoneNumber:
+              type:
+                - "string"
+              minLength: 1
+            isPhoneVerified:
+              type:
+                - "boolean"
+            secondaryPhoneNumber:
+              type:
+                - "string"
+                - "null"
+            fullName:
+              type:
+                - "string"
+              minLength: 1
+            firstName:
+              type:
+                - "string"
+                - "null"
+              minLength: 1
+            gender:
+              type:
+                - "string"
+                - "null"
+            birthDate:
+              type:
+                - "string"
+                - "null"
+            profilePictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            instagram:
+              type:
+                - "string"
+                - "null"
+            mail:
+              type:
+                - "string"
+                - "null"
+              format: "email"
+            dni:
+              type:
+                - "string"
+                - "null"
+            alternativeNames:
+              type:
+                - "array"
+              items:
+                type:
+                  - "string"
+            birthLocationId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            residenceLocationId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            isInTrash:
+              type:
+                - "boolean"
+            movedToTrashDate:
+              type:
+                - "string"
+                - "null"
+              format: "date-time"
+            firstTimeMiExpo:
+              type:
+                - "boolean"
+            created_at:
+              type:
+                - "string"
+              format: "date-time"
+            updated_at:
+              type:
+                - "string"
+              format: "date-time"
+          required:
+            - "id"
+            - "shortId"
+            - "phoneNumber"
+            - "isPhoneVerified"
+            - "secondaryPhoneNumber"
+            - "fullName"
+            - "firstName"
+            - "gender"
+            - "birthDate"
+            - "profilePictureUrl"
+            - "instagram"
+            - "mail"
+            - "dni"
+            - "alternativeNames"
+            - "birthLocationId"
+            - "residenceLocationId"
+            - "isInTrash"
+            - "movedToTrashDate"
+            - "firstTimeMiExpo"
+            - "created_at"
+            - "updated_at"
+      required:
+        - "success"
+        - "profile"

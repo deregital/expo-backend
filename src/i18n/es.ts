@@ -521,6 +521,7 @@ export default {
         'phone-already-verified': 'El teléfono ya fue verificado',
         'profile-not-found':
           'No se encontró un perfil asociado al teléfono. Por favor registrate',
+        success: 'Código de verificación enviado con éxito',
       },
       verify: {
         'error-format': 'El código debe tener 6 dígitos',
@@ -528,6 +529,7 @@ export default {
         'no-otp-found': 'No se encontró un código de verificación',
         'otp-expired':
           'El código de verificación expiró. Por favor solicita uno nuevo',
+        success: 'Código de verificación verificado con éxito',
       },
     },
   },
