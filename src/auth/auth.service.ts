@@ -1,18 +1,26 @@
 import { AccountService } from '@/account/account.service';
 import { LoginDto } from '@/auth/dto/login.dto';
 import { translate } from '@/i18n/translate';
+import { ProfileService } from '@/profile/profile.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
-import { type Account } from '~/types/prisma-schema';
+import { Profile, type Account } from '~/types/prisma-schema';
 
-type LoginPayload = {
+type BackendTokens = {
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
+};
+
+type LoginAccountPayload = {
   user: Omit<Account, 'password'>;
-  backendTokens: {
-    accessToken: string;
-    refreshToken: string;
-    expiresIn: number;
-  };
+  backendTokens: BackendTokens;
+};
+
+type LoginProfilePayload = {
+  user: Omit<Profile, 'password'>;
+  backendTokens: BackendTokens;
 };
 
 const EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000;
@@ -20,7 +28,6 @@ const EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000;
 type Payload = {
   username: string;
   id: string;
-  role: string;
   sub: {
     usernname: string;
   };
@@ -30,15 +37,29 @@ type Payload = {
 export class AuthService {
   constructor(
     private accountService: AccountService,
+    private profileService: ProfileService,
     private jwtService: JwtService,
   ) {}
 
-  async login(dto: LoginDto): Promise<LoginPayload> {
-    const user = await this.validateUser(dto);
+  async loginAccount(dto: LoginDto): Promise<LoginAccountPayload> {
+    const account = await this.validateAccount(dto);
 
-    const backendTokens = await this.generateToken(user);
+    const backendTokens = await this.generateToken(account);
     return {
-      user,
+      user: account,
+      backendTokens,
+    };
+  }
+  async loginProfile(dto: LoginDto): Promise<LoginProfilePayload> {
+    const profile = await this.validateProfile(dto);
+
+    const backendTokens = await this.generateToken({
+      id: profile.id,
+      username: dto.username,
+      password: dto.password,
+    });
+    return {
+      user: profile,
       backendTokens,
     };
   }
@@ -60,9 +81,11 @@ export class AuthService {
     };
   }
 
-  private async generateToken(
-    user: Account,
-  ): Promise<LoginPayload['backendTokens']> {
+  private async generateToken(user: {
+    username: string;
+    password: string;
+    id: string;
+  }): Promise<LoginAccountPayload['backendTokens']> {
     const payload = this.getPayload(user);
 
     return {
@@ -78,22 +101,43 @@ export class AuthService {
     };
   }
 
-  private getPayload(user: Account): Payload {
+  private getPayload(user: {
+    username: string;
+    password: string;
+    id: string;
+  }): Payload {
     return {
-      username: user.username,
+      username: user.username ?? '',
       id: user.id,
-      role: user.role,
       sub: {
-        usernname: user.username,
+        usernname: user.username ?? '',
       },
     };
   }
 
-  private async validateUser(dto: LoginDto): Promise<Account> {
-    const user = await this.accountService.findByUsername(dto.username);
+  private async validateAccount(dto: LoginDto): Promise<Account> {
+    const account = await this.accountService.findByUsername(dto.username);
 
-    if (user && (await compare(dto.password, user.password))) {
-      return user;
+    if (account && (await compare(dto.password, account.password))) {
+      return account;
+    }
+
+    throw new UnauthorizedException([
+      translate('route.auth.invalid-credentials'),
+    ]);
+  }
+
+  private async validateProfile(dto: LoginDto): Promise<Profile> {
+    const profile = await this.profileService.findByUsername(dto.username);
+
+    if (!profile?.password) {
+      throw new UnauthorizedException([
+        translate('route.auth.invalid-credentials'),
+      ]);
+    }
+
+    if (profile && (await compare(dto.password, profile.password))) {
+      return profile;
     }
 
     throw new UnauthorizedException([

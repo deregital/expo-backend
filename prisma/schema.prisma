@@ -46,6 +46,9 @@ model Profile {
 
   firstTimeMiExpo Boolean @default(true) @map("first_time_mi_expo")
 
+  username String? @unique
+  password String?
+
   phoneNumber     String  @unique @map("phone_number")
   isPhoneVerified Boolean @default(false) @map("is_phone_verified")
   otp             Otp[]

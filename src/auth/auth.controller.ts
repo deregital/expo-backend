@@ -1,5 +1,9 @@
 import { AuthService } from '@/auth/auth.service';
 import {
+  LoginMiExpoResponseDto,
+  loginMiExpoResponseSchema,
+} from '@/auth/dto/login-mi-expo.dto';
+import {
   LoginDto,
   LoginResponseDto,
   loginResponseSchema,
@@ -29,10 +33,10 @@ export class AuthController {
     type: LoginResponseDto,
   })
   @Post('login')
-  async loginUser(
+  async loginAccount(
     @Body() body: LoginDto,
   ): Promise<z.infer<typeof loginResponseSchema>> {
-    return await this.authService.login(body);
+    return await this.authService.loginAccount(body);
   }
 
   @ApiOkResponse({
@@ -46,5 +50,20 @@ export class AuthController {
   ): Promise<z.infer<typeof refreshResponseSchema>> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return await this.authService.refreshToken((req as any)['user']);
+  }
+
+  @ApiUnauthorizedResponse({
+    description: translate('route.auth.invalid-credentials'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    description: 'Sesión iniciada',
+    type: LoginMiExpoResponseDto,
+  })
+  @Post('login-mi-expo')
+  async loginProfile(
+    @Body() body: LoginDto,
+  ): Promise<z.infer<typeof loginMiExpoResponseSchema>> {
+    return await this.authService.loginProfile(body);
   }
 }

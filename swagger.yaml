@@ -2,7 +2,7 @@ openapi: "3.0.0"
 paths:
   /auth/login:
     post:
-      operationId: "AuthController_loginUser"
+      operationId: "AuthController_loginAccount"
       parameters: []
       requestBody:
         required: true
@@ -34,6 +34,29 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RefreshResponseDto"
+  /auth/login-mi-expo:
+    post:
+      operationId: "AuthController_loginProfile"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginDto"
+      responses:
+        200:
+          description: "Sesión iniciada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginMiExpoResponseDto"
+        401:
+          description: "Credenciales inválidas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /tag/create:
     post:
       operationId: "TagController_create"
@@ -1589,6 +1612,149 @@ components:
         - "refreshToken"
         - "accessToken"
         - "expiresIn"
+    LoginMiExpoResponseDto:
+      type:
+        - "object"
+      properties:
+        user:
+          type:
+            - "object"
+          properties:
+            id:
+              type:
+                - "string"
+              format: "uuid"
+            shortId:
+              type:
+                - "number"
+            firstTimeMiExpo:
+              type:
+                - "boolean"
+            username:
+              type:
+                - "string"
+                - "null"
+            phoneNumber:
+              type:
+                - "string"
+              minLength: 1
+            isPhoneVerified:
+              type:
+                - "boolean"
+            secondaryPhoneNumber:
+              type:
+                - "string"
+                - "null"
+            fullName:
+              type:
+                - "string"
+              minLength: 1
+            firstName:
+              type:
+                - "string"
+                - "null"
+              minLength: 1
+            gender:
+              type:
+                - "string"
+                - "null"
+            birthDate:
+              type:
+                - "string"
+                - "null"
+            profilePictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            instagram:
+              type:
+                - "string"
+                - "null"
+            mail:
+              type:
+                - "string"
+                - "null"
+              format: "email"
+            dni:
+              type:
+                - "string"
+                - "null"
+            alternativeNames:
+              type:
+                - "array"
+              items:
+                type:
+                  - "string"
+            birthLocationId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            residenceLocationId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            isInTrash:
+              type:
+                - "boolean"
+            movedToTrashDate:
+              type:
+                - "string"
+                - "null"
+              format: "date-time"
+            created_at:
+              type:
+                - "string"
+              format: "date-time"
+            updated_at:
+              type:
+                - "string"
+              format: "date-time"
+          required:
+            - "id"
+            - "shortId"
+            - "firstTimeMiExpo"
+            - "username"
+            - "phoneNumber"
+            - "isPhoneVerified"
+            - "secondaryPhoneNumber"
+            - "fullName"
+            - "firstName"
+            - "gender"
+            - "birthDate"
+            - "profilePictureUrl"
+            - "instagram"
+            - "mail"
+            - "dni"
+            - "alternativeNames"
+            - "birthLocationId"
+            - "residenceLocationId"
+            - "isInTrash"
+            - "movedToTrashDate"
+            - "created_at"
+            - "updated_at"
+        backendTokens:
+          type:
+            - "object"
+          properties:
+            accessToken:
+              type:
+                - "string"
+            refreshToken:
+              type:
+                - "string"
+            expiresIn:
+              type:
+                - "number"
+          required:
+            - "accessToken"
+            - "refreshToken"
+            - "expiresIn"
+      required:
+        - "user"
+        - "backendTokens"
     CreateTagDto:
       type:
         - "object"
@@ -2008,6 +2174,17 @@ components:
               shortId:
                 type:
                   - "number"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
               phoneNumber:
                 type:
                   - "string"
@@ -2078,9 +2255,6 @@ components:
                   - "string"
                   - "null"
                 format: "date-time"
-              firstTimeMiExpo:
-                type:
-                  - "boolean"
               created_at:
                 type:
                   - "string"
@@ -2092,6 +2266,9 @@ components:
             required:
               - "id"
               - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
               - "phoneNumber"
               - "isPhoneVerified"
               - "secondaryPhoneNumber"
@@ -2108,7 +2285,6 @@ components:
               - "residenceLocationId"
               - "isInTrash"
               - "movedToTrashDate"
-              - "firstTimeMiExpo"
               - "created_at"
               - "updated_at"
       required:
@@ -2152,6 +2328,17 @@ components:
               shortId:
                 type:
                   - "number"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
               phoneNumber:
                 type:
                   - "string"
@@ -2222,9 +2409,6 @@ components:
                   - "string"
                   - "null"
                 format: "date-time"
-              firstTimeMiExpo:
-                type:
-                  - "boolean"
               created_at:
                 type:
                   - "string"
@@ -2236,6 +2420,9 @@ components:
             required:
               - "id"
               - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
               - "phoneNumber"
               - "isPhoneVerified"
               - "secondaryPhoneNumber"
@@ -2252,7 +2439,6 @@ components:
               - "residenceLocationId"
               - "isInTrash"
               - "movedToTrashDate"
-              - "firstTimeMiExpo"
               - "created_at"
               - "updated_at"
       required:
@@ -4838,6 +5024,17 @@ components:
               shortId:
                 type:
                   - "number"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
               phoneNumber:
                 type:
                   - "string"
@@ -4908,9 +5105,6 @@ components:
                   - "string"
                   - "null"
                 format: "date-time"
-              firstTimeMiExpo:
-                type:
-                  - "boolean"
               created_at:
                 type:
                   - "string"
@@ -4980,6 +5174,9 @@ components:
             required:
               - "id"
               - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
               - "phoneNumber"
               - "isPhoneVerified"
               - "secondaryPhoneNumber"
@@ -4996,7 +5193,6 @@ components:
               - "residenceLocationId"
               - "isInTrash"
               - "movedToTrashDate"
-              - "firstTimeMiExpo"
               - "created_at"
               - "updated_at"
               - "tags"
@@ -5020,6 +5216,17 @@ components:
               shortId:
                 type:
                   - "number"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
               phoneNumber:
                 type:
                   - "string"
@@ -5090,9 +5297,6 @@ components:
                   - "string"
                   - "null"
                 format: "date-time"
-              firstTimeMiExpo:
-                type:
-                  - "boolean"
               created_at:
                 type:
                   - "string"
@@ -5237,6 +5441,9 @@ components:
             required:
               - "id"
               - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
               - "phoneNumber"
               - "isPhoneVerified"
               - "secondaryPhoneNumber"
@@ -5253,7 +5460,6 @@ components:
               - "residenceLocationId"
               - "isInTrash"
               - "movedToTrashDate"
-              - "firstTimeMiExpo"
               - "created_at"
               - "updated_at"
               - "tags"
@@ -5279,6 +5485,17 @@ components:
               shortId:
                 type:
                   - "number"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
               phoneNumber:
                 type:
                   - "string"
@@ -5349,9 +5566,6 @@ components:
                   - "string"
                   - "null"
                 format: "date-time"
-              firstTimeMiExpo:
-                type:
-                  - "boolean"
               created_at:
                 type:
                   - "string"
@@ -5415,6 +5629,9 @@ components:
             required:
               - "id"
               - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
               - "phoneNumber"
               - "isPhoneVerified"
               - "secondaryPhoneNumber"
@@ -5431,7 +5648,6 @@ components:
               - "residenceLocationId"
               - "isInTrash"
               - "movedToTrashDate"
-              - "firstTimeMiExpo"
               - "created_at"
               - "updated_at"
               - "tags"
@@ -5455,6 +5671,17 @@ components:
               shortId:
                 type:
                   - "number"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
               phoneNumber:
                 type:
                   - "string"
@@ -5525,9 +5752,6 @@ components:
                   - "string"
                   - "null"
                 format: "date-time"
-              firstTimeMiExpo:
-                type:
-                  - "boolean"
               created_at:
                 type:
                   - "string"
@@ -5581,6 +5805,9 @@ components:
             required:
               - "id"
               - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
               - "phoneNumber"
               - "isPhoneVerified"
               - "secondaryPhoneNumber"
@@ -5597,7 +5824,6 @@ components:
               - "residenceLocationId"
               - "isInTrash"
               - "movedToTrashDate"
-              - "firstTimeMiExpo"
               - "created_at"
               - "updated_at"
               - "tags"
@@ -5620,6 +5846,17 @@ components:
             shortId:
               type:
                 - "number"
+            firstTimeMiExpo:
+              type:
+                - "boolean"
+            username:
+              type:
+                - "string"
+                - "null"
+            password:
+              type:
+                - "string"
+                - "null"
             phoneNumber:
               type:
                 - "string"
@@ -5690,9 +5927,6 @@ components:
                 - "string"
                 - "null"
               format: "date-time"
-            firstTimeMiExpo:
-              type:
-                - "boolean"
             created_at:
               type:
                 - "string"
@@ -5757,6 +5991,9 @@ components:
           required:
             - "id"
             - "shortId"
+            - "firstTimeMiExpo"
+            - "username"
+            - "password"
             - "phoneNumber"
             - "isPhoneVerified"
             - "secondaryPhoneNumber"
@@ -5773,7 +6010,6 @@ components:
             - "residenceLocationId"
             - "isInTrash"
             - "movedToTrashDate"
-            - "firstTimeMiExpo"
             - "created_at"
             - "updated_at"
             - "tags"
@@ -5788,6 +6024,17 @@ components:
         shortId:
           type:
             - "number"
+        firstTimeMiExpo:
+          type:
+            - "boolean"
+        username:
+          type:
+            - "string"
+            - "null"
+        password:
+          type:
+            - "string"
+            - "null"
         phoneNumber:
           type:
             - "string"
@@ -5858,9 +6105,6 @@ components:
             - "string"
             - "null"
           format: "date-time"
-        firstTimeMiExpo:
-          type:
-            - "boolean"
         created_at:
           type:
             - "string"
@@ -5872,6 +6116,9 @@ components:
       required:
         - "id"
         - "shortId"
+        - "firstTimeMiExpo"
+        - "username"
+        - "password"
         - "phoneNumber"
         - "isPhoneVerified"
         - "secondaryPhoneNumber"
@@ -5888,7 +6135,6 @@ components:
         - "residenceLocationId"
         - "isInTrash"
         - "movedToTrashDate"
-        - "firstTimeMiExpo"
         - "created_at"
         - "updated_at"
     FindTrashResponseDto:
@@ -6175,6 +6421,17 @@ components:
         shortId:
           type:
             - "number"
+        firstTimeMiExpo:
+          type:
+            - "boolean"
+        username:
+          type:
+            - "string"
+            - "null"
+        password:
+          type:
+            - "string"
+            - "null"
         phoneNumber:
           type:
             - "string"
@@ -6245,9 +6502,6 @@ components:
             - "string"
             - "null"
           format: "date-time"
-        firstTimeMiExpo:
-          type:
-            - "boolean"
         created_at:
           type:
             - "string"
@@ -6412,6 +6666,9 @@ components:
       required:
         - "id"
         - "shortId"
+        - "firstTimeMiExpo"
+        - "username"
+        - "password"
         - "phoneNumber"
         - "isPhoneVerified"
         - "secondaryPhoneNumber"
@@ -6428,7 +6685,6 @@ components:
         - "residenceLocationId"
         - "isInTrash"
         - "movedToTrashDate"
-        - "firstTimeMiExpo"
         - "created_at"
         - "updated_at"
         - "residenceLocation"
@@ -6445,6 +6701,17 @@ components:
         shortId:
           type:
             - "number"
+        firstTimeMiExpo:
+          type:
+            - "boolean"
+        username:
+          type:
+            - "string"
+            - "null"
+        password:
+          type:
+            - "string"
+            - "null"
         phoneNumber:
           type:
             - "string"
@@ -6515,9 +6782,6 @@ components:
             - "string"
             - "null"
           format: "date-time"
-        firstTimeMiExpo:
-          type:
-            - "boolean"
         created_at:
           type:
             - "string"
@@ -6529,6 +6793,9 @@ components:
       required:
         - "id"
         - "shortId"
+        - "firstTimeMiExpo"
+        - "username"
+        - "password"
         - "phoneNumber"
         - "isPhoneVerified"
         - "secondaryPhoneNumber"
@@ -6545,7 +6812,6 @@ components:
         - "residenceLocationId"
         - "isInTrash"
         - "movedToTrashDate"
-        - "firstTimeMiExpo"
         - "created_at"
         - "updated_at"
     UpdateProfileDto:
@@ -7153,6 +7419,17 @@ components:
             shortId:
               type:
                 - "number"
+            firstTimeMiExpo:
+              type:
+                - "boolean"
+            username:
+              type:
+                - "string"
+                - "null"
+            password:
+              type:
+                - "string"
+                - "null"
             phoneNumber:
               type:
                 - "string"
@@ -7223,9 +7500,6 @@ components:
                 - "string"
                 - "null"
               format: "date-time"
-            firstTimeMiExpo:
-              type:
-                - "boolean"
             created_at:
               type:
                 - "string"
@@ -7237,6 +7511,9 @@ components:
           required:
             - "id"
             - "shortId"
+            - "firstTimeMiExpo"
+            - "username"
+            - "password"
             - "phoneNumber"
             - "isPhoneVerified"
             - "secondaryPhoneNumber"
@@ -7253,7 +7530,6 @@ components:
             - "residenceLocationId"
             - "isInTrash"
             - "movedToTrashDate"
-            - "firstTimeMiExpo"
             - "created_at"
             - "updated_at"
       required:

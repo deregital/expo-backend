@@ -1,5 +1,5 @@
 import { translate } from '@/i18n/translate';
-import { OTP_LENGTH } from '@/otp/constants';
+import { OTP_EXPIRES_IN, OTP_LENGTH } from '@/otp/constants';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import {
@@ -8,8 +8,6 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { Otp, Profile } from '~/types/prisma-schema';
-
-const OTP_EXPIRES_IN = 60 * 5;
 
 @Injectable()
 export class OtpService {
@@ -38,9 +36,10 @@ export class OtpService {
     });
 
     if (alreadyExists) {
-      throw new InternalServerErrorException([
-        translate('route.otp.already-exists'),
-      ]);
+      await this.deleteOTP(phoneNumber);
+      // throw new InternalServerErrorException([
+      //   translate('route.otp.already-exists'),
+      // ]);
     }
 
     const token = this.generateOTP();

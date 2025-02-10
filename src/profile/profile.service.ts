@@ -150,6 +150,16 @@ export class ProfileService {
     return { profiles };
   }
 
+  async findByUsername(username: Profile['username']): Promise<Profile | null> {
+    const profile = await this.prisma.profile.findFirst({
+      where: {
+        username: username,
+      },
+    });
+
+    return profile;
+  }
+
   async create(
     dto: CreateProfileDto['profile'],
     participantTagId: Tag['id'],

@@ -24,6 +24,11 @@ export const profileSchema = z.object({
   }),
   shortId: z.number(),
 
+  firstTimeMiExpo: z.boolean(),
+
+  username: z.string().nullable(),
+  password: z.string().nullable(), // ver constrains
+
   phoneNumber: z
     .string()
     .min(1, {
@@ -107,8 +112,6 @@ export const profileSchema = z.object({
 
   isInTrash: z.boolean(),
   movedToTrashDate: z.coerce.date().nullable(),
-
-  firstTimeMiExpo: z.boolean(),
 
   created_at: z.date(),
   updated_at: z.date(),
