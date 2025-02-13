@@ -7380,19 +7380,52 @@ components:
       type:
         - "object"
       properties:
-        success:
-          type:
-            - "boolean"
-        hasVerified:
-          type:
-            - "boolean"
-        hasUsername:
-          type:
-            - "boolean"
+        response:
+          discriminator:
+            propertyName: "success"
+          oneOf:
+            - type:
+                - "object"
+              properties:
+                hasVerified:
+                  type:
+                    - "boolean"
+                hasUsername:
+                  type:
+                    - "boolean"
+                success:
+                  type:
+                    - "boolean"
+                  enum:
+                    - true
+              required:
+                - "hasVerified"
+                - "hasUsername"
+                - "success"
+            - type:
+                - "object"
+              properties:
+                hasVerified:
+                  type:
+                    - "boolean"
+                hasUsername:
+                  type:
+                    - "boolean"
+                success:
+                  type:
+                    - "boolean"
+                  enum:
+                    - false
+                message:
+                  type:
+                    - "string"
+              required:
+                - "hasVerified"
+                - "hasUsername"
+                - "success"
+                - "message"
       required:
-        - "success"
-        - "hasVerified"
-        - "hasUsername"
+        - "response"
     VerifyOtpDto:
       type:
         - "object"

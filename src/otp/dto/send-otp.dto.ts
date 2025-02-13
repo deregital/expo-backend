@@ -8,12 +8,30 @@ export const sendOtpSchema = z.object({
 
 export class SendOtpDto extends createZodDtoWithoutDate(sendOtpSchema) {}
 
-export const sendOtpResponseSchema = z.object({
-  success: z.boolean(),
+// success: false & message: string. Success:true & message:never, zod.
+
+const baseResponseSchema = z.object({
   hasVerified: z.boolean(),
   hasUsername: z.boolean(),
 });
 
+export const discriminatedResponseSchema = z.discriminatedUnion('success', [
+  baseResponseSchema.merge(
+    z.object({
+      success: z.literal(true),
+    }),
+  ),
+  baseResponseSchema.merge(
+    z.object({
+      success: z.literal(false),
+      message: z.string(),
+    }),
+  ),
+]);
+
+export const sendOtpResponseSchema = z.object({
+  response: discriminatedResponseSchema,
+});
 export class SendOtpResponseDto extends createZodDtoWithoutDate(
   sendOtpResponseSchema,
 ) {}

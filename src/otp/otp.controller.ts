@@ -62,9 +62,14 @@ export class OtpController {
     }
 
     if (profile?.isPhoneVerified) {
-      throw new BadRequestException([
-        translate('route.otp.send.phone-already-verified'),
-      ]);
+      return {
+        response: {
+          success: false,
+          message: translate('route.otp.send.phone-already-verified'),
+          hasVerified: profile.isPhoneVerified,
+          hasUsername: profile.username !== null,
+        },
+      };
     }
 
     const code = await this.otpService.createOTP(body.phoneNumber);
@@ -72,9 +77,11 @@ export class OtpController {
     await this.whatsappService.sendOTP(body.phoneNumber, code);
 
     return {
-      hasVerified: profile.isPhoneVerified,
-      hasUsername: profile.username !== null,
-      success: true,
+      response: {
+        hasVerified: profile.isPhoneVerified,
+        hasUsername: profile.username !== null,
+        success: true,
+      },
     };
   }
 
