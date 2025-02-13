@@ -1443,7 +1443,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/SendOtpResponseDto"
         400:
-          description: "El teléfono ya fue verificado"
+          description: "El teléfono ya fue verificado, por favor inicie sesión"
           content:
             application/json:
               schema:

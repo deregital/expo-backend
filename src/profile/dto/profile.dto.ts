@@ -1,4 +1,5 @@
 import { translate } from '@/i18n/translate';
+import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import parsePhoneNumber, {
   type PhoneNumber,
   isValidPhoneNumber,
@@ -116,3 +117,5 @@ export const profileSchema = z.object({
   created_at: z.date(),
   updated_at: z.date(),
 });
+
+export class ProfileDto extends createZodDtoWithoutDate(profileSchema) {}

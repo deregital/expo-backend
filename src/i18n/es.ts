@@ -515,10 +515,12 @@ export default {
     otp: {
       'secret-not-found': 'El secreto de OTP no se encontró',
       'already-exists': 'El código de verificación ya fue enviado',
-      'phone-already-verified': 'El teléfono ya fue verificado',
+      'phone-already-verified':
+        'El teléfono ya fue verificado, por favor inicie sesión',
       send: {
         error: 'Error al enviar el código de verificación',
-        'phone-already-verified': 'El teléfono ya fue verificado',
+        'phone-already-verified':
+          'El teléfono ya fue verificado, por favor inicie sesión',
         'profile-not-found':
           'No se encontró un perfil asociado al teléfono. Por favor registrate',
         success: 'Código de verificación enviado con éxito',
