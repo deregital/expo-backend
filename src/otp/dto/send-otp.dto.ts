@@ -10,6 +10,8 @@ export class SendOtpDto extends createZodDtoWithoutDate(sendOtpSchema) {}
 
 export const sendOtpResponseSchema = z.object({
   success: z.boolean(),
+  hasVerified: z.boolean(),
+  hasUsername: z.boolean(),
 });
 
 export class SendOtpResponseDto extends createZodDtoWithoutDate(

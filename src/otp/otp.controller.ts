@@ -72,6 +72,8 @@ export class OtpController {
     await this.whatsappService.sendOTP(body.phoneNumber, code);
 
     return {
+      hasVerified: profile.isPhoneVerified,
+      hasUsername: profile.username !== null,
       success: true,
     };
   }

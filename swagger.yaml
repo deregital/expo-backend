@@ -7383,8 +7383,16 @@ components:
         success:
           type:
             - "boolean"
+        hasVerified:
+          type:
+            - "boolean"
+        hasUsername:
+          type:
+            - "boolean"
       required:
         - "success"
+        - "hasVerified"
+        - "hasUsername"
     VerifyOtpDto:
       type:
         - "object"
