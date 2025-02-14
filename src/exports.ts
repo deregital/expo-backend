@@ -7,6 +7,7 @@ export * from './event/exports';
 export * from './location/exports';
 export * from './message/exports';
 export * from './otp/exports';
+export * from './prisma/dtos.dto';
 export * from './profile/exports';
 export * from './shared/dto-modification/zod-without-dates';
 export * from './tag-group/exports';

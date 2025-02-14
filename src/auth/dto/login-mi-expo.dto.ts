@@ -1,5 +1,5 @@
 import { accountSchema } from '@/account/dto/account.dto';
-import { profileSchema } from '@/profile/dto/profile.dto';
+import { profileSchema } from '@/prisma/dtos.dto';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import z from 'zod';
 

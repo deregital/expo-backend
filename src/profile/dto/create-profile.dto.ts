@@ -1,6 +1,6 @@
 import { commentSchema } from '@/comment/dto/comment.dto';
 import { locationSchema } from '@/location/dto/location.dto';
-import { profileSchema } from '@/profile/dto/profile.dto';
+import { profileSchema } from '@/prisma/dtos.dto';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagSchema } from '@/tag/dto/tag.dto';
 import z from 'zod';

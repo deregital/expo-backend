@@ -1,4 +1,4 @@
-import { profileSchema } from '@/profile/dto/profile.dto';
+import { profileSchema } from '@/prisma/dtos.dto';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 import { tagSchema } from '@/tag/dto/tag.dto';
