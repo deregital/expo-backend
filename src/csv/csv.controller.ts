@@ -12,9 +12,9 @@ import { ErrorDto } from '@/shared/errors/errorType';
 import {
   Body,
   Controller,
-  Get,
   Header,
   InternalServerErrorException,
+  Post,
   Response,
   StreamableFile,
   UseGuards,
@@ -51,7 +51,7 @@ export class CsvController {
     description: translate('route.csv.download-profiles.error'),
   })
   @Header('Content-Type', 'text/csv')
-  @Get('/download-profiles')
+  @Post('/download-profiles')
   async downloadProfiles(
     @Body() dto: DownloadProfilesDto,
     @Account() account: AccountWithoutPassword,
@@ -92,7 +92,7 @@ export class CsvController {
     description: translate('route.csv.download-all-tables.unauthorized'),
   })
   @Header('Content-Type', 'application/zip')
-  @Get('download-all-tables')
+  @Post('download-all-tables')
   async downloadAllTables(
     @Body() dto: DownloadAllTablesDto,
     @Account() account: AccountWithoutPassword,
