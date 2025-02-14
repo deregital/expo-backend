@@ -20,7 +20,7 @@
     "postinstall": "patch-package",
     "format": "prettier --write \"src/**/*.ts\" \"types/**/*.ts\"",
     "check-format": "prettier --check \"src/**/*.ts\"",
-    "check-exports": "attw --pack .",
+    "check-exports": "attw --pack --profile node16 .",
     "local-release": "changeset version && changeset publish",
     "commit-schema": "git add ./types/schema.d.ts swagger.yaml && git commit -m \"Update schema\"",
     "start": "npx prisma generate && npx nest start",
@@ -46,7 +46,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.15.4",
+    "@arethetypeswrong/cli": "^0.17.3",
     "@changesets/cli": "^2.27.7",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/common": "^10.0.0",
@@ -110,6 +110,10 @@
       "require": "./dist/types/index.js",
       "default": "./dist/types/index.js",
       "types": "./dist/types/index.d.ts"
+    },
+    "./dto": {
+      "default": "./dist/src/prisma/dtos.dto.js",
+      "types": "./dist/src/prisma/dtos.dto.d.ts"
     }
   },
   "lint-staged": {
