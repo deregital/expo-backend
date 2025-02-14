@@ -75,6 +75,14 @@ export default {
         required: 'La fecha es requerida',
         invalid: 'La fecha debe ser una fecha válida',
       },
+      starting_date: {
+        required: 'La fecha de inicio es requerida',
+        invalid: 'La fecha de inicio debe ser una fecha válida',
+      },
+      ending_date: {
+        required: 'La fecha de finalización es requerida',
+        invalid: 'La fecha de finalización debe ser una fecha válida',
+      },
       location: {
         required: 'La ubicación es requerida',
       },

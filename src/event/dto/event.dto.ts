@@ -10,11 +10,21 @@ export const eventSchema = z.object({
     required_error: translate('model.event.date.required'),
     invalid_type_error: translate('model.event.date.invalid'),
   }),
+  starting_date: z.coerce.date({
+    required_error: translate('model.event.starting_date.required'),
+    invalid_type_error: translate('model.event.starting_date.invalid'),
+  }),
+  ending_date: z.coerce.date({
+    required_error: translate('model.event.ending_date.required'),
+    invalid_type_error: translate('model.event.ending_date.invalid'),
+  }),
   location: z.string().min(1, translate('model.event.location.required')),
 
   folderId: eventFolderSchema.shape.id.nullable(),
   tagAssistedId: tagSchema.shape.id,
   tagConfirmedId: tagSchema.shape.id,
+
+  tags: z.array(tagSchema).optional(),
 
   supraEventId: z
     .string()
