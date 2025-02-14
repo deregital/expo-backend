@@ -6,6 +6,8 @@ export const createEventSchema = eventSchema
   .pick({
     name: true,
     date: true,
+    starting_date: true,
+    ending_date: true,
     location: true,
     folderId: true,
   })
@@ -16,6 +18,8 @@ export const createEventSchema = eventSchema
           eventSchema.pick({
             name: true,
             date: true,
+            starting_date: true,
+            ending_date: true,
             location: true,
           }),
         )
