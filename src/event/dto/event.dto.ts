@@ -24,7 +24,8 @@ export const eventSchema = z.object({
   tagAssistedId: tagSchema.shape.id,
   tagConfirmedId: tagSchema.shape.id,
 
-  tags: z.array(tagSchema).optional(),
+  tags: z.array(tagSchema),
+  eventTickets: z.array(z.number().min(1)),
 
   supraEventId: z
     .string()
