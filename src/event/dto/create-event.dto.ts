@@ -25,6 +25,12 @@ export const createEventSchema = eventSchema
         )
         .optional(),
     }),
+  )
+  .merge(
+    eventSchema.pick({
+      tags: true,
+      eventTickets: true,
+    }),
   );
 
 export class CreateEventDto extends createZodDtoWithoutDate(

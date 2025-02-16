@@ -2,6 +2,7 @@ import { eventFolderSchema } from '@/event-folder/dto/event-folder.dto';
 import { translate } from '@/i18n/translate';
 import { tagSchema } from '@/tag/dto/tag.dto';
 import { z } from 'zod';
+import { TicketType } from '~/types/prisma-schema';
 
 export const eventSchema = z.object({
   id: z.string().uuid({ message: translate('model.event.id.uuid') }),
@@ -25,7 +26,13 @@ export const eventSchema = z.object({
   tagConfirmedId: tagSchema.shape.id,
 
   tags: z.array(tagSchema),
-  eventTickets: z.array(z.number().min(1)),
+  eventTickets: z.array(
+    z.object({
+      amount: z.number().min(1),
+      type: z.nativeEnum(TicketType),
+      price: z.number().nullable(),
+    }),
+  ),
 
   supraEventId: z
     .string()
