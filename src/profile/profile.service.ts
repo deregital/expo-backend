@@ -14,7 +14,7 @@ import { VisibleTagsType } from '@/shared/decorators/visible-tags.decorator';
 import { Inject, Injectable } from '@nestjs/common';
 import { hash } from 'bcrypt';
 import z from 'zod';
-import { Account, Profile, Tag, TagGroup } from '~/types';
+import { Account, Location, Profile, Tag, TagGroup } from '~/types';
 
 @Injectable()
 export class ProfileService {
@@ -489,15 +489,44 @@ export class ProfileService {
     return shortId;
   }
 
-  async verifyPhoneNumber(
-    phoneNumber: Profile['phoneNumber'],
-  ): Promise<Profile> {
+  async verifyPhoneNumber(phoneNumber: Profile['phoneNumber']): Promise<
+    Profile & {
+      residenceLocation: Pick<
+        Location,
+        'city' | 'state' | 'country' | 'latitude' | 'longitude'
+      > | null;
+      birthLocation: Pick<
+        Location,
+        'city' | 'state' | 'country' | 'latitude' | 'longitude'
+      > | null;
+    }
+  > {
     const profile = await this.prisma.profile.update({
       where: {
         phoneNumber: phoneNumber,
       },
       data: {
         isPhoneVerified: true,
+      },
+      include: {
+        residenceLocation: {
+          select: {
+            city: true,
+            state: true,
+            country: true,
+            latitude: true,
+            longitude: true,
+          },
+        },
+        birthLocation: {
+          select: {
+            city: true,
+            state: true,
+            country: true,
+            latitude: true,
+            longitude: true,
+          },
+        },
       },
     });
 

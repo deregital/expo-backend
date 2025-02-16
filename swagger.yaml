@@ -7567,6 +7567,58 @@ components:
               type:
                 - "string"
               format: "date-time"
+            residenceLocation:
+              type:
+                - "object"
+                - "null"
+              properties:
+                city:
+                  type:
+                    - "string"
+                country:
+                  type:
+                    - "string"
+                latitude:
+                  type:
+                    - "number"
+                  minimum: -90
+                  maximum: 90
+                longitude:
+                  type:
+                    - "number"
+                  minimum: -180
+                  maximum: 180
+              required:
+                - "city"
+                - "country"
+                - "latitude"
+                - "longitude"
+            birthLocation:
+              type:
+                - "object"
+                - "null"
+              properties:
+                city:
+                  type:
+                    - "string"
+                country:
+                  type:
+                    - "string"
+                latitude:
+                  type:
+                    - "number"
+                  minimum: -90
+                  maximum: 90
+                longitude:
+                  type:
+                    - "number"
+                  minimum: -180
+                  maximum: 180
+              required:
+                - "city"
+                - "country"
+                - "latitude"
+                - "longitude"
           required:
             - "id"
             - "shortId"
@@ -7591,6 +7643,8 @@ components:
             - "movedToTrashDate"
             - "created_at"
             - "updated_at"
+            - "residenceLocation"
+            - "birthLocation"
       required:
         - "success"
         - "profile"
