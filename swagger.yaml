@@ -6239,6 +6239,14 @@ components:
               type:
                 - "string"
                 - "null"
+            username:
+              type:
+                - "string"
+                - "null"
+            password:
+              type:
+                - "string"
+                - "null"
             comments:
               type:
                 - "array"
@@ -6332,6 +6340,8 @@ components:
             - "phoneNumber"
             - "profilePictureUrl"
             - "secondaryPhoneNumber"
+            - "username"
+            - "password"
         checkForSimilarity:
           type:
             - "boolean"
@@ -6870,6 +6880,14 @@ components:
             - "string"
             - "null"
           format: "date-time"
+        username:
+          type:
+            - "string"
+            - "null"
+        password:
+          type:
+            - "string"
+            - "null"
         residence:
           type:
             - "object"

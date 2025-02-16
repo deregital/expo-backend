@@ -1,4 +1,4 @@
-import { locationSchema } from '@/location/dto/location.dto';
+import { locationSchema } from '@/schema/location.schema';
 import { profileSchema } from '@/schema/profile.schema';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagSchema } from '@/tag/dto/tag.dto';
@@ -18,6 +18,8 @@ export const updateProfileSchema = profileSchema
     secondaryPhoneNumber: true,
     isInTrash: true,
     movedToTrashDate: true,
+    username: true,
+    password: true,
   })
   .partial()
   .merge(

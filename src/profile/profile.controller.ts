@@ -277,6 +277,7 @@ export class ProfileController {
           phoneNumber: profile.phoneNumber,
           secondaryPhoneNumber: profile.secondaryPhoneNumber,
           dni: profile.dni,
+          username: profile.username,
         },
         {
           isUpdating: false,
@@ -415,6 +416,7 @@ export class ProfileController {
           phoneNumber: body.phoneNumber || '',
           secondaryPhoneNumber: body.secondaryPhoneNumber || '',
           dni: body.dni || '',
+          username: body.username ?? null,
         },
         {
           isUpdating: true,
@@ -479,6 +481,7 @@ export class ProfileController {
       phoneNumber: Profile['phoneNumber'];
       secondaryPhoneNumber: Profile['secondaryPhoneNumber'];
       dni: Profile['dni'];
+      username: Profile['username'];
     },
     {
       isUpdating,
@@ -500,6 +503,7 @@ export class ProfileController {
       phoneNumber,
       secondaryPhoneNumber,
       dni: profile.dni,
+      username: profile.username,
     });
 
     if (isUpdating && existingProfile?.id === id) {

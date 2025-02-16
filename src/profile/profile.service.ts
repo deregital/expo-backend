@@ -12,6 +12,7 @@ import { findWithActiveChatResponseSchema } from '@/profile/dto/find-with-active
 import { UpdateProfileDto } from '@/profile/dto/update-profile.dto';
 import { VisibleTagsType } from '@/shared/decorators/visible-tags.decorator';
 import { Inject, Injectable } from '@nestjs/common';
+import { hash } from 'bcrypt';
 import z from 'zod';
 import { Account, Profile, Tag, TagGroup } from '~/types';
 
@@ -170,6 +171,8 @@ export class ProfileService {
     const profileCreated = await this.prisma.profile.create({
       data: {
         shortId: highestShortId + 1,
+        username: dto.username,
+        password: dto.password ? await hash(dto.password, 10) : undefined,
         fullName: dto.fullName,
         firstName: dto.fullName.split(' ')[0],
         phoneNumber: dto.phoneNumber,
@@ -247,6 +250,8 @@ export class ProfileService {
         id: id,
       },
       data: {
+        username: dto.username,
+        password: dto.password ? await hash(dto.password, 10) : undefined,
         fullName: dto.fullName,
         firstName: dto.fullName?.split(' ')[0] ?? undefined,
         phoneNumber: dto.phoneNumber,
@@ -441,10 +446,12 @@ export class ProfileService {
     phoneNumber,
     secondaryPhoneNumber,
     dni,
+    username,
   }: {
     phoneNumber: Profile['phoneNumber'];
     secondaryPhoneNumber: Profile['secondaryPhoneNumber'];
     dni: Profile['dni'];
+    username: Profile['username'];
   }): Promise<Profile | null> {
     const existingProfile = await this.prisma.profile.findFirst({
       where: {
@@ -454,6 +461,7 @@ export class ProfileService {
           { secondaryPhoneNumber: secondaryPhoneNumber ?? undefined },
           { secondaryPhoneNumber: phoneNumber },
           { dni: dni ?? undefined },
+          { username: username ?? undefined },
         ],
       },
     });

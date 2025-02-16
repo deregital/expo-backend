@@ -1,4 +1,4 @@
-import { locationSchema } from '@/location/dto/location.dto';
+import { locationSchema } from '@/schema/location.schema';
 import { profileSchema } from '@/schema/profile.schema';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
