@@ -2,14 +2,14 @@ import { AccountService } from '@/account/account.service';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateProfileDto } from '@/profile/dto/create-profile.dto';
+import { findAllProfileResponseSchema } from '@/profile/dto/find-all-profile.dto';
+import { findByDateRangeSchema } from '@/profile/dto/find-by-date-range-profile.dto';
+import { findByIdProfileResponseSchema } from '@/profile/dto/find-by-id-profile.dto';
+import { findByTagGroupsProfileResponseSchema } from '@/profile/dto/find-by-tag-groups-profile.dto';
+import { findByTagsProfileResponseSchema } from '@/profile/dto/find-by-tags-profile.dto';
+import { findTrashResponseSchema } from '@/profile/dto/find-trash.dto';
+import { findWithActiveChatResponseSchema } from '@/profile/dto/find-with-active-chat.dto';
 import { UpdateProfileDto } from '@/profile/dto/update-profile.dto';
-import { findAllProfileResponseSchema } from '@/profile/schema/find-all-profile.schema';
-import { findByDateRangeSchema } from '@/profile/schema/find-by-date-range-profile.schema';
-import { findByIdProfileResponseSchema } from '@/profile/schema/find-by-id-profile.schema';
-import { findByTagGroupsProfileResponseSchema } from '@/profile/schema/find-by-tag-groups-profile.schema';
-import { findByTagsProfileResponseSchema } from '@/profile/schema/find-by-tags-profile.schema';
-import { findTrashResponseSchema } from '@/profile/schema/find-trash.schema';
-import { findWithActiveChatResponseSchema } from '@/profile/schema/find-with-active-chat.schema';
 import { VisibleTagsType } from '@/shared/decorators/visible-tags.decorator';
 import { Inject, Injectable } from '@nestjs/common';
 import z from 'zod';
@@ -170,9 +170,6 @@ export class ProfileService {
     const profileCreated = await this.prisma.profile.create({
       data: {
         shortId: highestShortId + 1,
-        username: dto.username,
-        password: dto.password,
-
         fullName: dto.fullName,
         firstName: dto.fullName.split(' ')[0],
         phoneNumber: dto.phoneNumber,
@@ -250,8 +247,6 @@ export class ProfileService {
         id: id,
       },
       data: {
-        username: dto.username,
-        password: dto.password,
         fullName: dto.fullName,
         firstName: dto.fullName?.split(' ')[0] ?? undefined,
         phoneNumber: dto.phoneNumber,

@@ -9,32 +9,50 @@ import { translate } from '@/i18n/translate';
 import {
   CreateProfileDto,
   CreateProfileResponseDto,
-} from '@/profile/dto/create-profile.dto';
-import { DeleteProfileResponseDto } from '@/profile/dto/delete-profile.dto';
-import { FindAllProfileResponseDto } from '@/profile/dto/find-all-profile.dto';
-import { FindByDateRangeResponseDto } from '@/profile/dto/find-by-date-range-profile.dto';
-import { FindByIdProfileResponseDto } from '@/profile/dto/find-by-id-profile.dto';
-import { FindByPhoneNumberResponseDto } from '@/profile/dto/find-by-phone-number.dto';
-import { FindByTagGroupsProfileResponseDto } from '@/profile/dto/find-by-tag-groups-profile.dto';
-import { FindByTagsProfileResponseDto } from '@/profile/dto/find-by-tags-profile.dto';
-import { FindTrashResponseDto } from '@/profile/dto/find-trash.dto';
-import { FindWithActiveChatResponseDto } from '@/profile/dto/find-with-active-chat.dto';
-import { UpdateProfileDto } from '@/profile/dto/update-profile.dto';
-import { ProfileService } from '@/profile/profile.service';
-import {
   createProfileResponseSchema,
   SimilarityProfile,
-} from '@/profile/schema/create-profile.schema';
-import { deleteProfileResponseSchema } from '@/profile/schema/delete-profile.schema';
-import { findAllProfileResponseSchema } from '@/profile/schema/find-all-profile.schema';
-import { findByDateRangeResponseSchema } from '@/profile/schema/find-by-date-range-profile.schema';
-import { findByIdProfileResponseSchema } from '@/profile/schema/find-by-id-profile.schema';
-import { findByPhoneNumberResponseSchema } from '@/profile/schema/find-by-phone-number.schema';
-import { findByTagGroupsProfileResponseSchema } from '@/profile/schema/find-by-tag-groups-profile.schema';
-import { findByTagsProfileResponseSchema } from '@/profile/schema/find-by-tags-profile.schema';
-import { findTrashResponseSchema } from '@/profile/schema/find-trash.schema';
-import { findWithActiveChatResponseSchema } from '@/profile/schema/find-with-active-chat.schema';
-import { updateProfileResponseSchema } from '@/profile/schema/update-profile.schema';
+} from '@/profile/dto/create-profile.dto';
+import {
+  DeleteProfileResponseDto,
+  deleteProfileResponseSchema,
+} from '@/profile/dto/delete-profile.dto';
+import {
+  FindAllProfileResponseDto,
+  findAllProfileResponseSchema,
+} from '@/profile/dto/find-all-profile.dto';
+import {
+  FindByDateRangeResponseDto,
+  findByDateRangeResponseSchema,
+} from '@/profile/dto/find-by-date-range-profile.dto';
+import {
+  FindByIdProfileResponseDto,
+  findByIdProfileResponseSchema,
+} from '@/profile/dto/find-by-id-profile.dto';
+import {
+  FindByPhoneNumberResponseDto,
+  findByPhoneNumberResponseSchema,
+} from '@/profile/dto/find-by-phone-number.dto';
+import {
+  FindByTagGroupsProfileResponseDto,
+  findByTagGroupsProfileResponseSchema,
+} from '@/profile/dto/find-by-tag-groups-profile.dto';
+import {
+  FindByTagsProfileResponseDto,
+  findByTagsProfileResponseSchema,
+} from '@/profile/dto/find-by-tags-profile.dto';
+import {
+  FindTrashResponseDto,
+  findTrashResponseSchema,
+} from '@/profile/dto/find-trash.dto';
+import {
+  FindWithActiveChatResponseDto,
+  findWithActiveChatResponseSchema,
+} from '@/profile/dto/find-with-active-chat.dto';
+import {
+  UpdateProfileDto,
+  updateProfileResponseSchema,
+} from '@/profile/dto/update-profile.dto';
+import { ProfileService } from '@/profile/profile.service';
 import { GlobalFilterInterceptor } from '@/shared/decorators/global-filter.interceptor';
 import {
   VisibleTags,
