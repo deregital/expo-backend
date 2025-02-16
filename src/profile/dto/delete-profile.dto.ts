@@ -1,7 +1,5 @@
-import { profileSchema } from '@/prisma/dtos.dto';
+import { deleteProfileResponseSchema } from '@/profile/schema/delete-profile.schema';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
-
-export const deleteProfileResponseSchema = profileSchema;
 
 export class DeleteProfileResponseDto extends createZodDtoWithoutDate(
   deleteProfileResponseSchema,
