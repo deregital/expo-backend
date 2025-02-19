@@ -1,18 +1,26 @@
 import { translate } from '@/i18n/translate';
 import {
+  Profile,
+  ProfileWithoutPassword,
+} from '@/mi-expo/decorators/profile.decorator';
+import {
   LoginWithPhoneDto,
   LoginWithPhoneResponseDto,
   loginWithPhoneResponseSchema,
 } from '@/mi-expo/dto/login-with-phone.dto';
+import { MeResponseDto, meResponseSchema } from '@/mi-expo/dto/me';
+import { JwtMiExpoGuard } from '@/mi-expo/jwt-mi-expo.guard';
 import { MiExpoService } from '@/mi-expo/mi-expo.service';
 import { ProfileService } from '@/profile/profile.service';
 import { ErrorDto } from '@/shared/errors/errorType';
 import {
   Body,
   Controller,
+  Get,
   NotFoundException,
   Post,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import z from 'zod';
@@ -58,5 +66,17 @@ export class MiExpoController {
       tokens: tokens.backendTokens,
       profile: tokens.user,
     };
+  }
+
+  @UseGuards(JwtMiExpoGuard)
+  @ApiOkResponse({
+    description: 'Me',
+    type: MeResponseDto,
+  })
+  @Get('/me')
+  async me(
+    @Profile() profile: ProfileWithoutPassword,
+  ): Promise<z.infer<typeof meResponseSchema>> {
+    return await this.profileService.findById(profile.id);
   }
 }
