@@ -7,6 +7,7 @@ import {
   ZodNullable,
   ZodObject,
   ZodOptional,
+  ZodPipeline,
   ZodRawShape,
   ZodTypeAny,
   ZodUnion,
@@ -31,7 +32,12 @@ export type ReplaceDatesWithStrings<T extends ZodTypeAny> = T extends ZodDate
             ? ZodNullable<ReplaceDatesWithStrings<Inner>> // Process nullable schema
             : T extends ZodOptional<infer Inner>
               ? ZodOptional<ReplaceDatesWithStrings<Inner>> // Process optional schema
-              : T; // Otherwise, return the schema as is
+              : T extends ZodPipeline<infer A, infer B>
+                ? ZodPipeline<
+                    ReplaceDatesWithStrings<A>,
+                    ReplaceDatesWithStrings<B>
+                  > // Process pipeline
+                : T; // Otherwise, return the schema as is
 
 // Function to replace z.date() with z.string().datetime() recursively
 export const replaceDatesWithStrings = <T extends OpenApiZodAny>(
