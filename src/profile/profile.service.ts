@@ -1,4 +1,3 @@
-import { AccountService } from '@/account/account.service';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateProfileDto } from '@/profile/dto/create-profile.dto';
@@ -14,14 +13,17 @@ import { VisibleTagsType } from '@/shared/decorators/visible-tags.decorator';
 import { Inject, Injectable } from '@nestjs/common';
 import { hash } from 'bcrypt';
 import z from 'zod';
-import { Account, Location, Profile, Tag, TagGroup } from '~/types';
+import {
+  Account,
+  Location,
+  Profile,
+  Tag,
+  TagGroup,
+} from '~/types/prisma-schema';
 
 @Injectable()
 export class ProfileService {
-  constructor(
-    @Inject(PRISMA_SERVICE) private prisma: PrismaService,
-    private readonly accountService: AccountService,
-  ) {}
+  constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
   async findAll(
     visibleTags: VisibleTagsType,
@@ -54,16 +56,18 @@ export class ProfileService {
 
   async findById(
     id: string,
-    visibleTags: VisibleTagsType,
+    visibleTags: VisibleTagsType | undefined = undefined,
   ): Promise<z.infer<typeof findByIdProfileResponseSchema>> {
     const profile = await this.prisma.profile.findUnique({
       where: {
         id: id,
-        tags: {
-          some: {
-            id: { in: visibleTags },
-          },
-        },
+        tags: visibleTags
+          ? {
+              some: {
+                id: { in: visibleTags },
+              },
+            }
+          : undefined,
       },
       include: {
         tags: {

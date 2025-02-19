@@ -190,6 +190,7 @@ export default {
       'no-token': 'No se encontró un token',
       'invalid-token': 'Token inválido',
       'user-not-found': 'Usuario no encontrado',
+      'phone-not-verified': 'El teléfono no está verificado',
     },
     account: {
       create: {

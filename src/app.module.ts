@@ -21,6 +21,7 @@ import { WebhookModule } from '@/webhook/webhook.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE, ModuleRef } from '@nestjs/core';
+import { MiExpoModule } from './mi-expo/mi-expo.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { APP_PIPE, ModuleRef } from '@nestjs/core';
     MessageModule,
     WebhookModule,
     OtpModule,
+    MiExpoModule,
   ],
   providers: [
     {

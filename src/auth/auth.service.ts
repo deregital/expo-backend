@@ -5,9 +5,9 @@ import { ProfileService } from '@/profile/profile.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
-import { Profile, type Account } from '~/types/prisma-schema';
+import { type Account } from '~/types/prisma-schema';
 
-type BackendTokens = {
+export type BackendTokens = {
   accessToken: string;
   refreshToken: string;
   expiresIn: number;
@@ -18,12 +18,7 @@ type LoginAccountPayload = {
   backendTokens: BackendTokens;
 };
 
-type LoginProfilePayload = {
-  user: Omit<Profile, 'password'>;
-  backendTokens: BackendTokens;
-};
-
-const EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000;
+export const EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000;
 
 type Payload = {
   username: string;
@@ -47,19 +42,6 @@ export class AuthService {
     const backendTokens = await this.generateToken(account);
     return {
       user: account,
-      backendTokens,
-    };
-  }
-  async loginProfile(dto: LoginDto): Promise<LoginProfilePayload> {
-    const profile = await this.validateProfile(dto);
-
-    const backendTokens = await this.generateToken({
-      id: profile.id,
-      username: dto.username,
-      password: dto.password,
-    });
-    return {
-      user: profile,
       backendTokens,
     };
   }
@@ -120,24 +102,6 @@ export class AuthService {
 
     if (account && (await compare(dto.password, account.password))) {
       return account;
-    }
-
-    throw new UnauthorizedException([
-      translate('route.auth.invalid-credentials'),
-    ]);
-  }
-
-  private async validateProfile(dto: LoginDto): Promise<Profile> {
-    const profile = await this.profileService.findByUsername(dto.username);
-
-    if (!profile?.password) {
-      throw new UnauthorizedException([
-        translate('route.auth.invalid-credentials'),
-      ]);
-    }
-
-    if (profile && (await compare(dto.password, profile.password))) {
-      return profile;
     }
 
     throw new UnauthorizedException([
