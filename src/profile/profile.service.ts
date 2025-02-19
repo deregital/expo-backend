@@ -57,7 +57,11 @@ export class ProfileService {
   async findById(
     id: string,
     visibleTags: VisibleTagsType | undefined = undefined,
-  ): Promise<z.infer<typeof findByIdProfileResponseSchema>> {
+  ): Promise<
+    z.infer<typeof findByIdProfileResponseSchema> & {
+      password: Profile['password'];
+    }
+  > {
     const profile = await this.prisma.profile.findUnique({
       where: {
         id: id,
@@ -83,9 +87,6 @@ export class ProfileService {
         },
         residenceLocation: true,
         birthLocation: true,
-      },
-      omit: {
-        password: true,
       },
     });
 

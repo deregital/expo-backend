@@ -348,7 +348,12 @@ export class ProfileController {
     @Param('id', new ExistingRecord('profile')) id: string,
     @VisibleTags() visibleTags: VisibleTagsType,
   ): Promise<z.infer<typeof findByIdProfileResponseSchema>> {
-    return await this.profileService.findById(id, visibleTags);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...profile } = await this.profileService.findById(
+      id,
+      visibleTags,
+    );
+    return profile;
   }
 
   @ApiNotFoundResponse({

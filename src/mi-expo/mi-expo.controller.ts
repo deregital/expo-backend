@@ -89,9 +89,13 @@ export class MiExpoController {
   })
   @Get('/me')
   async me(
-    @Profile() profile: ProfileWithoutPassword,
+    @Profile() meProfile: ProfileWithoutPassword,
   ): Promise<z.infer<typeof getMiExpoMeResponseSchema>> {
-    return await this.profileService.findById(profile.id);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...profile } = await this.profileService.findById(
+      meProfile.id,
+    );
+    return profile;
   }
   @UseGuards(JwtMiExpoGuard)
   @ApiOkResponse({
