@@ -8,7 +8,7 @@ import {
   LoginWithPhoneResponseDto,
   loginWithPhoneResponseSchema,
 } from '@/mi-expo/dto/login-with-phone.dto';
-import { MiExpoMeResponseDto, meResponseSchema } from '@/mi-expo/dto/me';
+import { MiExpoMeResponseDto, meResponseSchema } from '@/mi-expo/dto/me.dto';
 import { JwtMiExpoGuard } from '@/mi-expo/jwt-mi-expo.guard';
 import { MiExpoService } from '@/mi-expo/mi-expo.service';
 import { ProfileService } from '@/profile/profile.service';
