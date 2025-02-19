@@ -1489,11 +1489,27 @@ paths:
       parameters: []
       responses:
         200:
+          description: "Perfil obtenido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetMiExpoMeResponseDto"
+    patch:
+      operationId: "MiExpoController_updateMe"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMiExpoMeDto"
+      responses:
+        200:
           description: "Me"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MiExpoMeResponseDto"
+                $ref: "#/components/schemas/GetMiExpoMeResponseDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -7669,7 +7685,7 @@ components:
       required:
         - "tokens"
         - "profile"
-    MiExpoMeResponseDto:
+    GetMiExpoMeResponseDto:
       type:
         - "object"
       properties:
@@ -7788,3 +7804,116 @@ components:
         - "movedToTrashDate"
         - "created_at"
         - "updated_at"
+    UpdateMiExpoMeDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        birthDate:
+          type:
+            - "string"
+        dni:
+          type:
+            - "string"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        gender:
+          type:
+            - "string"
+        instagram:
+          type:
+            - "string"
+        mail:
+          type:
+            - "string"
+          format: "email"
+        password:
+          type:
+            - "string"
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        secondaryPhoneNumber:
+          type:
+            - "string"
+        username:
+          type:
+            - "string"
+        birthLocation:
+          type:
+            - "object"
+          properties:
+            city:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+            state:
+              type:
+                - "string"
+          required:
+            - "city"
+            - "country"
+            - "latitude"
+            - "longitude"
+            - "state"
+        residenceLocation:
+          type:
+            - "object"
+          properties:
+            city:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+            state:
+              type:
+                - "string"
+          required:
+            - "city"
+            - "country"
+            - "latitude"
+            - "longitude"
+            - "state"
+      required:
+        - "id"
+        - "birthDate"
+        - "dni"
+        - "fullName"
+        - "gender"
+        - "instagram"
+        - "mail"
+        - "password"
+        - "phoneNumber"
+        - "secondaryPhoneNumber"
+        - "username"
+        - "birthLocation"
+        - "residenceLocation"

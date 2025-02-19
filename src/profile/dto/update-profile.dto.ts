@@ -20,6 +20,7 @@ export const updateProfileSchema = profileSchema
     movedToTrashDate: true,
     username: true,
     password: true,
+    firstTimeMiExpo: true,
   })
   .partial()
   .merge(

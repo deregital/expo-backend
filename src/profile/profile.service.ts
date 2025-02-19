@@ -247,7 +247,7 @@ export class ProfileService {
   async update(
     id: Profile['id'],
     dto: UpdateProfileDto,
-    participantTagId: Tag['id'] | undefined,
+    participantTagId: Tag['id'] | undefined = undefined,
   ): Promise<Profile> {
     const profileUpdated = await this.prisma.profile.update({
       where: {
@@ -257,6 +257,8 @@ export class ProfileService {
         username: dto.username,
         password: dto.password ? await hash(dto.password, 10) : undefined,
         fullName: dto.fullName,
+        firstTimeMiExpo:
+          dto.firstTimeMiExpo !== undefined ? dto.firstTimeMiExpo : undefined,
         firstName: dto.fullName?.split(' ')[0] ?? undefined,
         phoneNumber: dto.phoneNumber,
         secondaryPhoneNumber: dto.secondaryPhoneNumber,

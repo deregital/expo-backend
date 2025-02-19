@@ -4,11 +4,19 @@ import {
   ProfileWithoutPassword,
 } from '@/mi-expo/decorators/profile.decorator';
 import {
+  GetMiExpoMeResponseDto,
+  getMiExpoMeResponseSchema,
+} from '@/mi-expo/dto/get-me.dto';
+import {
   LoginWithPhoneDto,
   LoginWithPhoneResponseDto,
   loginWithPhoneResponseSchema,
 } from '@/mi-expo/dto/login-with-phone.dto';
-import { MiExpoMeResponseDto, meResponseSchema } from '@/mi-expo/dto/me.dto';
+import {
+  UpdateMiExpoMeDto,
+  UpdateMiExpoMeResponseDto,
+  updateMiExpoMeResponseSchema,
+} from '@/mi-expo/dto/update-me.dto';
 import { JwtMiExpoGuard } from '@/mi-expo/jwt-mi-expo.guard';
 import { MiExpoService } from '@/mi-expo/mi-expo.service';
 import { ProfileService } from '@/profile/profile.service';
@@ -18,6 +26,7 @@ import {
   Controller,
   Get,
   NotFoundException,
+  Patch,
   Post,
   UnauthorizedException,
   UseGuards,
@@ -70,13 +79,32 @@ export class MiExpoController {
 
   @UseGuards(JwtMiExpoGuard)
   @ApiOkResponse({
-    description: 'Me',
-    type: MiExpoMeResponseDto,
+    description: translate('route.profile.find-by-id.success'),
+    type: GetMiExpoMeResponseDto,
   })
   @Get('/me')
   async me(
     @Profile() profile: ProfileWithoutPassword,
-  ): Promise<z.infer<typeof meResponseSchema>> {
+  ): Promise<z.infer<typeof getMiExpoMeResponseSchema>> {
     return await this.profileService.findById(profile.id);
+  }
+  @UseGuards(JwtMiExpoGuard)
+  @ApiOkResponse({
+    description: 'Me',
+    type: GetMiExpoMeResponseDto,
+  })
+  @ApiOkResponse({
+    description: translate('route.profile.update.success'),
+    type: UpdateMiExpoMeResponseDto,
+  })
+  @Patch('/me')
+  async updateMe(
+    @Profile() profile: ProfileWithoutPassword,
+    @Body() body: UpdateMiExpoMeDto,
+  ): Promise<z.infer<typeof updateMiExpoMeResponseSchema>> {
+    return await this.profileService.update(profile.id, {
+      ...body,
+      firstTimeMiExpo: false,
+    });
   }
 }

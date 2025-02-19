@@ -37,7 +37,6 @@ export const profileSchema = z.object({
     .refine((value) => isValidPhoneNumber(value, 'AR'), {
       message: translate('model.profile.phoneNumber.invalid'),
     })
-
     .transform((value, ctx) => {
       if (!value) return value;
       const phoneNumber = parsePhoneNumber(value, {
@@ -56,7 +55,6 @@ export const profileSchema = z.object({
 
   secondaryPhoneNumber: z
     .string()
-    .nullable()
     .refine(
       (value) => {
         if (value === null) return true;
@@ -79,7 +77,9 @@ export const profileSchema = z.object({
         return value;
       }
       return formatArgNumber(phoneNumber, value);
-    }),
+    })
+
+    .nullable(),
   fullName: z.string().min(1, {
     message: translate('model.profile.fullName.required'),
   }),
