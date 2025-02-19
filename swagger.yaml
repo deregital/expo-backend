@@ -6772,6 +6772,9 @@ components:
           type:
             - "string"
             - "null"
+        firstTimeMiExpo:
+          type:
+            - "boolean"
         residence:
           type:
             - "object"
@@ -7808,16 +7811,14 @@ components:
       type:
         - "object"
       properties:
-        id:
-          type:
-            - "string"
-          format: "uuid"
         birthDate:
           type:
             - "string"
+            - "null"
         dni:
           type:
             - "string"
+            - "null"
         fullName:
           type:
             - "string"
@@ -7825,16 +7826,20 @@ components:
         gender:
           type:
             - "string"
+            - "null"
         instagram:
           type:
             - "string"
+            - "null"
         mail:
           type:
             - "string"
+            - "null"
           format: "email"
         password:
           type:
             - "string"
+            - "null"
         phoneNumber:
           type:
             - "string"
@@ -7842,10 +7847,12 @@ components:
         secondaryPhoneNumber:
           type:
             - "string"
+            - "null"
         username:
           type:
             - "string"
-        birthLocation:
+            - "null"
+        birth:
           type:
             - "object"
           properties:
@@ -7874,7 +7881,7 @@ components:
             - "latitude"
             - "longitude"
             - "state"
-        residenceLocation:
+        residence:
           type:
             - "object"
           properties:
@@ -7904,7 +7911,6 @@ components:
             - "longitude"
             - "state"
       required:
-        - "id"
         - "birthDate"
         - "dni"
         - "fullName"
@@ -7915,5 +7921,5 @@ components:
         - "phoneNumber"
         - "secondaryPhoneNumber"
         - "username"
-        - "birthLocation"
-        - "residenceLocation"
+        - "birth"
+        - "residence"

@@ -24,7 +24,7 @@
     "local-release": "changeset version && changeset publish",
     "commit-schema": "git add ./types/schema.d.ts swagger.yaml && git commit -m \"Update schema\"",
     "start": "npx prisma generate && npx nest start",
-    "dev": "npx prisma generate && nest start --watch",
+    "dev": "rm -r ./dist && npx prisma generate && nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main",
     "lint": "eslint \"{src,apps,libs,test,types}/**/*.ts\" --fix",

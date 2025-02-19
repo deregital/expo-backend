@@ -82,21 +82,6 @@ export const replaceDatesWithStrings = <T extends OpenApiZodAny>(
     ) as ReplaceDatesWithStrings<T>; // Process intersection
   }
 
-  if (schema instanceof ZodNullable) {
-    return z.nullable(
-      replaceDatesWithStrings(schema._def.innerType),
-    ) as ReplaceDatesWithStrings<T>; // Process nullable
-  }
-
-  if (schema instanceof ZodPipeline) {
-    return z
-      .string()
-      .datetime()
-      .pipe(
-        replaceDatesWithStrings(schema._def.out),
-      ) as ReplaceDatesWithStrings<T>;
-  }
-
   // Return the schema as is if no transformation is needed
   return schema as ReplaceDatesWithStrings<T>;
 };
