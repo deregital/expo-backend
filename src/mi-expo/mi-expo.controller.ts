@@ -17,6 +17,11 @@ import {
   UpdateMiExpoMeResponseDto,
   updateMiExpoMeResponseSchema,
 } from '@/mi-expo/dto/update-me.dto';
+import {
+  LoginMiExpoDto,
+  LoginMiExpoResponseDto,
+  loginMiExpoResponseSchema,
+} from '@/mi-expo/exports';
 import { JwtMiExpoGuard } from '@/mi-expo/jwt-mi-expo.guard';
 import { MiExpoService } from '@/mi-expo/mi-expo.service';
 import { ProfileService } from '@/profile/profile.service';
@@ -106,5 +111,25 @@ export class MiExpoController {
       ...body,
       firstTimeMiExpo: false,
     });
+  }
+
+  @ApiUnauthorizedResponse({
+    description: translate('route.auth.invalid-credentials'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    description: 'Sesión iniciada',
+    type: LoginMiExpoResponseDto,
+  })
+  @Post('/login')
+  async loginUsernamePassword(
+    @Body() body: LoginMiExpoDto,
+  ): Promise<z.infer<typeof loginMiExpoResponseSchema>> {
+    const tokens = await this.miExpoService.loginProfile(body);
+
+    return {
+      backendTokens: tokens.backendTokens,
+      user: tokens.user,
+    };
   }
 }

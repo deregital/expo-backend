@@ -84,6 +84,9 @@ export class ProfileService {
         residenceLocation: true,
         birthLocation: true,
       },
+      omit: {
+        password: true,
+      },
     });
 
     return profile!;
