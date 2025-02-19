@@ -8,7 +8,7 @@ import {
   LoginWithPhoneResponseDto,
   loginWithPhoneResponseSchema,
 } from '@/mi-expo/dto/login-with-phone.dto';
-import { MeResponseDto, meResponseSchema } from '@/mi-expo/dto/me';
+import { MiExpoMeResponseDto, meResponseSchema } from '@/mi-expo/dto/me';
 import { JwtMiExpoGuard } from '@/mi-expo/jwt-mi-expo.guard';
 import { MiExpoService } from '@/mi-expo/mi-expo.service';
 import { ProfileService } from '@/profile/profile.service';
@@ -71,7 +71,7 @@ export class MiExpoController {
   @UseGuards(JwtMiExpoGuard)
   @ApiOkResponse({
     description: 'Me',
-    type: MeResponseDto,
+    type: MiExpoMeResponseDto,
   })
   @Get('/me')
   async me(

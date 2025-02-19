@@ -3,4 +3,6 @@ import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dt
 
 export const meResponseSchema = profileSchema.omit({ password: true });
 
-export class MeResponseDto extends createZodDtoWithoutDate(meResponseSchema) {}
+export class MiExpoMeResponseDto extends createZodDtoWithoutDate(
+  meResponseSchema,
+) {}

@@ -1493,7 +1493,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MeResponseDto"
+                $ref: "#/components/schemas/MiExpoMeResponseDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -7669,7 +7669,7 @@ components:
       required:
         - "tokens"
         - "profile"
-    MeResponseDto:
+    MiExpoMeResponseDto:
       type:
         - "object"
       properties:
