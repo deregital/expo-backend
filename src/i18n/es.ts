@@ -11,7 +11,7 @@ export default {
       location: 'Ubicación',
       cannedResponse: 'Respuesta enlatada',
       message: 'Mensaje',
-      eventTickets: 'Tickets del evento',
+      eventTicket: 'Tickets del evento',
     },
     tag: {
       assisted: 'Asistió',
