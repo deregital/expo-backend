@@ -183,6 +183,20 @@ export default {
         'max-length': 'Los botones no pueden tener más de 20 caracteres',
       },
     },
+    ticket: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      eventId: {
+        uuid: 'El ID del evento debe ser un UUID',
+      },
+      fullName: {
+        required: 'El nombre es requerido',
+      },
+      mail: {
+        email: 'El email debe ser un email válido',
+      },
+    },
   },
   route: {
     auth: {
