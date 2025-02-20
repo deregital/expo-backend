@@ -19,6 +19,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE, ModuleRef } from '@nestjs/core';
 import { MessageModule } from './message/message.module';
+import { TicketModule } from './ticket/ticket.module';
 import { WebhookModule } from './webhook/webhook.module';
 
 @Module({
@@ -38,6 +39,7 @@ import { WebhookModule } from './webhook/webhook.module';
     ImageModule,
     CsvModule,
     MessageModule,
+    TicketModule,
     WebhookModule,
   ],
   providers: [
