@@ -1106,7 +1106,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
   /csv/download-profiles:
-    get:
+    post:
       operationId: "CsvController_downloadProfiles"
       parameters: []
       requestBody:
@@ -1135,7 +1135,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/StreamableFile"
   /csv/download-all-tables:
-    get:
+    post:
       operationId: "CsvController_downloadAllTables"
       parameters: []
       requestBody:
