@@ -34,39 +34,39 @@ export class EventService {
       data: {
         name: dto.name,
         date: dto.date,
+        starting_date: dto.starting_date,
+        ending_date: dto.ending_date,
         location: dto.location,
         folder: dto.folderId ? { connect: { id: dto.folderId } } : undefined,
         tagAssisted: {
           create: {
-            group: {
-              connect: {
-                id: dto.tagGroupId,
-              },
-            },
+            group: { connect: { id: dto.tagGroupId } },
             name: `${dto.name} - ${translate('prisma.tag.assisted')}`,
             type: TagType.EVENT,
           },
         },
         tagConfirmed: {
           create: {
-            group: {
-              connect: {
-                id: dto.tagGroupId,
-              },
-            },
+            group: { connect: { id: dto.tagGroupId } },
             name: `${dto.name} - ${translate('prisma.tag.confirmed')}`,
             type: TagType.EVENT,
           },
         },
         subEvents: dto.subEvents
-          ? {
-              connect: dto.subEvents.map((subEvent) => ({ id: subEvent.id })),
-            }
+          ? { connect: dto.subEvents.map((subEvent) => ({ id: subEvent.id })) }
           : undefined,
+
+        tags: { connect: dto.tags.map((tag) => ({ id: tag.id })) },
+        eventTickets: {
+          create: dto.eventTickets.map((ticket) => ({
+            amount: ticket.amount,
+            type: ticket.type,
+            price: ticket.price,
+          })),
+        },
       },
     });
   }
-
   async findAll(): Promise<
     z.infer<typeof getAllEventsResponseSchema.shape.withoutFolder>
   > {
@@ -155,7 +155,10 @@ export class EventService {
     tagGroupId,
   }: {
     id: Event['id'];
-    event: Pick<Event, 'date' | 'location' | 'name'>;
+    event: Pick<
+      Event,
+      'date' | 'location' | 'name' | 'starting_date' | 'ending_date'
+    >;
     supraEventId: Event['id'];
     tagGroupId: TagGroup['id'];
   }): Promise<Event> {
@@ -165,11 +168,15 @@ export class EventService {
       },
       update: {
         date: event.date,
+        starting_date: event.starting_date,
+        ending_date: event.ending_date,
         location: event.location,
         name: event.name,
       },
       create: {
         date: event.date,
+        starting_date: event.starting_date,
+        ending_date: event.ending_date,
         location: event.location,
         name: event.name,
         supraEvent: {

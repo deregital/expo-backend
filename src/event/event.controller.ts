@@ -106,6 +106,8 @@ export class EventController {
           return await this.eventService.create({
             ...subEvent,
             tagGroupId: tagGroup.id,
+            tags: [],
+            eventTickets: [],
           });
         }),
       );
@@ -226,6 +228,8 @@ export class EventController {
         event: {
           ...subEvent,
           date: newDate,
+          starting_date: new Date(subEvent.starting_date),
+          ending_date: new Date(subEvent.ending_date),
         },
         id: subEvent.id,
         supraEventId: event.id,
