@@ -100,22 +100,16 @@ export class CsvController {
   ): Promise<Buffer> {
     await this.accountService.checkPassword(account.id, dto.password);
 
-    try {
-      const zipData = await this.csvService.exportAllTables();
+    const zipData = await this.csvService.exportAllTables();
 
-      const timestamp = this.csvService.generateTimestamp();
-      const filename = `${timestamp}-todas_las_tablas.zip`;
+    const timestamp = this.csvService.generateTimestamp();
+    const filename = `${timestamp}-todas_las_tablas.zip`;
 
-      res.set({
-        type: 'application/zip',
-        'Content-Disposition': `attachment; filename=${filename}`,
-      });
-      res.send(zipData);
-      return zipData;
-    } catch (error) {
-      throw new InternalServerErrorException([
-        translate('route.csv.download-all-tables.error'),
-      ]);
-    }
+    res.set({
+      type: 'application/zip',
+      'Content-Disposition': `attachment; filename=${filename}`,
+    });
+    res.send(zipData);
+    return zipData;
   }
 }

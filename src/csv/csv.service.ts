@@ -1,6 +1,6 @@
 import { translate } from '@/i18n/translate';
 import { PRISMA_SERVICE } from '@/prisma/constants';
-import { PrismaService } from '@/prisma/prisma.service';
+import { PrismaService, TableNames } from '@/prisma/prisma.service';
 import {
   Inject,
   Injectable,
@@ -10,6 +10,20 @@ import ExcelJS from 'exceljs';
 import * as fastCsv from 'fast-csv';
 import JSZip from 'jszip';
 import { Readable } from 'stream';
+import { Prisma } from '~/types/prisma-schema';
+
+const modelNameToTable: Record<TableNames, Uncapitalize<TableNames>> = {
+  Account: 'account',
+  Comment: 'comment',
+  Profile: 'profile',
+  Tag: 'tag',
+  CannedResponse: 'cannedResponse',
+  Event: 'event',
+  EventFolder: 'eventFolder',
+  Location: 'location',
+  Message: 'message',
+  TagGroup: 'tagGroup',
+} as const;
 
 @Injectable()
 export class CsvService {
@@ -38,15 +52,18 @@ export class CsvService {
       const zip = new JSZip();
       const workbook = new ExcelJS.Workbook();
 
-      for (const table in this.prisma) {
+      for (const modelName of Object.values(Prisma.ModelName).filter(
+        (k) => k !== 'Enums',
+      )) {
+        const table = modelNameToTable[modelName as TableNames];
         const dataTables = [];
-        if (
-          table.charAt(0) === '_' ||
-          table.charAt(0) === '$' ||
-          ['enums'].includes(table)
-        ) {
-          continue;
-        }
+        // if (
+        //   table.charAt(0) === '_' ||
+        //   table.charAt(0) === '$' ||
+        //   ['enums'].includes(table)
+        // ) {
+        //   continue;
+        // }
         if (table === 'profile' || table === 'account') {
           dataTables.push(
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -108,6 +125,8 @@ export class CsvService {
       const zipData = await zipBlob.arrayBuffer();
       return Buffer.from(zipData);
     } catch (error) {
+      console.log(error);
+
       throw new InternalServerErrorException([
         translate('route.csv.download-all-tables.error'),
       ]);
