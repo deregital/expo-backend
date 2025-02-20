@@ -509,6 +509,36 @@ export default {
         error: 'Error al obtener el último mensaje',
       },
     },
+    ticket: {
+      create: {
+        success: 'Ticket creado con éxito',
+        conflict: 'Error en la creación del ticket',
+      },
+      'find-all': {
+        success: 'Tickets obtenidos',
+      },
+      'find-by-id': {
+        success: 'Ticket obtenido',
+        'not-found': 'Ticket no encontrado',
+      },
+      'find-by-mail': {
+        success: 'Tickets por mail obtenidos',
+        'not-found': 'Tickets por mail no encontrados',
+      },
+      'find-by-event': {
+        success: 'Tickets por evento obtenidos',
+        'not-found': 'Tickets por evento no encontrados',
+      },
+      update: {
+        success: 'Ticket actualizado',
+        'not-found': 'Ticket no encontrado',
+        conflict: 'Error en la actualización del ticket',
+      },
+      delete: {
+        success: 'Ticket eliminado',
+        'not-found': 'Ticket no encontrado',
+      },
+    },
     webhook: {
       get: {
         success: 'Webhook verificado',

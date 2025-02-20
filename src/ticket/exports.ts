@@ -2,6 +2,7 @@ export * from './dto/create-ticket.dto';
 export * from './dto/delete-ticket.dto';
 export * from './dto/find-all-tickets.dto';
 export * from './dto/find-by-event-ticket.dto';
+export * from './dto/find-by-id-ticket.dto';
 export * from './dto/find-by-mail-ticket.dto';
 export * from './dto/ticket.dto';
 export * from './dto/update-ticket.dto';

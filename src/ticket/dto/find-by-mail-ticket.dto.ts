@@ -4,14 +4,16 @@ import z from 'zod';
 import { ticketSchema } from './ticket.dto';
 
 export const findByMailTicketResponseSchema = z.object({
-  ticket: ticketSchema.merge(
-    z.object({
-      event: eventSchema.pick({
-        name: true,
-        date: true,
-        location: true,
+  tickets: z.array(
+    ticketSchema.merge(
+      z.object({
+        event: eventSchema.pick({
+          name: true,
+          date: true,
+          location: true,
+        }),
       }),
-    }),
+    ),
   ),
 });
 
