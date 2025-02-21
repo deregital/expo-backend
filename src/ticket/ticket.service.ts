@@ -89,9 +89,7 @@ export class TicketService {
     const ticket = await this.prisma.ticket.delete({
       where: { id },
     });
-    if (!ticket) {
-      throw new Error('Ticket no encontrado');
-    }
+
     return ticket;
   }
 }

@@ -46,7 +46,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
-  ApiConflictResponse,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -99,10 +98,6 @@ export class TicketController {
     description: translate('route.ticket.find-by-mail.success'),
     type: FindByMailTicketResponseDto,
   })
-  @ApiNotFoundResponse({
-    description: translate('route.ticket.find-by-mail.not-found'),
-    type: ErrorDto,
-  })
   @Get('/find-by-mail/:mail')
   async findByMail(
     @Param('mail') mail: string,
@@ -120,7 +115,7 @@ export class TicketController {
   })
   @Get('/find-by-event/:eventId')
   async findByEvent(
-    @Param('eventId') eventId: string,
+    @Param('eventId', new ExistingRecord('event')) eventId: string,
   ): Promise<z.infer<typeof findByEventTicketResponseSchema>> {
     return await this.ticketService.findByEvent(eventId);
   }
@@ -131,10 +126,6 @@ export class TicketController {
   })
   @ApiNotFoundResponse({
     description: translate('route.ticket.update.not-found'),
-    type: ErrorDto,
-  })
-  @ApiConflictResponse({
-    description: translate('route.ticket.update.conflict'),
     type: ErrorDto,
   })
   @Patch('/update/:id')
