@@ -1,6 +1,7 @@
+import { translate } from '@/i18n/translate';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import z from 'zod';
 import {
   CreateTicketDto,
@@ -46,7 +47,9 @@ export class TicketService {
       include: { event: true },
     });
     if (!ticket) {
-      throw new Error('Ticket no encontrado');
+      throw new NotFoundException([
+        translate('route.ticket.find-by-id.not-found'),
+      ]);
     }
     return { ticket };
   }
@@ -58,8 +61,10 @@ export class TicketService {
       where: { mail },
       include: { event: true },
     });
-    if (!ticketsByMail) {
-      throw new Error('Ticket no encontrado');
+    if (!ticketsByMail || ticketsByMail.length === 0) {
+      throw new NotFoundException([
+        translate('route.ticket.find-by-mail.not-found'),
+      ]);
     }
     return { tickets: ticketsByMail };
   }
@@ -71,8 +76,10 @@ export class TicketService {
       where: { eventId },
       include: { event: true },
     });
-    if (!ticketsByEvent) {
-      throw new Error('Ticket no encontrado');
+    if (!ticketsByEvent || ticketsByEvent.length === 0) {
+      throw new NotFoundException([
+        translate('route.ticket.find-by-event.not-found'),
+      ]);
     }
     return { tickets: ticketsByEvent };
   }

@@ -3,6 +3,7 @@ import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
 import { ErrorDto } from '@/shared/errors/errorType';
+import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import {
   Body,
   Controller,
@@ -77,9 +78,9 @@ export class TicketController {
     description: translate('route.ticket.find-by-id.not-found'),
     type: ErrorDto,
   })
-  @Get('/:id')
+  @Get('/find-by-id/:id')
   async findById(
-    @Param('id') id: string,
+    @Param('id', new ExistingRecord('ticket')) id: string,
   ): Promise<z.infer<typeof findByIdTicketResponseSchema>> {
     return await this.ticketService.findById(id);
   }
@@ -92,7 +93,7 @@ export class TicketController {
     description: translate('route.ticket.find-by-mail.not-found'),
     type: ErrorDto,
   })
-  @Get('/mail/:mail')
+  @Get('/find-by-mail/:mail')
   async findByMail(
     @Param('mail') mail: string,
   ): Promise<z.infer<typeof findByMailTicketResponseSchema>> {
@@ -107,7 +108,7 @@ export class TicketController {
     description: translate('route.ticket.find-by-event.not-found'),
     type: ErrorDto,
   })
-  @Get('/event/:eventId')
+  @Get('/find-by-event/:eventId')
   async findByEvent(
     @Param('eventId') eventId: string,
   ): Promise<z.infer<typeof findByEventTicketResponseSchema>> {
@@ -126,9 +127,9 @@ export class TicketController {
     description: translate('route.ticket.update.conflict'),
     type: ErrorDto,
   })
-  @Patch('/:id')
+  @Patch('/update/:id')
   async update(
-    @Param('id') id: string,
+    @Param('id', new ExistingRecord('ticket')) id: string,
     @Body() updateTicketDto: UpdateTicketDto,
   ): Promise<z.infer<typeof updateTicketResponseSchema>> {
     return await this.ticketService.update(id, updateTicketDto);
@@ -142,9 +143,9 @@ export class TicketController {
     description: translate('route.ticket.delete.not-found'),
     type: ErrorDto,
   })
-  @Delete('/:id')
+  @Delete('/delete/:id')
   async delete(
-    @Param('id') id: string,
+    @Param('id', new ExistingRecord('ticket')) id: string,
   ): Promise<z.infer<typeof deleteTicketResponseSchema>> {
     return await this.ticketService.delete(id);
   }
