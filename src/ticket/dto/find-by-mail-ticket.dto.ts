@@ -1,4 +1,4 @@
-import { eventSchema } from '@/exports';
+import { eventSchema } from '@/event/dto/event.dto';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import z from 'zod';
 import { ticketSchema } from './ticket.dto';
