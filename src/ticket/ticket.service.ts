@@ -79,9 +79,7 @@ export class TicketService {
       where: { id },
       data: dto,
     });
-    if (!ticket) {
-      throw new Error('Ticket no encontrado');
-    }
+
     return ticket;
   }
 
