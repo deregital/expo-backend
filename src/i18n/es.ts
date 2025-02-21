@@ -183,6 +183,26 @@ export default {
         'max-length': 'Los botones no pueden tener más de 20 caracteres',
       },
     },
+    ticket: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      eventId: {
+        uuid: 'El ID del evento debe ser un UUID',
+      },
+      fullName: {
+        required: 'El nombre es requerido',
+      },
+      mail: {
+        email: 'El email debe ser un email válido',
+      },
+      type: {
+        invalid: 'El tipo de ticket es inválido',
+      },
+      status: {
+        invalid: 'El estado del ticket es inválido',
+      },
+    },
   },
   route: {
     auth: {
@@ -493,6 +513,36 @@ export default {
       'last-message-timestamp': {
         success: 'Último mensaje obtenido',
         error: 'Error al obtener el último mensaje',
+      },
+    },
+    ticket: {
+      create: {
+        success: 'Ticket creado con éxito',
+        conflict: 'Error en la creación del ticket',
+      },
+      'find-all': {
+        success: 'Tickets obtenidos',
+      },
+      'find-by-id': {
+        success: 'Ticket obtenido',
+        'not-found': 'Ticket no encontrado',
+      },
+      'find-by-mail': {
+        success: 'Tickets por mail obtenidos',
+        'not-found': 'Tickets por mail no encontrados',
+      },
+      'find-by-event': {
+        success: 'Tickets por evento obtenidos',
+        'not-found': 'Tickets por evento no encontrados',
+      },
+      update: {
+        success: 'Ticket actualizado',
+        'not-found': 'Ticket no encontrado',
+        conflict: 'Error en la actualización del ticket',
+      },
+      delete: {
+        success: 'Ticket eliminado',
+        'not-found': 'Ticket no encontrado',
       },
     },
     webhook: {

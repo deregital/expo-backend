@@ -1361,6 +1361,156 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetLastMessageTimestampResponseDto"
+  /ticket/create:
+    post:
+      operationId: "TicketController_create"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTicketDto"
+      responses:
+        201:
+          description: "Ticket creado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateTicketResponseDto"
+  /ticket/all:
+    get:
+      operationId: "TicketController_findAll"
+      parameters: []
+      responses:
+        200:
+          description: "Tickets obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindAllTicketsResponseDto"
+  /ticket/find-by-id/{id}:
+    get:
+      operationId: "TicketController_findById"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Ticket obtenido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByIdTicketResponseDto"
+        404:
+          description: "Ticket no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /ticket/find-by-mail/{mail}:
+    get:
+      operationId: "TicketController_findByMail"
+      parameters:
+        - name: "mail"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Tickets por mail obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByMailTicketResponseDto"
+        404:
+          description: "Tickets por mail no encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /ticket/find-by-event/{eventId}:
+    get:
+      operationId: "TicketController_findByEvent"
+      parameters:
+        - name: "eventId"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Tickets por evento obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByEventTicketResponseDto"
+        404:
+          description: "Tickets por evento no encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /ticket/update/{id}:
+    patch:
+      operationId: "TicketController_update"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTicketDto"
+      responses:
+        200:
+          description: "Ticket actualizado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateTicketResponseDto"
+        404:
+          description: "Ticket no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "Error en la actualización del ticket"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /ticket/delete/{id}:
+    delete:
+      operationId: "TicketController_delete"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Ticket eliminado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteTicketResponseDto"
+        404:
+          description: "Ticket no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /webhook:
     get:
       operationId: "WebhookController_verify"
@@ -6962,3 +7112,530 @@ components:
             - "number"
       required:
         - "timestamp"
+    CreateTicketDto:
+      type:
+        - "object"
+      properties:
+        eventId:
+          type:
+            - "string"
+          format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PARTICIPANT"
+            - "SPECTATOR"
+            - "STAFF"
+        status:
+          type:
+            - "string"
+          enum:
+            - "BOOKED"
+            - "PAID"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        mail:
+          type:
+            - "string"
+          format: "email"
+      required:
+        - "eventId"
+        - "type"
+        - "status"
+        - "fullName"
+        - "mail"
+    CreateTicketResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        eventId:
+          type:
+            - "string"
+          format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PARTICIPANT"
+            - "SPECTATOR"
+            - "STAFF"
+        status:
+          type:
+            - "string"
+          enum:
+            - "BOOKED"
+            - "PAID"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        mail:
+          type:
+            - "string"
+          format: "email"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "eventId"
+        - "type"
+        - "status"
+        - "fullName"
+        - "mail"
+        - "created_at"
+        - "updated_at"
+    FindAllTicketsResponseDto:
+      type:
+        - "object"
+      properties:
+        tickets:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              eventId:
+                type:
+                  - "string"
+                format: "uuid"
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PARTICIPANT"
+                  - "SPECTATOR"
+                  - "STAFF"
+              status:
+                type:
+                  - "string"
+                enum:
+                  - "BOOKED"
+                  - "PAID"
+              fullName:
+                type:
+                  - "string"
+                minLength: 1
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              event:
+                type:
+                  - "object"
+                properties:
+                  name:
+                    type:
+                      - "string"
+                    minLength: 1
+                  date:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  location:
+                    type:
+                      - "string"
+                    minLength: 1
+                required:
+                  - "name"
+                  - "date"
+                  - "location"
+            required:
+              - "id"
+              - "eventId"
+              - "type"
+              - "status"
+              - "fullName"
+              - "mail"
+              - "created_at"
+              - "updated_at"
+              - "event"
+      required:
+        - "tickets"
+    FindByIdTicketResponseDto:
+      type:
+        - "object"
+      properties:
+        ticket:
+          type:
+            - "object"
+          properties:
+            id:
+              type:
+                - "string"
+              format: "uuid"
+            eventId:
+              type:
+                - "string"
+              format: "uuid"
+            type:
+              type:
+                - "string"
+              enum:
+                - "PARTICIPANT"
+                - "SPECTATOR"
+                - "STAFF"
+            status:
+              type:
+                - "string"
+              enum:
+                - "BOOKED"
+                - "PAID"
+            fullName:
+              type:
+                - "string"
+              minLength: 1
+            mail:
+              type:
+                - "string"
+              format: "email"
+            created_at:
+              type:
+                - "string"
+              format: "date-time"
+            updated_at:
+              type:
+                - "string"
+              format: "date-time"
+            event:
+              type:
+                - "object"
+              properties:
+                name:
+                  type:
+                    - "string"
+                  minLength: 1
+                date:
+                  type:
+                    - "string"
+                  format: "date-time"
+                location:
+                  type:
+                    - "string"
+                  minLength: 1
+              required:
+                - "name"
+                - "date"
+                - "location"
+          required:
+            - "id"
+            - "eventId"
+            - "type"
+            - "status"
+            - "fullName"
+            - "mail"
+            - "created_at"
+            - "updated_at"
+            - "event"
+      required:
+        - "ticket"
+    FindByMailTicketResponseDto:
+      type:
+        - "object"
+      properties:
+        tickets:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              eventId:
+                type:
+                  - "string"
+                format: "uuid"
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PARTICIPANT"
+                  - "SPECTATOR"
+                  - "STAFF"
+              status:
+                type:
+                  - "string"
+                enum:
+                  - "BOOKED"
+                  - "PAID"
+              fullName:
+                type:
+                  - "string"
+                minLength: 1
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              event:
+                type:
+                  - "object"
+                properties:
+                  name:
+                    type:
+                      - "string"
+                    minLength: 1
+                  date:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  location:
+                    type:
+                      - "string"
+                    minLength: 1
+                required:
+                  - "name"
+                  - "date"
+                  - "location"
+            required:
+              - "id"
+              - "eventId"
+              - "type"
+              - "status"
+              - "fullName"
+              - "mail"
+              - "created_at"
+              - "updated_at"
+              - "event"
+      required:
+        - "tickets"
+    FindByEventTicketResponseDto:
+      type:
+        - "object"
+      properties:
+        tickets:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              eventId:
+                type:
+                  - "string"
+                format: "uuid"
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PARTICIPANT"
+                  - "SPECTATOR"
+                  - "STAFF"
+              status:
+                type:
+                  - "string"
+                enum:
+                  - "BOOKED"
+                  - "PAID"
+              fullName:
+                type:
+                  - "string"
+                minLength: 1
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              event:
+                type:
+                  - "object"
+                properties:
+                  name:
+                    type:
+                      - "string"
+                    minLength: 1
+                  date:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  location:
+                    type:
+                      - "string"
+                    minLength: 1
+                required:
+                  - "name"
+                  - "date"
+                  - "location"
+            required:
+              - "id"
+              - "eventId"
+              - "type"
+              - "status"
+              - "fullName"
+              - "mail"
+              - "created_at"
+              - "updated_at"
+              - "event"
+      required:
+        - "tickets"
+    UpdateTicketDto:
+      type:
+        - "object"
+      properties:
+        type:
+          type:
+            - "string"
+          enum:
+            - "PARTICIPANT"
+            - "SPECTATOR"
+            - "STAFF"
+        status:
+          type:
+            - "string"
+          enum:
+            - "BOOKED"
+            - "PAID"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        mail:
+          type:
+            - "string"
+          format: "email"
+    UpdateTicketResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        eventId:
+          type:
+            - "string"
+          format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PARTICIPANT"
+            - "SPECTATOR"
+            - "STAFF"
+        status:
+          type:
+            - "string"
+          enum:
+            - "BOOKED"
+            - "PAID"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        mail:
+          type:
+            - "string"
+          format: "email"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "eventId"
+        - "type"
+        - "status"
+        - "fullName"
+        - "mail"
+        - "created_at"
+        - "updated_at"
+    DeleteTicketResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        eventId:
+          type:
+            - "string"
+          format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PARTICIPANT"
+            - "SPECTATOR"
+            - "STAFF"
+        status:
+          type:
+            - "string"
+          enum:
+            - "BOOKED"
+            - "PAID"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        mail:
+          type:
+            - "string"
+          format: "email"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "eventId"
+        - "type"
+        - "status"
+        - "fullName"
+        - "mail"
+        - "created_at"
+        - "updated_at"

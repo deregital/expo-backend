@@ -31,6 +31,13 @@ export default [
       'unused-imports': unusedImportPlugin,
     },
     rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          name: '@/exports',
+          message: 'NO SE IMPORTA DESDE EXPORTS PORQUE TRAE PROBLEMAS',
+        },
+      ],
       'unused-imports/no-unused-imports': 'warn',
       '@typescript-eslint/interface-name-prefix': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
