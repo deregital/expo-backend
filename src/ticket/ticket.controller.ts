@@ -5,6 +5,37 @@ import { translate } from '@/i18n/translate';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import {
+  CreateTicketDto,
+  CreateTicketResponseDto,
+  createTicketResponseSchema,
+} from '@/ticket/dto/create-ticket.dto';
+import {
+  DeleteTicketResponseDto,
+  deleteTicketResponseSchema,
+} from '@/ticket/dto/delete-ticket.dto';
+import {
+  FindAllTicketsResponseDto,
+  findAllTicketsResponseSchema,
+} from '@/ticket/dto/find-all-tickets.dto';
+import {
+  FindByEventTicketResponseDto,
+  findByEventTicketResponseSchema,
+} from '@/ticket/dto/find-by-event-ticket.dto';
+import {
+  FindByIdTicketResponseDto,
+  findByIdTicketResponseSchema,
+} from '@/ticket/dto/find-by-id-ticket.dto';
+import {
+  FindByMailTicketResponseDto,
+  findByMailTicketResponseSchema,
+} from '@/ticket/dto/find-by-mail-ticket.dto';
+import {
+  UpdateTicketDto,
+  UpdateTicketResponseDto,
+  updateTicketResponseSchema,
+} from '@/ticket/dto/update-ticket.dto';
+import { TicketService } from '@/ticket/ticket.service';
+import {
   Body,
   Controller,
   Delete,
@@ -22,27 +53,6 @@ import {
 } from '@nestjs/swagger';
 import z from 'zod';
 import { Role } from '~/types/prisma-schema';
-import {
-  CreateTicketDto,
-  CreateTicketResponseDto,
-  createTicketResponseSchema,
-} from './dto/create-ticket.dto';
-import {
-  DeleteTicketResponseDto,
-  deleteTicketResponseSchema,
-  FindAllTicketsResponseDto,
-  findAllTicketsResponseSchema,
-  FindByEventTicketResponseDto,
-  findByEventTicketResponseSchema,
-  FindByIdTicketResponseDto,
-  findByIdTicketResponseSchema,
-  FindByMailTicketResponseDto,
-  findByMailTicketResponseSchema,
-  UpdateTicketDto,
-  UpdateTicketResponseDto,
-  updateTicketResponseSchema,
-} from './exports';
-import { TicketService } from './ticket.service';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)

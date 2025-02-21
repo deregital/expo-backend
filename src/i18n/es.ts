@@ -196,6 +196,12 @@ export default {
       mail: {
         email: 'El email debe ser un email válido',
       },
+      type: {
+        invalid: 'El tipo de ticket es inválido',
+      },
+      status: {
+        invalid: 'El estado del ticket es inválido',
+      },
     },
   },
   route: {

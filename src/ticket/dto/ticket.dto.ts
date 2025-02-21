@@ -8,8 +8,12 @@ export const ticketSchema = z.object({
   id: z.string().uuid({ message: translate('model.ticket.id.uuid') }),
   eventId: eventSchema.shape.id,
 
-  type: z.nativeEnum(TicketType),
-  status: z.nativeEnum(TicketStatus),
+  type: z.nativeEnum(TicketType, {
+    message: translate('model.ticket.type.invalid'),
+  }),
+  status: z.nativeEnum(TicketStatus, {
+    message: translate('model.ticket.status.invalid'),
+  }),
 
   fullName: z.string().min(1, translate('model.ticket.fullName.required')),
   mail: z.string().email(translate('model.ticket.mail.email')),

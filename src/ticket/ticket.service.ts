@@ -1,21 +1,20 @@
-import { translate } from '@/i18n/translate';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import z from 'zod';
 import {
   CreateTicketDto,
   createTicketResponseSchema,
-} from './dto/create-ticket.dto';
-import { findByIdTicketResponseSchema } from './dto/find-by-id-ticket.dto';
+} from '@/ticket/dto/create-ticket.dto';
+import { deleteTicketResponseSchema } from '@/ticket/dto/delete-ticket.dto';
+import { findAllTicketsResponseSchema } from '@/ticket/dto/find-all-tickets.dto';
+import { findByEventTicketResponseSchema } from '@/ticket/dto/find-by-event-ticket.dto';
+import { findByIdTicketResponseSchema } from '@/ticket/dto/find-by-id-ticket.dto';
+import { findByMailTicketResponseSchema } from '@/ticket/dto/find-by-mail-ticket.dto';
 import {
-  deleteTicketResponseSchema,
-  findAllTicketsResponseSchema,
-  findByEventTicketResponseSchema,
-  findByMailTicketResponseSchema,
   UpdateTicketDto,
   updateTicketResponseSchema,
-} from './exports';
+} from '@/ticket/dto/update-ticket.dto';
+import { Inject, Injectable } from '@nestjs/common';
+import z from 'zod';
 
 @Injectable()
 export class TicketService {
@@ -46,12 +45,8 @@ export class TicketService {
       where: { id },
       include: { event: true },
     });
-    if (!ticket) {
-      throw new NotFoundException([
-        translate('route.ticket.find-by-id.not-found'),
-      ]);
-    }
-    return { ticket };
+
+    return { ticket: ticket! };
   }
 
   async findByMail(
@@ -61,11 +56,7 @@ export class TicketService {
       where: { mail },
       include: { event: true },
     });
-    if (!ticketsByMail || ticketsByMail.length === 0) {
-      throw new NotFoundException([
-        translate('route.ticket.find-by-mail.not-found'),
-      ]);
-    }
+
     return { tickets: ticketsByMail };
   }
 
@@ -76,11 +67,7 @@ export class TicketService {
       where: { eventId },
       include: { event: true },
     });
-    if (!ticketsByEvent || ticketsByEvent.length === 0) {
-      throw new NotFoundException([
-        translate('route.ticket.find-by-event.not-found'),
-      ]);
-    }
+
     return { tickets: ticketsByEvent };
   }
 
