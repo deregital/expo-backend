@@ -384,6 +384,12 @@ export default {
         'not-found': 'Evento no encontrado',
       },
     },
+    pdf: {
+      'generate-pdf': {
+        success: 'Ticket generado con éxito',
+        'not-found': 'Ticket no encontrado',
+      },
+    },
     profile: {
       'find-all': {
         success: 'Perfiles obtenidos',
