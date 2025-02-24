@@ -27,7 +27,7 @@ export const createEventSchema = eventSchema
         )
         .optional(),
 
-      tags: z.array(tagSchema.shape.id),
+      tagsId: z.array(tagSchema.shape.id),
 
       eventTickets: z.array(
         z.object({

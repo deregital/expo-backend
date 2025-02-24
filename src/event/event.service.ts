@@ -56,7 +56,7 @@ export class EventService {
           ? { connect: dto.subEvents.map((subEvent) => ({ id: subEvent.id })) }
           : undefined,
 
-        tags: { connect: dto.tags.map((tag) => ({ id: tag })) },
+        tags: { connect: dto.tagsId.map((tag) => ({ id: tag })) },
         eventTickets: {
           create: dto.eventTickets.map((ticket) => ({
             amount: ticket.amount,

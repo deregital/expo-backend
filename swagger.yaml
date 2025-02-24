@@ -3893,7 +3893,7 @@ components:
               - "startingDate"
               - "endingDate"
               - "location"
-        tags:
+        tagsId:
           type:
             - "array"
           items:
@@ -3933,7 +3933,7 @@ components:
         - "endingDate"
         - "location"
         - "folderId"
-        - "tags"
+        - "tagsId"
         - "eventTickets"
     CreateEventResponseDto:
       type:

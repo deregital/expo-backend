@@ -75,7 +75,7 @@ export class EventController {
     @Body() createEventDto: CreateEventDto,
   ): Promise<z.infer<typeof createEventResponseSchema>> {
     const areValidTags = await Promise.all(
-      createEventDto.tags.map(async (tagId) => {
+      createEventDto.tagsId.map(async (tagId) => {
         const tag = await this.tagService.findById(tagId);
         return !!tag;
       }),
@@ -119,7 +119,7 @@ export class EventController {
           return await this.eventService.create({
             ...subEvent,
             tagGroupId: tagGroup.id,
-            tags: [],
+            tagsId: [],
             eventTickets: [],
           });
         }),
