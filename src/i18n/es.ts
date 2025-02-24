@@ -76,11 +76,11 @@ export default {
         required: 'La fecha es requerida',
         invalid: 'La fecha debe ser una fecha válida',
       },
-      starting_date: {
+      startingDate: {
         required: 'La fecha de inicio es requerida',
         invalid: 'La fecha de inicio debe ser una fecha válida',
       },
-      ending_date: {
+      endingDate: {
         required: 'La fecha de finalización es requerida',
         invalid: 'La fecha de finalización debe ser una fecha válida',
       },
@@ -353,6 +353,7 @@ export default {
         success: 'Evento creado con éxito',
         conflict: 'Error en la creación del evento',
         'folder-not-found': 'Carpeta de evento no encontrada',
+        'tag-not-found': 'Etiqueta no encontrada',
       },
       'get-all': {
         success: 'Eventos obtenidos con éxito',

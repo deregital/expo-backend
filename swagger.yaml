@@ -3591,6 +3591,14 @@ components:
                       type:
                         - "string"
                       format: "date-time"
+                    startingDate:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    endingDate:
+                      type:
+                        - "string"
+                      format: "date-time"
                     location:
                       type:
                         - "string"
@@ -3625,6 +3633,8 @@ components:
                     - "id"
                     - "name"
                     - "date"
+                    - "startingDate"
+                    - "endingDate"
                     - "location"
                     - "folderId"
                     - "tagAssistedId"
@@ -3685,6 +3695,14 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              startingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              endingDate:
+                type:
+                  - "string"
+                format: "date-time"
               location:
                 type:
                   - "string"
@@ -3719,6 +3737,8 @@ components:
               - "id"
               - "name"
               - "date"
+              - "startingDate"
+              - "endingDate"
               - "location"
               - "folderId"
               - "tagAssistedId"
@@ -3823,6 +3843,14 @@ components:
           type:
             - "string"
           format: "date-time"
+        startingDate:
+          type:
+            - "string"
+          format: "date-time"
+        endingDate:
+          type:
+            - "string"
+          format: "date-time"
         location:
           type:
             - "string"
@@ -3847,6 +3875,14 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              startingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              endingDate:
+                type:
+                  - "string"
+                format: "date-time"
               location:
                 type:
                   - "string"
@@ -3854,12 +3890,51 @@ components:
             required:
               - "name"
               - "date"
+              - "startingDate"
+              - "endingDate"
               - "location"
+        tags:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+            format: "uuid"
+        eventTickets:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              amount:
+                type:
+                  - "number"
+                minimum: 1
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PARTICIPANT"
+                  - "STAFF"
+                  - "SPECTATOR"
+              price:
+                type:
+                  - "number"
+                  - "null"
+            required:
+              - "amount"
+              - "type"
+              - "price"
       required:
         - "name"
         - "date"
+        - "startingDate"
+        - "endingDate"
         - "location"
         - "folderId"
+        - "tags"
+        - "eventTickets"
     CreateEventResponseDto:
       type:
         - "object"
@@ -3873,6 +3948,14 @@ components:
             - "string"
           minLength: 1
         date:
+          type:
+            - "string"
+          format: "date-time"
+        startingDate:
+          type:
+            - "string"
+          format: "date-time"
+        endingDate:
           type:
             - "string"
           format: "date-time"
@@ -3910,6 +3993,8 @@ components:
         - "id"
         - "name"
         - "date"
+        - "startingDate"
+        - "endingDate"
         - "location"
         - "folderId"
         - "tagAssistedId"
@@ -3968,6 +4053,14 @@ components:
                       type:
                         - "string"
                       format: "date-time"
+                    startingDate:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    endingDate:
+                      type:
+                        - "string"
+                      format: "date-time"
                     location:
                       type:
                         - "string"
@@ -4015,6 +4108,14 @@ components:
                           type:
                             - "string"
                           format: "date-time"
+                        startingDate:
+                          type:
+                            - "string"
+                          format: "date-time"
+                        endingDate:
+                          type:
+                            - "string"
+                          format: "date-time"
                         location:
                           type:
                             - "string"
@@ -4049,6 +4150,8 @@ components:
                         - "id"
                         - "name"
                         - "date"
+                        - "startingDate"
+                        - "endingDate"
                         - "location"
                         - "folderId"
                         - "tagAssistedId"
@@ -4072,6 +4175,14 @@ components:
                               - "string"
                             minLength: 1
                           date:
+                            type:
+                              - "string"
+                            format: "date-time"
+                          startingDate:
+                            type:
+                              - "string"
+                            format: "date-time"
+                          endingDate:
                             type:
                               - "string"
                             format: "date-time"
@@ -4109,6 +4220,8 @@ components:
                           - "id"
                           - "name"
                           - "date"
+                          - "startingDate"
+                          - "endingDate"
                           - "location"
                           - "folderId"
                           - "tagAssistedId"
@@ -4120,6 +4233,8 @@ components:
                     - "id"
                     - "name"
                     - "date"
+                    - "startingDate"
+                    - "endingDate"
                     - "location"
                     - "folderId"
                     - "tagAssistedId"
@@ -4152,6 +4267,14 @@ components:
                   - "string"
                 minLength: 1
               date:
+                type:
+                  - "string"
+                format: "date-time"
+              startingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              endingDate:
                 type:
                   - "string"
                 format: "date-time"
@@ -4202,6 +4325,14 @@ components:
                     type:
                       - "string"
                     format: "date-time"
+                  startingDate:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  endingDate:
+                    type:
+                      - "string"
+                    format: "date-time"
                   location:
                     type:
                       - "string"
@@ -4236,6 +4367,8 @@ components:
                   - "id"
                   - "name"
                   - "date"
+                  - "startingDate"
+                  - "endingDate"
                   - "location"
                   - "folderId"
                   - "tagAssistedId"
@@ -4259,6 +4392,14 @@ components:
                         - "string"
                       minLength: 1
                     date:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    startingDate:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    endingDate:
                       type:
                         - "string"
                       format: "date-time"
@@ -4296,6 +4437,8 @@ components:
                     - "id"
                     - "name"
                     - "date"
+                    - "startingDate"
+                    - "endingDate"
                     - "location"
                     - "folderId"
                     - "tagAssistedId"
@@ -4307,6 +4450,8 @@ components:
               - "id"
               - "name"
               - "date"
+              - "startingDate"
+              - "endingDate"
               - "location"
               - "folderId"
               - "tagAssistedId"
@@ -4332,6 +4477,14 @@ components:
             - "string"
           minLength: 1
         date:
+          type:
+            - "string"
+          format: "date-time"
+        startingDate:
+          type:
+            - "string"
+          format: "date-time"
+        endingDate:
           type:
             - "string"
           format: "date-time"
@@ -4384,6 +4537,14 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              startingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              endingDate:
+                type:
+                  - "string"
+                format: "date-time"
               location:
                 type:
                   - "string"
@@ -4418,6 +4579,8 @@ components:
               - "id"
               - "name"
               - "date"
+              - "startingDate"
+              - "endingDate"
               - "location"
               - "folderId"
               - "tagAssistedId"
@@ -4439,6 +4602,14 @@ components:
                 - "string"
               minLength: 1
             date:
+              type:
+                - "string"
+              format: "date-time"
+            startingDate:
+              type:
+                - "string"
+              format: "date-time"
+            endingDate:
               type:
                 - "string"
               format: "date-time"
@@ -4476,6 +4647,8 @@ components:
             - "id"
             - "name"
             - "date"
+            - "startingDate"
+            - "endingDate"
             - "location"
             - "folderId"
             - "tagAssistedId"
@@ -4487,6 +4660,8 @@ components:
         - "id"
         - "name"
         - "date"
+        - "startingDate"
+        - "endingDate"
         - "location"
         - "folderId"
         - "tagAssistedId"
@@ -4517,6 +4692,14 @@ components:
           type:
             - "string"
           minLength: 1
+        startingDate:
+          type:
+            - "string"
+          format: "date-time"
+        endingDate:
+          type:
+            - "string"
+          format: "date-time"
         subEvents:
           type:
             - "array"
@@ -4536,6 +4719,14 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              startingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              endingDate:
+                type:
+                  - "string"
+                format: "date-time"
               id:
                 oneOf:
                   - type:
@@ -4549,12 +4740,16 @@ components:
               - "name"
               - "location"
               - "date"
+              - "startingDate"
+              - "endingDate"
               - "id"
       required:
         - "name"
         - "folderId"
         - "date"
         - "location"
+        - "startingDate"
+        - "endingDate"
         - "subEvents"
     UpdateEventResponseDto:
       type:
@@ -4569,6 +4764,14 @@ components:
             - "string"
           minLength: 1
         date:
+          type:
+            - "string"
+          format: "date-time"
+        startingDate:
+          type:
+            - "string"
+          format: "date-time"
+        endingDate:
           type:
             - "string"
           format: "date-time"
@@ -4681,6 +4884,8 @@ components:
         - "id"
         - "name"
         - "date"
+        - "startingDate"
+        - "endingDate"
         - "location"
         - "folderId"
         - "tagAssistedId"
@@ -4702,6 +4907,14 @@ components:
             - "string"
           minLength: 1
         date:
+          type:
+            - "string"
+          format: "date-time"
+        startingDate:
+          type:
+            - "string"
+          format: "date-time"
+        endingDate:
           type:
             - "string"
           format: "date-time"
@@ -4739,6 +4952,8 @@ components:
         - "id"
         - "name"
         - "date"
+        - "startingDate"
+        - "endingDate"
         - "location"
         - "folderId"
         - "tagAssistedId"

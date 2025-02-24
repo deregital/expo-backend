@@ -34,8 +34,8 @@ export class EventService {
       data: {
         name: dto.name,
         date: dto.date,
-        starting_date: dto.starting_date,
-        ending_date: dto.ending_date,
+        startingDate: dto.startingDate,
+        endingDate: dto.endingDate,
         location: dto.location,
         folder: dto.folderId ? { connect: { id: dto.folderId } } : undefined,
         tagAssisted: {
@@ -56,7 +56,7 @@ export class EventService {
           ? { connect: dto.subEvents.map((subEvent) => ({ id: subEvent.id })) }
           : undefined,
 
-        tags: { connect: dto.tags.map((tag) => ({ id: tag.id })) },
+        tags: { connect: dto.tags.map((tag) => ({ id: tag })) },
         eventTickets: {
           create: dto.eventTickets.map((ticket) => ({
             amount: ticket.amount,
@@ -157,7 +157,7 @@ export class EventService {
     id: Event['id'];
     event: Pick<
       Event,
-      'date' | 'location' | 'name' | 'starting_date' | 'ending_date'
+      'date' | 'location' | 'name' | 'startingDate' | 'endingDate'
     >;
     supraEventId: Event['id'];
     tagGroupId: TagGroup['id'];
@@ -168,15 +168,15 @@ export class EventService {
       },
       update: {
         date: event.date,
-        starting_date: event.starting_date,
-        ending_date: event.ending_date,
+        startingDate: event.startingDate,
+        endingDate: event.endingDate,
         location: event.location,
         name: event.name,
       },
       create: {
         date: event.date,
-        starting_date: event.starting_date,
-        ending_date: event.ending_date,
+        startingDate: event.startingDate,
+        endingDate: event.endingDate,
         location: event.location,
         name: event.name,
         supraEvent: {

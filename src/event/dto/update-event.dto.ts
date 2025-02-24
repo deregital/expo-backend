@@ -10,8 +10,8 @@ export const updateEventSchema = eventSchema
     folderId: true,
     date: true,
     location: true,
-    starting_date: true,
-    ending_date: true,
+    startingDate: true,
+    endingDate: true,
   })
   .merge(
     z.object({
@@ -21,8 +21,8 @@ export const updateEventSchema = eventSchema
             name: true,
             location: true,
             date: true,
-            starting_date: true,
-            ending_date: true,
+            startingDate: true,
+            endingDate: true,
           })
           .extend({
             id: eventSchema.shape.id.or(z.literal('')),

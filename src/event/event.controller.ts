@@ -74,6 +74,19 @@ export class EventController {
   async create(
     @Body() createEventDto: CreateEventDto,
   ): Promise<z.infer<typeof createEventResponseSchema>> {
+    const areValidTags = await Promise.all(
+      createEventDto.tags.map(async (tagId) => {
+        const tag = await this.tagService.findById(tagId);
+        return !!tag;
+      }),
+    );
+
+    if (areValidTags.includes(false)) {
+      throw new NotFoundException([
+        translate('route.event.create.tag-not-found'),
+      ]);
+    }
+
     const eventTagGroup = await this.tagGroupService.create({
       color: '#666666',
       isExclusive: true,
@@ -228,8 +241,8 @@ export class EventController {
         event: {
           ...subEvent,
           date: newDate,
-          starting_date: new Date(subEvent.starting_date),
-          ending_date: new Date(subEvent.ending_date),
+          startingDate: new Date(subEvent.startingDate),
+          endingDate: new Date(subEvent.endingDate),
         },
         id: subEvent.id,
         supraEventId: event.id,

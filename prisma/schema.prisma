@@ -133,9 +133,9 @@ model Tag {
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  Event      Event[]  @relation("EVENT_X_TAGS")
 
   @@map("TAG")
-  Event Event[] @relation("EVENT_X_TAGS")
 }
 
 model TagGroup {
@@ -152,12 +152,12 @@ model TagGroup {
 }
 
 model Event {
-  id            String         @id @default(uuid())
-  name          String
-  date          DateTime
-  starting_date DateTime
-  ending_date   DateTime
-  location      String
+  id           String   @id @default(uuid())
+  name         String
+  date         DateTime
+  startingDate DateTime @map("starting_date")
+  endingDate   DateTime @map("ending_date")
+  location     String
 
   folderId String?      @map("folder_id")
   folder   EventFolder? @relation("EVENT_FOLDER_X_EVENT", fields: [folderId], references: [id], onDelete: Cascade)
@@ -227,12 +227,12 @@ model Enums {
 }
 
 model EventTicket {
-  id       String     @id @default(uuid())
-  eventId  String     @map("event_id")
-  event    Event      @relation("EVENT_X_EVENTTICKET", fields: [eventId], references: [id], onDelete: Cascade)
-  amount   Int
-  type     TicketType
-  price    Float?
+  id      String     @id @default(uuid())
+  eventId String     @map("event_id")
+  event   Event      @relation("EVENT_X_EVENTTICKET", fields: [eventId], references: [id], onDelete: Cascade)
+  amount  Int
+  type    TicketType
+  price   Float?
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

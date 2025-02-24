@@ -10,13 +10,13 @@ export const eventSchema = z.object({
     required_error: translate('model.event.date.required'),
     invalid_type_error: translate('model.event.date.invalid'),
   }),
-  starting_date: z.coerce.date({
-    required_error: translate('model.event.starting_date.required'),
-    invalid_type_error: translate('model.event.starting_date.invalid'),
+  startingDate: z.coerce.date({
+    required_error: translate('model.event.startingDate.required'),
+    invalid_type_error: translate('model.event.startingDate.invalid'),
   }),
-  ending_date: z.coerce.date({
-    required_error: translate('model.event.ending_date.required'),
-    invalid_type_error: translate('model.event.ending_date.invalid'),
+  endingDate: z.coerce.date({
+    required_error: translate('model.event.endingDate.required'),
+    invalid_type_error: translate('model.event.endingDate.invalid'),
   }),
   location: z.string().min(1, translate('model.event.location.required')),
 

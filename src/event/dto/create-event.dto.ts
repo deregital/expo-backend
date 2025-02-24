@@ -8,8 +8,8 @@ export const createEventSchema = eventSchema
   .pick({
     name: true,
     date: true,
-    starting_date: true,
-    ending_date: true,
+    startingDate: true,
+    endingDate: true,
     location: true,
     folderId: true,
   })
@@ -20,14 +20,14 @@ export const createEventSchema = eventSchema
           eventSchema.pick({
             name: true,
             date: true,
-            starting_date: true,
-            ending_date: true,
+            startingDate: true,
+            endingDate: true,
             location: true,
           }),
         )
         .optional(),
 
-      tags: z.array(tagSchema),
+      tags: z.array(tagSchema.shape.id),
 
       eventTickets: z.array(
         z.object({
