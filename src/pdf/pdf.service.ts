@@ -3,18 +3,13 @@ import { PrismaService } from '@/prisma/prisma.service';
 import { Inject, Injectable } from '@nestjs/common';
 import { BLANK_PDF, Template } from '@pdfme/common';
 import { generate } from '@pdfme/generator';
-
-//const PDFDocument = require('pdfkit');
-
-export interface PdfTicketResult {
-  pdf: Buffer;
-}
+import { line, text } from '@pdfme/schemas';
 
 @Injectable()
 export class PdfService {
   constructor(@Inject(PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
-  async generatePdfTicket(id: string): Promise<PdfTicketResult> {
+  async generatePdfTicket(id: string): Promise<Buffer> {
     const ticket = await this.prisma.ticket.findUnique({
       where: { id },
       include: {
@@ -59,11 +54,12 @@ export class PdfService {
       },
     ];
 
-    // 'generate' retorna una Promesa con un Buffer
-    const result = await generate({ template, inputs });
-    const pdf = Buffer.from(result);
+    const plugins = {
+      text,
+      line,
+    };
 
-    // Devuelves un objeto que cumpla con tu tipado personalizado
-    return { pdf };
+    const pdf = await generate({ template, inputs, plugins });
+    return Buffer.from(pdf.buffer);
   }
 }
