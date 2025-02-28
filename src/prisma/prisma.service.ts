@@ -77,7 +77,7 @@ export class PrismaService implements OnModuleInit {
           },
         },
       },
-    }) as PrismaClient;
+    }) as unknown as PrismaClient;
   }
 
   extendWithChat(): PrismaClient {

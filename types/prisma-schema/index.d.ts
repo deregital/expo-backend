@@ -112,23 +112,22 @@ export namespace $Enums {
   export type TicketType = (typeof TicketType)[keyof typeof TicketType];
 }
 
-  export const TagType: {
-    PROFILE: 'PROFILE';
-    EVENT: 'EVENT';
-    PARTICIPANT: 'PARTICIPANT';
-    NOT_IN_SYSTEM: 'NOT_IN_SYSTEM';
-  };
+export const TagType: {
+  PROFILE: 'PROFILE';
+  EVENT: 'EVENT';
+  PARTICIPANT: 'PARTICIPANT';
+  NOT_IN_SYSTEM: 'NOT_IN_SYSTEM';
+};
 
-  export type TagType = (typeof TagType)[keyof typeof TagType];
+export type TagType = (typeof TagType)[keyof typeof TagType];
 
-  export const MessageState: {
-    SENT: 'SENT';
-    RECEIVED: 'RECEIVED';
-    SEEN: 'SEEN';
-  };
+export const MessageState: {
+  SENT: 'SENT';
+  RECEIVED: 'RECEIVED';
+  SEEN: 'SEEN';
+};
 
-  export type MessageState = (typeof MessageState)[keyof typeof MessageState];
-}
+export type MessageState = (typeof MessageState)[keyof typeof MessageState];
 
 export type Role = $Enums.Role;
 
