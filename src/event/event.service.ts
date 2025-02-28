@@ -2,6 +2,7 @@ import {
   CreateEventDto,
   createEventResponseSchema,
 } from '@/event/dto/create-event.dto';
+import { getActiveEventsResponseSchema } from '@/event/dto/get-active-events.dto';
 import { getAllEventsResponseSchema } from '@/event/dto/get-all-event.dto';
 import {
   getByIdEventResponseSchema,
@@ -16,7 +17,7 @@ import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Inject, Injectable } from '@nestjs/common';
 import { z } from 'zod';
-import { Event, TagGroup, TagType } from '~/types';
+import { Event, EventTicket, TagGroup, TagType } from '~/types/prisma-schema';
 import { deleteEventResponseSchema } from './dto/delete-event.dto';
 
 @Injectable()
@@ -103,6 +104,7 @@ export class EventService {
       where: { id },
       include: {
         subEvents: true,
+        eventTickets: true,
         supraEvent: true,
       },
     });
@@ -126,7 +128,9 @@ export class EventService {
 
   async update(
     id: Event['id'],
-    updateEventDto: UpdateEventDto,
+    updateEventDto: Omit<UpdateEventDto, 'eventTickets'> & {
+      eventTickets: Pick<EventTicket, 'id' | 'amount' | 'price' | 'type'>[];
+    },
   ): Promise<z.infer<typeof updateEventResponseSchema>> {
     return await this.prisma.event.update({
       where: { id },
@@ -134,6 +138,16 @@ export class EventService {
         name: updateEventDto.name,
         date: updateEventDto.date,
         location: updateEventDto.location,
+        startingDate: updateEventDto.startingDate,
+        endingDate: updateEventDto.endingDate,
+        eventTickets: {
+          set: updateEventDto.eventTickets.map((ticket) => ({
+            id: ticket.id,
+            amount: ticket.amount,
+            price: ticket.price,
+            type: ticket.type,
+          })),
+        },
         folder: updateEventDto.folderId
           ? { connect: { id: updateEventDto.folderId } }
           : { disconnect: true },
@@ -142,6 +156,14 @@ export class EventService {
         tagAssisted: {
           include: {
             group: true,
+          },
+        },
+        eventTickets: {
+          select: {
+            id: true,
+            amount: true,
+            price: true,
+            type: true,
           },
         },
       },
@@ -215,5 +237,33 @@ export class EventService {
       where: { id },
     });
     return deletedEvent;
+  }
+
+  async toggleActive(
+    id: string,
+    { active }: { active: boolean },
+  ): Promise<Event> {
+    return await this.prisma.event.update({
+      where: { id },
+      data: {
+        active,
+      },
+    });
+  }
+
+  async findActive(): Promise<z.infer<typeof getActiveEventsResponseSchema>> {
+    const events = await this.prisma.event.findMany({
+      where: {
+        active: true,
+        endingDate: {
+          lt: new Date(),
+        },
+      },
+      include: {
+        eventTickets: true,
+      },
+    });
+
+    return { events };
   }
 }

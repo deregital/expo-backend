@@ -129,6 +129,10 @@ export class PrismaService implements OnModuleInit {
     return this.db.event;
   }
 
+  get eventTicket(): PrismaClient['eventTicket'] {
+    return this.db.eventTicket;
+  }
+
   get eventFolder(): PrismaClient['eventFolder'] {
     return this.db.eventFolder;
   }

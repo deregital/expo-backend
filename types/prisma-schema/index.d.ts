@@ -9904,6 +9904,7 @@ export namespace Prisma {
     tagAssistedId: string | null;
     tagConfirmedId: string | null;
     supraEventId: string | null;
+    active: boolean | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -9919,6 +9920,7 @@ export namespace Prisma {
     tagAssistedId: string | null;
     tagConfirmedId: string | null;
     supraEventId: string | null;
+    active: boolean | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -9934,6 +9936,7 @@ export namespace Prisma {
     tagAssistedId: number;
     tagConfirmedId: number;
     supraEventId: number;
+    active: number;
     created_at: number;
     updated_at: number;
     _all: number;
@@ -9950,6 +9953,7 @@ export namespace Prisma {
     tagAssistedId?: true;
     tagConfirmedId?: true;
     supraEventId?: true;
+    active?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -9965,6 +9969,7 @@ export namespace Prisma {
     tagAssistedId?: true;
     tagConfirmedId?: true;
     supraEventId?: true;
+    active?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -9980,6 +9985,7 @@ export namespace Prisma {
     tagAssistedId?: true;
     tagConfirmedId?: true;
     supraEventId?: true;
+    active?: true;
     created_at?: true;
     updated_at?: true;
     _all?: true;
@@ -10071,6 +10077,7 @@ export namespace Prisma {
     tagAssistedId: string;
     tagConfirmedId: string;
     supraEventId: string | null;
+    active: boolean;
     created_at: Date;
     updated_at: Date;
     _count: EventCountAggregateOutputType | null;
@@ -10105,6 +10112,7 @@ export namespace Prisma {
       tagAssistedId?: boolean;
       tagConfirmedId?: boolean;
       supraEventId?: boolean;
+      active?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       folder?: boolean | Event$folderArgs<ExtArgs>;
@@ -10133,6 +10141,7 @@ export namespace Prisma {
       tagAssistedId?: boolean;
       tagConfirmedId?: boolean;
       supraEventId?: boolean;
+      active?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       folder?: boolean | Event$folderArgs<ExtArgs>;
@@ -10154,6 +10163,7 @@ export namespace Prisma {
     tagAssistedId?: boolean;
     tagConfirmedId?: boolean;
     supraEventId?: boolean;
+    active?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
   };
@@ -10204,6 +10214,7 @@ export namespace Prisma {
         tagAssistedId: string;
         tagConfirmedId: string;
         supraEventId: string | null;
+        active: boolean;
         created_at: Date;
         updated_at: Date;
       },
@@ -10757,6 +10768,7 @@ export namespace Prisma {
     readonly tagAssistedId: FieldRef<'Event', 'String'>;
     readonly tagConfirmedId: FieldRef<'Event', 'String'>;
     readonly supraEventId: FieldRef<'Event', 'String'>;
+    readonly active: FieldRef<'Event', 'Boolean'>;
     readonly created_at: FieldRef<'Event', 'DateTime'>;
     readonly updated_at: FieldRef<'Event', 'DateTime'>;
   }
@@ -16792,6 +16804,7 @@ export namespace Prisma {
     tagAssistedId: 'tagAssistedId';
     tagConfirmedId: 'tagConfirmedId';
     supraEventId: 'supraEventId';
+    active: 'active';
     created_at: 'created_at';
     updated_at: 'updated_at';
   };
@@ -17683,6 +17696,7 @@ export namespace Prisma {
     tagAssistedId?: StringFilter<'Event'> | string;
     tagConfirmedId?: StringFilter<'Event'> | string;
     supraEventId?: StringNullableFilter<'Event'> | string | null;
+    active?: BoolFilter<'Event'> | boolean;
     created_at?: DateTimeFilter<'Event'> | Date | string;
     updated_at?: DateTimeFilter<'Event'> | Date | string;
     folder?: XOR<
@@ -17708,6 +17722,7 @@ export namespace Prisma {
     tagAssistedId?: SortOrder;
     tagConfirmedId?: SortOrder;
     supraEventId?: SortOrderInput | SortOrder;
+    active?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     folder?: EventFolderOrderByWithRelationInput;
@@ -17734,6 +17749,7 @@ export namespace Prisma {
       location?: StringFilter<'Event'> | string;
       folderId?: StringNullableFilter<'Event'> | string | null;
       supraEventId?: StringNullableFilter<'Event'> | string | null;
+      active?: BoolFilter<'Event'> | boolean;
       created_at?: DateTimeFilter<'Event'> | Date | string;
       updated_at?: DateTimeFilter<'Event'> | Date | string;
       folder?: XOR<
@@ -17761,6 +17777,7 @@ export namespace Prisma {
     tagAssistedId?: SortOrder;
     tagConfirmedId?: SortOrder;
     supraEventId?: SortOrderInput | SortOrder;
+    active?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     _count?: EventCountOrderByAggregateInput;
@@ -17786,6 +17803,7 @@ export namespace Prisma {
     tagAssistedId?: StringWithAggregatesFilter<'Event'> | string;
     tagConfirmedId?: StringWithAggregatesFilter<'Event'> | string;
     supraEventId?: StringNullableWithAggregatesFilter<'Event'> | string | null;
+    active?: BoolWithAggregatesFilter<'Event'> | boolean;
     created_at?: DateTimeWithAggregatesFilter<'Event'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Event'> | Date | string;
   };
@@ -18788,6 +18806,7 @@ export namespace Prisma {
     startingDate: Date | string;
     endingDate: Date | string;
     location: string;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     folder?: EventFolderCreateNestedOneWithoutEventsInput;
@@ -18810,6 +18829,7 @@ export namespace Prisma {
     tagAssistedId: string;
     tagConfirmedId: string;
     supraEventId?: string | null;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
@@ -18824,6 +18844,7 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     folder?: EventFolderUpdateOneWithoutEventsNestedInput;
@@ -18846,6 +18867,7 @@ export namespace Prisma {
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
@@ -18864,6 +18886,7 @@ export namespace Prisma {
     tagAssistedId: string;
     tagConfirmedId: string;
     supraEventId?: string | null;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -18875,6 +18898,7 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -18890,6 +18914,7 @@ export namespace Prisma {
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -19808,6 +19833,7 @@ export namespace Prisma {
     tagAssistedId?: SortOrder;
     tagConfirmedId?: SortOrder;
     supraEventId?: SortOrder;
+    active?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -19823,6 +19849,7 @@ export namespace Prisma {
     tagAssistedId?: SortOrder;
     tagConfirmedId?: SortOrder;
     supraEventId?: SortOrder;
+    active?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -19838,6 +19865,7 @@ export namespace Prisma {
     tagAssistedId?: SortOrder;
     tagConfirmedId?: SortOrder;
     supraEventId?: SortOrder;
+    active?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -23801,6 +23829,7 @@ export namespace Prisma {
     startingDate: Date | string;
     endingDate: Date | string;
     location: string;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     folder?: EventFolderCreateNestedOneWithoutEventsInput;
@@ -23821,6 +23850,7 @@ export namespace Prisma {
     folderId?: string | null;
     tagConfirmedId: string;
     supraEventId?: string | null;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
@@ -23843,6 +23873,7 @@ export namespace Prisma {
     startingDate: Date | string;
     endingDate: Date | string;
     location: string;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     folder?: EventFolderCreateNestedOneWithoutEventsInput;
@@ -23863,6 +23894,7 @@ export namespace Prisma {
     folderId?: string | null;
     tagAssistedId: string;
     supraEventId?: string | null;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
@@ -24013,6 +24045,7 @@ export namespace Prisma {
     startingDate: Date | string;
     endingDate: Date | string;
     location: string;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     folder?: EventFolderCreateNestedOneWithoutEventsInput;
@@ -24034,6 +24067,7 @@ export namespace Prisma {
     tagAssistedId: string;
     tagConfirmedId: string;
     supraEventId?: string | null;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
@@ -24113,6 +24147,7 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     folder?: EventFolderUpdateOneWithoutEventsNestedInput;
@@ -24133,6 +24168,7 @@ export namespace Prisma {
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
@@ -24167,6 +24203,7 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     folder?: EventFolderUpdateOneWithoutEventsNestedInput;
@@ -24187,6 +24224,7 @@ export namespace Prisma {
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
@@ -24334,6 +24372,7 @@ export namespace Prisma {
     tagAssistedId?: StringFilter<'Event'> | string;
     tagConfirmedId?: StringFilter<'Event'> | string;
     supraEventId?: StringNullableFilter<'Event'> | string | null;
+    active?: BoolFilter<'Event'> | boolean;
     created_at?: DateTimeFilter<'Event'> | Date | string;
     updated_at?: DateTimeFilter<'Event'> | Date | string;
   };
@@ -24507,6 +24546,7 @@ export namespace Prisma {
     startingDate: Date | string;
     endingDate: Date | string;
     location: string;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     folder?: EventFolderCreateNestedOneWithoutEventsInput;
@@ -24528,6 +24568,7 @@ export namespace Prisma {
     tagAssistedId: string;
     tagConfirmedId: string;
     supraEventId?: string | null;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     tags?: TagUncheckedCreateNestedManyWithoutEventInput;
@@ -24549,6 +24590,7 @@ export namespace Prisma {
     startingDate: Date | string;
     endingDate: Date | string;
     location: string;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     folder?: EventFolderCreateNestedOneWithoutEventsInput;
@@ -24569,6 +24611,7 @@ export namespace Prisma {
     folderId?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
@@ -24815,6 +24858,7 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     folder?: EventFolderUpdateOneWithoutEventsNestedInput;
@@ -24836,6 +24880,7 @@ export namespace Prisma {
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
@@ -24943,6 +24988,7 @@ export namespace Prisma {
     startingDate: Date | string;
     endingDate: Date | string;
     location: string;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     tagAssisted: TagCreateNestedOneWithoutAssistedEventInput;
@@ -24963,6 +25009,7 @@ export namespace Prisma {
     tagAssistedId: string;
     tagConfirmedId: string;
     supraEventId?: string | null;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
@@ -25173,6 +25220,7 @@ export namespace Prisma {
     startingDate: Date | string;
     endingDate: Date | string;
     location: string;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     folder?: EventFolderCreateNestedOneWithoutEventsInput;
@@ -25194,6 +25242,7 @@ export namespace Prisma {
     tagAssistedId: string;
     tagConfirmedId: string;
     supraEventId?: string | null;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
@@ -25235,6 +25284,7 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     folder?: EventFolderUpdateOneWithoutEventsNestedInput;
@@ -25256,6 +25306,7 @@ export namespace Prisma {
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
@@ -26062,6 +26113,7 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     folder?: EventFolderUpdateOneWithoutEventsNestedInput;
@@ -26083,6 +26135,7 @@ export namespace Prisma {
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
@@ -26100,6 +26153,7 @@ export namespace Prisma {
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -26158,6 +26212,7 @@ export namespace Prisma {
     folderId?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -26178,6 +26233,7 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     folder?: EventFolderUpdateOneWithoutEventsNestedInput;
@@ -26198,6 +26254,7 @@ export namespace Prisma {
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
@@ -26215,6 +26272,7 @@ export namespace Prisma {
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -26293,6 +26351,7 @@ export namespace Prisma {
     tagAssistedId: string;
     tagConfirmedId: string;
     supraEventId?: string | null;
+    active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -26304,6 +26363,7 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tagAssisted?: TagUpdateOneRequiredWithoutAssistedEventNestedInput;
@@ -26324,6 +26384,7 @@ export namespace Prisma {
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
@@ -26341,6 +26402,7 @@ export namespace Prisma {
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };

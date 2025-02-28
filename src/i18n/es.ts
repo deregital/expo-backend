@@ -191,6 +191,14 @@ export default {
         'max-length': 'Los botones no pueden tener más de 20 caracteres',
       },
     },
+    eventTicket: {
+      amount: {
+        min: 'La cantidad de tickets debe ser mayor a 0',
+      },
+      price: {
+        min: 'El precio de los tickets debe ser mayor a 0',
+      },
+    },
   },
   route: {
     auth: {
@@ -367,9 +375,15 @@ export default {
         success: 'Evento actualizado con éxito',
         'not-found': 'Evento no encontrado',
         'subevent-not-found': 'Subevento no encontrado',
+        'active-event-not-editable': 'Evento activo no editable',
       },
       delete: {
         success: 'Evento eliminado con éxito',
+        'not-found': 'Evento no encontrado',
+      },
+      'toggle-active': {
+        success: 'Evento activo cambiado con éxito',
+        'active-event-not-editable': 'Evento activo no editable',
         'not-found': 'Evento no encontrado',
       },
     },

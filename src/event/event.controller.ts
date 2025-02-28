@@ -2,6 +2,7 @@ import { Roles } from '@/auth/decorators/rol.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { EventFolderService } from '@/event-folder/event-folder.service';
+import { EventTicketService } from '@/event-ticket/event-ticket.service';
 import {
   CreateEventDto,
   CreateEventResponseDto,
@@ -12,6 +13,10 @@ import {
   deleteEventResponseSchema,
 } from '@/event/dto/delete-event.dto';
 import {
+  GetActiveEventsResponseDto,
+  getActiveEventsResponseSchema,
+} from '@/event/dto/get-active-events.dto';
+import {
   GetAllEventsResponseDto,
   getAllEventsResponseSchema,
 } from '@/event/dto/get-all-event.dto';
@@ -19,6 +24,7 @@ import {
   GetByIdEventResponseDto,
   getByIdEventResponseSchema,
 } from '@/event/dto/get-by-id-event.dto';
+import { toggleActiveResponseSchema } from '@/event/dto/toggle-active-event.dto';
 import {
   UpdateEventDto,
   UpdateEventResponseDto,
@@ -32,6 +38,7 @@ import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
 import {
   Body,
+  ConflictException,
   Controller,
   Delete,
   Get,
@@ -49,7 +56,7 @@ import {
   ApiOkResponse,
 } from '@nestjs/swagger';
 import z from 'zod';
-import { Event, Role, Tag, TagGroup } from '~/types/prisma-schema';
+import { Event, EventTicket, Role, Tag, TagGroup } from '~/types/prisma-schema';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -60,6 +67,7 @@ export class EventController {
     private readonly eventFolderService: EventFolderService,
     private readonly tagGroupService: TagGroupService,
     private readonly tagService: TagService,
+    private readonly eventTicketsService: EventTicketService,
   ) {}
 
   @ApiCreatedResponse({
@@ -152,6 +160,15 @@ export class EventController {
     };
   }
 
+  @Get('/find-active')
+  @ApiOkResponse({
+    description: translate('route.event.get-all.success'),
+    type: GetActiveEventsResponseDto,
+  })
+  async getActive(): Promise<z.infer<typeof getActiveEventsResponseSchema>> {
+    return await this.eventService.findActive();
+  }
+
   @Get('/:id')
   @ApiOkResponse({
     description: translate('route.event.get-by-id.success'),
@@ -172,6 +189,10 @@ export class EventController {
     description: translate('route.event.update.success'),
     type: UpdateEventResponseDto,
   })
+  @ApiConflictResponse({
+    description: translate('route.event.update.active-event-not-editable'),
+    type: ErrorDto,
+  })
   @ApiNotFoundResponse({
     description: translate('route.event.update.not-found'),
     type: ErrorDto,
@@ -180,6 +201,14 @@ export class EventController {
     @Param('id', new ExistingRecord('event')) id: string,
     @Body() updateEventDto: UpdateEventDto,
   ): Promise<z.infer<typeof updateEventResponseSchema>> {
+    const event = await this.eventService.findById(id);
+    // TODO: CHECK IF TICKETS HAVE BEEN EMITTED FOR THIS EVENT
+    if (event.active) {
+      throw new ConflictException([
+        translate('route.event.update.active-event-not-editable'),
+      ]);
+    }
+
     if (updateEventDto.folderId) {
       const eventFolder = await this.eventFolderService.getById(
         updateEventDto.folderId,
@@ -192,15 +221,34 @@ export class EventController {
       }
     }
 
-    const event = await this.eventService.update(id, updateEventDto);
+    if (event.eventTickets.length > 0) {
+      await this.eventTicketsService.deleteByEventId(id);
+    }
+
+    let eventTickets: Pick<EventTicket, 'id' | 'amount' | 'price' | 'type'>[] =
+      [];
+
+    if (updateEventDto.eventTickets.length > 0) {
+      eventTickets = await this.eventTicketsService.createMany(
+        id,
+        updateEventDto.eventTickets,
+      );
+    }
+
+    const updatedEvent = await this.eventService.update(id, {
+      ...updateEventDto,
+      eventTickets,
+    });
     await this.updateEventTags({
-      assistedTagId: event.tagAssistedId,
-      confirmedTagId: event.tagConfirmedId,
-      eventName: event.name,
-      groupId: event.tagAssisted.groupId,
+      assistedTagId: updatedEvent.tagAssistedId,
+      confirmedTagId: updatedEvent.tagConfirmedId,
+      eventName: updatedEvent.name,
+      groupId: updatedEvent.tagAssisted.groupId,
     });
 
-    const subEvents = await this.eventService.findBySupraEventId(event.id);
+    const subEvents = await this.eventService.findBySupraEventId(
+      updatedEvent.id,
+    );
     const deletedSubEvents = subEvents.filter(
       (subEvent) =>
         !updateEventDto.subEvents.some((sub) => sub.id === subEvent.id),
@@ -245,7 +293,7 @@ export class EventController {
           endingDate: new Date(subEvent.endingDate),
         },
         id: subEvent.id,
-        supraEventId: event.id,
+        supraEventId: updatedEvent.id,
         tagGroupId: tagGroupSubEventId,
       });
     });
@@ -255,7 +303,7 @@ export class EventController {
       await this.tagGroupService.delete(subEvent.tagAssisted.groupId);
     });
 
-    return event;
+    return updatedEvent;
   }
 
   @Delete('/:id')
@@ -295,5 +343,32 @@ export class EventController {
     await this.tagService.update(confirmedTagId, {
       name: `${eventName} - ${translate('prisma.tag.confirmed')}`,
     });
+  }
+
+  @Post('/toggle-active/:id')
+  @ApiOkResponse({
+    description: translate('route.event.toggle-active.success'),
+    type: UpdateEventResponseDto,
+  })
+  @ApiConflictResponse({
+    description: translate(
+      'route.event.toggle-active.active-event-not-editable',
+    ),
+    type: ErrorDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.event.toggle-active.not-found'),
+    type: ErrorDto,
+  })
+  async toggleActive(
+    @Param('id', new ExistingRecord('event')) id: string,
+  ): Promise<z.infer<typeof toggleActiveResponseSchema>> {
+    const event = await this.eventService.findById(id);
+    // TODO: CHECK IF TICKETS HAVE BEEN EMITTED FOR THIS EVENT
+    if (event.active) {
+      return await this.eventService.toggleActive(id, { active: false });
+    } else {
+      return await this.eventService.toggleActive(id, { active: true });
+    }
   }
 }

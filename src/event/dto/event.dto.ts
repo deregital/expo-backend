@@ -24,6 +24,8 @@ export const eventSchema = z.object({
   tagAssistedId: tagSchema.shape.id,
   tagConfirmedId: tagSchema.shape.id,
 
+  active: z.boolean(),
+
   supraEventId: z
     .string()
     .uuid({

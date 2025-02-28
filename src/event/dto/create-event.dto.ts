@@ -1,7 +1,7 @@
+import { eventTicketsSchema } from '@/event/dto/event-tickets.dto';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagSchema } from '@/tag/dto/tag.dto';
 import z from 'zod';
-import { TicketType } from '~/types/prisma-schema';
 import { eventSchema } from './event.dto';
 
 export const createEventSchema = eventSchema
@@ -29,13 +29,7 @@ export const createEventSchema = eventSchema
 
       tagsId: z.array(tagSchema.shape.id),
 
-      eventTickets: z.array(
-        z.object({
-          amount: z.number().min(1),
-          type: z.nativeEnum(TicketType),
-          price: z.number().nullable(),
-        }),
-      ),
+      eventTickets: z.array(eventTicketsSchema.omit({ id: true })),
     }),
   );
 

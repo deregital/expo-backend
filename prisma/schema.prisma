@@ -175,6 +175,8 @@ model Event {
   tags         Tag[]         @relation("EVENT_X_TAGS")
   eventTickets EventTicket[] @relation("EVENT_X_EVENTTICKET")
 
+  active Boolean @default(false)
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
