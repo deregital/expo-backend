@@ -6,6 +6,7 @@ import {
   ConflictException,
   Inject,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { generate } from '@pdfme/generator';
@@ -107,33 +108,41 @@ export class PdfService {
   async findTicket(
     barcode_value: string,
   ): Promise<z.infer<typeof findTicketResponseSchema>> {
-    // Separamos la cadena en IV y texto cifrado, valiéndose de ':'
-    const [ivBase64, cipherTextBase64] = barcode_value.split(':');
-    if (!ivBase64 || !cipherTextBase64) {
-      throw new ConflictException(
-        translate('route.pdf.find-ticket.invalid-barcode'),
+    try {
+      // Separamos la cadena en IV y texto cifrado, valiéndose de ':'
+      const [ivBase64, cipherTextBase64] = barcode_value.split(':');
+      if (!ivBase64 || !cipherTextBase64) {
+        throw new ConflictException(
+          translate('route.pdf.find-ticket.invalid-barcode'),
+        );
+      }
+      // Construct key e IV
+      const key = this.getKeyFromSecret(process.env.BARCODE_SECRET!);
+      const iv = Buffer.from(ivBase64, 'base64');
+
+      // Intentamos descifrar
+      let ticketId: string;
+      const decipher = createDecipheriv('aes-256-cbc', key, iv);
+      ticketId = decipher.update(cipherTextBase64, 'base64', 'utf8');
+      ticketId += decipher.final('utf8');
+
+      // Buscamos el ticket en la base de datos
+      const ticket = await this.prisma.ticket.findUnique({
+        where: { id: ticketId },
+      });
+
+      if (!ticket) {
+        // NotFoundException ya es un error manejable por NestJS
+        throw new NotFoundException(
+          translate('route.pdf.find-ticket.not-found'),
+        );
+      }
+
+      return ticket;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        translate('route.pdf.find-ticket.error'),
       );
     }
-    // Construct key e IV
-    const key = this.getKeyFromSecret(process.env.BARCODE_SECRET!);
-    const iv = Buffer.from(ivBase64, 'base64');
-
-    // Intentamos descifrar
-    let ticketId: string;
-    const decipher = createDecipheriv('aes-256-cbc', key, iv);
-    ticketId = decipher.update(cipherTextBase64, 'base64', 'utf8');
-    ticketId += decipher.final('utf8');
-
-    // Buscamos el ticket en la base de datos
-    const ticket = await this.prisma.ticket.findUnique({
-      where: { id: ticketId },
-    });
-
-    if (!ticket) {
-      // NotFoundException ya es un error manejable por NestJS
-      throw new NotFoundException(translate('route.pdf.find-ticket.not-found'));
-    }
-
-    return ticket;
   }
 }
