@@ -389,6 +389,12 @@ export default {
         success: 'Ticket generado con éxito',
         'not-found': 'Ticket no encontrado',
       },
+      'find-ticket': {
+        success: 'Ticket encontrado con éxito',
+        'not-found': 'Ticket no encontrado',
+        'invalid-barcode': 'Error de formato en el valor del código de barras',
+        error: 'Error al descifrar el ID del ticket',
+      },
     },
     profile: {
       'find-all': {
