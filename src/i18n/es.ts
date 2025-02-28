@@ -11,6 +11,7 @@ export default {
       location: 'Ubicación',
       cannedResponse: 'Respuesta enlatada',
       message: 'Mensaje',
+      eventTicket: 'Tickets del evento',
     },
     tag: {
       assisted: 'Asistió',
@@ -74,6 +75,14 @@ export default {
       date: {
         required: 'La fecha es requerida',
         invalid: 'La fecha debe ser una fecha válida',
+      },
+      startingDate: {
+        required: 'La fecha de inicio es requerida',
+        invalid: 'La fecha de inicio debe ser una fecha válida',
+      },
+      endingDate: {
+        required: 'La fecha de finalización es requerida',
+        invalid: 'La fecha de finalización debe ser una fecha válida',
       },
       location: {
         required: 'La ubicación es requerida',
@@ -180,6 +189,14 @@ export default {
       buttons: {
         max: 'No se pueden tener más de 3 botones',
         'max-length': 'Los botones no pueden tener más de 20 caracteres',
+      },
+    },
+    eventTicket: {
+      amount: {
+        min: 'La cantidad de tickets debe ser mayor a 0',
+      },
+      price: {
+        min: 'El precio de los tickets debe ser mayor a 0',
       },
     },
   },
@@ -344,6 +361,7 @@ export default {
         success: 'Evento creado con éxito',
         conflict: 'Error en la creación del evento',
         'folder-not-found': 'Carpeta de evento no encontrada',
+        'tag-not-found': 'Etiqueta no encontrada',
       },
       'get-all': {
         success: 'Eventos obtenidos con éxito',
@@ -357,9 +375,15 @@ export default {
         success: 'Evento actualizado con éxito',
         'not-found': 'Evento no encontrado',
         'subevent-not-found': 'Subevento no encontrado',
+        'active-event-not-editable': 'Evento activo no editable',
       },
       delete: {
         success: 'Evento eliminado con éxito',
+        'not-found': 'Evento no encontrado',
+      },
+      'toggle-active': {
+        success: 'Evento activo cambiado con éxito',
+        'active-event-not-editable': 'Evento activo no editable',
         'not-found': 'Evento no encontrado',
       },
     },

@@ -133,6 +133,7 @@ model Tag {
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  Event      Event[]  @relation("EVENT_X_TAGS")
 
   @@map("TAG")
 }
@@ -151,10 +152,12 @@ model TagGroup {
 }
 
 model Event {
-  id       String   @id @default(uuid())
-  name     String
-  date     DateTime
-  location String
+  id           String   @id @default(uuid())
+  name         String
+  date         DateTime
+  startingDate DateTime @map("starting_date")
+  endingDate   DateTime @map("ending_date")
+  location     String
 
   folderId String?      @map("folder_id")
   folder   EventFolder? @relation("EVENT_FOLDER_X_EVENT", fields: [folderId], references: [id], onDelete: Cascade)
@@ -168,7 +171,11 @@ model Event {
   supraEventId String? @map("supra_event_id")
   supraEvent   Event?  @relation("SubEvents", fields: [supraEventId], references: [id], onDelete: Cascade)
 
-  subEvents Event[] @relation("SubEvents")
+  subEvents    Event[]       @relation("SubEvents")
+  tags         Tag[]         @relation("EVENT_X_TAGS")
+  eventTickets EventTicket[] @relation("EVENT_X_EVENTTICKET")
+
+  active Boolean @default(false)
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -221,6 +228,20 @@ model Enums {
   templateCategory TemplateCategory
 }
 
+model EventTicket {
+  id      String     @id @default(uuid())
+  eventId String     @map("event_id")
+  event   Event      @relation("EVENT_X_EVENTTICKET", fields: [eventId], references: [id], onDelete: Cascade)
+  amount  Int
+  type    TicketType
+  price   Float?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("EVENT_TICKET")
+}
+
 enum TemplateStatus {
   APPROVED
   PENDING
@@ -244,4 +265,10 @@ enum MessageState {
   SENT
   RECEIVED
   SEEN
+}
+
+enum TicketType {
+  PARTICIPANT
+  STAFF
+  SPECTATOR
 }
