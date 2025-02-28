@@ -802,6 +802,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteEventResponseDto"
+  /pdf/generate-pdf/{id}:
+    get:
+      operationId: "PdfController_generatePdf"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Ticket generado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneratePdfResponseDto"
+        404:
+          description: "Ticket no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /profile/all:
     get:
       operationId: "ProfileController_findAll"
@@ -1427,12 +1449,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindByMailTicketResponseDto"
-        404:
-          description: "Tickets por mail no encontrados"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorDto"
   /ticket/find-by-event/{eventId}:
     get:
       operationId: "TicketController_findByEvent"
@@ -1479,12 +1495,6 @@ paths:
                 $ref: "#/components/schemas/UpdateTicketResponseDto"
         404:
           description: "Ticket no encontrado"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorDto"
-        409:
-          description: "Error en la actualización del ticket"
           content:
             application/json:
               schema:
@@ -4896,6 +4906,7 @@ components:
         - "supraEventId"
         - "created_at"
         - "updated_at"
+    GeneratePdfResponseDto: {}
     FindAllProfileResponseDto:
       type:
         - "object"
