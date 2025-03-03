@@ -3,6 +3,7 @@ import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
 import { ErrorDto } from '@/shared/errors/errorType';
+import { decryptString } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import {
   CreateTicketDto,
@@ -30,6 +31,10 @@ import {
   findByMailTicketResponseSchema,
 } from '@/ticket/dto/find-by-mail-ticket.dto';
 import {
+  FindTicketResponseDto,
+  findTicketResponseSchema,
+} from '@/ticket/dto/find-ticket.dto';
+import {
   UpdateTicketDto,
   UpdateTicketResponseDto,
   updateTicketResponseSchema,
@@ -40,16 +45,21 @@ import {
   Controller,
   Delete,
   Get,
+  Header,
   Param,
   Patch,
   Post,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import {
+  ApiConflictResponse,
   ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
+import { Response } from 'express';
 import z from 'zod';
 import { Role } from '~/types/prisma-schema';
 
@@ -149,5 +159,54 @@ export class TicketController {
     @Param('id', new ExistingRecord('ticket')) id: string,
   ): Promise<z.infer<typeof deleteTicketResponseSchema>> {
     return await this.ticketService.delete(id);
+  }
+
+  @ApiOkResponse({
+    description: translate('route.pdf.generate-pdf.success'),
+    type: 'arraybuffer',
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.pdf.generate-pdf.not-found'),
+    type: ErrorDto,
+  })
+  @Header('Content-Type', 'application/pdf')
+  @Get('/generate-pdf/:id')
+  async generatePdf(
+    @Param('id', new ExistingRecord('ticket')) id: string,
+    @Res() res: Response,
+  ): Promise<void> {
+    const pdfBlob = await this.ticketService.generatePdfTicket(id);
+    const buffer = Buffer.from(await pdfBlob.arrayBuffer());
+
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename="ticket-${id}.pdf"`,
+    );
+    res.send(buffer);
+    return;
+  }
+
+  @ApiOkResponse({
+    description: translate('route.pdf.find-ticket.success'),
+    type: FindTicketResponseDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.pdf.find-ticket.not-found'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.pdf.find-ticket.invalid-barcode'),
+    type: ErrorDto,
+  })
+  @ApiInternalServerErrorResponse({
+    description: translate('route.pdf.find-ticket.error'),
+    type: ErrorDto,
+  })
+  @Get('/find-ticket/:id(*)')
+  async findTicket(
+    @Param('id') id: string,
+  ): Promise<z.infer<typeof findTicketResponseSchema>> {
+    const decryptedTicketId = decryptString(id);
+    return this.ticketService.findTicket(decryptedTicketId);
   }
 }
