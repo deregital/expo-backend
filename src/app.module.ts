@@ -11,7 +11,6 @@ import { ZodValidationPipe } from '@/filters/zod.pipe';
 import { ImageModule } from '@/image/image.module';
 import { LocationModule } from '@/location/location.module';
 import { MessageModule } from '@/message/message.module';
-import { PdfModule } from '@/pdf/pdf.module';
 import { PrismaModule } from '@/prisma/prisma.module';
 import { ProfileModule } from '@/profile/profile.module';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
@@ -35,7 +34,6 @@ import { APP_PIPE, ModuleRef } from '@nestjs/core';
     CannedResponseModule,
     EventFolderModule,
     EventModule,
-    PdfModule,
     ProfileModule,
     PrismaModule,
     ImageModule,
