@@ -100,6 +100,7 @@ export class TicketService {
   }
 
   async generatePdfTicket(id: string): Promise<Blob> {
+    console.log(encryptString(id));
     const ticket = await this.prisma.ticket.findUnique({
       where: { id },
       include: {

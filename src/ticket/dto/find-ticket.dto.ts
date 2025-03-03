@@ -1,5 +1,5 @@
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
-import { ticketSchema } from '@/ticket/exports';
+import { ticketSchema } from '@/ticket/dto/ticket.dto';
 
 export const findTicketResponseSchema = ticketSchema;
 

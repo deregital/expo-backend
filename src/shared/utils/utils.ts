@@ -1,3 +1,5 @@
+import { translate } from '@/i18n/translate';
+import { ConflictException } from '@nestjs/common';
 import {
   createCipheriv,
   createDecipheriv,
@@ -53,15 +55,21 @@ export function encryptString(string: string): string {
 }
 
 export function decryptString(encryptedString: string): string {
-  const [ivBase64, cipherTextBase64] = encryptedString.split(':');
+  try {
+    const [ivBase64, cipherTextBase64] = encryptedString.split(':');
+    if (!ivBase64 || !cipherTextBase64) {
+      throw new ConflictException(translate('route.pdf.find-ticket.error'));
+    }
+    const key = getKeyFromSecret(process.env.BARCODE_SECRET!);
+    const iv = Buffer.from(ivBase64!, 'base64');
 
-  const key = getKeyFromSecret(process.env.BARCODE_SECRET!);
-  const iv = Buffer.from(ivBase64!, 'base64');
+    let ticketId: string;
+    const decipher = createDecipheriv('aes-256-cbc', key, iv);
+    ticketId = decipher.update(cipherTextBase64!, 'base64', 'utf8');
+    ticketId += decipher.final('utf8');
 
-  let ticketId: string;
-  const decipher = createDecipheriv('aes-256-cbc', key, iv);
-  ticketId = decipher.update(cipherTextBase64!, 'base64', 'utf8');
-  ticketId += decipher.final('utf8');
-
-  return ticketId;
+    return ticketId;
+  } catch (error) {
+    throw new ConflictException(translate('route.pdf.find-ticket.error'));
+  }
 }
