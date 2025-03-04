@@ -1,3 +1,4 @@
+import { eventTicketsSchema } from '@/event/dto/event-tickets.dto';
 import { eventSchema } from '@/event/dto/event.dto';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
@@ -10,6 +11,8 @@ export const updateEventSchema = eventSchema
     folderId: true,
     date: true,
     location: true,
+    startingDate: true,
+    endingDate: true,
   })
   .merge(
     z.object({
@@ -19,10 +22,17 @@ export const updateEventSchema = eventSchema
             name: true,
             location: true,
             date: true,
+            startingDate: true,
+            endingDate: true,
           })
           .extend({
             id: eventSchema.shape.id.or(z.literal('')),
           }),
+      ),
+      eventTickets: z.array(
+        eventTicketsSchema.omit({
+          id: true,
+        }),
       ),
     }),
   );
@@ -38,6 +48,7 @@ export const updateEventResponseSchema = eventSchema.merge(
         group: tagGroupSchema,
       }),
     ),
+    eventTickets: z.array(eventTicketsSchema),
   }),
 );
 

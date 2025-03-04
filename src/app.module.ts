@@ -11,17 +11,18 @@ import { ZodValidationPipe } from '@/filters/zod.pipe';
 import { ImageModule } from '@/image/image.module';
 import { LocationModule } from '@/location/location.module';
 import { MessageModule } from '@/message/message.module';
+import { MiExpoModule } from '@/mi-expo/mi-expo.module';
 import { OtpModule } from '@/otp/otp.module';
 import { PrismaModule } from '@/prisma/prisma.module';
 import { ProfileModule } from '@/profile/profile.module';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagGroupModule } from '@/tag-group/tag-group.module';
 import { TagModule } from '@/tag/tag.module';
+import { TicketModule } from '@/ticket/ticket.module';
 import { WebhookModule } from '@/webhook/webhook.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE, ModuleRef } from '@nestjs/core';
-import { MiExpoModule } from './mi-expo/mi-expo.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { MiExpoModule } from './mi-expo/mi-expo.module';
     ImageModule,
     CsvModule,
     MessageModule,
+    TicketModule,
     WebhookModule,
     OtpModule,
     MiExpoModule,
