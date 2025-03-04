@@ -23,6 +23,7 @@ const modelNameToTable: Record<TableNames, Uncapitalize<TableNames>> = {
   Location: 'location',
   Message: 'message',
   TagGroup: 'tagGroup',
+  Ticket: 'ticket',
   EventTicket: 'eventTicket',
 } as const;
 
