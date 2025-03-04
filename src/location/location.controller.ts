@@ -27,14 +27,14 @@ import { ErrorDto } from '@/shared/errors/errorType';
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import z from 'zod';
-import { Role } from '~/types';
+import { Role } from '~/types/prisma-schema';
 
-@Roles(Role.ADMIN, Role.USER, Role.FORM)
-@UseGuards(JwtGuard, RoleGuard)
 @Controller('location')
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
+  @Roles(Role.ADMIN, Role.USER, Role.FORM)
+  @UseGuards(JwtGuard, RoleGuard)
   @Get('/all')
   @ApiOkResponse({
     type: FindAllLocationResponseDto,

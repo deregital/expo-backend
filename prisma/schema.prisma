@@ -44,7 +44,15 @@ model Profile {
   id      String @id @default(uuid())
   shortId Int    @map("short_id")
 
-  phoneNumber          String    @unique @map("phone_number")
+  firstTimeMiExpo Boolean @default(true) @map("first_time_mi_expo")
+
+  username String? @unique
+  password String?
+
+  phoneNumber     String  @unique @map("phone_number")
+  isPhoneVerified Boolean @default(false) @map("is_phone_verified")
+  otp             Otp[]
+
   secondaryPhoneNumber String?   @unique @map("secondary_phone_number")
   fullName             String    @map("full_name")
   firstName            String?   @map("first_name")
@@ -73,6 +81,19 @@ model Profile {
   updated_at DateTime @updatedAt
 
   @@map("PROFILE")
+}
+
+model Otp {
+  id               String   @id @default(uuid())
+  code             String
+  ownerPhoneNumber String   @map("account_id")
+  owner            Profile  @relation(fields: [ownerPhoneNumber], references: [phoneNumber])
+  expiresAt        DateTime @map("expires_at")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("OTP")
 }
 
 model Location {

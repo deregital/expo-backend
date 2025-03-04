@@ -1,4 +1,3 @@
-import { AccountService } from '@/account/account.service';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateProfileDto } from '@/profile/dto/create-profile.dto';
@@ -12,15 +11,19 @@ import { findWithActiveChatResponseSchema } from '@/profile/dto/find-with-active
 import { UpdateProfileDto } from '@/profile/dto/update-profile.dto';
 import { VisibleTagsType } from '@/shared/decorators/visible-tags.decorator';
 import { Inject, Injectable } from '@nestjs/common';
+import { hash } from 'bcrypt';
 import z from 'zod';
-import { Account, Profile, Tag, TagGroup } from '~/types';
+import {
+  Account,
+  Location,
+  Profile,
+  Tag,
+  TagGroup,
+} from '~/types/prisma-schema';
 
 @Injectable()
 export class ProfileService {
-  constructor(
-    @Inject(PRISMA_SERVICE) private prisma: PrismaService,
-    private readonly accountService: AccountService,
-  ) {}
+  constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
   async findAll(
     visibleTags: VisibleTagsType,
@@ -53,16 +56,22 @@ export class ProfileService {
 
   async findById(
     id: string,
-    visibleTags: VisibleTagsType,
-  ): Promise<z.infer<typeof findByIdProfileResponseSchema>> {
+    visibleTags: VisibleTagsType | undefined = undefined,
+  ): Promise<
+    z.infer<typeof findByIdProfileResponseSchema> & {
+      password: Profile['password'];
+    }
+  > {
     const profile = await this.prisma.profile.findUnique({
       where: {
         id: id,
-        tags: {
-          some: {
-            id: { in: visibleTags },
-          },
-        },
+        tags: visibleTags
+          ? {
+              some: {
+                id: { in: visibleTags },
+              },
+            }
+          : undefined,
       },
       include: {
         tags: {
@@ -150,6 +159,16 @@ export class ProfileService {
     return { profiles };
   }
 
+  async findByUsername(username: Profile['username']): Promise<Profile | null> {
+    const profile = await this.prisma.profile.findFirst({
+      where: {
+        username: username,
+      },
+    });
+
+    return profile;
+  }
+
   async create(
     dto: CreateProfileDto['profile'],
     participantTagId: Tag['id'],
@@ -160,6 +179,8 @@ export class ProfileService {
     const profileCreated = await this.prisma.profile.create({
       data: {
         shortId: highestShortId + 1,
+        username: dto.username,
+        password: dto.password ? await hash(dto.password, 10) : undefined,
         fullName: dto.fullName,
         firstName: dto.fullName.split(' ')[0],
         phoneNumber: dto.phoneNumber,
@@ -230,14 +251,18 @@ export class ProfileService {
   async update(
     id: Profile['id'],
     dto: UpdateProfileDto,
-    participantTagId: Tag['id'] | undefined,
+    participantTagId: Tag['id'] | undefined = undefined,
   ): Promise<Profile> {
     const profileUpdated = await this.prisma.profile.update({
       where: {
         id: id,
       },
       data: {
+        username: dto.username,
+        password: dto.password ? await hash(dto.password, 10) : undefined,
         fullName: dto.fullName,
+        firstTimeMiExpo:
+          dto.firstTimeMiExpo !== undefined ? dto.firstTimeMiExpo : undefined,
         firstName: dto.fullName?.split(' ')[0] ?? undefined,
         phoneNumber: dto.phoneNumber,
         secondaryPhoneNumber: dto.secondaryPhoneNumber,
@@ -333,7 +358,7 @@ export class ProfileService {
 
   async findByPhoneNumber(
     phoneNumber: Profile['phoneNumber'],
-    visibleTags: VisibleTagsType | undefined,
+    visibleTags: VisibleTagsType | undefined = undefined,
   ): Promise<Profile | null> {
     const profile = await this.prisma.profile.findUnique({
       where: {
@@ -431,10 +456,12 @@ export class ProfileService {
     phoneNumber,
     secondaryPhoneNumber,
     dni,
+    username,
   }: {
     phoneNumber: Profile['phoneNumber'];
     secondaryPhoneNumber: Profile['secondaryPhoneNumber'];
     dni: Profile['dni'];
+    username: Profile['username'];
   }): Promise<Profile | null> {
     const existingProfile = await this.prisma.profile.findFirst({
       where: {
@@ -444,6 +471,7 @@ export class ProfileService {
           { secondaryPhoneNumber: secondaryPhoneNumber ?? undefined },
           { secondaryPhoneNumber: phoneNumber },
           { dni: dni ?? undefined },
+          { username: username ?? undefined },
         ],
       },
     });
@@ -469,5 +497,49 @@ export class ProfileService {
     });
     const shortId = profileHighestShortId?.shortId ?? 0;
     return shortId;
+  }
+
+  async verifyPhoneNumber(phoneNumber: Profile['phoneNumber']): Promise<
+    Profile & {
+      residenceLocation: Pick<
+        Location,
+        'city' | 'state' | 'country' | 'latitude' | 'longitude'
+      > | null;
+      birthLocation: Pick<
+        Location,
+        'city' | 'state' | 'country' | 'latitude' | 'longitude'
+      > | null;
+    }
+  > {
+    const profile = await this.prisma.profile.update({
+      where: {
+        phoneNumber: phoneNumber,
+      },
+      data: {
+        isPhoneVerified: true,
+      },
+      include: {
+        residenceLocation: {
+          select: {
+            city: true,
+            state: true,
+            country: true,
+            latitude: true,
+            longitude: true,
+          },
+        },
+        birthLocation: {
+          select: {
+            city: true,
+            state: true,
+            country: true,
+            latitude: true,
+            longitude: true,
+          },
+        },
+      },
+    });
+
+    return profile;
   }
 }

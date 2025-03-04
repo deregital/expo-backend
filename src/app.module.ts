@@ -11,6 +11,8 @@ import { ZodValidationPipe } from '@/filters/zod.pipe';
 import { ImageModule } from '@/image/image.module';
 import { LocationModule } from '@/location/location.module';
 import { MessageModule } from '@/message/message.module';
+import { MiExpoModule } from '@/mi-expo/mi-expo.module';
+import { OtpModule } from '@/otp/otp.module';
 import { PrismaModule } from '@/prisma/prisma.module';
 import { ProfileModule } from '@/profile/profile.module';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
@@ -41,6 +43,8 @@ import { APP_PIPE, ModuleRef } from '@nestjs/core';
     MessageModule,
     TicketModule,
     WebhookModule,
+    OtpModule,
+    MiExpoModule,
   ],
   providers: [
     {

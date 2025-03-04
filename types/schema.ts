@@ -13,7 +13,7 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    post: operations['AuthController_loginUser'];
+    post: operations['AuthController_loginAccount'];
     delete?: never;
     options?: never;
     head?: never;
@@ -948,6 +948,86 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/otp/send': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['OtpController_sendOtp'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/otp/verify': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['OtpController_verifyOtp'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/mi-expo/login-with-phone': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MiExpoController_loginWithPhone'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/mi-expo/me': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['MiExpoController_me'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['MiExpoController_updateMe'];
+    trace?: never;
+  };
+  '/mi-expo/login': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MiExpoController_loginUsernamePassword'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1118,7 +1198,11 @@ export interface components {
         /** Format: uuid */
         id: string;
         shortId: number;
+        firstTimeMiExpo: boolean;
+        username: string | null;
+        password: string | null;
         phoneNumber: string;
+        isPhoneVerified: boolean;
         secondaryPhoneNumber: string | null;
         fullName: string;
         firstName: string | null;
@@ -1153,7 +1237,11 @@ export interface components {
         /** Format: uuid */
         id: string;
         shortId: number;
+        firstTimeMiExpo: boolean;
+        username: string | null;
+        password: string | null;
         phoneNumber: string;
+        isPhoneVerified: boolean;
         secondaryPhoneNumber: string | null;
         fullName: string;
         firstName: string | null;
@@ -1993,7 +2081,11 @@ export interface components {
         /** Format: uuid */
         id: string;
         shortId: number;
+        firstTimeMiExpo: boolean;
+        username: string | null;
+        password: string | null;
         phoneNumber: string;
+        isPhoneVerified: boolean;
         secondaryPhoneNumber: string | null;
         fullName: string;
         firstName: string | null;
@@ -2041,7 +2133,11 @@ export interface components {
         /** Format: uuid */
         id: string;
         shortId: number;
+        firstTimeMiExpo: boolean;
+        username: string | null;
+        password: string | null;
         phoneNumber: string;
+        isPhoneVerified: boolean;
         secondaryPhoneNumber: string | null;
         fullName: string;
         firstName: string | null;
@@ -2113,7 +2209,11 @@ export interface components {
         /** Format: uuid */
         id: string;
         shortId: number;
+        firstTimeMiExpo: boolean;
+        username: string | null;
+        password: string | null;
         phoneNumber: string;
+        isPhoneVerified: boolean;
         secondaryPhoneNumber: string | null;
         fullName: string;
         firstName: string | null;
@@ -2160,7 +2260,11 @@ export interface components {
         /** Format: uuid */
         id: string;
         shortId: number;
+        firstTimeMiExpo: boolean;
+        username: string | null;
+        password: string | null;
         phoneNumber: string;
+        isPhoneVerified: boolean;
         secondaryPhoneNumber: string | null;
         fullName: string;
         firstName: string | null;
@@ -2205,7 +2309,11 @@ export interface components {
             /** Format: uuid */
             id: string;
             shortId: number;
+            firstTimeMiExpo: boolean;
+            username: string | null;
+            password: string | null;
             phoneNumber: string;
+            isPhoneVerified: boolean;
             secondaryPhoneNumber: string | null;
             fullName: string;
             firstName: string | null;
@@ -2253,7 +2361,11 @@ export interface components {
       /** Format: uuid */
       id: string;
       shortId: number;
+      firstTimeMiExpo: boolean;
+      username: string | null;
+      password: string | null;
       phoneNumber: string;
+      isPhoneVerified: boolean;
       secondaryPhoneNumber: string | null;
       fullName: string;
       firstName: string | null;
@@ -2307,6 +2419,8 @@ export interface components {
         /** Format: uri */
         profilePictureUrl: string | null;
         secondaryPhoneNumber: string | null;
+        username: string | null;
+        password: string | null;
         comments?: {
           content: string;
           /** @default false */
@@ -2357,7 +2471,10 @@ export interface components {
       /** Format: uuid */
       id: string;
       shortId: number;
+      firstTimeMiExpo: boolean;
+      username: string | null;
       phoneNumber: string;
+      isPhoneVerified: boolean;
       secondaryPhoneNumber: string | null;
       fullName: string;
       firstName: string | null;
@@ -2431,7 +2548,11 @@ export interface components {
       /** Format: uuid */
       id: string;
       shortId: number;
+      firstTimeMiExpo: boolean;
+      username: string | null;
+      password: string | null;
       phoneNumber: string;
+      isPhoneVerified: boolean;
       secondaryPhoneNumber: string | null;
       fullName: string;
       firstName: string | null;
@@ -2472,6 +2593,9 @@ export interface components {
       isInTrash?: boolean;
       /** Format: date-time */
       movedToTrashDate?: string | null;
+      username?: string | null;
+      password?: string | null;
+      firstTimeMiExpo?: boolean;
       residence?: {
         city: string;
         country: string;
@@ -2490,7 +2614,7 @@ export interface components {
     };
     UpdateImageDto: {
       /** Format: binary */
-      image?: string;
+      image?: Record<string, never>;
     };
     UpdateImageResponseDto: {
       message: string;
@@ -2614,6 +2738,247 @@ export interface components {
     GetLastMessageTimestampResponseDto: {
       timestamp: number;
     };
+    SendOtpDto: {
+      phoneNumber: string;
+    };
+    SendOtpResponseDto: {
+      response:
+        | {
+            hasVerified: boolean;
+            hasUsername: boolean;
+            /** @enum {boolean} */
+            success: true;
+          }
+        | {
+            hasVerified: boolean;
+            hasUsername: boolean;
+            /** @enum {boolean} */
+            success: false;
+            message: string;
+          };
+    };
+    VerifyOtpDto: {
+      phoneNumber: string;
+      code: string;
+    };
+    VerifyOtpResponseDto: {
+      success: boolean;
+      profile: {
+        /** Format: uuid */
+        id: string;
+        shortId: number;
+        firstTimeMiExpo: boolean;
+        username: string | null;
+        password: string | null;
+        phoneNumber: string;
+        isPhoneVerified: boolean;
+        secondaryPhoneNumber: string | null;
+        fullName: string;
+        firstName: string | null;
+        gender: string | null;
+        birthDate: string | null;
+        /** Format: uri */
+        profilePictureUrl: string | null;
+        instagram: string | null;
+        /** Format: email */
+        mail: string | null;
+        dni: string | null;
+        alternativeNames: string[];
+        /** Format: uuid */
+        birthLocationId: string | null;
+        /** Format: uuid */
+        residenceLocationId: string | null;
+        isInTrash: boolean;
+        /** Format: date-time */
+        movedToTrashDate: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        residenceLocation: {
+          city: string;
+          country: string;
+          latitude: number;
+          longitude: number;
+        } | null;
+        birthLocation: {
+          city: string;
+          country: string;
+          latitude: number;
+          longitude: number;
+        } | null;
+      };
+    };
+    LoginWithPhoneDto: {
+      phoneNumber: string;
+    };
+    LoginWithPhoneResponseDto: {
+      tokens: {
+        accessToken: string;
+        refreshToken: string;
+        expiresIn: number;
+      };
+      profile: {
+        /** Format: uuid */
+        id: string;
+        shortId: number;
+        firstTimeMiExpo: boolean;
+        username: string | null;
+        phoneNumber: string;
+        isPhoneVerified: boolean;
+        secondaryPhoneNumber: string | null;
+        fullName: string;
+        firstName: string | null;
+        gender: string | null;
+        birthDate: string | null;
+        /** Format: uri */
+        profilePictureUrl: string | null;
+        instagram: string | null;
+        /** Format: email */
+        mail: string | null;
+        dni: string | null;
+        alternativeNames: string[];
+        /** Format: uuid */
+        birthLocationId: string | null;
+        /** Format: uuid */
+        residenceLocationId: string | null;
+        isInTrash: boolean;
+        /** Format: date-time */
+        movedToTrashDate: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      };
+    };
+    GetMiExpoMeResponseDto: {
+      /** Format: uuid */
+      id: string;
+      shortId: number;
+      firstTimeMiExpo: boolean;
+      username: string | null;
+      phoneNumber: string;
+      isPhoneVerified: boolean;
+      secondaryPhoneNumber: string | null;
+      fullName: string;
+      firstName: string | null;
+      gender: string | null;
+      birthDate: string | null;
+      /** Format: uri */
+      profilePictureUrl: string | null;
+      instagram: string | null;
+      /** Format: email */
+      mail: string | null;
+      dni: string | null;
+      alternativeNames: string[];
+      /** Format: uuid */
+      birthLocationId: string | null;
+      /** Format: uuid */
+      residenceLocationId: string | null;
+      isInTrash: boolean;
+      /** Format: date-time */
+      movedToTrashDate: string | null;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      residenceLocation: {
+        /** Format: uuid */
+        id: string;
+        latitude: number;
+        longitude: number;
+        country: string;
+        state: string;
+        city: string;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      } | null;
+      birthLocation: {
+        /** Format: uuid */
+        id: string;
+        latitude: number;
+        longitude: number;
+        country: string;
+        state: string;
+        city: string;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      } | null;
+    };
+    UpdateMiExpoMeDto: {
+      birthDate: string | null;
+      dni: string | null;
+      fullName: string;
+      gender: string | null;
+      instagram: string | null;
+      /** Format: email */
+      mail: string | null;
+      password: string | null;
+      phoneNumber: string;
+      secondaryPhoneNumber: string | null;
+      username: string | null;
+      birth: {
+        city: string;
+        country: string;
+        latitude: number;
+        longitude: number;
+        state: string;
+      };
+      residence: {
+        city: string;
+        country: string;
+        latitude: number;
+        longitude: number;
+        state: string;
+      };
+    };
+    LoginMiExpoDto: {
+      username: string;
+      password: string;
+    };
+    LoginMiExpoResponseDto: {
+      user: {
+        /** Format: uuid */
+        id: string;
+        shortId: number;
+        firstTimeMiExpo: boolean;
+        username: string | null;
+        phoneNumber: string;
+        isPhoneVerified: boolean;
+        secondaryPhoneNumber: string | null;
+        fullName: string;
+        firstName: string | null;
+        gender: string | null;
+        birthDate: string | null;
+        /** Format: uri */
+        profilePictureUrl: string | null;
+        instagram: string | null;
+        /** Format: email */
+        mail: string | null;
+        dni: string | null;
+        alternativeNames: string[];
+        /** Format: uuid */
+        birthLocationId: string | null;
+        /** Format: uuid */
+        residenceLocationId: string | null;
+        isInTrash: boolean;
+        /** Format: date-time */
+        movedToTrashDate: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      };
+      backendTokens: {
+        accessToken: string;
+        refreshToken: string;
+        expiresIn: number;
+      };
+    };
   };
   responses: never;
   parameters: never;
@@ -2623,7 +2988,7 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  AuthController_loginUser: {
+  AuthController_loginAccount: {
     parameters: {
       query?: never;
       header?: never;
@@ -2636,7 +3001,7 @@ export interface operations {
       };
     };
     responses: {
-      /** @description Cuenta creada */
+      /** @description Sesión iniciada */
       200: {
         headers: {
           [name: string]: unknown;
@@ -4647,6 +5012,200 @@ export interface operations {
           [name: string]: unknown;
         };
         content?: never;
+      };
+    };
+  };
+  OtpController_sendOtp: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['SendOtpDto'];
+      };
+    };
+    responses: {
+      /** @description Código de verificación enviado con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['SendOtpResponseDto'];
+        };
+      };
+      /** @description El teléfono ya fue verificado, por favor inicie sesión */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description No se encontró un perfil asociado al teléfono. Por favor registrate */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  OtpController_verifyOtp: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['VerifyOtpDto'];
+      };
+    };
+    responses: {
+      /** @description Código de verificación verificado con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['VerifyOtpResponseDto'];
+        };
+      };
+      /** @description El código de verificación expiró. Por favor solicita uno nuevo */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description No se encontró un código de verificación */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  MiExpoController_loginWithPhone: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['LoginWithPhoneDto'];
+      };
+    };
+    responses: {
+      /** @description Sesión iniciada */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['LoginWithPhoneResponseDto'];
+        };
+      };
+      /** @description Credenciales inválidas */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  MiExpoController_me: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Perfil obtenido */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetMiExpoMeResponseDto'];
+        };
+      };
+    };
+  };
+  MiExpoController_updateMe: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateMiExpoMeDto'];
+      };
+    };
+    responses: {
+      /** @description Me */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetMiExpoMeResponseDto'];
+        };
+      };
+    };
+  };
+  MiExpoController_loginUsernamePassword: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['LoginMiExpoDto'];
+      };
+    };
+    responses: {
+      /** @description Sesión iniciada */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['LoginMiExpoResponseDto'];
+        };
+      };
+      /** @description Credenciales inválidas */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
       };
     };
   };

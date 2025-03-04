@@ -1,4 +1,4 @@
-import { profileSchema } from '@/profile/dto/profile.dto';
+import { profileSchema } from '@/schema/profile.schema';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagSchema } from '@/tag/dto/tag.dto';
 import z from 'zod';

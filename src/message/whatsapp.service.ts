@@ -260,10 +260,21 @@ export class WhatsappService {
   async sendTemplateToPhone({
     templateName,
     phone,
-  }: {
-    templateName: string;
-    phone: string;
-  }): Promise<{
+    isOTP = false,
+    OTP,
+  }:
+    | {
+        templateName: string;
+        phone: string;
+        isOTP?: false; // Optional, defaults to false
+        OTP?: never; // Cannot be provided if isOTP is false
+      }
+    | {
+        templateName: string;
+        phone: string;
+        isOTP: true; // Required if OTP is provided
+        OTP: string; // Required if isOTP is true
+      }): Promise<{
     messageId: string;
   }> {
     const res = await fetch(
@@ -283,6 +294,25 @@ export class WhatsappService {
             language: {
               code: 'es_AR',
             },
+            ...(isOTP && {
+              components: [
+                {
+                  type: 'body',
+                  parameters: [{ type: 'text', text: OTP }],
+                },
+                {
+                  type: 'button',
+                  sub_type: 'url',
+                  index: '0',
+                  parameters: [
+                    {
+                      type: 'text',
+                      text: OTP,
+                    },
+                  ],
+                },
+              ],
+            }),
           },
         }),
       },
@@ -322,5 +352,20 @@ export class WhatsappService {
       messageId,
       text: message,
     };
+  }
+
+  async sendOTP(phone: string, code: string): Promise<void> {
+    const { messageId } = await this.sendTemplateToPhone({
+      phone,
+      templateName: 'otp_auth',
+      isOTP: true,
+      OTP: code,
+    });
+
+    if (!messageId) {
+      throw new InternalServerErrorException([
+        translate('route.otp.send.error'),
+      ]);
+    }
   }
 }

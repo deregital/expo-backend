@@ -10,6 +10,7 @@ import {
 } from '@/auth/dto/refresh.dto';
 import { RefreshJwtGuard } from '@/auth/guards/refresh.guard';
 import { translate } from '@/i18n/translate';
+
 import { ErrorDto } from '@/shared/errors/errorType';
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
@@ -25,14 +26,14 @@ export class AuthController {
     type: ErrorDto,
   })
   @ApiOkResponse({
-    description: 'Cuenta creada',
+    description: 'Sesión iniciada',
     type: LoginResponseDto,
   })
   @Post('login')
-  async loginUser(
+  async loginAccount(
     @Body() body: LoginDto,
   ): Promise<z.infer<typeof loginResponseSchema>> {
-    return await this.authService.login(body);
+    return await this.authService.loginAccount(body);
   }
 
   @ApiOkResponse({

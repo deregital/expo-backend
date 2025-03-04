@@ -2,7 +2,7 @@ openapi: "3.0.0"
 paths:
   /auth/login:
     post:
-      operationId: "AuthController_loginUser"
+      operationId: "AuthController_loginAccount"
       parameters: []
       requestBody:
         required: true
@@ -12,7 +12,7 @@ paths:
               $ref: "#/components/schemas/LoginDto"
       responses:
         200:
-          description: "Cuenta creada"
+          description: "Sesión iniciada"
           content:
             application/json:
               schema:
@@ -1647,6 +1647,137 @@ paths:
       responses:
         201:
           description: ""
+  /otp/send:
+    post:
+      operationId: "OtpController_sendOtp"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendOtpDto"
+      responses:
+        200:
+          description: "Código de verificación enviado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendOtpResponseDto"
+        400:
+          description: "El teléfono ya fue verificado, por favor inicie sesión"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        404:
+          description: "No se encontró un perfil asociado al teléfono. Por favor registrate"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /otp/verify:
+    post:
+      operationId: "OtpController_verifyOtp"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerifyOtpDto"
+      responses:
+        200:
+          description: "Código de verificación verificado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VerifyOtpResponseDto"
+        400:
+          description: "El código de verificación expiró. Por favor solicita uno nuevo"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        404:
+          description: "No se encontró un código de verificación"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /mi-expo/login-with-phone:
+    post:
+      operationId: "MiExpoController_loginWithPhone"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginWithPhoneDto"
+      responses:
+        200:
+          description: "Sesión iniciada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginWithPhoneResponseDto"
+        401:
+          description: "Credenciales inválidas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /mi-expo/me:
+    get:
+      operationId: "MiExpoController_me"
+      parameters: []
+      responses:
+        200:
+          description: "Perfil obtenido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetMiExpoMeResponseDto"
+    patch:
+      operationId: "MiExpoController_updateMe"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMiExpoMeDto"
+      responses:
+        200:
+          description: "Me"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetMiExpoMeResponseDto"
+  /mi-expo/login:
+    post:
+      operationId: "MiExpoController_loginUsernamePassword"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginMiExpoDto"
+      responses:
+        200:
+          description: "Sesión iniciada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginMiExpoResponseDto"
+        401:
+          description: "Credenciales inválidas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -2195,10 +2326,24 @@ components:
               shortId:
                 type:
                   - "number"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
               phoneNumber:
                 type:
                   - "string"
                 minLength: 1
+              isPhoneVerified:
+                type:
+                  - "boolean"
               secondaryPhoneNumber:
                 type:
                   - "string"
@@ -2273,7 +2418,11 @@ components:
             required:
               - "id"
               - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
               - "phoneNumber"
+              - "isPhoneVerified"
               - "secondaryPhoneNumber"
               - "fullName"
               - "firstName"
@@ -2331,10 +2480,24 @@ components:
               shortId:
                 type:
                   - "number"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
               phoneNumber:
                 type:
                   - "string"
                 minLength: 1
+              isPhoneVerified:
+                type:
+                  - "boolean"
               secondaryPhoneNumber:
                 type:
                   - "string"
@@ -2409,7 +2572,11 @@ components:
             required:
               - "id"
               - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
               - "phoneNumber"
+              - "isPhoneVerified"
               - "secondaryPhoneNumber"
               - "fullName"
               - "firstName"
@@ -5488,10 +5655,24 @@ components:
               shortId:
                 type:
                   - "number"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
               phoneNumber:
                 type:
                   - "string"
                 minLength: 1
+              isPhoneVerified:
+                type:
+                  - "boolean"
               secondaryPhoneNumber:
                 type:
                   - "string"
@@ -5624,7 +5805,11 @@ components:
             required:
               - "id"
               - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
               - "phoneNumber"
+              - "isPhoneVerified"
               - "secondaryPhoneNumber"
               - "fullName"
               - "firstName"
@@ -5662,10 +5847,24 @@ components:
               shortId:
                 type:
                   - "number"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
               phoneNumber:
                 type:
                   - "string"
                 minLength: 1
+              isPhoneVerified:
+                type:
+                  - "boolean"
               secondaryPhoneNumber:
                 type:
                   - "string"
@@ -5873,7 +6072,11 @@ components:
             required:
               - "id"
               - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
               - "phoneNumber"
+              - "isPhoneVerified"
               - "secondaryPhoneNumber"
               - "fullName"
               - "firstName"
@@ -5913,10 +6116,24 @@ components:
               shortId:
                 type:
                   - "number"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
               phoneNumber:
                 type:
                   - "string"
                 minLength: 1
+              isPhoneVerified:
+                type:
+                  - "boolean"
               secondaryPhoneNumber:
                 type:
                   - "string"
@@ -6043,7 +6260,11 @@ components:
             required:
               - "id"
               - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
               - "phoneNumber"
+              - "isPhoneVerified"
               - "secondaryPhoneNumber"
               - "fullName"
               - "firstName"
@@ -6081,10 +6302,24 @@ components:
               shortId:
                 type:
                   - "number"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
               phoneNumber:
                 type:
                   - "string"
                 minLength: 1
+              isPhoneVerified:
+                type:
+                  - "boolean"
               secondaryPhoneNumber:
                 type:
                   - "string"
@@ -6201,7 +6436,11 @@ components:
             required:
               - "id"
               - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
               - "phoneNumber"
+              - "isPhoneVerified"
               - "secondaryPhoneNumber"
               - "fullName"
               - "firstName"
@@ -6238,10 +6477,24 @@ components:
             shortId:
               type:
                 - "number"
+            firstTimeMiExpo:
+              type:
+                - "boolean"
+            username:
+              type:
+                - "string"
+                - "null"
+            password:
+              type:
+                - "string"
+                - "null"
             phoneNumber:
               type:
                 - "string"
               minLength: 1
+            isPhoneVerified:
+              type:
+                - "boolean"
             secondaryPhoneNumber:
               type:
                 - "string"
@@ -6369,7 +6622,11 @@ components:
           required:
             - "id"
             - "shortId"
+            - "firstTimeMiExpo"
+            - "username"
+            - "password"
             - "phoneNumber"
+            - "isPhoneVerified"
             - "secondaryPhoneNumber"
             - "fullName"
             - "firstName"
@@ -6398,10 +6655,24 @@ components:
         shortId:
           type:
             - "number"
+        firstTimeMiExpo:
+          type:
+            - "boolean"
+        username:
+          type:
+            - "string"
+            - "null"
+        password:
+          type:
+            - "string"
+            - "null"
         phoneNumber:
           type:
             - "string"
           minLength: 1
+        isPhoneVerified:
+          type:
+            - "boolean"
         secondaryPhoneNumber:
           type:
             - "string"
@@ -6476,7 +6747,11 @@ components:
       required:
         - "id"
         - "shortId"
+        - "firstTimeMiExpo"
+        - "username"
+        - "password"
         - "phoneNumber"
+        - "isPhoneVerified"
         - "secondaryPhoneNumber"
         - "fullName"
         - "firstName"
@@ -6595,6 +6870,14 @@ components:
               type:
                 - "string"
                 - "null"
+            username:
+              type:
+                - "string"
+                - "null"
+            password:
+              type:
+                - "string"
+                - "null"
             comments:
               type:
                 - "array"
@@ -6688,6 +6971,8 @@ components:
             - "phoneNumber"
             - "profilePictureUrl"
             - "secondaryPhoneNumber"
+            - "username"
+            - "password"
         checkForSimilarity:
           type:
             - "boolean"
@@ -6777,10 +7062,20 @@ components:
         shortId:
           type:
             - "number"
+        firstTimeMiExpo:
+          type:
+            - "boolean"
+        username:
+          type:
+            - "string"
+            - "null"
         phoneNumber:
           type:
             - "string"
           minLength: 1
+        isPhoneVerified:
+          type:
+            - "boolean"
         secondaryPhoneNumber:
           type:
             - "string"
@@ -7008,7 +7303,10 @@ components:
       required:
         - "id"
         - "shortId"
+        - "firstTimeMiExpo"
+        - "username"
         - "phoneNumber"
+        - "isPhoneVerified"
         - "secondaryPhoneNumber"
         - "fullName"
         - "firstName"
@@ -7039,10 +7337,24 @@ components:
         shortId:
           type:
             - "number"
+        firstTimeMiExpo:
+          type:
+            - "boolean"
+        username:
+          type:
+            - "string"
+            - "null"
+        password:
+          type:
+            - "string"
+            - "null"
         phoneNumber:
           type:
             - "string"
           minLength: 1
+        isPhoneVerified:
+          type:
+            - "boolean"
         secondaryPhoneNumber:
           type:
             - "string"
@@ -7117,7 +7429,11 @@ components:
       required:
         - "id"
         - "shortId"
+        - "firstTimeMiExpo"
+        - "username"
+        - "password"
         - "phoneNumber"
+        - "isPhoneVerified"
         - "secondaryPhoneNumber"
         - "fullName"
         - "firstName"
@@ -7190,6 +7506,17 @@ components:
             - "string"
             - "null"
           format: "date-time"
+        username:
+          type:
+            - "string"
+            - "null"
+        password:
+          type:
+            - "string"
+            - "null"
+        firstTimeMiExpo:
+          type:
+            - "boolean"
         residence:
           type:
             - "object"
@@ -7699,8 +8026,8 @@ components:
             - "string"
           enum:
             - "PARTICIPANT"
-            - "SPECTATOR"
             - "STAFF"
+            - "SPECTATOR"
         status:
           type:
             - "string"
@@ -7739,8 +8066,8 @@ components:
             - "string"
           enum:
             - "PARTICIPANT"
-            - "SPECTATOR"
             - "STAFF"
+            - "SPECTATOR"
         status:
           type:
             - "string"
@@ -7797,8 +8124,8 @@ components:
                   - "string"
                 enum:
                   - "PARTICIPANT"
-                  - "SPECTATOR"
                   - "STAFF"
+                  - "SPECTATOR"
               status:
                 type:
                   - "string"
@@ -7875,8 +8202,8 @@ components:
                 - "string"
               enum:
                 - "PARTICIPANT"
-                - "SPECTATOR"
                 - "STAFF"
+                - "SPECTATOR"
             status:
               type:
                 - "string"
@@ -7956,8 +8283,8 @@ components:
                   - "string"
                 enum:
                   - "PARTICIPANT"
-                  - "SPECTATOR"
                   - "STAFF"
+                  - "SPECTATOR"
               status:
                 type:
                   - "string"
@@ -8037,8 +8364,8 @@ components:
                   - "string"
                 enum:
                   - "PARTICIPANT"
-                  - "SPECTATOR"
                   - "STAFF"
+                  - "SPECTATOR"
               status:
                 type:
                   - "string"
@@ -8103,8 +8430,8 @@ components:
             - "string"
           enum:
             - "PARTICIPANT"
-            - "SPECTATOR"
             - "STAFF"
+            - "SPECTATOR"
         status:
           type:
             - "string"
@@ -8137,8 +8464,8 @@ components:
             - "string"
           enum:
             - "PARTICIPANT"
-            - "SPECTATOR"
             - "STAFF"
+            - "SPECTATOR"
         status:
           type:
             - "string"
@@ -8188,8 +8515,8 @@ components:
             - "string"
           enum:
             - "PARTICIPANT"
-            - "SPECTATOR"
             - "STAFF"
+            - "SPECTATOR"
         status:
           type:
             - "string"
@@ -8239,8 +8566,8 @@ components:
             - "string"
           enum:
             - "PARTICIPANT"
-            - "SPECTATOR"
             - "STAFF"
+            - "SPECTATOR"
         status:
           type:
             - "string"
@@ -8273,3 +8600,904 @@ components:
         - "mail"
         - "created_at"
         - "updated_at"
+    SendOtpDto:
+      type:
+        - "object"
+      properties:
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+      required:
+        - "phoneNumber"
+    SendOtpResponseDto:
+      type:
+        - "object"
+      properties:
+        response:
+          discriminator:
+            propertyName: "success"
+          oneOf:
+            - type:
+                - "object"
+              properties:
+                hasVerified:
+                  type:
+                    - "boolean"
+                hasUsername:
+                  type:
+                    - "boolean"
+                success:
+                  type:
+                    - "boolean"
+                  enum:
+                    - true
+              required:
+                - "hasVerified"
+                - "hasUsername"
+                - "success"
+            - type:
+                - "object"
+              properties:
+                hasVerified:
+                  type:
+                    - "boolean"
+                hasUsername:
+                  type:
+                    - "boolean"
+                success:
+                  type:
+                    - "boolean"
+                  enum:
+                    - false
+                message:
+                  type:
+                    - "string"
+              required:
+                - "hasVerified"
+                - "hasUsername"
+                - "success"
+                - "message"
+      required:
+        - "response"
+    VerifyOtpDto:
+      type:
+        - "object"
+      properties:
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        code:
+          type:
+            - "string"
+          minLength: 6
+          maxLength: 6
+      required:
+        - "phoneNumber"
+        - "code"
+    VerifyOtpResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+        profile:
+          type:
+            - "object"
+          properties:
+            id:
+              type:
+                - "string"
+              format: "uuid"
+            shortId:
+              type:
+                - "number"
+            firstTimeMiExpo:
+              type:
+                - "boolean"
+            username:
+              type:
+                - "string"
+                - "null"
+            password:
+              type:
+                - "string"
+                - "null"
+            phoneNumber:
+              type:
+                - "string"
+              minLength: 1
+            isPhoneVerified:
+              type:
+                - "boolean"
+            secondaryPhoneNumber:
+              type:
+                - "string"
+                - "null"
+            fullName:
+              type:
+                - "string"
+              minLength: 1
+            firstName:
+              type:
+                - "string"
+                - "null"
+              minLength: 1
+            gender:
+              type:
+                - "string"
+                - "null"
+            birthDate:
+              type:
+                - "string"
+                - "null"
+            profilePictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            instagram:
+              type:
+                - "string"
+                - "null"
+            mail:
+              type:
+                - "string"
+                - "null"
+              format: "email"
+            dni:
+              type:
+                - "string"
+                - "null"
+            alternativeNames:
+              type:
+                - "array"
+              items:
+                type:
+                  - "string"
+            birthLocationId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            residenceLocationId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            isInTrash:
+              type:
+                - "boolean"
+            movedToTrashDate:
+              type:
+                - "string"
+                - "null"
+              format: "date-time"
+            created_at:
+              type:
+                - "string"
+              format: "date-time"
+            updated_at:
+              type:
+                - "string"
+              format: "date-time"
+            residenceLocation:
+              type:
+                - "object"
+                - "null"
+              properties:
+                city:
+                  type:
+                    - "string"
+                country:
+                  type:
+                    - "string"
+                latitude:
+                  type:
+                    - "number"
+                  minimum: -90
+                  maximum: 90
+                longitude:
+                  type:
+                    - "number"
+                  minimum: -180
+                  maximum: 180
+              required:
+                - "city"
+                - "country"
+                - "latitude"
+                - "longitude"
+            birthLocation:
+              type:
+                - "object"
+                - "null"
+              properties:
+                city:
+                  type:
+                    - "string"
+                country:
+                  type:
+                    - "string"
+                latitude:
+                  type:
+                    - "number"
+                  minimum: -90
+                  maximum: 90
+                longitude:
+                  type:
+                    - "number"
+                  minimum: -180
+                  maximum: 180
+              required:
+                - "city"
+                - "country"
+                - "latitude"
+                - "longitude"
+          required:
+            - "id"
+            - "shortId"
+            - "firstTimeMiExpo"
+            - "username"
+            - "password"
+            - "phoneNumber"
+            - "isPhoneVerified"
+            - "secondaryPhoneNumber"
+            - "fullName"
+            - "firstName"
+            - "gender"
+            - "birthDate"
+            - "profilePictureUrl"
+            - "instagram"
+            - "mail"
+            - "dni"
+            - "alternativeNames"
+            - "birthLocationId"
+            - "residenceLocationId"
+            - "isInTrash"
+            - "movedToTrashDate"
+            - "created_at"
+            - "updated_at"
+            - "residenceLocation"
+            - "birthLocation"
+      required:
+        - "success"
+        - "profile"
+    LoginWithPhoneDto:
+      type:
+        - "object"
+      properties:
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+      required:
+        - "phoneNumber"
+    LoginWithPhoneResponseDto:
+      type:
+        - "object"
+      properties:
+        tokens:
+          type:
+            - "object"
+          properties:
+            accessToken:
+              type:
+                - "string"
+            refreshToken:
+              type:
+                - "string"
+            expiresIn:
+              type:
+                - "number"
+          required:
+            - "accessToken"
+            - "refreshToken"
+            - "expiresIn"
+        profile:
+          type:
+            - "object"
+          properties:
+            id:
+              type:
+                - "string"
+              format: "uuid"
+            shortId:
+              type:
+                - "number"
+            firstTimeMiExpo:
+              type:
+                - "boolean"
+            username:
+              type:
+                - "string"
+                - "null"
+            phoneNumber:
+              type:
+                - "string"
+              minLength: 1
+            isPhoneVerified:
+              type:
+                - "boolean"
+            secondaryPhoneNumber:
+              type:
+                - "string"
+                - "null"
+            fullName:
+              type:
+                - "string"
+              minLength: 1
+            firstName:
+              type:
+                - "string"
+                - "null"
+              minLength: 1
+            gender:
+              type:
+                - "string"
+                - "null"
+            birthDate:
+              type:
+                - "string"
+                - "null"
+            profilePictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            instagram:
+              type:
+                - "string"
+                - "null"
+            mail:
+              type:
+                - "string"
+                - "null"
+              format: "email"
+            dni:
+              type:
+                - "string"
+                - "null"
+            alternativeNames:
+              type:
+                - "array"
+              items:
+                type:
+                  - "string"
+            birthLocationId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            residenceLocationId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            isInTrash:
+              type:
+                - "boolean"
+            movedToTrashDate:
+              type:
+                - "string"
+                - "null"
+              format: "date-time"
+            created_at:
+              type:
+                - "string"
+              format: "date-time"
+            updated_at:
+              type:
+                - "string"
+              format: "date-time"
+          required:
+            - "id"
+            - "shortId"
+            - "firstTimeMiExpo"
+            - "username"
+            - "phoneNumber"
+            - "isPhoneVerified"
+            - "secondaryPhoneNumber"
+            - "fullName"
+            - "firstName"
+            - "gender"
+            - "birthDate"
+            - "profilePictureUrl"
+            - "instagram"
+            - "mail"
+            - "dni"
+            - "alternativeNames"
+            - "birthLocationId"
+            - "residenceLocationId"
+            - "isInTrash"
+            - "movedToTrashDate"
+            - "created_at"
+            - "updated_at"
+      required:
+        - "tokens"
+        - "profile"
+    GetMiExpoMeResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        shortId:
+          type:
+            - "number"
+        firstTimeMiExpo:
+          type:
+            - "boolean"
+        username:
+          type:
+            - "string"
+            - "null"
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        isPhoneVerified:
+          type:
+            - "boolean"
+        secondaryPhoneNumber:
+          type:
+            - "string"
+            - "null"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        firstName:
+          type:
+            - "string"
+            - "null"
+          minLength: 1
+        gender:
+          type:
+            - "string"
+            - "null"
+        birthDate:
+          type:
+            - "string"
+            - "null"
+        profilePictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        instagram:
+          type:
+            - "string"
+            - "null"
+        mail:
+          type:
+            - "string"
+            - "null"
+          format: "email"
+        dni:
+          type:
+            - "string"
+            - "null"
+        alternativeNames:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        birthLocationId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        residenceLocationId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        isInTrash:
+          type:
+            - "boolean"
+        movedToTrashDate:
+          type:
+            - "string"
+            - "null"
+          format: "date-time"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+        residenceLocation:
+          type:
+            - "object"
+            - "null"
+          properties:
+            id:
+              type:
+                - "string"
+              format: "uuid"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+            country:
+              type:
+                - "string"
+            state:
+              type:
+                - "string"
+            city:
+              type:
+                - "string"
+            created_at:
+              type:
+                - "string"
+              format: "date-time"
+            updated_at:
+              type:
+                - "string"
+              format: "date-time"
+          required:
+            - "id"
+            - "latitude"
+            - "longitude"
+            - "country"
+            - "state"
+            - "city"
+            - "created_at"
+            - "updated_at"
+        birthLocation:
+          type:
+            - "object"
+            - "null"
+          properties:
+            id:
+              type:
+                - "string"
+              format: "uuid"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+            country:
+              type:
+                - "string"
+            state:
+              type:
+                - "string"
+            city:
+              type:
+                - "string"
+            created_at:
+              type:
+                - "string"
+              format: "date-time"
+            updated_at:
+              type:
+                - "string"
+              format: "date-time"
+          required:
+            - "id"
+            - "latitude"
+            - "longitude"
+            - "country"
+            - "state"
+            - "city"
+            - "created_at"
+            - "updated_at"
+      required:
+        - "id"
+        - "shortId"
+        - "firstTimeMiExpo"
+        - "username"
+        - "phoneNumber"
+        - "isPhoneVerified"
+        - "secondaryPhoneNumber"
+        - "fullName"
+        - "firstName"
+        - "gender"
+        - "birthDate"
+        - "profilePictureUrl"
+        - "instagram"
+        - "mail"
+        - "dni"
+        - "alternativeNames"
+        - "birthLocationId"
+        - "residenceLocationId"
+        - "isInTrash"
+        - "movedToTrashDate"
+        - "created_at"
+        - "updated_at"
+        - "residenceLocation"
+        - "birthLocation"
+    UpdateMiExpoMeDto:
+      type:
+        - "object"
+      properties:
+        birthDate:
+          type:
+            - "string"
+            - "null"
+        dni:
+          type:
+            - "string"
+            - "null"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        gender:
+          type:
+            - "string"
+            - "null"
+        instagram:
+          type:
+            - "string"
+            - "null"
+        mail:
+          type:
+            - "string"
+            - "null"
+          format: "email"
+        password:
+          type:
+            - "string"
+            - "null"
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        secondaryPhoneNumber:
+          type:
+            - "string"
+            - "null"
+        username:
+          type:
+            - "string"
+            - "null"
+        birth:
+          type:
+            - "object"
+          properties:
+            city:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+            state:
+              type:
+                - "string"
+          required:
+            - "city"
+            - "country"
+            - "latitude"
+            - "longitude"
+            - "state"
+        residence:
+          type:
+            - "object"
+          properties:
+            city:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+            state:
+              type:
+                - "string"
+          required:
+            - "city"
+            - "country"
+            - "latitude"
+            - "longitude"
+            - "state"
+      required:
+        - "birthDate"
+        - "dni"
+        - "fullName"
+        - "gender"
+        - "instagram"
+        - "mail"
+        - "password"
+        - "phoneNumber"
+        - "secondaryPhoneNumber"
+        - "username"
+        - "birth"
+        - "residence"
+    LoginMiExpoDto:
+      type:
+        - "object"
+      properties:
+        username:
+          type:
+            - "string"
+        password:
+          type:
+            - "string"
+          minLength: 6
+      required:
+        - "username"
+        - "password"
+    LoginMiExpoResponseDto:
+      type:
+        - "object"
+      properties:
+        user:
+          type:
+            - "object"
+          properties:
+            id:
+              type:
+                - "string"
+              format: "uuid"
+            shortId:
+              type:
+                - "number"
+            firstTimeMiExpo:
+              type:
+                - "boolean"
+            username:
+              type:
+                - "string"
+                - "null"
+            phoneNumber:
+              type:
+                - "string"
+              minLength: 1
+            isPhoneVerified:
+              type:
+                - "boolean"
+            secondaryPhoneNumber:
+              type:
+                - "string"
+                - "null"
+            fullName:
+              type:
+                - "string"
+              minLength: 1
+            firstName:
+              type:
+                - "string"
+                - "null"
+              minLength: 1
+            gender:
+              type:
+                - "string"
+                - "null"
+            birthDate:
+              type:
+                - "string"
+                - "null"
+            profilePictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            instagram:
+              type:
+                - "string"
+                - "null"
+            mail:
+              type:
+                - "string"
+                - "null"
+              format: "email"
+            dni:
+              type:
+                - "string"
+                - "null"
+            alternativeNames:
+              type:
+                - "array"
+              items:
+                type:
+                  - "string"
+            birthLocationId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            residenceLocationId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            isInTrash:
+              type:
+                - "boolean"
+            movedToTrashDate:
+              type:
+                - "string"
+                - "null"
+              format: "date-time"
+            created_at:
+              type:
+                - "string"
+              format: "date-time"
+            updated_at:
+              type:
+                - "string"
+              format: "date-time"
+          required:
+            - "id"
+            - "shortId"
+            - "firstTimeMiExpo"
+            - "username"
+            - "phoneNumber"
+            - "isPhoneVerified"
+            - "secondaryPhoneNumber"
+            - "fullName"
+            - "firstName"
+            - "gender"
+            - "birthDate"
+            - "profilePictureUrl"
+            - "instagram"
+            - "mail"
+            - "dni"
+            - "alternativeNames"
+            - "birthLocationId"
+            - "residenceLocationId"
+            - "isInTrash"
+            - "movedToTrashDate"
+            - "created_at"
+            - "updated_at"
+        backendTokens:
+          type:
+            - "object"
+          properties:
+            accessToken:
+              type:
+                - "string"
+            refreshToken:
+              type:
+                - "string"
+            expiresIn:
+              type:
+                - "number"
+          required:
+            - "accessToken"
+            - "refreshToken"
+            - "expiresIn"
+      required:
+        - "user"
+        - "backendTokens"
