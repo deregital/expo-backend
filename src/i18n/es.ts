@@ -530,6 +530,7 @@ export default {
     ticket: {
       create: {
         success: 'Ticket creado con éxito',
+        'event-not-found': 'Evento no encontrado',
         conflict: 'Error en la creación del ticket',
       },
       'find-all': {

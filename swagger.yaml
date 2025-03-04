@@ -802,28 +802,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteEventResponseDto"
-  /pdf/generate-pdf/{id}:
-    get:
-      operationId: "PdfController_generatePdf"
-      parameters:
-        - name: "id"
-          required: true
-          in: "path"
-          schema:
-            type: "string"
-      responses:
-        200:
-          description: "Ticket generado con éxito"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/GeneratePdfResponseDto"
-        404:
-          description: "Ticket no encontrado"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorDto"
   /profile/all:
     get:
       operationId: "ProfileController_findAll"
@@ -1400,6 +1378,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CreateTicketResponseDto"
+        404:
+          description: "Evento no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /ticket/all:
     get:
       operationId: "TicketController_findAll"
@@ -1517,6 +1501,62 @@ paths:
                 $ref: "#/components/schemas/DeleteTicketResponseDto"
         404:
           description: "Ticket no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /ticket/generate-pdf/{id}:
+    get:
+      operationId: "TicketController_generatePdf"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Ticket generado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Buffer"
+        404:
+          description: "Ticket no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /ticket/find-ticket/{id}:
+    get:
+      operationId: "TicketController_findTicket"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Ticket encontrado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindTicketResponseDto"
+        404:
+          description: "Ticket no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "Error de formato en el valor del código de barras"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al descifrar el ID del ticket"
           content:
             application/json:
               schema:
@@ -4906,7 +4946,6 @@ components:
         - "supraEventId"
         - "created_at"
         - "updated_at"
-    GeneratePdfResponseDto: {}
     FindAllProfileResponseDto:
       type:
         - "object"
@@ -7144,6 +7183,7 @@ components:
           enum:
             - "BOOKED"
             - "PAID"
+            - "FREE"
         fullName:
           type:
             - "string"
@@ -7183,6 +7223,7 @@ components:
           enum:
             - "BOOKED"
             - "PAID"
+            - "FREE"
         fullName:
           type:
             - "string"
@@ -7240,6 +7281,7 @@ components:
                 enum:
                   - "BOOKED"
                   - "PAID"
+                  - "FREE"
               fullName:
                 type:
                   - "string"
@@ -7317,6 +7359,7 @@ components:
               enum:
                 - "BOOKED"
                 - "PAID"
+                - "FREE"
             fullName:
               type:
                 - "string"
@@ -7397,6 +7440,7 @@ components:
                 enum:
                   - "BOOKED"
                   - "PAID"
+                  - "FREE"
               fullName:
                 type:
                   - "string"
@@ -7477,6 +7521,7 @@ components:
                 enum:
                   - "BOOKED"
                   - "PAID"
+                  - "FREE"
               fullName:
                 type:
                   - "string"
@@ -7542,6 +7587,7 @@ components:
           enum:
             - "BOOKED"
             - "PAID"
+            - "FREE"
         fullName:
           type:
             - "string"
@@ -7575,6 +7621,7 @@ components:
           enum:
             - "BOOKED"
             - "PAID"
+            - "FREE"
         fullName:
           type:
             - "string"
@@ -7625,6 +7672,58 @@ components:
           enum:
             - "BOOKED"
             - "PAID"
+            - "FREE"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        mail:
+          type:
+            - "string"
+          format: "email"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "eventId"
+        - "type"
+        - "status"
+        - "fullName"
+        - "mail"
+        - "created_at"
+        - "updated_at"
+    FindTicketResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        eventId:
+          type:
+            - "string"
+          format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PARTICIPANT"
+            - "SPECTATOR"
+            - "STAFF"
+        status:
+          type:
+            - "string"
+          enum:
+            - "BOOKED"
+            - "PAID"
+            - "FREE"
         fullName:
           type:
             - "string"

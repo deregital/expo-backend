@@ -1,6 +1,7 @@
 import { Roles } from '@/auth/decorators/rol.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
+import { EventService } from '@/event/event.service';
 import { translate } from '@/i18n/translate';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { decryptString } from '@/shared/utils/utils';
@@ -46,6 +47,7 @@ import {
   Delete,
   Get,
   Header,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -67,8 +69,15 @@ import { Role } from '~/types/prisma-schema';
 @UseGuards(JwtGuard, RoleGuard)
 @Controller('ticket')
 export class TicketController {
-  constructor(private readonly ticketService: TicketService) {}
+  constructor(
+    private readonly ticketService: TicketService,
+    private readonly eventService: EventService,
+  ) {}
 
+  @ApiNotFoundResponse({
+    description: translate('route.ticket.create.event-not-found'),
+    type: ErrorDto,
+  })
   @ApiCreatedResponse({
     description: translate('route.ticket.create.success'),
     type: CreateTicketResponseDto,
@@ -77,6 +86,12 @@ export class TicketController {
   async create(
     @Body() createTicketDto: CreateTicketDto,
   ): Promise<z.infer<typeof createTicketResponseSchema>> {
+    const event = await this.eventService.findById(createTicketDto.eventId);
+    if (!event) {
+      throw new NotFoundException(
+        translate('route.ticket.create.event-not-found'),
+      );
+    }
     return await this.ticketService.create(createTicketDto);
   }
 
@@ -163,7 +178,7 @@ export class TicketController {
 
   @ApiOkResponse({
     description: translate('route.pdf.generate-pdf.success'),
-    type: 'arraybuffer',
+    type: Buffer,
   })
   @ApiNotFoundResponse({
     description: translate('route.pdf.generate-pdf.not-found'),

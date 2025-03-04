@@ -168,7 +168,7 @@ model Event {
   supraEventId String? @map("supra_event_id")
   supraEvent   Event?  @relation("SubEvents", fields: [supraEventId], references: [id], onDelete: Cascade)
 
-  subEvents Event[] @relation("SubEvents")
+  subEvents Event[]  @relation("SubEvents")
   tickets   Ticket[] @relation("EVENT_X_TICKET")
 
   created_at DateTime @default(now())
@@ -218,15 +218,15 @@ model CannedResponse {
 
 model Ticket {
   id String @id @default(uuid())
-  
-  event Event @relation("EVENT_X_TICKET", fields: [eventId], references: [id], onDelete: Cascade)
+
+  event   Event  @relation("EVENT_X_TICKET", fields: [eventId], references: [id], onDelete: Cascade)
   eventId String @map("event_id")
 
-  type TicketType
+  type   TicketType
   status TicketStatus
 
   fullName String
-  mail String
+  mail     String
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -249,6 +249,7 @@ enum TicketType {
 enum TicketStatus {
   BOOKED
   PAID
+  FREE
 }
 
 enum TemplateStatus {

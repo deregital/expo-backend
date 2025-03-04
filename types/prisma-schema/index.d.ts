@@ -113,6 +113,7 @@ export namespace $Enums {
   export const TicketStatus: {
     BOOKED: 'BOOKED';
     PAID: 'PAID';
+    FREE: 'FREE';
   };
 
   export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus];
