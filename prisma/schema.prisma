@@ -77,6 +77,8 @@ model Profile {
   isInTrash        Boolean   @default(false) @map("is_in_trash")
   movedToTrashDate DateTime? @map("moved_to_trash_date")
 
+  Ticket Ticket[] @relation("PROFILE_X_TICKET")
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -176,8 +178,8 @@ model Event {
   id           String   @id @default(uuid())
   name         String
   date         DateTime
-  startingDate DateTime @map("starting_date")
-  endingDate   DateTime @map("ending_date")
+  startingDate DateTime @default(now()) @map("starting_date")
+  endingDate   DateTime @default(now()) @map("ending_date")
   location     String
 
   folderId String?      @map("folder_id")
@@ -255,6 +257,9 @@ model Ticket {
 
   fullName String
   mail     String
+
+  profileId String?  @map("profile_id")
+  profile   Profile? @relation("PROFILE_X_TICKET", fields: [profileId], references: [id])
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

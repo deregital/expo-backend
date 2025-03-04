@@ -623,5 +623,10 @@ export default {
         success: 'Código de verificación verificado con éxito',
       },
     },
+    'mi-expo': {
+      'my-events': {
+        success: 'Eventos obtenidos',
+      },
+    },
   },
 } as const;

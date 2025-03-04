@@ -17,7 +17,14 @@ import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Inject, Injectable } from '@nestjs/common';
 import { z } from 'zod';
-import { Event, EventTicket, TagGroup, TagType } from '~/types/prisma-schema';
+import {
+  Event,
+  EventTicket,
+  Prisma,
+  Tag,
+  TagGroup,
+  TagType,
+} from '~/types/prisma-schema';
 import { deleteEventResponseSchema } from './dto/delete-event.dto';
 
 @Injectable()
@@ -265,5 +272,32 @@ export class EventService {
     });
 
     return { events };
+  }
+
+  async findActiveByTags(tagIds: Tag['id'][]): Promise<
+    Prisma.EventGetPayload<{
+      include: {
+        tickets: true;
+      };
+    }>[]
+  > {
+    return await this.prisma.event.findMany({
+      where: {
+        active: true,
+        endingDate: {
+          gt: new Date(),
+        },
+        tags: {
+          some: {
+            id: {
+              in: tagIds,
+            },
+          },
+        },
+      },
+      include: {
+        tickets: true,
+      },
+    });
   }
 }

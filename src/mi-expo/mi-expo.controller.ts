@@ -1,3 +1,4 @@
+import { EventService } from '@/event/event.service';
 import { translate } from '@/i18n/translate';
 import {
   Profile,
@@ -13,15 +14,19 @@ import {
   loginWithPhoneResponseSchema,
 } from '@/mi-expo/dto/login-with-phone.dto';
 import {
+  LoginMiExpoDto,
+  LoginMiExpoResponseDto,
+  loginMiExpoResponseSchema,
+} from '@/mi-expo/dto/login.dto';
+import {
+  MyEventsResponseDto,
+  myEventsResponseSchema,
+} from '@/mi-expo/dto/my-events.dto';
+import {
   UpdateMiExpoMeDto,
   UpdateMiExpoMeResponseDto,
   updateMiExpoMeResponseSchema,
 } from '@/mi-expo/dto/update-me.dto';
-import {
-  LoginMiExpoDto,
-  LoginMiExpoResponseDto,
-  loginMiExpoResponseSchema,
-} from '@/mi-expo/exports';
 import { JwtMiExpoGuard } from '@/mi-expo/jwt-mi-expo.guard';
 import { MiExpoService } from '@/mi-expo/mi-expo.service';
 import { ProfileService } from '@/profile/profile.service';
@@ -38,6 +43,7 @@ import {
 } from '@nestjs/common';
 import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import z from 'zod';
+import { TagType } from '~/types/prisma-schema';
 
 // @UseGuards(JwtMiExpoGuard)
 @Controller('mi-expo')
@@ -45,6 +51,7 @@ export class MiExpoController {
   constructor(
     private readonly profileService: ProfileService,
     private readonly miExpoService: MiExpoService,
+    private readonly eventService: EventService,
   ) {}
 
   @ApiUnauthorizedResponse({
@@ -115,6 +122,38 @@ export class MiExpoController {
       ...body,
       firstTimeMiExpo: false,
     });
+  }
+
+  @UseGuards(JwtMiExpoGuard)
+  @ApiOkResponse({
+    description: translate('route.mi-expo.my-events.success'),
+    type: MyEventsResponseDto,
+  })
+  @Get('/my-events')
+  async myEvents(
+    @Profile() profile: ProfileWithoutPassword,
+  ): Promise<z.infer<typeof myEventsResponseSchema>> {
+    const { tags } = await this.profileService.findById(profile.id);
+    const profileTags = tags.filter((tag) => tag.type === TagType.PROFILE);
+
+    if (profileTags.length === 0) {
+      return {
+        events: [],
+      };
+    }
+
+    const eventsByTags = await this.eventService.findActiveByTags(
+      profileTags.map((tag) => tag.id),
+    );
+
+    return {
+      events: eventsByTags.map((event) => ({
+        ...event,
+        haveTicket: event.tickets.some(
+          (ticket) => ticket.profileId === profile.id,
+        ),
+      })),
+    };
   }
 
   @ApiUnauthorizedResponse({

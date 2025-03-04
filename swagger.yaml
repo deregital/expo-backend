@@ -1755,6 +1755,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetMiExpoMeResponseDto"
+  /mi-expo/my-events:
+    get:
+      operationId: "MiExpoController_myEvents"
+      parameters: []
+      responses:
+        200:
+          description: "Eventos obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MyEventsResponseDto"
   /mi-expo/login:
     post:
       operationId: "MiExpoController_loginUsernamePassword"
@@ -9344,6 +9355,58 @@ components:
         - "username"
         - "birth"
         - "residence"
+    MyEventsResponseDto:
+      type:
+        - "object"
+      properties:
+        events:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              date:
+                type:
+                  - "string"
+                format: "date-time"
+              startingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              endingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              name:
+                type:
+                  - "string"
+                minLength: 1
+              location:
+                type:
+                  - "string"
+                minLength: 1
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              active:
+                type:
+                  - "boolean"
+              haveTicket:
+                type:
+                  - "boolean"
+            required:
+              - "date"
+              - "startingDate"
+              - "endingDate"
+              - "name"
+              - "location"
+              - "id"
+              - "active"
+              - "haveTicket"
+      required:
+        - "events"
     LoginMiExpoDto:
       type:
         - "object"
