@@ -12,6 +12,7 @@ export default {
       cannedResponse: 'Respuesta enlatada',
       message: 'Mensaje',
       ticket: 'Ticket',
+      eventTicket: 'Tickets del evento',
     },
     tag: {
       assisted: 'Asistió',
@@ -75,6 +76,14 @@ export default {
       date: {
         required: 'La fecha es requerida',
         invalid: 'La fecha debe ser una fecha válida',
+      },
+      startingDate: {
+        required: 'La fecha de inicio es requerida',
+        invalid: 'La fecha de inicio debe ser una fecha válida',
+      },
+      endingDate: {
+        required: 'La fecha de finalización es requerida',
+        invalid: 'La fecha de finalización debe ser una fecha válida',
       },
       location: {
         required: 'La ubicación es requerida',
@@ -201,6 +210,14 @@ export default {
       },
       status: {
         invalid: 'El estado del ticket es inválido',
+      },
+    },
+    eventTicket: {
+      amount: {
+        min: 'La cantidad de tickets debe ser mayor a 0',
+      },
+      price: {
+        min: 'El precio de los tickets debe ser mayor a 0',
       },
     },
   },
@@ -365,6 +382,7 @@ export default {
         success: 'Evento creado con éxito',
         conflict: 'Error en la creación del evento',
         'folder-not-found': 'Carpeta de evento no encontrada',
+        'tag-not-found': 'Etiqueta no encontrada',
       },
       'get-all': {
         success: 'Eventos obtenidos con éxito',
@@ -378,9 +396,15 @@ export default {
         success: 'Evento actualizado con éxito',
         'not-found': 'Evento no encontrado',
         'subevent-not-found': 'Subevento no encontrado',
+        'active-event-not-editable': 'Evento activo no editable',
       },
       delete: {
         success: 'Evento eliminado con éxito',
+        'not-found': 'Evento no encontrado',
+      },
+      'toggle-active': {
+        success: 'Evento activo cambiado con éxito',
+        'active-event-not-editable': 'Evento activo no editable',
         'not-found': 'Evento no encontrado',
       },
     },

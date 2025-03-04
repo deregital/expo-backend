@@ -732,6 +732,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /event/find-active:
+    get:
+      operationId: "EventController_getActive"
+      parameters: []
+      responses:
+        200:
+          description: "Eventos obtenidos con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetActiveEventsResponseDto"
   /event/{id}:
     get:
       operationId: "EventController_findById"
@@ -781,6 +792,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "Evento activo no editable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
     delete:
       operationId: "EventController_remove"
       parameters:
@@ -802,6 +819,34 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteEventResponseDto"
+  /event/toggle-active/{id}:
+    post:
+      operationId: "EventController_toggleActive"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Evento activo cambiado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateEventResponseDto"
+        404:
+          description: "Evento no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "Evento activo no editable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /profile/all:
     get:
       operationId: "ProfileController_findAll"
@@ -3791,6 +3836,14 @@ components:
                       type:
                         - "string"
                       format: "date-time"
+                    startingDate:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    endingDate:
+                      type:
+                        - "string"
+                      format: "date-time"
                     location:
                       type:
                         - "string"
@@ -3808,6 +3861,9 @@ components:
                       type:
                         - "string"
                       format: "uuid"
+                    active:
+                      type:
+                        - "boolean"
                     supraEventId:
                       type:
                         - "string"
@@ -3825,10 +3881,13 @@ components:
                     - "id"
                     - "name"
                     - "date"
+                    - "startingDate"
+                    - "endingDate"
                     - "location"
                     - "folderId"
                     - "tagAssistedId"
                     - "tagConfirmedId"
+                    - "active"
                     - "supraEventId"
                     - "created_at"
                     - "updated_at"
@@ -3885,6 +3944,14 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              startingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              endingDate:
+                type:
+                  - "string"
+                format: "date-time"
               location:
                 type:
                   - "string"
@@ -3902,6 +3969,9 @@ components:
                 type:
                   - "string"
                 format: "uuid"
+              active:
+                type:
+                  - "boolean"
               supraEventId:
                 type:
                   - "string"
@@ -3919,10 +3989,13 @@ components:
               - "id"
               - "name"
               - "date"
+              - "startingDate"
+              - "endingDate"
               - "location"
               - "folderId"
               - "tagAssistedId"
               - "tagConfirmedId"
+              - "active"
               - "supraEventId"
               - "created_at"
               - "updated_at"
@@ -4023,6 +4096,14 @@ components:
           type:
             - "string"
           format: "date-time"
+        startingDate:
+          type:
+            - "string"
+          format: "date-time"
+        endingDate:
+          type:
+            - "string"
+          format: "date-time"
         location:
           type:
             - "string"
@@ -4047,6 +4128,14 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              startingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              endingDate:
+                type:
+                  - "string"
+                format: "date-time"
               location:
                 type:
                   - "string"
@@ -4054,12 +4143,52 @@ components:
             required:
               - "name"
               - "date"
+              - "startingDate"
+              - "endingDate"
               - "location"
+        tagsId:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+            format: "uuid"
+        eventTickets:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              amount:
+                type:
+                  - "number"
+                minimum: 1
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PARTICIPANT"
+                  - "STAFF"
+                  - "SPECTATOR"
+              price:
+                type:
+                  - "number"
+                  - "null"
+                minimum: 1
+            required:
+              - "amount"
+              - "type"
+              - "price"
       required:
         - "name"
         - "date"
+        - "startingDate"
+        - "endingDate"
         - "location"
         - "folderId"
+        - "tagsId"
+        - "eventTickets"
     CreateEventResponseDto:
       type:
         - "object"
@@ -4073,6 +4202,14 @@ components:
             - "string"
           minLength: 1
         date:
+          type:
+            - "string"
+          format: "date-time"
+        startingDate:
+          type:
+            - "string"
+          format: "date-time"
+        endingDate:
           type:
             - "string"
           format: "date-time"
@@ -4093,6 +4230,9 @@ components:
           type:
             - "string"
           format: "uuid"
+        active:
+          type:
+            - "boolean"
         supraEventId:
           type:
             - "string"
@@ -4110,10 +4250,13 @@ components:
         - "id"
         - "name"
         - "date"
+        - "startingDate"
+        - "endingDate"
         - "location"
         - "folderId"
         - "tagAssistedId"
         - "tagConfirmedId"
+        - "active"
         - "supraEventId"
         - "created_at"
         - "updated_at"
@@ -4168,6 +4311,14 @@ components:
                       type:
                         - "string"
                       format: "date-time"
+                    startingDate:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    endingDate:
+                      type:
+                        - "string"
+                      format: "date-time"
                     location:
                       type:
                         - "string"
@@ -4185,6 +4336,9 @@ components:
                       type:
                         - "string"
                       format: "uuid"
+                    active:
+                      type:
+                        - "boolean"
                     supraEventId:
                       type:
                         - "string"
@@ -4215,6 +4369,14 @@ components:
                           type:
                             - "string"
                           format: "date-time"
+                        startingDate:
+                          type:
+                            - "string"
+                          format: "date-time"
+                        endingDate:
+                          type:
+                            - "string"
+                          format: "date-time"
                         location:
                           type:
                             - "string"
@@ -4232,6 +4394,9 @@ components:
                           type:
                             - "string"
                           format: "uuid"
+                        active:
+                          type:
+                            - "boolean"
                         supraEventId:
                           type:
                             - "string"
@@ -4249,10 +4414,13 @@ components:
                         - "id"
                         - "name"
                         - "date"
+                        - "startingDate"
+                        - "endingDate"
                         - "location"
                         - "folderId"
                         - "tagAssistedId"
                         - "tagConfirmedId"
+                        - "active"
                         - "supraEventId"
                         - "created_at"
                         - "updated_at"
@@ -4275,6 +4443,14 @@ components:
                             type:
                               - "string"
                             format: "date-time"
+                          startingDate:
+                            type:
+                              - "string"
+                            format: "date-time"
+                          endingDate:
+                            type:
+                              - "string"
+                            format: "date-time"
                           location:
                             type:
                               - "string"
@@ -4292,6 +4468,9 @@ components:
                             type:
                               - "string"
                             format: "uuid"
+                          active:
+                            type:
+                              - "boolean"
                           supraEventId:
                             type:
                               - "string"
@@ -4309,10 +4488,13 @@ components:
                           - "id"
                           - "name"
                           - "date"
+                          - "startingDate"
+                          - "endingDate"
                           - "location"
                           - "folderId"
                           - "tagAssistedId"
                           - "tagConfirmedId"
+                          - "active"
                           - "supraEventId"
                           - "created_at"
                           - "updated_at"
@@ -4320,10 +4502,13 @@ components:
                     - "id"
                     - "name"
                     - "date"
+                    - "startingDate"
+                    - "endingDate"
                     - "location"
                     - "folderId"
                     - "tagAssistedId"
                     - "tagConfirmedId"
+                    - "active"
                     - "supraEventId"
                     - "created_at"
                     - "updated_at"
@@ -4355,6 +4540,14 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              startingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              endingDate:
+                type:
+                  - "string"
+                format: "date-time"
               location:
                 type:
                   - "string"
@@ -4372,6 +4565,9 @@ components:
                 type:
                   - "string"
                 format: "uuid"
+              active:
+                type:
+                  - "boolean"
               supraEventId:
                 type:
                   - "string"
@@ -4402,6 +4598,14 @@ components:
                     type:
                       - "string"
                     format: "date-time"
+                  startingDate:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  endingDate:
+                    type:
+                      - "string"
+                    format: "date-time"
                   location:
                     type:
                       - "string"
@@ -4419,6 +4623,9 @@ components:
                     type:
                       - "string"
                     format: "uuid"
+                  active:
+                    type:
+                      - "boolean"
                   supraEventId:
                     type:
                       - "string"
@@ -4436,10 +4643,13 @@ components:
                   - "id"
                   - "name"
                   - "date"
+                  - "startingDate"
+                  - "endingDate"
                   - "location"
                   - "folderId"
                   - "tagAssistedId"
                   - "tagConfirmedId"
+                  - "active"
                   - "supraEventId"
                   - "created_at"
                   - "updated_at"
@@ -4462,6 +4672,14 @@ components:
                       type:
                         - "string"
                       format: "date-time"
+                    startingDate:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    endingDate:
+                      type:
+                        - "string"
+                      format: "date-time"
                     location:
                       type:
                         - "string"
@@ -4479,6 +4697,9 @@ components:
                       type:
                         - "string"
                       format: "uuid"
+                    active:
+                      type:
+                        - "boolean"
                     supraEventId:
                       type:
                         - "string"
@@ -4496,10 +4717,13 @@ components:
                     - "id"
                     - "name"
                     - "date"
+                    - "startingDate"
+                    - "endingDate"
                     - "location"
                     - "folderId"
                     - "tagAssistedId"
                     - "tagConfirmedId"
+                    - "active"
                     - "supraEventId"
                     - "created_at"
                     - "updated_at"
@@ -4507,10 +4731,13 @@ components:
               - "id"
               - "name"
               - "date"
+              - "startingDate"
+              - "endingDate"
               - "location"
               - "folderId"
               - "tagAssistedId"
               - "tagConfirmedId"
+              - "active"
               - "supraEventId"
               - "created_at"
               - "updated_at"
@@ -4519,6 +4746,119 @@ components:
       required:
         - "folders"
         - "withoutFolder"
+    GetActiveEventsResponseDto:
+      type:
+        - "object"
+      properties:
+        events:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              name:
+                type:
+                  - "string"
+                minLength: 1
+              date:
+                type:
+                  - "string"
+                format: "date-time"
+              startingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              endingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              location:
+                type:
+                  - "string"
+                minLength: 1
+              folderId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              tagAssistedId:
+                type:
+                  - "string"
+                format: "uuid"
+              tagConfirmedId:
+                type:
+                  - "string"
+                format: "uuid"
+              active:
+                type:
+                  - "boolean"
+              supraEventId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              eventTickets:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "object"
+                  properties:
+                    id:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    amount:
+                      type:
+                        - "number"
+                      minimum: 1
+                    type:
+                      type:
+                        - "string"
+                      enum:
+                        - "PARTICIPANT"
+                        - "STAFF"
+                        - "SPECTATOR"
+                    price:
+                      type:
+                        - "number"
+                        - "null"
+                      minimum: 1
+                  required:
+                    - "id"
+                    - "amount"
+                    - "type"
+                    - "price"
+            required:
+              - "id"
+              - "name"
+              - "date"
+              - "startingDate"
+              - "endingDate"
+              - "location"
+              - "folderId"
+              - "tagAssistedId"
+              - "tagConfirmedId"
+              - "active"
+              - "supraEventId"
+              - "created_at"
+              - "updated_at"
+              - "eventTickets"
+      required:
+        - "events"
     GetByIdEventResponseDto:
       type:
         - "object"
@@ -4532,6 +4872,14 @@ components:
             - "string"
           minLength: 1
         date:
+          type:
+            - "string"
+          format: "date-time"
+        startingDate:
+          type:
+            - "string"
+          format: "date-time"
+        endingDate:
           type:
             - "string"
           format: "date-time"
@@ -4552,6 +4900,9 @@ components:
           type:
             - "string"
           format: "uuid"
+        active:
+          type:
+            - "boolean"
         supraEventId:
           type:
             - "string"
@@ -4584,6 +4935,14 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              startingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              endingDate:
+                type:
+                  - "string"
+                format: "date-time"
               location:
                 type:
                   - "string"
@@ -4601,6 +4960,9 @@ components:
                 type:
                   - "string"
                 format: "uuid"
+              active:
+                type:
+                  - "boolean"
               supraEventId:
                 type:
                   - "string"
@@ -4618,10 +4980,13 @@ components:
               - "id"
               - "name"
               - "date"
+              - "startingDate"
+              - "endingDate"
               - "location"
               - "folderId"
               - "tagAssistedId"
               - "tagConfirmedId"
+              - "active"
               - "supraEventId"
               - "created_at"
               - "updated_at"
@@ -4642,6 +5007,14 @@ components:
               type:
                 - "string"
               format: "date-time"
+            startingDate:
+              type:
+                - "string"
+              format: "date-time"
+            endingDate:
+              type:
+                - "string"
+              format: "date-time"
             location:
               type:
                 - "string"
@@ -4659,6 +5032,9 @@ components:
               type:
                 - "string"
               format: "uuid"
+            active:
+              type:
+                - "boolean"
             supraEventId:
               type:
                 - "string"
@@ -4676,26 +5052,65 @@ components:
             - "id"
             - "name"
             - "date"
+            - "startingDate"
+            - "endingDate"
             - "location"
             - "folderId"
             - "tagAssistedId"
             - "tagConfirmedId"
+            - "active"
             - "supraEventId"
             - "created_at"
             - "updated_at"
+        eventTickets:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              amount:
+                type:
+                  - "number"
+                minimum: 1
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PARTICIPANT"
+                  - "STAFF"
+                  - "SPECTATOR"
+              price:
+                type:
+                  - "number"
+                  - "null"
+                minimum: 1
+            required:
+              - "id"
+              - "amount"
+              - "type"
+              - "price"
       required:
         - "id"
         - "name"
         - "date"
+        - "startingDate"
+        - "endingDate"
         - "location"
         - "folderId"
         - "tagAssistedId"
         - "tagConfirmedId"
+        - "active"
         - "supraEventId"
         - "created_at"
         - "updated_at"
         - "subEvents"
         - "supraEvent"
+        - "eventTickets"
     UpdateEventDto:
       type:
         - "object"
@@ -4717,6 +5132,14 @@ components:
           type:
             - "string"
           minLength: 1
+        startingDate:
+          type:
+            - "string"
+          format: "date-time"
+        endingDate:
+          type:
+            - "string"
+          format: "date-time"
         subEvents:
           type:
             - "array"
@@ -4736,6 +5159,14 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              startingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              endingDate:
+                type:
+                  - "string"
+                format: "date-time"
               id:
                 oneOf:
                   - type:
@@ -4749,13 +5180,45 @@ components:
               - "name"
               - "location"
               - "date"
+              - "startingDate"
+              - "endingDate"
               - "id"
+        eventTickets:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              amount:
+                type:
+                  - "number"
+                minimum: 1
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PARTICIPANT"
+                  - "STAFF"
+                  - "SPECTATOR"
+              price:
+                type:
+                  - "number"
+                  - "null"
+                minimum: 1
+            required:
+              - "amount"
+              - "type"
+              - "price"
       required:
         - "name"
         - "folderId"
         - "date"
         - "location"
+        - "startingDate"
+        - "endingDate"
         - "subEvents"
+        - "eventTickets"
     UpdateEventResponseDto:
       type:
         - "object"
@@ -4769,6 +5232,14 @@ components:
             - "string"
           minLength: 1
         date:
+          type:
+            - "string"
+          format: "date-time"
+        startingDate:
+          type:
+            - "string"
+          format: "date-time"
+        endingDate:
           type:
             - "string"
           format: "date-time"
@@ -4789,6 +5260,9 @@ components:
           type:
             - "string"
           format: "uuid"
+        active:
+          type:
+            - "boolean"
         supraEventId:
           type:
             - "string"
@@ -4877,18 +5351,54 @@ components:
             - "created_at"
             - "updated_at"
             - "group"
+        eventTickets:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              amount:
+                type:
+                  - "number"
+                minimum: 1
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PARTICIPANT"
+                  - "STAFF"
+                  - "SPECTATOR"
+              price:
+                type:
+                  - "number"
+                  - "null"
+                minimum: 1
+            required:
+              - "id"
+              - "amount"
+              - "type"
+              - "price"
       required:
         - "id"
         - "name"
         - "date"
+        - "startingDate"
+        - "endingDate"
         - "location"
         - "folderId"
         - "tagAssistedId"
         - "tagConfirmedId"
+        - "active"
         - "supraEventId"
         - "created_at"
         - "updated_at"
         - "tagAssisted"
+        - "eventTickets"
     DeleteEventResponseDto:
       type:
         - "object"
@@ -4902,6 +5412,14 @@ components:
             - "string"
           minLength: 1
         date:
+          type:
+            - "string"
+          format: "date-time"
+        startingDate:
+          type:
+            - "string"
+          format: "date-time"
+        endingDate:
           type:
             - "string"
           format: "date-time"
@@ -4922,6 +5440,9 @@ components:
           type:
             - "string"
           format: "uuid"
+        active:
+          type:
+            - "boolean"
         supraEventId:
           type:
             - "string"
@@ -4939,10 +5460,13 @@ components:
         - "id"
         - "name"
         - "date"
+        - "startingDate"
+        - "endingDate"
         - "location"
         - "folderId"
         - "tagAssistedId"
         - "tagConfirmedId"
+        - "active"
         - "supraEventId"
         - "created_at"
         - "updated_at"

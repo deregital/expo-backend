@@ -77,7 +77,7 @@ export class PrismaService implements OnModuleInit {
           },
         },
       },
-    }) as PrismaClient;
+    }) as unknown as PrismaClient;
   }
 
   extendWithChat(): PrismaClient {
@@ -127,6 +127,10 @@ export class PrismaService implements OnModuleInit {
 
   get event(): PrismaClient['event'] {
     return this.db.event;
+  }
+
+  get eventTicket(): PrismaClient['eventTicket'] {
+    return this.db.eventTicket;
   }
 
   get eventFolder(): PrismaClient['eventFolder'] {
