@@ -6519,8 +6519,19 @@ components:
                         isExclusive:
                           type:
                             - "boolean"
+                        name:
+                          type:
+                            - "string"
+                          minLength: 1
+                        color:
+                          type:
+                            - "string"
+                          minLength: 7
+                          maxLength: 7
                       required:
                         - "isExclusive"
+                        - "name"
+                        - "color"
                   required:
                     - "id"
                     - "name"

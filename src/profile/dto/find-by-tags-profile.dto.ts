@@ -13,6 +13,8 @@ export const findByTagsProfileResponseSchema = z.object({
             z.object({
               group: tagGroupSchema.pick({
                 isExclusive: true,
+                name: true,
+                color: true,
               }),
             }),
           ),
