@@ -49,7 +49,7 @@ export class TicketService {
   ): Promise<z.infer<typeof findByIdTicketResponseSchema>> {
     const ticket = await this.prisma.ticket.findUnique({
       where: { id },
-      include: { event: true },
+      include: { event: true, profile: true },
     });
 
     return { ticket: ticket! };
@@ -60,7 +60,7 @@ export class TicketService {
   ): Promise<z.infer<typeof findByMailTicketResponseSchema>> {
     const ticketsByMail = await this.prisma.ticket.findMany({
       where: { mail },
-      include: { event: true },
+      include: { event: true, profile: true },
     });
 
     return { tickets: ticketsByMail };
@@ -71,7 +71,7 @@ export class TicketService {
   ): Promise<z.infer<typeof findByEventTicketResponseSchema>> {
     const ticketsByEvent = await this.prisma.ticket.findMany({
       where: { eventId },
-      include: { event: true },
+      include: { event: true, profile: true },
     });
 
     return { tickets: ticketsByEvent };

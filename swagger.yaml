@@ -8530,6 +8530,131 @@ components:
                 - "name"
                 - "date"
                 - "location"
+            profile:
+              type:
+                - "object"
+                - "null"
+              properties:
+                id:
+                  type:
+                    - "string"
+                  format: "uuid"
+                shortId:
+                  type:
+                    - "number"
+                firstTimeMiExpo:
+                  type:
+                    - "boolean"
+                username:
+                  type:
+                    - "string"
+                    - "null"
+                password:
+                  type:
+                    - "string"
+                    - "null"
+                phoneNumber:
+                  type:
+                    - "string"
+                  minLength: 1
+                isPhoneVerified:
+                  type:
+                    - "boolean"
+                secondaryPhoneNumber:
+                  type:
+                    - "string"
+                    - "null"
+                fullName:
+                  type:
+                    - "string"
+                  minLength: 1
+                firstName:
+                  type:
+                    - "string"
+                    - "null"
+                  minLength: 1
+                gender:
+                  type:
+                    - "string"
+                    - "null"
+                birthDate:
+                  type:
+                    - "string"
+                    - "null"
+                profilePictureUrl:
+                  type:
+                    - "string"
+                    - "null"
+                  format: "uri"
+                instagram:
+                  type:
+                    - "string"
+                    - "null"
+                mail:
+                  type:
+                    - "string"
+                    - "null"
+                  format: "email"
+                dni:
+                  type:
+                    - "string"
+                    - "null"
+                alternativeNames:
+                  type:
+                    - "array"
+                  items:
+                    type:
+                      - "string"
+                birthLocationId:
+                  type:
+                    - "string"
+                    - "null"
+                  format: "uuid"
+                residenceLocationId:
+                  type:
+                    - "string"
+                    - "null"
+                  format: "uuid"
+                isInTrash:
+                  type:
+                    - "boolean"
+                movedToTrashDate:
+                  type:
+                    - "string"
+                    - "null"
+                  format: "date-time"
+                created_at:
+                  type:
+                    - "string"
+                  format: "date-time"
+                updated_at:
+                  type:
+                    - "string"
+                  format: "date-time"
+              required:
+                - "id"
+                - "shortId"
+                - "firstTimeMiExpo"
+                - "username"
+                - "password"
+                - "phoneNumber"
+                - "isPhoneVerified"
+                - "secondaryPhoneNumber"
+                - "fullName"
+                - "firstName"
+                - "gender"
+                - "birthDate"
+                - "profilePictureUrl"
+                - "instagram"
+                - "mail"
+                - "dni"
+                - "alternativeNames"
+                - "birthLocationId"
+                - "residenceLocationId"
+                - "isInTrash"
+                - "movedToTrashDate"
+                - "created_at"
+                - "updated_at"
           required:
             - "id"
             - "eventId"
@@ -8540,6 +8665,7 @@ components:
             - "created_at"
             - "updated_at"
             - "event"
+            - "profile"
       required:
         - "ticket"
     FindByMailTicketResponseDto:
@@ -8611,6 +8737,131 @@ components:
                   - "name"
                   - "date"
                   - "location"
+              profile:
+                type:
+                  - "object"
+                  - "null"
+                properties:
+                  id:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  shortId:
+                    type:
+                      - "number"
+                  firstTimeMiExpo:
+                    type:
+                      - "boolean"
+                  username:
+                    type:
+                      - "string"
+                      - "null"
+                  password:
+                    type:
+                      - "string"
+                      - "null"
+                  phoneNumber:
+                    type:
+                      - "string"
+                    minLength: 1
+                  isPhoneVerified:
+                    type:
+                      - "boolean"
+                  secondaryPhoneNumber:
+                    type:
+                      - "string"
+                      - "null"
+                  fullName:
+                    type:
+                      - "string"
+                    minLength: 1
+                  firstName:
+                    type:
+                      - "string"
+                      - "null"
+                    minLength: 1
+                  gender:
+                    type:
+                      - "string"
+                      - "null"
+                  birthDate:
+                    type:
+                      - "string"
+                      - "null"
+                  profilePictureUrl:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uri"
+                  instagram:
+                    type:
+                      - "string"
+                      - "null"
+                  mail:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "email"
+                  dni:
+                    type:
+                      - "string"
+                      - "null"
+                  alternativeNames:
+                    type:
+                      - "array"
+                    items:
+                      type:
+                        - "string"
+                  birthLocationId:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uuid"
+                  residenceLocationId:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uuid"
+                  isInTrash:
+                    type:
+                      - "boolean"
+                  movedToTrashDate:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "date-time"
+                  created_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  updated_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "shortId"
+                  - "firstTimeMiExpo"
+                  - "username"
+                  - "password"
+                  - "phoneNumber"
+                  - "isPhoneVerified"
+                  - "secondaryPhoneNumber"
+                  - "fullName"
+                  - "firstName"
+                  - "gender"
+                  - "birthDate"
+                  - "profilePictureUrl"
+                  - "instagram"
+                  - "mail"
+                  - "dni"
+                  - "alternativeNames"
+                  - "birthLocationId"
+                  - "residenceLocationId"
+                  - "isInTrash"
+                  - "movedToTrashDate"
+                  - "created_at"
+                  - "updated_at"
             required:
               - "id"
               - "eventId"
@@ -8621,6 +8872,7 @@ components:
               - "created_at"
               - "updated_at"
               - "event"
+              - "profile"
       required:
         - "tickets"
     FindByEventTicketResponseDto:
@@ -8692,6 +8944,131 @@ components:
                   - "name"
                   - "date"
                   - "location"
+              profile:
+                type:
+                  - "object"
+                  - "null"
+                properties:
+                  id:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  shortId:
+                    type:
+                      - "number"
+                  firstTimeMiExpo:
+                    type:
+                      - "boolean"
+                  username:
+                    type:
+                      - "string"
+                      - "null"
+                  password:
+                    type:
+                      - "string"
+                      - "null"
+                  phoneNumber:
+                    type:
+                      - "string"
+                    minLength: 1
+                  isPhoneVerified:
+                    type:
+                      - "boolean"
+                  secondaryPhoneNumber:
+                    type:
+                      - "string"
+                      - "null"
+                  fullName:
+                    type:
+                      - "string"
+                    minLength: 1
+                  firstName:
+                    type:
+                      - "string"
+                      - "null"
+                    minLength: 1
+                  gender:
+                    type:
+                      - "string"
+                      - "null"
+                  birthDate:
+                    type:
+                      - "string"
+                      - "null"
+                  profilePictureUrl:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uri"
+                  instagram:
+                    type:
+                      - "string"
+                      - "null"
+                  mail:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "email"
+                  dni:
+                    type:
+                      - "string"
+                      - "null"
+                  alternativeNames:
+                    type:
+                      - "array"
+                    items:
+                      type:
+                        - "string"
+                  birthLocationId:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uuid"
+                  residenceLocationId:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uuid"
+                  isInTrash:
+                    type:
+                      - "boolean"
+                  movedToTrashDate:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "date-time"
+                  created_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  updated_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "shortId"
+                  - "firstTimeMiExpo"
+                  - "username"
+                  - "password"
+                  - "phoneNumber"
+                  - "isPhoneVerified"
+                  - "secondaryPhoneNumber"
+                  - "fullName"
+                  - "firstName"
+                  - "gender"
+                  - "birthDate"
+                  - "profilePictureUrl"
+                  - "instagram"
+                  - "mail"
+                  - "dni"
+                  - "alternativeNames"
+                  - "birthLocationId"
+                  - "residenceLocationId"
+                  - "isInTrash"
+                  - "movedToTrashDate"
+                  - "created_at"
+                  - "updated_at"
             required:
               - "id"
               - "eventId"
@@ -8702,6 +9079,7 @@ components:
               - "created_at"
               - "updated_at"
               - "event"
+              - "profile"
       required:
         - "tickets"
     UpdateTicketDto:
