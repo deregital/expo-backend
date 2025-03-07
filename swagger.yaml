@@ -4676,6 +4676,91 @@ components:
                           - "supraEventId"
                           - "created_at"
                           - "updated_at"
+                    tags:
+                      type:
+                        - "array"
+                      items:
+                        type:
+                          - "object"
+                        properties:
+                          id:
+                            type:
+                              - "string"
+                            format: "uuid"
+                          name:
+                            type:
+                              - "string"
+                            minLength: 1
+                          type:
+                            type:
+                              - "string"
+                            enum:
+                              - "PROFILE"
+                              - "EVENT"
+                              - "PARTICIPANT"
+                              - "NOT_IN_SYSTEM"
+                          group:
+                            type:
+                              - "object"
+                            properties:
+                              id:
+                                type:
+                                  - "string"
+                                format: "uuid"
+                              color:
+                                type:
+                                  - "string"
+                                minLength: 7
+                                maxLength: 7
+                              name:
+                                type:
+                                  - "string"
+                                minLength: 1
+                              isExclusive:
+                                type:
+                                  - "boolean"
+                            required:
+                              - "id"
+                              - "color"
+                              - "name"
+                              - "isExclusive"
+                        required:
+                          - "id"
+                          - "name"
+                          - "type"
+                          - "group"
+                    eventTickets:
+                      type:
+                        - "array"
+                      items:
+                        type:
+                          - "object"
+                        properties:
+                          id:
+                            type:
+                              - "string"
+                            format: "uuid"
+                          amount:
+                            type:
+                              - "number"
+                            minimum: 1
+                          type:
+                            type:
+                              - "string"
+                            enum:
+                              - "PARTICIPANT"
+                              - "STAFF"
+                              - "SPECTATOR"
+                          price:
+                            type:
+                              - "number"
+                              - "null"
+                            minimum: 1
+                        required:
+                          - "id"
+                          - "amount"
+                          - "type"
+                          - "price"
                   required:
                     - "id"
                     - "name"
@@ -4692,6 +4777,8 @@ components:
                     - "updated_at"
                     - "supraEvent"
                     - "subEvents"
+                    - "tags"
+                    - "eventTickets"
             required:
               - "id"
               - "name"
@@ -4905,6 +4992,91 @@ components:
                     - "supraEventId"
                     - "created_at"
                     - "updated_at"
+              tags:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "object"
+                  properties:
+                    id:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    name:
+                      type:
+                        - "string"
+                      minLength: 1
+                    type:
+                      type:
+                        - "string"
+                      enum:
+                        - "PROFILE"
+                        - "EVENT"
+                        - "PARTICIPANT"
+                        - "NOT_IN_SYSTEM"
+                    group:
+                      type:
+                        - "object"
+                      properties:
+                        id:
+                          type:
+                            - "string"
+                          format: "uuid"
+                        color:
+                          type:
+                            - "string"
+                          minLength: 7
+                          maxLength: 7
+                        name:
+                          type:
+                            - "string"
+                          minLength: 1
+                        isExclusive:
+                          type:
+                            - "boolean"
+                      required:
+                        - "id"
+                        - "color"
+                        - "name"
+                        - "isExclusive"
+                  required:
+                    - "id"
+                    - "name"
+                    - "type"
+                    - "group"
+              eventTickets:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "object"
+                  properties:
+                    id:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    amount:
+                      type:
+                        - "number"
+                      minimum: 1
+                    type:
+                      type:
+                        - "string"
+                      enum:
+                        - "PARTICIPANT"
+                        - "STAFF"
+                        - "SPECTATOR"
+                    price:
+                      type:
+                        - "number"
+                        - "null"
+                      minimum: 1
+                  required:
+                    - "id"
+                    - "amount"
+                    - "type"
+                    - "price"
             required:
               - "id"
               - "name"
@@ -4921,6 +5093,8 @@ components:
               - "updated_at"
               - "supraEvent"
               - "subEvents"
+              - "tags"
+              - "eventTickets"
       required:
         - "folders"
         - "withoutFolder"
@@ -5272,6 +5446,84 @@ components:
               - "amount"
               - "type"
               - "price"
+        tags:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              name:
+                type:
+                  - "string"
+                minLength: 1
+              groupId:
+                type:
+                  - "string"
+                format: "uuid"
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PROFILE"
+                  - "EVENT"
+                  - "PARTICIPANT"
+                  - "NOT_IN_SYSTEM"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              group:
+                type:
+                  - "object"
+                properties:
+                  id:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  name:
+                    type:
+                      - "string"
+                    minLength: 1
+                  color:
+                    type:
+                      - "string"
+                    minLength: 7
+                    maxLength: 7
+                  isExclusive:
+                    type:
+                      - "boolean"
+                  created_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  updated_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "name"
+                  - "color"
+                  - "isExclusive"
+                  - "created_at"
+                  - "updated_at"
+            required:
+              - "id"
+              - "name"
+              - "groupId"
+              - "type"
+              - "created_at"
+              - "updated_at"
+              - "group"
       required:
         - "id"
         - "name"
@@ -5289,6 +5541,7 @@ components:
         - "subEvents"
         - "supraEvent"
         - "eventTickets"
+        - "tags"
     UpdateEventDto:
       type:
         - "object"

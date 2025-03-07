@@ -3,7 +3,6 @@ import {
   createEventResponseSchema,
 } from '@/event/dto/create-event.dto';
 import { getActiveEventsResponseSchema } from '@/event/dto/get-active-events.dto';
-import { getAllEventsResponseSchema } from '@/event/dto/get-all-event.dto';
 import {
   getByIdEventResponseSchema,
   getBySupraEventResponseSchema,
@@ -75,23 +74,18 @@ export class EventService {
       },
     });
   }
-  async findAll(): Promise<
-    z.infer<typeof getAllEventsResponseSchema.shape.withoutFolder>
-  > {
-    const events = await this.prisma.event.findMany({
-      include: {
-        folder: true,
-        tagAssisted: true,
-        tagConfirmed: true,
-        subEvents: true,
-        supraEvent: true,
-      },
-    });
-    return events;
-  }
 
   async findWithoutFolder(): Promise<
-    Array<Event & { subEvents: Event[]; supraEvent: Event | null }>
+    Array<
+      Event & {
+        subEvents: Event[];
+        supraEvent: Event | null;
+        tags: (Pick<Tag, 'id' | 'name' | 'type'> & {
+          group: Pick<TagGroup, 'color' | 'isExclusive' | 'name' | 'id'>;
+        })[];
+        eventTickets: EventTicket[];
+      }
+    >
   > {
     return await this.prisma.event.findMany({
       where: {
@@ -100,6 +94,19 @@ export class EventService {
       include: {
         subEvents: true,
         supraEvent: true,
+        tags: {
+          include: {
+            group: {
+              select: {
+                id: true,
+                color: true,
+                name: true,
+                isExclusive: true,
+              },
+            },
+          },
+        },
+        eventTickets: true,
       },
     });
   }
@@ -113,6 +120,11 @@ export class EventService {
         subEvents: true,
         eventTickets: true,
         supraEvent: true,
+        tags: {
+          include: {
+            group: true,
+          },
+        },
       },
     });
     return event!;

@@ -1,6 +1,7 @@
 import { eventTicketsSchema } from '@/event/dto/event-tickets.dto';
 import { eventSchema } from '@/event/dto/event.dto';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
+import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 import { tagSchema } from '@/tag/dto/tag.dto';
 
 import z from 'zod';
@@ -10,6 +11,7 @@ export const getByIdEventResponseSchema = eventSchema.merge(
     subEvents: z.array(eventSchema),
     supraEvent: eventSchema.nullable(),
     eventTickets: z.array(eventTicketsSchema),
+    tags: z.array(tagSchema.extend({ group: tagGroupSchema })),
   }),
 );
 
