@@ -5571,6 +5571,13 @@ components:
           type:
             - "string"
           format: "date-time"
+        tagsId:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+            format: "uuid"
         subEvents:
           type:
             - "array"
@@ -5648,6 +5655,7 @@ components:
         - "location"
         - "startingDate"
         - "endingDate"
+        - "tagsId"
         - "subEvents"
         - "eventTickets"
     UpdateEventResponseDto:

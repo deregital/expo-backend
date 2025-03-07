@@ -16,6 +16,7 @@ export const updateEventSchema = eventSchema
   })
   .merge(
     z.object({
+      tagsId: z.array(tagSchema.shape.id),
       subEvents: z.array(
         eventSchema
           .pick({

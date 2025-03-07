@@ -167,6 +167,9 @@ export class EventService {
             type: ticket.type,
           })),
         },
+        tags: {
+          set: updateEventDto.tagsId.map((tag) => ({ id: tag })),
+        },
         folder: updateEventDto.folderId
           ? { connect: { id: updateEventDto.folderId } }
           : { disconnect: true },
