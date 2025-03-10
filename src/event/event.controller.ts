@@ -33,6 +33,7 @@ import {
 import { EventService } from '@/event/event.service';
 import { translate } from '@/i18n/translate';
 import { ErrorDto } from '@/shared/errors/errorType';
+import { setHoursAndMinutes } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
@@ -134,11 +135,22 @@ export class EventController {
       );
     }
 
+    const eventStartingDate = setHoursAndMinutes(
+      createEventDto.date,
+      createEventDto.startingDate,
+    );
+    const eventEndingDate = setHoursAndMinutes(
+      createEventDto.date,
+      createEventDto.endingDate,
+    );
+
     return await this.eventService.create({
       ...createEventDto,
       folderId: createEventDto.folderId ?? undefined,
       tagGroupId: eventTagGroup.id,
       subEvents: subEvents.map((subEvent) => ({ id: subEvent.id })),
+      startingDate: eventStartingDate.toISOString(),
+      endingDate: eventEndingDate.toISOString(),
     });
   }
 
@@ -235,9 +247,20 @@ export class EventController {
       );
     }
 
+    const updatedStartingDate = setHoursAndMinutes(
+      updateEventDto.date,
+      updateEventDto.startingDate,
+    );
+    const updatedEndingDate = setHoursAndMinutes(
+      updateEventDto.date,
+      updateEventDto.endingDate,
+    );
+
     const updatedEvent = await this.eventService.update(id, {
       ...updateEventDto,
       eventTickets,
+      startingDate: updatedStartingDate.toISOString(),
+      endingDate: updatedEndingDate.toISOString(),
     });
     await this.updateEventTags({
       assistedTagId: updatedEvent.tagAssistedId,

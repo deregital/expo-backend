@@ -73,3 +73,15 @@ export function decryptString(encryptedString: string): string {
     throw new ConflictException(translate('route.pdf.find-ticket.error'));
   }
 }
+
+export function setHoursAndMinutes(
+  dateString: string,
+  newDateString: string,
+): Date {
+  const newDate = new Date(newDateString);
+  const updatedDate = new Date(dateString);
+  updatedDate.setHours(newDate.getHours());
+  updatedDate.setMinutes(newDate.getMinutes());
+
+  return updatedDate;
+}
