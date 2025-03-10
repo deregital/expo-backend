@@ -294,6 +294,7 @@ export class EventService {
     Prisma.EventGetPayload<{
       include: {
         tickets: true;
+        eventTickets: true;
       };
     }>[]
   > {
@@ -313,6 +314,7 @@ export class EventService {
       },
       include: {
         tickets: true,
+        eventTickets: true,
       },
     });
   }

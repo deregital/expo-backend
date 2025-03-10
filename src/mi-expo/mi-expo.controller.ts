@@ -5,6 +5,10 @@ import {
   ProfileWithoutPassword,
 } from '@/mi-expo/decorators/profile.decorator';
 import {
+  GetInvitationsResponseDto,
+  getInvitationsResponseSchema,
+} from '@/mi-expo/dto/get-invitations.dto';
+import {
   GetMiExpoMeResponseDto,
   getMiExpoMeResponseSchema,
 } from '@/mi-expo/dto/get-me.dto';
@@ -18,10 +22,6 @@ import {
   LoginMiExpoResponseDto,
   loginMiExpoResponseSchema,
 } from '@/mi-expo/dto/login.dto';
-import {
-  MyEventsResponseDto,
-  myEventsResponseSchema,
-} from '@/mi-expo/dto/my-events.dto';
 import {
   UpdateMiExpoMeDto,
   UpdateMiExpoMeResponseDto,
@@ -43,7 +43,7 @@ import {
 } from '@nestjs/common';
 import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import z from 'zod';
-import { TagType } from '~/types/prisma-schema';
+import { TagType, TicketType } from '~/types/prisma-schema';
 
 // @UseGuards(JwtMiExpoGuard)
 @Controller('mi-expo')
@@ -127,12 +127,12 @@ export class MiExpoController {
   @UseGuards(JwtMiExpoGuard)
   @ApiOkResponse({
     description: translate('route.mi-expo.my-events.success'),
-    type: MyEventsResponseDto,
+    type: GetInvitationsResponseDto,
   })
-  @Get('/my-events')
-  async myEvents(
+  @Get('/invitations')
+  async invitations(
     @Profile() profile: ProfileWithoutPassword,
-  ): Promise<z.infer<typeof myEventsResponseSchema>> {
+  ): Promise<z.infer<typeof getInvitationsResponseSchema>> {
     const { tags } = await this.profileService.findById(profile.id);
     const profileTags = tags.filter((tag) => tag.type === TagType.PROFILE);
 
@@ -145,14 +145,18 @@ export class MiExpoController {
     const eventsByTags = await this.eventService.findActiveByTags(
       profileTags.map((tag) => tag.id),
     );
+    const notFullEvents = eventsByTags.filter((event) => {
+      const participantTicketsEmitted = event.eventTickets.filter(
+        (eventTicket) => eventTicket.type === TicketType.PARTICIPANT,
+      ).length;
+      return (
+        event.tickets.filter((ticket) => ticket.type === TicketType.PARTICIPANT)
+          .length < participantTicketsEmitted
+      );
+    });
 
     return {
-      events: eventsByTags.map((event) => ({
-        ...event,
-        haveTicket: event.tickets.some(
-          (ticket) => ticket.profileId === profile.id,
-        ),
-      })),
+      events: notFullEvents,
     };
   }
 
