@@ -202,8 +202,8 @@ export class EventController {
     @Body() updateEventDto: UpdateEventDto,
   ): Promise<z.infer<typeof updateEventResponseSchema>> {
     const event = await this.eventService.findById(id);
-    // TODO: CHECK IF TICKETS HAVE BEEN EMITTED FOR THIS EVENT
-    if (event.active) {
+
+    if (event.active || event.tickets.length > 0) {
       throw new ConflictException([
         translate('route.event.update.active-event-not-editable'),
       ]);
