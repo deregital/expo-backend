@@ -125,6 +125,7 @@ export class EventService {
             group: true,
           },
         },
+        tickets: true,
       },
     });
     return event!;

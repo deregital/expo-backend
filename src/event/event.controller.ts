@@ -364,11 +364,11 @@ export class EventController {
     @Param('id', new ExistingRecord('event')) id: string,
   ): Promise<z.infer<typeof toggleActiveResponseSchema>> {
     const event = await this.eventService.findById(id);
-    // TODO: CHECK IF TICKETS HAVE BEEN EMITTED FOR THIS EVENT
-    if (event.active) {
-      return await this.eventService.toggleActive(id, { active: false });
-    } else {
-      return await this.eventService.toggleActive(id, { active: true });
+    if (event.tickets.length > 0 && event.active) {
+      throw new ConflictException([
+        translate('route.event.toggle-active.active-event-not-editable'),
+      ]);
     }
+    return await this.eventService.toggleActive(id, { active: !event.active });
   }
 }

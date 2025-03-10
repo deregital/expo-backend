@@ -5524,6 +5524,60 @@ components:
               - "created_at"
               - "updated_at"
               - "group"
+        tickets:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              eventId:
+                type:
+                  - "string"
+                format: "uuid"
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PARTICIPANT"
+                  - "STAFF"
+                  - "SPECTATOR"
+              status:
+                type:
+                  - "string"
+                enum:
+                  - "BOOKED"
+                  - "PAID"
+                  - "FREE"
+              fullName:
+                type:
+                  - "string"
+                minLength: 1
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "eventId"
+              - "type"
+              - "status"
+              - "fullName"
+              - "mail"
+              - "created_at"
+              - "updated_at"
       required:
         - "id"
         - "name"
@@ -5542,6 +5596,7 @@ components:
         - "supraEvent"
         - "eventTickets"
         - "tags"
+        - "tickets"
     UpdateEventDto:
       type:
         - "object"
