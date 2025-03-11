@@ -32,6 +32,10 @@ import {
   findByMailTicketResponseSchema,
 } from '@/ticket/dto/find-by-mail-ticket.dto';
 import {
+  FindByProfileIdTicketResponseDto,
+  findByProfileIdTicketResponseSchema,
+} from '@/ticket/dto/find-by-profile-id-ticket.dto';
+import {
   FindTicketResponseDto,
   findTicketResponseSchema,
 } from '@/ticket/dto/find-ticket.dto';
@@ -143,6 +147,21 @@ export class TicketController {
     @Param('eventId', new ExistingRecord('event')) eventId: string,
   ): Promise<z.infer<typeof findByEventTicketResponseSchema>> {
     return await this.ticketService.findByEvent(eventId);
+  }
+
+  @ApiOkResponse({
+    description: translate('route.ticket.find-by-id.success'),
+    type: FindByProfileIdTicketResponseDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.ticket.find-by-id.not-found'),
+    type: ErrorDto,
+  })
+  @Get('/find-by-profile-id/:profileId')
+  async findByProfileId(
+    @Param('profileId', new ExistingRecord('profile')) profileId: string,
+  ): Promise<z.infer<typeof findByProfileIdTicketResponseSchema>> {
+    return await this.ticketService.findByProfileId(profileId);
   }
 
   @ApiOkResponse({

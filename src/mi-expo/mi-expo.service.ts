@@ -77,7 +77,7 @@ export class MiExpoService {
 
     return {
       accessToken: await this.jwtService.signAsync(payload, {
-        expiresIn: '1h',
+        expiresIn: '7d',
         secret: process.env.JWT_SECRET,
       }),
       refreshToken: await this.jwtService.signAsync(payload, {

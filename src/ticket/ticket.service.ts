@@ -11,6 +11,7 @@ import { findAllTicketsResponseSchema } from '@/ticket/dto/find-all-tickets.dto'
 import { findByEventTicketResponseSchema } from '@/ticket/dto/find-by-event-ticket.dto';
 import { findByIdTicketResponseSchema } from '@/ticket/dto/find-by-id-ticket.dto';
 import { findByMailTicketResponseSchema } from '@/ticket/dto/find-by-mail-ticket.dto';
+import { findByProfileIdTicketResponseSchema } from '@/ticket/dto/find-by-profile-id-ticket.dto';
 import { findTicketResponseSchema } from '@/ticket/dto/find-ticket.dto';
 import {
   UpdateTicketDto,
@@ -20,6 +21,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { generate } from '@pdfme/generator';
 import { barcodes, line, text } from '@pdfme/schemas';
 import z from 'zod';
+import { Profile } from '~/types';
 import { TICKET_INPUTS, TICKET_TEMPLATE } from './constants';
 
 @Injectable()
@@ -75,6 +77,17 @@ export class TicketService {
     });
 
     return { tickets: ticketsByEvent };
+  }
+
+  async findByProfileId(
+    profileId: Profile['id'],
+  ): Promise<z.infer<typeof findByProfileIdTicketResponseSchema>> {
+    const ticketsByProfile = await this.prisma.ticket.findMany({
+      where: { profileId: profileId },
+      include: { event: true },
+    });
+
+    return { tickets: ticketsByProfile };
   }
 
   async update(
