@@ -33,6 +33,9 @@ export class TicketService {
   ): Promise<z.infer<typeof createTicketResponseSchema>> {
     return await this.prisma.ticket.create({
       data: dto,
+      include: {
+        event: true,
+      },
     });
   }
 

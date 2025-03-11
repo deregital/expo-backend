@@ -627,6 +627,12 @@ export default {
       'my-events': {
         success: 'Eventos obtenidos',
       },
+      'my-tickets': {
+        success: 'Tickets obtenidos',
+      },
+      'emit-ticket': {
+        success: 'Ticket emitido',
+      },
     },
   },
 } as const;

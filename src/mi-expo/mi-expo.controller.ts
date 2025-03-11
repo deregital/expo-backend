@@ -5,6 +5,11 @@ import {
   ProfileWithoutPassword,
 } from '@/mi-expo/decorators/profile.decorator';
 import {
+  EmitTicketDto,
+  EmitTicketResponseDto,
+  emitTicketResponseSchema,
+} from '@/mi-expo/dto/emit-ticket.dto';
+import {
   GetInvitationsResponseDto,
   getInvitationsResponseSchema,
 } from '@/mi-expo/dto/get-invitations.dto';
@@ -32,6 +37,11 @@ import { MiExpoService } from '@/mi-expo/mi-expo.service';
 import { ProfileService } from '@/profile/profile.service';
 import { ErrorDto } from '@/shared/errors/errorType';
 import {
+  FindByProfileIdTicketResponseDto,
+  findByProfileIdTicketResponseSchema,
+} from '@/ticket/dto/find-by-profile-id-ticket.dto';
+import { TicketService } from '@/ticket/ticket.service';
+import {
   Body,
   Controller,
   Get,
@@ -41,7 +51,11 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import z from 'zod';
 import { TagType, TicketType } from '~/types/prisma-schema';
 
@@ -52,6 +66,7 @@ export class MiExpoController {
     private readonly profileService: ProfileService,
     private readonly miExpoService: MiExpoService,
     private readonly eventService: EventService,
+    private readonly ticketService: TicketService,
   ) {}
 
   @ApiUnauthorizedResponse({
@@ -158,6 +173,34 @@ export class MiExpoController {
     return {
       events: notFullEvents,
     };
+  }
+
+  @UseGuards(JwtMiExpoGuard)
+  @ApiOkResponse({
+    description: translate('route.mi-expo.my-tickets.success'),
+    type: FindByProfileIdTicketResponseDto,
+  })
+  @Get('/tickets')
+  async tickets(
+    @Profile() profile: ProfileWithoutPassword,
+  ): Promise<z.infer<typeof findByProfileIdTicketResponseSchema>> {
+    return await this.ticketService.findByProfileId(profile.id);
+  }
+
+  @ApiCreatedResponse({
+    type: EmitTicketResponseDto,
+    description: translate('route.mi-expo.emit-ticket.success'),
+  })
+  @Post('/emit-ticket')
+  async emitTicket(
+    @Profile() profile: ProfileWithoutPassword,
+    @Body() body: EmitTicketDto,
+  ): Promise<z.infer<typeof emitTicketResponseSchema>> {
+    const event = await this.ticketService.create({
+      ...body,
+      profileId: profile.id,
+    });
+    return event;
   }
 
   @ApiUnauthorizedResponse({
