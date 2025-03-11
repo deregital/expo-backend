@@ -403,6 +403,9 @@ export default {
       delete: {
         success: 'Evento eliminado con éxito',
         'not-found': 'Evento no encontrado',
+        'active-event-not-deletable': 'No se puede eliminar un evento activo',
+        'with-tickets-not-deletable':
+          'No se puede eliminar un evento con tickets ya emitidos',
       },
       'toggle-active': {
         success: 'Evento activo cambiado con éxito',

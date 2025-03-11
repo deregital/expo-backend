@@ -341,6 +341,19 @@ export class EventController {
   async remove(
     @Param('id', new ExistingRecord('event')) id: string,
   ): Promise<z.infer<typeof deleteEventResponseSchema>> {
+    const event = await this.eventService.findById(id);
+    if (event.active) {
+      throw new ConflictException([
+        translate('route.event.delete.active-event-not-deletable'),
+      ]);
+    }
+
+    if (event.eventTickets.length > 0) {
+      throw new ConflictException([
+        translate('route.event.delete.with-tickets-not-deletable'),
+      ]);
+    }
+
     return await this.eventService.delete(id);
   }
 
