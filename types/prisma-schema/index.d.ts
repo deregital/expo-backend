@@ -91,6 +91,7 @@ export namespace $Enums {
     USER: 'USER';
     ADMIN: 'ADMIN';
     FORM: 'FORM';
+    MI_EXPO: 'MI_EXPO';
   };
 
   export type Role = (typeof Role)[keyof typeof Role];
@@ -4157,6 +4158,7 @@ export namespace Prisma {
   export type ProfileMinAggregateOutputType = {
     id: string | null;
     shortId: number | null;
+    role: $Enums.Role | null;
     firstTimeMiExpo: boolean | null;
     username: string | null;
     password: string | null;
@@ -4182,6 +4184,7 @@ export namespace Prisma {
   export type ProfileMaxAggregateOutputType = {
     id: string | null;
     shortId: number | null;
+    role: $Enums.Role | null;
     firstTimeMiExpo: boolean | null;
     username: string | null;
     password: string | null;
@@ -4207,6 +4210,7 @@ export namespace Prisma {
   export type ProfileCountAggregateOutputType = {
     id: number;
     shortId: number;
+    role: number;
     firstTimeMiExpo: number;
     username: number;
     password: number;
@@ -4242,6 +4246,7 @@ export namespace Prisma {
   export type ProfileMinAggregateInputType = {
     id?: true;
     shortId?: true;
+    role?: true;
     firstTimeMiExpo?: true;
     username?: true;
     password?: true;
@@ -4267,6 +4272,7 @@ export namespace Prisma {
   export type ProfileMaxAggregateInputType = {
     id?: true;
     shortId?: true;
+    role?: true;
     firstTimeMiExpo?: true;
     username?: true;
     password?: true;
@@ -4292,6 +4298,7 @@ export namespace Prisma {
   export type ProfileCountAggregateInputType = {
     id?: true;
     shortId?: true;
+    role?: true;
     firstTimeMiExpo?: true;
     username?: true;
     password?: true;
@@ -4410,6 +4417,7 @@ export namespace Prisma {
   export type ProfileGroupByOutputType = {
     id: string;
     shortId: number;
+    role: $Enums.Role;
     firstTimeMiExpo: boolean;
     username: string | null;
     password: string | null;
@@ -4457,6 +4465,7 @@ export namespace Prisma {
     {
       id?: boolean;
       shortId?: boolean;
+      role?: boolean;
       firstTimeMiExpo?: boolean;
       username?: boolean;
       password?: boolean;
@@ -4496,6 +4505,7 @@ export namespace Prisma {
     {
       id?: boolean;
       shortId?: boolean;
+      role?: boolean;
       firstTimeMiExpo?: boolean;
       username?: boolean;
       password?: boolean;
@@ -4529,6 +4539,7 @@ export namespace Prisma {
     {
       id?: boolean;
       shortId?: boolean;
+      role?: boolean;
       firstTimeMiExpo?: boolean;
       username?: boolean;
       password?: boolean;
@@ -4559,6 +4570,7 @@ export namespace Prisma {
   export type ProfileSelectScalar = {
     id?: boolean;
     shortId?: boolean;
+    role?: boolean;
     firstTimeMiExpo?: boolean;
     username?: boolean;
     password?: boolean;
@@ -4587,6 +4599,7 @@ export namespace Prisma {
   > = $Extensions.GetOmit<
     | 'id'
     | 'shortId'
+    | 'role'
     | 'firstTimeMiExpo'
     | 'username'
     | 'password'
@@ -4652,6 +4665,7 @@ export namespace Prisma {
       {
         id: string;
         shortId: number;
+        role: $Enums.Role;
         firstTimeMiExpo: boolean;
         username: string | null;
         password: string | null;
@@ -5342,6 +5356,7 @@ export namespace Prisma {
   interface ProfileFieldRefs {
     readonly id: FieldRef<'Profile', 'String'>;
     readonly shortId: FieldRef<'Profile', 'Int'>;
+    readonly role: FieldRef<'Profile', 'Role'>;
     readonly firstTimeMiExpo: FieldRef<'Profile', 'Boolean'>;
     readonly username: FieldRef<'Profile', 'String'>;
     readonly password: FieldRef<'Profile', 'String'>;
@@ -22596,6 +22611,7 @@ export namespace Prisma {
   export const ProfileScalarFieldEnum: {
     id: 'id';
     shortId: 'shortId';
+    role: 'role';
     firstTimeMiExpo: 'firstTimeMiExpo';
     username: 'username';
     password: 'password';
@@ -23106,6 +23122,7 @@ export namespace Prisma {
     NOT?: ProfileWhereInput | ProfileWhereInput[];
     id?: StringFilter<'Profile'> | string;
     shortId?: IntFilter<'Profile'> | number;
+    role?: EnumRoleFilter<'Profile'> | $Enums.Role;
     firstTimeMiExpo?: BoolFilter<'Profile'> | boolean;
     username?: StringNullableFilter<'Profile'> | string | null;
     password?: StringNullableFilter<'Profile'> | string | null;
@@ -23145,6 +23162,7 @@ export namespace Prisma {
   export type ProfileOrderByWithRelationInput = {
     id?: SortOrder;
     shortId?: SortOrder;
+    role?: SortOrder;
     firstTimeMiExpo?: SortOrder;
     username?: SortOrderInput | SortOrder;
     password?: SortOrderInput | SortOrder;
@@ -23185,6 +23203,7 @@ export namespace Prisma {
       OR?: ProfileWhereInput[];
       NOT?: ProfileWhereInput | ProfileWhereInput[];
       shortId?: IntFilter<'Profile'> | number;
+      role?: EnumRoleFilter<'Profile'> | $Enums.Role;
       firstTimeMiExpo?: BoolFilter<'Profile'> | boolean;
       password?: StringNullableFilter<'Profile'> | string | null;
       isPhoneVerified?: BoolFilter<'Profile'> | boolean;
@@ -23227,6 +23246,7 @@ export namespace Prisma {
   export type ProfileOrderByWithAggregationInput = {
     id?: SortOrder;
     shortId?: SortOrder;
+    role?: SortOrder;
     firstTimeMiExpo?: SortOrder;
     username?: SortOrderInput | SortOrder;
     password?: SortOrderInput | SortOrder;
@@ -23265,6 +23285,7 @@ export namespace Prisma {
       | ProfileScalarWhereWithAggregatesInput[];
     id?: StringWithAggregatesFilter<'Profile'> | string;
     shortId?: IntWithAggregatesFilter<'Profile'> | number;
+    role?: EnumRoleWithAggregatesFilter<'Profile'> | $Enums.Role;
     firstTimeMiExpo?: BoolWithAggregatesFilter<'Profile'> | boolean;
     username?: StringNullableWithAggregatesFilter<'Profile'> | string | null;
     password?: StringNullableWithAggregatesFilter<'Profile'> | string | null;
@@ -24376,6 +24397,7 @@ export namespace Prisma {
   export type ProfileCreateInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -24407,6 +24429,7 @@ export namespace Prisma {
   export type ProfileUncheckedCreateInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -24438,6 +24461,7 @@ export namespace Prisma {
   export type ProfileUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -24483,6 +24507,7 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -24531,6 +24556,7 @@ export namespace Prisma {
   export type ProfileCreateManyInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -24557,6 +24583,7 @@ export namespace Prisma {
   export type ProfileUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -24595,6 +24622,7 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -25784,6 +25812,7 @@ export namespace Prisma {
   export type ProfileCountOrderByAggregateInput = {
     id?: SortOrder;
     shortId?: SortOrder;
+    role?: SortOrder;
     firstTimeMiExpo?: SortOrder;
     username?: SortOrder;
     password?: SortOrder;
@@ -25814,6 +25843,7 @@ export namespace Prisma {
   export type ProfileMaxOrderByAggregateInput = {
     id?: SortOrder;
     shortId?: SortOrder;
+    role?: SortOrder;
     firstTimeMiExpo?: SortOrder;
     username?: SortOrder;
     password?: SortOrder;
@@ -25839,6 +25869,7 @@ export namespace Prisma {
   export type ProfileMinOrderByAggregateInput = {
     id?: SortOrder;
     shortId?: SortOrder;
+    role?: SortOrder;
     firstTimeMiExpo?: SortOrder;
     username?: SortOrder;
     password?: SortOrder;
@@ -30229,6 +30260,7 @@ export namespace Prisma {
   export type ProfileCreateWithoutOtpInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -30259,6 +30291,7 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutOtpInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -30317,6 +30350,7 @@ export namespace Prisma {
   export type ProfileUpdateWithoutOtpInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -30361,6 +30395,7 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutOtpInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -30408,6 +30443,7 @@ export namespace Prisma {
   export type ProfileCreateWithoutBirthLocationInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -30438,6 +30474,7 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutBirthLocationInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -30483,6 +30520,7 @@ export namespace Prisma {
   export type ProfileCreateWithoutResidenceLocationInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -30513,6 +30551,7 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutResidenceLocationInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -30589,6 +30628,7 @@ export namespace Prisma {
     NOT?: ProfileScalarWhereInput | ProfileScalarWhereInput[];
     id?: StringFilter<'Profile'> | string;
     shortId?: IntFilter<'Profile'> | number;
+    role?: EnumRoleFilter<'Profile'> | $Enums.Role;
     firstTimeMiExpo?: BoolFilter<'Profile'> | boolean;
     username?: StringNullableFilter<'Profile'> | string | null;
     password?: StringNullableFilter<'Profile'> | string | null;
@@ -30679,6 +30719,7 @@ export namespace Prisma {
   export type ProfileCreateWithoutCommentsInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -30709,6 +30750,7 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutCommentsInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -30851,6 +30893,7 @@ export namespace Prisma {
   export type ProfileUpdateWithoutCommentsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -30895,6 +30938,7 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutCommentsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -31144,6 +31188,7 @@ export namespace Prisma {
   export type ProfileCreateWithoutTagsInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -31174,6 +31219,7 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutTagsInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -32345,6 +32391,7 @@ export namespace Prisma {
   export type ProfileCreateWithoutMessagesInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -32375,6 +32422,7 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutMessagesInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -32433,6 +32481,7 @@ export namespace Prisma {
   export type ProfileUpdateWithoutMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -32477,6 +32526,7 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -32570,6 +32620,7 @@ export namespace Prisma {
   export type ProfileCreateWithoutTicketInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -32600,6 +32651,7 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutTicketInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -32716,6 +32768,7 @@ export namespace Prisma {
   export type ProfileUpdateWithoutTicketInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -32760,6 +32813,7 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutTicketInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -33314,6 +33368,7 @@ export namespace Prisma {
   export type ProfileCreateManyBirthLocationInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -33339,6 +33394,7 @@ export namespace Prisma {
   export type ProfileCreateManyResidenceLocationInput = {
     id?: string;
     shortId: number;
+    role?: $Enums.Role;
     firstTimeMiExpo?: boolean;
     username?: string | null;
     password?: string | null;
@@ -33364,6 +33420,7 @@ export namespace Prisma {
   export type ProfileUpdateWithoutBirthLocationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -33408,6 +33465,7 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutBirthLocationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -33455,6 +33513,7 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateManyWithoutBirthLocationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -33497,6 +33556,7 @@ export namespace Prisma {
   export type ProfileUpdateWithoutResidenceLocationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -33541,6 +33601,7 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutResidenceLocationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -33585,6 +33646,7 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateManyWithoutResidenceLocationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -33663,6 +33725,7 @@ export namespace Prisma {
   export type ProfileUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -33707,6 +33770,7 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -33754,6 +33818,7 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateManyWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
     username?: NullableStringFieldUpdateOperationsInput | string | null;
     password?: NullableStringFieldUpdateOperationsInput | string | null;

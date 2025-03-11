@@ -38,11 +38,14 @@ enum Role {
   USER
   ADMIN
   FORM
+  MI_EXPO
 }
 
 model Profile {
   id      String @id @default(uuid())
   shortId Int    @map("short_id")
+
+  role Role @default(MI_EXPO)
 
   firstTimeMiExpo Boolean @default(true) @map("first_time_mi_expo")
 

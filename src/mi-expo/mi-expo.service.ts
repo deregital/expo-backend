@@ -1,26 +1,11 @@
-import { BackendTokens, EXPIRE_TIME } from '@/auth/auth.service';
 import { translate } from '@/i18n/translate';
 import { LoginMiExpoDto } from '@/mi-expo/dto/login.dto';
 import { ProfileService } from '@/profile/profile.service';
+import { LoginProfilePayload, generateToken } from '@/shared/auth/auth-utils';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 import { Profile } from '~/types/prisma-schema';
-
-type LoginProfilePayload = {
-  user: Omit<Profile, 'password'>;
-  backendTokens: BackendTokens;
-};
-
-type Payload =
-  | {
-      id: string;
-    }
-  | {
-      id: string;
-      username: Profile['username'];
-      password: Profile['password'];
-    };
 
 @Injectable()
 export class MiExpoService {
@@ -42,11 +27,14 @@ export class MiExpoService {
       ]);
     }
 
-    const backendTokens = await this.generateToken({
-      id: profile.id,
-      username: profile.username,
-      password: profile.password,
-    });
+    const backendTokens = await generateToken(
+      {
+        id: profile.id,
+        username: profile.username ?? '',
+        role: profile.role,
+      },
+      this.jwtService,
+    );
 
     return {
       user: profile,
@@ -57,51 +45,17 @@ export class MiExpoService {
   async loginProfile(dto: LoginMiExpoDto): Promise<LoginProfilePayload> {
     const profile = await this.validateProfile(dto);
 
-    const backendTokens = await this.generateToken({
-      id: profile.id,
-      username: dto.username,
-      password: dto.password,
-    });
+    const backendTokens = await generateToken(
+      {
+        id: profile.id,
+        username: dto.username,
+        role: profile.role,
+      },
+      this.jwtService,
+    );
     return {
       user: profile,
       backendTokens,
-    };
-  }
-
-  private async generateToken(user: {
-    username: Profile['username'];
-    password: Profile['password'];
-    id: string;
-  }): Promise<LoginProfilePayload['backendTokens']> {
-    const payload = this.getPayload(user);
-
-    return {
-      accessToken: await this.jwtService.signAsync(payload, {
-        expiresIn: '7d',
-        secret: process.env.JWT_SECRET,
-      }),
-      refreshToken: await this.jwtService.signAsync(payload, {
-        expiresIn: '7d',
-        secret: process.env.JWT_REFRESH,
-      }),
-      expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME),
-    };
-  }
-
-  private getPayload(user: {
-    id: string;
-    username: Profile['username'];
-    password: Profile['password'];
-  }): Payload {
-    if (user.username && user.password) {
-      return {
-        id: user.id,
-        username: user.username,
-        password: user.password,
-      };
-    }
-    return {
-      id: user.id,
     };
   }
 
@@ -135,7 +89,14 @@ export class MiExpoService {
       throw new UnauthorizedException([translate('route.auth.invalid-token')]);
     }
 
-    const backendTokens = await this.generateToken(profileFound);
+    const backendTokens = await generateToken(
+      {
+        id: profileFound.id,
+        username: profileFound.username ?? '',
+        role: profileFound.role,
+      },
+      this.jwtService,
+    );
 
     return {
       ...backendTokens,

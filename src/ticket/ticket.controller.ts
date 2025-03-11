@@ -78,6 +78,7 @@ export class TicketController {
     private readonly eventService: EventService,
   ) {}
 
+  @Roles(Role.ADMIN, Role.MI_EXPO)
   @ApiNotFoundResponse({
     description: translate('route.ticket.create.event-not-found'),
     type: ErrorDto,
@@ -149,6 +150,7 @@ export class TicketController {
     return await this.ticketService.findByEvent(eventId);
   }
 
+  @Roles(Role.ADMIN, Role.USER, Role.MI_EXPO)
   @ApiOkResponse({
     description: translate('route.ticket.find-by-id.success'),
     type: FindByProfileIdTicketResponseDto,

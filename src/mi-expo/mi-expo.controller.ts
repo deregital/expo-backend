@@ -1,3 +1,6 @@
+import { Roles } from '@/auth/decorators/rol.decorator';
+import { JwtGuard } from '@/auth/guards/jwt.guard';
+import { RoleGuard } from '@/auth/guards/role.guard';
 import { EventService } from '@/event/event.service';
 import { translate } from '@/i18n/translate';
 import {
@@ -32,7 +35,6 @@ import {
   UpdateMiExpoMeResponseDto,
   updateMiExpoMeResponseSchema,
 } from '@/mi-expo/dto/update-me.dto';
-import { JwtMiExpoGuard } from '@/mi-expo/jwt-mi-expo.guard';
 import { MiExpoService } from '@/mi-expo/mi-expo.service';
 import { ProfileService } from '@/profile/profile.service';
 import { ErrorDto } from '@/shared/errors/errorType';
@@ -57,9 +59,8 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import z from 'zod';
-import { TagType, TicketType } from '~/types/prisma-schema';
+import { Role, TagType, TicketType } from '~/types/prisma-schema';
 
-// @UseGuards(JwtMiExpoGuard)
 @Controller('mi-expo')
 export class MiExpoController {
   constructor(
@@ -104,7 +105,8 @@ export class MiExpoController {
     };
   }
 
-  @UseGuards(JwtMiExpoGuard)
+  @Roles(Role.MI_EXPO)
+  @UseGuards(JwtGuard, RoleGuard)
   @ApiOkResponse({
     description: translate('route.profile.find-by-id.success'),
     type: GetMiExpoMeResponseDto,
@@ -119,7 +121,9 @@ export class MiExpoController {
     );
     return profile;
   }
-  @UseGuards(JwtMiExpoGuard)
+
+  @Roles(Role.MI_EXPO)
+  @UseGuards(JwtGuard, RoleGuard)
   @ApiOkResponse({
     description: 'Me',
     type: GetMiExpoMeResponseDto,
@@ -139,7 +143,8 @@ export class MiExpoController {
     });
   }
 
-  @UseGuards(JwtMiExpoGuard)
+  @Roles(Role.MI_EXPO)
+  @UseGuards(JwtGuard, RoleGuard)
   @ApiOkResponse({
     description: translate('route.mi-expo.my-events.success'),
     type: GetInvitationsResponseDto,
@@ -175,7 +180,8 @@ export class MiExpoController {
     };
   }
 
-  @UseGuards(JwtMiExpoGuard)
+  @Roles(Role.MI_EXPO)
+  @UseGuards(JwtGuard, RoleGuard)
   @ApiOkResponse({
     description: translate('route.mi-expo.my-tickets.success'),
     type: FindByProfileIdTicketResponseDto,

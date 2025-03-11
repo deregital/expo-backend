@@ -1,3 +1,4 @@
+import { AccountService } from '@/account/account.service';
 import { EventService } from '@/event/event.service';
 import { ProfileService } from '@/profile/profile.service';
 import { TicketService } from '@/ticket/ticket.service';
@@ -14,6 +15,7 @@ import { MiExpoService } from './mi-expo.service';
     JwtService,
     EventService,
     TicketService,
+    AccountService,
   ],
 })
 export class MiExpoModule {}

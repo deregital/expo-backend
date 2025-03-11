@@ -1,9 +1,10 @@
 import { translate } from '@/i18n/translate';
 import parsePhoneNumber, {
-  type PhoneNumber,
   isValidPhoneNumber,
+  type PhoneNumber,
 } from 'libphonenumber-js';
 import z from 'zod';
+import { Role } from '~/types/prisma-schema';
 
 function formatArgNumber(phoneNumber: PhoneNumber, value: string): string {
   const prefixes9 = ['11', '15'];
@@ -24,6 +25,7 @@ export const profileSchema = z.object({
   }),
   shortId: z.number(),
 
+  role: z.nativeEnum(Role).default(Role.MI_EXPO),
   firstTimeMiExpo: z.boolean(),
 
   username: z.string().nullable(),
