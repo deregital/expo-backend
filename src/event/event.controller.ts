@@ -119,6 +119,14 @@ export class EventController {
     if (createEventDto.subEvents) {
       subEvents = await Promise.all(
         createEventDto.subEvents.map(async (subEvent) => {
+          const subEventStartingDate = setHoursAndMinutes(
+            subEvent.date,
+            subEvent.startingDate,
+          );
+          const subEventEndingDate = setHoursAndMinutes(
+            subEvent.date,
+            subEvent.endingDate,
+          );
           const tagGroup = await this.tagGroupService.create({
             color: '#666666',
             isExclusive: true,
@@ -128,8 +136,10 @@ export class EventController {
           return await this.eventService.create({
             ...subEvent,
             tagGroupId: tagGroup.id,
-            tagsId: [],
-            eventTickets: [],
+            tagsId: createEventDto.tagsId,
+            eventTickets: createEventDto.eventTickets,
+            startingDate: subEventStartingDate.toISOString(),
+            endingDate: subEventEndingDate.toISOString(),
           });
         }),
       );
