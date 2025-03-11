@@ -348,7 +348,7 @@ export class EventController {
       ]);
     }
 
-    if (event.eventTickets.length > 0) {
+    if (event.tickets.length > 0) {
       throw new ConflictException([
         translate('route.event.delete.with-tickets-not-deletable'),
       ]);
