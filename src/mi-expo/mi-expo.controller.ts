@@ -7,11 +7,7 @@ import {
   Profile,
   ProfileWithoutPassword,
 } from '@/mi-expo/decorators/profile.decorator';
-import {
-  EmitTicketDto,
-  EmitTicketResponseDto,
-  emitTicketResponseSchema,
-} from '@/mi-expo/dto/emit-ticket.dto';
+
 import {
   GetInvitationsResponseDto,
   getInvitationsResponseSchema,
@@ -53,11 +49,7 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiCreatedResponse,
-  ApiOkResponse,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import z from 'zod';
 import { Role, TagType, TicketType } from '~/types/prisma-schema';
 
@@ -191,22 +183,6 @@ export class MiExpoController {
     @Profile() profile: ProfileWithoutPassword,
   ): Promise<z.infer<typeof findByProfileIdTicketResponseSchema>> {
     return await this.ticketService.findByProfileId(profile.id);
-  }
-
-  @ApiCreatedResponse({
-    type: EmitTicketResponseDto,
-    description: translate('route.mi-expo.emit-ticket.success'),
-  })
-  @Post('/emit-ticket')
-  async emitTicket(
-    @Profile() profile: ProfileWithoutPassword,
-    @Body() body: EmitTicketDto,
-  ): Promise<z.infer<typeof emitTicketResponseSchema>> {
-    const event = await this.ticketService.create({
-      ...body,
-      profileId: profile.id,
-    });
-    return event;
   }
 
   @ApiUnauthorizedResponse({

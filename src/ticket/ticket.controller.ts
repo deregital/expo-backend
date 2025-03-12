@@ -47,6 +47,7 @@ import {
 import { TicketService } from '@/ticket/ticket.service';
 import {
   Body,
+  ConflictException,
   Controller,
   Delete,
   Get,
@@ -83,6 +84,10 @@ export class TicketController {
     description: translate('route.ticket.create.event-not-found'),
     type: ErrorDto,
   })
+  @ApiConflictResponse({
+    description: translate('route.ticket.create.max-tickets-reached'),
+    type: ErrorDto,
+  })
   @ApiCreatedResponse({
     description: translate('route.ticket.create.success'),
     type: CreateTicketResponseDto,
@@ -97,6 +102,19 @@ export class TicketController {
         translate('route.ticket.create.event-not-found'),
       );
     }
+    const maxTicketsToEmit = event.eventTickets.find(
+      (et) => et.type === createTicketDto.type,
+    )?.amount;
+
+    const ticketsEmitted = event.tickets.filter(
+      (t) => t.type === createTicketDto.type,
+    ).length;
+    if (maxTicketsToEmit && ticketsEmitted >= maxTicketsToEmit) {
+      throw new ConflictException(
+        translate('route.ticket.create.max-tickets-reached'),
+      );
+    }
+
     return await this.ticketService.create(createTicketDto);
   }
 

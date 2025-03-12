@@ -561,6 +561,8 @@ export default {
         success: 'Ticket creado con éxito',
         'event-not-found': 'Evento no encontrado',
         conflict: 'Error en la creación del ticket',
+        'max-tickets-reached':
+          'No se pueden emitir más tickets para este evento',
       },
       'find-all': {
         success: 'Tickets obtenidos',
