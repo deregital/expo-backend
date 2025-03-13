@@ -33,7 +33,7 @@ import { Role } from '~/types/prisma-schema';
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
-  @Roles(Role.ADMIN, Role.USER, Role.FORM)
+  @Roles(Role.ADMIN, Role.USER, Role.FORM, Role.TICKETS)
   @UseGuards(JwtGuard, RoleGuard)
   @Get('/all')
   @ApiOkResponse({

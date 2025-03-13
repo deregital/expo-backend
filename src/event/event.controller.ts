@@ -159,7 +159,7 @@ export class EventController {
       withoutFolder: eventsWithoutFolder,
     };
   }
-
+  @Roles(Role.TICKETS, Role.ADMIN, Role.USER)
   @Get('/find-active')
   @ApiOkResponse({
     description: translate('route.event.get-all.success'),
