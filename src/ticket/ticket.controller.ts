@@ -3,6 +3,11 @@ import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { EventService } from '@/event/event.service';
 import { translate } from '@/i18n/translate';
+import { MailService } from '@/mail/mail.service';
+import {
+  Profile,
+  ProfileWithoutPassword,
+} from '@/mi-expo/decorators/profile.decorator';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { decryptString } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
@@ -40,6 +45,10 @@ import {
   findTicketResponseSchema,
 } from '@/ticket/dto/find-ticket.dto';
 import {
+  SendEmailResponseDto,
+  sendEmailResponseSchema,
+} from '@/ticket/dto/send-email.dto';
+import {
   UpdateTicketDto,
   UpdateTicketResponseDto,
   updateTicketResponseSchema,
@@ -57,6 +66,7 @@ import {
   Patch,
   Post,
   Res,
+  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -65,6 +75,7 @@ import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { Response } from 'express';
 import z from 'zod';
@@ -77,6 +88,7 @@ export class TicketController {
   constructor(
     private readonly ticketService: TicketService,
     private readonly eventService: EventService,
+    private readonly mailService: MailService,
   ) {}
 
   @Roles(Role.ADMIN, Role.MI_EXPO)
@@ -265,5 +277,38 @@ export class TicketController {
   ): Promise<z.infer<typeof findTicketResponseSchema>> {
     const decryptedTicketId = decryptString(id);
     return this.ticketService.findTicket(decryptedTicketId);
+  }
+
+  @Roles(Role.ADMIN, Role.MI_EXPO)
+  @ApiNotFoundResponse({
+    description: translate('route.ticket.send-email.not-found'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    description: translate('route.ticket.send-email.success'),
+    type: SendEmailResponseDto,
+  })
+  @ApiUnauthorizedResponse({
+    description: translate('route.ticket.send-email.unauthorized'),
+    type: ErrorDto,
+  })
+  @Post('/send-email/:id')
+  async sendEmail(
+    @Param('id', new ExistingRecord('ticket')) id: string,
+    @Profile() profile: ProfileWithoutPassword,
+  ): Promise<z.infer<typeof sendEmailResponseSchema>> {
+    const { ticket } = await this.ticketService.findById(id);
+    const event = await this.eventService.findById(ticket.eventId);
+
+    if (profile && ticket.profile && profile.id !== ticket.profile.id) {
+      throw new UnauthorizedException([
+        translate('route.ticket.send-email.unauthorized'),
+      ]);
+    }
+
+    const pdf = await this.ticketService.generatePdfTicket(id);
+    const mailId = await this.mailService.sendTicket({ ...ticket, event }, pdf);
+
+    return { mailId: mailId };
   }
 }

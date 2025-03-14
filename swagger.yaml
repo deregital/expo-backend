@@ -1634,6 +1634,34 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /ticket/send-email/{id}:
+    post:
+      operationId: "TicketController_sendEmail"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Email enviado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendEmailResponseDto"
+        401:
+          description: "No estás autorizado para enviar email para este ticket"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        404:
+          description: "Ticket no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /webhook:
     get:
       operationId: "WebhookController_verify"
@@ -9692,6 +9720,15 @@ components:
         - "mail"
         - "created_at"
         - "updated_at"
+    SendEmailResponseDto:
+      type:
+        - "object"
+      properties:
+        mailId:
+          type:
+            - "string"
+      required:
+        - "mailId"
     SendOtpDto:
       type:
         - "object"

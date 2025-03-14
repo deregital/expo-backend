@@ -588,6 +588,16 @@ export default {
         success: 'Ticket eliminado',
         'not-found': 'Ticket no encontrado',
       },
+      'send-email': {
+        success: 'Email enviado',
+        'not-found': 'Ticket no encontrado',
+        error: 'Error al enviar el email',
+        unauthorized: 'No estás autorizado para enviar email para este ticket',
+        mail: {
+          subject: `Llegó tu ExpoTicket para el evento \{\{eventName\}\}!`,
+          text: `Te esperamos el \{\{eventDate\}\} a las \{\{eventTime\}\} en \{\{eventLocation\}\}. ¡No te lo pierdas!`,
+        },
+      },
     },
     webhook: {
       get: {
