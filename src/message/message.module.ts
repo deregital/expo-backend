@@ -16,6 +16,7 @@ import { JwtService } from '@nestjs/jwt';
     TagService,
     WhatsappService,
     MessageService,
+    ProfileService,
   ],
 })
 export class MessageModule {}

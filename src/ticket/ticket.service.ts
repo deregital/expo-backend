@@ -11,6 +11,7 @@ import { findAllTicketsResponseSchema } from '@/ticket/dto/find-all-tickets.dto'
 import { findByEventTicketResponseSchema } from '@/ticket/dto/find-by-event-ticket.dto';
 import { findByIdTicketResponseSchema } from '@/ticket/dto/find-by-id-ticket.dto';
 import { findByMailTicketResponseSchema } from '@/ticket/dto/find-by-mail-ticket.dto';
+import { findByProfileIdTicketResponseSchema } from '@/ticket/dto/find-by-profile-id-ticket.dto';
 import { findTicketResponseSchema } from '@/ticket/dto/find-ticket.dto';
 import {
   UpdateTicketDto,
@@ -20,6 +21,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { generate } from '@pdfme/generator';
 import { barcodes, line, text } from '@pdfme/schemas';
 import z from 'zod';
+import { Profile } from '~/types';
 import { TICKET_INPUTS, TICKET_TEMPLATE } from './constants';
 
 @Injectable()
@@ -31,6 +33,9 @@ export class TicketService {
   ): Promise<z.infer<typeof createTicketResponseSchema>> {
     return await this.prisma.ticket.create({
       data: dto,
+      include: {
+        event: true,
+      },
     });
   }
 
@@ -49,7 +54,7 @@ export class TicketService {
   ): Promise<z.infer<typeof findByIdTicketResponseSchema>> {
     const ticket = await this.prisma.ticket.findUnique({
       where: { id },
-      include: { event: true },
+      include: { event: true, profile: true },
     });
 
     return { ticket: ticket! };
@@ -60,7 +65,7 @@ export class TicketService {
   ): Promise<z.infer<typeof findByMailTicketResponseSchema>> {
     const ticketsByMail = await this.prisma.ticket.findMany({
       where: { mail },
-      include: { event: true },
+      include: { event: true, profile: true },
     });
 
     return { tickets: ticketsByMail };
@@ -71,10 +76,21 @@ export class TicketService {
   ): Promise<z.infer<typeof findByEventTicketResponseSchema>> {
     const ticketsByEvent = await this.prisma.ticket.findMany({
       where: { eventId },
-      include: { event: true },
+      include: { event: true, profile: true },
     });
 
     return { tickets: ticketsByEvent };
+  }
+
+  async findByProfileId(
+    profileId: Profile['id'],
+  ): Promise<z.infer<typeof findByProfileIdTicketResponseSchema>> {
+    const ticketsByProfile = await this.prisma.ticket.findMany({
+      where: { profileId: profileId },
+      include: { event: true },
+    });
+
+    return { tickets: ticketsByProfile };
   }
 
   async update(

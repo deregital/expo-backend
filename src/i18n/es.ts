@@ -403,6 +403,9 @@ export default {
       delete: {
         success: 'Evento eliminado con éxito',
         'not-found': 'Evento no encontrado',
+        'active-event-not-deletable': 'No se puede eliminar un evento activo',
+        'with-tickets-not-deletable':
+          'No se puede eliminar un evento con tickets ya emitidos',
       },
       'toggle-active': {
         success: 'Evento activo cambiado con éxito',
@@ -558,6 +561,8 @@ export default {
         success: 'Ticket creado con éxito',
         'event-not-found': 'Evento no encontrado',
         conflict: 'Error en la creación del ticket',
+        'max-tickets-reached':
+          'No se pueden emitir más tickets para este evento',
       },
       'find-all': {
         success: 'Tickets obtenidos',
@@ -621,6 +626,17 @@ export default {
         'otp-expired':
           'El código de verificación expiró. Por favor solicita uno nuevo',
         success: 'Código de verificación verificado con éxito',
+      },
+    },
+    'mi-expo': {
+      'my-events': {
+        success: 'Eventos obtenidos',
+      },
+      'my-tickets': {
+        success: 'Tickets obtenidos',
+      },
+      'emit-ticket': {
+        success: 'Ticket emitido',
       },
     },
   },
