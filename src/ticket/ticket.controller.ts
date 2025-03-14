@@ -109,7 +109,10 @@ export class TicketController {
     const ticketsEmitted = event.tickets.filter(
       (t) => t.type === createTicketDto.type,
     ).length;
-    if (maxTicketsToEmit && ticketsEmitted >= maxTicketsToEmit) {
+    const hasMaxTickets =
+      maxTicketsToEmit !== null && maxTicketsToEmit !== undefined;
+
+    if (hasMaxTickets && ticketsEmitted >= maxTicketsToEmit) {
       throw new ConflictException(
         translate('route.ticket.create.max-tickets-reached'),
       );

@@ -4403,6 +4403,7 @@ components:
               amount:
                 type:
                   - "number"
+                  - "null"
                 minimum: 1
               type:
                 type:
@@ -4805,6 +4806,7 @@ components:
                           amount:
                             type:
                               - "number"
+                              - "null"
                             minimum: 1
                           type:
                             type:
@@ -5121,6 +5123,7 @@ components:
                     amount:
                       type:
                         - "number"
+                        - "null"
                       minimum: 1
                     type:
                       type:
@@ -5238,6 +5241,7 @@ components:
                     amount:
                       type:
                         - "number"
+                        - "null"
                       minimum: 1
                     type:
                       type:
@@ -5490,6 +5494,7 @@ components:
               amount:
                 type:
                   - "number"
+                  - "null"
                 minimum: 1
               type:
                 type:
@@ -5748,6 +5753,7 @@ components:
               amount:
                 type:
                   - "number"
+                  - "null"
                 minimum: 1
               type:
                 type:
@@ -5921,6 +5927,7 @@ components:
               amount:
                 type:
                   - "number"
+                  - "null"
                 minimum: 1
               type:
                 type:

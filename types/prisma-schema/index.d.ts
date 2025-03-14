@@ -21387,7 +21387,7 @@ export namespace Prisma {
   export type EventTicketGroupByOutputType = {
     id: string;
     eventId: string;
-    amount: number;
+    amount: number | null;
     type: $Enums.TicketType;
     price: number | null;
     created_at: Date;
@@ -21510,7 +21510,7 @@ export namespace Prisma {
       {
         id: string;
         eventId: string;
-        amount: number;
+        amount: number | null;
         type: $Enums.TicketType;
         price: number | null;
         created_at: Date;
@@ -24231,7 +24231,7 @@ export namespace Prisma {
     NOT?: EventTicketWhereInput | EventTicketWhereInput[];
     id?: StringFilter<'EventTicket'> | string;
     eventId?: StringFilter<'EventTicket'> | string;
-    amount?: IntFilter<'EventTicket'> | number;
+    amount?: IntNullableFilter<'EventTicket'> | number | null;
     type?: EnumTicketTypeFilter<'EventTicket'> | $Enums.TicketType;
     price?: FloatNullableFilter<'EventTicket'> | number | null;
     created_at?: DateTimeFilter<'EventTicket'> | Date | string;
@@ -24242,7 +24242,7 @@ export namespace Prisma {
   export type EventTicketOrderByWithRelationInput = {
     id?: SortOrder;
     eventId?: SortOrder;
-    amount?: SortOrder;
+    amount?: SortOrderInput | SortOrder;
     type?: SortOrder;
     price?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
@@ -24257,7 +24257,7 @@ export namespace Prisma {
       OR?: EventTicketWhereInput[];
       NOT?: EventTicketWhereInput | EventTicketWhereInput[];
       eventId?: StringFilter<'EventTicket'> | string;
-      amount?: IntFilter<'EventTicket'> | number;
+      amount?: IntNullableFilter<'EventTicket'> | number | null;
       type?: EnumTicketTypeFilter<'EventTicket'> | $Enums.TicketType;
       price?: FloatNullableFilter<'EventTicket'> | number | null;
       created_at?: DateTimeFilter<'EventTicket'> | Date | string;
@@ -24270,7 +24270,7 @@ export namespace Prisma {
   export type EventTicketOrderByWithAggregationInput = {
     id?: SortOrder;
     eventId?: SortOrder;
-    amount?: SortOrder;
+    amount?: SortOrderInput | SortOrder;
     type?: SortOrder;
     price?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
@@ -24292,7 +24292,7 @@ export namespace Prisma {
       | EventTicketScalarWhereWithAggregatesInput[];
     id?: StringWithAggregatesFilter<'EventTicket'> | string;
     eventId?: StringWithAggregatesFilter<'EventTicket'> | string;
-    amount?: IntWithAggregatesFilter<'EventTicket'> | number;
+    amount?: IntNullableWithAggregatesFilter<'EventTicket'> | number | null;
     type?:
       | EnumTicketTypeWithAggregatesFilter<'EventTicket'>
       | $Enums.TicketType;
@@ -25518,7 +25518,7 @@ export namespace Prisma {
 
   export type EventTicketCreateInput = {
     id?: string;
-    amount: number;
+    amount?: number | null;
     type: $Enums.TicketType;
     price?: number | null;
     created_at?: Date | string;
@@ -25529,7 +25529,7 @@ export namespace Prisma {
   export type EventTicketUncheckedCreateInput = {
     id?: string;
     eventId: string;
-    amount: number;
+    amount?: number | null;
     type: $Enums.TicketType;
     price?: number | null;
     created_at?: Date | string;
@@ -25538,7 +25538,7 @@ export namespace Prisma {
 
   export type EventTicketUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
-    amount?: IntFieldUpdateOperationsInput | number;
+    amount?: NullableIntFieldUpdateOperationsInput | number | null;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     price?: NullableFloatFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -25549,7 +25549,7 @@ export namespace Prisma {
   export type EventTicketUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     eventId?: StringFieldUpdateOperationsInput | string;
-    amount?: IntFieldUpdateOperationsInput | number;
+    amount?: NullableIntFieldUpdateOperationsInput | number | null;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     price?: NullableFloatFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -25559,7 +25559,7 @@ export namespace Prisma {
   export type EventTicketCreateManyInput = {
     id?: string;
     eventId: string;
-    amount: number;
+    amount?: number | null;
     type: $Enums.TicketType;
     price?: number | null;
     created_at?: Date | string;
@@ -25568,7 +25568,7 @@ export namespace Prisma {
 
   export type EventTicketUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string;
-    amount?: IntFieldUpdateOperationsInput | number;
+    amount?: NullableIntFieldUpdateOperationsInput | number | null;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     price?: NullableFloatFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -25578,7 +25578,7 @@ export namespace Prisma {
   export type EventTicketUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string;
     eventId?: StringFieldUpdateOperationsInput | string;
-    amount?: IntFieldUpdateOperationsInput | number;
+    amount?: NullableIntFieldUpdateOperationsInput | number | null;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     price?: NullableFloatFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -26635,6 +26635,17 @@ export namespace Prisma {
     _max?: NestedEnumTemplateCategoryFilter<$PrismaModel>;
   };
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null;
+  };
+
   export type FloatNullableFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null;
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
@@ -26684,6 +26695,22 @@ export namespace Prisma {
   export type EventTicketSumOrderByAggregateInput = {
     amount?: SortOrder;
     price?: SortOrder;
+  };
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
+    _count?: NestedIntNullableFilter<$PrismaModel>;
+    _avg?: NestedFloatNullableFilter<$PrismaModel>;
+    _sum?: NestedIntNullableFilter<$PrismaModel>;
+    _min?: NestedIntNullableFilter<$PrismaModel>;
+    _max?: NestedIntNullableFilter<$PrismaModel>;
   };
 
   export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -29007,6 +29034,14 @@ export namespace Prisma {
     connect?: EventWhereUniqueInput;
   };
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+  };
+
   export type NullableFloatFieldUpdateOperationsInput = {
     set?: number | null;
     increment?: number;
@@ -29456,6 +29491,22 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>;
     gte?: number | FloatFieldRefInput<$PrismaModel>;
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
+  };
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
+    _count?: NestedIntNullableFilter<$PrismaModel>;
+    _avg?: NestedFloatNullableFilter<$PrismaModel>;
+    _sum?: NestedIntNullableFilter<$PrismaModel>;
+    _min?: NestedIntNullableFilter<$PrismaModel>;
+    _max?: NestedIntNullableFilter<$PrismaModel>;
   };
 
   export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -31968,7 +32019,7 @@ export namespace Prisma {
 
   export type EventTicketCreateWithoutEventInput = {
     id?: string;
-    amount: number;
+    amount?: number | null;
     type: $Enums.TicketType;
     price?: number | null;
     created_at?: Date | string;
@@ -31977,7 +32028,7 @@ export namespace Prisma {
 
   export type EventTicketUncheckedCreateWithoutEventInput = {
     id?: string;
-    amount: number;
+    amount?: number | null;
     type: $Enums.TicketType;
     price?: number | null;
     created_at?: Date | string;
@@ -32302,7 +32353,7 @@ export namespace Prisma {
     NOT?: EventTicketScalarWhereInput | EventTicketScalarWhereInput[];
     id?: StringFilter<'EventTicket'> | string;
     eventId?: StringFilter<'EventTicket'> | string;
-    amount?: IntFilter<'EventTicket'> | number;
+    amount?: IntNullableFilter<'EventTicket'> | number | null;
     type?: EnumTicketTypeFilter<'EventTicket'> | $Enums.TicketType;
     price?: FloatNullableFilter<'EventTicket'> | number | null;
     created_at?: DateTimeFilter<'EventTicket'> | Date | string;
@@ -34024,7 +34075,7 @@ export namespace Prisma {
 
   export type EventTicketCreateManyEventInput = {
     id?: string;
-    amount: number;
+    amount?: number | null;
     type: $Enums.TicketType;
     price?: number | null;
     created_at?: Date | string;
@@ -34156,7 +34207,7 @@ export namespace Prisma {
 
   export type EventTicketUpdateWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string;
-    amount?: IntFieldUpdateOperationsInput | number;
+    amount?: NullableIntFieldUpdateOperationsInput | number | null;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     price?: NullableFloatFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -34165,7 +34216,7 @@ export namespace Prisma {
 
   export type EventTicketUncheckedUpdateWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string;
-    amount?: IntFieldUpdateOperationsInput | number;
+    amount?: NullableIntFieldUpdateOperationsInput | number | null;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     price?: NullableFloatFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -34174,7 +34225,7 @@ export namespace Prisma {
 
   export type EventTicketUncheckedUpdateManyWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string;
-    amount?: IntFieldUpdateOperationsInput | number;
+    amount?: NullableIntFieldUpdateOperationsInput | number | null;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     price?: NullableFloatFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
