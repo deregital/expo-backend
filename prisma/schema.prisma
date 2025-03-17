@@ -39,6 +39,7 @@ enum Role {
   ADMIN
   FORM
   MI_EXPO
+  TICKETS
 }
 
 model Profile {

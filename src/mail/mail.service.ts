@@ -20,7 +20,7 @@ export class MailService {
     pdf: Blob,
   ): Promise<string> {
     const { data, error } = await resend.emails.send({
-      from: 'Testeando ando <info@deregital.com>',
+      from: 'Expo Tickets <expotickets@deregital.online>',
       to: ticket.mail,
       subject: translate('route.ticket.send-email.mail.subject', {
         eventName: ticket.event.name,

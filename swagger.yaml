@@ -1904,6 +1904,7 @@ components:
                 - "ADMIN"
                 - "FORM"
                 - "MI_EXPO"
+                - "TICKETS"
             isGlobalFilterActive:
               default: false
               type:
@@ -2414,6 +2415,7 @@ components:
                   - "ADMIN"
                   - "FORM"
                   - "MI_EXPO"
+                  - "TICKETS"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -2577,6 +2579,7 @@ components:
                   - "ADMIN"
                   - "FORM"
                   - "MI_EXPO"
+                  - "TICKETS"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -2711,6 +2714,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
       required:
         - "username"
         - "password"
@@ -2734,6 +2738,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         isGlobalFilterActive:
           default: false
           type:
@@ -2789,6 +2794,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         isGlobalFilterActive:
           default: false
           type:
@@ -2935,6 +2941,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         isGlobalFilterActive:
           default: false
           type:
@@ -6088,6 +6095,7 @@ components:
                   - "ADMIN"
                   - "FORM"
                   - "MI_EXPO"
+                  - "TICKETS"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -6289,6 +6297,7 @@ components:
                   - "ADMIN"
                   - "FORM"
                   - "MI_EXPO"
+                  - "TICKETS"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -6567,6 +6576,7 @@ components:
                   - "ADMIN"
                   - "FORM"
                   - "MI_EXPO"
+                  - "TICKETS"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -6773,6 +6783,7 @@ components:
                   - "ADMIN"
                   - "FORM"
                   - "MI_EXPO"
+                  - "TICKETS"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -6957,6 +6968,7 @@ components:
                 - "ADMIN"
                 - "FORM"
                 - "MI_EXPO"
+                - "TICKETS"
             firstTimeMiExpo:
               type:
                 - "boolean"
@@ -7144,6 +7156,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -7560,6 +7573,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -7844,6 +7858,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -8851,6 +8866,7 @@ components:
                     - "ADMIN"
                     - "FORM"
                     - "MI_EXPO"
+                    - "TICKETS"
                 firstTimeMiExpo:
                   type:
                     - "boolean"
@@ -9067,6 +9083,7 @@ components:
                       - "ADMIN"
                       - "FORM"
                       - "MI_EXPO"
+                      - "TICKETS"
                   firstTimeMiExpo:
                     type:
                       - "boolean"
@@ -9283,6 +9300,7 @@ components:
                       - "ADMIN"
                       - "FORM"
                       - "MI_EXPO"
+                      - "TICKETS"
                   firstTimeMiExpo:
                     type:
                       - "boolean"
@@ -9832,6 +9850,7 @@ components:
                 - "ADMIN"
                 - "FORM"
                 - "MI_EXPO"
+                - "TICKETS"
             firstTimeMiExpo:
               type:
                 - "boolean"
@@ -10053,6 +10072,7 @@ components:
                 - "ADMIN"
                 - "FORM"
                 - "MI_EXPO"
+                - "TICKETS"
             firstTimeMiExpo:
               type:
                 - "boolean"
@@ -10184,6 +10204,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -10586,6 +10607,7 @@ components:
                 - "ADMIN"
                 - "FORM"
                 - "MI_EXPO"
+                - "TICKETS"
             firstTimeMiExpo:
               type:
                 - "boolean"

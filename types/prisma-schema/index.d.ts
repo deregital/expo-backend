@@ -92,6 +92,7 @@ export namespace $Enums {
     ADMIN: 'ADMIN';
     FORM: 'FORM';
     MI_EXPO: 'MI_EXPO';
+    TICKETS: 'TICKETS';
   };
 
   export type Role = (typeof Role)[keyof typeof Role];
