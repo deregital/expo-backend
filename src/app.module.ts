@@ -23,6 +23,7 @@ import { WebhookModule } from '@/webhook/webhook.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE, ModuleRef } from '@nestjs/core';
+import { ResendModule } from './resend/resend.module';
 
 @Module({
   imports: [
@@ -45,6 +46,9 @@ import { APP_PIPE, ModuleRef } from '@nestjs/core';
     WebhookModule,
     OtpModule,
     MiExpoModule,
+    ResendModule.forRoot({
+      apiKey: process.env.RESEND_API_KEY ?? 're_JUST_FOR_ACTION',
+    }),
   ],
   providers: [
     {

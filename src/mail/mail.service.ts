@@ -1,25 +1,23 @@
 import { translate } from '@/i18n/translate';
 import { RESEND_ERROR_CODES_BY_KEY } from '@/mail/consts';
+import { ResendService } from '@/resend/resend.service';
 import {
   HttpException,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
 import { format } from 'date-fns/format';
-import { Resend } from 'resend';
 import { Event, Ticket } from '~/types/prisma-schema';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 @Injectable()
 export class MailService {
-  constructor() {}
+  constructor(private readonly resendService: ResendService) {}
 
   async sendTicket(
     ticket: Omit<Ticket, 'profileId'> & { event: Event },
     pdf: Blob,
   ): Promise<string> {
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await this.resendService.emails.send({
       from: 'Expo Tickets <expotickets@deregital.online>',
       to: ticket.mail,
       subject: translate('route.ticket.send-email.mail.subject', {
