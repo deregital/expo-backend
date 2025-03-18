@@ -41,7 +41,9 @@ export class JwtGuard implements CanActivate {
           ]);
         }
         req.user = profile;
-      } else if ([Role.ADMIN, Role.USER, Role.FORM].includes(payload.role)) {
+      } else if (
+        [Role.ADMIN, Role.USER, Role.FORM, Role.TICKETS].includes(payload.role)
+      ) {
         const account = await this.accountService.findByUsername(
           payload.username,
         );
