@@ -23,6 +23,10 @@ import { barcodes, line, text } from '@pdfme/schemas';
 import z from 'zod';
 import { Profile } from '~/types';
 import { TICKET_INPUTS, TICKET_TEMPLATE } from './constants';
+import {
+  CreateManyTicketDto,
+  createManyTicketResponseSchema,
+} from './dto/create-many-ticket.dto';
 
 @Injectable()
 export class TicketService {
@@ -37,6 +41,33 @@ export class TicketService {
         event: true,
       },
     });
+  }
+
+  async createMany(
+    dto: CreateManyTicketDto,
+  ): Promise<z.infer<typeof createManyTicketResponseSchema>> {
+    await this.prisma.ticket.createMany({
+      data: dto,
+    });
+
+    const tickets = await this.prisma.ticket.findMany({
+      where: {
+        fullName: {
+          in: dto.map((ticket) => ticket.fullName),
+        },
+        mail: {
+          in: dto.map((ticket) => ticket.mail),
+        },
+        eventId: {
+          in: dto.map((ticket) => ticket.eventId),
+        },
+      },
+      include: {
+        event: true,
+      },
+    });
+
+    return tickets;
   }
 
   async findAll(): Promise<z.infer<typeof findAllTicketsResponseSchema>> {

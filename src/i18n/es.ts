@@ -564,6 +564,11 @@ export default {
         'max-tickets-reached':
           'No se pueden emitir más tickets para este evento',
       },
+      'create-many': {
+        success: 'Tickets creados con éxito',
+        'event-not-found': 'Evento no encontrado',
+        error: 'Error en la creación de los tickets',
+      },
       'find-all': {
         success: 'Tickets obtenidos',
       },

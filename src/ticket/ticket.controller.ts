@@ -7,6 +7,11 @@ import { ErrorDto } from '@/shared/errors/errorType';
 import { decryptString } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import {
+  CreateManyTicketDto,
+  CreateManyTicketResponseDto,
+  createManyTicketResponseSchema,
+} from '@/ticket/dto/create-many-ticket.dto';
+import {
   CreateTicketDto,
   CreateTicketResponseDto,
   createTicketResponseSchema,
@@ -119,6 +124,26 @@ export class TicketController {
     }
 
     return await this.ticketService.create(createTicketDto);
+  }
+
+  @Roles(Role.ADMIN, Role.MI_EXPO, Role.TICKETS)
+  @ApiNotFoundResponse({
+    description: translate('route.ticket.create-many.event-not-found'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.ticket.create-many.error'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    description: translate('route.ticket.create-many.success'),
+    type: CreateManyTicketResponseDto,
+  })
+  @Post('/create-many')
+  async createMany(
+    @Body() createManyTicketDto: CreateManyTicketDto,
+  ): Promise<z.infer<typeof createManyTicketResponseSchema>> {
+    return await this.ticketService.createMany(createManyTicketDto);
   }
 
   @ApiOkResponse({
