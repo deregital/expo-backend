@@ -54,6 +54,19 @@ export class EventFolderService {
           include: {
             subEvents: true,
             supraEvent: true,
+            tags: {
+              include: {
+                group: {
+                  select: {
+                    id: true,
+                    color: true,
+                    name: true,
+                    isExclusive: true,
+                  },
+                },
+              },
+            },
+            eventTickets: true,
           },
         },
       },

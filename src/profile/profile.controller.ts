@@ -9,8 +9,8 @@ import { translate } from '@/i18n/translate';
 import {
   CreateProfileDto,
   CreateProfileResponseDto,
-  createProfileResponseSchema,
   SimilarityProfile,
+  createProfileResponseSchema,
 } from '@/profile/dto/create-profile.dto';
 import {
   DeleteProfileResponseDto,

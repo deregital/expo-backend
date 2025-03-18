@@ -3,7 +3,6 @@ import {
   createEventResponseSchema,
 } from '@/event/dto/create-event.dto';
 import { getActiveEventsResponseSchema } from '@/event/dto/get-active-events.dto';
-import { getAllEventsResponseSchema } from '@/event/dto/get-all-event.dto';
 import {
   getByIdEventResponseSchema,
   getBySupraEventResponseSchema,
@@ -17,7 +16,14 @@ import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Inject, Injectable } from '@nestjs/common';
 import { z } from 'zod';
-import { Event, EventTicket, TagGroup, TagType } from '~/types/prisma-schema';
+import {
+  Event,
+  EventTicket,
+  Prisma,
+  Tag,
+  TagGroup,
+  TagType,
+} from '~/types/prisma-schema';
 import { deleteEventResponseSchema } from './dto/delete-event.dto';
 
 @Injectable()
@@ -68,23 +74,18 @@ export class EventService {
       },
     });
   }
-  async findAll(): Promise<
-    z.infer<typeof getAllEventsResponseSchema.shape.withoutFolder>
-  > {
-    const events = await this.prisma.event.findMany({
-      include: {
-        folder: true,
-        tagAssisted: true,
-        tagConfirmed: true,
-        subEvents: true,
-        supraEvent: true,
-      },
-    });
-    return events;
-  }
 
   async findWithoutFolder(): Promise<
-    Array<Event & { subEvents: Event[]; supraEvent: Event | null }>
+    Array<
+      Event & {
+        subEvents: Event[];
+        supraEvent: Event | null;
+        tags: (Pick<Tag, 'id' | 'name' | 'type'> & {
+          group: Pick<TagGroup, 'color' | 'isExclusive' | 'name' | 'id'>;
+        })[];
+        eventTickets: EventTicket[];
+      }
+    >
   > {
     return await this.prisma.event.findMany({
       where: {
@@ -93,6 +94,19 @@ export class EventService {
       include: {
         subEvents: true,
         supraEvent: true,
+        tags: {
+          include: {
+            group: {
+              select: {
+                id: true,
+                color: true,
+                name: true,
+                isExclusive: true,
+              },
+            },
+          },
+        },
+        eventTickets: true,
       },
     });
   }
@@ -106,6 +120,12 @@ export class EventService {
         subEvents: true,
         eventTickets: true,
         supraEvent: true,
+        tags: {
+          include: {
+            group: true,
+          },
+        },
+        tickets: true,
       },
     });
     return event!;
@@ -147,6 +167,9 @@ export class EventService {
             price: ticket.price,
             type: ticket.type,
           })),
+        },
+        tags: {
+          set: updateEventDto.tagsId.map((tag) => ({ id: tag })),
         },
         folder: updateEventDto.folderId
           ? { connect: { id: updateEventDto.folderId } }
@@ -265,5 +288,34 @@ export class EventService {
     });
 
     return { events };
+  }
+
+  async findActiveByTags(tagIds: Tag['id'][]): Promise<
+    Prisma.EventGetPayload<{
+      include: {
+        tickets: true;
+        eventTickets: true;
+      };
+    }>[]
+  > {
+    return await this.prisma.event.findMany({
+      where: {
+        active: true,
+        endingDate: {
+          gt: new Date(),
+        },
+        tags: {
+          some: {
+            id: {
+              in: tagIds,
+            },
+          },
+        },
+      },
+      include: {
+        tickets: true,
+        eventTickets: true,
+      },
+    });
   }
 }

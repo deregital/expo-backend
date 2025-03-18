@@ -33,6 +33,7 @@ import {
 import { EventService } from '@/event/event.service';
 import { translate } from '@/i18n/translate';
 import { ErrorDto } from '@/shared/errors/errorType';
+import { setHoursAndMinutes } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
@@ -118,6 +119,14 @@ export class EventController {
     if (createEventDto.subEvents) {
       subEvents = await Promise.all(
         createEventDto.subEvents.map(async (subEvent) => {
+          const subEventStartingDate = setHoursAndMinutes(
+            subEvent.date,
+            subEvent.startingDate,
+          );
+          const subEventEndingDate = setHoursAndMinutes(
+            subEvent.date,
+            subEvent.endingDate,
+          );
           const tagGroup = await this.tagGroupService.create({
             color: '#666666',
             isExclusive: true,
@@ -127,18 +136,31 @@ export class EventController {
           return await this.eventService.create({
             ...subEvent,
             tagGroupId: tagGroup.id,
-            tagsId: [],
-            eventTickets: [],
+            tagsId: createEventDto.tagsId,
+            eventTickets: createEventDto.eventTickets,
+            startingDate: subEventStartingDate.toISOString(),
+            endingDate: subEventEndingDate.toISOString(),
           });
         }),
       );
     }
+
+    const eventStartingDate = setHoursAndMinutes(
+      createEventDto.date,
+      createEventDto.startingDate,
+    );
+    const eventEndingDate = setHoursAndMinutes(
+      createEventDto.date,
+      createEventDto.endingDate,
+    );
 
     return await this.eventService.create({
       ...createEventDto,
       folderId: createEventDto.folderId ?? undefined,
       tagGroupId: eventTagGroup.id,
       subEvents: subEvents.map((subEvent) => ({ id: subEvent.id })),
+      startingDate: eventStartingDate.toISOString(),
+      endingDate: eventEndingDate.toISOString(),
     });
   }
 
@@ -203,8 +225,8 @@ export class EventController {
     @Body() updateEventDto: UpdateEventDto,
   ): Promise<z.infer<typeof updateEventResponseSchema>> {
     const event = await this.eventService.findById(id);
-    // TODO: CHECK IF TICKETS HAVE BEEN EMITTED FOR THIS EVENT
-    if (event.active) {
+
+    if (event.active || event.tickets.length > 0) {
       throw new ConflictException([
         translate('route.event.update.active-event-not-editable'),
       ]);
@@ -236,9 +258,20 @@ export class EventController {
       );
     }
 
+    const updatedStartingDate = setHoursAndMinutes(
+      updateEventDto.date,
+      updateEventDto.startingDate,
+    );
+    const updatedEndingDate = setHoursAndMinutes(
+      updateEventDto.date,
+      updateEventDto.endingDate,
+    );
+
     const updatedEvent = await this.eventService.update(id, {
       ...updateEventDto,
       eventTickets,
+      startingDate: updatedStartingDate.toISOString(),
+      endingDate: updatedEndingDate.toISOString(),
     });
     await this.updateEventTags({
       assistedTagId: updatedEvent.tagAssistedId,
@@ -319,6 +352,19 @@ export class EventController {
   async remove(
     @Param('id', new ExistingRecord('event')) id: string,
   ): Promise<z.infer<typeof deleteEventResponseSchema>> {
+    const event = await this.eventService.findById(id);
+    if (event.active) {
+      throw new ConflictException([
+        translate('route.event.delete.active-event-not-deletable'),
+      ]);
+    }
+
+    if (event.tickets.length > 0) {
+      throw new ConflictException([
+        translate('route.event.delete.with-tickets-not-deletable'),
+      ]);
+    }
+
     return await this.eventService.delete(id);
   }
 
@@ -365,11 +411,11 @@ export class EventController {
     @Param('id', new ExistingRecord('event')) id: string,
   ): Promise<z.infer<typeof toggleActiveResponseSchema>> {
     const event = await this.eventService.findById(id);
-    // TODO: CHECK IF TICKETS HAVE BEEN EMITTED FOR THIS EVENT
-    if (event.active) {
-      return await this.eventService.toggleActive(id, { active: false });
-    } else {
-      return await this.eventService.toggleActive(id, { active: true });
+    if (event.tickets.length > 0 && event.active) {
+      throw new ConflictException([
+        translate('route.event.toggle-active.active-event-not-editable'),
+      ]);
     }
+    return await this.eventService.toggleActive(id, { active: !event.active });
   }
 }

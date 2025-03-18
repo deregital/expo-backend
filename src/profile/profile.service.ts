@@ -123,6 +123,8 @@ export class ProfileService {
             group: {
               select: {
                 isExclusive: true,
+                color: true,
+                name: true,
               },
             },
           },

@@ -32,6 +32,10 @@ import {
   findByMailTicketResponseSchema,
 } from '@/ticket/dto/find-by-mail-ticket.dto';
 import {
+  FindByProfileIdTicketResponseDto,
+  findByProfileIdTicketResponseSchema,
+} from '@/ticket/dto/find-by-profile-id-ticket.dto';
+import {
   FindTicketResponseDto,
   findTicketResponseSchema,
 } from '@/ticket/dto/find-ticket.dto';
@@ -43,6 +47,7 @@ import {
 import { TicketService } from '@/ticket/ticket.service';
 import {
   Body,
+  ConflictException,
   Controller,
   Delete,
   Get,
@@ -74,8 +79,13 @@ export class TicketController {
     private readonly eventService: EventService,
   ) {}
 
+  @Roles(Role.ADMIN, Role.MI_EXPO)
   @ApiNotFoundResponse({
     description: translate('route.ticket.create.event-not-found'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.ticket.create.max-tickets-reached'),
     type: ErrorDto,
   })
   @ApiCreatedResponse({
@@ -92,6 +102,22 @@ export class TicketController {
         translate('route.ticket.create.event-not-found'),
       );
     }
+    const maxTicketsToEmit = event.eventTickets.find(
+      (et) => et.type === createTicketDto.type,
+    )?.amount;
+
+    const ticketsEmitted = event.tickets.filter(
+      (t) => t.type === createTicketDto.type,
+    ).length;
+    const hasMaxTickets =
+      maxTicketsToEmit !== null && maxTicketsToEmit !== undefined;
+
+    if (hasMaxTickets && ticketsEmitted >= maxTicketsToEmit) {
+      throw new ConflictException(
+        translate('route.ticket.create.max-tickets-reached'),
+      );
+    }
+
     return await this.ticketService.create(createTicketDto);
   }
 
@@ -143,6 +169,22 @@ export class TicketController {
     @Param('eventId', new ExistingRecord('event')) eventId: string,
   ): Promise<z.infer<typeof findByEventTicketResponseSchema>> {
     return await this.ticketService.findByEvent(eventId);
+  }
+
+  @Roles(Role.ADMIN, Role.USER, Role.MI_EXPO)
+  @ApiOkResponse({
+    description: translate('route.ticket.find-by-id.success'),
+    type: FindByProfileIdTicketResponseDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.ticket.find-by-id.not-found'),
+    type: ErrorDto,
+  })
+  @Get('/find-by-profile-id/:profileId')
+  async findByProfileId(
+    @Param('profileId', new ExistingRecord('profile')) profileId: string,
+  ): Promise<z.infer<typeof findByProfileIdTicketResponseSchema>> {
+    return await this.ticketService.findByProfileId(profileId);
   }
 
   @ApiOkResponse({
