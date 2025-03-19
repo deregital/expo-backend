@@ -8,8 +8,7 @@ import { decryptString } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import {
   CreateManyTicketDto,
-  CreateManyTicketResponseDto,
-  createManyTicketResponseSchema,
+  CreateManyTicketWithPdfsResponseDto,
 } from '@/ticket/dto/create-many-ticket.dto';
 import {
   CreateTicketDto,
@@ -137,13 +136,37 @@ export class TicketController {
   })
   @ApiOkResponse({
     description: translate('route.ticket.create-many.success'),
-    type: CreateManyTicketResponseDto,
+    type: CreateManyTicketWithPdfsResponseDto,
   })
   @Post('/create-many')
   async createMany(
     @Body() createManyTicketDto: CreateManyTicketDto,
-  ): Promise<z.infer<typeof createManyTicketResponseSchema>> {
-    return await this.ticketService.createMany(createManyTicketDto);
+    @Res() res: Response,
+  ): Promise<void> {
+    // Primero, crear los tickets
+    const tickets = await this.ticketService.createMany(createManyTicketDto);
+
+    // Extraer los IDs de los tickets creados
+    const ticketIds = tickets.map((ticket) => ticket.id);
+
+    // Luego, generar los PDFs para todos los tickets
+    const pdfs = await this.ticketService.generateMultiplePdfTickets(ticketIds);
+
+    // Preparar la respuesta con los tickets y los PDFs
+    const response = {
+      tickets: tickets,
+      pdfs: await Promise.all(
+        pdfs.map(async (item) => ({
+          ticketId: item.ticketId,
+          // Convertir el Blob a base64 para enviarlo en la respuesta JSON
+          pdfBase64: Buffer.from(await item.pdf.arrayBuffer()).toString(
+            'base64',
+          ),
+        })),
+      ),
+    };
+
+    res.status(200).json(response);
   }
 
   @ApiOkResponse({
