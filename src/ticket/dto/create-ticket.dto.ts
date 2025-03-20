@@ -10,6 +10,8 @@ export const createTicketSchema = ticketSchema
     status: true,
     fullName: true,
     mail: true,
+    dni: true,
+    seat: true,
   })
   .extend({
     profileId: profileSchema.shape.id.optional(),

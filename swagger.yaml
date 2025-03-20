@@ -5663,6 +5663,14 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              seat:
+                type:
+                  - "number"
+                minimum: 1
               created_at:
                 type:
                   - "string"
@@ -5678,6 +5686,8 @@ components:
               - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "seat"
               - "created_at"
               - "updated_at"
       required:
@@ -8565,6 +8575,14 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        seat:
+          type:
+            - "number"
+          minimum: 1
         profileId:
           type:
             - "string"
@@ -8575,6 +8593,8 @@ components:
         - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "seat"
     CreateTicketResponseDto:
       type:
         - "object"
@@ -8609,6 +8629,14 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        seat:
+          type:
+            - "number"
+          minimum: 1
         created_at:
           type:
             - "string"
@@ -8695,6 +8723,8 @@ components:
         - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "seat"
         - "created_at"
         - "updated_at"
         - "event"
@@ -8739,6 +8769,14 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              seat:
+                type:
+                  - "number"
+                minimum: 1
               created_at:
                 type:
                   - "string"
@@ -8774,6 +8812,8 @@ components:
               - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "seat"
               - "created_at"
               - "updated_at"
               - "event"
@@ -8817,6 +8857,14 @@ components:
               type:
                 - "string"
               format: "email"
+            dni:
+              type:
+                - "string"
+              minLength: 1
+            seat:
+              type:
+                - "number"
+              minimum: 1
             created_at:
               type:
                 - "string"
@@ -8987,6 +9035,8 @@ components:
             - "status"
             - "fullName"
             - "mail"
+            - "dni"
+            - "seat"
             - "created_at"
             - "updated_at"
             - "event"
@@ -9034,6 +9084,14 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              seat:
+                type:
+                  - "number"
+                minimum: 1
               created_at:
                 type:
                   - "string"
@@ -9204,6 +9262,8 @@ components:
               - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "seat"
               - "created_at"
               - "updated_at"
               - "event"
@@ -9251,6 +9311,14 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              seat:
+                type:
+                  - "number"
+                minimum: 1
               created_at:
                 type:
                   - "string"
@@ -9421,6 +9489,8 @@ components:
               - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "seat"
               - "created_at"
               - "updated_at"
               - "event"
@@ -9468,6 +9538,14 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              seat:
+                type:
+                  - "number"
+                minimum: 1
               created_at:
                 type:
                   - "string"
@@ -9554,6 +9632,8 @@ components:
               - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "seat"
               - "created_at"
               - "updated_at"
               - "event"
@@ -9619,6 +9699,14 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        seat:
+          type:
+            - "number"
+          minimum: 1
         created_at:
           type:
             - "string"
@@ -9634,6 +9722,8 @@ components:
         - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "seat"
         - "created_at"
         - "updated_at"
     DeleteTicketResponseDto:
@@ -9670,6 +9760,14 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        seat:
+          type:
+            - "number"
+          minimum: 1
         created_at:
           type:
             - "string"
@@ -9685,6 +9783,8 @@ components:
         - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "seat"
         - "created_at"
         - "updated_at"
     FindTicketResponseDto:
@@ -9721,6 +9821,14 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        seat:
+          type:
+            - "number"
+          minimum: 1
         created_at:
           type:
             - "string"
@@ -9736,6 +9844,8 @@ components:
         - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "seat"
         - "created_at"
         - "updated_at"
     SendEmailResponseDto:

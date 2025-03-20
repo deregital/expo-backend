@@ -182,6 +182,7 @@ export class EventController {
     };
   }
 
+  @Roles(Role.ADMIN, Role.USER, Role.TICKETS)
   @Get('/find-active')
   @ApiOkResponse({
     description: translate('route.event.get-all.success'),

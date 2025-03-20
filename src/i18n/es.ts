@@ -212,6 +212,12 @@ export default {
       status: {
         invalid: 'El estado del ticket es inválido',
       },
+      seat: {
+        required: 'El asiento es requerido',
+      },
+      dni: {
+        required: 'El DNI es requerido',
+      },
     },
     eventTicket: {
       amount: {
@@ -417,6 +423,10 @@ export default {
       'generate-pdf': {
         success: 'Ticket generado con éxito',
         'not-found': 'Ticket no encontrado',
+        pdf: {
+          footer:
+            'Para cualquier duda, reclamo o consulta llamar al 11-6056-7270 o comunicarse vía mail a ariellask@gmail.com.\nMás información en expodesfiles.com',
+        },
       },
       'find-ticket': {
         success: 'Ticket encontrado con éxito',
