@@ -263,7 +263,7 @@ model Ticket {
   mail     String
   dni      String
 
-  seat Int @default(autoincrement())
+  seat Int?
 
   profileId String?  @map("profile_id")
   profile   Profile? @relation("PROFILE_X_TICKET", fields: [profileId], references: [id])
@@ -271,6 +271,7 @@ model Ticket {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  @@index([eventId, seat], name: "unique_seat_per_event")
   @@map("TICKET")
 }
 

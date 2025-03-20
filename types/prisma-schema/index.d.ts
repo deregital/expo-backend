@@ -18833,7 +18833,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
-    seat: number;
+    seat: number | null;
     profileId: string | null;
     created_at: Date;
     updated_at: Date;
@@ -18986,7 +18986,7 @@ export namespace Prisma {
         fullName: string;
         mail: string;
         dni: string;
-        seat: number;
+        seat: number | null;
         profileId: string | null;
         created_at: Date;
         updated_at: Date;
@@ -24149,7 +24149,7 @@ export namespace Prisma {
     fullName?: StringFilter<'Ticket'> | string;
     mail?: StringFilter<'Ticket'> | string;
     dni?: StringFilter<'Ticket'> | string;
-    seat?: IntFilter<'Ticket'> | number;
+    seat?: IntNullableFilter<'Ticket'> | number | null;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeFilter<'Ticket'> | Date | string;
@@ -24168,7 +24168,7 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
-    seat?: SortOrder;
+    seat?: SortOrderInput | SortOrder;
     profileId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -24188,7 +24188,7 @@ export namespace Prisma {
       fullName?: StringFilter<'Ticket'> | string;
       mail?: StringFilter<'Ticket'> | string;
       dni?: StringFilter<'Ticket'> | string;
-      seat?: IntFilter<'Ticket'> | number;
+      seat?: IntNullableFilter<'Ticket'> | number | null;
       profileId?: StringNullableFilter<'Ticket'> | string | null;
       created_at?: DateTimeFilter<'Ticket'> | Date | string;
       updated_at?: DateTimeFilter<'Ticket'> | Date | string;
@@ -24209,7 +24209,7 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
-    seat?: SortOrder;
+    seat?: SortOrderInput | SortOrder;
     profileId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -24237,7 +24237,7 @@ export namespace Prisma {
     fullName?: StringWithAggregatesFilter<'Ticket'> | string;
     mail?: StringWithAggregatesFilter<'Ticket'> | string;
     dni?: StringWithAggregatesFilter<'Ticket'> | string;
-    seat?: IntWithAggregatesFilter<'Ticket'> | number;
+    seat?: IntNullableWithAggregatesFilter<'Ticket'> | number | null;
     profileId?: StringNullableWithAggregatesFilter<'Ticket'> | string | null;
     created_at?: DateTimeWithAggregatesFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Ticket'> | Date | string;
@@ -25460,7 +25460,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
-    seat?: number;
+    seat?: number | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
@@ -25475,7 +25475,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
-    seat?: number;
+    seat?: number | null;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -25488,7 +25488,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
-    seat?: IntFieldUpdateOperationsInput | number;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
@@ -25503,7 +25503,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
-    seat?: IntFieldUpdateOperationsInput | number;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -25517,7 +25517,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
-    seat?: number;
+    seat?: number | null;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -25530,7 +25530,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
-    seat?: IntFieldUpdateOperationsInput | number;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -25543,7 +25543,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
-    seat?: IntFieldUpdateOperationsInput | number;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -26570,6 +26570,17 @@ export namespace Prisma {
     not?: NestedEnumTicketStatusFilter<$PrismaModel> | $Enums.TicketStatus;
   };
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null;
+  };
+
   export type EventScalarRelationFilter = {
     is?: EventWhereInput;
     isNot?: EventWhereInput;
@@ -26658,6 +26669,22 @@ export namespace Prisma {
     _max?: NestedEnumTicketStatusFilter<$PrismaModel>;
   };
 
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
+    _count?: NestedIntNullableFilter<$PrismaModel>;
+    _avg?: NestedFloatNullableFilter<$PrismaModel>;
+    _sum?: NestedIntNullableFilter<$PrismaModel>;
+    _min?: NestedIntNullableFilter<$PrismaModel>;
+    _max?: NestedIntNullableFilter<$PrismaModel>;
+  };
+
   export type EnumTemplateStatusFilter<$PrismaModel = never> = {
     equals?:
       | $Enums.TemplateStatus
@@ -26740,17 +26767,6 @@ export namespace Prisma {
     _max?: NestedEnumTemplateCategoryFilter<$PrismaModel>;
   };
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    lt?: number | IntFieldRefInput<$PrismaModel>;
-    lte?: number | IntFieldRefInput<$PrismaModel>;
-    gt?: number | IntFieldRefInput<$PrismaModel>;
-    gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null;
-  };
-
   export type FloatNullableFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null;
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
@@ -26800,22 +26816,6 @@ export namespace Prisma {
   export type EventTicketSumOrderByAggregateInput = {
     amount?: SortOrder;
     price?: SortOrder;
-  };
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    lt?: number | IntFieldRefInput<$PrismaModel>;
-    lte?: number | IntFieldRefInput<$PrismaModel>;
-    gt?: number | IntFieldRefInput<$PrismaModel>;
-    gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
-    _count?: NestedIntNullableFilter<$PrismaModel>;
-    _avg?: NestedFloatNullableFilter<$PrismaModel>;
-    _sum?: NestedIntNullableFilter<$PrismaModel>;
-    _min?: NestedIntNullableFilter<$PrismaModel>;
-    _max?: NestedIntNullableFilter<$PrismaModel>;
   };
 
   export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -29086,6 +29086,14 @@ export namespace Prisma {
     set?: $Enums.TicketStatus;
   };
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+  };
+
   export type EventUpdateOneRequiredWithoutTicketsNestedInput = {
     create?: XOR<
       EventCreateWithoutTicketsInput,
@@ -29137,14 +29145,6 @@ export namespace Prisma {
     >;
     connectOrCreate?: EventCreateOrConnectWithoutEventTicketsInput;
     connect?: EventWhereUniqueInput;
-  };
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null;
-    increment?: number;
-    decrement?: number;
-    multiply?: number;
-    divide?: number;
   };
 
   export type NullableFloatFieldUpdateOperationsInput = {
@@ -29519,6 +29519,33 @@ export namespace Prisma {
       _max?: NestedEnumTicketStatusFilter<$PrismaModel>;
     };
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
+    _count?: NestedIntNullableFilter<$PrismaModel>;
+    _avg?: NestedFloatNullableFilter<$PrismaModel>;
+    _sum?: NestedIntNullableFilter<$PrismaModel>;
+    _min?: NestedIntNullableFilter<$PrismaModel>;
+    _max?: NestedIntNullableFilter<$PrismaModel>;
+  };
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    lt?: number | FloatFieldRefInput<$PrismaModel>;
+    lte?: number | FloatFieldRefInput<$PrismaModel>;
+    gt?: number | FloatFieldRefInput<$PrismaModel>;
+    gte?: number | FloatFieldRefInput<$PrismaModel>;
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
+  };
+
   export type NestedEnumTemplateStatusFilter<$PrismaModel = never> = {
     equals?:
       | $Enums.TemplateStatus
@@ -29585,33 +29612,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>;
     _min?: NestedEnumTemplateCategoryFilter<$PrismaModel>;
     _max?: NestedEnumTemplateCategoryFilter<$PrismaModel>;
-  };
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    lt?: number | FloatFieldRefInput<$PrismaModel>;
-    lte?: number | FloatFieldRefInput<$PrismaModel>;
-    gt?: number | FloatFieldRefInput<$PrismaModel>;
-    gte?: number | FloatFieldRefInput<$PrismaModel>;
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
-  };
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    lt?: number | IntFieldRefInput<$PrismaModel>;
-    lte?: number | IntFieldRefInput<$PrismaModel>;
-    gt?: number | IntFieldRefInput<$PrismaModel>;
-    gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
-    _count?: NestedIntNullableFilter<$PrismaModel>;
-    _avg?: NestedFloatNullableFilter<$PrismaModel>;
-    _sum?: NestedIntNullableFilter<$PrismaModel>;
-    _min?: NestedIntNullableFilter<$PrismaModel>;
-    _max?: NestedIntNullableFilter<$PrismaModel>;
   };
 
   export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -30120,7 +30120,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
-    seat?: number;
+    seat?: number | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
@@ -30134,7 +30134,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
-    seat?: number;
+    seat?: number | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -30413,7 +30413,7 @@ export namespace Prisma {
     fullName?: StringFilter<'Ticket'> | string;
     mail?: StringFilter<'Ticket'> | string;
     dni?: StringFilter<'Ticket'> | string;
-    seat?: IntFilter<'Ticket'> | number;
+    seat?: IntNullableFilter<'Ticket'> | number | null;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeFilter<'Ticket'> | Date | string;
@@ -32013,7 +32013,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
-    seat?: number;
+    seat?: number | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     profile?: ProfileCreateNestedOneWithoutTicketInput;
@@ -32026,7 +32026,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
-    seat?: number;
+    seat?: number | null;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -33359,7 +33359,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
-    seat?: number;
+    seat?: number | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -33507,7 +33507,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
-    seat?: IntFieldUpdateOperationsInput | number;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
@@ -33521,7 +33521,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
-    seat?: IntFieldUpdateOperationsInput | number;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -33534,7 +33534,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
-    seat?: IntFieldUpdateOperationsInput | number;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -34177,7 +34177,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
-    seat?: number;
+    seat?: number | null;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -34214,7 +34214,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
-    seat?: IntFieldUpdateOperationsInput | number;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     profile?: ProfileUpdateOneWithoutTicketNestedInput;
@@ -34227,7 +34227,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
-    seat?: IntFieldUpdateOperationsInput | number;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -34240,7 +34240,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
-    seat?: IntFieldUpdateOperationsInput | number;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
