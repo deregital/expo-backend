@@ -15,6 +15,7 @@ import { MiExpoModule } from '@/mi-expo/mi-expo.module';
 import { OtpModule } from '@/otp/otp.module';
 import { PrismaModule } from '@/prisma/prisma.module';
 import { ProfileModule } from '@/profile/profile.module';
+import { ResendModule } from '@/resend/resend.module';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagGroupModule } from '@/tag-group/tag-group.module';
 import { TagModule } from '@/tag/tag.module';
@@ -23,7 +24,6 @@ import { WebhookModule } from '@/webhook/webhook.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE, ModuleRef } from '@nestjs/core';
-import { ResendModule } from './resend/resend.module';
 
 @Module({
   imports: [

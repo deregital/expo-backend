@@ -7,7 +7,7 @@ import {
   randomBytes,
 } from 'crypto';
 import fs from 'fs';
-import { join as pathJoin } from 'path';
+import path, { join as pathJoin } from 'path';
 
 function getLastTimestampPath(): string {
   return process.env.NODE_ENV === 'production'
@@ -84,4 +84,31 @@ export function setHoursAndMinutes(
   updatedDate.setMinutes(newDate.getMinutes());
 
   return updatedDate;
+}
+
+export async function getDMSansFonts(): Promise<{
+  fontBold: Buffer;
+  fontSemiBold: Buffer;
+  fontLight: Buffer;
+}> {
+  const fontFolderPath = path.join(
+    __dirname,
+    '..',
+    '..',
+    '..',
+    '..',
+    'public',
+    'fonts',
+  );
+
+  const fontBoldPath = path.join(fontFolderPath, 'DMSans-Bold.ttf');
+  const fontBold = await fs.promises.readFile(fontBoldPath);
+
+  const fontSemiBoldPath = path.join(fontFolderPath, 'DMSans-SemiBold.ttf');
+  const fontSemiBold = await fs.promises.readFile(fontSemiBoldPath);
+
+  const fontLightPath = path.join(fontFolderPath, 'DMSans-Light.ttf');
+  const fontLight = await fs.promises.readFile(fontLightPath);
+
+  return { fontBold, fontSemiBold, fontLight };
 }
