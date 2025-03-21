@@ -1435,6 +1435,35 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /ticket/create-many:
+    post:
+      operationId: "TicketController_createMany"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateManyTicketDto"
+      responses:
+        200:
+          description: "Tickets creados con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateManyTicketWithPdfsResponseDto"
+        404:
+          description: "Evento no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "Error en la creación de los tickets"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /ticket/all:
     get:
       operationId: "TicketController_findAll"
@@ -1875,6 +1904,7 @@ components:
                 - "USER"
                 - "ADMIN"
                 - "FORM"
+                - "TICKETS"
                 - "MI_EXPO"
             isGlobalFilterActive:
               default: false
@@ -2385,6 +2415,7 @@ components:
                   - "USER"
                   - "ADMIN"
                   - "FORM"
+                  - "TICKETS"
                   - "MI_EXPO"
               firstTimeMiExpo:
                 type:
@@ -2548,6 +2579,7 @@ components:
                   - "USER"
                   - "ADMIN"
                   - "FORM"
+                  - "TICKETS"
                   - "MI_EXPO"
               firstTimeMiExpo:
                 type:
@@ -2682,6 +2714,7 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
+            - "TICKETS"
             - "MI_EXPO"
       required:
         - "username"
@@ -2705,6 +2738,7 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
+            - "TICKETS"
             - "MI_EXPO"
         isGlobalFilterActive:
           default: false
@@ -2760,6 +2794,7 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
+            - "TICKETS"
             - "MI_EXPO"
         isGlobalFilterActive:
           default: false
@@ -2906,6 +2941,7 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
+            - "TICKETS"
             - "MI_EXPO"
         isGlobalFilterActive:
           default: false
@@ -6059,6 +6095,7 @@ components:
                   - "USER"
                   - "ADMIN"
                   - "FORM"
+                  - "TICKETS"
                   - "MI_EXPO"
               firstTimeMiExpo:
                 type:
@@ -6260,6 +6297,7 @@ components:
                   - "USER"
                   - "ADMIN"
                   - "FORM"
+                  - "TICKETS"
                   - "MI_EXPO"
               firstTimeMiExpo:
                 type:
@@ -6538,6 +6576,7 @@ components:
                   - "USER"
                   - "ADMIN"
                   - "FORM"
+                  - "TICKETS"
                   - "MI_EXPO"
               firstTimeMiExpo:
                 type:
@@ -6744,6 +6783,7 @@ components:
                   - "USER"
                   - "ADMIN"
                   - "FORM"
+                  - "TICKETS"
                   - "MI_EXPO"
               firstTimeMiExpo:
                 type:
@@ -6928,6 +6968,7 @@ components:
                 - "USER"
                 - "ADMIN"
                 - "FORM"
+                - "TICKETS"
                 - "MI_EXPO"
             firstTimeMiExpo:
               type:
@@ -7115,6 +7156,7 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
+            - "TICKETS"
             - "MI_EXPO"
         firstTimeMiExpo:
           type:
@@ -7531,6 +7573,7 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
+            - "TICKETS"
             - "MI_EXPO"
         firstTimeMiExpo:
           type:
@@ -7815,6 +7858,7 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
+            - "TICKETS"
             - "MI_EXPO"
         firstTimeMiExpo:
           type:
@@ -8655,6 +8699,198 @@ components:
         - "created_at"
         - "updated_at"
         - "event"
+    CreateManyTicketDto:
+      type:
+        - "array"
+      items:
+        type:
+          - "object"
+        properties:
+          eventId:
+            type:
+              - "string"
+            format: "uuid"
+          type:
+            type:
+              - "string"
+            enum:
+              - "PARTICIPANT"
+              - "STAFF"
+              - "SPECTATOR"
+          status:
+            type:
+              - "string"
+            enum:
+              - "BOOKED"
+              - "PAID"
+              - "FREE"
+          fullName:
+            type:
+              - "string"
+            minLength: 1
+          mail:
+            type:
+              - "string"
+            format: "email"
+          profileId:
+            type:
+              - "string"
+            format: "uuid"
+        required:
+          - "eventId"
+          - "type"
+          - "status"
+          - "fullName"
+          - "mail"
+    CreateManyTicketWithPdfsResponseDto:
+      type:
+        - "object"
+      properties:
+        tickets:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              eventId:
+                type:
+                  - "string"
+                format: "uuid"
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PARTICIPANT"
+                  - "STAFF"
+                  - "SPECTATOR"
+              status:
+                type:
+                  - "string"
+                enum:
+                  - "BOOKED"
+                  - "PAID"
+                  - "FREE"
+              fullName:
+                type:
+                  - "string"
+                minLength: 1
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              event:
+                type:
+                  - "object"
+                properties:
+                  id:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  name:
+                    type:
+                      - "string"
+                    minLength: 1
+                  date:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  startingDate:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  endingDate:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  location:
+                    type:
+                      - "string"
+                    minLength: 1
+                  folderId:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uuid"
+                  tagAssistedId:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  tagConfirmedId:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  active:
+                    type:
+                      - "boolean"
+                  supraEventId:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uuid"
+                  created_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  updated_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "name"
+                  - "date"
+                  - "startingDate"
+                  - "endingDate"
+                  - "location"
+                  - "folderId"
+                  - "tagAssistedId"
+                  - "tagConfirmedId"
+                  - "active"
+                  - "supraEventId"
+                  - "created_at"
+                  - "updated_at"
+            required:
+              - "id"
+              - "eventId"
+              - "type"
+              - "status"
+              - "fullName"
+              - "mail"
+              - "created_at"
+              - "updated_at"
+              - "event"
+        pdfs:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              ticketId:
+                type:
+                  - "string"
+              pdfBase64:
+                type:
+                  - "string"
+            required:
+              - "ticketId"
+              - "pdfBase64"
+      required:
+        - "tickets"
+        - "pdfs"
     FindAllTicketsResponseDto:
       type:
         - "object"
@@ -8822,6 +9058,7 @@ components:
                     - "USER"
                     - "ADMIN"
                     - "FORM"
+                    - "TICKETS"
                     - "MI_EXPO"
                 firstTimeMiExpo:
                   type:
@@ -9038,6 +9275,7 @@ components:
                       - "USER"
                       - "ADMIN"
                       - "FORM"
+                      - "TICKETS"
                       - "MI_EXPO"
                   firstTimeMiExpo:
                     type:
@@ -9254,6 +9492,7 @@ components:
                       - "USER"
                       - "ADMIN"
                       - "FORM"
+                      - "TICKETS"
                       - "MI_EXPO"
                   firstTimeMiExpo:
                     type:
@@ -9794,6 +10033,7 @@ components:
                 - "USER"
                 - "ADMIN"
                 - "FORM"
+                - "TICKETS"
                 - "MI_EXPO"
             firstTimeMiExpo:
               type:
@@ -10015,6 +10255,7 @@ components:
                 - "USER"
                 - "ADMIN"
                 - "FORM"
+                - "TICKETS"
                 - "MI_EXPO"
             firstTimeMiExpo:
               type:
@@ -10146,6 +10387,7 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
+            - "TICKETS"
             - "MI_EXPO"
         firstTimeMiExpo:
           type:
@@ -10548,6 +10790,7 @@ components:
                 - "USER"
                 - "ADMIN"
                 - "FORM"
+                - "TICKETS"
                 - "MI_EXPO"
             firstTimeMiExpo:
               type:

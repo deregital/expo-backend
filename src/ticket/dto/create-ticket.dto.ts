@@ -1,7 +1,7 @@
 import { eventSchema } from '@/event/dto/event.dto';
 import { profileSchema } from '@/schema/profile.schema';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
-import { ticketSchema } from './ticket.dto';
+import { ticketSchema } from '@/ticket/dto/ticket.dto';
 
 export const createTicketSchema = ticketSchema
   .pick({
