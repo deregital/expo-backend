@@ -91,6 +91,7 @@ export namespace $Enums {
     USER: 'USER';
     ADMIN: 'ADMIN';
     FORM: 'FORM';
+    TICKETS: 'TICKETS';
     MI_EXPO: 'MI_EXPO';
   };
 

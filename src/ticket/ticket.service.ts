@@ -48,7 +48,7 @@ export class TicketService {
     dto: CreateManyTicketDto,
   ): Promise<z.infer<typeof createManyTicketResponseSchema>> {
     const tickets = await this.prisma.ticket.createManyAndReturn({
-      data: dto,
+      data: dto.tickets,
       include: {
         event: true,
       },

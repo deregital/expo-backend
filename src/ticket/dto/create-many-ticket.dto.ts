@@ -4,18 +4,21 @@ import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dt
 import z from 'zod';
 import { ticketSchema } from './ticket.dto';
 
-export const createManyTicketSchema = ticketSchema
-  .pick({
-    eventId: true,
-    type: true,
-    status: true,
-    fullName: true,
-    mail: true,
-  })
-  .extend({
-    profileId: profileSchema.shape.id.optional(),
-  })
-  .array();
+export const createManyTicketSchema = z.object({
+  tickets: z.array(
+    ticketSchema
+      .pick({
+        eventId: true,
+        type: true,
+        status: true,
+        fullName: true,
+        mail: true,
+      })
+      .extend({
+        profileId: profileSchema.shape.id.optional(),
+      }),
+  ),
+});
 
 export class CreateManyTicketDto extends createZodDtoWithoutDate(
   createManyTicketSchema,
