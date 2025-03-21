@@ -8701,47 +8701,53 @@ components:
         - "event"
     CreateManyTicketDto:
       type:
-        - "array"
-      items:
-        type:
-          - "object"
-        properties:
-          eventId:
-            type:
-              - "string"
-            format: "uuid"
+        - "object"
+      properties:
+        tickets:
           type:
+            - "array"
+          items:
             type:
-              - "string"
-            enum:
-              - "PARTICIPANT"
-              - "STAFF"
-              - "SPECTATOR"
-          status:
-            type:
-              - "string"
-            enum:
-              - "BOOKED"
-              - "PAID"
-              - "FREE"
-          fullName:
-            type:
-              - "string"
-            minLength: 1
-          mail:
-            type:
-              - "string"
-            format: "email"
-          profileId:
-            type:
-              - "string"
-            format: "uuid"
-        required:
-          - "eventId"
-          - "type"
-          - "status"
-          - "fullName"
-          - "mail"
+              - "object"
+            properties:
+              eventId:
+                type:
+                  - "string"
+                format: "uuid"
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PARTICIPANT"
+                  - "STAFF"
+                  - "SPECTATOR"
+              status:
+                type:
+                  - "string"
+                enum:
+                  - "BOOKED"
+                  - "PAID"
+                  - "FREE"
+              fullName:
+                type:
+                  - "string"
+                minLength: 1
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              profileId:
+                type:
+                  - "string"
+                format: "uuid"
+            required:
+              - "eventId"
+              - "type"
+              - "status"
+              - "fullName"
+              - "mail"
+      required:
+        - "tickets"
     CreateManyTicketWithPdfsResponseDto:
       type:
         - "object"
