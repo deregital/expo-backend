@@ -79,7 +79,7 @@ import {
 } from '@nestjs/swagger';
 import { Response } from 'express';
 import z from 'zod';
-import { Role } from '~/types/prisma-schema';
+import { Role, TicketType } from '~/types/prisma-schema';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -130,7 +130,17 @@ export class TicketController {
       );
     }
 
-    return await this.ticketService.create(createTicketDto);
+    const seat =
+      createTicketDto.type === TicketType.SPECTATOR
+        ? (await this.ticketService.getHighestSeatForEvent(
+            createTicketDto.eventId,
+          )) + 1
+        : null;
+
+    return await this.ticketService.create({
+      ...createTicketDto,
+      seat,
+    });
   }
 
   @ApiOkResponse({
