@@ -2,6 +2,7 @@ import { translate } from '@/i18n/translate';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { encryptString, getDMSansFonts } from '@/shared/utils/utils';
+import { TicketInputs, generateTicketTemplate } from '@/ticket/constants';
 import {
   CreateTicketDto,
   createTicketResponseSchema,
@@ -18,13 +19,12 @@ import {
   updateTicketResponseSchema,
 } from '@/ticket/dto/update-ticket.dto';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { Font } from '@pdfme/common';
+import { Font, GenerateProps } from '@pdfme/common';
 import { generate } from '@pdfme/generator';
 import { barcodes, image, line, text } from '@pdfme/schemas';
 import { format } from 'date-fns/format';
 import z from 'zod';
 import { Profile } from '~/types';
-import { TICKET_TEMPLATE, TicketInputs } from './constants';
 
 @Injectable()
 export class TicketService {
@@ -150,7 +150,9 @@ export class TicketService {
     const seat = ticket.seat ? ticket.seat.toString() : '-';
 
     // Encriptar id del ticket para pasarlo de valor al barcode
-    const template = TICKET_TEMPLATE;
+    const template = generateTicketTemplate(
+      ticket.type,
+    ) as GenerateProps['template'];
 
     const inputs = [
       {

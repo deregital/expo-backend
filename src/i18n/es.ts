@@ -19,6 +19,11 @@ export default {
       assisted: 'Asistió',
       confirmed: 'Confirmó asistencia',
     },
+    ticketType: {
+      STAFF: 'Staff',
+      SPECTATOR: 'Espectador',
+      PARTICIPANT: 'Participante',
+    },
     conflict: `Ya existe un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
     'not-found': `No se encontró un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
   },
