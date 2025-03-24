@@ -255,6 +255,7 @@ export class TicketController {
     return await this.ticketService.delete(id);
   }
 
+  @Roles(Role.ADMIN, Role.USER, Role.MI_EXPO)
   @ApiOkResponse({
     description: translate('route.pdf.generate-pdf.success'),
     type: Buffer,
