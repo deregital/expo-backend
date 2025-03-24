@@ -8580,11 +8580,6 @@ components:
           type:
             - "string"
           minLength: 1
-        seat:
-          type:
-            - "number"
-            - "null"
-          minimum: 1
         profileId:
           type:
             - "string"
@@ -8596,7 +8591,6 @@ components:
         - "fullName"
         - "mail"
         - "dni"
-        - "seat"
     CreateTicketResponseDto:
       type:
         - "object"

@@ -24,14 +24,14 @@ import { generate } from '@pdfme/generator';
 import { barcodes, image, line, text } from '@pdfme/schemas';
 import { format } from 'date-fns/format';
 import z from 'zod';
-import { Profile } from '~/types';
+import { Profile, Ticket } from '~/types';
 
 @Injectable()
 export class TicketService {
   constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
   async create(
-    dto: CreateTicketDto,
+    dto: CreateTicketDto & { seat: Ticket['seat'] },
   ): Promise<z.infer<typeof createTicketResponseSchema>> {
     return await this.prisma.ticket.create({
       data: dto,

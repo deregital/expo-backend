@@ -578,6 +578,8 @@ export default {
         conflict: 'Error en la creación del ticket',
         'max-tickets-reached':
           'No se pueden emitir más tickets para este evento',
+        'profile-id-required':
+          'El ID del perfil es requerido en el ticket de participante',
       },
       'find-all': {
         success: 'Tickets obtenidos',

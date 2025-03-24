@@ -11,6 +11,7 @@ import {
 import { ErrorDto } from '@/shared/errors/errorType';
 import { decryptString } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
+import { TagService } from '@/tag/tag.service';
 import {
   CreateTicketDto,
   CreateTicketResponseDto,
@@ -89,6 +90,7 @@ export class TicketController {
     private readonly ticketService: TicketService,
     private readonly eventService: EventService,
     private readonly mailService: MailService,
+    private readonly tagService: TagService,
   ) {}
 
   @Roles(Role.ADMIN, Role.MI_EXPO)
@@ -136,6 +138,19 @@ export class TicketController {
             createTicketDto.eventId,
           )) + 1
         : null;
+
+    if (createTicketDto.type === TicketType.PARTICIPANT) {
+      if (!createTicketDto.profileId) {
+        // No debería pasar nunca, pero por si acaso
+        throw new ConflictException([
+          translate('route.ticket.create.profile-id-required'),
+        ]);
+      }
+      this.tagService.massiveAllocation({
+        profileIds: [createTicketDto.profileId],
+        tagIds: [event.tagConfirmedId],
+      });
+    }
 
     return await this.ticketService.create({
       ...createTicketDto,
