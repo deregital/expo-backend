@@ -14,4 +14,5 @@ export * from './schema/exports';
 export * from './shared/dto-modification/zod-without-dates';
 export * from './tag-group/exports';
 export * from './tag/exports';
+export * from './ticket-group/exports';
 export * from './ticket/exports';
