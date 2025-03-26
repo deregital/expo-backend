@@ -1,10 +1,11 @@
+import { AccountService } from '@/account/account.service';
+import { TicketGroupController } from '@/ticket-group/ticket-group.controller';
+import { TicketGroupService } from '@/ticket-group/ticket-group.service';
 import { Module } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { TicketGroupController } from './ticket-group.controller';
-import { TicketGroupService } from './ticket-group.service';
 
 @Module({
   controllers: [TicketGroupController],
-  providers: [TicketGroupService, JwtService],
+  providers: [TicketGroupService, JwtService, AccountService],
 })
 export class TicketGroupModule {}
