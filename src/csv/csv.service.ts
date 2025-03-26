@@ -26,6 +26,7 @@ const modelNameToTable: Record<TableNames, Uncapitalize<TableNames>> = {
   Ticket: 'ticket',
   EventTicket: 'eventTicket',
   Otp: 'otp',
+  TicketGroup: 'ticketGroup',
 } as const;
 
 @Injectable()

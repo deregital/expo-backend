@@ -10,7 +10,6 @@ export const createManyTicketSchema = z.object({
       .pick({
         eventId: true,
         type: true,
-        status: true,
         fullName: true,
         mail: true,
       })

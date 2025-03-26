@@ -14,6 +14,7 @@ export default {
       otp: 'OTP',
       ticket: 'Ticket',
       eventTicket: 'Tickets del evento',
+      ticketGroup: 'Grupo de tickets',
     },
     tag: {
       assisted: 'Asistió',
@@ -211,6 +212,15 @@ export default {
       },
       status: {
         invalid: 'El estado del ticket es inválido',
+      },
+    },
+    ticketGroup: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      amountTickets: 'La cantidad de tickets debe ser mayor a 0',
+      status: {
+        invalid: 'El estado del grupo de tickets es inválido',
       },
     },
     eventTicket: {
@@ -592,6 +602,25 @@ export default {
       delete: {
         success: 'Ticket eliminado',
         'not-found': 'Ticket no encontrado',
+      },
+    },
+    'ticket-group': {
+      create: {
+        success: 'Grupo de tickets creado',
+        'event-not-found': 'Evento no encontrado',
+        conflict: 'Error en la creación del grupo de tickets',
+      },
+      'find-tickets-by-event': {
+        success: 'Tickets por evento obtenidos',
+        'not-found': 'Tickets por evento no encontrados',
+      },
+      update: {
+        success: 'Grupo de tickets actualizado',
+        'not-found': 'Grupo de tickets no encontrado',
+      },
+      delete: {
+        success: 'Grupo de tickets eliminado',
+        'not-found': 'Grupo de tickets no encontrado',
       },
     },
     webhook: {

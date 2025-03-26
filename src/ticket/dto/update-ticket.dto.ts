@@ -4,7 +4,6 @@ import { ticketSchema } from './ticket.dto';
 export const updateTicketSchema = ticketSchema
   .pick({
     type: true,
-    status: true,
     fullName: true,
     mail: true,
   })

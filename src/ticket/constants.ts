@@ -78,14 +78,6 @@ export const TICKET_TEMPLATE: Template = {
         fontSize: 10,
       },
       {
-        name: 'ticket_status',
-        type: 'text',
-        position: { x: 100, y: 180 },
-        width: 180,
-        height: 10,
-        fontSize: 10,
-      },
-      {
         name: 'ticket_id',
         type: 'text',
         position: { x: 100, y: 195 },
@@ -209,17 +201,6 @@ export const TICKET_TEMPLATE: Template = {
         fontSize: 10,
         fontWeight: 'bold',
         value: 'Tipo:',
-      },
-      {
-        name: 'status_label',
-        type: 'text',
-        position: { x: 30, y: 180 },
-        content: 'Estado:',
-        width: 60,
-        height: 10,
-        fontSize: 10,
-        fontWeight: 'bold',
-        value: 'Estado:',
       },
       // Pie de página
       {
