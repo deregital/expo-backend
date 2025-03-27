@@ -19,6 +19,11 @@ export default {
       assisted: 'Asistió',
       confirmed: 'Confirmó asistencia',
     },
+    ticketType: {
+      STAFF: 'Staff',
+      SPECTATOR: 'Espectador',
+      PARTICIPANT: 'Participante',
+    },
     conflict: `Ya existe un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
     'not-found': `No se encontró un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
   },
@@ -211,6 +216,12 @@ export default {
       },
       status: {
         invalid: 'El estado del ticket es inválido',
+      },
+      seat: {
+        required: 'El asiento es requerido',
+      },
+      dni: {
+        required: 'El DNI es requerido',
       },
     },
     eventTicket: {
@@ -417,6 +428,10 @@ export default {
       'generate-pdf': {
         success: 'Ticket generado con éxito',
         'not-found': 'Ticket no encontrado',
+        pdf: {
+          footer:
+            'Para cualquier duda, reclamo o consulta llamar al 11-6056-7270 o comunicarse vía mail a ariellask@gmail.com.\nMás información en expodesfiles.com',
+        },
       },
       'find-ticket': {
         success: 'Ticket encontrado con éxito',
@@ -563,6 +578,8 @@ export default {
         conflict: 'Error en la creación del ticket',
         'max-tickets-reached':
           'No se pueden emitir más tickets para este evento',
+        'profile-id-required':
+          'El ID del perfil es requerido en el ticket de participante',
       },
       'find-all': {
         success: 'Tickets obtenidos',
@@ -587,6 +604,16 @@ export default {
       delete: {
         success: 'Ticket eliminado',
         'not-found': 'Ticket no encontrado',
+      },
+      'send-email': {
+        success: 'Email enviado',
+        'not-found': 'Ticket no encontrado',
+        error: 'Error al enviar el email',
+        unauthorized: 'No estás autorizado para enviar email para este ticket',
+        mail: {
+          subject: `Llegó tu ExpoTicket para el evento \{\{eventName\}\}!`,
+          text: `Te esperamos el \{\{eventDate\}\} a las \{\{eventTime\}\} en \{\{eventLocation\}\}. ¡No te lo pierdas!`,
+        },
       },
     },
     webhook: {

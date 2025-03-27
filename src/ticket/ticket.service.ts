@@ -1,7 +1,8 @@
 import { translate } from '@/i18n/translate';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
-import { encryptString } from '@/shared/utils/utils';
+import { encryptString, getDMSansFonts } from '@/shared/utils/utils';
+import { TicketInputs, generateTicketTemplate } from '@/ticket/constants';
 import {
   CreateTicketDto,
   createTicketResponseSchema,
@@ -18,18 +19,19 @@ import {
   updateTicketResponseSchema,
 } from '@/ticket/dto/update-ticket.dto';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Font, GenerateProps } from '@pdfme/common';
 import { generate } from '@pdfme/generator';
-import { barcodes, line, text } from '@pdfme/schemas';
+import { barcodes, image, line, text } from '@pdfme/schemas';
+import { format } from 'date-fns/format';
 import z from 'zod';
-import { Profile } from '~/types';
-import { TICKET_INPUTS, TICKET_TEMPLATE } from './constants';
+import { Profile, Ticket } from '~/types';
 
 @Injectable()
 export class TicketService {
   constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
   async create(
-    dto: CreateTicketDto,
+    dto: CreateTicketDto & { seat: Ticket['seat'] },
   ): Promise<z.infer<typeof createTicketResponseSchema>> {
     return await this.prisma.ticket.create({
       data: dto,
@@ -142,32 +144,58 @@ export class TicketService {
       minute: '2-digit',
     });
 
+    const normalizedDni = Number.isNaN(Number(ticket.dni))
+      ? ticket.dni
+      : Number(ticket.dni).toLocaleString('es-ES');
+    const seat = ticket.seat ? ticket.seat.toString() : '-';
+
     // Encriptar id del ticket para pasarlo de valor al barcode
-    const template = TICKET_TEMPLATE;
+    const template = generateTicketTemplate(
+      ticket.type,
+    ) as GenerateProps['template'];
 
     const inputs = [
       {
-        event_name: ticket.event.name,
-        event_date: formattedDate,
-        event_time: formattedTime,
-        event_location: ticket.event.location,
-        mail_ticket: ticket.mail,
-        fullName_ticket: ticket.fullName,
-        ticket_type: ticket.type,
-        ticket_status: ticket.status,
-        ticket_id: ticket.id,
-        ...TICKET_INPUTS,
-        ticket_barcode: encryptString(ticket.id),
-      },
+        eventName: ticket.event.name,
+        eventDate: `${formattedDate} - ${formattedTime}`,
+        eventLocation: ticket.event.location,
+        fullName: ticket.fullName,
+        dni: normalizedDni,
+        seat,
+        barcode: encryptString(ticket.id),
+        footer: translate('route.pdf.generate-pdf.pdf.footer'),
+        emissionDate: format(ticket.created_at, 'dd/MM/yyyy HH:mm'),
+      } satisfies TicketInputs,
     ];
 
     const plugins = {
       text,
       line,
+      image,
       barcodes: barcodes.code128,
     };
 
-    const pdf = await generate({ template, inputs, plugins });
+    const { fontBold, fontSemiBold, fontLight } = await getDMSansFonts();
+
+    const font: Font = {
+      'DMSans-Bold': {
+        data: fontBold, // Provide the buffer instead of a string path
+      },
+      'DMSans-SemiBold': {
+        data: fontSemiBold, // Provide the buffer instead of a string path
+        fallback: true,
+      },
+      'DMSans-Light': {
+        data: fontLight, // Provide the buffer instead of a string path
+      },
+    };
+
+    const pdf = await generate({
+      template,
+      inputs,
+      plugins,
+      options: { font },
+    });
     const blob = new Blob([pdf.buffer], {
       type: 'application/pdf',
     });
@@ -186,5 +214,15 @@ export class TicketService {
       throw new NotFoundException(translate('route.pdf.find-ticket.not-found'));
     }
     return ticket;
+  }
+
+  async getHighestSeatForEvent(eventId: string): Promise<number> {
+    const highest = await this.prisma.ticket.findFirst({
+      where: { eventId, seat: { not: null }, type: 'SPECTATOR' },
+      select: { seat: true },
+      orderBy: { seat: 'desc' },
+    });
+
+    return highest?.seat || 0;
   }
 }

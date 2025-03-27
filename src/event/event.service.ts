@@ -279,7 +279,7 @@ export class EventService {
       where: {
         active: true,
         endingDate: {
-          lt: new Date(),
+          gt: new Date(),
         },
       },
       include: {

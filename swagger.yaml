@@ -1634,6 +1634,34 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /ticket/send-email/{id}:
+    post:
+      operationId: "TicketController_sendEmail"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Email enviado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendEmailResponseDto"
+        401:
+          description: "No estás autorizado para enviar email para este ticket"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        404:
+          description: "Ticket no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /webhook:
     get:
       operationId: "WebhookController_verify"
@@ -1876,6 +1904,7 @@ components:
                 - "ADMIN"
                 - "FORM"
                 - "MI_EXPO"
+                - "TICKETS"
             isGlobalFilterActive:
               default: false
               type:
@@ -2386,6 +2415,7 @@ components:
                   - "ADMIN"
                   - "FORM"
                   - "MI_EXPO"
+                  - "TICKETS"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -2549,6 +2579,7 @@ components:
                   - "ADMIN"
                   - "FORM"
                   - "MI_EXPO"
+                  - "TICKETS"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -2683,6 +2714,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
       required:
         - "username"
         - "password"
@@ -2706,6 +2738,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         isGlobalFilterActive:
           default: false
           type:
@@ -2761,6 +2794,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         isGlobalFilterActive:
           default: false
           type:
@@ -2907,6 +2941,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         isGlobalFilterActive:
           default: false
           type:
@@ -5628,6 +5663,15 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              seat:
+                type:
+                  - "number"
+                  - "null"
+                minimum: 1
               created_at:
                 type:
                   - "string"
@@ -5643,6 +5687,8 @@ components:
               - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "seat"
               - "created_at"
               - "updated_at"
       required:
@@ -6060,6 +6106,7 @@ components:
                   - "ADMIN"
                   - "FORM"
                   - "MI_EXPO"
+                  - "TICKETS"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -6261,6 +6308,7 @@ components:
                   - "ADMIN"
                   - "FORM"
                   - "MI_EXPO"
+                  - "TICKETS"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -6539,6 +6587,7 @@ components:
                   - "ADMIN"
                   - "FORM"
                   - "MI_EXPO"
+                  - "TICKETS"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -6745,6 +6794,7 @@ components:
                   - "ADMIN"
                   - "FORM"
                   - "MI_EXPO"
+                  - "TICKETS"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -6929,6 +6979,7 @@ components:
                 - "ADMIN"
                 - "FORM"
                 - "MI_EXPO"
+                - "TICKETS"
             firstTimeMiExpo:
               type:
                 - "boolean"
@@ -7116,6 +7167,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -7532,6 +7584,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -7816,6 +7869,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -8522,6 +8576,10 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
         profileId:
           type:
             - "string"
@@ -8532,6 +8590,7 @@ components:
         - "status"
         - "fullName"
         - "mail"
+        - "dni"
     CreateTicketResponseDto:
       type:
         - "object"
@@ -8566,6 +8625,15 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        seat:
+          type:
+            - "number"
+            - "null"
+          minimum: 1
         created_at:
           type:
             - "string"
@@ -8652,6 +8720,8 @@ components:
         - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "seat"
         - "created_at"
         - "updated_at"
         - "event"
@@ -8696,6 +8766,15 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              seat:
+                type:
+                  - "number"
+                  - "null"
+                minimum: 1
               created_at:
                 type:
                   - "string"
@@ -8731,6 +8810,8 @@ components:
               - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "seat"
               - "created_at"
               - "updated_at"
               - "event"
@@ -8774,6 +8855,15 @@ components:
               type:
                 - "string"
               format: "email"
+            dni:
+              type:
+                - "string"
+              minLength: 1
+            seat:
+              type:
+                - "number"
+                - "null"
+              minimum: 1
             created_at:
               type:
                 - "string"
@@ -8823,6 +8913,7 @@ components:
                     - "ADMIN"
                     - "FORM"
                     - "MI_EXPO"
+                    - "TICKETS"
                 firstTimeMiExpo:
                   type:
                     - "boolean"
@@ -8943,6 +9034,8 @@ components:
             - "status"
             - "fullName"
             - "mail"
+            - "dni"
+            - "seat"
             - "created_at"
             - "updated_at"
             - "event"
@@ -8990,6 +9083,15 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              seat:
+                type:
+                  - "number"
+                  - "null"
+                minimum: 1
               created_at:
                 type:
                   - "string"
@@ -9039,6 +9141,7 @@ components:
                       - "ADMIN"
                       - "FORM"
                       - "MI_EXPO"
+                      - "TICKETS"
                   firstTimeMiExpo:
                     type:
                       - "boolean"
@@ -9159,6 +9262,8 @@ components:
               - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "seat"
               - "created_at"
               - "updated_at"
               - "event"
@@ -9206,6 +9311,15 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              seat:
+                type:
+                  - "number"
+                  - "null"
+                minimum: 1
               created_at:
                 type:
                   - "string"
@@ -9255,6 +9369,7 @@ components:
                       - "ADMIN"
                       - "FORM"
                       - "MI_EXPO"
+                      - "TICKETS"
                   firstTimeMiExpo:
                     type:
                       - "boolean"
@@ -9375,6 +9490,8 @@ components:
               - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "seat"
               - "created_at"
               - "updated_at"
               - "event"
@@ -9422,6 +9539,15 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              seat:
+                type:
+                  - "number"
+                  - "null"
+                minimum: 1
               created_at:
                 type:
                   - "string"
@@ -9508,6 +9634,8 @@ components:
               - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "seat"
               - "created_at"
               - "updated_at"
               - "event"
@@ -9573,6 +9701,15 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        seat:
+          type:
+            - "number"
+            - "null"
+          minimum: 1
         created_at:
           type:
             - "string"
@@ -9588,6 +9725,8 @@ components:
         - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "seat"
         - "created_at"
         - "updated_at"
     DeleteTicketResponseDto:
@@ -9624,6 +9763,15 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        seat:
+          type:
+            - "number"
+            - "null"
+          minimum: 1
         created_at:
           type:
             - "string"
@@ -9639,6 +9787,8 @@ components:
         - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "seat"
         - "created_at"
         - "updated_at"
     FindTicketResponseDto:
@@ -9675,6 +9825,15 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        seat:
+          type:
+            - "number"
+            - "null"
+          minimum: 1
         created_at:
           type:
             - "string"
@@ -9690,8 +9849,19 @@ components:
         - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "seat"
         - "created_at"
         - "updated_at"
+    SendEmailResponseDto:
+      type:
+        - "object"
+      properties:
+        mailId:
+          type:
+            - "string"
+      required:
+        - "mailId"
     SendOtpDto:
       type:
         - "object"
@@ -9795,6 +9965,7 @@ components:
                 - "ADMIN"
                 - "FORM"
                 - "MI_EXPO"
+                - "TICKETS"
             firstTimeMiExpo:
               type:
                 - "boolean"
@@ -10016,6 +10187,7 @@ components:
                 - "ADMIN"
                 - "FORM"
                 - "MI_EXPO"
+                - "TICKETS"
             firstTimeMiExpo:
               type:
                 - "boolean"
@@ -10147,6 +10319,7 @@ components:
             - "ADMIN"
             - "FORM"
             - "MI_EXPO"
+            - "TICKETS"
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -10549,6 +10722,7 @@ components:
                 - "ADMIN"
                 - "FORM"
                 - "MI_EXPO"
+                - "TICKETS"
             firstTimeMiExpo:
               type:
                 - "boolean"
