@@ -4,14 +4,14 @@ import {
   CreateTicketGroupDto,
   createTicketGroupResponseSchema,
 } from '@/ticket-group/dto/create-ticket-group.dto';
-import { Inject, Injectable } from '@nestjs/common';
-import z from 'zod';
-import { deleteTicketGroupResponseSchema } from './dto/delete-ticket-group.dto';
-import { findTicketsByEventResponseSchema } from './dto/find-tickets-by-event.dto';
+import { deleteTicketGroupResponseSchema } from '@/ticket-group/dto/delete-ticket-group.dto';
+import { findTicketsByEventResponseSchema } from '@/ticket-group/dto/find-tickets-by-event.dto';
 import {
   UpdateTicketGroupDto,
   updateTicketGroupResponseSchema,
-} from './dto/update-ticket-group.dto';
+} from '@/ticket-group/dto/update-ticket-group.dto';
+import { Inject, Injectable } from '@nestjs/common';
+import z from 'zod';
 
 @Injectable()
 export class TicketGroupService {
