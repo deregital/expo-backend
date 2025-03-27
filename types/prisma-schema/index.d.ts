@@ -18972,7 +18972,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     profileId: string | null;
-    ticketGroupId: string | null;
+    ticketGroupId: string;
     created_at: Date;
     updated_at: Date;
     _count: TicketCountAggregateOutputType | null;
@@ -19008,7 +19008,7 @@ export namespace Prisma {
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
       profile?: boolean | Ticket$profileArgs<ExtArgs>;
-      ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
+      ticketGroup?: boolean | TicketGroupDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['ticket']
   >;
@@ -19028,7 +19028,7 @@ export namespace Prisma {
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
       profile?: boolean | Ticket$profileArgs<ExtArgs>;
-      ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
+      ticketGroup?: boolean | TicketGroupDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['ticket']
   >;
@@ -19048,7 +19048,7 @@ export namespace Prisma {
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
       profile?: boolean | Ticket$profileArgs<ExtArgs>;
-      ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
+      ticketGroup?: boolean | TicketGroupDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['ticket']
   >;
@@ -19084,21 +19084,21 @@ export namespace Prisma {
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
     profile?: boolean | Ticket$profileArgs<ExtArgs>;
-    ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
+    ticketGroup?: boolean | TicketGroupDefaultArgs<ExtArgs>;
   };
   export type TicketIncludeCreateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
     profile?: boolean | Ticket$profileArgs<ExtArgs>;
-    ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
+    ticketGroup?: boolean | TicketGroupDefaultArgs<ExtArgs>;
   };
   export type TicketIncludeUpdateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
     profile?: boolean | Ticket$profileArgs<ExtArgs>;
-    ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
+    ticketGroup?: boolean | TicketGroupDefaultArgs<ExtArgs>;
   };
 
   export type $TicketPayload<
@@ -19108,7 +19108,7 @@ export namespace Prisma {
     objects: {
       event: Prisma.$EventPayload<ExtArgs>;
       profile: Prisma.$ProfilePayload<ExtArgs> | null;
-      ticketGroup: Prisma.$TicketGroupPayload<ExtArgs> | null;
+      ticketGroup: Prisma.$TicketGroupPayload<ExtArgs>;
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -19118,7 +19118,7 @@ export namespace Prisma {
         fullName: string;
         mail: string;
         profileId: string | null;
-        ticketGroupId: string | null;
+        ticketGroupId: string;
         created_at: Date;
         updated_at: Date;
       },
@@ -19694,16 +19694,17 @@ export namespace Prisma {
       ExtArgs,
       ClientOptions
     >;
-    ticketGroup<T extends Ticket$ticketGroupArgs<ExtArgs> = {}>(
-      args?: Subset<T, Ticket$ticketGroupArgs<ExtArgs>>,
+    ticketGroup<T extends TicketGroupDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, TicketGroupDefaultArgs<ExtArgs>>,
     ): Prisma__TicketGroupClient<
-      $Result.GetResult<
-        Prisma.$TicketGroupPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        ClientOptions
-      > | null,
-      null,
+      | $Result.GetResult<
+          Prisma.$TicketGroupPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          ClientOptions
+        >
+      | Null,
+      Null,
       ExtArgs,
       ClientOptions
     >;
@@ -20197,27 +20198,6 @@ export namespace Prisma {
      */
     include?: ProfileInclude<ExtArgs> | null;
     where?: ProfileWhereInput;
-  };
-
-  /**
-   * Ticket.ticketGroup
-   */
-  export type Ticket$ticketGroupArgs<
-    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-  > = {
-    /**
-     * Select specific fields to fetch from the TicketGroup
-     */
-    select?: TicketGroupSelect<ExtArgs> | null;
-    /**
-     * Omit specific fields from the TicketGroup
-     */
-    omit?: TicketGroupOmit<ExtArgs> | null;
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TicketGroupInclude<ExtArgs> | null;
-    where?: TicketGroupWhereInput;
   };
 
   /**
@@ -25723,7 +25703,7 @@ export namespace Prisma {
     fullName?: StringFilter<'Ticket'> | string;
     mail?: StringFilter<'Ticket'> | string;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
-    ticketGroupId?: StringNullableFilter<'Ticket'> | string | null;
+    ticketGroupId?: StringFilter<'Ticket'> | string;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeFilter<'Ticket'> | Date | string;
     event?: XOR<EventScalarRelationFilter, EventWhereInput>;
@@ -25731,10 +25711,7 @@ export namespace Prisma {
       ProfileNullableScalarRelationFilter,
       ProfileWhereInput
     > | null;
-    ticketGroup?: XOR<
-      TicketGroupNullableScalarRelationFilter,
-      TicketGroupWhereInput
-    > | null;
+    ticketGroup?: XOR<TicketGroupScalarRelationFilter, TicketGroupWhereInput>;
   };
 
   export type TicketOrderByWithRelationInput = {
@@ -25744,7 +25721,7 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     profileId?: SortOrderInput | SortOrder;
-    ticketGroupId?: SortOrderInput | SortOrder;
+    ticketGroupId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     event?: EventOrderByWithRelationInput;
@@ -25763,7 +25740,7 @@ export namespace Prisma {
       fullName?: StringFilter<'Ticket'> | string;
       mail?: StringFilter<'Ticket'> | string;
       profileId?: StringNullableFilter<'Ticket'> | string | null;
-      ticketGroupId?: StringNullableFilter<'Ticket'> | string | null;
+      ticketGroupId?: StringFilter<'Ticket'> | string;
       created_at?: DateTimeFilter<'Ticket'> | Date | string;
       updated_at?: DateTimeFilter<'Ticket'> | Date | string;
       event?: XOR<EventScalarRelationFilter, EventWhereInput>;
@@ -25771,10 +25748,7 @@ export namespace Prisma {
         ProfileNullableScalarRelationFilter,
         ProfileWhereInput
       > | null;
-      ticketGroup?: XOR<
-        TicketGroupNullableScalarRelationFilter,
-        TicketGroupWhereInput
-      > | null;
+      ticketGroup?: XOR<TicketGroupScalarRelationFilter, TicketGroupWhereInput>;
     },
     'id'
   >;
@@ -25786,7 +25760,7 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     profileId?: SortOrderInput | SortOrder;
-    ticketGroupId?: SortOrderInput | SortOrder;
+    ticketGroupId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     _count?: TicketCountOrderByAggregateInput;
@@ -25808,10 +25782,7 @@ export namespace Prisma {
     fullName?: StringWithAggregatesFilter<'Ticket'> | string;
     mail?: StringWithAggregatesFilter<'Ticket'> | string;
     profileId?: StringNullableWithAggregatesFilter<'Ticket'> | string | null;
-    ticketGroupId?:
-      | StringNullableWithAggregatesFilter<'Ticket'>
-      | string
-      | null;
+    ticketGroupId?: StringWithAggregatesFilter<'Ticket'> | string;
     created_at?: DateTimeWithAggregatesFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Ticket'> | Date | string;
   };
@@ -27117,7 +27088,7 @@ export namespace Prisma {
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
     profile?: ProfileCreateNestedOneWithoutTicketInput;
-    ticketGroup?: TicketGroupCreateNestedOneWithoutTicketsInput;
+    ticketGroup: TicketGroupCreateNestedOneWithoutTicketsInput;
   };
 
   export type TicketUncheckedCreateInput = {
@@ -27127,7 +27098,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     profileId?: string | null;
-    ticketGroupId?: string | null;
+    ticketGroupId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -27141,7 +27112,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
     profile?: ProfileUpdateOneWithoutTicketNestedInput;
-    ticketGroup?: TicketGroupUpdateOneWithoutTicketsNestedInput;
+    ticketGroup?: TicketGroupUpdateOneRequiredWithoutTicketsNestedInput;
   };
 
   export type TicketUncheckedUpdateInput = {
@@ -27151,7 +27122,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
-    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
+    ticketGroupId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -27163,7 +27134,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     profileId?: string | null;
-    ticketGroupId?: string | null;
+    ticketGroupId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -27184,7 +27155,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
-    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
+    ticketGroupId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -28293,9 +28264,9 @@ export namespace Prisma {
     isNot?: ProfileWhereInput | null;
   };
 
-  export type TicketGroupNullableScalarRelationFilter = {
-    is?: TicketGroupWhereInput | null;
-    isNot?: TicketGroupWhereInput | null;
+  export type TicketGroupScalarRelationFilter = {
+    is?: TicketGroupWhereInput;
+    isNot?: TicketGroupWhereInput;
   };
 
   export type TicketCountOrderByAggregateInput = {
@@ -30970,15 +30941,13 @@ export namespace Prisma {
     >;
   };
 
-  export type TicketGroupUpdateOneWithoutTicketsNestedInput = {
+  export type TicketGroupUpdateOneRequiredWithoutTicketsNestedInput = {
     create?: XOR<
       TicketGroupCreateWithoutTicketsInput,
       TicketGroupUncheckedCreateWithoutTicketsInput
     >;
     connectOrCreate?: TicketGroupCreateOrConnectWithoutTicketsInput;
     upsert?: TicketGroupUpsertWithoutTicketsInput;
-    disconnect?: TicketGroupWhereInput | boolean;
-    delete?: TicketGroupWhereInput | boolean;
     connect?: TicketGroupWhereUniqueInput;
     update?: XOR<
       XOR<
@@ -32109,7 +32078,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
-    ticketGroup?: TicketGroupCreateNestedOneWithoutTicketsInput;
+    ticketGroup: TicketGroupCreateNestedOneWithoutTicketsInput;
   };
 
   export type TicketUncheckedCreateWithoutProfileInput = {
@@ -32118,7 +32087,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    ticketGroupId?: string | null;
+    ticketGroupId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -32396,7 +32365,7 @@ export namespace Prisma {
     fullName?: StringFilter<'Ticket'> | string;
     mail?: StringFilter<'Ticket'> | string;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
-    ticketGroupId?: StringNullableFilter<'Ticket'> | string | null;
+    ticketGroupId?: StringFilter<'Ticket'> | string;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeFilter<'Ticket'> | Date | string;
   };
@@ -34008,7 +33977,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     profile?: ProfileCreateNestedOneWithoutTicketInput;
-    ticketGroup?: TicketGroupCreateNestedOneWithoutTicketsInput;
+    ticketGroup: TicketGroupCreateNestedOneWithoutTicketsInput;
   };
 
   export type TicketUncheckedCreateWithoutEventInput = {
@@ -34017,7 +33986,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     profileId?: string | null;
-    ticketGroupId?: string | null;
+    ticketGroupId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -35673,7 +35642,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    ticketGroupId?: string | null;
+    ticketGroupId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -35822,7 +35791,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
-    ticketGroup?: TicketGroupUpdateOneWithoutTicketsNestedInput;
+    ticketGroup?: TicketGroupUpdateOneRequiredWithoutTicketsNestedInput;
   };
 
   export type TicketUncheckedUpdateWithoutProfileInput = {
@@ -35831,7 +35800,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
-    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
+    ticketGroupId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -35842,7 +35811,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
-    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
+    ticketGroupId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -36486,7 +36455,7 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     profileId?: string | null;
-    ticketGroupId?: string | null;
+    ticketGroupId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -36531,7 +36500,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     profile?: ProfileUpdateOneWithoutTicketNestedInput;
-    ticketGroup?: TicketGroupUpdateOneWithoutTicketsNestedInput;
+    ticketGroup?: TicketGroupUpdateOneRequiredWithoutTicketsNestedInput;
   };
 
   export type TicketUncheckedUpdateWithoutEventInput = {
@@ -36540,7 +36509,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
-    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
+    ticketGroupId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -36551,7 +36520,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
-    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
+    ticketGroupId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
