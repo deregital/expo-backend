@@ -1,6 +1,7 @@
 import { eventFolderSchema } from '@/event-folder/dto/event-folder.dto';
 import { translate } from '@/i18n/translate';
 import { tagSchema } from '@/tag/dto/tag.dto';
+import { ticketGroupSchema } from '@/ticket-group/dto/ticket-group.dto';
 import { z } from 'zod';
 
 export const eventSchema = z.object({
@@ -25,6 +26,8 @@ export const eventSchema = z.object({
   tagConfirmedId: tagSchema.shape.id,
 
   active: z.boolean(),
+
+  ticketGroupId: ticketGroupSchema.shape.id,
 
   supraEventId: z
     .string()
