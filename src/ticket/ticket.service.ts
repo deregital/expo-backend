@@ -28,6 +28,10 @@ import {
   createManyTicketResponseSchema,
   generateMultiplePdfTicketsSchema,
 } from './dto/create-many-ticket.dto';
+import {
+  FindByEventAndTypeTicketDto,
+  findByEventAndTypeTicketResponseSchema,
+} from './dto/find-by-event-type-ticket.dto';
 
 @Injectable()
 export class TicketService {
@@ -98,6 +102,17 @@ export class TicketService {
     });
 
     return { tickets: ticketsByEvent };
+  }
+
+  async findByEventAndType(
+    dto: FindByEventAndTypeTicketDto,
+  ): Promise<z.infer<typeof findByEventAndTypeTicketResponseSchema>> {
+    const ticketsByEventAndType = await this.prisma.ticket.findMany({
+      where: { eventId: dto.eventId, type: dto.type },
+      include: { event: true, profile: true },
+    });
+
+    return { tickets: ticketsByEventAndType.length };
   }
 
   async findByProfileId(

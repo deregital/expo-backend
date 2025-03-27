@@ -110,13 +110,15 @@ export class TicketController {
       (et) => et.type === createTicketDto.type,
     )?.amount;
 
-    const ticketsEmitted = event.tickets.filter(
-      (t) => t.type === createTicketDto.type,
-    ).length;
+    const ticketsEmitted = await this.ticketService.findByEventAndType({
+      eventId: createTicketDto.eventId,
+      type: createTicketDto.type,
+    });
+
     const hasMaxTickets =
       maxTicketsToEmit !== null && maxTicketsToEmit !== undefined;
 
-    if (hasMaxTickets && ticketsEmitted >= maxTicketsToEmit) {
+    if (hasMaxTickets && ticketsEmitted.tickets >= maxTicketsToEmit) {
       throw new ConflictException(
         translate('route.ticket.create.max-tickets-reached'),
       );
@@ -143,7 +145,40 @@ export class TicketController {
     @Body() createManyTicketDto: CreateManyTicketDto,
     @Res() res: Response,
   ): Promise<void> {
-    // Primero, crear los tickets
+    const event = createManyTicketDto.tickets[0]?.eventId;
+    const type = createManyTicketDto.tickets[0]?.type;
+    if (!event) {
+      throw new NotFoundException(
+        translate('route.ticket.create-many.event-not-found'),
+      );
+    }
+    if (!type) {
+      throw new NotFoundException(
+        translate('route.ticket.create-many.type-not-found'),
+      );
+    }
+    const eventTickets = (await this.eventService.findById(event)).eventTickets;
+    const maxTicketsToEmit = eventTickets.find(
+      (et) => et.type === type,
+    )?.amount;
+    if (!maxTicketsToEmit) {
+      throw new NotFoundException(
+        translate('route.ticket.create-many.max-tickets-not-found'),
+      );
+    }
+    const ticketsEmitted = await this.ticketService.findByEventAndType({
+      eventId: event,
+      type,
+    });
+    if (
+      ticketsEmitted.tickets + createManyTicketDto.tickets.length >
+      maxTicketsToEmit
+    ) {
+      throw new ConflictException(
+        translate('route.ticket.create-many.max-tickets-reached'),
+      );
+    }
+    // Primero, crear los ticket
     const tickets = await this.ticketService.createMany(createManyTicketDto);
 
     // Extraer los IDs de los tickets creados

@@ -1,8 +1,10 @@
 import {
   Body,
+  ConflictException,
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -11,6 +13,7 @@ import {
 import { Roles } from '@/auth/decorators/rol.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
+import { EventService } from '@/event/event.service';
 import { translate } from '@/i18n/translate';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
@@ -23,7 +26,10 @@ import {
   DeleteTicketGroupResponseDto,
   deleteTicketGroupResponseSchema,
 } from '@/ticket-group/dto/delete-ticket-group.dto';
-import { findTicketsByEventResponseSchema } from '@/ticket-group/dto/find-tickets-by-event.dto';
+import {
+  FindTicketsByEventDto,
+  findTicketsByEventResponseSchema,
+} from '@/ticket-group/dto/find-tickets-by-event.dto';
 import {
   UpdateTicketGroupDto,
   UpdateTicketGroupResponseDto,
@@ -43,7 +49,10 @@ import { Role } from '~/types/prisma-schema';
 @UseGuards(JwtGuard, RoleGuard)
 @Controller('ticket-group')
 export class TicketGroupController {
-  constructor(private readonly ticketGroupService: TicketGroupService) {}
+  constructor(
+    private readonly ticketGroupService: TicketGroupService,
+    private readonly eventService: EventService,
+  ) {}
 
   @ApiOkResponse({
     description: translate('route.ticket-group.create.success'),
@@ -61,11 +70,39 @@ export class TicketGroupController {
   async create(
     @Body() createTicketGroupDto: CreateTicketGroupDto,
   ): Promise<z.infer<typeof createTicketGroupResponseSchema>> {
+    const event = await this.eventService.findById(
+      createTicketGroupDto.eventId,
+    );
+    if (!event) {
+      throw new NotFoundException(
+        translate('route.ticket-group.create.event-not-found'),
+      );
+    }
+    const maxTicketsToEmit = event.eventTickets.find(
+      (et) => et.type === 'SPECTATOR',
+    )?.amount;
+    if (!maxTicketsToEmit) {
+      throw new NotFoundException(
+        translate('route.ticket.create-many.max-tickets-not-found'),
+      );
+    }
+    const ticketsEmitted = await this.ticketGroupService.findTicketsByEvent(
+      createTicketGroupDto.eventId,
+    );
+    if (
+      ticketsEmitted.tickets + createTicketGroupDto.amountTickets >
+      maxTicketsToEmit
+    ) {
+      throw new ConflictException(
+        translate('route.ticket.create-many.max-tickets-reached'),
+      );
+    }
     return this.ticketGroupService.create(createTicketGroupDto);
   }
 
   @ApiOkResponse({
     description: translate('route.ticket-group.find-tickets-by-event.success'),
+    type: FindTicketsByEventDto,
   })
   @ApiNotFoundResponse({
     description: translate(
