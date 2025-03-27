@@ -39,7 +39,9 @@ export class TicketGroupService {
       },
     });
 
-    return tickets._sum.amountTickets;
+    return {
+      tickets: tickets._sum.amountTickets ?? 0,
+    };
   }
   async update(
     id: string,

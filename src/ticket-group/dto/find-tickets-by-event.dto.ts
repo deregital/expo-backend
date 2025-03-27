@@ -1,3 +1,5 @@
 import z from 'zod';
 
-export const findTicketsByEventResponseSchema = z.number().nullable();
+export const findTicketsByEventResponseSchema = z.object({
+  tickets: z.number(),
+});
