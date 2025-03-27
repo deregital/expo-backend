@@ -6,6 +6,7 @@ export const updateTicketSchema = ticketSchema
     type: true,
     fullName: true,
     mail: true,
+    ticketGroupId: true,
   })
   .partial();
 
