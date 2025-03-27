@@ -192,6 +192,7 @@ export class EventController {
     return await this.eventService.findActive();
   }
 
+  @Roles(Role.TICKETS, Role.ADMIN, Role.USER)
   @Get('/:id')
   @ApiOkResponse({
     description: translate('route.event.get-by-id.success'),

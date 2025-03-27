@@ -38,6 +38,7 @@ enum Role {
   USER
   ADMIN
   FORM
+  TICKETS
   MI_EXPO
   TICKETS
 }
@@ -182,8 +183,8 @@ model Event {
   id           String   @id @default(uuid())
   name         String
   date         DateTime
-  startingDate DateTime @default(now()) @map("starting_date")
-  endingDate   DateTime @default(now()) @map("ending_date")
+  startingDate DateTime @map("starting_date") @default(now())
+  endingDate   DateTime @map("ending_date") @default(now())
   location     String
 
   folderId String?      @map("folder_id")
