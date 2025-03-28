@@ -1663,6 +1663,107 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+  /ticket-group/create:
+    post:
+      operationId: "TicketGroupController_create"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTicketGroupDto"
+      responses:
+        200:
+          description: "Grupo de tickets creado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateTicketGroupResponseDto"
+        404:
+          description: "Evento no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "Error en la creación del grupo de tickets"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /ticket-group/find-tickets-by-event/{id}:
+    get:
+      operationId: "TicketGroupController_findTicketsByEvent"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Tickets por evento obtenidos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindTicketsByEventDto"
+        404:
+          description: "Tickets por evento no encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /ticket-group/update/{id}:
+    patch:
+      operationId: "TicketGroupController_update"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTicketGroupDto"
+      responses:
+        200:
+          description: "Grupo de tickets actualizado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateTicketGroupResponseDto"
+        404:
+          description: "Grupo de tickets no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+  /ticket-group/delete/{id}:
+    delete:
+      operationId: "TicketGroupController_delete"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Grupo de tickets eliminado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteTicketGroupResponseDto"
+        404:
+          description: "Grupo de tickets no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
   /webhook:
     get:
       operationId: "WebhookController_verify"
@@ -5649,13 +5750,6 @@ components:
                   - "PARTICIPANT"
                   - "STAFF"
                   - "SPECTATOR"
-              status:
-                type:
-                  - "string"
-                enum:
-                  - "BOOKED"
-                  - "PAID"
-                  - "FREE"
               fullName:
                 type:
                   - "string"
@@ -5664,6 +5758,14 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              ticketGroupId:
+                type:
+                  - "string"
+                format: "uuid"
               created_at:
                 type:
                   - "string"
@@ -5676,9 +5778,10 @@ components:
               - "id"
               - "eventId"
               - "type"
-              - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "ticketGroupId"
               - "created_at"
               - "updated_at"
       required:
@@ -8551,13 +8654,6 @@ components:
             - "PARTICIPANT"
             - "STAFF"
             - "SPECTATOR"
-        status:
-          type:
-            - "string"
-          enum:
-            - "BOOKED"
-            - "PAID"
-            - "FREE"
         fullName:
           type:
             - "string"
@@ -8566,6 +8662,14 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        ticketGroupId:
+          type:
+            - "string"
+          format: "uuid"
         profileId:
           type:
             - "string"
@@ -8573,9 +8677,10 @@ components:
       required:
         - "eventId"
         - "type"
-        - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "ticketGroupId"
     CreateTicketResponseDto:
       type:
         - "object"
@@ -8595,13 +8700,6 @@ components:
             - "PARTICIPANT"
             - "STAFF"
             - "SPECTATOR"
-        status:
-          type:
-            - "string"
-          enum:
-            - "BOOKED"
-            - "PAID"
-            - "FREE"
         fullName:
           type:
             - "string"
@@ -8610,6 +8708,14 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        ticketGroupId:
+          type:
+            - "string"
+          format: "uuid"
         created_at:
           type:
             - "string"
@@ -8693,9 +8799,10 @@ components:
         - "id"
         - "eventId"
         - "type"
-        - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "ticketGroupId"
         - "created_at"
         - "updated_at"
         - "event"
@@ -8721,13 +8828,6 @@ components:
                   - "PARTICIPANT"
                   - "STAFF"
                   - "SPECTATOR"
-              status:
-                type:
-                  - "string"
-                enum:
-                  - "BOOKED"
-                  - "PAID"
-                  - "FREE"
               fullName:
                 type:
                   - "string"
@@ -8736,6 +8836,14 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              ticketGroupId:
+                type:
+                  - "string"
+                format: "uuid"
               profileId:
                 type:
                   - "string"
@@ -8743,9 +8851,10 @@ components:
             required:
               - "eventId"
               - "type"
-              - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "ticketGroupId"
       required:
         - "tickets"
     CreateManyTicketWithPdfsResponseDto:
@@ -8774,13 +8883,6 @@ components:
                   - "PARTICIPANT"
                   - "STAFF"
                   - "SPECTATOR"
-              status:
-                type:
-                  - "string"
-                enum:
-                  - "BOOKED"
-                  - "PAID"
-                  - "FREE"
               fullName:
                 type:
                   - "string"
@@ -8789,6 +8891,14 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              ticketGroupId:
+                type:
+                  - "string"
+                format: "uuid"
               created_at:
                 type:
                   - "string"
@@ -8872,9 +8982,10 @@ components:
               - "id"
               - "eventId"
               - "type"
-              - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "ticketGroupId"
               - "created_at"
               - "updated_at"
               - "event"
@@ -8923,13 +9034,6 @@ components:
                   - "PARTICIPANT"
                   - "STAFF"
                   - "SPECTATOR"
-              status:
-                type:
-                  - "string"
-                enum:
-                  - "BOOKED"
-                  - "PAID"
-                  - "FREE"
               fullName:
                 type:
                   - "string"
@@ -8938,6 +9042,14 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              ticketGroupId:
+                type:
+                  - "string"
+                format: "uuid"
               created_at:
                 type:
                   - "string"
@@ -8970,9 +9082,10 @@ components:
               - "id"
               - "eventId"
               - "type"
-              - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "ticketGroupId"
               - "created_at"
               - "updated_at"
               - "event"
@@ -9001,13 +9114,6 @@ components:
                 - "PARTICIPANT"
                 - "STAFF"
                 - "SPECTATOR"
-            status:
-              type:
-                - "string"
-              enum:
-                - "BOOKED"
-                - "PAID"
-                - "FREE"
             fullName:
               type:
                 - "string"
@@ -9016,6 +9122,14 @@ components:
               type:
                 - "string"
               format: "email"
+            dni:
+              type:
+                - "string"
+              minLength: 1
+            ticketGroupId:
+              type:
+                - "string"
+              format: "uuid"
             created_at:
               type:
                 - "string"
@@ -9183,9 +9297,10 @@ components:
             - "id"
             - "eventId"
             - "type"
-            - "status"
             - "fullName"
             - "mail"
+            - "dni"
+            - "ticketGroupId"
             - "created_at"
             - "updated_at"
             - "event"
@@ -9218,13 +9333,6 @@ components:
                   - "PARTICIPANT"
                   - "STAFF"
                   - "SPECTATOR"
-              status:
-                type:
-                  - "string"
-                enum:
-                  - "BOOKED"
-                  - "PAID"
-                  - "FREE"
               fullName:
                 type:
                   - "string"
@@ -9233,6 +9341,14 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              ticketGroupId:
+                type:
+                  - "string"
+                format: "uuid"
               created_at:
                 type:
                   - "string"
@@ -9400,9 +9516,10 @@ components:
               - "id"
               - "eventId"
               - "type"
-              - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "ticketGroupId"
               - "created_at"
               - "updated_at"
               - "event"
@@ -9435,13 +9552,6 @@ components:
                   - "PARTICIPANT"
                   - "STAFF"
                   - "SPECTATOR"
-              status:
-                type:
-                  - "string"
-                enum:
-                  - "BOOKED"
-                  - "PAID"
-                  - "FREE"
               fullName:
                 type:
                   - "string"
@@ -9450,6 +9560,14 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              ticketGroupId:
+                type:
+                  - "string"
+                format: "uuid"
               created_at:
                 type:
                   - "string"
@@ -9617,9 +9735,10 @@ components:
               - "id"
               - "eventId"
               - "type"
-              - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "ticketGroupId"
               - "created_at"
               - "updated_at"
               - "event"
@@ -9652,13 +9771,6 @@ components:
                   - "PARTICIPANT"
                   - "STAFF"
                   - "SPECTATOR"
-              status:
-                type:
-                  - "string"
-                enum:
-                  - "BOOKED"
-                  - "PAID"
-                  - "FREE"
               fullName:
                 type:
                   - "string"
@@ -9667,6 +9779,14 @@ components:
                 type:
                   - "string"
                 format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              ticketGroupId:
+                type:
+                  - "string"
+                format: "uuid"
               created_at:
                 type:
                   - "string"
@@ -9750,9 +9870,10 @@ components:
               - "id"
               - "eventId"
               - "type"
-              - "status"
               - "fullName"
               - "mail"
+              - "dni"
+              - "ticketGroupId"
               - "created_at"
               - "updated_at"
               - "event"
@@ -9769,13 +9890,6 @@ components:
             - "PARTICIPANT"
             - "STAFF"
             - "SPECTATOR"
-        status:
-          type:
-            - "string"
-          enum:
-            - "BOOKED"
-            - "PAID"
-            - "FREE"
         fullName:
           type:
             - "string"
@@ -9784,6 +9898,14 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        ticketGroupId:
+          type:
+            - "string"
+          format: "uuid"
     UpdateTicketResponseDto:
       type:
         - "object"
@@ -9803,13 +9925,6 @@ components:
             - "PARTICIPANT"
             - "STAFF"
             - "SPECTATOR"
-        status:
-          type:
-            - "string"
-          enum:
-            - "BOOKED"
-            - "PAID"
-            - "FREE"
         fullName:
           type:
             - "string"
@@ -9818,6 +9933,14 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        ticketGroupId:
+          type:
+            - "string"
+          format: "uuid"
         created_at:
           type:
             - "string"
@@ -9830,9 +9953,10 @@ components:
         - "id"
         - "eventId"
         - "type"
-        - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "ticketGroupId"
         - "created_at"
         - "updated_at"
     DeleteTicketResponseDto:
@@ -9854,13 +9978,6 @@ components:
             - "PARTICIPANT"
             - "STAFF"
             - "SPECTATOR"
-        status:
-          type:
-            - "string"
-          enum:
-            - "BOOKED"
-            - "PAID"
-            - "FREE"
         fullName:
           type:
             - "string"
@@ -9869,6 +9986,14 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        ticketGroupId:
+          type:
+            - "string"
+          format: "uuid"
         created_at:
           type:
             - "string"
@@ -9881,9 +10006,10 @@ components:
         - "id"
         - "eventId"
         - "type"
-        - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "ticketGroupId"
         - "created_at"
         - "updated_at"
     FindTicketResponseDto:
@@ -9905,13 +10031,6 @@ components:
             - "PARTICIPANT"
             - "STAFF"
             - "SPECTATOR"
-        status:
-          type:
-            - "string"
-          enum:
-            - "BOOKED"
-            - "PAID"
-            - "FREE"
         fullName:
           type:
             - "string"
@@ -9920,6 +10039,14 @@ components:
           type:
             - "string"
           format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        ticketGroupId:
+          type:
+            - "string"
+          format: "uuid"
         created_at:
           type:
             - "string"
@@ -9932,9 +10059,296 @@ components:
         - "id"
         - "eventId"
         - "type"
-        - "status"
         - "fullName"
         - "mail"
+        - "dni"
+        - "ticketGroupId"
+        - "created_at"
+        - "updated_at"
+    CreateTicketGroupDto:
+      type:
+        - "object"
+      properties:
+        eventId:
+          type:
+            - "string"
+          format: "uuid"
+        amountTickets:
+          type:
+            - "number"
+          minimum: 0
+        status:
+          type:
+            - "string"
+          enum:
+            - "BOOKED"
+            - "PAID"
+            - "FREE"
+      required:
+        - "eventId"
+        - "amountTickets"
+        - "status"
+    CreateTicketGroupResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        amountTickets:
+          type:
+            - "number"
+          minimum: 0
+        status:
+          type:
+            - "string"
+          enum:
+            - "BOOKED"
+            - "PAID"
+            - "FREE"
+        eventId:
+          type:
+            - "string"
+          format: "uuid"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+        tickets:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              eventId:
+                type:
+                  - "string"
+                format: "uuid"
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PARTICIPANT"
+                  - "STAFF"
+                  - "SPECTATOR"
+              fullName:
+                type:
+                  - "string"
+                minLength: 1
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              ticketGroupId:
+                type:
+                  - "string"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "eventId"
+              - "type"
+              - "fullName"
+              - "mail"
+              - "dni"
+              - "ticketGroupId"
+              - "created_at"
+              - "updated_at"
+        event:
+          type:
+            - "object"
+          properties:
+            id:
+              type:
+                - "string"
+              format: "uuid"
+            name:
+              type:
+                - "string"
+              minLength: 1
+            date:
+              type:
+                - "string"
+              format: "date-time"
+            startingDate:
+              type:
+                - "string"
+              format: "date-time"
+            endingDate:
+              type:
+                - "string"
+              format: "date-time"
+            location:
+              type:
+                - "string"
+              minLength: 1
+            folderId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            tagAssistedId:
+              type:
+                - "string"
+              format: "uuid"
+            tagConfirmedId:
+              type:
+                - "string"
+              format: "uuid"
+            active:
+              type:
+                - "boolean"
+            supraEventId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            created_at:
+              type:
+                - "string"
+              format: "date-time"
+            updated_at:
+              type:
+                - "string"
+              format: "date-time"
+          required:
+            - "id"
+            - "name"
+            - "date"
+            - "startingDate"
+            - "endingDate"
+            - "location"
+            - "folderId"
+            - "tagAssistedId"
+            - "tagConfirmedId"
+            - "active"
+            - "supraEventId"
+            - "created_at"
+            - "updated_at"
+      required:
+        - "id"
+        - "amountTickets"
+        - "status"
+        - "eventId"
+        - "created_at"
+        - "updated_at"
+        - "tickets"
+        - "event"
+    FindTicketsByEventDto:
+      type:
+        - "object"
+      properties:
+        tickets:
+          type:
+            - "number"
+      required:
+        - "tickets"
+    UpdateTicketGroupDto:
+      type:
+        - "object"
+      properties:
+        status:
+          type:
+            - "string"
+          enum:
+            - "BOOKED"
+            - "PAID"
+            - "FREE"
+    UpdateTicketGroupResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        amountTickets:
+          type:
+            - "number"
+          minimum: 0
+        status:
+          type:
+            - "string"
+          enum:
+            - "BOOKED"
+            - "PAID"
+            - "FREE"
+        eventId:
+          type:
+            - "string"
+          format: "uuid"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "amountTickets"
+        - "status"
+        - "eventId"
+        - "created_at"
+        - "updated_at"
+    DeleteTicketGroupResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        amountTickets:
+          type:
+            - "number"
+          minimum: 0
+        status:
+          type:
+            - "string"
+          enum:
+            - "BOOKED"
+            - "PAID"
+            - "FREE"
+        eventId:
+          type:
+            - "string"
+          format: "uuid"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "amountTickets"
+        - "status"
+        - "eventId"
         - "created_at"
         - "updated_at"
     SendOtpDto:

@@ -18822,6 +18822,7 @@ export namespace Prisma {
     type: $Enums.TicketType | null;
     fullName: string | null;
     mail: string | null;
+    dni: string | null;
     profileId: string | null;
     ticketGroupId: string | null;
     created_at: Date | null;
@@ -18834,6 +18835,7 @@ export namespace Prisma {
     type: $Enums.TicketType | null;
     fullName: string | null;
     mail: string | null;
+    dni: string | null;
     profileId: string | null;
     ticketGroupId: string | null;
     created_at: Date | null;
@@ -18846,6 +18848,7 @@ export namespace Prisma {
     type: number;
     fullName: number;
     mail: number;
+    dni: number;
     profileId: number;
     ticketGroupId: number;
     created_at: number;
@@ -18859,6 +18862,7 @@ export namespace Prisma {
     type?: true;
     fullName?: true;
     mail?: true;
+    dni?: true;
     profileId?: true;
     ticketGroupId?: true;
     created_at?: true;
@@ -18871,6 +18875,7 @@ export namespace Prisma {
     type?: true;
     fullName?: true;
     mail?: true;
+    dni?: true;
     profileId?: true;
     ticketGroupId?: true;
     created_at?: true;
@@ -18883,6 +18888,7 @@ export namespace Prisma {
     type?: true;
     fullName?: true;
     mail?: true;
+    dni?: true;
     profileId?: true;
     ticketGroupId?: true;
     created_at?: true;
@@ -18971,6 +18977,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
+    dni: string;
     profileId: string | null;
     ticketGroupId: string;
     created_at: Date;
@@ -19002,6 +19009,7 @@ export namespace Prisma {
       type?: boolean;
       fullName?: boolean;
       mail?: boolean;
+      dni?: boolean;
       profileId?: boolean;
       ticketGroupId?: boolean;
       created_at?: boolean;
@@ -19022,6 +19030,7 @@ export namespace Prisma {
       type?: boolean;
       fullName?: boolean;
       mail?: boolean;
+      dni?: boolean;
       profileId?: boolean;
       ticketGroupId?: boolean;
       created_at?: boolean;
@@ -19042,6 +19051,7 @@ export namespace Prisma {
       type?: boolean;
       fullName?: boolean;
       mail?: boolean;
+      dni?: boolean;
       profileId?: boolean;
       ticketGroupId?: boolean;
       created_at?: boolean;
@@ -19059,6 +19069,7 @@ export namespace Prisma {
     type?: boolean;
     fullName?: boolean;
     mail?: boolean;
+    dni?: boolean;
     profileId?: boolean;
     ticketGroupId?: boolean;
     created_at?: boolean;
@@ -19073,6 +19084,7 @@ export namespace Prisma {
     | 'type'
     | 'fullName'
     | 'mail'
+    | 'dni'
     | 'profileId'
     | 'ticketGroupId'
     | 'created_at'
@@ -19117,6 +19129,7 @@ export namespace Prisma {
         type: $Enums.TicketType;
         fullName: string;
         mail: string;
+        dni: string;
         profileId: string | null;
         ticketGroupId: string;
         created_at: Date;
@@ -19753,6 +19766,7 @@ export namespace Prisma {
     readonly type: FieldRef<'Ticket', 'TicketType'>;
     readonly fullName: FieldRef<'Ticket', 'String'>;
     readonly mail: FieldRef<'Ticket', 'String'>;
+    readonly dni: FieldRef<'Ticket', 'String'>;
     readonly profileId: FieldRef<'Ticket', 'String'>;
     readonly ticketGroupId: FieldRef<'Ticket', 'String'>;
     readonly created_at: FieldRef<'Ticket', 'DateTime'>;
@@ -24371,6 +24385,7 @@ export namespace Prisma {
     type: 'type';
     fullName: 'fullName';
     mail: 'mail';
+    dni: 'dni';
     profileId: 'profileId';
     ticketGroupId: 'ticketGroupId';
     created_at: 'created_at';
@@ -25702,6 +25717,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFilter<'Ticket'> | $Enums.TicketType;
     fullName?: StringFilter<'Ticket'> | string;
     mail?: StringFilter<'Ticket'> | string;
+    dni?: StringFilter<'Ticket'> | string;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
     ticketGroupId?: StringFilter<'Ticket'> | string;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
@@ -25720,6 +25736,7 @@ export namespace Prisma {
     type?: SortOrder;
     fullName?: SortOrder;
     mail?: SortOrder;
+    dni?: SortOrder;
     profileId?: SortOrderInput | SortOrder;
     ticketGroupId?: SortOrder;
     created_at?: SortOrder;
@@ -25739,6 +25756,7 @@ export namespace Prisma {
       type?: EnumTicketTypeFilter<'Ticket'> | $Enums.TicketType;
       fullName?: StringFilter<'Ticket'> | string;
       mail?: StringFilter<'Ticket'> | string;
+      dni?: StringFilter<'Ticket'> | string;
       profileId?: StringNullableFilter<'Ticket'> | string | null;
       ticketGroupId?: StringFilter<'Ticket'> | string;
       created_at?: DateTimeFilter<'Ticket'> | Date | string;
@@ -25759,6 +25777,7 @@ export namespace Prisma {
     type?: SortOrder;
     fullName?: SortOrder;
     mail?: SortOrder;
+    dni?: SortOrder;
     profileId?: SortOrderInput | SortOrder;
     ticketGroupId?: SortOrder;
     created_at?: SortOrder;
@@ -25781,6 +25800,7 @@ export namespace Prisma {
     type?: EnumTicketTypeWithAggregatesFilter<'Ticket'> | $Enums.TicketType;
     fullName?: StringWithAggregatesFilter<'Ticket'> | string;
     mail?: StringWithAggregatesFilter<'Ticket'> | string;
+    dni?: StringWithAggregatesFilter<'Ticket'> | string;
     profileId?: StringNullableWithAggregatesFilter<'Ticket'> | string | null;
     ticketGroupId?: StringWithAggregatesFilter<'Ticket'> | string;
     created_at?: DateTimeWithAggregatesFilter<'Ticket'> | Date | string;
@@ -27084,6 +27104,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
+    dni?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
@@ -27097,6 +27118,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
+    dni?: string;
     profileId?: string | null;
     ticketGroupId: string;
     created_at?: Date | string;
@@ -27108,6 +27130,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
@@ -27121,6 +27144,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     ticketGroupId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -27133,6 +27157,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
+    dni?: string;
     profileId?: string | null;
     ticketGroupId: string;
     created_at?: Date | string;
@@ -27144,6 +27169,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -27154,6 +27180,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     ticketGroupId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -28275,6 +28302,7 @@ export namespace Prisma {
     type?: SortOrder;
     fullName?: SortOrder;
     mail?: SortOrder;
+    dni?: SortOrder;
     profileId?: SortOrder;
     ticketGroupId?: SortOrder;
     created_at?: SortOrder;
@@ -28287,6 +28315,7 @@ export namespace Prisma {
     type?: SortOrder;
     fullName?: SortOrder;
     mail?: SortOrder;
+    dni?: SortOrder;
     profileId?: SortOrder;
     ticketGroupId?: SortOrder;
     created_at?: SortOrder;
@@ -28299,6 +28328,7 @@ export namespace Prisma {
     type?: SortOrder;
     fullName?: SortOrder;
     mail?: SortOrder;
+    dni?: SortOrder;
     profileId?: SortOrder;
     ticketGroupId?: SortOrder;
     created_at?: SortOrder;
@@ -32075,6 +32105,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
+    dni?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
@@ -32087,6 +32118,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
+    dni?: string;
     ticketGroupId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -32364,6 +32396,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFilter<'Ticket'> | $Enums.TicketType;
     fullName?: StringFilter<'Ticket'> | string;
     mail?: StringFilter<'Ticket'> | string;
+    dni?: StringFilter<'Ticket'> | string;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
     ticketGroupId?: StringFilter<'Ticket'> | string;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
@@ -33974,6 +34007,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
+    dni?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     profile?: ProfileCreateNestedOneWithoutTicketInput;
@@ -33985,6 +34019,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
+    dni?: string;
     profileId?: string | null;
     ticketGroupId: string;
     created_at?: Date | string;
@@ -35187,6 +35222,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
+    dni?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
@@ -35199,6 +35235,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
+    dni?: string;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -35642,6 +35679,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
+    dni?: string;
     ticketGroupId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -35788,6 +35826,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
@@ -35800,6 +35839,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
     ticketGroupId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -35811,6 +35851,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
     ticketGroupId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -36454,6 +36495,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
+    dni?: string;
     profileId?: string | null;
     ticketGroupId: string;
     created_at?: Date | string;
@@ -36497,6 +36539,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     profile?: ProfileUpdateOneWithoutTicketNestedInput;
@@ -36508,6 +36551,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     ticketGroupId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -36519,6 +36563,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     ticketGroupId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -36752,6 +36797,7 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
+    dni?: string;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -36762,6 +36808,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
@@ -36774,6 +36821,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -36785,6 +36833,7 @@ export namespace Prisma {
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;

@@ -104,7 +104,7 @@ export class TicketService {
     return { tickets: ticketsByEvent };
   }
 
-  async findByEventAndType(
+  async findAmountByEventAndType(
     dto: FindByEventAndTypeTicketDto,
   ): Promise<z.infer<typeof findByEventAndTypeTicketResponseSchema>> {
     const ticketsByEventAndType = await this.prisma.ticket.findMany({

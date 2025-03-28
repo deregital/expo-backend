@@ -110,7 +110,7 @@ export class TicketController {
       (et) => et.type === createTicketDto.type,
     )?.amount;
 
-    const ticketsEmitted = await this.ticketService.findByEventAndType({
+    const ticketsEmitted = await this.ticketService.findAmountByEventAndType({
       eventId: createTicketDto.eventId,
       type: createTicketDto.type,
     });
@@ -166,7 +166,7 @@ export class TicketController {
         translate('route.ticket.create-many.max-tickets-not-found'),
       );
     }
-    const ticketsEmitted = await this.ticketService.findByEventAndType({
+    const ticketsEmitted = await this.ticketService.findAmountByEventAndType({
       eventId: event,
       type,
     });

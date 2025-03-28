@@ -1,6 +1,6 @@
 import { translate } from '@/i18n/translate';
 import { PRISMA_SERVICE } from '@/prisma/constants';
-import { PrismaService, TableNames } from '@/prisma/prisma.service';
+import { PrismaService } from '@/prisma/prisma.service';
 import {
   Inject,
   Injectable,
@@ -11,23 +11,6 @@ import * as fastCsv from 'fast-csv';
 import JSZip from 'jszip';
 import { Readable } from 'stream';
 import { Prisma } from '~/types/prisma-schema';
-
-const modelNameToTable: Record<TableNames, Uncapitalize<TableNames>> = {
-  Account: 'account',
-  Comment: 'comment',
-  Profile: 'profile',
-  Tag: 'tag',
-  CannedResponse: 'cannedResponse',
-  Event: 'event',
-  EventFolder: 'eventFolder',
-  Location: 'location',
-  Message: 'message',
-  TagGroup: 'tagGroup',
-  Ticket: 'ticket',
-  EventTicket: 'eventTicket',
-  Otp: 'otp',
-  TicketGroup: 'ticketGroup',
-} as const;
 
 @Injectable()
 export class CsvService {
@@ -59,7 +42,8 @@ export class CsvService {
       for (const modelName of Object.values(Prisma.ModelName).filter(
         (k) => k !== 'Enums',
       )) {
-        const table = modelNameToTable[modelName as TableNames];
+        const table = (modelName![0]!.toLowerCase() +
+          modelName.slice(1)) as Uncapitalize<Prisma.ModelName>;
         const dataTables = [];
         // if (
         //   table.charAt(0) === '_' ||
