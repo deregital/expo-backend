@@ -213,6 +213,9 @@ export default {
       status: {
         invalid: 'El estado del ticket es inválido',
       },
+      dni: {
+        required: 'El DNI es requerido',
+      },
     },
     ticketGroup: {
       id: {

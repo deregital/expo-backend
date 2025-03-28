@@ -9,6 +9,7 @@ export const createTicketSchema = ticketSchema
     type: true,
     fullName: true,
     mail: true,
+    dni: true,
     ticketGroupId: true,
   })
   .extend({

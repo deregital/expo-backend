@@ -12,6 +12,7 @@ export const createManyTicketSchema = z.object({
         type: true,
         fullName: true,
         mail: true,
+        dni: true,
         ticketGroupId: true,
       })
       .extend({

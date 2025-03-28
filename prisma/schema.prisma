@@ -261,6 +261,7 @@ model Ticket {
 
   fullName String
   mail     String
+  dni      String @default("11111111")
 
   profileId String?  @map("profile_id")
   profile   Profile? @relation("PROFILE_X_TICKET", fields: [profileId], references: [id])
