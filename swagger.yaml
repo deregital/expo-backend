@@ -23,6 +23,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Auth"
   /auth/refresh:
     post:
       operationId: "AuthController_refreshToken"
@@ -34,6 +36,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RefreshResponseDto"
+      tags:
+        - "Auth"
   /tag/create:
     post:
       operationId: "TagController_create"
@@ -51,6 +55,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CreateTagResponseDto"
+      tags:
+        - "Tag"
   /tag/all:
     get:
       operationId: "TagController_findAll"
@@ -62,6 +68,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllTagResponseDto"
+      tags:
+        - "Tag"
   /tag/find-by-group/{groupId}:
     get:
       operationId: "TagController_findByGroup"
@@ -84,6 +92,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Tag"
   /tag/{id}:
     get:
       operationId: "TagController_findById"
@@ -106,6 +116,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Tag"
     patch:
       operationId: "TagController_update"
       parameters:
@@ -133,6 +145,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Tag"
     delete:
       operationId: "TagController_remove"
       parameters:
@@ -154,6 +168,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteTagResponseDto"
+      tags:
+        - "Tag"
   /tag/massive-allocation:
     post:
       operationId: "TagController_massiveAllocation"
@@ -171,6 +187,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/MassiveAllocationResponseDto"
+      tags:
+        - "Tag"
   /tag/massive-deallocation:
     post:
       operationId: "TagController_massiveDeallocation"
@@ -188,6 +206,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/MassiveDeallocationResponseDto"
+      tags:
+        - "Tag"
   /account/create:
     post:
       operationId: "AccountController_create"
@@ -205,6 +225,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CreateAccountResponseDto"
+      tags:
+        - "Account"
   /account/global-filter:
     patch:
       operationId: "AccountController_updateGlobalFilter"
@@ -222,6 +244,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UpdateGlobalFilterResponseDto"
+      tags:
+        - "Account"
     get:
       operationId: "AccountController_getGlobalFilter"
       parameters: []
@@ -232,6 +256,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetGlobalFilterResponseDto"
+      tags:
+        - "Account"
   /account/me:
     get:
       operationId: "AccountController_getMe"
@@ -243,6 +269,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetMeResponseDto"
+      tags:
+        - "Account"
   /tag-group/create:
     post:
       operationId: "TagGroupController_create"
@@ -260,6 +288,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CreateTagGroupResponseDto"
+      tags:
+        - "TagGroup"
   /tag-group/all:
     get:
       operationId: "TagGroupController_findAll"
@@ -271,6 +301,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllTagGroupResponseDto"
+      tags:
+        - "TagGroup"
   /tag-group/all-with-tags:
     get:
       operationId: "TagGroupController_findAllWithTags"
@@ -282,6 +314,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllWithTagsResponseDto"
+      tags:
+        - "TagGroup"
   /tag-group/{id}:
     get:
       operationId: "TagGroupController_findById"
@@ -304,6 +338,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "TagGroup"
     patch:
       operationId: "TagGroupController_update"
       parameters:
@@ -331,6 +367,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "TagGroup"
     delete:
       operationId: "TagGroupController_delete"
       parameters:
@@ -352,6 +390,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "TagGroup"
   /comment/create:
     post:
       operationId: "CommentController_createComment"
@@ -375,6 +415,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Comment"
   /comment/get-by-profile/{id}:
     get:
       operationId: "CommentController_getCommentsByProfileId"
@@ -397,6 +439,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Comment"
   /comment/toggle-solve/{id}:
     patch:
       operationId: "CommentController_toggleSolveComment"
@@ -425,6 +469,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Comment"
   /location/all:
     get:
       operationId: "LocationController_findAll"
@@ -436,6 +482,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllLocationResponseDto"
+      tags:
+        - "Location"
   /location/arg-states:
     get:
       operationId: "LocationController_findArgStates"
@@ -447,6 +495,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindArgStatesResponseDto"
+      tags:
+        - "Location"
   /location/find-cities-by-arg-state/{argState}:
     get:
       operationId: "LocationController_findCitiesByArgState"
@@ -469,6 +519,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Location"
   /location/all-countries:
     get:
       operationId: "LocationController_findAllCountries"
@@ -480,6 +532,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllCountriesResponseDto"
+      tags:
+        - "Location"
   /location/states-by-country/{countryCode}:
     get:
       operationId: "LocationController_findStatesByCountry"
@@ -502,6 +556,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Location"
   /canned-response/create:
     post:
       operationId: "CannedResponseController_createCannedResponse"
@@ -525,6 +581,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "CannedResponse"
   /canned-response/all:
     get:
       operationId: "CannedResponseController_getAllCannedResponses"
@@ -536,6 +594,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetAllCannedResponseResponseDto"
+      tags:
+        - "CannedResponse"
   /canned-response/update/{id}:
     patch:
       operationId: "CannedResponseController_updateCannedResponse"
@@ -564,6 +624,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "CannedResponse"
   /canned-response/delete/{id}:
     delete:
       operationId: "CannedResponseController_deleteCannedResponse"
@@ -586,6 +648,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "CannedResponse"
   /event-folder/create:
     post:
       operationId: "EventFolderController_createEventFolder"
@@ -609,6 +673,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "EventFolder"
   /event-folder/all:
     get:
       operationId: "EventFolderController_getAllEventFolders"
@@ -620,6 +686,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetAllEventFolderResponseDto"
+      tags:
+        - "EventFolder"
   /event-folder/{id}:
     get:
       operationId: "EventFolderController_getEventFolderById"
@@ -642,6 +710,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "EventFolder"
   /event-folder/update/{id}:
     patch:
       operationId: "EventFolderController_updateEventFolder"
@@ -670,6 +740,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "EventFolder"
   /event-folder/delete/{id}:
     delete:
       operationId: "EventFolderController_deleteEventFolder"
@@ -692,6 +764,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "EventFolder"
   /event/create:
     post:
       operationId: "EventController_create"
@@ -715,6 +789,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Event"
   /event/all:
     get:
       operationId: "EventController_findAll"
@@ -732,6 +808,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Event"
   /event/find-active:
     get:
       operationId: "EventController_getActive"
@@ -743,6 +821,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetActiveEventsResponseDto"
+      tags:
+        - "Event"
   /event/{id}:
     get:
       operationId: "EventController_findById"
@@ -765,6 +845,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Event"
     patch:
       operationId: "EventController_update"
       parameters:
@@ -798,6 +880,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Event"
     delete:
       operationId: "EventController_remove"
       parameters:
@@ -819,6 +903,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteEventResponseDto"
+      tags:
+        - "Event"
   /event/toggle-active/{id}:
     post:
       operationId: "EventController_toggleActive"
@@ -847,6 +933,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Event"
   /profile/all:
     get:
       operationId: "ProfileController_findAll"
@@ -858,6 +946,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllProfileResponseDto"
+      tags:
+        - "Profile"
   /profile/all-with-active-chat:
     get:
       operationId: "ProfileController_findAllWithActiveChat"
@@ -869,6 +959,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindWithActiveChatResponseDto"
+      tags:
+        - "Profile"
   /profile/find-by-tags:
     get:
       operationId: "ProfileController_findByTag"
@@ -893,6 +985,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Profile"
   /profile/find-by-tag-groups:
     get:
       operationId: "ProfileController_findByTagGroups"
@@ -917,6 +1011,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Profile"
   /profile/find-by-date-range:
     get:
       operationId: "ProfileController_findByDateRange"
@@ -944,6 +1040,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Profile"
   /profile/find-by-phone-number/{phoneNumber}:
     get:
       operationId: "ProfileController_findByPhoneNumber"
@@ -966,6 +1064,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Profile"
   /profile/find-trash:
     get:
       operationId: "ProfileController_findTrashCan"
@@ -977,6 +1077,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindTrashResponseDto"
+      tags:
+        - "Profile"
   /profile/create:
     post:
       operationId: "ProfileController_create"
@@ -1006,6 +1108,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Profile"
   /profile/{id}:
     get:
       operationId: "ProfileController_findById"
@@ -1028,6 +1132,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Profile"
     delete:
       operationId: "ProfileController_delete"
       parameters:
@@ -1049,6 +1155,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Profile"
     patch:
       operationId: "ProfileController_update"
       parameters:
@@ -1082,6 +1190,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Profile"
   /image/update/{id}:
     patch:
       operationId: "ImageController_updateImage"
@@ -1122,6 +1232,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Image"
   /image/delete/{id}:
     delete:
       operationId: "ImageController_deleteImage"
@@ -1150,6 +1262,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Image"
   /csv/download-profiles:
     post:
       operationId: "CsvController_downloadProfiles"
@@ -1179,6 +1293,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StreamableFile"
+      tags:
+        - "Csv"
   /csv/download-all-tables:
     post:
       operationId: "CsvController_downloadAllTables"
@@ -1202,6 +1318,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Buffer"
+      tags:
+        - "Csv"
   /message/create-template:
     post:
       operationId: "MessageController_createTemplate"
@@ -1219,6 +1337,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CreateTemplateResponseDto"
+      tags:
+        - "Message"
   /message/templates:
     get:
       operationId: "MessageController_findTemplates"
@@ -1230,6 +1350,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindTemplatesResponseDto"
+      tags:
+        - "Message"
   /message/template/{id}:
     get:
       operationId: "MessageController_findTemplateById"
@@ -1246,6 +1368,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindTemplateByIdResponseDto"
+      tags:
+        - "Message"
   /message/template/{metaId}:
     patch:
       operationId: "MessageController_updateTemplate"
@@ -1274,6 +1398,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Message"
     delete:
       operationId: "MessageController_deleteTemplate"
       parameters:
@@ -1295,6 +1421,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Message"
   /message/send-message-to-phone:
     post:
       operationId: "MessageController_sendMessageToPhone"
@@ -1318,6 +1446,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Message"
   /message/send-template-to-tags:
     post:
       operationId: "MessageController_sendTemplateToTags"
@@ -1335,6 +1465,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SendTemplateToTagsResponseDto"
+      tags:
+        - "Message"
   /message/find-messages-by-phone/{phone}:
     get:
       operationId: "MessageController_findMessagesByPhone"
@@ -1357,6 +1489,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Message"
   /message/read-messages/{phone}:
     post:
       operationId: "MessageController_readMessages"
@@ -1379,6 +1513,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Message"
   /message/non-read-messages:
     get:
       operationId: "MessageController_nonReadMessages"
@@ -1390,6 +1526,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/NonReadMessagesDto"
+      tags:
+        - "Message"
   /message/last-message-timestamp/{phone}:
     get:
       operationId: "MessageController_getLastMessageTimestamp"
@@ -1406,6 +1544,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetLastMessageTimestampResponseDto"
+      tags:
+        - "Message"
   /ticket/create:
     post:
       operationId: "TicketController_create"
@@ -1435,6 +1575,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Ticket"
   /ticket/all:
     get:
       operationId: "TicketController_findAll"
@@ -1446,6 +1588,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllTicketsResponseDto"
+      tags:
+        - "Ticket"
   /ticket/find-by-id/{id}:
     get:
       operationId: "TicketController_findById"
@@ -1468,6 +1612,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Ticket"
   /ticket/find-by-mail/{mail}:
     get:
       operationId: "TicketController_findByMail"
@@ -1484,6 +1630,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindByMailTicketResponseDto"
+      tags:
+        - "Ticket"
   /ticket/find-by-event/{eventId}:
     get:
       operationId: "TicketController_findByEvent"
@@ -1506,6 +1654,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Ticket"
   /ticket/find-by-profile-id/{profileId}:
     get:
       operationId: "TicketController_findByProfileId"
@@ -1528,6 +1678,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Ticket"
   /ticket/update/{id}:
     patch:
       operationId: "TicketController_update"
@@ -1556,6 +1708,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Ticket"
   /ticket/delete/{id}:
     delete:
       operationId: "TicketController_delete"
@@ -1578,6 +1732,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Ticket"
   /ticket/generate-pdf/{id}:
     get:
       operationId: "TicketController_generatePdf"
@@ -1600,6 +1756,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Ticket"
   /ticket/find-ticket/{id}:
     get:
       operationId: "TicketController_findTicket"
@@ -1634,6 +1792,39 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Ticket"
+  /ticket/scan:
+    post:
+      operationId: "TicketController_scanTicket"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScanTicketDto"
+      responses:
+        200:
+          description: "Ticket escaneado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScanTicketResponseDto"
+        404:
+          description: "Ticket no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "El ticket ya fue escaneado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Ticket"
   /ticket/send-email/{id}:
     post:
       operationId: "TicketController_sendEmail"
@@ -1662,6 +1853,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Ticket"
   /webhook:
     get:
       operationId: "WebhookController_verify"
@@ -1692,6 +1885,8 @@ paths:
           description: "Solicitud incorrecta"
         403:
           description: "Prohibido"
+      tags:
+        - "Webhook"
     post:
       operationId: "WebhookController_receiveMessage"
       parameters:
@@ -1703,6 +1898,8 @@ paths:
       responses:
         201:
           description: ""
+      tags:
+        - "Webhook"
   /otp/send:
     post:
       operationId: "OtpController_sendOtp"
@@ -1732,6 +1929,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Otp"
   /otp/verify:
     post:
       operationId: "OtpController_verifyOtp"
@@ -1761,6 +1960,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Otp"
   /mi-expo/login-with-phone:
     post:
       operationId: "MiExpoController_loginWithPhone"
@@ -1784,6 +1985,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "MiExpo"
   /mi-expo/me:
     get:
       operationId: "MiExpoController_me"
@@ -1795,6 +1998,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetMiExpoMeResponseDto"
+      tags:
+        - "MiExpo"
     patch:
       operationId: "MiExpoController_updateMe"
       parameters: []
@@ -1811,6 +2016,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetMiExpoMeResponseDto"
+      tags:
+        - "MiExpo"
   /mi-expo/invitations:
     get:
       operationId: "MiExpoController_invitations"
@@ -1822,6 +2029,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetInvitationsResponseDto"
+      tags:
+        - "MiExpo"
   /mi-expo/tickets:
     get:
       operationId: "MiExpoController_tickets"
@@ -1833,6 +2042,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindByProfileIdTicketResponseDto"
+      tags:
+        - "MiExpo"
   /mi-expo/login:
     post:
       operationId: "MiExpoController_loginUsernamePassword"
@@ -1856,6 +2067,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "MiExpo"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -1903,8 +2116,8 @@ components:
                 - "USER"
                 - "ADMIN"
                 - "FORM"
-                - "MI_EXPO"
                 - "TICKETS"
+                - "MI_EXPO"
             isGlobalFilterActive:
               default: false
               type:
@@ -2414,8 +2627,8 @@ components:
                   - "USER"
                   - "ADMIN"
                   - "FORM"
-                  - "MI_EXPO"
                   - "TICKETS"
+                  - "MI_EXPO"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -2578,8 +2791,8 @@ components:
                   - "USER"
                   - "ADMIN"
                   - "FORM"
-                  - "MI_EXPO"
                   - "TICKETS"
+                  - "MI_EXPO"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -2713,8 +2926,8 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
-            - "MI_EXPO"
             - "TICKETS"
+            - "MI_EXPO"
       required:
         - "username"
         - "password"
@@ -2737,8 +2950,8 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
-            - "MI_EXPO"
             - "TICKETS"
+            - "MI_EXPO"
         isGlobalFilterActive:
           default: false
           type:
@@ -2793,8 +3006,8 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
-            - "MI_EXPO"
             - "TICKETS"
+            - "MI_EXPO"
         isGlobalFilterActive:
           default: false
           type:
@@ -2940,8 +3153,8 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
-            - "MI_EXPO"
             - "TICKETS"
+            - "MI_EXPO"
         isGlobalFilterActive:
           default: false
           type:
@@ -5672,6 +5885,14 @@ components:
                   - "number"
                   - "null"
                 minimum: 1
+              scanned:
+                type:
+                  - "boolean"
+              scannedAt:
+                type:
+                  - "string"
+                  - "null"
+                format: "date-time"
               created_at:
                 type:
                   - "string"
@@ -5689,6 +5910,8 @@ components:
               - "mail"
               - "dni"
               - "seat"
+              - "scanned"
+              - "scannedAt"
               - "created_at"
               - "updated_at"
       required:
@@ -6105,8 +6328,8 @@ components:
                   - "USER"
                   - "ADMIN"
                   - "FORM"
-                  - "MI_EXPO"
                   - "TICKETS"
+                  - "MI_EXPO"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -6307,8 +6530,8 @@ components:
                   - "USER"
                   - "ADMIN"
                   - "FORM"
-                  - "MI_EXPO"
                   - "TICKETS"
+                  - "MI_EXPO"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -6586,8 +6809,8 @@ components:
                   - "USER"
                   - "ADMIN"
                   - "FORM"
-                  - "MI_EXPO"
                   - "TICKETS"
+                  - "MI_EXPO"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -6793,8 +7016,8 @@ components:
                   - "USER"
                   - "ADMIN"
                   - "FORM"
-                  - "MI_EXPO"
                   - "TICKETS"
+                  - "MI_EXPO"
               firstTimeMiExpo:
                 type:
                   - "boolean"
@@ -6978,8 +7201,8 @@ components:
                 - "USER"
                 - "ADMIN"
                 - "FORM"
-                - "MI_EXPO"
                 - "TICKETS"
+                - "MI_EXPO"
             firstTimeMiExpo:
               type:
                 - "boolean"
@@ -7166,8 +7389,8 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
-            - "MI_EXPO"
             - "TICKETS"
+            - "MI_EXPO"
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -7583,8 +7806,8 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
-            - "MI_EXPO"
             - "TICKETS"
+            - "MI_EXPO"
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -7868,8 +8091,8 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
-            - "MI_EXPO"
             - "TICKETS"
+            - "MI_EXPO"
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -8634,6 +8857,14 @@ components:
             - "number"
             - "null"
           minimum: 1
+        scanned:
+          type:
+            - "boolean"
+        scannedAt:
+          type:
+            - "string"
+            - "null"
+          format: "date-time"
         created_at:
           type:
             - "string"
@@ -8722,6 +8953,8 @@ components:
         - "mail"
         - "dni"
         - "seat"
+        - "scanned"
+        - "scannedAt"
         - "created_at"
         - "updated_at"
         - "event"
@@ -8775,6 +9008,14 @@ components:
                   - "number"
                   - "null"
                 minimum: 1
+              scanned:
+                type:
+                  - "boolean"
+              scannedAt:
+                type:
+                  - "string"
+                  - "null"
+                format: "date-time"
               created_at:
                 type:
                   - "string"
@@ -8812,6 +9053,8 @@ components:
               - "mail"
               - "dni"
               - "seat"
+              - "scanned"
+              - "scannedAt"
               - "created_at"
               - "updated_at"
               - "event"
@@ -8864,6 +9107,14 @@ components:
                 - "number"
                 - "null"
               minimum: 1
+            scanned:
+              type:
+                - "boolean"
+            scannedAt:
+              type:
+                - "string"
+                - "null"
+              format: "date-time"
             created_at:
               type:
                 - "string"
@@ -8912,8 +9163,8 @@ components:
                     - "USER"
                     - "ADMIN"
                     - "FORM"
-                    - "MI_EXPO"
                     - "TICKETS"
+                    - "MI_EXPO"
                 firstTimeMiExpo:
                   type:
                     - "boolean"
@@ -9036,6 +9287,8 @@ components:
             - "mail"
             - "dni"
             - "seat"
+            - "scanned"
+            - "scannedAt"
             - "created_at"
             - "updated_at"
             - "event"
@@ -9092,6 +9345,14 @@ components:
                   - "number"
                   - "null"
                 minimum: 1
+              scanned:
+                type:
+                  - "boolean"
+              scannedAt:
+                type:
+                  - "string"
+                  - "null"
+                format: "date-time"
               created_at:
                 type:
                   - "string"
@@ -9140,8 +9401,8 @@ components:
                       - "USER"
                       - "ADMIN"
                       - "FORM"
-                      - "MI_EXPO"
                       - "TICKETS"
+                      - "MI_EXPO"
                   firstTimeMiExpo:
                     type:
                       - "boolean"
@@ -9264,6 +9525,8 @@ components:
               - "mail"
               - "dni"
               - "seat"
+              - "scanned"
+              - "scannedAt"
               - "created_at"
               - "updated_at"
               - "event"
@@ -9320,6 +9583,14 @@ components:
                   - "number"
                   - "null"
                 minimum: 1
+              scanned:
+                type:
+                  - "boolean"
+              scannedAt:
+                type:
+                  - "string"
+                  - "null"
+                format: "date-time"
               created_at:
                 type:
                   - "string"
@@ -9368,8 +9639,8 @@ components:
                       - "USER"
                       - "ADMIN"
                       - "FORM"
-                      - "MI_EXPO"
                       - "TICKETS"
+                      - "MI_EXPO"
                   firstTimeMiExpo:
                     type:
                       - "boolean"
@@ -9492,6 +9763,8 @@ components:
               - "mail"
               - "dni"
               - "seat"
+              - "scanned"
+              - "scannedAt"
               - "created_at"
               - "updated_at"
               - "event"
@@ -9548,6 +9821,14 @@ components:
                   - "number"
                   - "null"
                 minimum: 1
+              scanned:
+                type:
+                  - "boolean"
+              scannedAt:
+                type:
+                  - "string"
+                  - "null"
+                format: "date-time"
               created_at:
                 type:
                   - "string"
@@ -9636,6 +9917,8 @@ components:
               - "mail"
               - "dni"
               - "seat"
+              - "scanned"
+              - "scannedAt"
               - "created_at"
               - "updated_at"
               - "event"
@@ -9710,6 +9993,14 @@ components:
             - "number"
             - "null"
           minimum: 1
+        scanned:
+          type:
+            - "boolean"
+        scannedAt:
+          type:
+            - "string"
+            - "null"
+          format: "date-time"
         created_at:
           type:
             - "string"
@@ -9727,6 +10018,8 @@ components:
         - "mail"
         - "dni"
         - "seat"
+        - "scanned"
+        - "scannedAt"
         - "created_at"
         - "updated_at"
     DeleteTicketResponseDto:
@@ -9772,6 +10065,14 @@ components:
             - "number"
             - "null"
           minimum: 1
+        scanned:
+          type:
+            - "boolean"
+        scannedAt:
+          type:
+            - "string"
+            - "null"
+          format: "date-time"
         created_at:
           type:
             - "string"
@@ -9789,6 +10090,8 @@ components:
         - "mail"
         - "dni"
         - "seat"
+        - "scanned"
+        - "scannedAt"
         - "created_at"
         - "updated_at"
     FindTicketResponseDto:
@@ -9834,6 +10137,14 @@ components:
             - "number"
             - "null"
           minimum: 1
+        scanned:
+          type:
+            - "boolean"
+        scannedAt:
+          type:
+            - "string"
+            - "null"
+          format: "date-time"
         created_at:
           type:
             - "string"
@@ -9851,8 +10162,28 @@ components:
         - "mail"
         - "dni"
         - "seat"
+        - "scanned"
+        - "scannedAt"
         - "created_at"
         - "updated_at"
+    ScanTicketDto:
+      type:
+        - "object"
+      properties:
+        ticketBarcode:
+          type:
+            - "string"
+      required:
+        - "ticketBarcode"
+    ScanTicketResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+      required:
+        - "success"
     SendEmailResponseDto:
       type:
         - "object"
@@ -9964,8 +10295,8 @@ components:
                 - "USER"
                 - "ADMIN"
                 - "FORM"
-                - "MI_EXPO"
                 - "TICKETS"
+                - "MI_EXPO"
             firstTimeMiExpo:
               type:
                 - "boolean"
@@ -10186,8 +10517,8 @@ components:
                 - "USER"
                 - "ADMIN"
                 - "FORM"
-                - "MI_EXPO"
                 - "TICKETS"
+                - "MI_EXPO"
             firstTimeMiExpo:
               type:
                 - "boolean"
@@ -10318,8 +10649,8 @@ components:
             - "USER"
             - "ADMIN"
             - "FORM"
-            - "MI_EXPO"
             - "TICKETS"
+            - "MI_EXPO"
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -10721,8 +11052,8 @@ components:
                 - "USER"
                 - "ADMIN"
                 - "FORM"
-                - "MI_EXPO"
                 - "TICKETS"
+                - "MI_EXPO"
             firstTimeMiExpo:
               type:
                 - "boolean"

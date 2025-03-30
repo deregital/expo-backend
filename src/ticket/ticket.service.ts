@@ -216,6 +216,18 @@ export class TicketService {
     return ticket;
   }
 
+  async scanTicket(id: Ticket['id']): Promise<Ticket> {
+    const ticket = await this.prisma.ticket.update({
+      where: { id },
+      data: {
+        scanned: true,
+        scannedAt: new Date(),
+      },
+    });
+
+    return ticket;
+  }
+
   async getHighestSeatForEvent(eventId: string): Promise<number> {
     const highest = await this.prisma.ticket.findFirst({
       where: { eventId, seat: { not: null }, type: 'SPECTATOR' },

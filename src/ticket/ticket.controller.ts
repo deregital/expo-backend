@@ -8,6 +8,7 @@ import {
   Profile,
   ProfileWithoutPassword,
 } from '@/mi-expo/decorators/profile.decorator';
+import { ProfileService } from '@/profile/profile.service';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { decryptString } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
@@ -45,6 +46,11 @@ import {
   FindTicketResponseDto,
   findTicketResponseSchema,
 } from '@/ticket/dto/find-ticket.dto';
+import {
+  ScanTicketDto,
+  ScanTicketResponseDto,
+  scanTicketResponseSchema,
+} from '@/ticket/dto/scan-ticket.dto';
 import {
   SendEmailResponseDto,
   sendEmailResponseSchema,
@@ -91,6 +97,7 @@ export class TicketController {
     private readonly eventService: EventService,
     private readonly mailService: MailService,
     private readonly tagService: TagService,
+    private readonly profileService: ProfileService,
   ) {}
 
   @Roles(Role.ADMIN, Role.MI_EXPO)
@@ -152,10 +159,7 @@ export class TicketController {
       });
     }
 
-    return await this.ticketService.create({
-      ...createTicketDto,
-      seat,
-    });
+    return await this.ticketService.create({ ...createTicketDto, seat });
   }
 
   @ApiOkResponse({
@@ -252,6 +256,21 @@ export class TicketController {
   async delete(
     @Param('id', new ExistingRecord('ticket')) id: string,
   ): Promise<z.infer<typeof deleteTicketResponseSchema>> {
+    const { ticket } = await this.ticketService.findById(id);
+    if (ticket.type === TicketType.PARTICIPANT) {
+      const profile = ticket.profile;
+      if (!profile) {
+        throw new NotFoundException([
+          translate('route.ticket.delete.participant-not-found'),
+        ]);
+      }
+      const event = await this.eventService.findById(ticket.eventId);
+      await this.tagService.massiveDeallocation({
+        profileIds: [profile.id],
+        tagIds: [event.tagConfirmedId],
+      });
+    }
+
     return await this.ticketService.delete(id);
   }
 
@@ -297,12 +316,63 @@ export class TicketController {
     description: translate('route.pdf.find-ticket.error'),
     type: ErrorDto,
   })
-  @Get('/find-ticket/:id(*)')
+  @Get('/find-ticket/*id')
   async findTicket(
     @Param('id') id: string,
   ): Promise<z.infer<typeof findTicketResponseSchema>> {
     const decryptedTicketId = decryptString(id);
     return this.ticketService.findTicket(decryptedTicketId);
+  }
+
+  @Roles(Role.ADMIN, Role.USER)
+  @ApiNotFoundResponse({
+    description: translate('route.ticket.scan.not-found'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.ticket.scan.already-scanned'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    description: translate('route.ticket.scan.success'),
+    type: ScanTicketResponseDto,
+  })
+  @Post('/scan')
+  async scanTicket(
+    @Body() scanTicketDto: ScanTicketDto,
+  ): Promise<z.infer<typeof scanTicketResponseSchema>> {
+    const decryptedTicketId = decryptString(scanTicketDto.ticketBarcode);
+    const ticket = await this.ticketService.findTicket(decryptedTicketId);
+    if (!ticket) {
+      throw new NotFoundException([translate('route.ticket.scan.not-found')]);
+    }
+    if (ticket.scanned) {
+      throw new ConflictException([
+        translate('route.ticket.scan.already-scanned'),
+      ]);
+    }
+    const event = await this.eventService.findById(ticket.eventId);
+    if (!event) {
+      throw new NotFoundException([
+        translate('route.ticket.scan.event-not-found'),
+      ]);
+    }
+    const scannedTicket = await this.ticketService.scanTicket(ticket.id);
+
+    if (scannedTicket.type === TicketType.PARTICIPANT) {
+      const profileId = scannedTicket.profileId;
+      if (!profileId) {
+        throw new NotFoundException([
+          translate('route.ticket.scan.participant-not-found'),
+        ]);
+      }
+      await this.tagService.massiveAllocation({
+        profileIds: [profileId],
+        tagIds: [event.tagAssistedId],
+      });
+    }
+
+    return { success: true };
   }
 
   @Roles(Role.ADMIN, Role.MI_EXPO)

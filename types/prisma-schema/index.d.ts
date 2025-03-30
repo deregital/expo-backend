@@ -91,8 +91,8 @@ export namespace $Enums {
     USER: 'USER';
     ADMIN: 'ADMIN';
     FORM: 'FORM';
-    MI_EXPO: 'MI_EXPO';
     TICKETS: 'TICKETS';
+    MI_EXPO: 'MI_EXPO';
   };
 
   export type Role = (typeof Role)[keyof typeof Role];
@@ -225,7 +225,7 @@ export class PrismaClient<
     callback: (
       event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent,
     ) => void,
-  ): void;
+  ): PrismaClient;
 
   /**
    * Connect with the database
@@ -333,15 +333,14 @@ export class PrismaClient<
 
   $extends: $Extensions.ExtendsHook<
     'extends',
-    Prisma.TypeMapCb,
+    Prisma.TypeMapCb<ClientOptions>,
     ExtArgs,
     $Utils.Call<
-      Prisma.TypeMapCb,
+      Prisma.TypeMapCb<ClientOptions>,
       {
         extArgs: ExtArgs;
       }
-    >,
-    ClientOptions
+    >
   >;
 
   /**
@@ -539,8 +538,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact;
 
   /**
-   * Prisma Client JS version: 6.4.1
-   * Query Engine version: a9055b89e58b4b5bfb59600785423b1db3d0e75d
+   * Prisma Client JS version: 6.5.0
+   * Query Engine version: 173f8d54f8d52e692c7e27e72a88314ec7aeff60
    */
   export type PrismaVersion = {
     client: string;
@@ -819,7 +818,7 @@ export namespace Prisma {
     O extends unknown
       ?
           | (K extends keyof O ? { [P in K]: O[P] } & O : O)
-          | ({ [P in keyof O as P extends K ? K : never]-?: O[P] } & O)
+          | ({ [P in keyof O as P extends K ? P : never]-?: O[P] } & O)
       : never
   >;
 
@@ -963,21 +962,24 @@ export namespace Prisma {
     db?: Datasource;
   };
 
-  interface TypeMapCb
+  interface TypeMapCb<ClientOptions = {}>
     extends $Utils.Fn<
-      { extArgs: $Extensions.InternalArgs; clientOptions: PrismaClientOptions },
+      { extArgs: $Extensions.InternalArgs },
       $Utils.Record<string, any>
     > {
     returns: Prisma.TypeMap<
       this['params']['extArgs'],
-      this['params']['clientOptions']
+      ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}
     >;
   }
 
   export type TypeMap<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > = {
+    globalOmitOptions: {
+      omit: GlobalOmitOptions;
+    };
     meta: {
       modelProps:
         | 'account'
@@ -2968,7 +2970,7 @@ export namespace Prisma {
 
   export interface AccountDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Account'];
@@ -2992,11 +2994,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -3018,11 +3020,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -3045,11 +3047,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -3073,11 +3075,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -3103,7 +3105,7 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -3126,11 +3128,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -3178,7 +3180,7 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -3201,11 +3203,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -3230,11 +3232,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -3309,7 +3311,7 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -3337,11 +3339,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -3493,7 +3495,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     comments<T extends Account$commentsArgs<ExtArgs> = {}>(
@@ -3503,7 +3505,7 @@ export namespace Prisma {
           Prisma.$CommentPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -3514,7 +3516,7 @@ export namespace Prisma {
           Prisma.$CommentPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -3525,7 +3527,7 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -3536,7 +3538,7 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -4706,7 +4708,7 @@ export namespace Prisma {
 
   export interface ProfileDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Profile'];
@@ -4730,11 +4732,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -4756,11 +4758,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -4783,11 +4785,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -4811,11 +4813,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -4841,7 +4843,7 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -4864,11 +4866,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -4916,7 +4918,7 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -4939,11 +4941,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -4968,11 +4970,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -5047,7 +5049,7 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -5075,11 +5077,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -5231,7 +5233,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     otp<T extends Profile$otpArgs<ExtArgs> = {}>(
@@ -5241,7 +5243,7 @@ export namespace Prisma {
           Prisma.$OtpPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -5252,7 +5254,7 @@ export namespace Prisma {
           Prisma.$CommentPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -5263,7 +5265,7 @@ export namespace Prisma {
           Prisma.$MessagePayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -5274,7 +5276,7 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -5285,11 +5287,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     residenceLocation<T extends Profile$residenceLocationArgs<ExtArgs> = {}>(
       args?: Subset<T, Profile$residenceLocationArgs<ExtArgs>>,
@@ -5298,11 +5300,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     Ticket<T extends Profile$TicketArgs<ExtArgs> = {}>(
       args?: Subset<T, Profile$TicketArgs<ExtArgs>>,
@@ -5311,7 +5313,7 @@ export namespace Prisma {
           Prisma.$TicketPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -6279,7 +6281,7 @@ export namespace Prisma {
 
   export interface OtpDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Otp'];
@@ -6303,11 +6305,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -6329,11 +6331,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -6356,11 +6358,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -6384,11 +6386,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -6414,7 +6416,7 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -6437,11 +6439,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -6489,7 +6491,7 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -6512,11 +6514,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -6541,11 +6543,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -6620,7 +6622,7 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -6648,11 +6650,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -6804,7 +6806,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     owner<T extends ProfileDefaultArgs<ExtArgs> = {}>(
@@ -6814,12 +6816,12 @@ export namespace Prisma {
           Prisma.$ProfilePayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null,
       Null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -7654,7 +7656,7 @@ export namespace Prisma {
 
   export interface LocationDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Location'];
@@ -7678,11 +7680,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -7704,11 +7706,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -7731,11 +7733,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -7759,11 +7761,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -7789,7 +7791,7 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -7812,11 +7814,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -7864,7 +7866,7 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -7887,11 +7889,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -7916,11 +7918,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -7995,7 +7997,7 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -8023,11 +8025,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -8180,7 +8182,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     birthProfiles<T extends Location$birthProfilesArgs<ExtArgs> = {}>(
@@ -8190,7 +8192,7 @@ export namespace Prisma {
           Prisma.$ProfilePayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -8201,7 +8203,7 @@ export namespace Prisma {
           Prisma.$ProfilePayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -9103,7 +9105,7 @@ export namespace Prisma {
 
   export interface CommentDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Comment'];
@@ -9127,11 +9129,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -9153,11 +9155,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -9180,11 +9182,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -9208,11 +9210,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -9238,7 +9240,7 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -9261,11 +9263,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -9313,7 +9315,7 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -9336,11 +9338,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -9365,11 +9367,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -9444,7 +9446,7 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -9472,11 +9474,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -9628,7 +9630,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     account<T extends AccountDefaultArgs<ExtArgs> = {}>(
@@ -9638,12 +9640,12 @@ export namespace Prisma {
           Prisma.$AccountPayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null,
       Null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     profile<T extends ProfileDefaultArgs<ExtArgs> = {}>(
       args?: Subset<T, ProfileDefaultArgs<ExtArgs>>,
@@ -9652,12 +9654,12 @@ export namespace Prisma {
           Prisma.$ProfilePayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null,
       Null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     solvedBy<T extends Comment$solvedByArgs<ExtArgs> = {}>(
       args?: Subset<T, Comment$solvedByArgs<ExtArgs>>,
@@ -9666,11 +9668,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -10482,7 +10484,7 @@ export namespace Prisma {
 
   export interface TagDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Tag'];
@@ -10506,11 +10508,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -10532,11 +10534,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -10559,11 +10561,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -10587,11 +10589,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -10617,7 +10619,7 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -10640,11 +10642,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -10692,7 +10694,7 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -10715,11 +10717,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -10744,11 +10746,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -10823,7 +10825,7 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -10851,11 +10853,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -11007,7 +11009,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     group<T extends TagGroupDefaultArgs<ExtArgs> = {}>(
@@ -11017,12 +11019,12 @@ export namespace Prisma {
           Prisma.$TagGroupPayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null,
       Null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     assistedEvent<T extends Tag$assistedEventArgs<ExtArgs> = {}>(
       args?: Subset<T, Tag$assistedEventArgs<ExtArgs>>,
@@ -11031,11 +11033,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     confirmedEvent<T extends Tag$confirmedEventArgs<ExtArgs> = {}>(
       args?: Subset<T, Tag$confirmedEventArgs<ExtArgs>>,
@@ -11044,11 +11046,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     accounts<T extends Tag$accountsArgs<ExtArgs> = {}>(
       args?: Subset<T, Tag$accountsArgs<ExtArgs>>,
@@ -11057,7 +11059,7 @@ export namespace Prisma {
           Prisma.$AccountPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -11068,7 +11070,7 @@ export namespace Prisma {
           Prisma.$ProfilePayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -11079,7 +11081,7 @@ export namespace Prisma {
           Prisma.$AccountPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -11090,7 +11092,7 @@ export namespace Prisma {
           Prisma.$EventPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -12007,7 +12009,7 @@ export namespace Prisma {
 
   export interface TagGroupDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['TagGroup'];
@@ -12031,11 +12033,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -12057,11 +12059,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -12084,11 +12086,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -12112,11 +12114,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -12142,7 +12144,7 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -12165,11 +12167,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -12217,7 +12219,7 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -12240,11 +12242,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -12269,11 +12271,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -12348,7 +12350,7 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -12376,11 +12378,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -12533,7 +12535,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     tags<T extends TagGroup$tagsArgs<ExtArgs> = {}>(
@@ -12543,7 +12545,7 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -13471,7 +13473,7 @@ export namespace Prisma {
 
   export interface EventDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Event'];
@@ -13495,11 +13497,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -13521,11 +13523,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -13548,11 +13550,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -13576,11 +13578,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -13606,7 +13608,7 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -13629,11 +13631,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -13681,7 +13683,7 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -13704,11 +13706,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -13733,11 +13735,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -13812,7 +13814,7 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -13840,11 +13842,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -13996,7 +13998,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     folder<T extends Event$folderArgs<ExtArgs> = {}>(
@@ -14006,11 +14008,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     tagAssisted<T extends TagDefaultArgs<ExtArgs> = {}>(
       args?: Subset<T, TagDefaultArgs<ExtArgs>>,
@@ -14019,12 +14021,12 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null,
       Null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     tagConfirmed<T extends TagDefaultArgs<ExtArgs> = {}>(
       args?: Subset<T, TagDefaultArgs<ExtArgs>>,
@@ -14033,12 +14035,12 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null,
       Null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     supraEvent<T extends Event$supraEventArgs<ExtArgs> = {}>(
       args?: Subset<T, Event$supraEventArgs<ExtArgs>>,
@@ -14047,11 +14049,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     tickets<T extends Event$ticketsArgs<ExtArgs> = {}>(
       args?: Subset<T, Event$ticketsArgs<ExtArgs>>,
@@ -14060,7 +14062,7 @@ export namespace Prisma {
           Prisma.$TicketPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -14071,7 +14073,7 @@ export namespace Prisma {
           Prisma.$EventPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -14082,7 +14084,7 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -14093,7 +14095,7 @@ export namespace Prisma {
           Prisma.$EventTicketPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -15006,7 +15008,7 @@ export namespace Prisma {
 
   export interface EventFolderDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['EventFolder'];
@@ -15030,11 +15032,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -15056,11 +15058,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -15083,11 +15085,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -15111,11 +15113,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -15141,7 +15143,7 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -15164,11 +15166,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -15216,7 +15218,7 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -15239,11 +15241,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -15268,11 +15270,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -15347,7 +15349,7 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -15375,11 +15377,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -15532,7 +15534,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     events<T extends EventFolder$eventsArgs<ExtArgs> = {}>(
@@ -15542,7 +15544,7 @@ export namespace Prisma {
           Prisma.$EventPayload<ExtArgs>,
           T,
           'findMany',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null
     >;
@@ -16354,7 +16356,7 @@ export namespace Prisma {
 
   export interface MessageDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Message'];
@@ -16378,11 +16380,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -16404,11 +16406,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -16431,11 +16433,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -16459,11 +16461,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -16489,7 +16491,7 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -16512,11 +16514,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -16564,7 +16566,7 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -16587,11 +16589,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -16616,11 +16618,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -16695,7 +16697,7 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -16723,11 +16725,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -16879,7 +16881,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     profile<T extends ProfileDefaultArgs<ExtArgs> = {}>(
@@ -16889,12 +16891,12 @@ export namespace Prisma {
           Prisma.$ProfilePayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null,
       Null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -17642,7 +17644,7 @@ export namespace Prisma {
 
   export interface CannedResponseDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['CannedResponse'];
@@ -17666,11 +17668,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -17692,11 +17694,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -17719,11 +17721,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -17747,11 +17749,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -17777,7 +17779,7 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -17800,11 +17802,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -17852,7 +17854,7 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -17875,11 +17877,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -17904,11 +17906,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -17983,7 +17985,7 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -18011,11 +18013,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -18168,7 +18170,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     /**
@@ -18651,6 +18653,8 @@ export namespace Prisma {
     mail: string | null;
     dni: string | null;
     seat: number | null;
+    scanned: boolean | null;
+    scannedAt: Date | null;
     profileId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
@@ -18665,6 +18669,8 @@ export namespace Prisma {
     mail: string | null;
     dni: string | null;
     seat: number | null;
+    scanned: boolean | null;
+    scannedAt: Date | null;
     profileId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
@@ -18679,6 +18685,8 @@ export namespace Prisma {
     mail: number;
     dni: number;
     seat: number;
+    scanned: number;
+    scannedAt: number;
     profileId: number;
     created_at: number;
     updated_at: number;
@@ -18702,6 +18710,8 @@ export namespace Prisma {
     mail?: true;
     dni?: true;
     seat?: true;
+    scanned?: true;
+    scannedAt?: true;
     profileId?: true;
     created_at?: true;
     updated_at?: true;
@@ -18716,6 +18726,8 @@ export namespace Prisma {
     mail?: true;
     dni?: true;
     seat?: true;
+    scanned?: true;
+    scannedAt?: true;
     profileId?: true;
     created_at?: true;
     updated_at?: true;
@@ -18730,6 +18742,8 @@ export namespace Prisma {
     mail?: true;
     dni?: true;
     seat?: true;
+    scanned?: true;
+    scannedAt?: true;
     profileId?: true;
     created_at?: true;
     updated_at?: true;
@@ -18834,6 +18848,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat: number | null;
+    scanned: boolean;
+    scannedAt: Date | null;
     profileId: string | null;
     created_at: Date;
     updated_at: Date;
@@ -18869,6 +18885,8 @@ export namespace Prisma {
       mail?: boolean;
       dni?: boolean;
       seat?: boolean;
+      scanned?: boolean;
+      scannedAt?: boolean;
       profileId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
@@ -18890,6 +18908,8 @@ export namespace Prisma {
       mail?: boolean;
       dni?: boolean;
       seat?: boolean;
+      scanned?: boolean;
+      scannedAt?: boolean;
       profileId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
@@ -18911,6 +18931,8 @@ export namespace Prisma {
       mail?: boolean;
       dni?: boolean;
       seat?: boolean;
+      scanned?: boolean;
+      scannedAt?: boolean;
       profileId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
@@ -18929,6 +18951,8 @@ export namespace Prisma {
     mail?: boolean;
     dni?: boolean;
     seat?: boolean;
+    scanned?: boolean;
+    scannedAt?: boolean;
     profileId?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
@@ -18945,6 +18969,8 @@ export namespace Prisma {
     | 'mail'
     | 'dni'
     | 'seat'
+    | 'scanned'
+    | 'scannedAt'
     | 'profileId'
     | 'created_at'
     | 'updated_at',
@@ -18987,6 +19013,8 @@ export namespace Prisma {
         mail: string;
         dni: string;
         seat: number | null;
+        scanned: boolean;
+        scannedAt: Date | null;
         profileId: string | null;
         created_at: Date;
         updated_at: Date;
@@ -19008,7 +19036,7 @@ export namespace Prisma {
 
   export interface TicketDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Ticket'];
@@ -19032,11 +19060,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -19058,11 +19086,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -19085,11 +19113,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -19113,11 +19141,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -19143,7 +19171,7 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -19166,11 +19194,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -19218,7 +19246,7 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -19241,11 +19269,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -19270,11 +19298,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -19349,7 +19377,7 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -19377,11 +19405,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -19533,7 +19561,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     event<T extends EventDefaultArgs<ExtArgs> = {}>(
@@ -19543,12 +19571,12 @@ export namespace Prisma {
           Prisma.$EventPayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null,
       Null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     profile<T extends Ticket$profileArgs<ExtArgs> = {}>(
       args?: Subset<T, Ticket$profileArgs<ExtArgs>>,
@@ -19557,11 +19585,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -19611,6 +19639,8 @@ export namespace Prisma {
     readonly mail: FieldRef<'Ticket', 'String'>;
     readonly dni: FieldRef<'Ticket', 'String'>;
     readonly seat: FieldRef<'Ticket', 'Int'>;
+    readonly scanned: FieldRef<'Ticket', 'Boolean'>;
+    readonly scannedAt: FieldRef<'Ticket', 'DateTime'>;
     readonly profileId: FieldRef<'Ticket', 'String'>;
     readonly created_at: FieldRef<'Ticket', 'DateTime'>;
     readonly updated_at: FieldRef<'Ticket', 'DateTime'>;
@@ -20296,7 +20326,7 @@ export namespace Prisma {
 
   export interface EnumsDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Enums'];
@@ -20320,11 +20350,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -20346,11 +20376,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -20373,11 +20403,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -20401,11 +20431,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -20431,7 +20461,7 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -20454,11 +20484,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -20506,7 +20536,7 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -20529,11 +20559,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -20558,11 +20588,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -20637,7 +20667,7 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -20665,11 +20695,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -20821,7 +20851,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     /**
@@ -21599,7 +21629,7 @@ export namespace Prisma {
 
   export interface EventTicketDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['EventTicket'];
@@ -21623,11 +21653,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'findUnique',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -21649,11 +21679,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -21676,11 +21706,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'findFirst',
-        ClientOptions
+        GlobalOmitOptions
       > | null,
       null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -21704,11 +21734,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -21734,7 +21764,7 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'findMany',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -21757,11 +21787,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'create',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -21809,7 +21839,7 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -21832,11 +21862,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'delete',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -21861,11 +21891,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'update',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -21940,7 +21970,7 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        ClientOptions
+        GlobalOmitOptions
       >
     >;
 
@@ -21968,11 +21998,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'upsert',
-        ClientOptions
+        GlobalOmitOptions
       >,
       never,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
 
     /**
@@ -22125,7 +22155,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    ClientOptions = {},
+    GlobalOmitOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     event<T extends EventDefaultArgs<ExtArgs> = {}>(
@@ -22135,12 +22165,12 @@ export namespace Prisma {
           Prisma.$EventPayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          ClientOptions
+          GlobalOmitOptions
         >
       | Null,
       Null,
       ExtArgs,
-      ClientOptions
+      GlobalOmitOptions
     >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -22830,6 +22860,8 @@ export namespace Prisma {
     mail: 'mail';
     dni: 'dni';
     seat: 'seat';
+    scanned: 'scanned';
+    scannedAt: 'scannedAt';
     profileId: 'profileId';
     created_at: 'created_at';
     updated_at: 'updated_at';
@@ -24150,6 +24182,8 @@ export namespace Prisma {
     mail?: StringFilter<'Ticket'> | string;
     dni?: StringFilter<'Ticket'> | string;
     seat?: IntNullableFilter<'Ticket'> | number | null;
+    scanned?: BoolFilter<'Ticket'> | boolean;
+    scannedAt?: DateTimeNullableFilter<'Ticket'> | Date | string | null;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeFilter<'Ticket'> | Date | string;
@@ -24169,6 +24203,8 @@ export namespace Prisma {
     mail?: SortOrder;
     dni?: SortOrder;
     seat?: SortOrderInput | SortOrder;
+    scanned?: SortOrder;
+    scannedAt?: SortOrderInput | SortOrder;
     profileId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -24189,6 +24225,8 @@ export namespace Prisma {
       mail?: StringFilter<'Ticket'> | string;
       dni?: StringFilter<'Ticket'> | string;
       seat?: IntNullableFilter<'Ticket'> | number | null;
+      scanned?: BoolFilter<'Ticket'> | boolean;
+      scannedAt?: DateTimeNullableFilter<'Ticket'> | Date | string | null;
       profileId?: StringNullableFilter<'Ticket'> | string | null;
       created_at?: DateTimeFilter<'Ticket'> | Date | string;
       updated_at?: DateTimeFilter<'Ticket'> | Date | string;
@@ -24210,6 +24248,8 @@ export namespace Prisma {
     mail?: SortOrder;
     dni?: SortOrder;
     seat?: SortOrderInput | SortOrder;
+    scanned?: SortOrder;
+    scannedAt?: SortOrderInput | SortOrder;
     profileId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -24238,6 +24278,12 @@ export namespace Prisma {
     mail?: StringWithAggregatesFilter<'Ticket'> | string;
     dni?: StringWithAggregatesFilter<'Ticket'> | string;
     seat?: IntNullableWithAggregatesFilter<'Ticket'> | number | null;
+    scanned?: BoolWithAggregatesFilter<'Ticket'> | boolean;
+    scannedAt?:
+      | DateTimeNullableWithAggregatesFilter<'Ticket'>
+      | Date
+      | string
+      | null;
     profileId?: StringNullableWithAggregatesFilter<'Ticket'> | string | null;
     created_at?: DateTimeWithAggregatesFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Ticket'> | Date | string;
@@ -25461,6 +25507,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
@@ -25476,6 +25524,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -25489,6 +25539,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
@@ -25504,6 +25560,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -25518,6 +25580,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -25531,6 +25595,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -25544,6 +25614,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -26600,6 +26676,8 @@ export namespace Prisma {
     mail?: SortOrder;
     dni?: SortOrder;
     seat?: SortOrder;
+    scanned?: SortOrder;
+    scannedAt?: SortOrder;
     profileId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -26618,6 +26696,8 @@ export namespace Prisma {
     mail?: SortOrder;
     dni?: SortOrder;
     seat?: SortOrder;
+    scanned?: SortOrder;
+    scannedAt?: SortOrder;
     profileId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -26632,6 +26712,8 @@ export namespace Prisma {
     mail?: SortOrder;
     dni?: SortOrder;
     seat?: SortOrder;
+    scanned?: SortOrder;
+    scannedAt?: SortOrder;
     profileId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -30121,6 +30203,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
@@ -30135,6 +30219,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -30414,6 +30500,8 @@ export namespace Prisma {
     mail?: StringFilter<'Ticket'> | string;
     dni?: StringFilter<'Ticket'> | string;
     seat?: IntNullableFilter<'Ticket'> | number | null;
+    scanned?: BoolFilter<'Ticket'> | boolean;
+    scannedAt?: DateTimeNullableFilter<'Ticket'> | Date | string | null;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeFilter<'Ticket'> | Date | string;
@@ -32014,6 +32102,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     profile?: ProfileCreateNestedOneWithoutTicketInput;
@@ -32027,6 +32117,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -33360,6 +33452,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -33508,6 +33602,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
@@ -33522,6 +33622,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -33535,6 +33641,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -34178,6 +34290,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -34215,6 +34329,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     profile?: ProfileUpdateOneWithoutTicketNestedInput;
@@ -34228,6 +34348,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -34241,6 +34367,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
