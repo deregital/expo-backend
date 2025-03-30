@@ -88,21 +88,14 @@ export class EventService {
     >
   > {
     return await this.prisma.event.findMany({
-      where: {
-        folderId: null,
-      },
+      where: { folderId: null },
       include: {
         subEvents: true,
         supraEvent: true,
         tags: {
           include: {
             group: {
-              select: {
-                id: true,
-                color: true,
-                name: true,
-                isExclusive: true,
-              },
+              select: { id: true, color: true, name: true, isExclusive: true },
             },
           },
         },
@@ -120,11 +113,7 @@ export class EventService {
         subEvents: true,
         eventTickets: true,
         supraEvent: true,
-        tags: {
-          include: {
-            group: true,
-          },
-        },
+        tags: { include: { group: true } },
         tickets: true,
       },
     });
@@ -135,13 +124,8 @@ export class EventService {
     id: Event['id'],
   ): Promise<z.infer<typeof getBySupraEventResponseSchema>> {
     const events = await this.prisma.event.findMany({
-      where: {
-        supraEventId: id,
-      },
-      include: {
-        tagAssisted: true,
-        tagConfirmed: true,
-      },
+      where: { supraEventId: id },
+      include: { tagAssisted: true, tagConfirmed: true },
     });
     return events;
   }
@@ -168,26 +152,15 @@ export class EventService {
             type: ticket.type,
           })),
         },
-        tags: {
-          set: updateEventDto.tagsId.map((tag) => ({ id: tag })),
-        },
+        tags: { set: updateEventDto.tagsId.map((tag) => ({ id: tag })) },
         folder: updateEventDto.folderId
           ? { connect: { id: updateEventDto.folderId } }
           : { disconnect: true },
       },
       include: {
-        tagAssisted: {
-          include: {
-            group: true,
-          },
-        },
+        tagAssisted: { include: { group: true } },
         eventTickets: {
-          select: {
-            id: true,
-            amount: true,
-            price: true,
-            type: true,
-          },
+          select: { id: true, amount: true, price: true, type: true },
         },
       },
     });
@@ -208,9 +181,7 @@ export class EventService {
     tagGroupId: TagGroup['id'];
   }): Promise<Event> {
     return await this.prisma.event.upsert({
-      where: {
-        id,
-      },
+      where: { id },
       update: {
         date: event.date,
         startingDate: event.startingDate,
@@ -224,29 +195,17 @@ export class EventService {
         endingDate: event.endingDate,
         location: event.location,
         name: event.name,
-        supraEvent: {
-          connect: {
-            id: supraEventId,
-          },
-        },
+        supraEvent: { connect: { id: supraEventId } },
         tagAssisted: {
           create: {
-            group: {
-              connect: {
-                id: tagGroupId,
-              },
-            },
+            group: { connect: { id: tagGroupId } },
             name: `${event.name} - ${translate('prisma.tag.assisted')}`,
             type: TagType.EVENT,
           },
         },
         tagConfirmed: {
           create: {
-            group: {
-              connect: {
-                id: tagGroupId,
-              },
-            },
+            group: { connect: { id: tagGroupId } },
             name: `${event.name} - ${translate('prisma.tag.confirmed')}`,
             type: TagType.EVENT,
           },
@@ -256,9 +215,7 @@ export class EventService {
   }
 
   async delete(id: string): Promise<z.infer<typeof deleteEventResponseSchema>> {
-    const deletedEvent = await this.prisma.event.delete({
-      where: { id },
-    });
+    const deletedEvent = await this.prisma.event.delete({ where: { id } });
     return deletedEvent;
   }
 
@@ -266,56 +223,30 @@ export class EventService {
     id: string,
     { active }: { active: boolean },
   ): Promise<Event> {
-    return await this.prisma.event.update({
-      where: { id },
-      data: {
-        active,
-      },
-    });
+    return await this.prisma.event.update({ where: { id }, data: { active } });
   }
 
   async findActive(): Promise<z.infer<typeof getActiveEventsResponseSchema>> {
     const events = await this.prisma.event.findMany({
-      where: {
-        active: true,
-        endingDate: {
-          gt: new Date(),
-        },
-      },
-      include: {
-        eventTickets: true,
-      },
+      where: { active: true, endingDate: { gt: new Date() } },
+      include: { eventTickets: true },
     });
 
     return { events };
   }
 
-  async findActiveByTags(tagIds: Tag['id'][]): Promise<
-    Prisma.EventGetPayload<{
-      include: {
-        tickets: true;
-        eventTickets: true;
-      };
-    }>[]
+  async findActiveByTags(
+    tagIds: Tag['id'][],
+  ): Promise<
+    Prisma.EventGetPayload<{ include: { tickets: true; eventTickets: true } }>[]
   > {
     return await this.prisma.event.findMany({
       where: {
         active: true,
-        endingDate: {
-          gt: new Date(),
-        },
-        tags: {
-          some: {
-            id: {
-              in: tagIds,
-            },
-          },
-        },
+        endingDate: { gt: new Date() },
+        tags: { some: { id: { in: tagIds } } },
       },
-      include: {
-        tickets: true,
-        eventTickets: true,
-      },
+      include: { tickets: true, eventTickets: true },
     });
   }
 }

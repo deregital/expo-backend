@@ -357,6 +357,10 @@ export class TicketController {
         translate('route.ticket.scan.event-not-found'),
       ]);
     }
+    if (event.endingDate < new Date()) {
+      throw new ConflictException([translate('route.ticket.scan.event-ended')]);
+    }
+
     const scannedTicket = await this.ticketService.scanTicket(ticket.id);
 
     if (scannedTicket.type === TicketType.PARTICIPANT) {
