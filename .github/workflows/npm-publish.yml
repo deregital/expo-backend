@@ -18,6 +18,8 @@ jobs:
         with:
           node-version: 20
 
+      - run: npm install --legacy-peer-deps # Install dependencies without peer dependency checks
+
       - run: npx patch-package # Apply any patches
 
       - run: npm install # Install dependencies
