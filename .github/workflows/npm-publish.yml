@@ -18,6 +18,8 @@ jobs:
         with:
           node-version: 20
 
+      - run: npx patch-package # Apply any patches
+
       - run: npm install # Install dependencies
 
       - run: npx prisma generate # Generate Prisma Client
