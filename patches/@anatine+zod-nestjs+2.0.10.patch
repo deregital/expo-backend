@@ -1,0 +1,15 @@
+diff --git a/node_modules/@anatine/zod-nestjs/package.json b/node_modules/@anatine/zod-nestjs/package.json
+index 250ae70..8fc14e6 100644
+--- a/node_modules/@anatine/zod-nestjs/package.json
++++ b/node_modules/@anatine/zod-nestjs/package.json
+@@ -26,8 +26,8 @@
+   },
+   "peerDependencies": {
+     "@anatine/zod-openapi": "^2.0.1",
+-    "@nestjs/common": "^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0",
+-    "@nestjs/swagger": "^6.0.0 || ^7.0.0",
++    "@nestjs/common": "^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0",
++    "@nestjs/swagger": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0",
+     "openapi3-ts": "^4.1.2",
+     "zod": "^3.20.0"
+   }
