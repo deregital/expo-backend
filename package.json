@@ -15,10 +15,9 @@
     "dist/src/i18n"
   ],
   "scripts": {
-    "ci": "npm install && npx prisma generate && npm run generate-ts-schema && npm run build && npx prisma generate && npm run format && npm run lint && npm run check-exports",
+    "ci": "npm install --legacy-peer-deps && npx prisma generate && npm run generate-ts-schema && npm run build && npx prisma generate && npm run format && npm run lint && npm run check-exports",
     "build": "nest build",
     "postinstall": "patch-package",
-    "preinstall": "patch-package",
     "format": "prettier --write \"src/**/*.ts\" \"types/**/*.ts\"",
     "check-format": "prettier --check \"src/**/*.ts\"",
     "check-exports": "attw --pack --profile node16 .",
