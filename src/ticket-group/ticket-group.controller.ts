@@ -43,7 +43,7 @@ import {
   ApiOkResponse,
 } from '@nestjs/swagger';
 import z from 'zod';
-import { Role } from '~/types/prisma-schema';
+import { Role, TicketType } from '~/types/prisma-schema';
 
 @Roles(Role.ADMIN, Role.USER, Role.TICKETS)
 @UseGuards(JwtGuard, RoleGuard)
@@ -79,7 +79,7 @@ export class TicketGroupController {
       );
     }
     const maxTicketsToEmit = event.eventTickets.find(
-      (et) => et.type === 'SPECTATOR',
+      (et) => et.type === TicketType.SPECTATOR,
     )?.amount;
     if (!maxTicketsToEmit) {
       throw new NotFoundException(

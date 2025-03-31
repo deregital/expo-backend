@@ -32,23 +32,11 @@ export const generateMultiplePdfTicketsSchema = z
   })
   .array();
 
-export class GenerateMultiplePdfTicketsResponseDto extends createZodDtoWithoutDate(
-  generateMultiplePdfTicketsSchema,
-) {}
-
-export class GenerateMultiplePdfTicketsDto extends createZodDtoWithoutDate(
-  generateMultiplePdfTicketsSchema,
-) {}
-
 export const createManyTicketResponseSchema = ticketSchema
   .extend({
     event: eventSchema,
   })
   .array();
-
-export class CreateManyTicketResponseDto extends createZodDtoWithoutDate(
-  createManyTicketResponseSchema,
-) {}
 
 export const createManyTicketWithPdfsResponseSchema = z.object({
   tickets: createManyTicketResponseSchema,

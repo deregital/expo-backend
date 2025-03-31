@@ -21,21 +21,72 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { generate } from '@pdfme/generator';
 import { barcodes, line, text } from '@pdfme/schemas';
 import z from 'zod';
-import { Profile } from '~/types';
+import { Profile, Ticket, TicketType } from '~/types';
 import { TICKET_INPUTS, TICKET_TEMPLATE } from './constants';
 import {
   CreateManyTicketDto,
   createManyTicketResponseSchema,
   generateMultiplePdfTicketsSchema,
 } from './dto/create-many-ticket.dto';
-import {
-  FindByEventAndTypeTicketDto,
-  findByEventAndTypeTicketResponseSchema,
-} from './dto/find-by-event-type-ticket.dto';
 
 @Injectable()
 export class TicketService {
   constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
+
+  private async generatePdfTickets(
+    ticket: Ticket,
+  ): Promise<{ ticketId: string; pdf: Blob } | null> {
+    // Reutilizar la lógica existente de formateo de fecha y generación de PDF
+    const event = await this.prisma.event.findUnique({
+      where: { id: ticket.eventId },
+    });
+    if (!event) return null;
+    const eventDate = new Date(event.date);
+
+    const formattedDate = eventDate.toLocaleDateString('es-ES', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+
+    const formattedTime = eventDate.toLocaleTimeString('es-ES', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    const template = TICKET_TEMPLATE;
+    const inputs = [
+      {
+        event_name: event.name,
+        event_date: formattedDate,
+        event_time: formattedTime,
+        event_location: event.location,
+        mail_ticket: ticket.mail,
+        fullName_ticket: ticket.fullName,
+        ticket_type: ticket.type,
+        ticket_id: ticket.id,
+        ...TICKET_INPUTS,
+        ticket_barcode: encryptString(ticket.id),
+      },
+    ];
+
+    const plugins = {
+      text,
+      line,
+      barcodes: barcodes.code128,
+    };
+
+    const pdf = await generate({ template, inputs, plugins });
+    const blob = new Blob([pdf.buffer], {
+      type: 'application/pdf',
+    });
+
+    return {
+      ticketId: ticket.id,
+      pdf: blob,
+    };
+  }
 
   async create(
     dto: CreateTicketDto,
@@ -105,14 +156,15 @@ export class TicketService {
   }
 
   async findAmountByEventAndType(
-    dto: FindByEventAndTypeTicketDto,
-  ): Promise<z.infer<typeof findByEventAndTypeTicketResponseSchema>> {
+    eventId: string,
+    type: TicketType,
+  ): Promise<number> {
     const ticketsByEventAndType = await this.prisma.ticket.findMany({
-      where: { eventId: dto.eventId, type: dto.type },
+      where: { eventId: eventId, type: type },
       include: { event: true, profile: true },
     });
 
-    return { tickets: ticketsByEventAndType.length };
+    return ticketsByEventAndType.length;
   }
 
   async findByProfileId(
@@ -233,54 +285,11 @@ export class TicketService {
 
     // Generar PDFs para todos los tickets
     const pdfPromises = tickets.map(async (ticket) => {
-      // Reutilizar la lógica existente de formateo de fecha y generación de PDF
-      const eventDate = new Date(ticket.event.date);
-      const formattedDate = eventDate.toLocaleDateString('es-ES', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
-
-      const formattedTime = eventDate.toLocaleTimeString('es-ES', {
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-
-      const template = TICKET_TEMPLATE;
-      const inputs = [
-        {
-          event_name: ticket.event.name,
-          event_date: formattedDate,
-          event_time: formattedTime,
-          event_location: ticket.event.location,
-          mail_ticket: ticket.mail,
-          fullName_ticket: ticket.fullName,
-          ticket_type: ticket.type,
-          ticket_id: ticket.id,
-          ...TICKET_INPUTS,
-          ticket_barcode: encryptString(ticket.id),
-        },
-      ];
-
-      const plugins = {
-        text,
-        line,
-        barcodes: barcodes.code128,
-      };
-
-      const pdf = await generate({ template, inputs, plugins });
-      const blob = new Blob([pdf.buffer], {
-        type: 'application/pdf',
-      });
-
-      return {
-        ticketId: ticket.id,
-        pdf: blob,
-      };
+      return await this.generatePdfTickets(ticket);
     });
 
     // Esperar a que todos los PDFs se generen
-    return Promise.all(pdfPromises);
+    const pdfs = await Promise.all(pdfPromises);
+    return pdfs.filter((pdf) => pdf !== null);
   }
 }

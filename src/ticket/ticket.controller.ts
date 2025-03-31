@@ -9,6 +9,7 @@ import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import {
   CreateManyTicketDto,
   CreateManyTicketWithPdfsResponseDto,
+  createManyTicketWithPdfsResponseSchema,
 } from '@/ticket/dto/create-many-ticket.dto';
 import {
   CreateTicketDto,
@@ -110,15 +111,15 @@ export class TicketController {
       (et) => et.type === createTicketDto.type,
     )?.amount;
 
-    const ticketsEmitted = await this.ticketService.findAmountByEventAndType({
-      eventId: createTicketDto.eventId,
-      type: createTicketDto.type,
-    });
+    const ticketsEmitted = await this.ticketService.findAmountByEventAndType(
+      createTicketDto.eventId,
+      createTicketDto.type,
+    );
 
     const hasMaxTickets =
       maxTicketsToEmit !== null && maxTicketsToEmit !== undefined;
 
-    if (hasMaxTickets && ticketsEmitted.tickets >= maxTicketsToEmit) {
+    if (hasMaxTickets && ticketsEmitted >= maxTicketsToEmit) {
       throw new ConflictException(
         translate('route.ticket.create.max-tickets-reached'),
       );
@@ -143,8 +144,7 @@ export class TicketController {
   @Post('/create-many')
   async createMany(
     @Body() createManyTicketDto: CreateManyTicketDto,
-    @Res() res: Response,
-  ): Promise<void> {
+  ): Promise<z.infer<typeof createManyTicketWithPdfsResponseSchema>> {
     const event = createManyTicketDto.tickets[0]?.eventId;
     const type = createManyTicketDto.tickets[0]?.type;
     if (!event) {
@@ -166,12 +166,12 @@ export class TicketController {
         translate('route.ticket.create-many.max-tickets-not-found'),
       );
     }
-    const ticketsEmitted = await this.ticketService.findAmountByEventAndType({
-      eventId: event,
+    const ticketsEmitted = await this.ticketService.findAmountByEventAndType(
+      event,
       type,
-    });
+    );
     if (
-      ticketsEmitted.tickets + createManyTicketDto.tickets.length >
+      ticketsEmitted + createManyTicketDto.tickets.length >
       maxTicketsToEmit
     ) {
       throw new ConflictException(
@@ -201,7 +201,7 @@ export class TicketController {
       ),
     };
 
-    res.status(200).json(response);
+    return response;
   }
 
   @ApiOkResponse({
