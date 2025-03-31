@@ -35,12 +35,15 @@ export class TicketService {
 
   private async generatePdfTickets(
     ticket: Ticket,
-  ): Promise<{ ticketId: string; pdf: Blob } | null> {
+  ): Promise<{ ticketId: string; pdf: Blob }> {
     // Reutilizar la lógica existente de formateo de fecha y generación de PDF
     const event = await this.prisma.event.findUnique({
       where: { id: ticket.eventId },
     });
-    if (!event) return null;
+    if (!event)
+      throw new NotFoundException(
+        translate('route.pdf.generate-pdf.not-found'),
+      );
     const eventDate = new Date(event.date);
 
     const formattedDate = eventDate.toLocaleDateString('es-ES', {
@@ -288,8 +291,8 @@ export class TicketService {
       return await this.generatePdfTickets(ticket);
     });
 
-    // Esperar a que todos los PDFs se generen
+    // Esperar a que todos los PDFs se generen y filtrar los nulos
     const pdfs = await Promise.all(pdfPromises);
-    return pdfs.filter((pdf) => pdf !== null);
+    return pdfs;
   }
 }
