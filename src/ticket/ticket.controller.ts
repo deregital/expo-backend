@@ -83,7 +83,7 @@ import {
   ApiOkResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { Response } from 'express';
+import type { Response } from 'express';
 import z from 'zod';
 import { Role, TicketType } from '~/types/prisma-schema';
 
@@ -182,9 +182,9 @@ export class TicketController {
   async createMany(
     @Body() createManyTicketDto: CreateManyTicketDto,
   ): Promise<z.infer<typeof createManyTicketWithPdfsResponseSchema>> {
-    const event = createManyTicketDto.tickets[0]?.eventId;
+    const eventId = createManyTicketDto.tickets[0]?.eventId;
     const type = createManyTicketDto.tickets[0]?.type;
-    if (!event) {
+    if (!eventId) {
       throw new NotFoundException(
         translate('route.ticket.create-many.event-not-found'),
       );
@@ -194,7 +194,8 @@ export class TicketController {
         translate('route.ticket.create-many.type-not-found'),
       );
     }
-    const eventTickets = (await this.eventService.findById(event)).eventTickets;
+    const eventTickets = (await this.eventService.findById(eventId))
+      .eventTickets;
     const maxTicketsToEmit = eventTickets.find(
       (et) => et.type === type,
     )?.amount;
@@ -204,7 +205,7 @@ export class TicketController {
       );
     }
     const ticketsEmitted = await this.ticketService.findAmountByEventAndType(
-      event,
+      eventId,
       type,
     );
     if (
@@ -215,8 +216,19 @@ export class TicketController {
         translate('route.ticket.create-many.max-tickets-reached'),
       );
     }
+
+    const seat =
+      type === TicketType.SPECTATOR
+        ? (await this.ticketService.getHighestSeatForEvent(eventId)) + 1
+        : null;
+
     // Primero, crear los ticket
-    const tickets = await this.ticketService.createMany(createManyTicketDto);
+    const tickets = await this.ticketService.createMany({
+      tickets: createManyTicketDto.tickets.map((ticket, index) => ({
+        ...ticket,
+        seat: seat ? seat + 1 + index : null,
+      })),
+    });
 
     // Extraer los IDs de los tickets creados
     const ticketIds = tickets.map((ticket) => ticket.id);
