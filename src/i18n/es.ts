@@ -14,6 +14,7 @@ export default {
       otp: 'OTP',
       ticket: 'Ticket',
       eventTicket: 'Tickets del evento',
+      ticketGroup: 'Grupo de tickets',
     },
     tag: {
       assisted: 'Asistió',
@@ -217,11 +218,20 @@ export default {
       status: {
         invalid: 'El estado del ticket es inválido',
       },
+      dni: {
+        required: 'El DNI es requerido',
+      },
       seat: {
         required: 'El asiento es requerido',
       },
-      dni: {
-        required: 'El DNI es requerido',
+    },
+    ticketGroup: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      amountTickets: 'La cantidad de tickets debe ser mayor a 0',
+      status: {
+        invalid: 'El estado del grupo de tickets es inválido',
       },
     },
     eventTicket: {
@@ -581,6 +591,15 @@ export default {
         'profile-id-required':
           'El ID del perfil es requerido en el ticket de participante',
       },
+      'create-many': {
+        success: 'Tickets creados con éxito',
+        'event-not-found': 'Evento no encontrado',
+        error: 'Error en la creación de los tickets',
+        'max-tickets-reached':
+          'No se pueden emitir más tickets para este evento',
+        'type-not-found': 'Tipo de ticket no encontrado',
+        'max-tickets-not-found': 'Cantidad máxima de tickets no encontrada',
+      },
       'find-all': {
         success: 'Tickets obtenidos',
       },
@@ -614,6 +633,25 @@ export default {
           subject: `Llegó tu ExpoTicket para el evento \{\{eventName\}\}!`,
           text: `Te esperamos el \{\{eventDate\}\} a las \{\{eventTime\}\} en \{\{eventLocation\}\}. ¡No te lo pierdas!`,
         },
+      },
+    },
+    'ticket-group': {
+      create: {
+        success: 'Grupo de tickets creado',
+        'event-not-found': 'Evento no encontrado',
+        conflict: 'Error en la creación del grupo de tickets',
+      },
+      'find-tickets-by-event': {
+        success: 'Tickets por evento obtenidos',
+        'not-found': 'Tickets por evento no encontrados',
+      },
+      update: {
+        success: 'Grupo de tickets actualizado',
+        'not-found': 'Grupo de tickets no encontrado',
+      },
+      delete: {
+        success: 'Grupo de tickets eliminado',
+        'not-found': 'Grupo de tickets no encontrado',
       },
     },
     webhook: {

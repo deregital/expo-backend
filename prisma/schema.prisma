@@ -199,6 +199,7 @@ model Event {
   supraEvent   Event?  @relation("SubEvents", fields: [supraEventId], references: [id], onDelete: Cascade)
 
   tickets      Ticket[]      @relation("EVENT_X_TICKET")
+  ticketGroups TicketGroup[] @relation("EVENT_X_TICKET_GROUP")
   subEvents    Event[]       @relation("SubEvents")
   tags         Tag[]         @relation("EVENT_X_TAGS")
   eventTickets EventTicket[] @relation("EVENT_X_EVENTTICKET")
@@ -256,8 +257,7 @@ model Ticket {
   event   Event  @relation("EVENT_X_TICKET", fields: [eventId], references: [id], onDelete: Cascade)
   eventId String @map("event_id")
 
-  type   TicketType
-  status TicketStatus
+  type TicketType
 
   fullName String
   mail     String
@@ -268,11 +268,30 @@ model Ticket {
   profileId String?  @map("profile_id")
   profile   Profile? @relation("PROFILE_X_TICKET", fields: [profileId], references: [id])
 
+  ticketGroupId String?      @map("ticket_group_id")
+  ticketGroup   TicketGroup? @relation("TICKET_X_TICKET_GROUP", fields: [ticketGroupId], references: [id])
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
   @@index([eventId, seat], name: "unique_seat_per_event")
   @@map("TICKET")
+}
+
+model TicketGroup {
+  id String @id @default(uuid())
+
+  status        TicketGroupStatus
+  amountTickets Int               @default(0)
+  eventId       String            @map("event_id")
+  event         Event             @relation("EVENT_X_TICKET_GROUP", fields: [eventId], references: [id], onDelete: Cascade)
+
+  tickets Ticket[] @relation("TICKET_X_TICKET_GROUP")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("TICKET_GROUP")
 }
 
 model Enums {
@@ -326,7 +345,7 @@ enum TicketType {
   SPECTATOR
 }
 
-enum TicketStatus {
+enum TicketGroupStatus {
   BOOKED
   PAID
   FREE

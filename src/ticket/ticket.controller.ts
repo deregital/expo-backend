@@ -13,6 +13,11 @@ import { decryptString } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagService } from '@/tag/tag.service';
 import {
+  CreateManyTicketDto,
+  CreateManyTicketWithPdfsResponseDto,
+  createManyTicketWithPdfsResponseSchema,
+} from '@/ticket/dto/create-many-ticket.dto';
+import {
   CreateTicketDto,
   CreateTicketResponseDto,
   createTicketResponseSchema,
@@ -78,7 +83,7 @@ import {
   ApiOkResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { Response } from 'express';
+import type { Response } from 'express';
 import z from 'zod';
 import { Role, TicketType } from '~/types/prisma-schema';
 
@@ -120,9 +125,11 @@ export class TicketController {
       (et) => et.type === createTicketDto.type,
     )?.amount;
 
-    const ticketsEmitted = event.tickets.filter(
-      (t) => t.type === createTicketDto.type,
-    ).length;
+    const ticketsEmitted = await this.ticketService.findAmountByEventAndType(
+      createTicketDto.eventId,
+      createTicketDto.type,
+    );
+
     const hasMaxTickets =
       maxTicketsToEmit !== null && maxTicketsToEmit !== undefined;
 
@@ -156,6 +163,94 @@ export class TicketController {
       ...createTicketDto,
       seat,
     });
+  }
+
+  @Roles(Role.ADMIN, Role.MI_EXPO, Role.TICKETS)
+  @ApiNotFoundResponse({
+    description: translate('route.ticket.create-many.event-not-found'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.ticket.create-many.error'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    description: translate('route.ticket.create-many.success'),
+    type: CreateManyTicketWithPdfsResponseDto,
+  })
+  @Post('/create-many')
+  async createMany(
+    @Body() createManyTicketDto: CreateManyTicketDto,
+  ): Promise<z.infer<typeof createManyTicketWithPdfsResponseSchema>> {
+    const eventId = createManyTicketDto.tickets[0]?.eventId;
+    const type = createManyTicketDto.tickets[0]?.type;
+    if (!eventId) {
+      throw new NotFoundException(
+        translate('route.ticket.create-many.event-not-found'),
+      );
+    }
+    if (!type) {
+      throw new NotFoundException(
+        translate('route.ticket.create-many.type-not-found'),
+      );
+    }
+    const eventTickets = (await this.eventService.findById(eventId))
+      .eventTickets;
+    const maxTicketsToEmit = eventTickets.find(
+      (et) => et.type === type,
+    )?.amount;
+    if (!maxTicketsToEmit) {
+      throw new NotFoundException(
+        translate('route.ticket.create-many.max-tickets-not-found'),
+      );
+    }
+    const ticketsEmitted = await this.ticketService.findAmountByEventAndType(
+      eventId,
+      type,
+    );
+    if (
+      ticketsEmitted + createManyTicketDto.tickets.length >
+      maxTicketsToEmit
+    ) {
+      throw new ConflictException(
+        translate('route.ticket.create-many.max-tickets-reached'),
+      );
+    }
+
+    const seat =
+      type === TicketType.SPECTATOR
+        ? (await this.ticketService.getHighestSeatForEvent(eventId)) + 1
+        : null;
+
+    // Primero, crear los ticket
+    const tickets = await this.ticketService.createMany({
+      tickets: createManyTicketDto.tickets.map((ticket, index) => ({
+        ...ticket,
+        seat: seat ? seat + index : null,
+      })),
+    });
+
+    // Extraer los IDs de los tickets creados
+    const ticketIds = tickets.map((ticket) => ticket.id);
+
+    // Luego, generar los PDFs para todos los tickets
+    const pdfs = await this.ticketService.generateMultiplePdfTickets(ticketIds);
+
+    // Preparar la respuesta con los tickets y los PDFs
+    const response = {
+      tickets: tickets,
+      pdfs: await Promise.all(
+        pdfs.map(async (item) => ({
+          ticketId: item.ticketId,
+          // Convertir el Blob a base64 para enviarlo en la respuesta JSON
+          pdfBase64: Buffer.from(await item.pdf.arrayBuffer()).toString(
+            'base64',
+          ),
+        })),
+      ),
+    };
+
+    return response;
   }
 
   @ApiOkResponse({
@@ -270,7 +365,13 @@ export class TicketController {
     @Param('id', new ExistingRecord('ticket')) id: string,
     @Res() res: Response,
   ): Promise<void> {
-    const pdfBlob = await this.ticketService.generatePdfTicket(id);
+    const { ticket } = await this.ticketService.findById(id);
+    if (!ticket) {
+      throw new NotFoundException(
+        translate('route.pdf.generate-pdf.not-found'),
+      );
+    }
+    const pdfBlob = await this.ticketService.generatePdfTicket(ticket);
     const buffer = Buffer.from(await pdfBlob.arrayBuffer());
 
     res.setHeader(
@@ -332,7 +433,7 @@ export class TicketController {
       ]);
     }
 
-    const pdf = await this.ticketService.generatePdfTicket(id);
+    const pdf = await this.ticketService.generatePdfTicket(ticket);
     const mailId = await this.mailService.sendTicket({ ...ticket, event }, pdf);
 
     return { mailId: mailId };
