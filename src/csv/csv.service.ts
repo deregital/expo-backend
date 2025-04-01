@@ -42,16 +42,12 @@ export class CsvService {
       for (const modelName of Object.values(Prisma.ModelName).filter(
         (k) => k !== 'Enums',
       )) {
+        if (!modelName) {
+          continue;
+        }
         const table = (modelName![0]!.toLowerCase() +
           modelName.slice(1)) as Uncapitalize<Prisma.ModelName>;
         const dataTables = [];
-        // if (
-        //   table.charAt(0) === '_' ||
-        //   table.charAt(0) === '$' ||
-        //   ['enums'].includes(table)
-        // ) {
-        //   continue;
-        // }
         if (table === 'profile' || table === 'account') {
           dataTables.push(
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

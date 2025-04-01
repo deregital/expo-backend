@@ -18812,8 +18812,18 @@ export namespace Prisma {
 
   export type AggregateTicket = {
     _count: TicketCountAggregateOutputType | null;
+    _avg: TicketAvgAggregateOutputType | null;
+    _sum: TicketSumAggregateOutputType | null;
     _min: TicketMinAggregateOutputType | null;
     _max: TicketMaxAggregateOutputType | null;
+  };
+
+  export type TicketAvgAggregateOutputType = {
+    seat: number | null;
+  };
+
+  export type TicketSumAggregateOutputType = {
+    seat: number | null;
   };
 
   export type TicketMinAggregateOutputType = {
@@ -18823,6 +18833,7 @@ export namespace Prisma {
     fullName: string | null;
     mail: string | null;
     dni: string | null;
+    seat: number | null;
     profileId: string | null;
     ticketGroupId: string | null;
     created_at: Date | null;
@@ -18836,6 +18847,7 @@ export namespace Prisma {
     fullName: string | null;
     mail: string | null;
     dni: string | null;
+    seat: number | null;
     profileId: string | null;
     ticketGroupId: string | null;
     created_at: Date | null;
@@ -18849,11 +18861,20 @@ export namespace Prisma {
     fullName: number;
     mail: number;
     dni: number;
+    seat: number;
     profileId: number;
     ticketGroupId: number;
     created_at: number;
     updated_at: number;
     _all: number;
+  };
+
+  export type TicketAvgAggregateInputType = {
+    seat?: true;
+  };
+
+  export type TicketSumAggregateInputType = {
+    seat?: true;
   };
 
   export type TicketMinAggregateInputType = {
@@ -18863,6 +18884,7 @@ export namespace Prisma {
     fullName?: true;
     mail?: true;
     dni?: true;
+    seat?: true;
     profileId?: true;
     ticketGroupId?: true;
     created_at?: true;
@@ -18876,6 +18898,7 @@ export namespace Prisma {
     fullName?: true;
     mail?: true;
     dni?: true;
+    seat?: true;
     profileId?: true;
     ticketGroupId?: true;
     created_at?: true;
@@ -18889,6 +18912,7 @@ export namespace Prisma {
     fullName?: true;
     mail?: true;
     dni?: true;
+    seat?: true;
     profileId?: true;
     ticketGroupId?: true;
     created_at?: true;
@@ -18936,6 +18960,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      *
+     * Select which fields to average
+     **/
+    _avg?: TicketAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+     **/
+    _sum?: TicketSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
      * Select which fields to find the minimum value
      **/
     _min?: TicketMinAggregateInputType;
@@ -18967,6 +19003,8 @@ export namespace Prisma {
     take?: number;
     skip?: number;
     _count?: TicketCountAggregateInputType | true;
+    _avg?: TicketAvgAggregateInputType;
+    _sum?: TicketSumAggregateInputType;
     _min?: TicketMinAggregateInputType;
     _max?: TicketMaxAggregateInputType;
   };
@@ -18978,11 +19016,14 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    seat: number | null;
     profileId: string | null;
-    ticketGroupId: string;
+    ticketGroupId: string | null;
     created_at: Date;
     updated_at: Date;
     _count: TicketCountAggregateOutputType | null;
+    _avg: TicketAvgAggregateOutputType | null;
+    _sum: TicketSumAggregateOutputType | null;
     _min: TicketMinAggregateOutputType | null;
     _max: TicketMaxAggregateOutputType | null;
   };
@@ -19010,13 +19051,14 @@ export namespace Prisma {
       fullName?: boolean;
       mail?: boolean;
       dni?: boolean;
+      seat?: boolean;
       profileId?: boolean;
       ticketGroupId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
       profile?: boolean | Ticket$profileArgs<ExtArgs>;
-      ticketGroup?: boolean | TicketGroupDefaultArgs<ExtArgs>;
+      ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
     },
     ExtArgs['result']['ticket']
   >;
@@ -19031,13 +19073,14 @@ export namespace Prisma {
       fullName?: boolean;
       mail?: boolean;
       dni?: boolean;
+      seat?: boolean;
       profileId?: boolean;
       ticketGroupId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
       profile?: boolean | Ticket$profileArgs<ExtArgs>;
-      ticketGroup?: boolean | TicketGroupDefaultArgs<ExtArgs>;
+      ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
     },
     ExtArgs['result']['ticket']
   >;
@@ -19052,13 +19095,14 @@ export namespace Prisma {
       fullName?: boolean;
       mail?: boolean;
       dni?: boolean;
+      seat?: boolean;
       profileId?: boolean;
       ticketGroupId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
       profile?: boolean | Ticket$profileArgs<ExtArgs>;
-      ticketGroup?: boolean | TicketGroupDefaultArgs<ExtArgs>;
+      ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
     },
     ExtArgs['result']['ticket']
   >;
@@ -19070,6 +19114,7 @@ export namespace Prisma {
     fullName?: boolean;
     mail?: boolean;
     dni?: boolean;
+    seat?: boolean;
     profileId?: boolean;
     ticketGroupId?: boolean;
     created_at?: boolean;
@@ -19085,6 +19130,7 @@ export namespace Prisma {
     | 'fullName'
     | 'mail'
     | 'dni'
+    | 'seat'
     | 'profileId'
     | 'ticketGroupId'
     | 'created_at'
@@ -19096,21 +19142,21 @@ export namespace Prisma {
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
     profile?: boolean | Ticket$profileArgs<ExtArgs>;
-    ticketGroup?: boolean | TicketGroupDefaultArgs<ExtArgs>;
+    ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
   };
   export type TicketIncludeCreateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
     profile?: boolean | Ticket$profileArgs<ExtArgs>;
-    ticketGroup?: boolean | TicketGroupDefaultArgs<ExtArgs>;
+    ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
   };
   export type TicketIncludeUpdateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
     profile?: boolean | Ticket$profileArgs<ExtArgs>;
-    ticketGroup?: boolean | TicketGroupDefaultArgs<ExtArgs>;
+    ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
   };
 
   export type $TicketPayload<
@@ -19120,7 +19166,7 @@ export namespace Prisma {
     objects: {
       event: Prisma.$EventPayload<ExtArgs>;
       profile: Prisma.$ProfilePayload<ExtArgs> | null;
-      ticketGroup: Prisma.$TicketGroupPayload<ExtArgs>;
+      ticketGroup: Prisma.$TicketGroupPayload<ExtArgs> | null;
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -19130,8 +19176,9 @@ export namespace Prisma {
         fullName: string;
         mail: string;
         dni: string;
+        seat: number | null;
         profileId: string | null;
-        ticketGroupId: string;
+        ticketGroupId: string | null;
         created_at: Date;
         updated_at: Date;
       },
@@ -19707,17 +19754,16 @@ export namespace Prisma {
       ExtArgs,
       ClientOptions
     >;
-    ticketGroup<T extends TicketGroupDefaultArgs<ExtArgs> = {}>(
-      args?: Subset<T, TicketGroupDefaultArgs<ExtArgs>>,
+    ticketGroup<T extends Ticket$ticketGroupArgs<ExtArgs> = {}>(
+      args?: Subset<T, Ticket$ticketGroupArgs<ExtArgs>>,
     ): Prisma__TicketGroupClient<
-      | $Result.GetResult<
-          Prisma.$TicketGroupPayload<ExtArgs>,
-          T,
-          'findUniqueOrThrow',
-          ClientOptions
-        >
-      | Null,
-      Null,
+      $Result.GetResult<
+        Prisma.$TicketGroupPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        ClientOptions
+      > | null,
+      null,
       ExtArgs,
       ClientOptions
     >;
@@ -19767,6 +19813,7 @@ export namespace Prisma {
     readonly fullName: FieldRef<'Ticket', 'String'>;
     readonly mail: FieldRef<'Ticket', 'String'>;
     readonly dni: FieldRef<'Ticket', 'String'>;
+    readonly seat: FieldRef<'Ticket', 'Int'>;
     readonly profileId: FieldRef<'Ticket', 'String'>;
     readonly ticketGroupId: FieldRef<'Ticket', 'String'>;
     readonly created_at: FieldRef<'Ticket', 'DateTime'>;
@@ -20212,6 +20259,27 @@ export namespace Prisma {
      */
     include?: ProfileInclude<ExtArgs> | null;
     where?: ProfileWhereInput;
+  };
+
+  /**
+   * Ticket.ticketGroup
+   */
+  export type Ticket$ticketGroupArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    where?: TicketGroupWhereInput;
   };
 
   /**
@@ -24386,6 +24454,7 @@ export namespace Prisma {
     fullName: 'fullName';
     mail: 'mail';
     dni: 'dni';
+    seat: 'seat';
     profileId: 'profileId';
     ticketGroupId: 'ticketGroupId';
     created_at: 'created_at';
@@ -25718,8 +25787,9 @@ export namespace Prisma {
     fullName?: StringFilter<'Ticket'> | string;
     mail?: StringFilter<'Ticket'> | string;
     dni?: StringFilter<'Ticket'> | string;
+    seat?: IntNullableFilter<'Ticket'> | number | null;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
-    ticketGroupId?: StringFilter<'Ticket'> | string;
+    ticketGroupId?: StringNullableFilter<'Ticket'> | string | null;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeFilter<'Ticket'> | Date | string;
     event?: XOR<EventScalarRelationFilter, EventWhereInput>;
@@ -25727,7 +25797,10 @@ export namespace Prisma {
       ProfileNullableScalarRelationFilter,
       ProfileWhereInput
     > | null;
-    ticketGroup?: XOR<TicketGroupScalarRelationFilter, TicketGroupWhereInput>;
+    ticketGroup?: XOR<
+      TicketGroupNullableScalarRelationFilter,
+      TicketGroupWhereInput
+    > | null;
   };
 
   export type TicketOrderByWithRelationInput = {
@@ -25737,8 +25810,9 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
+    seat?: SortOrderInput | SortOrder;
     profileId?: SortOrderInput | SortOrder;
-    ticketGroupId?: SortOrder;
+    ticketGroupId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     event?: EventOrderByWithRelationInput;
@@ -25757,8 +25831,9 @@ export namespace Prisma {
       fullName?: StringFilter<'Ticket'> | string;
       mail?: StringFilter<'Ticket'> | string;
       dni?: StringFilter<'Ticket'> | string;
+      seat?: IntNullableFilter<'Ticket'> | number | null;
       profileId?: StringNullableFilter<'Ticket'> | string | null;
-      ticketGroupId?: StringFilter<'Ticket'> | string;
+      ticketGroupId?: StringNullableFilter<'Ticket'> | string | null;
       created_at?: DateTimeFilter<'Ticket'> | Date | string;
       updated_at?: DateTimeFilter<'Ticket'> | Date | string;
       event?: XOR<EventScalarRelationFilter, EventWhereInput>;
@@ -25766,7 +25841,10 @@ export namespace Prisma {
         ProfileNullableScalarRelationFilter,
         ProfileWhereInput
       > | null;
-      ticketGroup?: XOR<TicketGroupScalarRelationFilter, TicketGroupWhereInput>;
+      ticketGroup?: XOR<
+        TicketGroupNullableScalarRelationFilter,
+        TicketGroupWhereInput
+      > | null;
     },
     'id'
   >;
@@ -25778,13 +25856,16 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
+    seat?: SortOrderInput | SortOrder;
     profileId?: SortOrderInput | SortOrder;
-    ticketGroupId?: SortOrder;
+    ticketGroupId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     _count?: TicketCountOrderByAggregateInput;
+    _avg?: TicketAvgOrderByAggregateInput;
     _max?: TicketMaxOrderByAggregateInput;
     _min?: TicketMinOrderByAggregateInput;
+    _sum?: TicketSumOrderByAggregateInput;
   };
 
   export type TicketScalarWhereWithAggregatesInput = {
@@ -25801,8 +25882,12 @@ export namespace Prisma {
     fullName?: StringWithAggregatesFilter<'Ticket'> | string;
     mail?: StringWithAggregatesFilter<'Ticket'> | string;
     dni?: StringWithAggregatesFilter<'Ticket'> | string;
+    seat?: IntNullableWithAggregatesFilter<'Ticket'> | number | null;
     profileId?: StringNullableWithAggregatesFilter<'Ticket'> | string | null;
-    ticketGroupId?: StringWithAggregatesFilter<'Ticket'> | string;
+    ticketGroupId?:
+      | StringNullableWithAggregatesFilter<'Ticket'>
+      | string
+      | null;
     created_at?: DateTimeWithAggregatesFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Ticket'> | Date | string;
   };
@@ -27104,12 +27189,13 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    dni?: string;
+    dni: string;
+    seat?: number | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
     profile?: ProfileCreateNestedOneWithoutTicketInput;
-    ticketGroup: TicketGroupCreateNestedOneWithoutTicketsInput;
+    ticketGroup?: TicketGroupCreateNestedOneWithoutTicketsInput;
   };
 
   export type TicketUncheckedCreateInput = {
@@ -27118,9 +27204,10 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    dni?: string;
+    dni: string;
+    seat?: number | null;
     profileId?: string | null;
-    ticketGroupId: string;
+    ticketGroupId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -27131,11 +27218,12 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
     profile?: ProfileUpdateOneWithoutTicketNestedInput;
-    ticketGroup?: TicketGroupUpdateOneRequiredWithoutTicketsNestedInput;
+    ticketGroup?: TicketGroupUpdateOneWithoutTicketsNestedInput;
   };
 
   export type TicketUncheckedUpdateInput = {
@@ -27145,8 +27233,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
-    ticketGroupId?: StringFieldUpdateOperationsInput | string;
+    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -27157,9 +27246,10 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    dni?: string;
+    dni: string;
+    seat?: number | null;
     profileId?: string | null;
-    ticketGroupId: string;
+    ticketGroupId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -27170,6 +27260,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -27181,8 +27272,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
-    ticketGroupId?: StringFieldUpdateOperationsInput | string;
+    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -28281,6 +28373,17 @@ export namespace Prisma {
     not?: NestedEnumTicketTypeFilter<$PrismaModel> | $Enums.TicketType;
   };
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null;
+  };
+
   export type EventScalarRelationFilter = {
     is?: EventWhereInput;
     isNot?: EventWhereInput;
@@ -28291,9 +28394,9 @@ export namespace Prisma {
     isNot?: ProfileWhereInput | null;
   };
 
-  export type TicketGroupScalarRelationFilter = {
-    is?: TicketGroupWhereInput;
-    isNot?: TicketGroupWhereInput;
+  export type TicketGroupNullableScalarRelationFilter = {
+    is?: TicketGroupWhereInput | null;
+    isNot?: TicketGroupWhereInput | null;
   };
 
   export type TicketCountOrderByAggregateInput = {
@@ -28303,10 +28406,15 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
+    seat?: SortOrder;
     profileId?: SortOrder;
     ticketGroupId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
+  };
+
+  export type TicketAvgOrderByAggregateInput = {
+    seat?: SortOrder;
   };
 
   export type TicketMaxOrderByAggregateInput = {
@@ -28316,6 +28424,7 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
+    seat?: SortOrder;
     profileId?: SortOrder;
     ticketGroupId?: SortOrder;
     created_at?: SortOrder;
@@ -28329,10 +28438,15 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
+    seat?: SortOrder;
     profileId?: SortOrder;
     ticketGroupId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
+  };
+
+  export type TicketSumOrderByAggregateInput = {
+    seat?: SortOrder;
   };
 
   export type EnumTicketTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -28345,6 +28459,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>;
     _min?: NestedEnumTicketTypeFilter<$PrismaModel>;
     _max?: NestedEnumTicketTypeFilter<$PrismaModel>;
+  };
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
+    _count?: NestedIntNullableFilter<$PrismaModel>;
+    _avg?: NestedFloatNullableFilter<$PrismaModel>;
+    _sum?: NestedIntNullableFilter<$PrismaModel>;
+    _min?: NestedIntNullableFilter<$PrismaModel>;
+    _max?: NestedIntNullableFilter<$PrismaModel>;
   };
 
   export type EnumTicketGroupStatusFilter<$PrismaModel = never> = {
@@ -28498,17 +28628,6 @@ export namespace Prisma {
     _max?: NestedEnumTemplateCategoryFilter<$PrismaModel>;
   };
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    lt?: number | IntFieldRefInput<$PrismaModel>;
-    lte?: number | IntFieldRefInput<$PrismaModel>;
-    gt?: number | IntFieldRefInput<$PrismaModel>;
-    gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null;
-  };
-
   export type FloatNullableFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null;
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
@@ -28558,22 +28677,6 @@ export namespace Prisma {
   export type EventTicketSumOrderByAggregateInput = {
     amount?: SortOrder;
     price?: SortOrder;
-  };
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    lt?: number | IntFieldRefInput<$PrismaModel>;
-    lte?: number | IntFieldRefInput<$PrismaModel>;
-    gt?: number | IntFieldRefInput<$PrismaModel>;
-    gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
-    _count?: NestedIntNullableFilter<$PrismaModel>;
-    _avg?: NestedFloatNullableFilter<$PrismaModel>;
-    _sum?: NestedIntNullableFilter<$PrismaModel>;
-    _min?: NestedIntNullableFilter<$PrismaModel>;
-    _max?: NestedIntNullableFilter<$PrismaModel>;
   };
 
   export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -30935,6 +31038,14 @@ export namespace Prisma {
     set?: $Enums.TicketType;
   };
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+  };
+
   export type EventUpdateOneRequiredWithoutTicketsNestedInput = {
     create?: XOR<
       EventCreateWithoutTicketsInput,
@@ -30971,13 +31082,15 @@ export namespace Prisma {
     >;
   };
 
-  export type TicketGroupUpdateOneRequiredWithoutTicketsNestedInput = {
+  export type TicketGroupUpdateOneWithoutTicketsNestedInput = {
     create?: XOR<
       TicketGroupCreateWithoutTicketsInput,
       TicketGroupUncheckedCreateWithoutTicketsInput
     >;
     connectOrCreate?: TicketGroupCreateOrConnectWithoutTicketsInput;
     upsert?: TicketGroupUpsertWithoutTicketsInput;
+    disconnect?: TicketGroupWhereInput | boolean;
+    delete?: TicketGroupWhereInput | boolean;
     connect?: TicketGroupWhereUniqueInput;
     update?: XOR<
       XOR<
@@ -31119,14 +31232,6 @@ export namespace Prisma {
     >;
     connectOrCreate?: EventCreateOrConnectWithoutEventTicketsInput;
     connect?: EventWhereUniqueInput;
-  };
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null;
-    increment?: number;
-    decrement?: number;
-    multiply?: number;
-    divide?: number;
   };
 
   export type NullableFloatFieldUpdateOperationsInput = {
@@ -31471,6 +31576,33 @@ export namespace Prisma {
     _max?: NestedEnumTicketTypeFilter<$PrismaModel>;
   };
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
+    lt?: number | IntFieldRefInput<$PrismaModel>;
+    lte?: number | IntFieldRefInput<$PrismaModel>;
+    gt?: number | IntFieldRefInput<$PrismaModel>;
+    gte?: number | IntFieldRefInput<$PrismaModel>;
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
+    _count?: NestedIntNullableFilter<$PrismaModel>;
+    _avg?: NestedFloatNullableFilter<$PrismaModel>;
+    _sum?: NestedIntNullableFilter<$PrismaModel>;
+    _min?: NestedIntNullableFilter<$PrismaModel>;
+    _max?: NestedIntNullableFilter<$PrismaModel>;
+  };
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
+    lt?: number | FloatFieldRefInput<$PrismaModel>;
+    lte?: number | FloatFieldRefInput<$PrismaModel>;
+    gt?: number | FloatFieldRefInput<$PrismaModel>;
+    gte?: number | FloatFieldRefInput<$PrismaModel>;
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
+  };
+
   export type NestedEnumTicketGroupStatusFilter<$PrismaModel = never> = {
     equals?:
       | $Enums.TicketGroupStatus
@@ -31572,33 +31704,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>;
     _min?: NestedEnumTemplateCategoryFilter<$PrismaModel>;
     _max?: NestedEnumTemplateCategoryFilter<$PrismaModel>;
-  };
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null;
-    lt?: number | FloatFieldRefInput<$PrismaModel>;
-    lte?: number | FloatFieldRefInput<$PrismaModel>;
-    gt?: number | FloatFieldRefInput<$PrismaModel>;
-    gte?: number | FloatFieldRefInput<$PrismaModel>;
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
-  };
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null;
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
-    lt?: number | IntFieldRefInput<$PrismaModel>;
-    lte?: number | IntFieldRefInput<$PrismaModel>;
-    gt?: number | IntFieldRefInput<$PrismaModel>;
-    gte?: number | IntFieldRefInput<$PrismaModel>;
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null;
-    _count?: NestedIntNullableFilter<$PrismaModel>;
-    _avg?: NestedFloatNullableFilter<$PrismaModel>;
-    _sum?: NestedIntNullableFilter<$PrismaModel>;
-    _min?: NestedIntNullableFilter<$PrismaModel>;
-    _max?: NestedIntNullableFilter<$PrismaModel>;
   };
 
   export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -32105,11 +32210,12 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    dni?: string;
+    dni: string;
+    seat?: number | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
-    ticketGroup: TicketGroupCreateNestedOneWithoutTicketsInput;
+    ticketGroup?: TicketGroupCreateNestedOneWithoutTicketsInput;
   };
 
   export type TicketUncheckedCreateWithoutProfileInput = {
@@ -32118,8 +32224,9 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    dni?: string;
-    ticketGroupId: string;
+    dni: string;
+    seat?: number | null;
+    ticketGroupId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -32397,8 +32504,9 @@ export namespace Prisma {
     fullName?: StringFilter<'Ticket'> | string;
     mail?: StringFilter<'Ticket'> | string;
     dni?: StringFilter<'Ticket'> | string;
+    seat?: IntNullableFilter<'Ticket'> | number | null;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
-    ticketGroupId?: StringFilter<'Ticket'> | string;
+    ticketGroupId?: StringNullableFilter<'Ticket'> | string | null;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeFilter<'Ticket'> | Date | string;
   };
@@ -34007,11 +34115,12 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    dni?: string;
+    dni: string;
+    seat?: number | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     profile?: ProfileCreateNestedOneWithoutTicketInput;
-    ticketGroup: TicketGroupCreateNestedOneWithoutTicketsInput;
+    ticketGroup?: TicketGroupCreateNestedOneWithoutTicketsInput;
   };
 
   export type TicketUncheckedCreateWithoutEventInput = {
@@ -34019,9 +34128,10 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    dni?: string;
+    dni: string;
+    seat?: number | null;
     profileId?: string | null;
-    ticketGroupId: string;
+    ticketGroupId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -35222,7 +35332,8 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    dni?: string;
+    dni: string;
+    seat?: number | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
@@ -35235,7 +35346,8 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    dni?: string;
+    dni: string;
+    seat?: number | null;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -35679,8 +35791,9 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    dni?: string;
-    ticketGroupId: string;
+    dni: string;
+    seat?: number | null;
+    ticketGroupId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -35827,10 +35940,11 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
-    ticketGroup?: TicketGroupUpdateOneRequiredWithoutTicketsNestedInput;
+    ticketGroup?: TicketGroupUpdateOneWithoutTicketsNestedInput;
   };
 
   export type TicketUncheckedUpdateWithoutProfileInput = {
@@ -35840,7 +35954,8 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
-    ticketGroupId?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -35852,7 +35967,8 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
-    ticketGroupId?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -36495,9 +36611,10 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    dni?: string;
+    dni: string;
+    seat?: number | null;
     profileId?: string | null;
-    ticketGroupId: string;
+    ticketGroupId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -36540,10 +36657,11 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     profile?: ProfileUpdateOneWithoutTicketNestedInput;
-    ticketGroup?: TicketGroupUpdateOneRequiredWithoutTicketsNestedInput;
+    ticketGroup?: TicketGroupUpdateOneWithoutTicketsNestedInput;
   };
 
   export type TicketUncheckedUpdateWithoutEventInput = {
@@ -36552,8 +36670,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
-    ticketGroupId?: StringFieldUpdateOperationsInput | string;
+    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -36564,8 +36683,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
-    ticketGroupId?: StringFieldUpdateOperationsInput | string;
+    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -36797,7 +36917,8 @@ export namespace Prisma {
     type: $Enums.TicketType;
     fullName: string;
     mail: string;
-    dni?: string;
+    dni: string;
+    seat?: number | null;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -36809,6 +36930,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
@@ -36822,6 +36944,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -36834,6 +36957,7 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;

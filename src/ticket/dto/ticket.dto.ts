@@ -17,7 +17,9 @@ export const ticketSchema = z.object({
   mail: z.string().email(translate('model.ticket.mail.email')),
   dni: z.string().min(1, translate('model.ticket.dni.required')),
 
-  ticketGroupId: ticketGroupSchema.shape.id,
+  seat: z.number().min(1, translate('model.ticket.seat.required')).nullable(),
+
+  ticketGroupId: ticketGroupSchema.shape.id.nullable(),
   created_at: z.date(),
   updated_at: z.date(),
 });

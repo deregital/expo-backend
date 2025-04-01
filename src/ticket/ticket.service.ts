@@ -1,7 +1,8 @@
 import { translate } from '@/i18n/translate';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
-import { encryptString } from '@/shared/utils/utils';
+import { encryptString, getDMSansFonts } from '@/shared/utils/utils';
+import { TicketInputs, generateTicketTemplate } from '@/ticket/constants';
 import {
   CreateTicketDto,
   createTicketResponseSchema,
@@ -18,11 +19,12 @@ import {
   updateTicketResponseSchema,
 } from '@/ticket/dto/update-ticket.dto';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Font, GenerateProps } from '@pdfme/common';
 import { generate } from '@pdfme/generator';
-import { barcodes, line, text } from '@pdfme/schemas';
+import { barcodes, image, line, text } from '@pdfme/schemas';
+import { format } from 'date-fns/format';
 import z from 'zod';
-import { Profile, Ticket, TicketType } from '~/types';
-import { TICKET_INPUTS, TICKET_TEMPLATE } from './constants';
+import { Event, Profile, Ticket, TicketType } from '~/types';
 import {
   CreateManyTicketDto,
   createManyTicketResponseSchema,
@@ -33,66 +35,8 @@ import {
 export class TicketService {
   constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
-  private async generatePdfTickets(
-    ticket: Ticket,
-  ): Promise<{ ticketId: string; pdf: Blob }> {
-    // Reutilizar la lógica existente de formateo de fecha y generación de PDF
-    const event = await this.prisma.event.findUnique({
-      where: { id: ticket.eventId },
-    });
-    if (!event)
-      throw new NotFoundException(
-        translate('route.pdf.generate-pdf.not-found'),
-      );
-    const eventDate = new Date(event.date);
-
-    const formattedDate = eventDate.toLocaleDateString('es-ES', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-
-    const formattedTime = eventDate.toLocaleTimeString('es-ES', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-
-    const template = TICKET_TEMPLATE;
-    const inputs = [
-      {
-        event_name: event.name,
-        event_date: formattedDate,
-        event_time: formattedTime,
-        event_location: event.location,
-        mail_ticket: ticket.mail,
-        fullName_ticket: ticket.fullName,
-        ticket_type: ticket.type,
-        ticket_id: ticket.id,
-        ...TICKET_INPUTS,
-        ticket_barcode: encryptString(ticket.id),
-      },
-    ];
-
-    const plugins = {
-      text,
-      line,
-      barcodes: barcodes.code128,
-    };
-
-    const pdf = await generate({ template, inputs, plugins });
-    const blob = new Blob([pdf.buffer], {
-      type: 'application/pdf',
-    });
-
-    return {
-      ticketId: ticket.id,
-      pdf: blob,
-    };
-  }
-
   async create(
-    dto: CreateTicketDto,
+    dto: CreateTicketDto & { seat: Ticket['seat'] },
   ): Promise<z.infer<typeof createTicketResponseSchema>> {
     return await this.prisma.ticket.create({
       data: dto,
@@ -203,14 +147,7 @@ export class TicketService {
     return ticket;
   }
 
-  async generatePdfTicket(id: string): Promise<Blob> {
-    const ticket = await this.prisma.ticket.findUnique({
-      where: { id },
-      include: {
-        event: true,
-      },
-    });
-
+  async generatePdfTicket(ticket: Ticket & { event: Event }): Promise<Blob> {
     // Format date to a readable format
     const eventDate = new Date(ticket!.event.date);
     const formattedDate = eventDate.toLocaleDateString('es-ES', {
@@ -230,31 +167,58 @@ export class TicketService {
       minute: '2-digit',
     });
 
+    const normalizedDni = Number.isNaN(Number(ticket.dni))
+      ? ticket.dni
+      : Number(ticket.dni).toLocaleString('es-ES');
+    const seat = ticket.seat ? ticket.seat.toString() : '-';
+
     // Encriptar id del ticket para pasarlo de valor al barcode
-    const template = TICKET_TEMPLATE;
+    const template = generateTicketTemplate(
+      ticket.type,
+    ) as GenerateProps['template'];
 
     const inputs = [
       {
-        event_name: ticket.event.name,
-        event_date: formattedDate,
-        event_time: formattedTime,
-        event_location: ticket.event.location,
-        mail_ticket: ticket.mail,
-        fullName_ticket: ticket.fullName,
-        ticket_type: ticket.type,
-        ticket_id: ticket.id,
-        ...TICKET_INPUTS,
-        ticket_barcode: encryptString(ticket.id),
-      },
+        eventName: ticket.event.name,
+        eventDate: `${formattedDate} - ${formattedTime}`,
+        eventLocation: ticket.event.location,
+        fullName: ticket.fullName,
+        dni: normalizedDni,
+        seat,
+        barcode: encryptString(ticket.id),
+        footer: translate('route.pdf.generate-pdf.pdf.footer'),
+        emissionDate: format(ticket.created_at, 'dd/MM/yyyy HH:mm'),
+      } satisfies TicketInputs,
     ];
 
     const plugins = {
       text,
       line,
+      image,
       barcodes: barcodes.code128,
     };
 
-    const pdf = await generate({ template, inputs, plugins });
+    const { fontBold, fontSemiBold, fontLight } = await getDMSansFonts();
+
+    const font: Font = {
+      'DMSans-Bold': {
+        data: fontBold, // Provide the buffer instead of a string path
+      },
+      'DMSans-SemiBold': {
+        data: fontSemiBold, // Provide the buffer instead of a string path
+        fallback: true,
+      },
+      'DMSans-Light': {
+        data: fontLight, // Provide the buffer instead of a string path
+      },
+    };
+
+    const pdf = await generate({
+      template,
+      inputs,
+      plugins,
+      options: { font },
+    });
     const blob = new Blob([pdf.buffer], {
       type: 'application/pdf',
     });
@@ -288,11 +252,21 @@ export class TicketService {
 
     // Generar PDFs para todos los tickets
     const pdfPromises = tickets.map(async (ticket) => {
-      return await this.generatePdfTickets(ticket);
+      return { ticketId: ticket.id, pdf: await this.generatePdfTicket(ticket) };
     });
 
     // Esperar a que todos los PDFs se generen y filtrar los nulos
     const pdfs = await Promise.all(pdfPromises);
     return pdfs;
+  }
+
+  async getHighestSeatForEvent(eventId: string): Promise<number> {
+    const highest = await this.prisma.ticket.findFirst({
+      where: { eventId, seat: { not: null }, type: 'SPECTATOR' },
+      select: { seat: true },
+      orderBy: { seat: 'desc' },
+    });
+
+    return highest?.seat || 0;
   }
 }
