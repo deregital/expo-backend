@@ -226,7 +226,7 @@ export class TicketController {
     const tickets = await this.ticketService.createMany({
       tickets: createManyTicketDto.tickets.map((ticket, index) => ({
         ...ticket,
-        seat: seat ? seat + 1 + index : null,
+        seat: seat ? seat + index : null,
       })),
     });
 
