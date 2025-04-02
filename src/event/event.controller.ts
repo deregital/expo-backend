@@ -366,7 +366,9 @@ export class EventController {
       ]);
     }
 
-    return await this.eventService.delete(id);
+    const eventDeleted = await this.eventService.delete(id);
+    await this.tagGroupService.delete(event.tagAssisted.groupId);
+    return eventDeleted;
   }
 
   private async updateEventTags({

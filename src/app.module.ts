@@ -19,6 +19,7 @@ import { ResendModule } from '@/resend/resend.module';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagGroupModule } from '@/tag-group/tag-group.module';
 import { TagModule } from '@/tag/tag.module';
+import { TicketGroupModule } from '@/ticket-group/ticket-group.module';
 import { TicketModule } from '@/ticket/ticket.module';
 import { WebhookModule } from '@/webhook/webhook.module';
 import { Module } from '@nestjs/common';
@@ -43,6 +44,7 @@ import { APP_PIPE, ModuleRef } from '@nestjs/core';
     CsvModule,
     MessageModule,
     TicketModule,
+    TicketGroupModule,
     WebhookModule,
     OtpModule,
     MiExpoModule,

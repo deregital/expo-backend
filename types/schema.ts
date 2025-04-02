@@ -980,6 +980,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/ticket/create-many': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['TicketController_createMany'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/ticket/all': {
     parameters: {
       query?: never;
@@ -1124,6 +1140,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/ticket/scan': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['TicketController_scanTicket'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/ticket/send-email/{id}': {
     parameters: {
       query?: never;
@@ -1135,6 +1167,70 @@ export interface paths {
     put?: never;
     post: operations['TicketController_sendEmail'];
     delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/ticket-group/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['TicketGroupController_create'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/ticket-group/find-tickets-by-event/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['TicketGroupController_findTicketsByEvent'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/ticket-group/update/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['TicketGroupController_update'];
+    trace?: never;
+  };
+  '/ticket-group/delete/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete: operations['TicketGroupController_delete'];
     options?: never;
     head?: never;
     patch?: never;
@@ -1282,7 +1378,7 @@ export interface components {
         id: string;
         username: string;
         /** @enum {string} */
-        role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+        role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
         /** @default false */
         isGlobalFilterActive: boolean;
         /** @default [] */
@@ -1442,7 +1538,7 @@ export interface components {
          * @default MI_EXPO
          * @enum {string}
          */
-        role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+        role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
         firstTimeMiExpo: boolean;
         username: string | null;
         password: string | null;
@@ -1486,7 +1582,7 @@ export interface components {
          * @default MI_EXPO
          * @enum {string}
          */
-        role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+        role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
         firstTimeMiExpo: boolean;
         username: string | null;
         password: string | null;
@@ -1521,14 +1617,14 @@ export interface components {
       username: string;
       password: string;
       /** @enum {string} */
-      role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+      role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
     };
     CreateAccountResponseDto: {
       /** Format: uuid */
       id: string;
       username: string;
       /** @enum {string} */
-      role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+      role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
       /** @default false */
       isGlobalFilterActive: boolean;
       /** @default [] */
@@ -1545,7 +1641,7 @@ export interface components {
       username: string;
       password: string;
       /** @enum {string} */
-      role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+      role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
       /** @default false */
       isGlobalFilterActive: boolean;
       /** @default [] */
@@ -1590,7 +1686,7 @@ export interface components {
       id: string;
       username: string;
       /** @enum {string} */
-      role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+      role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
       /** @default false */
       isGlobalFilterActive: boolean;
       /** @default [] */
@@ -2439,16 +2535,69 @@ export interface components {
         eventId: string;
         /** @enum {string} */
         type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
-        /** @enum {string} */
-        status: 'BOOKED' | 'PAID' | 'FREE';
         fullName: string;
         /** Format: email */
         mail: string;
+        dni: string;
+        seat: number | null;
+        scanned: boolean;
+        /** Format: date-time */
+        scannedAt: string | null;
+        /** Format: uuid */
+        ticketGroupId: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
         updated_at: string;
       }[];
+      tagAssisted: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        groupId: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        group: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          color: string;
+          isExclusive: boolean;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        };
+      };
+      tagConfirmed: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        groupId: string;
+        /** @enum {string} */
+        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        group: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          color: string;
+          isExclusive: boolean;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        };
+      };
     };
     UpdateEventDto: {
       name: string;
@@ -2571,7 +2720,7 @@ export interface components {
          * @default MI_EXPO
          * @enum {string}
          */
-        role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+        role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
         firstTimeMiExpo: boolean;
         username: string | null;
         password: string | null;
@@ -2628,7 +2777,7 @@ export interface components {
          * @default MI_EXPO
          * @enum {string}
          */
-        role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+        role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
         firstTimeMiExpo: boolean;
         username: string | null;
         password: string | null;
@@ -2709,7 +2858,7 @@ export interface components {
          * @default MI_EXPO
          * @enum {string}
          */
-        role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+        role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
         firstTimeMiExpo: boolean;
         username: string | null;
         password: string | null;
@@ -2767,7 +2916,7 @@ export interface components {
          * @default MI_EXPO
          * @enum {string}
          */
-        role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+        role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
         firstTimeMiExpo: boolean;
         username: string | null;
         password: string | null;
@@ -2821,7 +2970,7 @@ export interface components {
              * @default MI_EXPO
              * @enum {string}
              */
-            role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+            role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
             firstTimeMiExpo: boolean;
             username: string | null;
             password: string | null;
@@ -2878,7 +3027,7 @@ export interface components {
        * @default MI_EXPO
        * @enum {string}
        */
-      role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+      role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
       firstTimeMiExpo: boolean;
       username: string | null;
       password: string | null;
@@ -2993,7 +3142,7 @@ export interface components {
        * @default MI_EXPO
        * @enum {string}
        */
-      role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+      role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
       firstTimeMiExpo: boolean;
       username: string | null;
       phoneNumber: string;
@@ -3075,7 +3224,7 @@ export interface components {
        * @default MI_EXPO
        * @enum {string}
        */
-      role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+      role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
       firstTimeMiExpo: boolean;
       username: string | null;
       password: string | null;
@@ -3271,13 +3420,14 @@ export interface components {
       eventId: string;
       /** @enum {string} */
       type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
-      /** @enum {string} */
-      status: 'BOOKED' | 'PAID' | 'FREE';
       fullName: string;
       /** Format: email */
       mail: string;
+      dni: string;
       /** Format: uuid */
       profileId?: string;
+      /** Format: uuid */
+      ticketGroupId?: string;
     };
     CreateTicketResponseDto: {
       /** Format: uuid */
@@ -3286,11 +3436,16 @@ export interface components {
       eventId: string;
       /** @enum {string} */
       type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
-      /** @enum {string} */
-      status: 'BOOKED' | 'PAID' | 'FREE';
       fullName: string;
       /** Format: email */
       mail: string;
+      dni: string;
+      seat: number | null;
+      scanned: boolean;
+      /** Format: date-time */
+      scannedAt: string | null;
+      /** Format: uuid */
+      ticketGroupId: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -3321,6 +3476,75 @@ export interface components {
         updated_at: string;
       };
     };
+    CreateManyTicketDto: {
+      tickets: {
+        /** Format: uuid */
+        eventId: string;
+        /** @enum {string} */
+        type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
+        fullName: string;
+        /** Format: email */
+        mail: string;
+        dni: string;
+        /** Format: uuid */
+        ticketGroupId: string | null;
+        /** Format: uuid */
+        profileId?: string;
+      }[];
+    };
+    CreateManyTicketWithPdfsResponseDto: {
+      tickets: {
+        /** Format: uuid */
+        id: string;
+        /** Format: uuid */
+        eventId: string;
+        /** @enum {string} */
+        type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
+        fullName: string;
+        /** Format: email */
+        mail: string;
+        dni: string;
+        seat: number | null;
+        scanned: boolean;
+        /** Format: date-time */
+        scannedAt: string | null;
+        /** Format: uuid */
+        ticketGroupId: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        event: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: date-time */
+          date: string;
+          /** Format: date-time */
+          startingDate: string;
+          /** Format: date-time */
+          endingDate: string;
+          location: string;
+          /** Format: uuid */
+          folderId: string | null;
+          /** Format: uuid */
+          tagAssistedId: string;
+          /** Format: uuid */
+          tagConfirmedId: string;
+          active: boolean;
+          /** Format: uuid */
+          supraEventId: string | null;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        };
+      }[];
+      pdfs: {
+        ticketId: string;
+        pdfBase64: string;
+      }[];
+    };
     FindAllTicketsResponseDto: {
       tickets: {
         /** Format: uuid */
@@ -3329,11 +3553,16 @@ export interface components {
         eventId: string;
         /** @enum {string} */
         type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
-        /** @enum {string} */
-        status: 'BOOKED' | 'PAID' | 'FREE';
         fullName: string;
         /** Format: email */
         mail: string;
+        dni: string;
+        seat: number | null;
+        scanned: boolean;
+        /** Format: date-time */
+        scannedAt: string | null;
+        /** Format: uuid */
+        ticketGroupId: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -3354,20 +3583,44 @@ export interface components {
         eventId: string;
         /** @enum {string} */
         type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
-        /** @enum {string} */
-        status: 'BOOKED' | 'PAID' | 'FREE';
         fullName: string;
         /** Format: email */
         mail: string;
+        dni: string;
+        seat: number | null;
+        scanned: boolean;
+        /** Format: date-time */
+        scannedAt: string | null;
+        /** Format: uuid */
+        ticketGroupId: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
         updated_at: string;
         event: {
+          /** Format: uuid */
+          id: string;
           name: string;
           /** Format: date-time */
           date: string;
+          /** Format: date-time */
+          startingDate: string;
+          /** Format: date-time */
+          endingDate: string;
           location: string;
+          /** Format: uuid */
+          folderId: string | null;
+          /** Format: uuid */
+          tagAssistedId: string;
+          /** Format: uuid */
+          tagConfirmedId: string;
+          active: boolean;
+          /** Format: uuid */
+          supraEventId: string | null;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
         };
         profile: {
           /** Format: uuid */
@@ -3377,7 +3630,7 @@ export interface components {
            * @default MI_EXPO
            * @enum {string}
            */
-          role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+          role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
           firstTimeMiExpo: boolean;
           username: string | null;
           password: string | null;
@@ -3407,6 +3660,8 @@ export interface components {
           /** Format: date-time */
           updated_at: string;
         } | null;
+        /** Format: uuid */
+        profileId: string | null;
       };
     };
     FindByMailTicketResponseDto: {
@@ -3417,11 +3672,16 @@ export interface components {
         eventId: string;
         /** @enum {string} */
         type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
-        /** @enum {string} */
-        status: 'BOOKED' | 'PAID' | 'FREE';
         fullName: string;
         /** Format: email */
         mail: string;
+        dni: string;
+        seat: number | null;
+        scanned: boolean;
+        /** Format: date-time */
+        scannedAt: string | null;
+        /** Format: uuid */
+        ticketGroupId: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -3440,7 +3700,7 @@ export interface components {
            * @default MI_EXPO
            * @enum {string}
            */
-          role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+          role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
           firstTimeMiExpo: boolean;
           username: string | null;
           password: string | null;
@@ -3480,11 +3740,16 @@ export interface components {
         eventId: string;
         /** @enum {string} */
         type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
-        /** @enum {string} */
-        status: 'BOOKED' | 'PAID' | 'FREE';
         fullName: string;
         /** Format: email */
         mail: string;
+        dni: string;
+        seat: number | null;
+        scanned: boolean;
+        /** Format: date-time */
+        scannedAt: string | null;
+        /** Format: uuid */
+        ticketGroupId: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -3503,7 +3768,7 @@ export interface components {
            * @default MI_EXPO
            * @enum {string}
            */
-          role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+          role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
           firstTimeMiExpo: boolean;
           username: string | null;
           password: string | null;
@@ -3543,11 +3808,16 @@ export interface components {
         eventId: string;
         /** @enum {string} */
         type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
-        /** @enum {string} */
-        status: 'BOOKED' | 'PAID' | 'FREE';
         fullName: string;
         /** Format: email */
         mail: string;
+        dni: string;
+        seat: number | null;
+        scanned: boolean;
+        /** Format: date-time */
+        scannedAt: string | null;
+        /** Format: uuid */
+        ticketGroupId: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -3582,11 +3852,12 @@ export interface components {
     UpdateTicketDto: {
       /** @enum {string} */
       type?: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
-      /** @enum {string} */
-      status?: 'BOOKED' | 'PAID' | 'FREE';
       fullName?: string;
       /** Format: email */
       mail?: string;
+      dni?: string;
+      /** Format: uuid */
+      ticketGroupId?: string | null;
     };
     UpdateTicketResponseDto: {
       /** Format: uuid */
@@ -3595,11 +3866,16 @@ export interface components {
       eventId: string;
       /** @enum {string} */
       type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
-      /** @enum {string} */
-      status: 'BOOKED' | 'PAID' | 'FREE';
       fullName: string;
       /** Format: email */
       mail: string;
+      dni: string;
+      seat: number | null;
+      scanned: boolean;
+      /** Format: date-time */
+      scannedAt: string | null;
+      /** Format: uuid */
+      ticketGroupId: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -3612,11 +3888,16 @@ export interface components {
       eventId: string;
       /** @enum {string} */
       type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
-      /** @enum {string} */
-      status: 'BOOKED' | 'PAID' | 'FREE';
       fullName: string;
       /** Format: email */
       mail: string;
+      dni: string;
+      seat: number | null;
+      scanned: boolean;
+      /** Format: date-time */
+      scannedAt: string | null;
+      /** Format: uuid */
+      ticketGroupId: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -3629,18 +3910,129 @@ export interface components {
       eventId: string;
       /** @enum {string} */
       type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
-      /** @enum {string} */
-      status: 'BOOKED' | 'PAID' | 'FREE';
       fullName: string;
       /** Format: email */
       mail: string;
+      dni: string;
+      seat: number | null;
+      scanned: boolean;
+      /** Format: date-time */
+      scannedAt: string | null;
+      /** Format: uuid */
+      ticketGroupId: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
       updated_at: string;
     };
+    ScanTicketDto: {
+      ticketBarcode: string;
+    };
+    ScanTicketResponseDto: {
+      success: boolean;
+    };
     SendEmailResponseDto: {
       mailId: string;
+    };
+    CreateTicketGroupDto: {
+      /** Format: uuid */
+      eventId: string;
+      amountTickets: number;
+      /** @enum {string} */
+      status: 'BOOKED' | 'PAID' | 'FREE';
+    };
+    CreateTicketGroupResponseDto: {
+      /** Format: uuid */
+      id: string;
+      amountTickets: number;
+      /** @enum {string} */
+      status: 'BOOKED' | 'PAID' | 'FREE';
+      /** Format: uuid */
+      eventId: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      tickets: {
+        /** Format: uuid */
+        id: string;
+        /** Format: uuid */
+        eventId: string;
+        /** @enum {string} */
+        type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
+        fullName: string;
+        /** Format: email */
+        mail: string;
+        dni: string;
+        seat: number | null;
+        scanned: boolean;
+        /** Format: date-time */
+        scannedAt: string | null;
+        /** Format: uuid */
+        ticketGroupId: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
+      event: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: date-time */
+        date: string;
+        /** Format: date-time */
+        startingDate: string;
+        /** Format: date-time */
+        endingDate: string;
+        location: string;
+        /** Format: uuid */
+        folderId: string | null;
+        /** Format: uuid */
+        tagAssistedId: string;
+        /** Format: uuid */
+        tagConfirmedId: string;
+        active: boolean;
+        /** Format: uuid */
+        supraEventId: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      };
+    };
+    FindTicketsByEventDto: {
+      tickets: number;
+    };
+    UpdateTicketGroupDto: {
+      /** @enum {string} */
+      status?: 'BOOKED' | 'PAID' | 'FREE';
+    };
+    UpdateTicketGroupResponseDto: {
+      /** Format: uuid */
+      id: string;
+      amountTickets: number;
+      /** @enum {string} */
+      status: 'BOOKED' | 'PAID' | 'FREE';
+      /** Format: uuid */
+      eventId: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    DeleteTicketGroupResponseDto: {
+      /** Format: uuid */
+      id: string;
+      amountTickets: number;
+      /** @enum {string} */
+      status: 'BOOKED' | 'PAID' | 'FREE';
+      /** Format: uuid */
+      eventId: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
     };
     SendOtpDto: {
       phoneNumber: string;
@@ -3675,7 +4067,7 @@ export interface components {
          * @default MI_EXPO
          * @enum {string}
          */
-        role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+        role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
         firstTimeMiExpo: boolean;
         username: string | null;
         password: string | null;
@@ -3735,7 +4127,7 @@ export interface components {
          * @default MI_EXPO
          * @enum {string}
          */
-        role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+        role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
         firstTimeMiExpo: boolean;
         username: string | null;
         phoneNumber: string;
@@ -3773,7 +4165,7 @@ export interface components {
        * @default MI_EXPO
        * @enum {string}
        */
-      role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+      role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
       firstTimeMiExpo: boolean;
       username: string | null;
       phoneNumber: string;
@@ -3883,7 +4275,7 @@ export interface components {
          * @default MI_EXPO
          * @enum {string}
          */
-        role: 'USER' | 'ADMIN' | 'FORM' | 'MI_EXPO' | 'TICKETS';
+        role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
         firstTimeMiExpo: boolean;
         username: string | null;
         phoneNumber: string;
@@ -6008,6 +6400,48 @@ export interface operations {
       };
     };
   };
+  TicketController_createMany: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateManyTicketDto'];
+      };
+    };
+    responses: {
+      /** @description Tickets creados con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateManyTicketWithPdfsResponseDto'];
+        };
+      };
+      /** @description Evento no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error en la creación de los tickets */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
   TicketController_findAll: {
     parameters: {
       query?: never;
@@ -6289,6 +6723,48 @@ export interface operations {
       };
     };
   };
+  TicketController_scanTicket: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ScanTicketDto'];
+      };
+    };
+    responses: {
+      /** @description Ticket escaneado con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ScanTicketResponseDto'];
+        };
+      };
+      /** @description Ticket no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description El ticket ya fue escaneado */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
   TicketController_sendEmail: {
     parameters: {
       query?: never;
@@ -6319,6 +6795,145 @@ export interface operations {
         };
       };
       /** @description Ticket no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  TicketGroupController_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateTicketGroupDto'];
+      };
+    };
+    responses: {
+      /** @description Grupo de tickets creado */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateTicketGroupResponseDto'];
+        };
+      };
+      /** @description Evento no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error en la creación del grupo de tickets */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  TicketGroupController_findTicketsByEvent: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Tickets por evento obtenidos */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindTicketsByEventDto'];
+        };
+      };
+      /** @description Tickets por evento no encontrados */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  TicketGroupController_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateTicketGroupDto'];
+      };
+    };
+    responses: {
+      /** @description Grupo de tickets actualizado */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateTicketGroupResponseDto'];
+        };
+      };
+      /** @description Grupo de tickets no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  TicketGroupController_delete: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Grupo de tickets eliminado */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DeleteTicketGroupResponseDto'];
+        };
+      };
+      /** @description Grupo de tickets no encontrado */
       404: {
         headers: {
           [name: string]: unknown;

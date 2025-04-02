@@ -14,6 +14,7 @@ export default {
       otp: 'OTP',
       ticket: 'Ticket',
       eventTicket: 'Tickets del evento',
+      ticketGroup: 'Grupo de tickets',
     },
     tag: { assisted: 'Asistió', confirmed: 'Confirmó asistencia' },
     ticketType: {
@@ -142,14 +143,39 @@ export default {
       },
     },
     ticket: {
-      id: { uuid: 'El ID debe ser un UUID' },
-      eventId: { uuid: 'El ID del evento debe ser un UUID' },
-      fullName: { required: 'El nombre es requerido' },
-      mail: { email: 'El email debe ser un email válido' },
-      type: { invalid: 'El tipo de ticket es inválido' },
-      status: { invalid: 'El estado del ticket es inválido' },
-      seat: { required: 'El asiento es requerido' },
-      dni: { required: 'El DNI es requerido' },
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      eventId: {
+        uuid: 'El ID del evento debe ser un UUID',
+      },
+      fullName: {
+        required: 'El nombre es requerido',
+      },
+      mail: {
+        email: 'El email debe ser un email válido',
+      },
+      type: {
+        invalid: 'El tipo de ticket es inválido',
+      },
+      status: {
+        invalid: 'El estado del ticket es inválido',
+      },
+      dni: {
+        required: 'El DNI es requerido',
+      },
+      seat: {
+        required: 'El asiento es requerido',
+      },
+    },
+    ticketGroup: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      amountTickets: 'La cantidad de tickets debe ser mayor a 0',
+      status: {
+        invalid: 'El estado del grupo de tickets es inválido',
+      },
     },
     eventTicket: {
       amount: { min: 'La cantidad de tickets debe ser mayor a 0' },
@@ -474,7 +500,18 @@ export default {
         'profile-id-required':
           'El ID del perfil es requerido en el ticket de participante',
       },
-      'find-all': { success: 'Tickets obtenidos' },
+      'create-many': {
+        success: 'Tickets creados con éxito',
+        'event-not-found': 'Evento no encontrado',
+        error: 'Error en la creación de los tickets',
+        'max-tickets-reached':
+          'No se pueden emitir más tickets para este evento',
+        'type-not-found': 'Tipo de ticket no encontrado',
+        'max-tickets-not-found': 'Cantidad máxima de tickets no encontrada',
+      },
+      'find-all': {
+        success: 'Tickets obtenidos',
+      },
       'find-by-id': {
         success: 'Ticket obtenido',
         'not-found': 'Ticket no encontrado',
@@ -513,6 +550,25 @@ export default {
         success: 'Ticket escaneado con éxito',
         'already-scanned': 'El ticket ya fue escaneado',
         'participant-not-found': 'Participante no encontrado',
+      },
+    },
+    'ticket-group': {
+      create: {
+        success: 'Grupo de tickets creado',
+        'event-not-found': 'Evento no encontrado',
+        conflict: 'Error en la creación del grupo de tickets',
+      },
+      'find-tickets-by-event': {
+        success: 'Tickets por evento obtenidos',
+        'not-found': 'Tickets por evento no encontrados',
+      },
+      update: {
+        success: 'Grupo de tickets actualizado',
+        'not-found': 'Grupo de tickets no encontrado',
+      },
+      delete: {
+        success: 'Grupo de tickets eliminado',
+        'not-found': 'Grupo de tickets no encontrado',
       },
     },
     webhook: {
