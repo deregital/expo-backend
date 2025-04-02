@@ -18,6 +18,8 @@ export const ticketSchema = z.object({
   dni: z.string().min(1, translate('model.ticket.dni.required')),
 
   seat: z.number().min(1, translate('model.ticket.seat.required')).nullable(),
+  scanned: z.boolean(),
+  scannedAt: z.date().nullable(),
 
   ticketGroupId: ticketGroupSchema.shape.id.nullable(),
   created_at: z.date(),

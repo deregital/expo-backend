@@ -263,7 +263,9 @@ model Ticket {
   mail     String
   dni      String
 
-  seat Int?
+  seat      Int?
+  scanned   Boolean   @default(false)
+  scannedAt DateTime? @map("scanned_at")
 
   profileId String?  @map("profile_id")
   profile   Profile? @relation("PROFILE_X_TICKET", fields: [profileId], references: [id])

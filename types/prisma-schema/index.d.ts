@@ -18834,6 +18834,8 @@ export namespace Prisma {
     mail: string | null;
     dni: string | null;
     seat: number | null;
+    scanned: boolean | null;
+    scannedAt: Date | null;
     profileId: string | null;
     ticketGroupId: string | null;
     created_at: Date | null;
@@ -18848,6 +18850,8 @@ export namespace Prisma {
     mail: string | null;
     dni: string | null;
     seat: number | null;
+    scanned: boolean | null;
+    scannedAt: Date | null;
     profileId: string | null;
     ticketGroupId: string | null;
     created_at: Date | null;
@@ -18862,6 +18866,8 @@ export namespace Prisma {
     mail: number;
     dni: number;
     seat: number;
+    scanned: number;
+    scannedAt: number;
     profileId: number;
     ticketGroupId: number;
     created_at: number;
@@ -18885,6 +18891,8 @@ export namespace Prisma {
     mail?: true;
     dni?: true;
     seat?: true;
+    scanned?: true;
+    scannedAt?: true;
     profileId?: true;
     ticketGroupId?: true;
     created_at?: true;
@@ -18899,6 +18907,8 @@ export namespace Prisma {
     mail?: true;
     dni?: true;
     seat?: true;
+    scanned?: true;
+    scannedAt?: true;
     profileId?: true;
     ticketGroupId?: true;
     created_at?: true;
@@ -18913,6 +18923,8 @@ export namespace Prisma {
     mail?: true;
     dni?: true;
     seat?: true;
+    scanned?: true;
+    scannedAt?: true;
     profileId?: true;
     ticketGroupId?: true;
     created_at?: true;
@@ -19017,6 +19029,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat: number | null;
+    scanned: boolean;
+    scannedAt: Date | null;
     profileId: string | null;
     ticketGroupId: string | null;
     created_at: Date;
@@ -19052,6 +19066,8 @@ export namespace Prisma {
       mail?: boolean;
       dni?: boolean;
       seat?: boolean;
+      scanned?: boolean;
+      scannedAt?: boolean;
       profileId?: boolean;
       ticketGroupId?: boolean;
       created_at?: boolean;
@@ -19074,6 +19090,8 @@ export namespace Prisma {
       mail?: boolean;
       dni?: boolean;
       seat?: boolean;
+      scanned?: boolean;
+      scannedAt?: boolean;
       profileId?: boolean;
       ticketGroupId?: boolean;
       created_at?: boolean;
@@ -19096,6 +19114,8 @@ export namespace Prisma {
       mail?: boolean;
       dni?: boolean;
       seat?: boolean;
+      scanned?: boolean;
+      scannedAt?: boolean;
       profileId?: boolean;
       ticketGroupId?: boolean;
       created_at?: boolean;
@@ -19115,6 +19135,8 @@ export namespace Prisma {
     mail?: boolean;
     dni?: boolean;
     seat?: boolean;
+    scanned?: boolean;
+    scannedAt?: boolean;
     profileId?: boolean;
     ticketGroupId?: boolean;
     created_at?: boolean;
@@ -19131,6 +19153,8 @@ export namespace Prisma {
     | 'mail'
     | 'dni'
     | 'seat'
+    | 'scanned'
+    | 'scannedAt'
     | 'profileId'
     | 'ticketGroupId'
     | 'created_at'
@@ -19177,6 +19201,8 @@ export namespace Prisma {
         mail: string;
         dni: string;
         seat: number | null;
+        scanned: boolean;
+        scannedAt: Date | null;
         profileId: string | null;
         ticketGroupId: string | null;
         created_at: Date;
@@ -19814,6 +19840,8 @@ export namespace Prisma {
     readonly mail: FieldRef<'Ticket', 'String'>;
     readonly dni: FieldRef<'Ticket', 'String'>;
     readonly seat: FieldRef<'Ticket', 'Int'>;
+    readonly scanned: FieldRef<'Ticket', 'Boolean'>;
+    readonly scannedAt: FieldRef<'Ticket', 'DateTime'>;
     readonly profileId: FieldRef<'Ticket', 'String'>;
     readonly ticketGroupId: FieldRef<'Ticket', 'String'>;
     readonly created_at: FieldRef<'Ticket', 'DateTime'>;
@@ -24455,6 +24483,8 @@ export namespace Prisma {
     mail: 'mail';
     dni: 'dni';
     seat: 'seat';
+    scanned: 'scanned';
+    scannedAt: 'scannedAt';
     profileId: 'profileId';
     ticketGroupId: 'ticketGroupId';
     created_at: 'created_at';
@@ -25788,6 +25818,8 @@ export namespace Prisma {
     mail?: StringFilter<'Ticket'> | string;
     dni?: StringFilter<'Ticket'> | string;
     seat?: IntNullableFilter<'Ticket'> | number | null;
+    scanned?: BoolFilter<'Ticket'> | boolean;
+    scannedAt?: DateTimeNullableFilter<'Ticket'> | Date | string | null;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
     ticketGroupId?: StringNullableFilter<'Ticket'> | string | null;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
@@ -25811,6 +25843,8 @@ export namespace Prisma {
     mail?: SortOrder;
     dni?: SortOrder;
     seat?: SortOrderInput | SortOrder;
+    scanned?: SortOrder;
+    scannedAt?: SortOrderInput | SortOrder;
     profileId?: SortOrderInput | SortOrder;
     ticketGroupId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
@@ -25832,6 +25866,8 @@ export namespace Prisma {
       mail?: StringFilter<'Ticket'> | string;
       dni?: StringFilter<'Ticket'> | string;
       seat?: IntNullableFilter<'Ticket'> | number | null;
+      scanned?: BoolFilter<'Ticket'> | boolean;
+      scannedAt?: DateTimeNullableFilter<'Ticket'> | Date | string | null;
       profileId?: StringNullableFilter<'Ticket'> | string | null;
       ticketGroupId?: StringNullableFilter<'Ticket'> | string | null;
       created_at?: DateTimeFilter<'Ticket'> | Date | string;
@@ -25857,6 +25893,8 @@ export namespace Prisma {
     mail?: SortOrder;
     dni?: SortOrder;
     seat?: SortOrderInput | SortOrder;
+    scanned?: SortOrder;
+    scannedAt?: SortOrderInput | SortOrder;
     profileId?: SortOrderInput | SortOrder;
     ticketGroupId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
@@ -25883,6 +25921,12 @@ export namespace Prisma {
     mail?: StringWithAggregatesFilter<'Ticket'> | string;
     dni?: StringWithAggregatesFilter<'Ticket'> | string;
     seat?: IntNullableWithAggregatesFilter<'Ticket'> | number | null;
+    scanned?: BoolWithAggregatesFilter<'Ticket'> | boolean;
+    scannedAt?:
+      | DateTimeNullableWithAggregatesFilter<'Ticket'>
+      | Date
+      | string
+      | null;
     profileId?: StringNullableWithAggregatesFilter<'Ticket'> | string | null;
     ticketGroupId?:
       | StringNullableWithAggregatesFilter<'Ticket'>
@@ -27191,6 +27235,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
@@ -27206,6 +27252,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     profileId?: string | null;
     ticketGroupId?: string | null;
     created_at?: Date | string;
@@ -27219,6 +27267,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
@@ -27234,6 +27288,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -27248,6 +27308,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     profileId?: string | null;
     ticketGroupId?: string | null;
     created_at?: Date | string;
@@ -27261,6 +27323,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -27273,6 +27341,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -28407,6 +28481,8 @@ export namespace Prisma {
     mail?: SortOrder;
     dni?: SortOrder;
     seat?: SortOrder;
+    scanned?: SortOrder;
+    scannedAt?: SortOrder;
     profileId?: SortOrder;
     ticketGroupId?: SortOrder;
     created_at?: SortOrder;
@@ -28425,6 +28501,8 @@ export namespace Prisma {
     mail?: SortOrder;
     dni?: SortOrder;
     seat?: SortOrder;
+    scanned?: SortOrder;
+    scannedAt?: SortOrder;
     profileId?: SortOrder;
     ticketGroupId?: SortOrder;
     created_at?: SortOrder;
@@ -28439,6 +28517,8 @@ export namespace Prisma {
     mail?: SortOrder;
     dni?: SortOrder;
     seat?: SortOrder;
+    scanned?: SortOrder;
+    scannedAt?: SortOrder;
     profileId?: SortOrder;
     ticketGroupId?: SortOrder;
     created_at?: SortOrder;
@@ -32212,6 +32292,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
@@ -32226,6 +32308,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     ticketGroupId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -32505,6 +32589,8 @@ export namespace Prisma {
     mail?: StringFilter<'Ticket'> | string;
     dni?: StringFilter<'Ticket'> | string;
     seat?: IntNullableFilter<'Ticket'> | number | null;
+    scanned?: BoolFilter<'Ticket'> | boolean;
+    scannedAt?: DateTimeNullableFilter<'Ticket'> | Date | string | null;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
     ticketGroupId?: StringNullableFilter<'Ticket'> | string | null;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
@@ -34117,6 +34203,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     profile?: ProfileCreateNestedOneWithoutTicketInput;
@@ -34130,6 +34218,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     profileId?: string | null;
     ticketGroupId?: string | null;
     created_at?: Date | string;
@@ -35334,6 +35424,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
@@ -35348,6 +35440,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -35793,6 +35887,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     ticketGroupId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -35941,6 +36037,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
@@ -35955,6 +36057,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -35968,6 +36076,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -36613,6 +36727,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     profileId?: string | null;
     ticketGroupId?: string | null;
     created_at?: Date | string;
@@ -36658,6 +36774,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     profile?: ProfileUpdateOneWithoutTicketNestedInput;
@@ -36671,6 +36793,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -36684,6 +36812,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -36919,6 +37053,8 @@ export namespace Prisma {
     mail: string;
     dni: string;
     seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
     profileId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -36931,6 +37067,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
@@ -36945,6 +37087,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -36958,6 +37106,12 @@ export namespace Prisma {
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;

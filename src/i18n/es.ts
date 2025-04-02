@@ -16,10 +16,7 @@ export default {
       eventTicket: 'Tickets del evento',
       ticketGroup: 'Grupo de tickets',
     },
-    tag: {
-      assisted: 'Asistió',
-      confirmed: 'Confirmó asistencia',
-    },
+    tag: { assisted: 'Asistió', confirmed: 'Confirmó asistencia' },
     ticketType: {
       STAFF: 'Staff',
       SPECTATOR: 'Espectador',
@@ -30,24 +27,13 @@ export default {
   },
   model: {
     comment: {
-      id: {
-        uuid: 'El ID debe ser un UUID',
-      },
-      content: {
-        min: 'El contenido debe tener al menos 1 caracter',
-      },
-      isSolvable: {
-        required: 'No se indica si el comentario es resoluble',
-      },
+      id: { uuid: 'El ID debe ser un UUID' },
+      content: { min: 'El contenido debe tener al menos 1 caracter' },
+      isSolvable: { required: 'No se indica si el comentario es resoluble' },
     },
     account: {
-      id: {
-        required: 'El ID es requerido',
-        uuid: 'El ID debe ser un UUID',
-      },
-      username: {
-        required: 'El nombre de usuario es requerido',
-      },
+      id: { required: 'El ID es requerido', uuid: 'El ID debe ser un UUID' },
+      username: { required: 'El nombre de usuario es requerido' },
       email: {
         required: 'El email es requerido',
         email: 'El email debe ser un email válido',
@@ -56,30 +42,19 @@ export default {
         required: 'La contraseña es requerida',
         min: 'La contraseña debe tener al menos 6 caracteres',
       },
-      role: {
-        required: 'El rol es requerido',
-        invalid: 'El rol es inválido',
-      },
+      role: { required: 'El rol es requerido', invalid: 'El rol es inválido' },
     },
     tag: {
-      id: {
-        uuid: 'El ID debe ser un UUID',
-      },
+      id: { uuid: 'El ID debe ser un UUID' },
       name: {
         required: 'El nombre es requerido',
         min: 'El nombre debe tener al menos 1 caracter',
       },
-      type: {
-        invalid: 'El tipo de etiqueta es inválido',
-      },
+      type: { invalid: 'El tipo de etiqueta es inválido' },
     },
     event: {
-      id: {
-        uuid: 'El ID debe ser un UUID',
-      },
-      name: {
-        required: 'El nombre es requerido',
-      },
+      id: { uuid: 'El ID debe ser un UUID' },
+      name: { required: 'El nombre es requerido' },
       date: {
         required: 'La fecha es requerida',
         invalid: 'La fecha debe ser una fecha válida',
@@ -92,46 +67,30 @@ export default {
         required: 'La fecha de finalización es requerida',
         invalid: 'La fecha de finalización debe ser una fecha válida',
       },
-      location: {
-        required: 'La ubicación es requerida',
-      },
+      location: { required: 'La ubicación es requerida' },
     },
     tagGroup: {
-      id: {
-        uuid: 'El ID debe ser un UUID',
-      },
-      name: {
-        required: 'El nombre es requerido',
-      },
+      id: { uuid: 'El ID debe ser un UUID' },
+      name: { required: 'El nombre es requerido' },
       color: {
         invalid: 'El color debe tener el formato hexadecimal (#ABCDEF)',
       },
     },
     'event-folder': {
-      id: {
-        uuid: 'El ID debe ser un UUID',
-      },
-      name: {
-        min: 'El nombre debe tener al menos 1 caracter',
-      },
+      id: { uuid: 'El ID debe ser un UUID' },
+      name: { min: 'El nombre debe tener al menos 1 caracter' },
       color: {
         invalid: 'El color debe tener el formato hexadecimal (#ABCDEF)',
       },
     },
     profile: {
-      id: {
-        uuid: 'El ID debe ser un UUID',
-      },
+      id: { uuid: 'El ID debe ser un UUID' },
       phoneNumber: {
         required: 'El teléfono es un campo obligatorio',
         invalid: 'El teléfono no es válido',
       },
-      secondaryPhoneNumber: {
-        invalid: 'El teléfono secundario no es válido',
-      },
-      fullName: {
-        required: 'El nombre es un campo obligatorio',
-      },
+      secondaryPhoneNumber: { invalid: 'El teléfono secundario no es válido' },
+      fullName: { required: 'El nombre es un campo obligatorio' },
       profilePictureUrl: {
         invalid: 'La URL de la imagen de perfil no es válida',
       },
@@ -141,20 +100,12 @@ export default {
       },
     },
     location: {
-      id: {
-        uuid: 'El ID debe ser un UUID',
-      },
-      latitude: {
-        minmax: 'La latitud debe estar entre -90 y 90',
-      },
-      longitude: {
-        minmax: 'La longitud debe estar entre -180 y 180',
-      },
+      id: { uuid: 'El ID debe ser un UUID' },
+      latitude: { minmax: 'La latitud debe estar entre -90 y 90' },
+      longitude: { minmax: 'La longitud debe estar entre -180 y 180' },
     },
     'canned-response': {
-      id: {
-        uuid: 'El ID debe ser un UUID',
-      },
+      id: { uuid: 'El ID debe ser un UUID' },
       name: {
         required: 'El nombre es requerido',
         min: 'El nombre debe tener al menos 1 caracter',
@@ -164,18 +115,10 @@ export default {
         min: 'El contenido debe tener al menos 1 caracter',
       },
     },
-    message: {
-      id: {
-        uuid: 'El ID debe ser un UUID',
-      },
-    },
+    message: { id: { uuid: 'El ID debe ser un UUID' } },
     image: {
-      id: {
-        uuid: 'El formato del ID de la imagen es inválido.',
-      },
-      url: {
-        url: 'Por favor, proporcione una URL válida para la imagen.',
-      },
+      id: { uuid: 'El formato del ID de la imagen es inválido.' },
+      url: { url: 'Por favor, proporcione una URL válida para la imagen.' },
     },
     csv: {
       password: {
@@ -235,12 +178,8 @@ export default {
       },
     },
     eventTicket: {
-      amount: {
-        min: 'La cantidad de tickets debe ser mayor a 0',
-      },
-      price: {
-        min: 'El precio de los tickets debe ser mayor a 0',
-      },
+      amount: { min: 'La cantidad de tickets debe ser mayor a 0' },
+      price: { min: 'El precio de los tickets debe ser mayor a 0' },
     },
   },
   route: {
@@ -264,21 +203,15 @@ export default {
         success: 'Filtro base obtenido',
         'not-found': 'Cuenta no encontrada',
       },
-      me: {
-        success: 'Cuenta obtenida',
-      },
+      me: { success: 'Cuenta obtenida' },
       'check-password': {
         'not-found': 'Cuenta no encontrada',
         'invalid-password': 'Contraseña inválida',
       },
     },
     tag: {
-      create: {
-        success: 'Etiqueta creada con éxito',
-      },
-      'find-all': {
-        success: 'Etiquetas obtenidas',
-      },
+      create: { success: 'Etiqueta creada con éxito' },
+      'find-all': { success: 'Etiquetas obtenidas' },
       'find-one': {
         success: 'Etiqueta obtenida',
         'not-found': 'Etiqueta no encontrada',
@@ -295,23 +228,13 @@ export default {
         success: 'Etiquetas obtenidas',
         'not-found': 'Grupo de etiquetas no encontrado',
       },
-      'massive-allocation': {
-        success: 'Etiquetas asignadas con éxito',
-      },
-      'massive-deallocation': {
-        success: 'Etiquetas desasignadas con éxito',
-      },
+      'massive-allocation': { success: 'Etiquetas asignadas con éxito' },
+      'massive-deallocation': { success: 'Etiquetas desasignadas con éxito' },
     },
     'tag-group': {
-      create: {
-        success: 'Grupo de etiquetas creado con éxito',
-      },
-      'find-all': {
-        success: 'Grupos de etiquetas obtenidos',
-      },
-      'find-all-with-tags': {
-        success: 'Etiquetas obtenidas',
-      },
+      create: { success: 'Grupo de etiquetas creado con éxito' },
+      'find-all': { success: 'Grupos de etiquetas obtenidos' },
+      'find-all-with-tags': { success: 'Etiquetas obtenidas' },
       'find-one': {
         success: 'Grupo de etiquetas obtenido',
         'not-found': 'Grupo de etiquetas no encontrado',
@@ -341,19 +264,13 @@ export default {
       },
     },
     location: {
-      'find-all': {
-        success: 'Ubicaciones obtenidas',
-      },
+      'find-all': { success: 'Ubicaciones obtenidas' },
       'find-cities-by-arg-state': {
         success: 'Localidades de Argentina obtenidas',
         'not-found': `Provincia "\{\{argState\}\}" no encontrada`,
       },
-      'arg-states': {
-        success: 'Provincias de Argentina obtenidas',
-      },
-      'all-countries': {
-        success: 'Países obtenidos',
-      },
+      'arg-states': { success: 'Provincias de Argentina obtenidas' },
+      'all-countries': { success: 'Países obtenidos' },
       'states-by-country': {
         success: 'Estados obtenidos',
         'not-found-error': `No se encontraron estados para el país \{\{countryCode\}\}`,
@@ -451,9 +368,7 @@ export default {
       },
     },
     profile: {
-      'find-all': {
-        success: 'Perfiles obtenidos',
-      },
+      'find-all': { success: 'Perfiles obtenidos' },
       'find-by-id': {
         'not-found': 'Perfil no encontrado',
         success: 'Perfil obtenido',
@@ -496,12 +411,8 @@ export default {
         success: 'Perfil obtenido',
         'not-found': 'Perfil no encontrado',
       },
-      'find-trash': {
-        success: 'Perfiles obtenidos',
-      },
-      'find-all-with-active-chat': {
-        success: 'Perfiles obtenido',
-      },
+      'find-trash': { success: 'Perfiles obtenidos' },
+      'find-all-with-active-chat': { success: 'Perfiles obtenido' },
     },
     image: {
       update: {
@@ -538,9 +449,7 @@ export default {
         success: 'Plantilla creada con éxito',
         error: 'Error al crear la plantilla',
       },
-      'find-templates': {
-        success: 'Plantillas encontradas',
-      },
+      'find-templates': { success: 'Plantillas encontradas' },
       'find-template-by-id': {
         error: 'Error al encontrar la plantilla',
         success: 'Plantilla encontrada',
@@ -623,6 +532,7 @@ export default {
       delete: {
         success: 'Ticket eliminado',
         'not-found': 'Ticket no encontrado',
+        'participant-not-found': 'Participante no encontrado',
       },
       'send-email': {
         success: 'Email enviado',
@@ -633,6 +543,13 @@ export default {
           subject: `Llegó tu ExpoTicket para el evento \{\{eventName\}\}!`,
           text: `Te esperamos el \{\{eventDate\}\} a las \{\{eventTime\}\} en \{\{eventLocation\}\}. ¡No te lo pierdas!`,
         },
+      },
+      scan: {
+        'not-found': 'Ticket no encontrado',
+        'event-not-found': 'Evento no encontrado',
+        success: 'Ticket escaneado con éxito',
+        'already-scanned': 'El ticket ya fue escaneado',
+        'participant-not-found': 'Participante no encontrado',
       },
     },
     'ticket-group': {
@@ -694,15 +611,9 @@ export default {
       },
     },
     'mi-expo': {
-      'my-events': {
-        success: 'Eventos obtenidos',
-      },
-      'my-tickets': {
-        success: 'Tickets obtenidos',
-      },
-      'emit-ticket': {
-        success: 'Ticket emitido',
-      },
+      'my-events': { success: 'Eventos obtenidos' },
+      'my-tickets': { success: 'Tickets obtenidos' },
+      'emit-ticket': { success: 'Ticket emitido' },
     },
   },
 } as const;
