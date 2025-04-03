@@ -10717,11 +10717,18 @@ components:
       type:
         - "object"
       properties:
-        ticketBarcode:
+        type:
+          type:
+            - "string"
+          enum:
+            - "id"
+            - "barcode"
+        value:
           type:
             - "string"
       required:
-        - "ticketBarcode"
+        - "type"
+        - "value"
     ScanTicketResponseDto:
       type:
         - "object"

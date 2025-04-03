@@ -91,7 +91,7 @@ import {
 } from '@nestjs/swagger';
 import type { Response } from 'express';
 import z from 'zod';
-import { Role, TicketType } from '~/types/prisma-schema';
+import { Role, Ticket, TicketType } from '~/types/prisma-schema';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -442,11 +442,30 @@ export class TicketController {
   async scanTicket(
     @Body() scanTicketDto: ScanTicketDto,
   ): Promise<z.infer<typeof scanTicketResponseSchema>> {
-    const decryptedTicketId = decryptString(scanTicketDto.ticketBarcode);
-    const ticket = await this.ticketService.findTicket(decryptedTicketId);
+    const { type, value } = scanTicketDto;
+    let ticket: Omit<Ticket, 'profileId'>;
+
+    switch (type) {
+      case 'barcode': {
+        const decryptedTicketId = decryptString(scanTicketDto.value);
+        ticket = await this.ticketService.findTicket(decryptedTicketId);
+        break;
+      }
+      case 'id': {
+        ticket = (await this.ticketService.findById(value)).ticket;
+        break;
+      }
+      default: {
+        throw new ConflictException([
+          translate('route.ticket.scan.invalid-type'),
+        ]);
+      }
+    }
+
     if (!ticket) {
       throw new NotFoundException([translate('route.ticket.scan.not-found')]);
     }
+
     if (ticket.scanned) {
       throw new ConflictException([
         translate('route.ticket.scan.already-scanned'),

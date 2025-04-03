@@ -2,7 +2,8 @@ import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dt
 import z from 'zod';
 
 export const scanTicketSchema = z.object({
-  ticketBarcode: z.string(),
+  type: z.enum(['id', 'barcode']),
+  value: z.string(),
 });
 
 export class ScanTicketDto extends createZodDtoWithoutDate(scanTicketSchema) {}
