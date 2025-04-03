@@ -6,6 +6,7 @@ export * from './csv/exports';
 export * from './event-folder/exports';
 export * from './event/exports';
 export * from './location/exports';
+export * from './mercadopago/exports';
 export * from './message/exports';
 export * from './mi-expo/exports';
 export * from './otp/exports';

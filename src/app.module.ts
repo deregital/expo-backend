@@ -25,6 +25,7 @@ import { WebhookModule } from '@/webhook/webhook.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE, ModuleRef } from '@nestjs/core';
+import { MercadoPagoModule } from './mercadopago/mercadopago.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { APP_PIPE, ModuleRef } from '@nestjs/core';
     ResendModule.forRoot({
       apiKey: process.env.RESEND_API_KEY ?? 're_JUST_FOR_ACTION',
     }),
+    MercadoPagoModule,
   ],
   providers: [
     {
