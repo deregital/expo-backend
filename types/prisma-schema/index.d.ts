@@ -73,6 +73,11 @@ export type CannedResponse =
  */
 export type Ticket = $Result.DefaultSelection<Prisma.$TicketPayload>;
 /**
+ * Model TicketGroup
+ *
+ */
+export type TicketGroup = $Result.DefaultSelection<Prisma.$TicketGroupPayload>;
+/**
  * Model Enums
  *
  */
@@ -140,13 +145,14 @@ export namespace $Enums {
 
   export type TicketType = (typeof TicketType)[keyof typeof TicketType];
 
-  export const TicketStatus: {
+  export const TicketGroupStatus: {
     BOOKED: 'BOOKED';
     PAID: 'PAID';
     FREE: 'FREE';
   };
 
-  export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus];
+  export type TicketGroupStatus =
+    (typeof TicketGroupStatus)[keyof typeof TicketGroupStatus];
 }
 
 export type Role = $Enums.Role;
@@ -173,9 +179,9 @@ export type TicketType = $Enums.TicketType;
 
 export const TicketType: typeof $Enums.TicketType;
 
-export type TicketStatus = $Enums.TicketStatus;
+export type TicketGroupStatus = $Enums.TicketGroupStatus;
 
-export const TicketStatus: typeof $Enums.TicketStatus;
+export const TicketGroupStatus: typeof $Enums.TicketGroupStatus;
 
 /**
  * ##  Prisma Client ʲˢ
@@ -225,7 +231,7 @@ export class PrismaClient<
     callback: (
       event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent,
     ) => void,
-  ): PrismaClient;
+  ): void;
 
   /**
    * Connect with the database
@@ -333,14 +339,15 @@ export class PrismaClient<
 
   $extends: $Extensions.ExtendsHook<
     'extends',
-    Prisma.TypeMapCb<ClientOptions>,
+    Prisma.TypeMapCb,
     ExtArgs,
     $Utils.Call<
-      Prisma.TypeMapCb<ClientOptions>,
+      Prisma.TypeMapCb,
       {
         extArgs: ExtArgs;
       }
-    >
+    >,
+    ClientOptions
   >;
 
   /**
@@ -464,6 +471,16 @@ export class PrismaClient<
   get ticket(): Prisma.TicketDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.ticketGroup`: Exposes CRUD operations for the **TicketGroup** model.
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more TicketGroups
+   * const ticketGroups = await prisma.ticketGroup.findMany()
+   * ```
+   */
+  get ticketGroup(): Prisma.TicketGroupDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.enums`: Exposes CRUD operations for the **Enums** model.
    * Example usage:
    * ```ts
@@ -538,8 +555,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact;
 
   /**
-   * Prisma Client JS version: 6.5.0
-   * Query Engine version: 173f8d54f8d52e692c7e27e72a88314ec7aeff60
+   * Prisma Client JS version: 6.4.1
+   * Query Engine version: a9055b89e58b4b5bfb59600785423b1db3d0e75d
    */
   export type PrismaVersion = {
     client: string;
@@ -818,7 +835,7 @@ export namespace Prisma {
     O extends unknown
       ?
           | (K extends keyof O ? { [P in K]: O[P] } & O : O)
-          | ({ [P in keyof O as P extends K ? P : never]-?: O[P] } & O)
+          | ({ [P in keyof O as P extends K ? K : never]-?: O[P] } & O)
       : never
   >;
 
@@ -952,6 +969,7 @@ export namespace Prisma {
     Message: 'Message';
     CannedResponse: 'CannedResponse';
     Ticket: 'Ticket';
+    TicketGroup: 'TicketGroup';
     Enums: 'Enums';
     EventTicket: 'EventTicket';
   };
@@ -962,24 +980,21 @@ export namespace Prisma {
     db?: Datasource;
   };
 
-  interface TypeMapCb<ClientOptions = {}>
+  interface TypeMapCb
     extends $Utils.Fn<
-      { extArgs: $Extensions.InternalArgs },
+      { extArgs: $Extensions.InternalArgs; clientOptions: PrismaClientOptions },
       $Utils.Record<string, any>
     > {
     returns: Prisma.TypeMap<
       this['params']['extArgs'],
-      ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}
+      this['params']['clientOptions']
     >;
   }
 
   export type TypeMap<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > = {
-    globalOmitOptions: {
-      omit: GlobalOmitOptions;
-    };
     meta: {
       modelProps:
         | 'account'
@@ -994,6 +1009,7 @@ export namespace Prisma {
         | 'message'
         | 'cannedResponse'
         | 'ticket'
+        | 'ticketGroup'
         | 'enums'
         | 'eventTicket';
       txIsolationLevel: Prisma.TransactionIsolationLevel;
@@ -1891,6 +1907,82 @@ export namespace Prisma {
           };
         };
       };
+      TicketGroup: {
+        payload: Prisma.$TicketGroupPayload<ExtArgs>;
+        fields: Prisma.TicketGroupFieldRefs;
+        operations: {
+          findUnique: {
+            args: Prisma.TicketGroupFindUniqueArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TicketGroupPayload> | null;
+          };
+          findUniqueOrThrow: {
+            args: Prisma.TicketGroupFindUniqueOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TicketGroupPayload>;
+          };
+          findFirst: {
+            args: Prisma.TicketGroupFindFirstArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TicketGroupPayload> | null;
+          };
+          findFirstOrThrow: {
+            args: Prisma.TicketGroupFindFirstOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TicketGroupPayload>;
+          };
+          findMany: {
+            args: Prisma.TicketGroupFindManyArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TicketGroupPayload>[];
+          };
+          create: {
+            args: Prisma.TicketGroupCreateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TicketGroupPayload>;
+          };
+          createMany: {
+            args: Prisma.TicketGroupCreateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          createManyAndReturn: {
+            args: Prisma.TicketGroupCreateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TicketGroupPayload>[];
+          };
+          delete: {
+            args: Prisma.TicketGroupDeleteArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TicketGroupPayload>;
+          };
+          update: {
+            args: Prisma.TicketGroupUpdateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TicketGroupPayload>;
+          };
+          deleteMany: {
+            args: Prisma.TicketGroupDeleteManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateMany: {
+            args: Prisma.TicketGroupUpdateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateManyAndReturn: {
+            args: Prisma.TicketGroupUpdateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TicketGroupPayload>[];
+          };
+          upsert: {
+            args: Prisma.TicketGroupUpsertArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$TicketGroupPayload>;
+          };
+          aggregate: {
+            args: Prisma.TicketGroupAggregateArgs<ExtArgs>;
+            result: $Utils.Optional<AggregateTicketGroup>;
+          };
+          groupBy: {
+            args: Prisma.TicketGroupGroupByArgs<ExtArgs>;
+            result: $Utils.Optional<TicketGroupGroupByOutputType>[];
+          };
+          count: {
+            args: Prisma.TicketGroupCountArgs<ExtArgs>;
+            result:
+              | $Utils.Optional<TicketGroupCountAggregateOutputType>
+              | number;
+          };
+        };
+      };
       Enums: {
         payload: Prisma.$EnumsPayload<ExtArgs>;
         fields: Prisma.EnumsFieldRefs;
@@ -2141,6 +2233,7 @@ export namespace Prisma {
     message?: MessageOmit;
     cannedResponse?: CannedResponseOmit;
     ticket?: TicketOmit;
+    ticketGroup?: TicketGroupOmit;
     enums?: EnumsOmit;
     eventTicket?: EventTicketOmit;
   };
@@ -2558,6 +2651,7 @@ export namespace Prisma {
 
   export type EventCountOutputType = {
     tickets: number;
+    ticketGroups: number;
     subEvents: number;
     tags: number;
     eventTickets: number;
@@ -2567,6 +2661,7 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     tickets?: boolean | EventCountOutputTypeCountTicketsArgs;
+    ticketGroups?: boolean | EventCountOutputTypeCountTicketGroupsArgs;
     subEvents?: boolean | EventCountOutputTypeCountSubEventsArgs;
     tags?: boolean | EventCountOutputTypeCountTagsArgs;
     eventTickets?: boolean | EventCountOutputTypeCountEventTicketsArgs;
@@ -2592,6 +2687,15 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: TicketWhereInput;
+  };
+
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeCountTicketGroupsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: TicketGroupWhereInput;
   };
 
   /**
@@ -2655,6 +2759,42 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: EventWhereInput;
+  };
+
+  /**
+   * Count Type TicketGroupCountOutputType
+   */
+
+  export type TicketGroupCountOutputType = {
+    tickets: number;
+  };
+
+  export type TicketGroupCountOutputTypeSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    tickets?: boolean | TicketGroupCountOutputTypeCountTicketsArgs;
+  };
+
+  // Custom InputTypes
+  /**
+   * TicketGroupCountOutputType without action
+   */
+  export type TicketGroupCountOutputTypeDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroupCountOutputType
+     */
+    select?: TicketGroupCountOutputTypeSelect<ExtArgs> | null;
+  };
+
+  /**
+   * TicketGroupCountOutputType without action
+   */
+  export type TicketGroupCountOutputTypeCountTicketsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: TicketWhereInput;
   };
 
   /**
@@ -2970,7 +3110,7 @@ export namespace Prisma {
 
   export interface AccountDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Account'];
@@ -2994,11 +3134,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -3020,11 +3160,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -3047,11 +3187,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -3075,11 +3215,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -3105,7 +3245,7 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -3128,11 +3268,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -3180,7 +3320,7 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -3203,11 +3343,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -3232,11 +3372,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -3311,7 +3451,7 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -3339,11 +3479,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -3495,7 +3635,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     comments<T extends Account$commentsArgs<ExtArgs> = {}>(
@@ -3505,7 +3645,7 @@ export namespace Prisma {
           Prisma.$CommentPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -3516,7 +3656,7 @@ export namespace Prisma {
           Prisma.$CommentPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -3527,7 +3667,7 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -3538,7 +3678,7 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -4708,7 +4848,7 @@ export namespace Prisma {
 
   export interface ProfileDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Profile'];
@@ -4732,11 +4872,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -4758,11 +4898,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -4785,11 +4925,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -4813,11 +4953,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -4843,7 +4983,7 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -4866,11 +5006,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -4918,7 +5058,7 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -4941,11 +5081,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -4970,11 +5110,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -5049,7 +5189,7 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -5077,11 +5217,11 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -5233,7 +5373,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     otp<T extends Profile$otpArgs<ExtArgs> = {}>(
@@ -5243,7 +5383,7 @@ export namespace Prisma {
           Prisma.$OtpPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -5254,7 +5394,7 @@ export namespace Prisma {
           Prisma.$CommentPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -5265,7 +5405,7 @@ export namespace Prisma {
           Prisma.$MessagePayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -5276,7 +5416,7 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -5287,11 +5427,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     residenceLocation<T extends Profile$residenceLocationArgs<ExtArgs> = {}>(
       args?: Subset<T, Profile$residenceLocationArgs<ExtArgs>>,
@@ -5300,11 +5440,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     Ticket<T extends Profile$TicketArgs<ExtArgs> = {}>(
       args?: Subset<T, Profile$TicketArgs<ExtArgs>>,
@@ -5313,7 +5453,7 @@ export namespace Prisma {
           Prisma.$TicketPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -6281,7 +6421,7 @@ export namespace Prisma {
 
   export interface OtpDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Otp'];
@@ -6305,11 +6445,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -6331,11 +6471,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -6358,11 +6498,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -6386,11 +6526,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -6416,7 +6556,7 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -6439,11 +6579,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -6491,7 +6631,7 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -6514,11 +6654,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -6543,11 +6683,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -6622,7 +6762,7 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -6650,11 +6790,11 @@ export namespace Prisma {
         Prisma.$OtpPayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -6806,7 +6946,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     owner<T extends ProfileDefaultArgs<ExtArgs> = {}>(
@@ -6816,12 +6956,12 @@ export namespace Prisma {
           Prisma.$ProfilePayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null,
       Null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -7656,7 +7796,7 @@ export namespace Prisma {
 
   export interface LocationDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Location'];
@@ -7680,11 +7820,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -7706,11 +7846,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -7733,11 +7873,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -7761,11 +7901,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -7791,7 +7931,7 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -7814,11 +7954,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -7866,7 +8006,7 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -7889,11 +8029,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -7918,11 +8058,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -7997,7 +8137,7 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -8025,11 +8165,11 @@ export namespace Prisma {
         Prisma.$LocationPayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -8182,7 +8322,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     birthProfiles<T extends Location$birthProfilesArgs<ExtArgs> = {}>(
@@ -8192,7 +8332,7 @@ export namespace Prisma {
           Prisma.$ProfilePayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -8203,7 +8343,7 @@ export namespace Prisma {
           Prisma.$ProfilePayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -9105,7 +9245,7 @@ export namespace Prisma {
 
   export interface CommentDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Comment'];
@@ -9129,11 +9269,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -9155,11 +9295,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -9182,11 +9322,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -9210,11 +9350,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -9240,7 +9380,7 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -9263,11 +9403,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -9315,7 +9455,7 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -9338,11 +9478,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -9367,11 +9507,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -9446,7 +9586,7 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -9474,11 +9614,11 @@ export namespace Prisma {
         Prisma.$CommentPayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -9630,7 +9770,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     account<T extends AccountDefaultArgs<ExtArgs> = {}>(
@@ -9640,12 +9780,12 @@ export namespace Prisma {
           Prisma.$AccountPayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null,
       Null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     profile<T extends ProfileDefaultArgs<ExtArgs> = {}>(
       args?: Subset<T, ProfileDefaultArgs<ExtArgs>>,
@@ -9654,12 +9794,12 @@ export namespace Prisma {
           Prisma.$ProfilePayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null,
       Null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     solvedBy<T extends Comment$solvedByArgs<ExtArgs> = {}>(
       args?: Subset<T, Comment$solvedByArgs<ExtArgs>>,
@@ -9668,11 +9808,11 @@ export namespace Prisma {
         Prisma.$AccountPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -10484,7 +10624,7 @@ export namespace Prisma {
 
   export interface TagDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Tag'];
@@ -10508,11 +10648,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -10534,11 +10674,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -10561,11 +10701,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -10589,11 +10729,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -10619,7 +10759,7 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -10642,11 +10782,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -10694,7 +10834,7 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -10717,11 +10857,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -10746,11 +10886,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -10825,7 +10965,7 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -10853,11 +10993,11 @@ export namespace Prisma {
         Prisma.$TagPayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -11009,7 +11149,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     group<T extends TagGroupDefaultArgs<ExtArgs> = {}>(
@@ -11019,12 +11159,12 @@ export namespace Prisma {
           Prisma.$TagGroupPayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null,
       Null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     assistedEvent<T extends Tag$assistedEventArgs<ExtArgs> = {}>(
       args?: Subset<T, Tag$assistedEventArgs<ExtArgs>>,
@@ -11033,11 +11173,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     confirmedEvent<T extends Tag$confirmedEventArgs<ExtArgs> = {}>(
       args?: Subset<T, Tag$confirmedEventArgs<ExtArgs>>,
@@ -11046,11 +11186,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     accounts<T extends Tag$accountsArgs<ExtArgs> = {}>(
       args?: Subset<T, Tag$accountsArgs<ExtArgs>>,
@@ -11059,7 +11199,7 @@ export namespace Prisma {
           Prisma.$AccountPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -11070,7 +11210,7 @@ export namespace Prisma {
           Prisma.$ProfilePayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -11081,7 +11221,7 @@ export namespace Prisma {
           Prisma.$AccountPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -11092,7 +11232,7 @@ export namespace Prisma {
           Prisma.$EventPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -12009,7 +12149,7 @@ export namespace Prisma {
 
   export interface TagGroupDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['TagGroup'];
@@ -12033,11 +12173,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -12059,11 +12199,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -12086,11 +12226,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -12114,11 +12254,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -12144,7 +12284,7 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -12167,11 +12307,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -12219,7 +12359,7 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -12242,11 +12382,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -12271,11 +12411,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -12350,7 +12490,7 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -12378,11 +12518,11 @@ export namespace Prisma {
         Prisma.$TagGroupPayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -12535,7 +12675,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     tags<T extends TagGroup$tagsArgs<ExtArgs> = {}>(
@@ -12545,7 +12685,7 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -13304,6 +13444,7 @@ export namespace Prisma {
       tagConfirmed?: boolean | TagDefaultArgs<ExtArgs>;
       supraEvent?: boolean | Event$supraEventArgs<ExtArgs>;
       tickets?: boolean | Event$ticketsArgs<ExtArgs>;
+      ticketGroups?: boolean | Event$ticketGroupsArgs<ExtArgs>;
       subEvents?: boolean | Event$subEventsArgs<ExtArgs>;
       tags?: boolean | Event$tagsArgs<ExtArgs>;
       eventTickets?: boolean | Event$eventTicketsArgs<ExtArgs>;
@@ -13404,6 +13545,7 @@ export namespace Prisma {
     tagConfirmed?: boolean | TagDefaultArgs<ExtArgs>;
     supraEvent?: boolean | Event$supraEventArgs<ExtArgs>;
     tickets?: boolean | Event$ticketsArgs<ExtArgs>;
+    ticketGroups?: boolean | Event$ticketGroupsArgs<ExtArgs>;
     subEvents?: boolean | Event$subEventsArgs<ExtArgs>;
     tags?: boolean | Event$tagsArgs<ExtArgs>;
     eventTickets?: boolean | Event$eventTicketsArgs<ExtArgs>;
@@ -13436,6 +13578,7 @@ export namespace Prisma {
       tagConfirmed: Prisma.$TagPayload<ExtArgs>;
       supraEvent: Prisma.$EventPayload<ExtArgs> | null;
       tickets: Prisma.$TicketPayload<ExtArgs>[];
+      ticketGroups: Prisma.$TicketGroupPayload<ExtArgs>[];
       subEvents: Prisma.$EventPayload<ExtArgs>[];
       tags: Prisma.$TagPayload<ExtArgs>[];
       eventTickets: Prisma.$EventTicketPayload<ExtArgs>[];
@@ -13473,7 +13616,7 @@ export namespace Prisma {
 
   export interface EventDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Event'];
@@ -13497,11 +13640,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -13523,11 +13666,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -13550,11 +13693,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -13578,11 +13721,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -13608,7 +13751,7 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -13631,11 +13774,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -13683,7 +13826,7 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -13706,11 +13849,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -13735,11 +13878,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -13814,7 +13957,7 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -13842,11 +13985,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -13998,7 +14141,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     folder<T extends Event$folderArgs<ExtArgs> = {}>(
@@ -14008,11 +14151,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     tagAssisted<T extends TagDefaultArgs<ExtArgs> = {}>(
       args?: Subset<T, TagDefaultArgs<ExtArgs>>,
@@ -14021,12 +14164,12 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null,
       Null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     tagConfirmed<T extends TagDefaultArgs<ExtArgs> = {}>(
       args?: Subset<T, TagDefaultArgs<ExtArgs>>,
@@ -14035,12 +14178,12 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null,
       Null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     supraEvent<T extends Event$supraEventArgs<ExtArgs> = {}>(
       args?: Subset<T, Event$supraEventArgs<ExtArgs>>,
@@ -14049,11 +14192,11 @@ export namespace Prisma {
         Prisma.$EventPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     tickets<T extends Event$ticketsArgs<ExtArgs> = {}>(
       args?: Subset<T, Event$ticketsArgs<ExtArgs>>,
@@ -14062,7 +14205,18 @@ export namespace Prisma {
           Prisma.$TicketPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
+        >
+      | Null
+    >;
+    ticketGroups<T extends Event$ticketGroupsArgs<ExtArgs> = {}>(
+      args?: Subset<T, Event$ticketGroupsArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$TicketGroupPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
         >
       | Null
     >;
@@ -14073,7 +14227,7 @@ export namespace Prisma {
           Prisma.$EventPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -14084,7 +14238,7 @@ export namespace Prisma {
           Prisma.$TagPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -14095,7 +14249,7 @@ export namespace Prisma {
           Prisma.$EventTicketPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -14643,6 +14797,34 @@ export namespace Prisma {
   };
 
   /**
+   * Event.ticketGroups
+   */
+  export type Event$ticketGroupsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    where?: TicketGroupWhereInput;
+    orderBy?:
+      | TicketGroupOrderByWithRelationInput
+      | TicketGroupOrderByWithRelationInput[];
+    cursor?: TicketGroupWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: TicketGroupScalarFieldEnum | TicketGroupScalarFieldEnum[];
+  };
+
+  /**
    * Event.subEvents
    */
   export type Event$subEventsArgs<
@@ -15008,7 +15190,7 @@ export namespace Prisma {
 
   export interface EventFolderDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['EventFolder'];
@@ -15032,11 +15214,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -15058,11 +15240,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -15085,11 +15267,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -15113,11 +15295,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -15143,7 +15325,7 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -15166,11 +15348,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -15218,7 +15400,7 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -15241,11 +15423,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -15270,11 +15452,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -15349,7 +15531,7 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -15377,11 +15559,11 @@ export namespace Prisma {
         Prisma.$EventFolderPayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -15534,7 +15716,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     events<T extends EventFolder$eventsArgs<ExtArgs> = {}>(
@@ -15544,7 +15726,7 @@ export namespace Prisma {
           Prisma.$EventPayload<ExtArgs>,
           T,
           'findMany',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null
     >;
@@ -16356,7 +16538,7 @@ export namespace Prisma {
 
   export interface MessageDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Message'];
@@ -16380,11 +16562,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -16406,11 +16588,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -16433,11 +16615,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -16461,11 +16643,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -16491,7 +16673,7 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -16514,11 +16696,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -16566,7 +16748,7 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -16589,11 +16771,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -16618,11 +16800,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -16697,7 +16879,7 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -16725,11 +16907,11 @@ export namespace Prisma {
         Prisma.$MessagePayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -16881,7 +17063,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     profile<T extends ProfileDefaultArgs<ExtArgs> = {}>(
@@ -16891,12 +17073,12 @@ export namespace Prisma {
           Prisma.$ProfilePayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null,
       Null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -17644,7 +17826,7 @@ export namespace Prisma {
 
   export interface CannedResponseDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['CannedResponse'];
@@ -17668,11 +17850,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -17694,11 +17876,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -17721,11 +17903,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -17749,11 +17931,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -17779,7 +17961,7 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -17802,11 +17984,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -17854,7 +18036,7 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -17877,11 +18059,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -17906,11 +18088,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -17985,7 +18167,7 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -18013,11 +18195,11 @@ export namespace Prisma {
         Prisma.$CannedResponsePayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -18170,7 +18352,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     /**
@@ -18648,7 +18830,6 @@ export namespace Prisma {
     id: string | null;
     eventId: string | null;
     type: $Enums.TicketType | null;
-    status: $Enums.TicketStatus | null;
     fullName: string | null;
     mail: string | null;
     dni: string | null;
@@ -18656,6 +18837,7 @@ export namespace Prisma {
     scanned: boolean | null;
     scannedAt: Date | null;
     profileId: string | null;
+    ticketGroupId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -18664,7 +18846,6 @@ export namespace Prisma {
     id: string | null;
     eventId: string | null;
     type: $Enums.TicketType | null;
-    status: $Enums.TicketStatus | null;
     fullName: string | null;
     mail: string | null;
     dni: string | null;
@@ -18672,6 +18853,7 @@ export namespace Prisma {
     scanned: boolean | null;
     scannedAt: Date | null;
     profileId: string | null;
+    ticketGroupId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -18680,7 +18862,6 @@ export namespace Prisma {
     id: number;
     eventId: number;
     type: number;
-    status: number;
     fullName: number;
     mail: number;
     dni: number;
@@ -18688,6 +18869,7 @@ export namespace Prisma {
     scanned: number;
     scannedAt: number;
     profileId: number;
+    ticketGroupId: number;
     created_at: number;
     updated_at: number;
     _all: number;
@@ -18705,7 +18887,6 @@ export namespace Prisma {
     id?: true;
     eventId?: true;
     type?: true;
-    status?: true;
     fullName?: true;
     mail?: true;
     dni?: true;
@@ -18713,6 +18894,7 @@ export namespace Prisma {
     scanned?: true;
     scannedAt?: true;
     profileId?: true;
+    ticketGroupId?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -18721,7 +18903,6 @@ export namespace Prisma {
     id?: true;
     eventId?: true;
     type?: true;
-    status?: true;
     fullName?: true;
     mail?: true;
     dni?: true;
@@ -18729,6 +18910,7 @@ export namespace Prisma {
     scanned?: true;
     scannedAt?: true;
     profileId?: true;
+    ticketGroupId?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -18737,7 +18919,6 @@ export namespace Prisma {
     id?: true;
     eventId?: true;
     type?: true;
-    status?: true;
     fullName?: true;
     mail?: true;
     dni?: true;
@@ -18745,6 +18926,7 @@ export namespace Prisma {
     scanned?: true;
     scannedAt?: true;
     profileId?: true;
+    ticketGroupId?: true;
     created_at?: true;
     updated_at?: true;
     _all?: true;
@@ -18843,7 +19025,6 @@ export namespace Prisma {
     id: string;
     eventId: string;
     type: $Enums.TicketType;
-    status: $Enums.TicketStatus;
     fullName: string;
     mail: string;
     dni: string;
@@ -18851,6 +19032,7 @@ export namespace Prisma {
     scanned: boolean;
     scannedAt: Date | null;
     profileId: string | null;
+    ticketGroupId: string | null;
     created_at: Date;
     updated_at: Date;
     _count: TicketCountAggregateOutputType | null;
@@ -18880,7 +19062,6 @@ export namespace Prisma {
       id?: boolean;
       eventId?: boolean;
       type?: boolean;
-      status?: boolean;
       fullName?: boolean;
       mail?: boolean;
       dni?: boolean;
@@ -18888,10 +19069,12 @@ export namespace Prisma {
       scanned?: boolean;
       scannedAt?: boolean;
       profileId?: boolean;
+      ticketGroupId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
       profile?: boolean | Ticket$profileArgs<ExtArgs>;
+      ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
     },
     ExtArgs['result']['ticket']
   >;
@@ -18903,7 +19086,6 @@ export namespace Prisma {
       id?: boolean;
       eventId?: boolean;
       type?: boolean;
-      status?: boolean;
       fullName?: boolean;
       mail?: boolean;
       dni?: boolean;
@@ -18911,10 +19093,12 @@ export namespace Prisma {
       scanned?: boolean;
       scannedAt?: boolean;
       profileId?: boolean;
+      ticketGroupId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
       profile?: boolean | Ticket$profileArgs<ExtArgs>;
+      ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
     },
     ExtArgs['result']['ticket']
   >;
@@ -18926,7 +19110,6 @@ export namespace Prisma {
       id?: boolean;
       eventId?: boolean;
       type?: boolean;
-      status?: boolean;
       fullName?: boolean;
       mail?: boolean;
       dni?: boolean;
@@ -18934,10 +19117,12 @@ export namespace Prisma {
       scanned?: boolean;
       scannedAt?: boolean;
       profileId?: boolean;
+      ticketGroupId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
       profile?: boolean | Ticket$profileArgs<ExtArgs>;
+      ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
     },
     ExtArgs['result']['ticket']
   >;
@@ -18946,7 +19131,6 @@ export namespace Prisma {
     id?: boolean;
     eventId?: boolean;
     type?: boolean;
-    status?: boolean;
     fullName?: boolean;
     mail?: boolean;
     dni?: boolean;
@@ -18954,6 +19138,7 @@ export namespace Prisma {
     scanned?: boolean;
     scannedAt?: boolean;
     profileId?: boolean;
+    ticketGroupId?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
   };
@@ -18964,7 +19149,6 @@ export namespace Prisma {
     | 'id'
     | 'eventId'
     | 'type'
-    | 'status'
     | 'fullName'
     | 'mail'
     | 'dni'
@@ -18972,6 +19156,7 @@ export namespace Prisma {
     | 'scanned'
     | 'scannedAt'
     | 'profileId'
+    | 'ticketGroupId'
     | 'created_at'
     | 'updated_at',
     ExtArgs['result']['ticket']
@@ -18981,18 +19166,21 @@ export namespace Prisma {
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
     profile?: boolean | Ticket$profileArgs<ExtArgs>;
+    ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
   };
   export type TicketIncludeCreateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
     profile?: boolean | Ticket$profileArgs<ExtArgs>;
+    ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
   };
   export type TicketIncludeUpdateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
     profile?: boolean | Ticket$profileArgs<ExtArgs>;
+    ticketGroup?: boolean | Ticket$ticketGroupArgs<ExtArgs>;
   };
 
   export type $TicketPayload<
@@ -19002,13 +19190,13 @@ export namespace Prisma {
     objects: {
       event: Prisma.$EventPayload<ExtArgs>;
       profile: Prisma.$ProfilePayload<ExtArgs> | null;
+      ticketGroup: Prisma.$TicketGroupPayload<ExtArgs> | null;
     };
     scalars: $Extensions.GetPayloadResult<
       {
         id: string;
         eventId: string;
         type: $Enums.TicketType;
-        status: $Enums.TicketStatus;
         fullName: string;
         mail: string;
         dni: string;
@@ -19016,6 +19204,7 @@ export namespace Prisma {
         scanned: boolean;
         scannedAt: Date | null;
         profileId: string | null;
+        ticketGroupId: string | null;
         created_at: Date;
         updated_at: Date;
       },
@@ -19036,7 +19225,7 @@ export namespace Prisma {
 
   export interface TicketDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Ticket'];
@@ -19060,11 +19249,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -19086,11 +19275,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -19113,11 +19302,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -19141,11 +19330,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -19171,7 +19360,7 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -19194,11 +19383,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -19246,7 +19435,7 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -19269,11 +19458,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -19298,11 +19487,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -19377,7 +19566,7 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -19405,11 +19594,11 @@ export namespace Prisma {
         Prisma.$TicketPayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -19561,7 +19750,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     event<T extends EventDefaultArgs<ExtArgs> = {}>(
@@ -19571,12 +19760,12 @@ export namespace Prisma {
           Prisma.$EventPayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null,
       Null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     profile<T extends Ticket$profileArgs<ExtArgs> = {}>(
       args?: Subset<T, Ticket$profileArgs<ExtArgs>>,
@@ -19585,11 +19774,24 @@ export namespace Prisma {
         Prisma.$ProfilePayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
+    >;
+    ticketGroup<T extends Ticket$ticketGroupArgs<ExtArgs> = {}>(
+      args?: Subset<T, Ticket$ticketGroupArgs<ExtArgs>>,
+    ): Prisma__TicketGroupClient<
+      $Result.GetResult<
+        Prisma.$TicketGroupPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
     >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -19634,7 +19836,6 @@ export namespace Prisma {
     readonly id: FieldRef<'Ticket', 'String'>;
     readonly eventId: FieldRef<'Ticket', 'String'>;
     readonly type: FieldRef<'Ticket', 'TicketType'>;
-    readonly status: FieldRef<'Ticket', 'TicketStatus'>;
     readonly fullName: FieldRef<'Ticket', 'String'>;
     readonly mail: FieldRef<'Ticket', 'String'>;
     readonly dni: FieldRef<'Ticket', 'String'>;
@@ -19642,6 +19843,7 @@ export namespace Prisma {
     readonly scanned: FieldRef<'Ticket', 'Boolean'>;
     readonly scannedAt: FieldRef<'Ticket', 'DateTime'>;
     readonly profileId: FieldRef<'Ticket', 'String'>;
+    readonly ticketGroupId: FieldRef<'Ticket', 'String'>;
     readonly created_at: FieldRef<'Ticket', 'DateTime'>;
     readonly updated_at: FieldRef<'Ticket', 'DateTime'>;
   }
@@ -20088,6 +20290,27 @@ export namespace Prisma {
   };
 
   /**
+   * Ticket.ticketGroup
+   */
+  export type Ticket$ticketGroupArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    where?: TicketGroupWhereInput;
+  };
+
+  /**
    * Ticket without action
    */
   export type TicketDefaultArgs<
@@ -20105,6 +20328,1407 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: TicketInclude<ExtArgs> | null;
+  };
+
+  /**
+   * Model TicketGroup
+   */
+
+  export type AggregateTicketGroup = {
+    _count: TicketGroupCountAggregateOutputType | null;
+    _avg: TicketGroupAvgAggregateOutputType | null;
+    _sum: TicketGroupSumAggregateOutputType | null;
+    _min: TicketGroupMinAggregateOutputType | null;
+    _max: TicketGroupMaxAggregateOutputType | null;
+  };
+
+  export type TicketGroupAvgAggregateOutputType = {
+    amountTickets: number | null;
+  };
+
+  export type TicketGroupSumAggregateOutputType = {
+    amountTickets: number | null;
+  };
+
+  export type TicketGroupMinAggregateOutputType = {
+    id: string | null;
+    status: $Enums.TicketGroupStatus | null;
+    amountTickets: number | null;
+    eventId: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type TicketGroupMaxAggregateOutputType = {
+    id: string | null;
+    status: $Enums.TicketGroupStatus | null;
+    amountTickets: number | null;
+    eventId: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type TicketGroupCountAggregateOutputType = {
+    id: number;
+    status: number;
+    amountTickets: number;
+    eventId: number;
+    created_at: number;
+    updated_at: number;
+    _all: number;
+  };
+
+  export type TicketGroupAvgAggregateInputType = {
+    amountTickets?: true;
+  };
+
+  export type TicketGroupSumAggregateInputType = {
+    amountTickets?: true;
+  };
+
+  export type TicketGroupMinAggregateInputType = {
+    id?: true;
+    status?: true;
+    amountTickets?: true;
+    eventId?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type TicketGroupMaxAggregateInputType = {
+    id?: true;
+    status?: true;
+    amountTickets?: true;
+    eventId?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type TicketGroupCountAggregateInputType = {
+    id?: true;
+    status?: true;
+    amountTickets?: true;
+    eventId?: true;
+    created_at?: true;
+    updated_at?: true;
+    _all?: true;
+  };
+
+  export type TicketGroupAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which TicketGroup to aggregate.
+     */
+    where?: TicketGroupWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of TicketGroups to fetch.
+     */
+    orderBy?:
+      | TicketGroupOrderByWithRelationInput
+      | TicketGroupOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: TicketGroupWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` TicketGroups from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` TicketGroups.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned TicketGroups
+     **/
+    _count?: true | TicketGroupCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to average
+     **/
+    _avg?: TicketGroupAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+     **/
+    _sum?: TicketGroupSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+     **/
+    _min?: TicketGroupMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+     **/
+    _max?: TicketGroupMaxAggregateInputType;
+  };
+
+  export type GetTicketGroupAggregateType<T extends TicketGroupAggregateArgs> =
+    {
+      [P in keyof T & keyof AggregateTicketGroup]: P extends '_count' | 'count'
+        ? T[P] extends true
+          ? number
+          : GetScalarType<T[P], AggregateTicketGroup[P]>
+        : GetScalarType<T[P], AggregateTicketGroup[P]>;
+    };
+
+  export type TicketGroupGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: TicketGroupWhereInput;
+    orderBy?:
+      | TicketGroupOrderByWithAggregationInput
+      | TicketGroupOrderByWithAggregationInput[];
+    by: TicketGroupScalarFieldEnum[] | TicketGroupScalarFieldEnum;
+    having?: TicketGroupScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: TicketGroupCountAggregateInputType | true;
+    _avg?: TicketGroupAvgAggregateInputType;
+    _sum?: TicketGroupSumAggregateInputType;
+    _min?: TicketGroupMinAggregateInputType;
+    _max?: TicketGroupMaxAggregateInputType;
+  };
+
+  export type TicketGroupGroupByOutputType = {
+    id: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets: number;
+    eventId: string;
+    created_at: Date;
+    updated_at: Date;
+    _count: TicketGroupCountAggregateOutputType | null;
+    _avg: TicketGroupAvgAggregateOutputType | null;
+    _sum: TicketGroupSumAggregateOutputType | null;
+    _min: TicketGroupMinAggregateOutputType | null;
+    _max: TicketGroupMaxAggregateOutputType | null;
+  };
+
+  type GetTicketGroupGroupByPayload<T extends TicketGroupGroupByArgs> =
+    Prisma.PrismaPromise<
+      Array<
+        PickEnumerable<TicketGroupGroupByOutputType, T['by']> & {
+          [P in keyof T &
+            keyof TicketGroupGroupByOutputType]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TicketGroupGroupByOutputType[P]>
+            : GetScalarType<T[P], TicketGroupGroupByOutputType[P]>;
+        }
+      >
+    >;
+
+  export type TicketGroupSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      status?: boolean;
+      amountTickets?: boolean;
+      eventId?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      event?: boolean | EventDefaultArgs<ExtArgs>;
+      tickets?: boolean | TicketGroup$ticketsArgs<ExtArgs>;
+      _count?: boolean | TicketGroupCountOutputTypeDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['ticketGroup']
+  >;
+
+  export type TicketGroupSelectCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      status?: boolean;
+      amountTickets?: boolean;
+      eventId?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      event?: boolean | EventDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['ticketGroup']
+  >;
+
+  export type TicketGroupSelectUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      status?: boolean;
+      amountTickets?: boolean;
+      eventId?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      event?: boolean | EventDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['ticketGroup']
+  >;
+
+  export type TicketGroupSelectScalar = {
+    id?: boolean;
+    status?: boolean;
+    amountTickets?: boolean;
+    eventId?: boolean;
+    created_at?: boolean;
+    updated_at?: boolean;
+  };
+
+  export type TicketGroupOmit<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetOmit<
+    'id' | 'status' | 'amountTickets' | 'eventId' | 'created_at' | 'updated_at',
+    ExtArgs['result']['ticketGroup']
+  >;
+  export type TicketGroupInclude<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    event?: boolean | EventDefaultArgs<ExtArgs>;
+    tickets?: boolean | TicketGroup$ticketsArgs<ExtArgs>;
+    _count?: boolean | TicketGroupCountOutputTypeDefaultArgs<ExtArgs>;
+  };
+  export type TicketGroupIncludeCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    event?: boolean | EventDefaultArgs<ExtArgs>;
+  };
+  export type TicketGroupIncludeUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    event?: boolean | EventDefaultArgs<ExtArgs>;
+  };
+
+  export type $TicketGroupPayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    name: 'TicketGroup';
+    objects: {
+      event: Prisma.$EventPayload<ExtArgs>;
+      tickets: Prisma.$TicketPayload<ExtArgs>[];
+    };
+    scalars: $Extensions.GetPayloadResult<
+      {
+        id: string;
+        status: $Enums.TicketGroupStatus;
+        amountTickets: number;
+        eventId: string;
+        created_at: Date;
+        updated_at: Date;
+      },
+      ExtArgs['result']['ticketGroup']
+    >;
+    composites: {};
+  };
+
+  type TicketGroupGetPayload<
+    S extends boolean | null | undefined | TicketGroupDefaultArgs,
+  > = $Result.GetResult<Prisma.$TicketGroupPayload, S>;
+
+  type TicketGroupCountArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = Omit<
+    TicketGroupFindManyArgs,
+    'select' | 'include' | 'distinct' | 'omit'
+  > & {
+    select?: TicketGroupCountAggregateInputType | true;
+  };
+
+  export interface TicketGroupDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['TicketGroup'];
+      meta: { name: 'TicketGroup' };
+    };
+    /**
+     * Find zero or one TicketGroup that matches the filter.
+     * @param {TicketGroupFindUniqueArgs} args - Arguments to find a TicketGroup
+     * @example
+     * // Get one TicketGroup
+     * const ticketGroup = await prisma.ticketGroup.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TicketGroupFindUniqueArgs>(
+      args: SelectSubset<T, TicketGroupFindUniqueArgs<ExtArgs>>,
+    ): Prisma__TicketGroupClient<
+      $Result.GetResult<
+        Prisma.$TicketGroupPayload<ExtArgs>,
+        T,
+        'findUnique',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find one TicketGroup that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TicketGroupFindUniqueOrThrowArgs} args - Arguments to find a TicketGroup
+     * @example
+     * // Get one TicketGroup
+     * const ticketGroup = await prisma.ticketGroup.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TicketGroupFindUniqueOrThrowArgs>(
+      args: SelectSubset<T, TicketGroupFindUniqueOrThrowArgs<ExtArgs>>,
+    ): Prisma__TicketGroupClient<
+      $Result.GetResult<
+        Prisma.$TicketGroupPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first TicketGroup that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketGroupFindFirstArgs} args - Arguments to find a TicketGroup
+     * @example
+     * // Get one TicketGroup
+     * const ticketGroup = await prisma.ticketGroup.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TicketGroupFindFirstArgs>(
+      args?: SelectSubset<T, TicketGroupFindFirstArgs<ExtArgs>>,
+    ): Prisma__TicketGroupClient<
+      $Result.GetResult<
+        Prisma.$TicketGroupPayload<ExtArgs>,
+        T,
+        'findFirst',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first TicketGroup that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketGroupFindFirstOrThrowArgs} args - Arguments to find a TicketGroup
+     * @example
+     * // Get one TicketGroup
+     * const ticketGroup = await prisma.ticketGroup.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TicketGroupFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TicketGroupFindFirstOrThrowArgs<ExtArgs>>,
+    ): Prisma__TicketGroupClient<
+      $Result.GetResult<
+        Prisma.$TicketGroupPayload<ExtArgs>,
+        T,
+        'findFirstOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find zero or more TicketGroups that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketGroupFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TicketGroups
+     * const ticketGroups = await prisma.ticketGroup.findMany()
+     *
+     * // Get first 10 TicketGroups
+     * const ticketGroups = await prisma.ticketGroup.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const ticketGroupWithIdOnly = await prisma.ticketGroup.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends TicketGroupFindManyArgs>(
+      args?: SelectSubset<T, TicketGroupFindManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$TicketGroupPayload<ExtArgs>,
+        T,
+        'findMany',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create a TicketGroup.
+     * @param {TicketGroupCreateArgs} args - Arguments to create a TicketGroup.
+     * @example
+     * // Create one TicketGroup
+     * const TicketGroup = await prisma.ticketGroup.create({
+     *   data: {
+     *     // ... data to create a TicketGroup
+     *   }
+     * })
+     *
+     */
+    create<T extends TicketGroupCreateArgs>(
+      args: SelectSubset<T, TicketGroupCreateArgs<ExtArgs>>,
+    ): Prisma__TicketGroupClient<
+      $Result.GetResult<
+        Prisma.$TicketGroupPayload<ExtArgs>,
+        T,
+        'create',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Create many TicketGroups.
+     * @param {TicketGroupCreateManyArgs} args - Arguments to create many TicketGroups.
+     * @example
+     * // Create many TicketGroups
+     * const ticketGroup = await prisma.ticketGroup.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends TicketGroupCreateManyArgs>(
+      args?: SelectSubset<T, TicketGroupCreateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create many TicketGroups and returns the data saved in the database.
+     * @param {TicketGroupCreateManyAndReturnArgs} args - Arguments to create many TicketGroups.
+     * @example
+     * // Create many TicketGroups
+     * const ticketGroup = await prisma.ticketGroup.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many TicketGroups and only return the `id`
+     * const ticketGroupWithIdOnly = await prisma.ticketGroup.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends TicketGroupCreateManyAndReturnArgs>(
+      args?: SelectSubset<T, TicketGroupCreateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$TicketGroupPayload<ExtArgs>,
+        T,
+        'createManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Delete a TicketGroup.
+     * @param {TicketGroupDeleteArgs} args - Arguments to delete one TicketGroup.
+     * @example
+     * // Delete one TicketGroup
+     * const TicketGroup = await prisma.ticketGroup.delete({
+     *   where: {
+     *     // ... filter to delete one TicketGroup
+     *   }
+     * })
+     *
+     */
+    delete<T extends TicketGroupDeleteArgs>(
+      args: SelectSubset<T, TicketGroupDeleteArgs<ExtArgs>>,
+    ): Prisma__TicketGroupClient<
+      $Result.GetResult<
+        Prisma.$TicketGroupPayload<ExtArgs>,
+        T,
+        'delete',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Update one TicketGroup.
+     * @param {TicketGroupUpdateArgs} args - Arguments to update one TicketGroup.
+     * @example
+     * // Update one TicketGroup
+     * const ticketGroup = await prisma.ticketGroup.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends TicketGroupUpdateArgs>(
+      args: SelectSubset<T, TicketGroupUpdateArgs<ExtArgs>>,
+    ): Prisma__TicketGroupClient<
+      $Result.GetResult<
+        Prisma.$TicketGroupPayload<ExtArgs>,
+        T,
+        'update',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Delete zero or more TicketGroups.
+     * @param {TicketGroupDeleteManyArgs} args - Arguments to filter TicketGroups to delete.
+     * @example
+     * // Delete a few TicketGroups
+     * const { count } = await prisma.ticketGroup.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends TicketGroupDeleteManyArgs>(
+      args?: SelectSubset<T, TicketGroupDeleteManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more TicketGroups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketGroupUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TicketGroups
+     * const ticketGroup = await prisma.ticketGroup.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends TicketGroupUpdateManyArgs>(
+      args: SelectSubset<T, TicketGroupUpdateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more TicketGroups and returns the data updated in the database.
+     * @param {TicketGroupUpdateManyAndReturnArgs} args - Arguments to update many TicketGroups.
+     * @example
+     * // Update many TicketGroups
+     * const ticketGroup = await prisma.ticketGroup.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more TicketGroups and only return the `id`
+     * const ticketGroupWithIdOnly = await prisma.ticketGroup.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends TicketGroupUpdateManyAndReturnArgs>(
+      args: SelectSubset<T, TicketGroupUpdateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$TicketGroupPayload<ExtArgs>,
+        T,
+        'updateManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create or update one TicketGroup.
+     * @param {TicketGroupUpsertArgs} args - Arguments to update or create a TicketGroup.
+     * @example
+     * // Update or create a TicketGroup
+     * const ticketGroup = await prisma.ticketGroup.upsert({
+     *   create: {
+     *     // ... data to create a TicketGroup
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TicketGroup we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TicketGroupUpsertArgs>(
+      args: SelectSubset<T, TicketGroupUpsertArgs<ExtArgs>>,
+    ): Prisma__TicketGroupClient<
+      $Result.GetResult<
+        Prisma.$TicketGroupPayload<ExtArgs>,
+        T,
+        'upsert',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Count the number of TicketGroups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketGroupCountArgs} args - Arguments to filter TicketGroups to count.
+     * @example
+     * // Count the number of TicketGroups
+     * const count = await prisma.ticketGroup.count({
+     *   where: {
+     *     // ... the filter for the TicketGroups we want to count
+     *   }
+     * })
+     **/
+    count<T extends TicketGroupCountArgs>(
+      args?: Subset<T, TicketGroupCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TicketGroupCountAggregateOutputType>
+        : number
+    >;
+
+    /**
+     * Allows you to perform aggregations operations on a TicketGroup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketGroupAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+     **/
+    aggregate<T extends TicketGroupAggregateArgs>(
+      args: Subset<T, TicketGroupAggregateArgs>,
+    ): Prisma.PrismaPromise<GetTicketGroupAggregateType<T>>;
+
+    /**
+     * Group by TicketGroup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketGroupGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+     **/
+    groupBy<
+      T extends TicketGroupGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TicketGroupGroupByArgs['orderBy'] }
+        : { orderBy?: TicketGroupGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<
+        Keys<MaybeTupleToUnion<T['orderBy']>>
+      >,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ];
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields],
+    >(
+      args: SubsetIntersection<T, TicketGroupGroupByArgs, OrderByArg> &
+        InputErrors,
+    ): {} extends InputErrors
+      ? GetTicketGroupGroupByPayload<T>
+      : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the TicketGroup model
+     */
+    readonly fields: TicketGroupFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TicketGroup.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TicketGroupClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    event<T extends EventDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, EventDefaultArgs<ExtArgs>>,
+    ): Prisma__EventClient<
+      | $Result.GetResult<
+          Prisma.$EventPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          ClientOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      ClientOptions
+    >;
+    tickets<T extends TicketGroup$ticketsArgs<ExtArgs> = {}>(
+      args?: Subset<T, TicketGroup$ticketsArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$TicketPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?:
+        | ((value: T) => TResult1 | PromiseLike<TResult1>)
+        | undefined
+        | null,
+      onrejected?:
+        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?:
+        | ((reason: any) => TResult | PromiseLike<TResult>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+  /**
+   * Fields of the TicketGroup model
+   */
+  interface TicketGroupFieldRefs {
+    readonly id: FieldRef<'TicketGroup', 'String'>;
+    readonly status: FieldRef<'TicketGroup', 'TicketGroupStatus'>;
+    readonly amountTickets: FieldRef<'TicketGroup', 'Int'>;
+    readonly eventId: FieldRef<'TicketGroup', 'String'>;
+    readonly created_at: FieldRef<'TicketGroup', 'DateTime'>;
+    readonly updated_at: FieldRef<'TicketGroup', 'DateTime'>;
+  }
+
+  // Custom InputTypes
+  /**
+   * TicketGroup findUnique
+   */
+  export type TicketGroupFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    /**
+     * Filter, which TicketGroup to fetch.
+     */
+    where: TicketGroupWhereUniqueInput;
+  };
+
+  /**
+   * TicketGroup findUniqueOrThrow
+   */
+  export type TicketGroupFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    /**
+     * Filter, which TicketGroup to fetch.
+     */
+    where: TicketGroupWhereUniqueInput;
+  };
+
+  /**
+   * TicketGroup findFirst
+   */
+  export type TicketGroupFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    /**
+     * Filter, which TicketGroup to fetch.
+     */
+    where?: TicketGroupWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of TicketGroups to fetch.
+     */
+    orderBy?:
+      | TicketGroupOrderByWithRelationInput
+      | TicketGroupOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for TicketGroups.
+     */
+    cursor?: TicketGroupWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` TicketGroups from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` TicketGroups.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of TicketGroups.
+     */
+    distinct?: TicketGroupScalarFieldEnum | TicketGroupScalarFieldEnum[];
+  };
+
+  /**
+   * TicketGroup findFirstOrThrow
+   */
+  export type TicketGroupFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    /**
+     * Filter, which TicketGroup to fetch.
+     */
+    where?: TicketGroupWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of TicketGroups to fetch.
+     */
+    orderBy?:
+      | TicketGroupOrderByWithRelationInput
+      | TicketGroupOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for TicketGroups.
+     */
+    cursor?: TicketGroupWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` TicketGroups from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` TicketGroups.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of TicketGroups.
+     */
+    distinct?: TicketGroupScalarFieldEnum | TicketGroupScalarFieldEnum[];
+  };
+
+  /**
+   * TicketGroup findMany
+   */
+  export type TicketGroupFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    /**
+     * Filter, which TicketGroups to fetch.
+     */
+    where?: TicketGroupWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of TicketGroups to fetch.
+     */
+    orderBy?:
+      | TicketGroupOrderByWithRelationInput
+      | TicketGroupOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing TicketGroups.
+     */
+    cursor?: TicketGroupWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` TicketGroups from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` TicketGroups.
+     */
+    skip?: number;
+    distinct?: TicketGroupScalarFieldEnum | TicketGroupScalarFieldEnum[];
+  };
+
+  /**
+   * TicketGroup create
+   */
+  export type TicketGroupCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a TicketGroup.
+     */
+    data: XOR<TicketGroupCreateInput, TicketGroupUncheckedCreateInput>;
+  };
+
+  /**
+   * TicketGroup createMany
+   */
+  export type TicketGroupCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to create many TicketGroups.
+     */
+    data: TicketGroupCreateManyInput | TicketGroupCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * TicketGroup createManyAndReturn
+   */
+  export type TicketGroupCreateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * The data used to create many TicketGroups.
+     */
+    data: TicketGroupCreateManyInput | TicketGroupCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupIncludeCreateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * TicketGroup update
+   */
+  export type TicketGroupUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a TicketGroup.
+     */
+    data: XOR<TicketGroupUpdateInput, TicketGroupUncheckedUpdateInput>;
+    /**
+     * Choose, which TicketGroup to update.
+     */
+    where: TicketGroupWhereUniqueInput;
+  };
+
+  /**
+   * TicketGroup updateMany
+   */
+  export type TicketGroupUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to update TicketGroups.
+     */
+    data: XOR<
+      TicketGroupUpdateManyMutationInput,
+      TicketGroupUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which TicketGroups to update
+     */
+    where?: TicketGroupWhereInput;
+    /**
+     * Limit how many TicketGroups to update.
+     */
+    limit?: number;
+  };
+
+  /**
+   * TicketGroup updateManyAndReturn
+   */
+  export type TicketGroupUpdateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * The data used to update TicketGroups.
+     */
+    data: XOR<
+      TicketGroupUpdateManyMutationInput,
+      TicketGroupUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which TicketGroups to update
+     */
+    where?: TicketGroupWhereInput;
+    /**
+     * Limit how many TicketGroups to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupIncludeUpdateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * TicketGroup upsert
+   */
+  export type TicketGroupUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the TicketGroup to update in case it exists.
+     */
+    where: TicketGroupWhereUniqueInput;
+    /**
+     * In case the TicketGroup found by the `where` argument doesn't exist, create a new TicketGroup with this data.
+     */
+    create: XOR<TicketGroupCreateInput, TicketGroupUncheckedCreateInput>;
+    /**
+     * In case the TicketGroup was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TicketGroupUpdateInput, TicketGroupUncheckedUpdateInput>;
+  };
+
+  /**
+   * TicketGroup delete
+   */
+  export type TicketGroupDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    /**
+     * Filter which TicketGroup to delete.
+     */
+    where: TicketGroupWhereUniqueInput;
+  };
+
+  /**
+   * TicketGroup deleteMany
+   */
+  export type TicketGroupDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which TicketGroups to delete
+     */
+    where?: TicketGroupWhereInput;
+    /**
+     * Limit how many TicketGroups to delete.
+     */
+    limit?: number;
+  };
+
+  /**
+   * TicketGroup.tickets
+   */
+  export type TicketGroup$ticketsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Ticket
+     */
+    select?: TicketSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Ticket
+     */
+    omit?: TicketOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketInclude<ExtArgs> | null;
+    where?: TicketWhereInput;
+    orderBy?: TicketOrderByWithRelationInput | TicketOrderByWithRelationInput[];
+    cursor?: TicketWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: TicketScalarFieldEnum | TicketScalarFieldEnum[];
+  };
+
+  /**
+   * TicketGroup without action
+   */
+  export type TicketGroupDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
   };
 
   /**
@@ -20326,7 +21950,7 @@ export namespace Prisma {
 
   export interface EnumsDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['Enums'];
@@ -20350,11 +21974,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -20376,11 +22000,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -20403,11 +22027,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -20431,11 +22055,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -20461,7 +22085,7 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -20484,11 +22108,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -20536,7 +22160,7 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -20559,11 +22183,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -20588,11 +22212,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -20667,7 +22291,7 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -20695,11 +22319,11 @@ export namespace Prisma {
         Prisma.$EnumsPayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -20851,7 +22475,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     /**
@@ -21629,7 +23253,7 @@ export namespace Prisma {
 
   export interface EventTicketDelegate<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > {
     [K: symbol]: {
       types: Prisma.TypeMap<ExtArgs>['model']['EventTicket'];
@@ -21653,11 +23277,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'findUnique',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -21679,11 +23303,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -21706,11 +23330,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'findFirst',
-        GlobalOmitOptions
+        ClientOptions
       > | null,
       null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -21734,11 +23358,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'findFirstOrThrow',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -21764,7 +23388,7 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'findMany',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -21787,11 +23411,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'create',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -21839,7 +23463,7 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'createManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -21862,11 +23486,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'delete',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -21891,11 +23515,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'update',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -21970,7 +23594,7 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'updateManyAndReturn',
-        GlobalOmitOptions
+        ClientOptions
       >
     >;
 
@@ -21998,11 +23622,11 @@ export namespace Prisma {
         Prisma.$EventTicketPayload<ExtArgs>,
         T,
         'upsert',
-        GlobalOmitOptions
+        ClientOptions
       >,
       never,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
 
     /**
@@ -22155,7 +23779,7 @@ export namespace Prisma {
     T,
     Null = never,
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-    GlobalOmitOptions = {},
+    ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     event<T extends EventDefaultArgs<ExtArgs> = {}>(
@@ -22165,12 +23789,12 @@ export namespace Prisma {
           Prisma.$EventPayload<ExtArgs>,
           T,
           'findUniqueOrThrow',
-          GlobalOmitOptions
+          ClientOptions
         >
       | Null,
       Null,
       ExtArgs,
-      GlobalOmitOptions
+      ClientOptions
     >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -22855,7 +24479,6 @@ export namespace Prisma {
     id: 'id';
     eventId: 'eventId';
     type: 'type';
-    status: 'status';
     fullName: 'fullName';
     mail: 'mail';
     dni: 'dni';
@@ -22863,12 +24486,25 @@ export namespace Prisma {
     scanned: 'scanned';
     scannedAt: 'scannedAt';
     profileId: 'profileId';
+    ticketGroupId: 'ticketGroupId';
     created_at: 'created_at';
     updated_at: 'updated_at';
   };
 
   export type TicketScalarFieldEnum =
     (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum];
+
+  export const TicketGroupScalarFieldEnum: {
+    id: 'id';
+    status: 'status';
+    amountTickets: 'amountTickets';
+    eventId: 'eventId';
+    created_at: 'created_at';
+    updated_at: 'updated_at';
+  };
+
+  export type TicketGroupScalarFieldEnum =
+    (typeof TicketGroupScalarFieldEnum)[keyof typeof TicketGroupScalarFieldEnum];
 
   export const EnumsScalarFieldEnum: {
     id: 'id';
@@ -23084,18 +24720,16 @@ export namespace Prisma {
   >;
 
   /**
-   * Reference to a field of type 'TicketStatus'
+   * Reference to a field of type 'TicketGroupStatus'
    */
-  export type EnumTicketStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
-    $PrismaModel,
-    'TicketStatus'
-  >;
+  export type EnumTicketGroupStatusFieldRefInput<$PrismaModel> =
+    FieldRefInputType<$PrismaModel, 'TicketGroupStatus'>;
 
   /**
-   * Reference to a field of type 'TicketStatus[]'
+   * Reference to a field of type 'TicketGroupStatus[]'
    */
-  export type ListEnumTicketStatusFieldRefInput<$PrismaModel> =
-    FieldRefInputType<$PrismaModel, 'TicketStatus[]'>;
+  export type ListEnumTicketGroupStatusFieldRefInput<$PrismaModel> =
+    FieldRefInputType<$PrismaModel, 'TicketGroupStatus[]'>;
 
   /**
    * Reference to a field of type 'TemplateStatus'
@@ -23868,6 +25502,7 @@ export namespace Prisma {
     tagConfirmed?: XOR<TagScalarRelationFilter, TagWhereInput>;
     supraEvent?: XOR<EventNullableScalarRelationFilter, EventWhereInput> | null;
     tickets?: TicketListRelationFilter;
+    ticketGroups?: TicketGroupListRelationFilter;
     subEvents?: EventListRelationFilter;
     tags?: TagListRelationFilter;
     eventTickets?: EventTicketListRelationFilter;
@@ -23892,6 +25527,7 @@ export namespace Prisma {
     tagConfirmed?: TagOrderByWithRelationInput;
     supraEvent?: EventOrderByWithRelationInput;
     tickets?: TicketOrderByRelationAggregateInput;
+    ticketGroups?: TicketGroupOrderByRelationAggregateInput;
     subEvents?: EventOrderByRelationAggregateInput;
     tags?: TagOrderByRelationAggregateInput;
     eventTickets?: EventTicketOrderByRelationAggregateInput;
@@ -23926,6 +25562,7 @@ export namespace Prisma {
         EventWhereInput
       > | null;
       tickets?: TicketListRelationFilter;
+      ticketGroups?: TicketGroupListRelationFilter;
       subEvents?: EventListRelationFilter;
       tags?: TagListRelationFilter;
       eventTickets?: EventTicketListRelationFilter;
@@ -24177,7 +25814,6 @@ export namespace Prisma {
     id?: StringFilter<'Ticket'> | string;
     eventId?: StringFilter<'Ticket'> | string;
     type?: EnumTicketTypeFilter<'Ticket'> | $Enums.TicketType;
-    status?: EnumTicketStatusFilter<'Ticket'> | $Enums.TicketStatus;
     fullName?: StringFilter<'Ticket'> | string;
     mail?: StringFilter<'Ticket'> | string;
     dni?: StringFilter<'Ticket'> | string;
@@ -24185,6 +25821,7 @@ export namespace Prisma {
     scanned?: BoolFilter<'Ticket'> | boolean;
     scannedAt?: DateTimeNullableFilter<'Ticket'> | Date | string | null;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
+    ticketGroupId?: StringNullableFilter<'Ticket'> | string | null;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeFilter<'Ticket'> | Date | string;
     event?: XOR<EventScalarRelationFilter, EventWhereInput>;
@@ -24192,13 +25829,16 @@ export namespace Prisma {
       ProfileNullableScalarRelationFilter,
       ProfileWhereInput
     > | null;
+    ticketGroup?: XOR<
+      TicketGroupNullableScalarRelationFilter,
+      TicketGroupWhereInput
+    > | null;
   };
 
   export type TicketOrderByWithRelationInput = {
     id?: SortOrder;
     eventId?: SortOrder;
     type?: SortOrder;
-    status?: SortOrder;
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
@@ -24206,10 +25846,12 @@ export namespace Prisma {
     scanned?: SortOrder;
     scannedAt?: SortOrderInput | SortOrder;
     profileId?: SortOrderInput | SortOrder;
+    ticketGroupId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     event?: EventOrderByWithRelationInput;
     profile?: ProfileOrderByWithRelationInput;
+    ticketGroup?: TicketGroupOrderByWithRelationInput;
   };
 
   export type TicketWhereUniqueInput = Prisma.AtLeast<
@@ -24220,7 +25862,6 @@ export namespace Prisma {
       NOT?: TicketWhereInput | TicketWhereInput[];
       eventId?: StringFilter<'Ticket'> | string;
       type?: EnumTicketTypeFilter<'Ticket'> | $Enums.TicketType;
-      status?: EnumTicketStatusFilter<'Ticket'> | $Enums.TicketStatus;
       fullName?: StringFilter<'Ticket'> | string;
       mail?: StringFilter<'Ticket'> | string;
       dni?: StringFilter<'Ticket'> | string;
@@ -24228,12 +25869,17 @@ export namespace Prisma {
       scanned?: BoolFilter<'Ticket'> | boolean;
       scannedAt?: DateTimeNullableFilter<'Ticket'> | Date | string | null;
       profileId?: StringNullableFilter<'Ticket'> | string | null;
+      ticketGroupId?: StringNullableFilter<'Ticket'> | string | null;
       created_at?: DateTimeFilter<'Ticket'> | Date | string;
       updated_at?: DateTimeFilter<'Ticket'> | Date | string;
       event?: XOR<EventScalarRelationFilter, EventWhereInput>;
       profile?: XOR<
         ProfileNullableScalarRelationFilter,
         ProfileWhereInput
+      > | null;
+      ticketGroup?: XOR<
+        TicketGroupNullableScalarRelationFilter,
+        TicketGroupWhereInput
       > | null;
     },
     'id'
@@ -24243,7 +25889,6 @@ export namespace Prisma {
     id?: SortOrder;
     eventId?: SortOrder;
     type?: SortOrder;
-    status?: SortOrder;
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
@@ -24251,6 +25896,7 @@ export namespace Prisma {
     scanned?: SortOrder;
     scannedAt?: SortOrderInput | SortOrder;
     profileId?: SortOrderInput | SortOrder;
+    ticketGroupId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     _count?: TicketCountOrderByAggregateInput;
@@ -24271,9 +25917,6 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<'Ticket'> | string;
     eventId?: StringWithAggregatesFilter<'Ticket'> | string;
     type?: EnumTicketTypeWithAggregatesFilter<'Ticket'> | $Enums.TicketType;
-    status?:
-      | EnumTicketStatusWithAggregatesFilter<'Ticket'>
-      | $Enums.TicketStatus;
     fullName?: StringWithAggregatesFilter<'Ticket'> | string;
     mail?: StringWithAggregatesFilter<'Ticket'> | string;
     dni?: StringWithAggregatesFilter<'Ticket'> | string;
@@ -24285,8 +25928,90 @@ export namespace Prisma {
       | string
       | null;
     profileId?: StringNullableWithAggregatesFilter<'Ticket'> | string | null;
+    ticketGroupId?:
+      | StringNullableWithAggregatesFilter<'Ticket'>
+      | string
+      | null;
     created_at?: DateTimeWithAggregatesFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Ticket'> | Date | string;
+  };
+
+  export type TicketGroupWhereInput = {
+    AND?: TicketGroupWhereInput | TicketGroupWhereInput[];
+    OR?: TicketGroupWhereInput[];
+    NOT?: TicketGroupWhereInput | TicketGroupWhereInput[];
+    id?: StringFilter<'TicketGroup'> | string;
+    status?:
+      | EnumTicketGroupStatusFilter<'TicketGroup'>
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFilter<'TicketGroup'> | number;
+    eventId?: StringFilter<'TicketGroup'> | string;
+    created_at?: DateTimeFilter<'TicketGroup'> | Date | string;
+    updated_at?: DateTimeFilter<'TicketGroup'> | Date | string;
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>;
+    tickets?: TicketListRelationFilter;
+  };
+
+  export type TicketGroupOrderByWithRelationInput = {
+    id?: SortOrder;
+    status?: SortOrder;
+    amountTickets?: SortOrder;
+    eventId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    event?: EventOrderByWithRelationInput;
+    tickets?: TicketOrderByRelationAggregateInput;
+  };
+
+  export type TicketGroupWhereUniqueInput = Prisma.AtLeast<
+    {
+      id?: string;
+      AND?: TicketGroupWhereInput | TicketGroupWhereInput[];
+      OR?: TicketGroupWhereInput[];
+      NOT?: TicketGroupWhereInput | TicketGroupWhereInput[];
+      status?:
+        | EnumTicketGroupStatusFilter<'TicketGroup'>
+        | $Enums.TicketGroupStatus;
+      amountTickets?: IntFilter<'TicketGroup'> | number;
+      eventId?: StringFilter<'TicketGroup'> | string;
+      created_at?: DateTimeFilter<'TicketGroup'> | Date | string;
+      updated_at?: DateTimeFilter<'TicketGroup'> | Date | string;
+      event?: XOR<EventScalarRelationFilter, EventWhereInput>;
+      tickets?: TicketListRelationFilter;
+    },
+    'id'
+  >;
+
+  export type TicketGroupOrderByWithAggregationInput = {
+    id?: SortOrder;
+    status?: SortOrder;
+    amountTickets?: SortOrder;
+    eventId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    _count?: TicketGroupCountOrderByAggregateInput;
+    _avg?: TicketGroupAvgOrderByAggregateInput;
+    _max?: TicketGroupMaxOrderByAggregateInput;
+    _min?: TicketGroupMinOrderByAggregateInput;
+    _sum?: TicketGroupSumOrderByAggregateInput;
+  };
+
+  export type TicketGroupScalarWhereWithAggregatesInput = {
+    AND?:
+      | TicketGroupScalarWhereWithAggregatesInput
+      | TicketGroupScalarWhereWithAggregatesInput[];
+    OR?: TicketGroupScalarWhereWithAggregatesInput[];
+    NOT?:
+      | TicketGroupScalarWhereWithAggregatesInput
+      | TicketGroupScalarWhereWithAggregatesInput[];
+    id?: StringWithAggregatesFilter<'TicketGroup'> | string;
+    status?:
+      | EnumTicketGroupStatusWithAggregatesFilter<'TicketGroup'>
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntWithAggregatesFilter<'TicketGroup'> | number;
+    eventId?: StringWithAggregatesFilter<'TicketGroup'> | string;
+    created_at?: DateTimeWithAggregatesFilter<'TicketGroup'> | Date | string;
+    updated_at?: DateTimeWithAggregatesFilter<'TicketGroup'> | Date | string;
   };
 
   export type EnumsWhereInput = {
@@ -25205,6 +26930,7 @@ export namespace Prisma {
     tagConfirmed: TagCreateNestedOneWithoutConfirmedEventInput;
     supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
     tickets?: TicketCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
     tags?: TagCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
@@ -25225,6 +26951,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
     tags?: TagUncheckedCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
@@ -25245,6 +26972,7 @@ export namespace Prisma {
     tagConfirmed?: TagUpdateOneRequiredWithoutConfirmedEventNestedInput;
     supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
     tickets?: TicketUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
@@ -25265,6 +26993,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
@@ -25502,7 +27231,6 @@ export namespace Prisma {
   export type TicketCreateInput = {
     id?: string;
     type: $Enums.TicketType;
-    status: $Enums.TicketStatus;
     fullName: string;
     mail: string;
     dni: string;
@@ -25513,13 +27241,13 @@ export namespace Prisma {
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
     profile?: ProfileCreateNestedOneWithoutTicketInput;
+    ticketGroup?: TicketGroupCreateNestedOneWithoutTicketsInput;
   };
 
   export type TicketUncheckedCreateInput = {
     id?: string;
     eventId: string;
     type: $Enums.TicketType;
-    status: $Enums.TicketStatus;
     fullName: string;
     mail: string;
     dni: string;
@@ -25527,6 +27255,7 @@ export namespace Prisma {
     scanned?: boolean;
     scannedAt?: Date | string | null;
     profileId?: string | null;
+    ticketGroupId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -25534,7 +27263,6 @@ export namespace Prisma {
   export type TicketUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
-    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
@@ -25549,13 +27277,13 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
     profile?: ProfileUpdateOneWithoutTicketNestedInput;
+    ticketGroup?: TicketGroupUpdateOneWithoutTicketsNestedInput;
   };
 
   export type TicketUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     eventId?: StringFieldUpdateOperationsInput | string;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
-    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
@@ -25567,6 +27295,7 @@ export namespace Prisma {
       | string
       | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
+    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -25575,7 +27304,6 @@ export namespace Prisma {
     id?: string;
     eventId: string;
     type: $Enums.TicketType;
-    status: $Enums.TicketStatus;
     fullName: string;
     mail: string;
     dni: string;
@@ -25583,6 +27311,7 @@ export namespace Prisma {
     scanned?: boolean;
     scannedAt?: Date | string | null;
     profileId?: string | null;
+    ticketGroupId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -25590,7 +27319,6 @@ export namespace Prisma {
   export type TicketUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
-    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
@@ -25609,7 +27337,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     eventId?: StringFieldUpdateOperationsInput | string;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
-    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
@@ -25621,6 +27348,81 @@ export namespace Prisma {
       | string
       | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
+    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type TicketGroupCreateInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    event: EventCreateNestedOneWithoutTicketGroupsInput;
+    tickets?: TicketCreateNestedManyWithoutTicketGroupInput;
+  };
+
+  export type TicketGroupUncheckedCreateInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
+    eventId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tickets?: TicketUncheckedCreateNestedManyWithoutTicketGroupInput;
+  };
+
+  export type TicketGroupUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    event?: EventUpdateOneRequiredWithoutTicketGroupsNestedInput;
+    tickets?: TicketUpdateManyWithoutTicketGroupNestedInput;
+  };
+
+  export type TicketGroupUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    eventId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tickets?: TicketUncheckedUpdateManyWithoutTicketGroupNestedInput;
+  };
+
+  export type TicketGroupCreateManyInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
+    eventId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type TicketGroupUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type TicketGroupUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    eventId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -26395,10 +28197,20 @@ export namespace Prisma {
     isNot?: TagWhereInput;
   };
 
+  export type TicketGroupListRelationFilter = {
+    every?: TicketGroupWhereInput;
+    some?: TicketGroupWhereInput;
+    none?: TicketGroupWhereInput;
+  };
+
   export type EventTicketListRelationFilter = {
     every?: EventTicketWhereInput;
     some?: EventTicketWhereInput;
     none?: EventTicketWhereInput;
+  };
+
+  export type TicketGroupOrderByRelationAggregateInput = {
+    _count?: SortOrder;
   };
 
   export type EventTicketOrderByRelationAggregateInput = {
@@ -26635,17 +28447,6 @@ export namespace Prisma {
     not?: NestedEnumTicketTypeFilter<$PrismaModel> | $Enums.TicketType;
   };
 
-  export type EnumTicketStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.TicketStatus | EnumTicketStatusFieldRefInput<$PrismaModel>;
-    in?:
-      | $Enums.TicketStatus[]
-      | ListEnumTicketStatusFieldRefInput<$PrismaModel>;
-    notIn?:
-      | $Enums.TicketStatus[]
-      | ListEnumTicketStatusFieldRefInput<$PrismaModel>;
-    not?: NestedEnumTicketStatusFilter<$PrismaModel> | $Enums.TicketStatus;
-  };
-
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null;
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
@@ -26667,11 +28468,15 @@ export namespace Prisma {
     isNot?: ProfileWhereInput | null;
   };
 
+  export type TicketGroupNullableScalarRelationFilter = {
+    is?: TicketGroupWhereInput | null;
+    isNot?: TicketGroupWhereInput | null;
+  };
+
   export type TicketCountOrderByAggregateInput = {
     id?: SortOrder;
     eventId?: SortOrder;
     type?: SortOrder;
-    status?: SortOrder;
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
@@ -26679,6 +28484,7 @@ export namespace Prisma {
     scanned?: SortOrder;
     scannedAt?: SortOrder;
     profileId?: SortOrder;
+    ticketGroupId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -26691,7 +28497,6 @@ export namespace Prisma {
     id?: SortOrder;
     eventId?: SortOrder;
     type?: SortOrder;
-    status?: SortOrder;
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
@@ -26699,6 +28504,7 @@ export namespace Prisma {
     scanned?: SortOrder;
     scannedAt?: SortOrder;
     profileId?: SortOrder;
+    ticketGroupId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -26707,7 +28513,6 @@ export namespace Prisma {
     id?: SortOrder;
     eventId?: SortOrder;
     type?: SortOrder;
-    status?: SortOrder;
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
@@ -26715,6 +28520,7 @@ export namespace Prisma {
     scanned?: SortOrder;
     scannedAt?: SortOrder;
     profileId?: SortOrder;
+    ticketGroupId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -26735,22 +28541,6 @@ export namespace Prisma {
     _max?: NestedEnumTicketTypeFilter<$PrismaModel>;
   };
 
-  export type EnumTicketStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TicketStatus | EnumTicketStatusFieldRefInput<$PrismaModel>;
-    in?:
-      | $Enums.TicketStatus[]
-      | ListEnumTicketStatusFieldRefInput<$PrismaModel>;
-    notIn?:
-      | $Enums.TicketStatus[]
-      | ListEnumTicketStatusFieldRefInput<$PrismaModel>;
-    not?:
-      | NestedEnumTicketStatusWithAggregatesFilter<$PrismaModel>
-      | $Enums.TicketStatus;
-    _count?: NestedIntFilter<$PrismaModel>;
-    _min?: NestedEnumTicketStatusFilter<$PrismaModel>;
-    _max?: NestedEnumTicketStatusFilter<$PrismaModel>;
-  };
-
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null;
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null;
@@ -26766,6 +28556,75 @@ export namespace Prisma {
     _min?: NestedIntNullableFilter<$PrismaModel>;
     _max?: NestedIntNullableFilter<$PrismaModel>;
   };
+
+  export type EnumTicketGroupStatusFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.TicketGroupStatus
+      | EnumTicketGroupStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.TicketGroupStatus[]
+      | ListEnumTicketGroupStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.TicketGroupStatus[]
+      | ListEnumTicketGroupStatusFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumTicketGroupStatusFilter<$PrismaModel>
+      | $Enums.TicketGroupStatus;
+  };
+
+  export type TicketGroupCountOrderByAggregateInput = {
+    id?: SortOrder;
+    status?: SortOrder;
+    amountTickets?: SortOrder;
+    eventId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type TicketGroupAvgOrderByAggregateInput = {
+    amountTickets?: SortOrder;
+  };
+
+  export type TicketGroupMaxOrderByAggregateInput = {
+    id?: SortOrder;
+    status?: SortOrder;
+    amountTickets?: SortOrder;
+    eventId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type TicketGroupMinOrderByAggregateInput = {
+    id?: SortOrder;
+    status?: SortOrder;
+    amountTickets?: SortOrder;
+    eventId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type TicketGroupSumOrderByAggregateInput = {
+    amountTickets?: SortOrder;
+  };
+
+  export type EnumTicketGroupStatusWithAggregatesFilter<$PrismaModel = never> =
+    {
+      equals?:
+        | $Enums.TicketGroupStatus
+        | EnumTicketGroupStatusFieldRefInput<$PrismaModel>;
+      in?:
+        | $Enums.TicketGroupStatus[]
+        | ListEnumTicketGroupStatusFieldRefInput<$PrismaModel>;
+      notIn?:
+        | $Enums.TicketGroupStatus[]
+        | ListEnumTicketGroupStatusFieldRefInput<$PrismaModel>;
+      not?:
+        | NestedEnumTicketGroupStatusWithAggregatesFilter<$PrismaModel>
+        | $Enums.TicketGroupStatus;
+      _count?: NestedIntFilter<$PrismaModel>;
+      _min?: NestedEnumTicketGroupStatusFilter<$PrismaModel>;
+      _max?: NestedEnumTicketGroupStatusFilter<$PrismaModel>;
+    };
 
   export type EnumTemplateStatusFilter<$PrismaModel = never> = {
     equals?:
@@ -28641,6 +30500,21 @@ export namespace Prisma {
     connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
   };
 
+  export type TicketGroupCreateNestedManyWithoutEventInput = {
+    create?:
+      | XOR<
+          TicketGroupCreateWithoutEventInput,
+          TicketGroupUncheckedCreateWithoutEventInput
+        >
+      | TicketGroupCreateWithoutEventInput[]
+      | TicketGroupUncheckedCreateWithoutEventInput[];
+    connectOrCreate?:
+      | TicketGroupCreateOrConnectWithoutEventInput
+      | TicketGroupCreateOrConnectWithoutEventInput[];
+    createMany?: TicketGroupCreateManyEventInputEnvelope;
+    connect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+  };
+
   export type EventCreateNestedManyWithoutSupraEventInput = {
     create?:
       | XOR<
@@ -28695,6 +30569,21 @@ export namespace Prisma {
       | TicketCreateOrConnectWithoutEventInput[];
     createMany?: TicketCreateManyEventInputEnvelope;
     connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
+  };
+
+  export type TicketGroupUncheckedCreateNestedManyWithoutEventInput = {
+    create?:
+      | XOR<
+          TicketGroupCreateWithoutEventInput,
+          TicketGroupUncheckedCreateWithoutEventInput
+        >
+      | TicketGroupCreateWithoutEventInput[]
+      | TicketGroupUncheckedCreateWithoutEventInput[];
+    connectOrCreate?:
+      | TicketGroupCreateOrConnectWithoutEventInput
+      | TicketGroupCreateOrConnectWithoutEventInput[];
+    createMany?: TicketGroupCreateManyEventInputEnvelope;
+    connect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
   };
 
   export type EventUncheckedCreateNestedManyWithoutSupraEventInput = {
@@ -28838,6 +30727,34 @@ export namespace Prisma {
     deleteMany?: TicketScalarWhereInput | TicketScalarWhereInput[];
   };
 
+  export type TicketGroupUpdateManyWithoutEventNestedInput = {
+    create?:
+      | XOR<
+          TicketGroupCreateWithoutEventInput,
+          TicketGroupUncheckedCreateWithoutEventInput
+        >
+      | TicketGroupCreateWithoutEventInput[]
+      | TicketGroupUncheckedCreateWithoutEventInput[];
+    connectOrCreate?:
+      | TicketGroupCreateOrConnectWithoutEventInput
+      | TicketGroupCreateOrConnectWithoutEventInput[];
+    upsert?:
+      | TicketGroupUpsertWithWhereUniqueWithoutEventInput
+      | TicketGroupUpsertWithWhereUniqueWithoutEventInput[];
+    createMany?: TicketGroupCreateManyEventInputEnvelope;
+    set?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    disconnect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    delete?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    connect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    update?:
+      | TicketGroupUpdateWithWhereUniqueWithoutEventInput
+      | TicketGroupUpdateWithWhereUniqueWithoutEventInput[];
+    updateMany?:
+      | TicketGroupUpdateManyWithWhereWithoutEventInput
+      | TicketGroupUpdateManyWithWhereWithoutEventInput[];
+    deleteMany?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
+  };
+
   export type EventUpdateManyWithoutSupraEventNestedInput = {
     create?:
       | XOR<
@@ -28944,6 +30861,34 @@ export namespace Prisma {
       | TicketUpdateManyWithWhereWithoutEventInput
       | TicketUpdateManyWithWhereWithoutEventInput[];
     deleteMany?: TicketScalarWhereInput | TicketScalarWhereInput[];
+  };
+
+  export type TicketGroupUncheckedUpdateManyWithoutEventNestedInput = {
+    create?:
+      | XOR<
+          TicketGroupCreateWithoutEventInput,
+          TicketGroupUncheckedCreateWithoutEventInput
+        >
+      | TicketGroupCreateWithoutEventInput[]
+      | TicketGroupUncheckedCreateWithoutEventInput[];
+    connectOrCreate?:
+      | TicketGroupCreateOrConnectWithoutEventInput
+      | TicketGroupCreateOrConnectWithoutEventInput[];
+    upsert?:
+      | TicketGroupUpsertWithWhereUniqueWithoutEventInput
+      | TicketGroupUpsertWithWhereUniqueWithoutEventInput[];
+    createMany?: TicketGroupCreateManyEventInputEnvelope;
+    set?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    disconnect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    delete?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    connect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    update?:
+      | TicketGroupUpdateWithWhereUniqueWithoutEventInput
+      | TicketGroupUpdateWithWhereUniqueWithoutEventInput[];
+    updateMany?:
+      | TicketGroupUpdateManyWithWhereWithoutEventInput
+      | TicketGroupUpdateManyWithWhereWithoutEventInput[];
+    deleteMany?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
   };
 
   export type EventUncheckedUpdateManyWithoutSupraEventNestedInput = {
@@ -29160,12 +31105,17 @@ export namespace Prisma {
     connect?: ProfileWhereUniqueInput;
   };
 
-  export type EnumTicketTypeFieldUpdateOperationsInput = {
-    set?: $Enums.TicketType;
+  export type TicketGroupCreateNestedOneWithoutTicketsInput = {
+    create?: XOR<
+      TicketGroupCreateWithoutTicketsInput,
+      TicketGroupUncheckedCreateWithoutTicketsInput
+    >;
+    connectOrCreate?: TicketGroupCreateOrConnectWithoutTicketsInput;
+    connect?: TicketGroupWhereUniqueInput;
   };
 
-  export type EnumTicketStatusFieldUpdateOperationsInput = {
-    set?: $Enums.TicketStatus;
+  export type EnumTicketTypeFieldUpdateOperationsInput = {
+    set?: $Enums.TicketType;
   };
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -29210,6 +31160,141 @@ export namespace Prisma {
       >,
       ProfileUncheckedUpdateWithoutTicketInput
     >;
+  };
+
+  export type TicketGroupUpdateOneWithoutTicketsNestedInput = {
+    create?: XOR<
+      TicketGroupCreateWithoutTicketsInput,
+      TicketGroupUncheckedCreateWithoutTicketsInput
+    >;
+    connectOrCreate?: TicketGroupCreateOrConnectWithoutTicketsInput;
+    upsert?: TicketGroupUpsertWithoutTicketsInput;
+    disconnect?: TicketGroupWhereInput | boolean;
+    delete?: TicketGroupWhereInput | boolean;
+    connect?: TicketGroupWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        TicketGroupUpdateToOneWithWhereWithoutTicketsInput,
+        TicketGroupUpdateWithoutTicketsInput
+      >,
+      TicketGroupUncheckedUpdateWithoutTicketsInput
+    >;
+  };
+
+  export type EventCreateNestedOneWithoutTicketGroupsInput = {
+    create?: XOR<
+      EventCreateWithoutTicketGroupsInput,
+      EventUncheckedCreateWithoutTicketGroupsInput
+    >;
+    connectOrCreate?: EventCreateOrConnectWithoutTicketGroupsInput;
+    connect?: EventWhereUniqueInput;
+  };
+
+  export type TicketCreateNestedManyWithoutTicketGroupInput = {
+    create?:
+      | XOR<
+          TicketCreateWithoutTicketGroupInput,
+          TicketUncheckedCreateWithoutTicketGroupInput
+        >
+      | TicketCreateWithoutTicketGroupInput[]
+      | TicketUncheckedCreateWithoutTicketGroupInput[];
+    connectOrCreate?:
+      | TicketCreateOrConnectWithoutTicketGroupInput
+      | TicketCreateOrConnectWithoutTicketGroupInput[];
+    createMany?: TicketCreateManyTicketGroupInputEnvelope;
+    connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
+  };
+
+  export type TicketUncheckedCreateNestedManyWithoutTicketGroupInput = {
+    create?:
+      | XOR<
+          TicketCreateWithoutTicketGroupInput,
+          TicketUncheckedCreateWithoutTicketGroupInput
+        >
+      | TicketCreateWithoutTicketGroupInput[]
+      | TicketUncheckedCreateWithoutTicketGroupInput[];
+    connectOrCreate?:
+      | TicketCreateOrConnectWithoutTicketGroupInput
+      | TicketCreateOrConnectWithoutTicketGroupInput[];
+    createMany?: TicketCreateManyTicketGroupInputEnvelope;
+    connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
+  };
+
+  export type EnumTicketGroupStatusFieldUpdateOperationsInput = {
+    set?: $Enums.TicketGroupStatus;
+  };
+
+  export type EventUpdateOneRequiredWithoutTicketGroupsNestedInput = {
+    create?: XOR<
+      EventCreateWithoutTicketGroupsInput,
+      EventUncheckedCreateWithoutTicketGroupsInput
+    >;
+    connectOrCreate?: EventCreateOrConnectWithoutTicketGroupsInput;
+    upsert?: EventUpsertWithoutTicketGroupsInput;
+    connect?: EventWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        EventUpdateToOneWithWhereWithoutTicketGroupsInput,
+        EventUpdateWithoutTicketGroupsInput
+      >,
+      EventUncheckedUpdateWithoutTicketGroupsInput
+    >;
+  };
+
+  export type TicketUpdateManyWithoutTicketGroupNestedInput = {
+    create?:
+      | XOR<
+          TicketCreateWithoutTicketGroupInput,
+          TicketUncheckedCreateWithoutTicketGroupInput
+        >
+      | TicketCreateWithoutTicketGroupInput[]
+      | TicketUncheckedCreateWithoutTicketGroupInput[];
+    connectOrCreate?:
+      | TicketCreateOrConnectWithoutTicketGroupInput
+      | TicketCreateOrConnectWithoutTicketGroupInput[];
+    upsert?:
+      | TicketUpsertWithWhereUniqueWithoutTicketGroupInput
+      | TicketUpsertWithWhereUniqueWithoutTicketGroupInput[];
+    createMany?: TicketCreateManyTicketGroupInputEnvelope;
+    set?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
+    disconnect?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
+    delete?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
+    connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
+    update?:
+      | TicketUpdateWithWhereUniqueWithoutTicketGroupInput
+      | TicketUpdateWithWhereUniqueWithoutTicketGroupInput[];
+    updateMany?:
+      | TicketUpdateManyWithWhereWithoutTicketGroupInput
+      | TicketUpdateManyWithWhereWithoutTicketGroupInput[];
+    deleteMany?: TicketScalarWhereInput | TicketScalarWhereInput[];
+  };
+
+  export type TicketUncheckedUpdateManyWithoutTicketGroupNestedInput = {
+    create?:
+      | XOR<
+          TicketCreateWithoutTicketGroupInput,
+          TicketUncheckedCreateWithoutTicketGroupInput
+        >
+      | TicketCreateWithoutTicketGroupInput[]
+      | TicketUncheckedCreateWithoutTicketGroupInput[];
+    connectOrCreate?:
+      | TicketCreateOrConnectWithoutTicketGroupInput
+      | TicketCreateOrConnectWithoutTicketGroupInput[];
+    upsert?:
+      | TicketUpsertWithWhereUniqueWithoutTicketGroupInput
+      | TicketUpsertWithWhereUniqueWithoutTicketGroupInput[];
+    createMany?: TicketCreateManyTicketGroupInputEnvelope;
+    set?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
+    disconnect?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
+    delete?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
+    connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
+    update?:
+      | TicketUpdateWithWhereUniqueWithoutTicketGroupInput
+      | TicketUpdateWithWhereUniqueWithoutTicketGroupInput[];
+    updateMany?:
+      | TicketUpdateManyWithWhereWithoutTicketGroupInput
+      | TicketUpdateManyWithWhereWithoutTicketGroupInput[];
+    deleteMany?: TicketScalarWhereInput | TicketScalarWhereInput[];
   };
 
   export type EnumTemplateStatusFieldUpdateOperationsInput = {
@@ -29559,17 +31644,6 @@ export namespace Prisma {
     not?: NestedEnumTicketTypeFilter<$PrismaModel> | $Enums.TicketType;
   };
 
-  export type NestedEnumTicketStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.TicketStatus | EnumTicketStatusFieldRefInput<$PrismaModel>;
-    in?:
-      | $Enums.TicketStatus[]
-      | ListEnumTicketStatusFieldRefInput<$PrismaModel>;
-    notIn?:
-      | $Enums.TicketStatus[]
-      | ListEnumTicketStatusFieldRefInput<$PrismaModel>;
-    not?: NestedEnumTicketStatusFilter<$PrismaModel> | $Enums.TicketStatus;
-  };
-
   export type NestedEnumTicketTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.TicketType | EnumTicketTypeFieldRefInput<$PrismaModel>;
     in?: $Enums.TicketType[] | ListEnumTicketTypeFieldRefInput<$PrismaModel>;
@@ -29581,25 +31655,6 @@ export namespace Prisma {
     _min?: NestedEnumTicketTypeFilter<$PrismaModel>;
     _max?: NestedEnumTicketTypeFilter<$PrismaModel>;
   };
-
-  export type NestedEnumTicketStatusWithAggregatesFilter<$PrismaModel = never> =
-    {
-      equals?:
-        | $Enums.TicketStatus
-        | EnumTicketStatusFieldRefInput<$PrismaModel>;
-      in?:
-        | $Enums.TicketStatus[]
-        | ListEnumTicketStatusFieldRefInput<$PrismaModel>;
-      notIn?:
-        | $Enums.TicketStatus[]
-        | ListEnumTicketStatusFieldRefInput<$PrismaModel>;
-      not?:
-        | NestedEnumTicketStatusWithAggregatesFilter<$PrismaModel>
-        | $Enums.TicketStatus;
-      _count?: NestedIntFilter<$PrismaModel>;
-      _min?: NestedEnumTicketStatusFilter<$PrismaModel>;
-      _max?: NestedEnumTicketStatusFilter<$PrismaModel>;
-    };
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null;
@@ -29626,6 +31681,41 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>;
     gte?: number | FloatFieldRefInput<$PrismaModel>;
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null;
+  };
+
+  export type NestedEnumTicketGroupStatusFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.TicketGroupStatus
+      | EnumTicketGroupStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.TicketGroupStatus[]
+      | ListEnumTicketGroupStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.TicketGroupStatus[]
+      | ListEnumTicketGroupStatusFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumTicketGroupStatusFilter<$PrismaModel>
+      | $Enums.TicketGroupStatus;
+  };
+
+  export type NestedEnumTicketGroupStatusWithAggregatesFilter<
+    $PrismaModel = never,
+  > = {
+    equals?:
+      | $Enums.TicketGroupStatus
+      | EnumTicketGroupStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.TicketGroupStatus[]
+      | ListEnumTicketGroupStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.TicketGroupStatus[]
+      | ListEnumTicketGroupStatusFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumTicketGroupStatusWithAggregatesFilter<$PrismaModel>
+      | $Enums.TicketGroupStatus;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedEnumTicketGroupStatusFilter<$PrismaModel>;
+    _max?: NestedEnumTicketGroupStatusFilter<$PrismaModel>;
   };
 
   export type NestedEnumTemplateStatusFilter<$PrismaModel = never> = {
@@ -30198,7 +32288,6 @@ export namespace Prisma {
   export type TicketCreateWithoutProfileInput = {
     id?: string;
     type: $Enums.TicketType;
-    status: $Enums.TicketStatus;
     fullName: string;
     mail: string;
     dni: string;
@@ -30208,19 +32297,20 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
+    ticketGroup?: TicketGroupCreateNestedOneWithoutTicketsInput;
   };
 
   export type TicketUncheckedCreateWithoutProfileInput = {
     id?: string;
     eventId: string;
     type: $Enums.TicketType;
-    status: $Enums.TicketStatus;
     fullName: string;
     mail: string;
     dni: string;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
+    ticketGroupId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -30495,7 +32585,6 @@ export namespace Prisma {
     id?: StringFilter<'Ticket'> | string;
     eventId?: StringFilter<'Ticket'> | string;
     type?: EnumTicketTypeFilter<'Ticket'> | $Enums.TicketType;
-    status?: EnumTicketStatusFilter<'Ticket'> | $Enums.TicketStatus;
     fullName?: StringFilter<'Ticket'> | string;
     mail?: StringFilter<'Ticket'> | string;
     dni?: StringFilter<'Ticket'> | string;
@@ -30503,6 +32592,7 @@ export namespace Prisma {
     scanned?: BoolFilter<'Ticket'> | boolean;
     scannedAt?: DateTimeNullableFilter<'Ticket'> | Date | string | null;
     profileId?: StringNullableFilter<'Ticket'> | string | null;
+    ticketGroupId?: StringNullableFilter<'Ticket'> | string | null;
     created_at?: DateTimeFilter<'Ticket'> | Date | string;
     updated_at?: DateTimeFilter<'Ticket'> | Date | string;
   };
@@ -31321,6 +33411,7 @@ export namespace Prisma {
     tagConfirmed: TagCreateNestedOneWithoutConfirmedEventInput;
     supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
     tickets?: TicketCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
     tags?: TagCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
@@ -31340,6 +33431,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
     tags?: TagUncheckedCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
@@ -31367,6 +33459,7 @@ export namespace Prisma {
     tagAssisted: TagCreateNestedOneWithoutAssistedEventInput;
     supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
     tickets?: TicketCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
     tags?: TagCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
@@ -31386,6 +33479,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
     tags?: TagUncheckedCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
@@ -31556,6 +33650,7 @@ export namespace Prisma {
     tagConfirmed: TagCreateNestedOneWithoutConfirmedEventInput;
     supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
     tickets?: TicketCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
   };
@@ -31575,6 +33670,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
   };
@@ -31659,6 +33755,7 @@ export namespace Prisma {
     tagConfirmed?: TagUpdateOneRequiredWithoutConfirmedEventNestedInput;
     supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
     tickets?: TicketUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
@@ -31678,6 +33775,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
@@ -31717,6 +33815,7 @@ export namespace Prisma {
     tagAssisted?: TagUpdateOneRequiredWithoutAssistedEventNestedInput;
     supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
     tickets?: TicketUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
@@ -31736,6 +33835,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
@@ -32063,6 +34163,7 @@ export namespace Prisma {
     tagConfirmed: TagCreateNestedOneWithoutConfirmedEventInput;
     supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
     tickets?: TicketCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     tags?: TagCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
   };
@@ -32082,6 +34183,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     tags?: TagUncheckedCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
   };
@@ -32097,7 +34199,6 @@ export namespace Prisma {
   export type TicketCreateWithoutEventInput = {
     id?: string;
     type: $Enums.TicketType;
-    status: $Enums.TicketStatus;
     fullName: string;
     mail: string;
     dni: string;
@@ -32107,12 +34208,12 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     profile?: ProfileCreateNestedOneWithoutTicketInput;
+    ticketGroup?: TicketGroupCreateNestedOneWithoutTicketsInput;
   };
 
   export type TicketUncheckedCreateWithoutEventInput = {
     id?: string;
     type: $Enums.TicketType;
-    status: $Enums.TicketStatus;
     fullName: string;
     mail: string;
     dni: string;
@@ -32120,6 +34221,7 @@ export namespace Prisma {
     scanned?: boolean;
     scannedAt?: Date | string | null;
     profileId?: string | null;
+    ticketGroupId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -32137,6 +34239,37 @@ export namespace Prisma {
     skipDuplicates?: boolean;
   };
 
+  export type TicketGroupCreateWithoutEventInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tickets?: TicketCreateNestedManyWithoutTicketGroupInput;
+  };
+
+  export type TicketGroupUncheckedCreateWithoutEventInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tickets?: TicketUncheckedCreateNestedManyWithoutTicketGroupInput;
+  };
+
+  export type TicketGroupCreateOrConnectWithoutEventInput = {
+    where: TicketGroupWhereUniqueInput;
+    create: XOR<
+      TicketGroupCreateWithoutEventInput,
+      TicketGroupUncheckedCreateWithoutEventInput
+    >;
+  };
+
+  export type TicketGroupCreateManyEventInputEnvelope = {
+    data: TicketGroupCreateManyEventInput | TicketGroupCreateManyEventInput[];
+    skipDuplicates?: boolean;
+  };
+
   export type EventCreateWithoutSupraEventInput = {
     id?: string;
     name: string;
@@ -32151,6 +34284,7 @@ export namespace Prisma {
     tagAssisted: TagCreateNestedOneWithoutAssistedEventInput;
     tagConfirmed: TagCreateNestedOneWithoutConfirmedEventInput;
     tickets?: TicketCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
     tags?: TagCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
@@ -32170,6 +34304,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
     tags?: TagUncheckedCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
@@ -32422,6 +34557,7 @@ export namespace Prisma {
     tagConfirmed?: TagUpdateOneRequiredWithoutConfirmedEventNestedInput;
     supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
     tickets?: TicketUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     tags?: TagUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
   };
@@ -32441,6 +34577,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
   };
@@ -32471,6 +34608,48 @@ export namespace Prisma {
       TicketUpdateManyMutationInput,
       TicketUncheckedUpdateManyWithoutEventInput
     >;
+  };
+
+  export type TicketGroupUpsertWithWhereUniqueWithoutEventInput = {
+    where: TicketGroupWhereUniqueInput;
+    update: XOR<
+      TicketGroupUpdateWithoutEventInput,
+      TicketGroupUncheckedUpdateWithoutEventInput
+    >;
+    create: XOR<
+      TicketGroupCreateWithoutEventInput,
+      TicketGroupUncheckedCreateWithoutEventInput
+    >;
+  };
+
+  export type TicketGroupUpdateWithWhereUniqueWithoutEventInput = {
+    where: TicketGroupWhereUniqueInput;
+    data: XOR<
+      TicketGroupUpdateWithoutEventInput,
+      TicketGroupUncheckedUpdateWithoutEventInput
+    >;
+  };
+
+  export type TicketGroupUpdateManyWithWhereWithoutEventInput = {
+    where: TicketGroupScalarWhereInput;
+    data: XOR<
+      TicketGroupUpdateManyMutationInput,
+      TicketGroupUncheckedUpdateManyWithoutEventInput
+    >;
+  };
+
+  export type TicketGroupScalarWhereInput = {
+    AND?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
+    OR?: TicketGroupScalarWhereInput[];
+    NOT?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
+    id?: StringFilter<'TicketGroup'> | string;
+    status?:
+      | EnumTicketGroupStatusFilter<'TicketGroup'>
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFilter<'TicketGroup'> | number;
+    eventId?: StringFilter<'TicketGroup'> | string;
+    created_at?: DateTimeFilter<'TicketGroup'> | Date | string;
+    updated_at?: DateTimeFilter<'TicketGroup'> | Date | string;
   };
 
   export type EventUpsertWithWhereUniqueWithoutSupraEventInput = {
@@ -32581,6 +34760,7 @@ export namespace Prisma {
     tagConfirmed: TagCreateNestedOneWithoutConfirmedEventInput;
     supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
     tickets?: TicketCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
     tags?: TagCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
@@ -32600,6 +34780,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
     tags?: TagUncheckedCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
@@ -32843,6 +35024,7 @@ export namespace Prisma {
     tagAssisted: TagCreateNestedOneWithoutAssistedEventInput;
     tagConfirmed: TagCreateNestedOneWithoutConfirmedEventInput;
     supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
+    ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
     tags?: TagCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
@@ -32862,6 +35044,7 @@ export namespace Prisma {
     active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
+    ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
     tags?: TagUncheckedCreateNestedManyWithoutEventInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
@@ -32945,6 +35128,32 @@ export namespace Prisma {
     >;
   };
 
+  export type TicketGroupCreateWithoutTicketsInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    event: EventCreateNestedOneWithoutTicketGroupsInput;
+  };
+
+  export type TicketGroupUncheckedCreateWithoutTicketsInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
+    eventId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type TicketGroupCreateOrConnectWithoutTicketsInput = {
+    where: TicketGroupWhereUniqueInput;
+    create: XOR<
+      TicketGroupCreateWithoutTicketsInput,
+      TicketGroupUncheckedCreateWithoutTicketsInput
+    >;
+  };
+
   export type EventUpsertWithoutTicketsInput = {
     update: XOR<
       EventUpdateWithoutTicketsInput,
@@ -32979,6 +35188,7 @@ export namespace Prisma {
     tagAssisted?: TagUpdateOneRequiredWithoutAssistedEventNestedInput;
     tagConfirmed?: TagUpdateOneRequiredWithoutConfirmedEventNestedInput;
     supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
+    ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
@@ -32998,6 +35208,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
@@ -33116,6 +35327,227 @@ export namespace Prisma {
     tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
   };
 
+  export type TicketGroupUpsertWithoutTicketsInput = {
+    update: XOR<
+      TicketGroupUpdateWithoutTicketsInput,
+      TicketGroupUncheckedUpdateWithoutTicketsInput
+    >;
+    create: XOR<
+      TicketGroupCreateWithoutTicketsInput,
+      TicketGroupUncheckedCreateWithoutTicketsInput
+    >;
+    where?: TicketGroupWhereInput;
+  };
+
+  export type TicketGroupUpdateToOneWithWhereWithoutTicketsInput = {
+    where?: TicketGroupWhereInput;
+    data: XOR<
+      TicketGroupUpdateWithoutTicketsInput,
+      TicketGroupUncheckedUpdateWithoutTicketsInput
+    >;
+  };
+
+  export type TicketGroupUpdateWithoutTicketsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    event?: EventUpdateOneRequiredWithoutTicketGroupsNestedInput;
+  };
+
+  export type TicketGroupUncheckedUpdateWithoutTicketsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    eventId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type EventCreateWithoutTicketGroupsInput = {
+    id?: string;
+    name: string;
+    date: Date | string;
+    startingDate?: Date | string;
+    endingDate?: Date | string;
+    location: string;
+    active?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    folder?: EventFolderCreateNestedOneWithoutEventsInput;
+    tagAssisted: TagCreateNestedOneWithoutAssistedEventInput;
+    tagConfirmed: TagCreateNestedOneWithoutConfirmedEventInput;
+    supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
+    tickets?: TicketCreateNestedManyWithoutEventInput;
+    subEvents?: EventCreateNestedManyWithoutSupraEventInput;
+    tags?: TagCreateNestedManyWithoutEventInput;
+    eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
+  };
+
+  export type EventUncheckedCreateWithoutTicketGroupsInput = {
+    id?: string;
+    name: string;
+    date: Date | string;
+    startingDate?: Date | string;
+    endingDate?: Date | string;
+    location: string;
+    folderId?: string | null;
+    tagAssistedId: string;
+    tagConfirmedId: string;
+    supraEventId?: string | null;
+    active?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
+    subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
+    tags?: TagUncheckedCreateNestedManyWithoutEventInput;
+    eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
+  };
+
+  export type EventCreateOrConnectWithoutTicketGroupsInput = {
+    where: EventWhereUniqueInput;
+    create: XOR<
+      EventCreateWithoutTicketGroupsInput,
+      EventUncheckedCreateWithoutTicketGroupsInput
+    >;
+  };
+
+  export type TicketCreateWithoutTicketGroupInput = {
+    id?: string;
+    type: $Enums.TicketType;
+    fullName: string;
+    mail: string;
+    dni: string;
+    seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    event: EventCreateNestedOneWithoutTicketsInput;
+    profile?: ProfileCreateNestedOneWithoutTicketInput;
+  };
+
+  export type TicketUncheckedCreateWithoutTicketGroupInput = {
+    id?: string;
+    eventId: string;
+    type: $Enums.TicketType;
+    fullName: string;
+    mail: string;
+    dni: string;
+    seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
+    profileId?: string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type TicketCreateOrConnectWithoutTicketGroupInput = {
+    where: TicketWhereUniqueInput;
+    create: XOR<
+      TicketCreateWithoutTicketGroupInput,
+      TicketUncheckedCreateWithoutTicketGroupInput
+    >;
+  };
+
+  export type TicketCreateManyTicketGroupInputEnvelope = {
+    data: TicketCreateManyTicketGroupInput | TicketCreateManyTicketGroupInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type EventUpsertWithoutTicketGroupsInput = {
+    update: XOR<
+      EventUpdateWithoutTicketGroupsInput,
+      EventUncheckedUpdateWithoutTicketGroupsInput
+    >;
+    create: XOR<
+      EventCreateWithoutTicketGroupsInput,
+      EventUncheckedCreateWithoutTicketGroupsInput
+    >;
+    where?: EventWhereInput;
+  };
+
+  export type EventUpdateToOneWithWhereWithoutTicketGroupsInput = {
+    where?: EventWhereInput;
+    data: XOR<
+      EventUpdateWithoutTicketGroupsInput,
+      EventUncheckedUpdateWithoutTicketGroupsInput
+    >;
+  };
+
+  export type EventUpdateWithoutTicketGroupsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    date?: DateTimeFieldUpdateOperationsInput | Date | string;
+    startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    location?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    folder?: EventFolderUpdateOneWithoutEventsNestedInput;
+    tagAssisted?: TagUpdateOneRequiredWithoutAssistedEventNestedInput;
+    tagConfirmed?: TagUpdateOneRequiredWithoutConfirmedEventNestedInput;
+    supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
+    tickets?: TicketUpdateManyWithoutEventNestedInput;
+    subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
+    tags?: TagUpdateManyWithoutEventNestedInput;
+    eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
+  };
+
+  export type EventUncheckedUpdateWithoutTicketGroupsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    date?: DateTimeFieldUpdateOperationsInput | Date | string;
+    startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    location?: StringFieldUpdateOperationsInput | string;
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null;
+    tagAssistedId?: StringFieldUpdateOperationsInput | string;
+    tagConfirmedId?: StringFieldUpdateOperationsInput | string;
+    supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
+    subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
+    tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
+    eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
+  };
+
+  export type TicketUpsertWithWhereUniqueWithoutTicketGroupInput = {
+    where: TicketWhereUniqueInput;
+    update: XOR<
+      TicketUpdateWithoutTicketGroupInput,
+      TicketUncheckedUpdateWithoutTicketGroupInput
+    >;
+    create: XOR<
+      TicketCreateWithoutTicketGroupInput,
+      TicketUncheckedCreateWithoutTicketGroupInput
+    >;
+  };
+
+  export type TicketUpdateWithWhereUniqueWithoutTicketGroupInput = {
+    where: TicketWhereUniqueInput;
+    data: XOR<
+      TicketUpdateWithoutTicketGroupInput,
+      TicketUncheckedUpdateWithoutTicketGroupInput
+    >;
+  };
+
+  export type TicketUpdateManyWithWhereWithoutTicketGroupInput = {
+    where: TicketScalarWhereInput;
+    data: XOR<
+      TicketUpdateManyMutationInput,
+      TicketUncheckedUpdateManyWithoutTicketGroupInput
+    >;
+  };
+
   export type EventCreateWithoutEventTicketsInput = {
     id?: string;
     name: string;
@@ -33131,6 +35563,7 @@ export namespace Prisma {
     tagConfirmed: TagCreateNestedOneWithoutConfirmedEventInput;
     supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
     tickets?: TicketCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
     tags?: TagCreateNestedManyWithoutEventInput;
   };
@@ -33150,6 +35583,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
     tags?: TagUncheckedCreateNestedManyWithoutEventInput;
   };
@@ -33197,6 +35631,7 @@ export namespace Prisma {
     tagConfirmed?: TagUpdateOneRequiredWithoutConfirmedEventNestedInput;
     supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
     tickets?: TicketUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUpdateManyWithoutEventNestedInput;
   };
@@ -33216,6 +35651,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
   };
@@ -33447,13 +35883,13 @@ export namespace Prisma {
     id?: string;
     eventId: string;
     type: $Enums.TicketType;
-    status: $Enums.TicketStatus;
     fullName: string;
     mail: string;
     dni: string;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
+    ticketGroupId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -33597,7 +36033,6 @@ export namespace Prisma {
   export type TicketUpdateWithoutProfileInput = {
     id?: StringFieldUpdateOperationsInput | string;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
-    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
@@ -33611,13 +36046,13 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
+    ticketGroup?: TicketGroupUpdateOneWithoutTicketsNestedInput;
   };
 
   export type TicketUncheckedUpdateWithoutProfileInput = {
     id?: StringFieldUpdateOperationsInput | string;
     eventId?: StringFieldUpdateOperationsInput | string;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
-    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
@@ -33628,6 +36063,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -33636,7 +36072,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     eventId?: StringFieldUpdateOperationsInput | string;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
-    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
@@ -33647,6 +36082,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -34199,6 +36635,7 @@ export namespace Prisma {
     tagConfirmed?: TagUpdateOneRequiredWithoutConfirmedEventNestedInput;
     supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
     tickets?: TicketUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
   };
@@ -34218,6 +36655,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
   };
@@ -34285,7 +36723,6 @@ export namespace Prisma {
   export type TicketCreateManyEventInput = {
     id?: string;
     type: $Enums.TicketType;
-    status: $Enums.TicketStatus;
     fullName: string;
     mail: string;
     dni: string;
@@ -34293,6 +36730,15 @@ export namespace Prisma {
     scanned?: boolean;
     scannedAt?: Date | string | null;
     profileId?: string | null;
+    ticketGroupId?: string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type TicketGroupCreateManyEventInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -34324,7 +36770,6 @@ export namespace Prisma {
   export type TicketUpdateWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
-    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
@@ -34338,12 +36783,12 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     profile?: ProfileUpdateOneWithoutTicketNestedInput;
+    ticketGroup?: TicketGroupUpdateOneWithoutTicketsNestedInput;
   };
 
   export type TicketUncheckedUpdateWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
-    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
@@ -34355,6 +36800,7 @@ export namespace Prisma {
       | string
       | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
+    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -34362,7 +36808,6 @@ export namespace Prisma {
   export type TicketUncheckedUpdateManyWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
-    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus;
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
@@ -34374,6 +36819,39 @@ export namespace Prisma {
       | string
       | null;
     profileId?: NullableStringFieldUpdateOperationsInput | string | null;
+    ticketGroupId?: NullableStringFieldUpdateOperationsInput | string | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type TicketGroupUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tickets?: TicketUpdateManyWithoutTicketGroupNestedInput;
+  };
+
+  export type TicketGroupUncheckedUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tickets?: TicketUncheckedUpdateManyWithoutTicketGroupNestedInput;
+  };
+
+  export type TicketGroupUncheckedUpdateManyWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -34392,6 +36870,7 @@ export namespace Prisma {
     tagAssisted?: TagUpdateOneRequiredWithoutAssistedEventNestedInput;
     tagConfirmed?: TagUpdateOneRequiredWithoutConfirmedEventNestedInput;
     tickets?: TicketUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
@@ -34411,6 +36890,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
@@ -34524,6 +37004,7 @@ export namespace Prisma {
     tagConfirmed?: TagUpdateOneRequiredWithoutConfirmedEventNestedInput;
     supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
     tickets?: TicketUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
@@ -34543,6 +37024,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
     tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
@@ -34559,6 +37041,78 @@ export namespace Prisma {
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type TicketCreateManyTicketGroupInput = {
+    id?: string;
+    eventId: string;
+    type: $Enums.TicketType;
+    fullName: string;
+    mail: string;
+    dni: string;
+    seat?: number | null;
+    scanned?: boolean;
+    scannedAt?: Date | string | null;
+    profileId?: string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type TicketUpdateWithoutTicketGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
+    profile?: ProfileUpdateOneWithoutTicketNestedInput;
+  };
+
+  export type TicketUncheckedUpdateWithoutTicketGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    eventId?: StringFieldUpdateOperationsInput | string;
+    type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type TicketUncheckedUpdateManyWithoutTicketGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    eventId?: StringFieldUpdateOperationsInput | string;
+    type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    mail?: StringFieldUpdateOperationsInput | string;
+    dni?: StringFieldUpdateOperationsInput | string;
+    seat?: NullableIntFieldUpdateOperationsInput | number | null;
+    scanned?: BoolFieldUpdateOperationsInput | boolean;
+    scannedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profileId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };

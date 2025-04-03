@@ -110,6 +110,16 @@ export class EventService {
     const event = await this.prisma.event.findUnique({
       where: { id },
       include: {
+        tagAssisted: {
+          include: {
+            group: true,
+          },
+        },
+        tagConfirmed: {
+          include: {
+            group: true,
+          },
+        },
         subEvents: true,
         eventTickets: true,
         supraEvent: true,

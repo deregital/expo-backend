@@ -7,12 +7,9 @@ import { ticketSchema } from './ticket.dto';
 export const findByIdTicketResponseSchema = z.object({
   ticket: ticketSchema.merge(
     z.object({
-      event: eventSchema.pick({
-        name: true,
-        date: true,
-        location: true,
-      }),
+      event: eventSchema,
       profile: profileSchema.nullable(),
+      profileId: profileSchema.shape.id.nullable(),
     }),
   ),
 });

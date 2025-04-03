@@ -24,7 +24,12 @@ import { generate } from '@pdfme/generator';
 import { barcodes, image, line, text } from '@pdfme/schemas';
 import { format } from 'date-fns/format';
 import z from 'zod';
-import { Profile, Ticket } from '~/types';
+import { Event, Profile, Ticket, TicketType } from '~/types';
+import {
+  CreateManyTicketDto,
+  createManyTicketResponseSchema,
+  generateMultiplePdfTicketsSchema,
+} from './dto/create-many-ticket.dto';
 
 @Injectable()
 export class TicketService {
@@ -39,6 +44,19 @@ export class TicketService {
         event: true,
       },
     });
+  }
+
+  async createMany(
+    dto: CreateManyTicketDto,
+  ): Promise<z.infer<typeof createManyTicketResponseSchema>> {
+    const tickets = await this.prisma.ticket.createManyAndReturn({
+      data: dto.tickets,
+      include: {
+        event: true,
+      },
+    });
+
+    return tickets;
   }
 
   async findAll(): Promise<z.infer<typeof findAllTicketsResponseSchema>> {
@@ -84,6 +102,18 @@ export class TicketService {
     return { tickets: ticketsByEvent };
   }
 
+  async findAmountByEventAndType(
+    eventId: string,
+    type: TicketType,
+  ): Promise<number> {
+    const ticketsByEventAndType = await this.prisma.ticket.findMany({
+      where: { eventId: eventId, type: type },
+      include: { event: true, profile: true },
+    });
+
+    return ticketsByEventAndType.length;
+  }
+
   async findByProfileId(
     profileId: Profile['id'],
   ): Promise<z.infer<typeof findByProfileIdTicketResponseSchema>> {
@@ -117,14 +147,7 @@ export class TicketService {
     return ticket;
   }
 
-  async generatePdfTicket(id: string): Promise<Blob> {
-    const ticket = await this.prisma.ticket.findUnique({
-      where: { id },
-      include: {
-        event: true,
-      },
-    });
-
+  async generatePdfTicket(ticket: Ticket & { event: Event }): Promise<Blob> {
     // Format date to a readable format
     const eventDate = new Date(ticket!.event.date);
     const formattedDate = eventDate.toLocaleDateString('es-ES', {
@@ -226,6 +249,27 @@ export class TicketService {
     });
 
     return ticket;
+  }
+
+  async generateMultiplePdfTickets(
+    ticketIds: string[],
+  ): Promise<z.infer<typeof generateMultiplePdfTicketsSchema>> {
+    // Obtener todos los tickets con sus eventos en una sola consulta
+    const tickets = await this.prisma.ticket.findMany({
+      where: { id: { in: ticketIds } },
+      include: {
+        event: true,
+      },
+    });
+
+    // Generar PDFs para todos los tickets
+    const pdfPromises = tickets.map(async (ticket) => {
+      return { ticketId: ticket.id, pdf: await this.generatePdfTicket(ticket) };
+    });
+
+    // Esperar a que todos los PDFs se generen y filtrar los nulos
+    const pdfs = await Promise.all(pdfPromises);
+    return pdfs;
   }
 
   async getHighestSeatForEvent(eventId: string): Promise<number> {
