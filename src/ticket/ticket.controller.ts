@@ -496,7 +496,7 @@ export class TicketController {
       });
     }
 
-    return { success: true };
+    return scannedTicket;
   }
 
   @Roles(Role.ADMIN, Role.MI_EXPO)
