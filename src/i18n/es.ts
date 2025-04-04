@@ -615,5 +615,17 @@ export default {
       'my-tickets': { success: 'Tickets obtenidos' },
       'emit-ticket': { success: 'Ticket emitido' },
     },
+    mercadopago: {
+      'create-preference': {
+        success: 'Preferencia creada con éxito',
+        'event-not-found': 'Evento no encontrado',
+        conflict: 'Error en la creación de la preferencia',
+      },
+      webhook: {
+        success: 'Webhook procesado con éxito',
+        error: 'Error al procesar el webhook',
+        'signature-not-found': 'Firma no encontrada',
+      },
+    },
   },
 } as const;

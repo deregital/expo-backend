@@ -1,8 +1,15 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { createHmac } from 'crypto';
 import MercadoPagoConfig, { Payment, Preference } from 'mercadopago';
-import { PreferenceResponse } from 'mercadopago/dist/clients/preference/commonTypes';
-import { CreatePreferenceDto } from './dto/create-preference-mercadopago.dto';
+import z from 'zod';
+import {
+  CreatePreferenceDto,
+  createPreferenceResponseSchema,
+} from './dto/create-preference-mercadopago.dto';
 import { WebhookDto } from './dto/webhook-mercadopago.dto';
 
 @Injectable()
@@ -17,7 +24,7 @@ export class MercadoPagoService {
   }
   async createPreference(
     body: CreatePreferenceDto,
-  ): Promise<PreferenceResponse['init_point']> {
+  ): Promise<z.infer<typeof createPreferenceResponseSchema>> {
     const mercadopago = this.mercadoPago();
     const preference = await new Preference(mercadopago).create({
       body: {
@@ -36,7 +43,13 @@ export class MercadoPagoService {
         },
       },
     });
-    return preference.init_point;
+    if (!preference || !preference.id || !preference.init_point) {
+      throw new ConflictException('Error creating preference');
+    }
+    return {
+      id: preference.id,
+      init_point: preference.init_point,
+    };
   }
 
   private verifySignature(

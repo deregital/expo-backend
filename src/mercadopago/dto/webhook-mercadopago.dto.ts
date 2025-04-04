@@ -15,3 +15,12 @@ export const webhookSchema = z.object({
 });
 
 export class WebhookDto extends createZodDtoWithoutDate(webhookSchema) {}
+
+export const webhookResponseSchema = z.object({
+  id: z.string(),
+  status: z.string(),
+});
+
+export class WebhookResponseDto extends createZodDtoWithoutDate(
+  webhookResponseSchema,
+) {}

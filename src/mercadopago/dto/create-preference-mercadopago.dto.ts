@@ -16,3 +16,11 @@ export const createPreferenceSchema = z.object({
 export class CreatePreferenceDto extends createZodDtoWithoutDate(
   createPreferenceSchema,
 ) {}
+
+export const createPreferenceResponseSchema = z.object({
+  id: z.string(),
+  init_point: z.string(),
+});
+export class CreatePreferenceResponseDto extends createZodDtoWithoutDate(
+  createPreferenceResponseSchema,
+) {}
