@@ -10,6 +10,7 @@ import {
   Headers,
   NotFoundException,
   Post,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -17,6 +18,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
+import { Response } from 'express';
 import z from 'zod';
 import { Role } from '~/types';
 import {
@@ -24,11 +26,9 @@ import {
   CreatePreferenceResponseDto,
   createPreferenceResponseSchema,
 } from './dto/create-preference-mercadopago.dto';
-import { WebhookDto, WebhookResponseDto } from './dto/webhook-mercadopago.dto';
+import { WebhookDto } from './dto/webhook-mercadopago.dto';
 import { MercadoPagoService } from './mercadopago.service';
 
-@Roles(Role.ADMIN, Role.USER, Role.TICKETS)
-@UseGuards(JwtGuard, RoleGuard)
 @Controller('mercadopago')
 export class MercadoPagoController {
   constructor(
@@ -38,7 +38,7 @@ export class MercadoPagoController {
 
   @ApiOkResponse({
     description: translate('route.mercadopago.create-preference.success'),
-    type: WebhookResponseDto,
+    type: CreatePreferenceResponseDto,
   })
   @ApiNotFoundResponse({
     description: translate(
@@ -50,16 +50,19 @@ export class MercadoPagoController {
     description: translate('route.mercadopago.create-preference.conflict'),
     type: ErrorDto,
   })
+  @UseGuards(JwtGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER, Role.TICKETS)
   @Post('/create-preference')
   async createPreference(
     @Body() body: CreatePreferenceDto,
   ): Promise<z.infer<typeof createPreferenceResponseSchema>> {
+    console.log('body', body);
     return this.mercadoPagoService.createPreference(body);
   }
 
   @ApiOkResponse({
     description: translate('route.mercadopago.webhook.success'),
-    type: CreatePreferenceResponseDto,
+    type: Response,
   })
   @ApiConflictResponse({
     description: translate('route.mercadopago.webhook.error'),
@@ -68,9 +71,12 @@ export class MercadoPagoController {
   @Post('/webhook')
   async webhook(
     @Body() body: WebhookDto,
+    @Res() res: Response,
     @Headers('x-signature') signature?: string,
     @Headers('x-request-id') requestId?: string,
   ) {
+    res.status(200);
+    console.log('body', body);
     if (!signature || !requestId) {
       throw new NotFoundException(
         translate('route.mercadopago.webhook.signature-not-found'),
@@ -84,6 +90,6 @@ export class MercadoPagoController {
     await this.ticketGroupService.update(dataTicketGroup.id, {
       status: dataTicketGroup.status === 'approved' ? 'PAID' : 'BOOKED',
     });
-    return dataTicketGroup;
+    return res;
   }
 }

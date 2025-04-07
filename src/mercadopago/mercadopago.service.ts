@@ -1,10 +1,11 @@
+import { translate } from '@/i18n/translate';
 import {
   ConflictException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
 import { createHmac } from 'crypto';
-import MercadoPagoConfig, { Payment, Preference } from 'mercadopago';
+import { MercadoPagoConfig, Payment, Preference } from 'mercadopago';
 import z from 'zod';
 import {
   CreatePreferenceDto,
@@ -25,31 +26,39 @@ export class MercadoPagoService {
   async createPreference(
     body: CreatePreferenceDto,
   ): Promise<z.infer<typeof createPreferenceResponseSchema>> {
-    const mercadopago = this.mercadoPago();
-    const preference = await new Preference(mercadopago).create({
-      body: {
-        items: body.items.map((item) => ({
-          id: item.id,
-          title: item.title,
-          quantity: item.quantity,
-          unit_price: item.unit_price,
-        })),
-        external_reference: body.ticket_group_id,
-        auto_return: 'all',
-        back_urls: {
-          success: `${process.env.FRONTEND_URL}/ticket-group/${body.ticket_group_id}`,
-          pending: `${process.env.FRONTEND_URL}/ticket-group/${body.ticket_group_id}`,
-          failure: `${process.env.FRONTEND_URL}/ticket-group/${body.ticket_group_id}`,
+    try {
+      const mercadopago = this.mercadoPago();
+      const preference = await new Preference(mercadopago).create({
+        body: {
+          items: body.items.map((item) => ({
+            id: item.id,
+            title: item.title,
+            quantity: item.quantity,
+            unit_price: item.unit_price,
+          })),
+          external_reference: body.ticket_group_id,
+          auto_return: 'all',
+          back_urls: {
+            success: `https://mercadopago.com.ar/`,
+            pending: `https://mercadopago.com.ar/`,
+            failure: `https://mercadopago.com.ar/`,
+          },
         },
-      },
-    });
-    if (!preference || !preference.id || !preference.init_point) {
-      throw new ConflictException('Error creating preference');
+      });
+      if (!preference || !preference.id || !preference.init_point) {
+        throw new ConflictException(
+          translate('route.mercadopago.create-preference.error'),
+        );
+      }
+      return {
+        id: preference.id,
+        init_point: preference.init_point,
+      };
+    } catch (error) {
+      throw new ConflictException(
+        translate('route.mercadopago.create-preference.error'),
+      );
     }
-    return {
-      id: preference.id,
-      init_point: preference.init_point,
-    };
   }
 
   private verifySignature(
@@ -57,11 +66,6 @@ export class MercadoPagoService {
     request_id: string,
     data_id: string,
   ) {
-    console.log('Verificando firma con datos:', {
-      signature,
-      request_id,
-      data_id,
-    });
     const ts = signature.split(',')[0]?.split('=')[1];
     const v1 = signature.split(',')[1]?.split('=')[1];
     const manifest = `id:${data_id};request-id:${request_id};ts:${ts?.trim()};`;
@@ -71,7 +75,6 @@ export class MercadoPagoService {
       .digest('hex');
     const isValid = signatureDecrypted === v1?.trim();
 
-    console.log('Resultado de verificación de firma:', isValid);
     return isValid;
   }
 
@@ -85,12 +88,21 @@ export class MercadoPagoService {
     if (!isValid) {
       throw new UnauthorizedException('Firma inválida');
     }
-    const mercadopago = this.mercadoPago();
-    const payment = await new Payment(mercadopago).get({ id: data_id });
+    try {
+      const mercadopago = this.mercadoPago();
+      const payment = await new Payment(mercadopago).get({ id: data_id });
+      if (!payment) {
+        throw new ConflictException(
+          translate('route.mercadopago.webhook.error'),
+        );
+      }
 
-    return {
-      status: payment.status ?? 'REJECTED',
-      id: payment.external_reference ?? '',
-    };
+      return {
+        status: payment.status ?? 'REJECTED',
+        id: payment.external_reference ?? '',
+      };
+    } catch (error) {
+      throw new ConflictException(translate('route.mercadopago.webhook.error'));
+    }
   }
 }

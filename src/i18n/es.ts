@@ -619,6 +619,7 @@ export default {
       'create-preference': {
         success: 'Preferencia creada con éxito',
         'event-not-found': 'Evento no encontrado',
+        error: 'Error en la creación de la preferencia',
         conflict: 'Error en la creación de la preferencia',
       },
       webhook: {

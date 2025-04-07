@@ -17,10 +17,19 @@ export class CreatePreferenceDto extends createZodDtoWithoutDate(
   createPreferenceSchema,
 ) {}
 
-export const createPreferenceResponseSchema = z.object({
-  id: z.string(),
-  init_point: z.string(),
+export const typePreferenceError = z.object({
+  message: z.string(),
+  error: z.string(),
+  status: z.string(),
+  cause: z.string(),
 });
+
+export const createPreferenceResponseSchema =
+  z.object({
+    id: z.string(),
+    init_point: z.string(),
+  }) || typePreferenceError;
+
 export class CreatePreferenceResponseDto extends createZodDtoWithoutDate(
   createPreferenceResponseSchema,
 ) {}
