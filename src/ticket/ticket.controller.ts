@@ -16,8 +16,8 @@ import { TagService } from '@/tag/tag.service';
 import { TicketGroupService } from '@/ticket-group/ticket-group.service';
 import {
   CreateManyTicketDto,
-  CreateManyTicketWithPdfsResponseDto,
-  createManyTicketWithPdfsResponseSchema,
+  CreateManyTicketResponseDto,
+  createManyTicketResponseSchema,
 } from '@/ticket/dto/create-many-ticket.dto';
 import {
   CreateTicketDto,
@@ -93,6 +93,10 @@ import {
 import type { Response } from 'express';
 import z from 'zod';
 import { Role, TicketType } from '~/types/prisma-schema';
+import {
+  GetPdfsByTicketGroupResponseDto,
+  getPdfsByTicketGroupResponseSchema,
+} from './dto/get-pdfs-by-group-ticket.dto';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -182,12 +186,12 @@ export class TicketController {
   })
   @ApiOkResponse({
     description: translate('route.ticket.create-many.success'),
-    type: CreateManyTicketWithPdfsResponseDto,
+    type: CreateManyTicketResponseDto,
   })
   @Post('/create-many')
   async createMany(
     @Body() createManyTicketDto: CreateManyTicketDto,
-  ): Promise<z.infer<typeof createManyTicketWithPdfsResponseSchema>> {
+  ): Promise<z.infer<typeof createManyTicketResponseSchema>> {
     const eventId = createManyTicketDto.tickets[0]?.eventId;
     const type = createManyTicketDto.tickets[0]?.type;
     if (!eventId) {
@@ -235,25 +239,50 @@ export class TicketController {
         seat: seat ? seat + index : null,
       })),
     });
+    return tickets;
+  }
 
-    // Extraer los IDs de los tickets creados
+  @ApiOkResponse({
+    description: translate('route.ticket.get-pdfs-by-ticket-group.success'),
+    type: GetPdfsByTicketGroupResponseDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.ticket.get-pdfs-by-ticket-group.not-found'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.ticket.get-pdfs-by-ticket-group.error'),
+    type: ErrorDto,
+  })
+  @Get('get-pdfs-by-ticket-group/:ticketGroupId')
+  async getPdfsByTicketGroup(
+    @Param('ticketGroupId', new ExistingRecord('ticketGroup'))
+    ticketGroupId: string,
+  ): Promise<z.infer<typeof getPdfsByTicketGroupResponseSchema>> {
+    const ticketGroup = await this.ticketGroupService.findGroup(ticketGroupId);
+    if (!ticketGroup) {
+      throw new NotFoundException(
+        translate('route.ticket.get-pdfs-by-ticket-group.not-found'),
+      );
+    } else if (ticketGroup.status !== 'PAID' && ticketGroup.status !== 'FREE') {
+      throw new ConflictException(
+        translate('route.ticket.get-pdfs-by-ticket-group.error'),
+      );
+    }
+    const tickets = (await this.ticketService.findByTicketGroup(ticketGroupId))
+      .tickets;
     const ticketIds = tickets.map((ticket) => ticket.id);
-    // Luego, generar los PDFs para todos los tickets
     const pdfs = await this.ticketService.generateMultiplePdfTickets(ticketIds);
-    // Preparar la respuesta con los tickets y los PDFs
     const response = {
-      tickets: tickets,
       pdfs: await Promise.all(
         pdfs.map(async (item) => ({
           ticketId: item.ticketId,
-          // Convertir el Blob a base64 para enviarlo en la respuesta JSON
           pdfBase64: Buffer.from(await item.pdf.arrayBuffer()).toString(
             'base64',
           ),
         })),
       ),
     };
-
     return response;
   }
 

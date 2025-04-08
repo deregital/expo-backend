@@ -1,6 +1,9 @@
 import { translate } from '@/i18n/translate';
+import { PRISMA_SERVICE } from '@/prisma/constants';
+import { PrismaService } from '@/prisma/prisma.service';
 import {
   ConflictException,
+  Inject,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -15,7 +18,7 @@ import { WebhookDto } from './dto/webhook-mercadopago.dto';
 
 @Injectable()
 export class MercadoPagoService {
-  constructor() {}
+  constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
   private mercadoPago() {
     const mercadopago = new MercadoPagoConfig({
@@ -27,6 +30,51 @@ export class MercadoPagoService {
     body: CreatePreferenceDto,
   ): Promise<z.infer<typeof createPreferenceResponseSchema>> {
     try {
+      const eventTicket = await this.prisma.ticketGroup.findUnique({
+        where: { id: body.ticket_group_id },
+        select: {
+          event: {
+            select: {
+              eventTickets: {
+                where: {
+                  type: 'SPECTATOR',
+                },
+                select: {
+                  price: true,
+                  amount: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      if (!eventTicket || !eventTicket.event.eventTickets[0]?.amount) {
+        throw new ConflictException(
+          translate('route.mercadopago.create-preference.event-not-found'),
+        );
+      }
+      const amountTicketsBought = await this.prisma.ticketGroup.aggregate({
+        where: { id: body.ticket_group_id },
+        _sum: {
+          amountTickets: true,
+        },
+      });
+      if (
+        amountTicketsBought._sum.amountTickets &&
+        amountTicketsBought._sum.amountTickets + body.items[0]!.quantity >
+          eventTicket?.event.eventTickets[0]?.amount
+      ) {
+        throw new ConflictException(
+          translate('route.mercadopago.create-preference.conflict'),
+        );
+      }
+      if (
+        eventTicket?.event.eventTickets[0]?.price !== body.items[0]?.unit_price
+      ) {
+        throw new ConflictException(
+          translate('route.mercadopago.create-preference.conflict'),
+        );
+      }
       const mercadopago = this.mercadoPago();
       const preference = await new Preference(mercadopago).create({
         body: {

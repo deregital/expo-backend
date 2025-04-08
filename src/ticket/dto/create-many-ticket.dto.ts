@@ -38,16 +38,6 @@ export const createManyTicketResponseSchema = ticketSchema
   })
   .array();
 
-export const createManyTicketWithPdfsResponseSchema = z.object({
-  tickets: createManyTicketResponseSchema,
-  pdfs: z.array(
-    z.object({
-      ticketId: z.string(),
-      pdfBase64: z.string(),
-    }),
-  ),
-});
-
-export class CreateManyTicketWithPdfsResponseDto extends createZodDtoWithoutDate(
-  createManyTicketWithPdfsResponseSchema,
+export class CreateManyTicketResponseDto extends createZodDtoWithoutDate(
+  createManyTicketResponseSchema,
 ) {}

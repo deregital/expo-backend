@@ -30,6 +30,7 @@ import {
   createManyTicketResponseSchema,
   generateMultiplePdfTicketsSchema,
 } from './dto/create-many-ticket.dto';
+import { findByTicketGroupTicketResponseSchema } from './dto/get-pdfs-by-group-ticket.dto';
 
 @Injectable()
 export class TicketService {
@@ -123,6 +124,16 @@ export class TicketService {
     });
 
     return { tickets: ticketsByProfile };
+  }
+
+  async findByTicketGroup(
+    ticketGroupId: string,
+  ): Promise<z.infer<typeof findByTicketGroupTicketResponseSchema>> {
+    const ticketsByTicketGroup = await this.prisma.ticket.findMany({
+      where: { ticketGroupId },
+    });
+
+    return { tickets: ticketsByTicketGroup };
   }
 
   async update(

@@ -509,6 +509,11 @@ export default {
         'type-not-found': 'Tipo de ticket no encontrado',
         'max-tickets-not-found': 'Cantidad máxima de tickets no encontrada',
       },
+      'get-pdfs-by-ticket-group': {
+        success: 'PDFs de tickets obtenidos con éxito',
+        'not-found': 'Grupo de tickets no encontrado',
+        error: 'Error al obtener los PDFs de los tickets',
+      },
       'find-all': {
         success: 'Tickets obtenidos',
       },
