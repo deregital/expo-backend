@@ -56,7 +56,6 @@
     "@pdfme/common": "^5.3.13",
     "@pdfme/generator": "^5.3.13",
     "@pdfme/schemas": "^5.3.13",
-    "@pdfme/ui": "^5.3.13",
     "@prisma/client": "^6.4.1",
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.17",
