@@ -241,7 +241,7 @@ export class TicketController {
     });
     return tickets;
   }
-
+  @Roles(Role.ADMIN, Role.MI_EXPO, Role.TICKETS)
   @ApiOkResponse({
     description: translate('route.ticket.get-pdfs-by-ticket-group.success'),
     type: GetPdfsByTicketGroupResponseDto,
