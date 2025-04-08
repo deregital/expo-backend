@@ -195,7 +195,7 @@ export class TicketService {
       text,
       line,
       image,
-      barcodes: barcodes.code128,
+      barcodes: barcodes.qrcode,
     };
 
     const { fontBold, fontSemiBold, fontLight } = await getDMSansFonts();
