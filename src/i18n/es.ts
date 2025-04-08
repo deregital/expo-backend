@@ -558,6 +558,11 @@ export default {
         'event-not-found': 'Evento no encontrado',
         conflict: 'Error en la creación del grupo de tickets',
       },
+      'find-group': {
+        success: 'Grupo de tickets encontrado',
+        'not-found': 'Grupo de tickets no encontrado',
+        conflict: 'Error en la búsqueda del grupo de tickets',
+      },
       'find-tickets-by-event': {
         success: 'Tickets por evento obtenidos',
         'not-found': 'Tickets por evento no encontrados',

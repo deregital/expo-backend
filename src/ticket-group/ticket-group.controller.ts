@@ -44,6 +44,10 @@ import {
 } from '@nestjs/swagger';
 import z from 'zod';
 import { Role, TicketType } from '~/types/prisma-schema';
+import {
+  findGroupResponseSchema,
+  FindGroupTicketGroupDto,
+} from './dto/find-group-ticket-group.dto';
 
 @Roles(Role.ADMIN, Role.USER, Role.TICKETS)
 @UseGuards(JwtGuard, RoleGuard)
@@ -115,6 +119,25 @@ export class TicketGroupController {
     @Param('id', new ExistingRecord('event')) id: string,
   ): Promise<z.infer<typeof findTicketsByEventResponseSchema>> {
     return this.ticketGroupService.findTicketsByEvent(id);
+  }
+
+  @ApiOkResponse({
+    description: translate('route.ticket-group.find-group.success'),
+    type: FindGroupTicketGroupDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.ticket-group.find-group.not-found'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.ticket-group.find-group.conflict'),
+    type: ErrorDto,
+  })
+  @Get('/find-group/:id')
+  async findGroup(
+    @Param('id', new ExistingRecord('ticketGroup')) id: string,
+  ): Promise<z.infer<typeof findGroupResponseSchema>> {
+    return this.ticketGroupService.findGroup(id);
   }
 
   @ApiOkResponse({

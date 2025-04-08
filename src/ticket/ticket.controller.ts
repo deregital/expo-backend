@@ -13,6 +13,7 @@ import { ErrorDto } from '@/shared/errors/errorType';
 import { decryptString } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagService } from '@/tag/tag.service';
+import { TicketGroupService } from '@/ticket-group/ticket-group.service';
 import {
   CreateManyTicketDto,
   CreateManyTicketWithPdfsResponseDto,
@@ -102,6 +103,7 @@ export class TicketController {
     private readonly eventService: EventService,
     private readonly mailService: MailService,
     private readonly tagService: TagService,
+    private readonly ticketGroupService: TicketGroupService,
     private readonly profileService: ProfileService,
   ) {}
 
@@ -236,10 +238,8 @@ export class TicketController {
 
     // Extraer los IDs de los tickets creados
     const ticketIds = tickets.map((ticket) => ticket.id);
-
     // Luego, generar los PDFs para todos los tickets
     const pdfs = await this.ticketService.generateMultiplePdfTickets(ticketIds);
-
     // Preparar la respuesta con los tickets y los PDFs
     const response = {
       tickets: tickets,

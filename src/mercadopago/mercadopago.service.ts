@@ -39,9 +39,9 @@ export class MercadoPagoService {
           external_reference: body.ticket_group_id,
           auto_return: 'all',
           back_urls: {
-            success: `https://mercadopago.com.ar/`,
-            pending: `https://mercadopago.com.ar/`,
-            failure: `https://mercadopago.com.ar/`,
+            success: `${process.env.EXPO_TICKETS_URL}/mercadopago/${body.ticket_group_id}`,
+            pending: `${process.env.EXPO_TICKETS_URL}/payment/error`,
+            failure: `${process.env.EXPO_TICKETS_URL}/payment/error`,
           },
         },
       });
