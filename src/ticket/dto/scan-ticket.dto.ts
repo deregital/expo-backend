@@ -1,15 +1,15 @@
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
+import { ticketSchema } from '@/ticket/dto/ticket.dto';
 import z from 'zod';
 
 export const scanTicketSchema = z.object({
-  ticketBarcode: z.string(),
+  type: z.enum(['id', 'barcode']),
+  value: z.string(),
 });
 
 export class ScanTicketDto extends createZodDtoWithoutDate(scanTicketSchema) {}
 
-export const scanTicketResponseSchema = z.object({
-  success: z.boolean(),
-});
+export const scanTicketResponseSchema = ticketSchema;
 
 export class ScanTicketResponseDto extends createZodDtoWithoutDate(
   scanTicketResponseSchema,
