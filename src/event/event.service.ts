@@ -292,6 +292,9 @@ export class EventService {
           gt: new Date(),
         },
       },
+      orderBy: {
+        endingDate: 'asc',
+      },
       include: {
         eventTickets: true,
       },
