@@ -1593,7 +1593,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreateManyTicketWithPdfsResponseDto"
+                $ref: "#/components/schemas/CreateManyTicketResponseDto"
         404:
           description: "Evento no encontrado"
           content:
@@ -1602,6 +1602,36 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
         409:
           description: "Error en la creación de los tickets"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Ticket"
+  /ticket/get-pdfs-by-ticket-group/{ticketGroupId}:
+    get:
+      operationId: "TicketController_getPdfsByTicketGroup"
+      parameters:
+        - name: "ticketGroupId"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "PDFs de tickets obtenidos con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetPdfsByTicketGroupResponseDto"
+        404:
+          description: "Grupo de tickets no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "Error al obtener los PDFs de los tickets"
           content:
             application/json:
               schema:
@@ -1941,6 +1971,36 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "TicketGroup"
+  /ticket-group/find-group/{id}:
+    get:
+      operationId: "TicketGroupController_findGroup"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Grupo de tickets encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindGroupTicketGroupDto"
+        404:
+          description: "Grupo de tickets no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "Error en la búsqueda del grupo de tickets"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "TicketGroup"
   /ticket-group/update/{id}:
     patch:
       operationId: "TicketGroupController_update"
@@ -2209,6 +2269,72 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "MiExpo"
+  /mercadopago/create-preference:
+    post:
+      operationId: "MercadoPagoController_createPreference"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePreferenceDto"
+      responses:
+        200:
+          description: "Preferencia creada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreatePreferenceResponseDto"
+        404:
+          description: "Evento no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "Error en la creación de la preferencia"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "MercadoPago"
+  /mercadopago/webhook:
+    post:
+      operationId: "MercadoPagoController_webhook"
+      parameters:
+        - name: "x-signature"
+          required: true
+          in: "header"
+          schema:
+            type: "string"
+        - name: "x-request-id"
+          required: true
+          in: "header"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookDto"
+      responses:
+        200:
+          description: "Webhook procesado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+        409:
+          description: "Error al procesar el webhook"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "MercadoPago"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -9294,14 +9420,67 @@ components:
               - "ticketGroupId"
       required:
         - "tickets"
-    CreateManyTicketWithPdfsResponseDto:
+    CreateManyTicketResponseDto:
       type:
-        - "object"
-      properties:
-        tickets:
+        - "array"
+      items:
+        type:
+          - "object"
+        properties:
+          id:
+            type:
+              - "string"
+            format: "uuid"
+          eventId:
+            type:
+              - "string"
+            format: "uuid"
           type:
-            - "array"
-          items:
+            type:
+              - "string"
+            enum:
+              - "PARTICIPANT"
+              - "STAFF"
+              - "SPECTATOR"
+          fullName:
+            type:
+              - "string"
+            minLength: 1
+          mail:
+            type:
+              - "string"
+            format: "email"
+          dni:
+            type:
+              - "string"
+            minLength: 1
+          seat:
+            type:
+              - "number"
+              - "null"
+            minimum: 1
+          scanned:
+            type:
+              - "boolean"
+          scannedAt:
+            type:
+              - "string"
+              - "null"
+            format: "date-time"
+          ticketGroupId:
+            type:
+              - "string"
+              - "null"
+            format: "uuid"
+          created_at:
+            type:
+              - "string"
+            format: "date-time"
+          updated_at:
+            type:
+              - "string"
+            format: "date-time"
+          event:
             type:
               - "object"
             properties:
@@ -9309,43 +9488,43 @@ components:
                 type:
                   - "string"
                 format: "uuid"
-              eventId:
+              name:
+                type:
+                  - "string"
+                minLength: 1
+              date:
+                type:
+                  - "string"
+                format: "date-time"
+              startingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              endingDate:
+                type:
+                  - "string"
+                format: "date-time"
+              location:
+                type:
+                  - "string"
+                minLength: 1
+              folderId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              tagAssistedId:
                 type:
                   - "string"
                 format: "uuid"
-              type:
+              tagConfirmedId:
                 type:
                   - "string"
-                enum:
-                  - "PARTICIPANT"
-                  - "STAFF"
-                  - "SPECTATOR"
-              fullName:
-                type:
-                  - "string"
-                minLength: 1
-              mail:
-                type:
-                  - "string"
-                format: "email"
-              dni:
-                type:
-                  - "string"
-                minLength: 1
-              seat:
-                type:
-                  - "number"
-                  - "null"
-                minimum: 1
-              scanned:
+                format: "uuid"
+              active:
                 type:
                   - "boolean"
-              scannedAt:
-                type:
-                  - "string"
-                  - "null"
-                format: "date-time"
-              ticketGroupId:
+              supraEventId:
                 type:
                   - "string"
                   - "null"
@@ -9358,91 +9537,38 @@ components:
                 type:
                   - "string"
                 format: "date-time"
-              event:
-                type:
-                  - "object"
-                properties:
-                  id:
-                    type:
-                      - "string"
-                    format: "uuid"
-                  name:
-                    type:
-                      - "string"
-                    minLength: 1
-                  date:
-                    type:
-                      - "string"
-                    format: "date-time"
-                  startingDate:
-                    type:
-                      - "string"
-                    format: "date-time"
-                  endingDate:
-                    type:
-                      - "string"
-                    format: "date-time"
-                  location:
-                    type:
-                      - "string"
-                    minLength: 1
-                  folderId:
-                    type:
-                      - "string"
-                      - "null"
-                    format: "uuid"
-                  tagAssistedId:
-                    type:
-                      - "string"
-                    format: "uuid"
-                  tagConfirmedId:
-                    type:
-                      - "string"
-                    format: "uuid"
-                  active:
-                    type:
-                      - "boolean"
-                  supraEventId:
-                    type:
-                      - "string"
-                      - "null"
-                    format: "uuid"
-                  created_at:
-                    type:
-                      - "string"
-                    format: "date-time"
-                  updated_at:
-                    type:
-                      - "string"
-                    format: "date-time"
-                required:
-                  - "id"
-                  - "name"
-                  - "date"
-                  - "startingDate"
-                  - "endingDate"
-                  - "location"
-                  - "folderId"
-                  - "tagAssistedId"
-                  - "tagConfirmedId"
-                  - "active"
-                  - "supraEventId"
-                  - "created_at"
-                  - "updated_at"
             required:
               - "id"
-              - "eventId"
-              - "type"
-              - "fullName"
-              - "mail"
-              - "dni"
-              - "seat"
-              - "scanned"
-              - "scannedAt"
-              - "ticketGroupId"
+              - "name"
+              - "date"
+              - "startingDate"
+              - "endingDate"
+              - "location"
+              - "folderId"
+              - "tagAssistedId"
+              - "tagConfirmedId"
+              - "active"
+              - "supraEventId"
               - "created_at"
               - "updated_at"
-              - "event"
+        required:
+          - "id"
+          - "eventId"
+          - "type"
+          - "fullName"
+          - "mail"
+          - "dni"
+          - "seat"
+          - "scanned"
+          - "scannedAt"
+          - "ticketGroupId"
+          - "created_at"
+          - "updated_at"
+          - "event"
+    GetPdfsByTicketGroupResponseDto:
+      type:
+        - "object"
+      properties:
         pdfs:
           type:
             - "array"
@@ -9460,7 +9586,6 @@ components:
               - "ticketId"
               - "pdfBase64"
       required:
-        - "tickets"
         - "pdfs"
     FindAllTicketsResponseDto:
       type:
@@ -10752,17 +10877,9 @@ components:
           type:
             - "number"
           minimum: 0
-        status:
-          type:
-            - "string"
-          enum:
-            - "BOOKED"
-            - "PAID"
-            - "FREE"
       required:
         - "eventId"
         - "amountTickets"
-        - "status"
     CreateTicketGroupResponseDto:
       type:
         - "object"
@@ -10956,6 +11073,44 @@ components:
             - "number"
       required:
         - "tickets"
+    FindGroupTicketGroupDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        amountTickets:
+          type:
+            - "number"
+          minimum: 0
+        status:
+          type:
+            - "string"
+          enum:
+            - "BOOKED"
+            - "PAID"
+            - "FREE"
+        eventId:
+          type:
+            - "string"
+          format: "uuid"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "amountTickets"
+        - "status"
+        - "eventId"
+        - "created_at"
+        - "updated_at"
     UpdateTicketGroupDto:
       type:
         - "object"
@@ -12032,3 +12187,79 @@ components:
       required:
         - "user"
         - "backendTokens"
+    CreatePreferenceDto:
+      type:
+        - "object"
+      properties:
+        ticket_group_id:
+          type:
+            - "string"
+        ticket_type:
+          type:
+            - "string"
+          enum:
+            - "PARTICIPANT"
+            - "STAFF"
+            - "SPECTATOR"
+      required:
+        - "ticket_group_id"
+        - "ticket_type"
+    CreatePreferenceResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+        init_point:
+          type:
+            - "string"
+      required:
+        - "id"
+        - "init_point"
+    WebhookDto:
+      type:
+        - "object"
+      properties:
+        data:
+          type:
+            - "object"
+          properties:
+            id:
+              type:
+                - "string"
+          required:
+            - "id"
+        action:
+          type:
+            - "string"
+        api_version:
+          type:
+            - "string"
+        date_created:
+          type:
+            - "string"
+        id:
+          type:
+            - "number"
+        live_mode:
+          type:
+            - "boolean"
+        type:
+          type:
+            - "string"
+        user_id:
+          type:
+            - "number"
+      required:
+        - "data"
+        - "action"
+        - "api_version"
+        - "date_created"
+        - "id"
+        - "live_mode"
+        - "type"
+        - "user_id"
+    Response:
+      type: "object"
+      properties: {}

@@ -75,6 +75,8 @@ export class MercadoPagoController {
     @Headers('x-request-id') requestId?: string,
   ): Promise<Response> {
     res.status(200);
+    console.log('body', body);
+
     if (!signature || !requestId) {
       throw new NotFoundException(
         translate('route.mercadopago.webhook.signature-not-found'),

@@ -1,4 +1,5 @@
 import { AccountService } from '@/account/account.service';
+import { EventTicketService } from '@/event-ticket/event-ticket.service';
 import { ProfileService } from '@/profile/profile.service';
 import { TicketGroupService } from '@/ticket-group/ticket-group.service';
 import { TicketService } from '@/ticket/ticket.service';
@@ -15,6 +16,7 @@ import { MercadoPagoService } from './mercadopago.service';
     AccountService,
     ProfileService,
     TicketGroupService,
+    EventTicketService,
     TicketService,
   ],
 })
