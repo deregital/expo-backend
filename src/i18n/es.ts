@@ -556,6 +556,8 @@ export default {
         success: 'Ticket escaneado con éxito',
         'already-scanned': 'El ticket ya fue escaneado',
         'participant-not-found': 'Participante no encontrado',
+        'event-ended': 'El evento ya ha finalizado',
+        'invalid-type': 'El tipo de ticket no es válido',
       },
     },
     'ticket-group': {

@@ -10842,20 +10842,88 @@ components:
       type:
         - "object"
       properties:
-        ticketBarcode:
+        type:
+          type:
+            - "string"
+          enum:
+            - "id"
+            - "barcode"
+        value:
           type:
             - "string"
       required:
-        - "ticketBarcode"
+        - "type"
+        - "value"
     ScanTicketResponseDto:
       type:
         - "object"
       properties:
-        success:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        eventId:
+          type:
+            - "string"
+          format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PARTICIPANT"
+            - "STAFF"
+            - "SPECTATOR"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        mail:
+          type:
+            - "string"
+          format: "email"
+        dni:
+          type:
+            - "string"
+          minLength: 1
+        seat:
+          type:
+            - "number"
+            - "null"
+          minimum: 1
+        scanned:
           type:
             - "boolean"
+        scannedAt:
+          type:
+            - "string"
+            - "null"
+          format: "date-time"
+        ticketGroupId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
       required:
-        - "success"
+        - "id"
+        - "eventId"
+        - "type"
+        - "fullName"
+        - "mail"
+        - "dni"
+        - "seat"
+        - "scanned"
+        - "scannedAt"
+        - "ticketGroupId"
+        - "created_at"
+        - "updated_at"
     SendEmailResponseDto:
       type:
         - "object"
