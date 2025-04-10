@@ -238,8 +238,18 @@ export class EventService {
 
   async findActive(): Promise<z.infer<typeof getActiveEventsResponseSchema>> {
     const events = await this.prisma.event.findMany({
-      where: { active: true, endingDate: { gt: new Date() } },
-      include: { eventTickets: true },
+      where: {
+        active: true,
+        endingDate: {
+          gt: new Date(),
+        },
+      },
+      orderBy: {
+        endingDate: 'asc',
+      },
+      include: {
+        eventTickets: true,
+      },
     });
 
     return { events };

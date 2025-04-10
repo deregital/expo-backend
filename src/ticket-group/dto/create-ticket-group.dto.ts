@@ -7,7 +7,6 @@ import z from 'zod';
 export const createTicketGroupSchema = ticketGroupSchema.pick({
   eventId: true,
   amountTickets: true,
-  status: true,
 });
 
 export class CreateTicketGroupDto extends createZodDtoWithoutDate(

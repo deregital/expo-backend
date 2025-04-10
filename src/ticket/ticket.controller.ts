@@ -8,15 +8,15 @@ import {
   Profile,
   ProfileWithoutPassword,
 } from '@/mi-expo/decorators/profile.decorator';
-import { ProfileService } from '@/profile/profile.service';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { decryptString } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagService } from '@/tag/tag.service';
+import { TicketGroupService } from '@/ticket-group/ticket-group.service';
 import {
   CreateManyTicketDto,
-  CreateManyTicketWithPdfsResponseDto,
-  createManyTicketWithPdfsResponseSchema,
+  CreateManyTicketResponseDto,
+  createManyTicketResponseSchema,
 } from '@/ticket/dto/create-many-ticket.dto';
 import {
   CreateTicketDto,
@@ -92,6 +92,10 @@ import {
 import type { Response } from 'express';
 import z from 'zod';
 import { Role, Ticket, TicketType } from '~/types/prisma-schema';
+import {
+  GetPdfsByTicketGroupResponseDto,
+  getPdfsByTicketGroupResponseSchema,
+} from './dto/get-pdfs-by-group-ticket.dto';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -102,7 +106,7 @@ export class TicketController {
     private readonly eventService: EventService,
     private readonly mailService: MailService,
     private readonly tagService: TagService,
-    private readonly profileService: ProfileService,
+    private readonly ticketGroupService: TicketGroupService,
   ) {}
 
   @Roles(Role.ADMIN, Role.MI_EXPO)
@@ -132,10 +136,11 @@ export class TicketController {
       (et) => et.type === createTicketDto.type,
     )?.amount;
 
-    const ticketsEmitted = await this.ticketService.findAmountByEventAndType(
-      createTicketDto.eventId,
-      createTicketDto.type,
-    );
+    const ticketsEmitted =
+      await this.ticketService.findEmittedAmountByEventAndType(
+        createTicketDto.eventId,
+        createTicketDto.type,
+      );
 
     const hasMaxTickets =
       maxTicketsToEmit !== null && maxTicketsToEmit !== undefined;
@@ -180,14 +185,20 @@ export class TicketController {
   })
   @ApiOkResponse({
     description: translate('route.ticket.create-many.success'),
-    type: CreateManyTicketWithPdfsResponseDto,
+    type: CreateManyTicketResponseDto,
   })
   @Post('/create-many')
   async createMany(
     @Body() createManyTicketDto: CreateManyTicketDto,
-  ): Promise<z.infer<typeof createManyTicketWithPdfsResponseSchema>> {
+  ): Promise<z.infer<typeof createManyTicketResponseSchema>> {
     const eventId = createManyTicketDto.tickets[0]?.eventId;
     const type = createManyTicketDto.tickets[0]?.type;
+    const ticketGroupId = createManyTicketDto.tickets[0]?.ticketGroupId;
+    if (!ticketGroupId) {
+      throw new NotFoundException(
+        translate('route.ticket.create-many.ticket-group-not-found'),
+      );
+    }
     if (!eventId) {
       throw new NotFoundException(
         translate('route.ticket.create-many.event-not-found'),
@@ -200,18 +211,17 @@ export class TicketController {
     }
     const eventTickets = (await this.eventService.findById(eventId))
       .eventTickets;
-    const maxTicketsToEmit = eventTickets.find(
-      (et) => et.type === type,
-    )?.amount;
+    const eventTicketThisType = eventTickets.find((et) => et.type === type);
+    const { amount: maxTicketsToEmit, price: ticketPrice } =
+      eventTicketThisType ?? {};
+
     if (!maxTicketsToEmit) {
       throw new NotFoundException(
         translate('route.ticket.create-many.max-tickets-not-found'),
       );
     }
-    const ticketsEmitted = await this.ticketService.findAmountByEventAndType(
-      eventId,
-      type,
-    );
+    const ticketsEmitted =
+      await this.ticketService.findEmittedAmountByEventAndType(eventId, type);
     if (
       ticketsEmitted + createManyTicketDto.tickets.length >
       maxTicketsToEmit
@@ -234,26 +244,56 @@ export class TicketController {
       })),
     });
 
-    // Extraer los IDs de los tickets creados
-    const ticketIds = tickets.map((ticket) => ticket.id);
+    // Si el precio es null (gratuito), cambiar el estado del ticketGroup a FREE
+    const isTicketFree = ticketPrice === null;
 
-    // Luego, generar los PDFs para todos los tickets
-    const pdfs = await this.ticketService.generateMultiplePdfTickets(ticketIds);
+    await this.ticketGroupService.update(ticketGroupId, {
+      status: isTicketFree ? 'FREE' : undefined,
+    });
 
-    // Preparar la respuesta con los tickets y los PDFs
+    return tickets;
+  }
+  @Roles(Role.ADMIN, Role.MI_EXPO, Role.TICKETS)
+  @ApiOkResponse({
+    description: translate('route.ticket.get-pdfs-by-ticket-group.success'),
+    type: GetPdfsByTicketGroupResponseDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.ticket.get-pdfs-by-ticket-group.not-found'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.ticket.get-pdfs-by-ticket-group.error'),
+    type: ErrorDto,
+  })
+  @Get('get-pdfs-by-ticket-group/:ticketGroupId')
+  async getPdfsByTicketGroup(
+    @Param('ticketGroupId', new ExistingRecord('ticketGroup'))
+    ticketGroupId: string,
+  ): Promise<z.infer<typeof getPdfsByTicketGroupResponseSchema>> {
+    const ticketGroup = await this.ticketGroupService.findGroup(ticketGroupId);
+    if (!ticketGroup) {
+      throw new NotFoundException([
+        translate('route.ticket.get-pdfs-by-ticket-group.not-found'),
+      ]);
+    } else if (ticketGroup.status !== 'PAID' && ticketGroup.status !== 'FREE') {
+      throw new ConflictException([
+        translate('route.ticket.get-pdfs-by-ticket-group.error'),
+      ]);
+    }
+    const tickets =
+      await this.ticketService.findByTicketGroupWithEvent(ticketGroupId);
+    const pdfs = await this.ticketService.generateMultiplePdfTickets(tickets);
     const response = {
-      tickets: tickets,
       pdfs: await Promise.all(
         pdfs.map(async (item) => ({
           ticketId: item.ticketId,
-          // Convertir el Blob a base64 para enviarlo en la respuesta JSON
           pdfBase64: Buffer.from(await item.pdf.arrayBuffer()).toString(
             'base64',
           ),
         })),
       ),
     };
-
     return response;
   }
 

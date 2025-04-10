@@ -1,25 +1,23 @@
 import { AccountService } from '@/account/account.service';
-import { EventService } from '@/event/event.service';
-import { MailService } from '@/mail/mail.service';
+import { EventTicketService } from '@/event-ticket/event-ticket.service';
 import { ProfileService } from '@/profile/profile.service';
-import { TagService } from '@/tag/tag.service';
 import { TicketGroupService } from '@/ticket-group/ticket-group.service';
-import { TicketController } from '@/ticket/ticket.controller';
 import { TicketService } from '@/ticket/ticket.service';
 import { Module } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { MercadoPagoController } from './mercadopago.controller';
+import { MercadoPagoService } from './mercadopago.service';
 
 @Module({
-  controllers: [TicketController],
+  controllers: [MercadoPagoController],
   providers: [
-    TicketService,
+    MercadoPagoService,
     JwtService,
     AccountService,
-    EventService,
     ProfileService,
-    MailService,
-    TagService,
     TicketGroupService,
+    EventTicketService,
+    TicketService,
   ],
 })
-export class TicketModule {}
+export class MercadoPagoModule {}

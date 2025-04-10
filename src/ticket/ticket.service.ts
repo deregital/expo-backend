@@ -30,6 +30,7 @@ import {
   createManyTicketResponseSchema,
   generateMultiplePdfTicketsSchema,
 } from './dto/create-many-ticket.dto';
+import { findByTicketGroupTicketResponseSchema } from './dto/get-pdfs-by-group-ticket.dto';
 
 @Injectable()
 export class TicketService {
@@ -102,7 +103,7 @@ export class TicketService {
     return { tickets: ticketsByEvent };
   }
 
-  async findAmountByEventAndType(
+  async findEmittedAmountByEventAndType(
     eventId: string,
     type: TicketType,
   ): Promise<number> {
@@ -123,6 +124,27 @@ export class TicketService {
     });
 
     return { tickets: ticketsByProfile };
+  }
+
+  async findByTicketGroup(
+    ticketGroupId: string,
+  ): Promise<z.infer<typeof findByTicketGroupTicketResponseSchema>> {
+    const ticketsByTicketGroup = await this.prisma.ticket.findMany({
+      where: { ticketGroupId },
+    });
+
+    return { tickets: ticketsByTicketGroup };
+  }
+
+  async findByTicketGroupWithEvent(
+    ticketGroupId: string,
+  ): Promise<Array<Ticket & { event: Event }>> {
+    const tickets = await this.prisma.ticket.findMany({
+      where: { ticketGroupId },
+      include: { event: true },
+    });
+
+    return tickets;
   }
 
   async update(
@@ -252,16 +274,8 @@ export class TicketService {
   }
 
   async generateMultiplePdfTickets(
-    ticketIds: string[],
+    tickets: Array<Ticket & { event: Event }>,
   ): Promise<z.infer<typeof generateMultiplePdfTicketsSchema>> {
-    // Obtener todos los tickets con sus eventos en una sola consulta
-    const tickets = await this.prisma.ticket.findMany({
-      where: { id: { in: ticketIds } },
-      include: {
-        event: true,
-      },
-    });
-
     // Generar PDFs para todos los tickets
     const pdfPromises = tickets.map(async (ticket) => {
       return { ticketId: ticket.id, pdf: await this.generatePdfTicket(ticket) };

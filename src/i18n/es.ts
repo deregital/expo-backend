@@ -507,7 +507,13 @@ export default {
         'max-tickets-reached':
           'No se pueden emitir más tickets para este evento',
         'type-not-found': 'Tipo de ticket no encontrado',
+        'ticket-group-not-found': 'Grupo de tickets no encontrado',
         'max-tickets-not-found': 'Cantidad máxima de tickets no encontrada',
+      },
+      'get-pdfs-by-ticket-group': {
+        success: 'PDFs de tickets obtenidos con éxito',
+        'not-found': 'Grupo de tickets no encontrado',
+        error: 'Error al obtener los PDFs de los tickets',
       },
       'find-all': {
         success: 'Tickets obtenidos',
@@ -559,6 +565,11 @@ export default {
         success: 'Grupo de tickets creado',
         'event-not-found': 'Evento no encontrado',
         conflict: 'Error en la creación del grupo de tickets',
+      },
+      'find-group': {
+        success: 'Grupo de tickets encontrado',
+        'not-found': 'Grupo de tickets no encontrado',
+        conflict: 'Error en la búsqueda del grupo de tickets',
       },
       'find-tickets-by-event': {
         success: 'Tickets por evento obtenidos',
@@ -616,6 +627,21 @@ export default {
       'my-events': { success: 'Eventos obtenidos' },
       'my-tickets': { success: 'Tickets obtenidos' },
       'emit-ticket': { success: 'Ticket emitido' },
+    },
+    mercadopago: {
+      'create-preference': {
+        success: 'Preferencia creada con éxito',
+        'event-not-found': 'Evento no encontrado',
+        error: 'Error en la creación de la preferencia',
+        conflict: 'Error en la creación de la preferencia',
+        title: `Entradas para el evento \{\{eventName\}\}, x\{\{quantity\}\}`,
+      },
+      webhook: {
+        success: 'Webhook procesado con éxito',
+        error: 'Error al procesar el webhook',
+        'signature-not-found': 'Firma no encontrada',
+        'invalid-signature': 'Firma inválida',
+      },
     },
   },
 } as const;

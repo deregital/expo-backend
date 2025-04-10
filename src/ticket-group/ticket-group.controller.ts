@@ -36,6 +36,7 @@ import {
   updateTicketGroupResponseSchema,
 } from '@/ticket-group/dto/update-ticket-group.dto';
 import { TicketGroupService } from '@/ticket-group/ticket-group.service';
+import { TicketService } from '@/ticket/ticket.service';
 import { UseGuards } from '@nestjs/common';
 import {
   ApiConflictResponse,
@@ -44,6 +45,10 @@ import {
 } from '@nestjs/swagger';
 import z from 'zod';
 import { Role, TicketType } from '~/types/prisma-schema';
+import {
+  findGroupResponseSchema,
+  FindGroupTicketGroupDto,
+} from './dto/find-group-ticket-group.dto';
 
 @Roles(Role.ADMIN, Role.USER, Role.TICKETS)
 @UseGuards(JwtGuard, RoleGuard)
@@ -52,6 +57,7 @@ export class TicketGroupController {
   constructor(
     private readonly ticketGroupService: TicketGroupService,
     private readonly eventService: EventService,
+    private readonly ticketService: TicketService,
   ) {}
 
   @ApiOkResponse({
@@ -86,11 +92,13 @@ export class TicketGroupController {
         translate('route.ticket.create-many.max-tickets-not-found'),
       );
     }
-    const ticketsEmitted = await this.ticketGroupService.findTicketsByEvent(
-      createTicketGroupDto.eventId,
-    );
+    const ticketsEmitted =
+      await this.ticketService.findEmittedAmountByEventAndType(
+        createTicketGroupDto.eventId,
+        TicketType.SPECTATOR,
+      );
     if (
-      ticketsEmitted.tickets + createTicketGroupDto.amountTickets >
+      ticketsEmitted + createTicketGroupDto.amountTickets >
       maxTicketsToEmit
     ) {
       throw new ConflictException(
@@ -114,7 +122,32 @@ export class TicketGroupController {
   async findTicketsByEvent(
     @Param('id', new ExistingRecord('event')) id: string,
   ): Promise<z.infer<typeof findTicketsByEventResponseSchema>> {
-    return this.ticketGroupService.findTicketsByEvent(id);
+    const ticketsEmitted =
+      await this.ticketService.findEmittedAmountByEventAndType(
+        id,
+        TicketType.SPECTATOR,
+      );
+
+    return { tickets: ticketsEmitted };
+  }
+
+  @ApiOkResponse({
+    description: translate('route.ticket-group.find-group.success'),
+    type: FindGroupTicketGroupDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.ticket-group.find-group.not-found'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.ticket-group.find-group.conflict'),
+    type: ErrorDto,
+  })
+  @Get('/find-group/:id')
+  async findGroup(
+    @Param('id', new ExistingRecord('ticketGroup')) id: string,
+  ): Promise<z.infer<typeof findGroupResponseSchema>> {
+    return this.ticketGroupService.findGroup(id);
   }
 
   @ApiOkResponse({

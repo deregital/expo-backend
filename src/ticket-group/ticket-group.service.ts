@@ -5,13 +5,14 @@ import {
   createTicketGroupResponseSchema,
 } from '@/ticket-group/dto/create-ticket-group.dto';
 import { deleteTicketGroupResponseSchema } from '@/ticket-group/dto/delete-ticket-group.dto';
-import { findTicketsByEventResponseSchema } from '@/ticket-group/dto/find-tickets-by-event.dto';
+import { findGroupResponseSchema } from '@/ticket-group/dto/find-group-ticket-group.dto';
 import {
   UpdateTicketGroupDto,
   updateTicketGroupResponseSchema,
 } from '@/ticket-group/dto/update-ticket-group.dto';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import z from 'zod';
+import { TicketGroupStatus } from '~/types/prisma-schema';
 
 @Injectable()
 export class TicketGroupService {
@@ -21,7 +22,10 @@ export class TicketGroupService {
     createTicketGroupDto: CreateTicketGroupDto,
   ): Promise<z.infer<typeof createTicketGroupResponseSchema>> {
     return await this.prisma.ticketGroup.create({
-      data: createTicketGroupDto,
+      data: {
+        ...createTicketGroupDto,
+        status: TicketGroupStatus.BOOKED,
+      },
       include: {
         tickets: true,
         event: true,
@@ -29,20 +33,20 @@ export class TicketGroupService {
     });
   }
 
-  async findTicketsByEvent(
-    eventId: string,
-  ): Promise<z.infer<typeof findTicketsByEventResponseSchema>> {
-    const tickets = await this.prisma.ticketGroup.aggregate({
-      where: { eventId },
-      _sum: {
-        amountTickets: true,
-      },
+  async findGroup(
+    id: string,
+  ): Promise<z.infer<typeof findGroupResponseSchema>> {
+    const group = await this.prisma.ticketGroup.findUnique({
+      where: { id },
     });
 
-    return {
-      tickets: tickets._sum.amountTickets ?? 0,
-    };
+    if (!group) {
+      throw new NotFoundException(`Ticket group with id ${id} not found`);
+    }
+
+    return group;
   }
+
   async update(
     id: string,
     updateTicketGroupDto: UpdateTicketGroupDto,

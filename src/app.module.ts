@@ -10,6 +10,7 @@ import { EventModule } from '@/event/event.module';
 import { ZodValidationPipe } from '@/filters/zod.pipe';
 import { ImageModule } from '@/image/image.module';
 import { LocationModule } from '@/location/location.module';
+import { MercadoPagoModule } from '@/mercadopago/mercadopago.module';
 import { MessageModule } from '@/message/message.module';
 import { MiExpoModule } from '@/mi-expo/mi-expo.module';
 import { OtpModule } from '@/otp/otp.module';
@@ -51,6 +52,7 @@ import { APP_PIPE, ModuleRef } from '@nestjs/core';
     ResendModule.forRoot({
       apiKey: process.env.RESEND_API_KEY ?? 're_JUST_FOR_ACTION',
     }),
+    MercadoPagoModule,
   ],
   providers: [
     {
