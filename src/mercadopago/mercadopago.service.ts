@@ -1,11 +1,8 @@
 import { EventTicketService } from '@/event-ticket/event-ticket.service';
 import { translate } from '@/i18n/translate';
-import { PRISMA_SERVICE } from '@/prisma/constants';
-import { PrismaService } from '@/prisma/prisma.service';
 import { TicketService } from '@/ticket/ticket.service';
 import {
   ConflictException,
-  Inject,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -21,7 +18,6 @@ import { WebhookDto } from './dto/webhook-mercadopago.dto';
 @Injectable()
 export class MercadoPagoService {
   constructor(
-    @Inject(PRISMA_SERVICE) private prisma: PrismaService,
     private readonly ticketService: TicketService,
     private readonly eventTicketService: EventTicketService,
   ) {}

@@ -12208,15 +12208,42 @@ components:
       type:
         - "object"
       properties:
-        id:
-          type:
-            - "string"
-        init_point:
-          type:
-            - "string"
+        response:
+          oneOf:
+            - type:
+                - "object"
+              properties:
+                id:
+                  type:
+                    - "string"
+                init_point:
+                  type:
+                    - "string"
+              required:
+                - "id"
+                - "init_point"
+            - type:
+                - "object"
+              properties:
+                message:
+                  type:
+                    - "string"
+                error:
+                  type:
+                    - "string"
+                status:
+                  type:
+                    - "string"
+                cause:
+                  type:
+                    - "string"
+              required:
+                - "message"
+                - "error"
+                - "status"
+                - "cause"
       required:
-        - "id"
-        - "init_point"
+        - "response"
     WebhookDto:
       type:
         - "object"
