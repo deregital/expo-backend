@@ -507,6 +507,7 @@ export default {
         'max-tickets-reached':
           'No se pueden emitir más tickets para este evento',
         'type-not-found': 'Tipo de ticket no encontrado',
+        'ticket-group-not-found': 'Grupo de tickets no encontrado',
         'max-tickets-not-found': 'Cantidad máxima de tickets no encontrada',
       },
       'get-pdfs-by-ticket-group': {

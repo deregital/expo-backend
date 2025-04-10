@@ -2,7 +2,7 @@ import { EventTicketService } from '@/event-ticket/event-ticket.service';
 import { translate } from '@/i18n/translate';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
-import { TicketGroupService } from '@/ticket-group/ticket-group.service';
+import { TicketService } from '@/ticket/ticket.service';
 import {
   ConflictException,
   Inject,
@@ -22,7 +22,7 @@ import { WebhookDto } from './dto/webhook-mercadopago.dto';
 export class MercadoPagoService {
   constructor(
     @Inject(PRISMA_SERVICE) private prisma: PrismaService,
-    private readonly ticketGroupService: TicketGroupService,
+    private readonly ticketService: TicketService,
     private readonly eventTicketService: EventTicketService,
   ) {}
 
@@ -55,8 +55,11 @@ export class MercadoPagoService {
           translate('route.mercadopago.create-preference.event-not-found'),
         );
       }
-      const { tickets: amountTicketsBought } =
-        await this.ticketGroupService.findTicketsByEvent(eventTicket.event.id);
+      const amountTicketsBought =
+        await this.ticketService.findEmittedAmountByEventAndType(
+          eventTicket.event.id,
+          body.ticket_type,
+        );
 
       if (
         amountTicketsBought + eventTicketThisType.amount >

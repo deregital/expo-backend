@@ -36,6 +36,7 @@ import {
   updateTicketGroupResponseSchema,
 } from '@/ticket-group/dto/update-ticket-group.dto';
 import { TicketGroupService } from '@/ticket-group/ticket-group.service';
+import { TicketService } from '@/ticket/ticket.service';
 import { UseGuards } from '@nestjs/common';
 import {
   ApiConflictResponse,
@@ -56,6 +57,7 @@ export class TicketGroupController {
   constructor(
     private readonly ticketGroupService: TicketGroupService,
     private readonly eventService: EventService,
+    private readonly ticketService: TicketService,
   ) {}
 
   @ApiOkResponse({
@@ -90,11 +92,13 @@ export class TicketGroupController {
         translate('route.ticket.create-many.max-tickets-not-found'),
       );
     }
-    const ticketsEmitted = await this.ticketGroupService.findTicketsByEvent(
-      createTicketGroupDto.eventId,
-    );
+    const ticketsEmitted =
+      await this.ticketService.findEmittedAmountByEventAndType(
+        createTicketGroupDto.eventId,
+        TicketType.SPECTATOR,
+      );
     if (
-      ticketsEmitted.tickets + createTicketGroupDto.amountTickets >
+      ticketsEmitted + createTicketGroupDto.amountTickets >
       maxTicketsToEmit
     ) {
       throw new ConflictException(
@@ -118,7 +122,13 @@ export class TicketGroupController {
   async findTicketsByEvent(
     @Param('id', new ExistingRecord('event')) id: string,
   ): Promise<z.infer<typeof findTicketsByEventResponseSchema>> {
-    return this.ticketGroupService.findTicketsByEvent(id);
+    const ticketsEmitted =
+      await this.ticketService.findEmittedAmountByEventAndType(
+        id,
+        TicketType.SPECTATOR,
+      );
+
+    return { tickets: ticketsEmitted };
   }
 
   @ApiOkResponse({

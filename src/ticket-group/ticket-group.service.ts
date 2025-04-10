@@ -6,13 +6,13 @@ import {
 } from '@/ticket-group/dto/create-ticket-group.dto';
 import { deleteTicketGroupResponseSchema } from '@/ticket-group/dto/delete-ticket-group.dto';
 import { findGroupResponseSchema } from '@/ticket-group/dto/find-group-ticket-group.dto';
-import { findTicketsByEventResponseSchema } from '@/ticket-group/dto/find-tickets-by-event.dto';
 import {
   UpdateTicketGroupDto,
   updateTicketGroupResponseSchema,
 } from '@/ticket-group/dto/update-ticket-group.dto';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import z from 'zod';
+import { TicketGroupStatus } from '~/types/prisma-schema';
 
 @Injectable()
 export class TicketGroupService {
@@ -22,27 +22,15 @@ export class TicketGroupService {
     createTicketGroupDto: CreateTicketGroupDto,
   ): Promise<z.infer<typeof createTicketGroupResponseSchema>> {
     return await this.prisma.ticketGroup.create({
-      data: createTicketGroupDto,
+      data: {
+        ...createTicketGroupDto,
+        status: TicketGroupStatus.BOOKED,
+      },
       include: {
         tickets: true,
         event: true,
       },
     });
-  }
-
-  async findTicketsByEvent(
-    eventId: string,
-  ): Promise<z.infer<typeof findTicketsByEventResponseSchema>> {
-    const tickets = await this.prisma.ticketGroup.aggregate({
-      where: { eventId },
-      _sum: {
-        amountTickets: true,
-      },
-    });
-
-    return {
-      tickets: tickets._sum.amountTickets ?? 0,
-    };
   }
 
   async findGroup(

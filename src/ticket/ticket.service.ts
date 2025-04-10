@@ -103,7 +103,7 @@ export class TicketService {
     return { tickets: ticketsByEvent };
   }
 
-  async findAmountByEventAndType(
+  async findEmittedAmountByEventAndType(
     eventId: string,
     type: TicketType,
   ): Promise<number> {
@@ -134,6 +134,17 @@ export class TicketService {
     });
 
     return { tickets: ticketsByTicketGroup };
+  }
+
+  async findByTicketGroupWithEvent(
+    ticketGroupId: string,
+  ): Promise<Array<Ticket & { event: Event }>> {
+    const tickets = await this.prisma.ticket.findMany({
+      where: { ticketGroupId },
+      include: { event: true },
+    });
+
+    return tickets;
   }
 
   async update(
@@ -263,16 +274,8 @@ export class TicketService {
   }
 
   async generateMultiplePdfTickets(
-    ticketIds: string[],
+    tickets: Array<Ticket & { event: Event }>,
   ): Promise<z.infer<typeof generateMultiplePdfTicketsSchema>> {
-    // Obtener todos los tickets con sus eventos en una sola consulta
-    const tickets = await this.prisma.ticket.findMany({
-      where: { id: { in: ticketIds } },
-      include: {
-        event: true,
-      },
-    });
-
     // Generar PDFs para todos los tickets
     const pdfPromises = tickets.map(async (ticket) => {
       return { ticketId: ticket.id, pdf: await this.generatePdfTicket(ticket) };
