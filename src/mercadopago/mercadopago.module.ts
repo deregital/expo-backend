@@ -1,6 +1,7 @@
 import { AccountService } from '@/account/account.service';
 import { ProfileService } from '@/profile/profile.service';
 import { TicketGroupService } from '@/ticket-group/ticket-group.service';
+import { TicketService } from '@/ticket/ticket.service';
 import { Module } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { MercadoPagoController } from './mercadopago.controller';
@@ -14,6 +15,7 @@ import { MercadoPagoService } from './mercadopago.service';
     AccountService,
     ProfileService,
     TicketGroupService,
+    TicketService,
   ],
 })
 export class MercadoPagoModule {}

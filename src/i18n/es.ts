@@ -631,11 +631,13 @@ export default {
         'event-not-found': 'Evento no encontrado',
         error: 'Error en la creación de la preferencia',
         conflict: 'Error en la creación de la preferencia',
+        title: `Entradas para el evento \{\{eventName\}\}, x\{\{quantity\}\}`,
       },
       webhook: {
         success: 'Webhook procesado con éxito',
         error: 'Error al procesar el webhook',
         'signature-not-found': 'Firma no encontrada',
+        'invalid-signature': 'Firma inválida',
       },
     },
   },

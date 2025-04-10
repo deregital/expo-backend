@@ -1,16 +1,10 @@
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import z from 'zod';
+import { TicketType } from '~/types/prisma-schema';
 
 export const createPreferenceSchema = z.object({
-  items: z.array(
-    z.object({
-      id: z.string(),
-      title: z.string(),
-      quantity: z.number(),
-      unit_price: z.number(),
-    }),
-  ),
   ticket_group_id: z.string(),
+  ticket_type: z.nativeEnum(TicketType),
 });
 
 export class CreatePreferenceDto extends createZodDtoWithoutDate(

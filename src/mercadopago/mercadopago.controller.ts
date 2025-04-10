@@ -51,12 +51,11 @@ export class MercadoPagoController {
     type: ErrorDto,
   })
   @UseGuards(JwtGuard, RoleGuard)
-  @Roles(Role.ADMIN, Role.USER, Role.TICKETS)
+  @Roles(Role.ADMIN, Role.USER, Role.TICKETS, Role.MI_EXPO)
   @Post('/create-preference')
   async createPreference(
     @Body() body: CreatePreferenceDto,
   ): Promise<z.infer<typeof createPreferenceResponseSchema>> {
-    console.log('body', body);
     return this.mercadoPagoService.createPreference(body);
   }
 
@@ -74,9 +73,8 @@ export class MercadoPagoController {
     @Res() res: Response,
     @Headers('x-signature') signature?: string,
     @Headers('x-request-id') requestId?: string,
-  ) {
+  ): Promise<Response> {
     res.status(200);
-    console.log('body', body);
     if (!signature || !requestId) {
       throw new NotFoundException(
         translate('route.mercadopago.webhook.signature-not-found'),
@@ -87,6 +85,11 @@ export class MercadoPagoController {
       signature,
       requestId,
     );
+
+    if (!dataTicketGroup.id) {
+      throw new NotFoundException(translate('route.mercadopago.webhook.error'));
+    }
+
     await this.ticketGroupService.update(dataTicketGroup.id, {
       status: dataTicketGroup.status === 'approved' ? 'PAID' : 'BOOKED',
     });

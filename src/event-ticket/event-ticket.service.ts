@@ -1,7 +1,7 @@
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Inject, Injectable } from '@nestjs/common';
-import { EventTicket } from '~/types/prisma-schema';
+import { EventTicket, TicketGroup, TicketType } from '~/types/prisma-schema';
 
 @Injectable()
 export class EventTicketService {
@@ -29,6 +29,45 @@ export class EventTicketService {
         amount: true,
         price: true,
         type: true,
+      },
+    });
+  }
+
+  async findByTicketGroupIdAndType(
+    id: TicketGroup['id'],
+    type: TicketType,
+  ): Promise<{
+    amountTickets: number;
+    event: {
+      id: string;
+      name: string;
+      eventTickets: {
+        price: number | null;
+        amount: number | null;
+        type: TicketType;
+      }[];
+    };
+  } | null> {
+    return await this.prisma.ticketGroup.findUnique({
+      where: { id },
+      select: {
+        amountTickets: true,
+        event: {
+          select: {
+            id: true,
+            name: true,
+            eventTickets: {
+              where: {
+                type,
+              },
+              select: {
+                price: true,
+                amount: true,
+                type: true,
+              },
+            },
+          },
+        },
       },
     });
   }

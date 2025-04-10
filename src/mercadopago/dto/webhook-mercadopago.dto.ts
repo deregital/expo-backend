@@ -8,7 +8,7 @@ export const webhookSchema = z.object({
   action: z.string(),
   api_version: z.string(),
   date_created: z.string(),
-  id: z.string(),
+  id: z.number(),
   live_mode: z.boolean(),
   type: z.string(),
   user_id: z.number(),

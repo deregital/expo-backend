@@ -1,6 +1,8 @@
+import { EventTicketService } from '@/event-ticket/event-ticket.service';
 import { translate } from '@/i18n/translate';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
+import { TicketGroupService } from '@/ticket-group/ticket-group.service';
 import {
   ConflictException,
   Inject,
@@ -18,76 +20,71 @@ import { WebhookDto } from './dto/webhook-mercadopago.dto';
 
 @Injectable()
 export class MercadoPagoService {
-  constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
+  constructor(
+    @Inject(PRISMA_SERVICE) private prisma: PrismaService,
+    private readonly ticketGroupService: TicketGroupService,
+    private readonly eventTicketService: EventTicketService,
+  ) {}
 
-  private mercadoPago() {
+  private mercadoPago(): MercadoPagoConfig {
     const mercadopago = new MercadoPagoConfig({
       accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN!,
     });
     return mercadopago;
   }
+
   async createPreference(
     body: CreatePreferenceDto,
   ): Promise<z.infer<typeof createPreferenceResponseSchema>> {
     try {
-      const eventTicket = await this.prisma.ticketGroup.findUnique({
-        where: { id: body.ticket_group_id },
-        select: {
-          event: {
-            select: {
-              eventTickets: {
-                where: {
-                  type: 'SPECTATOR',
-                },
-                select: {
-                  price: true,
-                  amount: true,
-                },
-              },
-            },
-          },
-        },
-      });
-      if (!eventTicket || !eventTicket.event.eventTickets[0]?.amount) {
+      const eventTicket =
+        await this.eventTicketService.findByTicketGroupIdAndType(
+          body.ticket_group_id,
+          body.ticket_type,
+        );
+
+      const eventTicketThisType = eventTicket?.event.eventTickets.find(
+        (ticket) => ticket.type === body.ticket_type,
+      );
+      if (
+        !eventTicketThisType ||
+        !eventTicket ||
+        eventTicketThisType.amount === null
+      ) {
         throw new ConflictException(
           translate('route.mercadopago.create-preference.event-not-found'),
         );
       }
-      const amountTicketsBought = await this.prisma.ticketGroup.aggregate({
-        where: { id: body.ticket_group_id },
-        _sum: {
-          amountTickets: true,
-        },
-      });
+      const { tickets: amountTicketsBought } =
+        await this.ticketGroupService.findTicketsByEvent(eventTicket.event.id);
+
       if (
-        amountTicketsBought._sum.amountTickets &&
-        amountTicketsBought._sum.amountTickets + body.items[0]!.quantity >
-          eventTicket?.event.eventTickets[0]?.amount
+        amountTicketsBought + eventTicketThisType.amount >
+        eventTicketThisType.amount
       ) {
         throw new ConflictException(
           translate('route.mercadopago.create-preference.conflict'),
         );
       }
-      if (
-        eventTicket?.event.eventTickets[0]?.price !== body.items[0]?.unit_price
-      ) {
-        throw new ConflictException(
-          translate('route.mercadopago.create-preference.conflict'),
-        );
-      }
+
       const mercadopago = this.mercadoPago();
       const preference = await new Preference(mercadopago).create({
         body: {
-          items: body.items.map((item) => ({
-            id: item.id,
-            title: item.title,
-            quantity: item.quantity,
-            unit_price: item.unit_price,
-          })),
+          items: [
+            {
+              id: body.ticket_group_id,
+              title: translate('route.mercadopago.create-preference.title', {
+                eventName: eventTicket.event.name,
+                quantity: eventTicket.amountTickets.toLocaleString(),
+              }),
+              quantity: eventTicket.amountTickets,
+              unit_price: eventTicket.event.eventTickets[0]?.price ?? 0,
+            },
+          ],
           external_reference: body.ticket_group_id,
           auto_return: 'all',
           back_urls: {
-            success: `${process.env.EXPO_TICKETS_URL}/mercadopago/${body.ticket_group_id}`,
+            success: `${process.env.EXPO_TICKETS_URL}/payment/${body.ticket_group_id}`,
             pending: `${process.env.EXPO_TICKETS_URL}/payment/error`,
             failure: `${process.env.EXPO_TICKETS_URL}/payment/error`,
           },
@@ -113,7 +110,7 @@ export class MercadoPagoService {
     signature: string,
     request_id: string,
     data_id: string,
-  ) {
+  ): boolean {
     const ts = signature.split(',')[0]?.split('=')[1];
     const v1 = signature.split(',')[1]?.split('=')[1];
     const manifest = `id:${data_id};request-id:${request_id};ts:${ts?.trim()};`;
@@ -130,11 +127,13 @@ export class MercadoPagoService {
     body: WebhookDto,
     signature: string,
     requestId: string,
-  ): Promise<{ status: string; id: string }> {
+  ): Promise<{ status: string; id: string | null }> {
     const data_id = body.data.id;
     const isValid = this.verifySignature(signature, requestId, data_id);
     if (!isValid) {
-      throw new UnauthorizedException('Firma inválida');
+      throw new UnauthorizedException([
+        translate('route.mercadopago.webhook.invalid-signature'),
+      ]);
     }
     try {
       const mercadopago = this.mercadoPago();
@@ -147,7 +146,7 @@ export class MercadoPagoService {
 
       return {
         status: payment.status ?? 'REJECTED',
-        id: payment.external_reference ?? '',
+        id: payment.external_reference ?? null,
       };
     } catch (error) {
       throw new ConflictException(translate('route.mercadopago.webhook.error'));
