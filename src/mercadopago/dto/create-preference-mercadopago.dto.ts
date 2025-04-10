@@ -18,11 +18,14 @@ export const typePreferenceError = z.object({
   cause: z.string(),
 });
 
-export const createPreferenceResponseSchema =
-  z.object({
-    id: z.string(),
-    init_point: z.string(),
-  }) || typePreferenceError;
+export const createPreferenceResponseSchema = z.object({
+  response: z
+    .object({
+      id: z.string(),
+      init_point: z.string(),
+    })
+    .or(typePreferenceError),
+});
 
 export class CreatePreferenceResponseDto extends createZodDtoWithoutDate(
   createPreferenceResponseSchema,

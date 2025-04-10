@@ -99,8 +99,10 @@ export class MercadoPagoService {
         );
       }
       return {
-        id: preference.id,
-        init_point: preference.init_point,
+        response: {
+          id: preference.id,
+          init_point: preference.init_point,
+        },
       };
     } catch (error) {
       throw new ConflictException(
