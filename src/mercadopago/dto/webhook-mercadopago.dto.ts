@@ -11,7 +11,7 @@ export const webhookSchema = z.object({
   id: z.number(),
   live_mode: z.boolean(),
   type: z.string(),
-  user_id: z.number(),
+  user_id: z.string(),
 });
 
 export class WebhookDto extends createZodDtoWithoutDate(webhookSchema) {}

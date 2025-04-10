@@ -12250,7 +12250,7 @@ components:
             - "string"
         user_id:
           type:
-            - "number"
+            - "string"
       required:
         - "data"
         - "action"
