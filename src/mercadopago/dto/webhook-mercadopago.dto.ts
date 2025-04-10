@@ -8,10 +8,10 @@ export const webhookSchema = z.object({
   action: z.string(),
   api_version: z.string(),
   date_created: z.string(),
-  id: z.number(),
+  id: z.coerce.number(),
   live_mode: z.boolean(),
   type: z.string(),
-  user_id: z.string(),
+  user_id: z.coerce.number(),
 });
 
 export class WebhookDto extends createZodDtoWithoutDate(webhookSchema) {}
