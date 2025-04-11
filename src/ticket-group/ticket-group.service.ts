@@ -72,4 +72,16 @@ export class TicketGroupService {
       },
     });
   }
+
+  async deleteBookedTicketsGroup(eventId: string) {
+    return await this.prisma.ticketGroup.deleteMany({
+      where: {
+        status: TicketGroupStatus.BOOKED,
+        eventId,
+        created_at: {
+          lt: new Date(Date.now() - 1000 * 60 * 10),
+        },
+      },
+    });
+  }
 }

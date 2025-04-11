@@ -37,6 +37,7 @@ import { setHoursAndMinutes } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
+import { TicketGroupService } from '@/ticket-group/ticket-group.service';
 import {
   Body,
   ConflictException,
@@ -69,6 +70,7 @@ export class EventController {
     private readonly tagGroupService: TagGroupService,
     private readonly tagService: TagService,
     private readonly eventTicketsService: EventTicketService,
+    private readonly ticketGroupService: TicketGroupService,
   ) {}
 
   @ApiCreatedResponse({
@@ -205,6 +207,7 @@ export class EventController {
   async findById(
     @Param('id', new ExistingRecord('event')) id: string,
   ): Promise<z.infer<typeof getByIdEventResponseSchema>> {
+    await this.ticketGroupService.deleteBookedTicketsGroup(id);
     return await this.eventService.findById(id);
   }
 
