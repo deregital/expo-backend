@@ -93,10 +93,11 @@ export class TicketGroupController {
       );
     }
     const ticketsEmitted =
-      await this.ticketService.findEmittedAmountByEventAndType(
-        createTicketGroupDto.eventId,
-        TicketType.SPECTATOR,
-      );
+      (
+        await this.ticketGroupService.findTicketsByEvent(
+          createTicketGroupDto.eventId,
+        )
+      )._sum.amountTickets ?? 0;
     if (
       ticketsEmitted + createTicketGroupDto.amountTickets >
       maxTicketsToEmit
