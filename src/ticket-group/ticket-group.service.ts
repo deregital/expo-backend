@@ -47,6 +47,15 @@ export class TicketGroupService {
     return group;
   }
 
+  async findTicketsByEvent(eventId: string) {
+    return await this.prisma.ticketGroup.aggregate({
+      where: { eventId },
+      _sum: {
+        amountTickets: true,
+      },
+    });
+  }
+
   async update(
     id: string,
     updateTicketGroupDto: UpdateTicketGroupDto,

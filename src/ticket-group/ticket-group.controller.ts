@@ -123,10 +123,8 @@ export class TicketGroupController {
     @Param('id', new ExistingRecord('event')) id: string,
   ): Promise<z.infer<typeof findTicketsByEventResponseSchema>> {
     const ticketsEmitted =
-      await this.ticketService.findEmittedAmountByEventAndType(
-        id,
-        TicketType.SPECTATOR,
-      );
+      (await this.ticketGroupService.findTicketsByEvent(id))._sum
+        .amountTickets ?? 0;
 
     return { tickets: ticketsEmitted };
   }
