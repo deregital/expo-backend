@@ -79,7 +79,7 @@ export class TicketGroupService {
         status: TicketGroupStatus.BOOKED,
         eventId,
         created_at: {
-          lt: new Date(Date.now() - 1000 * 60 * 10),
+          gt: new Date(Date.now() - 1000 * 60 * 10),
         },
       },
     });
