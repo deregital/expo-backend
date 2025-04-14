@@ -47,7 +47,9 @@ export class TicketGroupService {
     return group;
   }
 
-  async findTicketsByEvent(eventId: string) {
+  async findTicketsByEvent(
+    eventId: string,
+  ): Promise<{ _sum: { amountTickets: number | null } }> {
     return await this.prisma.ticketGroup.aggregate({
       where: { eventId },
       _sum: {
@@ -82,8 +84,8 @@ export class TicketGroupService {
     });
   }
 
-  async deleteBookedTicketsGroup(eventId: string) {
-    return await this.prisma.ticketGroup.deleteMany({
+  async deleteBookedTicketsGroup(eventId: string): Promise<void> {
+    await this.prisma.ticketGroup.deleteMany({
       where: {
         status: TicketGroupStatus.BOOKED,
         eventId,
