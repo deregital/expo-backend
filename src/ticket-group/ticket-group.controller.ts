@@ -123,6 +123,7 @@ export class TicketGroupController {
   async findTicketsByEvent(
     @Param('id', new ExistingRecord('event')) id: string,
   ): Promise<z.infer<typeof findTicketsByEventResponseSchema>> {
+    await this.ticketGroupService.deleteBookedTicketsGroup(id);
     const ticketsEmitted =
       (await this.ticketGroupService.findTicketsByEvent(id))._sum
         .amountTickets ?? 0;
