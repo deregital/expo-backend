@@ -93,10 +93,11 @@ export class TicketGroupController {
       );
     }
     const ticketsEmitted =
-      await this.ticketService.findEmittedAmountByEventAndType(
-        createTicketGroupDto.eventId,
-        TicketType.SPECTATOR,
-      );
+      (
+        await this.ticketGroupService.findTicketsByEvent(
+          createTicketGroupDto.eventId,
+        )
+      )._sum.amountTickets ?? 0;
     if (
       ticketsEmitted + createTicketGroupDto.amountTickets >
       maxTicketsToEmit
@@ -122,11 +123,10 @@ export class TicketGroupController {
   async findTicketsByEvent(
     @Param('id', new ExistingRecord('event')) id: string,
   ): Promise<z.infer<typeof findTicketsByEventResponseSchema>> {
+    await this.ticketGroupService.deleteBookedTicketsGroup(id);
     const ticketsEmitted =
-      await this.ticketService.findEmittedAmountByEventAndType(
-        id,
-        TicketType.SPECTATOR,
-      );
+      (await this.ticketGroupService.findTicketsByEvent(id))._sum
+        .amountTickets ?? 0;
 
     return { tickets: ticketsEmitted };
   }

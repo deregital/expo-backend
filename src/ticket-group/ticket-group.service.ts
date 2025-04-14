@@ -47,6 +47,17 @@ export class TicketGroupService {
     return group;
   }
 
+  async findTicketsByEvent(
+    eventId: string,
+  ): Promise<{ _sum: { amountTickets: number | null } }> {
+    return await this.prisma.ticketGroup.aggregate({
+      where: { eventId },
+      _sum: {
+        amountTickets: true,
+      },
+    });
+  }
+
   async update(
     id: string,
     updateTicketGroupDto: UpdateTicketGroupDto,
@@ -69,6 +80,18 @@ export class TicketGroupService {
       include: {
         tickets: true,
         event: true,
+      },
+    });
+  }
+
+  async deleteBookedTicketsGroup(eventId: string): Promise<void> {
+    await this.prisma.ticketGroup.deleteMany({
+      where: {
+        status: TicketGroupStatus.BOOKED,
+        eventId,
+        created_at: {
+          lt: new Date(Date.now() - 1000 * 60 * 10),
+        },
       },
     });
   }
