@@ -68,6 +68,12 @@ export default {
         invalid: 'La fecha de finalización debe ser una fecha válida',
       },
       location: { required: 'La ubicación es requerida' },
+      eventPictureUrl: {
+        invalid: 'La URL de la imagen del evento no es válida',
+      },
+      eventBannerUrl: {
+        invalid: 'La URL del banner del evento no es válida',
+      },
     },
     tagGroup: {
       id: { uuid: 'El ID debe ser un UUID' },
