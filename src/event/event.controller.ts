@@ -142,6 +142,9 @@ export class EventController {
             eventTickets: createEventDto.eventTickets,
             startingDate: subEventStartingDate.toISOString(),
             endingDate: subEventEndingDate.toISOString(),
+            eventPictureUrl: subEvent.eventPictureUrl,
+            eventBannerUrl: subEvent.eventBannerUrl,
+            eventDescription: subEvent.eventDescription,
           });
         }),
       );

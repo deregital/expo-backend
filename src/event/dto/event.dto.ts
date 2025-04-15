@@ -24,16 +24,14 @@ export const eventSchema = z.object({
     .url({
       message: translate('model.event.eventPictureUrl.invalid'),
     })
-    .nullable()
-    .optional(),
+    .nullable(),
   eventBannerUrl: z
     .string()
     .url({
       message: translate('model.event.eventBannerUrl.invalid'),
     })
-    .nullable()
-    .optional(),
-  eventDescription: z.string().nullable().optional(),
+    .nullable(),
+  eventDescription: z.string().nullable(),
 
   folderId: eventFolderSchema.shape.id.nullable(),
   tagAssistedId: tagSchema.shape.id,

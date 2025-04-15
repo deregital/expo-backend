@@ -20,13 +20,22 @@ export const createEventSchema = eventSchema
     z.object({
       subEvents: z
         .array(
-          eventSchema.pick({
-            name: true,
-            date: true,
-            startingDate: true,
-            endingDate: true,
-            location: true,
-          }),
+          eventSchema
+            .pick({
+              name: true,
+              date: true,
+              startingDate: true,
+              endingDate: true,
+              location: true,
+              eventPictureUrl: true,
+              eventBannerUrl: true,
+              eventDescription: true,
+            })
+            .extend({
+              eventPictureUrl: z.string().nullable().default(null),
+              eventBannerUrl: z.string().nullable().default(null),
+              eventDescription: z.string().nullable().default(null),
+            }),
         )
         .optional(),
 
