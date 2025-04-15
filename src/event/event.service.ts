@@ -44,6 +44,9 @@ export class EventService {
         startingDate: dto.startingDate,
         endingDate: dto.endingDate,
         location: dto.location,
+        eventPictureUrl: dto.eventPictureUrl ?? undefined,
+        eventBannerUrl: dto.eventBannerUrl ?? undefined,
+        eventDescription: dto.eventDescription ?? undefined,
         folder: dto.folderId ? { connect: { id: dto.folderId } } : undefined,
         tagAssisted: {
           create: {
