@@ -20,7 +20,6 @@ export function addEventTicketRefinements<T extends z.ZodTypeAny>(
   schema: T,
 ): ZodEffects<T, T['_output'], T['_input']> {
   return schema.superRefine((data: z.infer<T>, ctx) => {
-    console.log('amount', data.amount, data.type);
     if (data.amount !== null && data.amount < 1) {
       ctx.addIssue({
         path: ['amount'],
