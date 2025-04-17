@@ -172,6 +172,7 @@ export class TicketService {
   async generatePdfTicket(ticket: Ticket & { event: Event }): Promise<Blob> {
     // Format date to a readable format
     const eventDate = new Date(ticket!.event.date);
+    const eventStartingDate = new Date(ticket!.event.startingDate);
     const formattedDate = eventDate.toLocaleDateString('es-ES', {
       weekday: 'long',
       year: 'numeric',
@@ -184,7 +185,7 @@ export class TicketService {
       );
     }
     // Format time
-    const formattedTime = eventDate.toLocaleTimeString('es-ES', {
+    const formattedTime = eventStartingDate.toLocaleTimeString('es-ES', {
       hour: '2-digit',
       minute: '2-digit',
     });

@@ -178,7 +178,9 @@ export default {
       },
     },
     eventTicket: {
-      amount: { min: 'La cantidad de tickets debe ser mayor a 0' },
+      amount: {
+        min: `La cantidad de tickets de \{\{type\}\} debe ser mayor a 0`,
+      },
       price: { min: 'El precio de los tickets debe ser mayor a 0' },
     },
   },
