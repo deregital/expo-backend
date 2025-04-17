@@ -4918,7 +4918,6 @@ components:
                 type:
                   - "number"
                   - "null"
-                minimum: 1
               type:
                 type:
                   - "string"
@@ -5321,7 +5320,6 @@ components:
                             type:
                               - "number"
                               - "null"
-                            minimum: 1
                           type:
                             type:
                               - "string"
@@ -5638,7 +5636,6 @@ components:
                       type:
                         - "number"
                         - "null"
-                      minimum: 1
                     type:
                       type:
                         - "string"
@@ -5756,7 +5753,6 @@ components:
                       type:
                         - "number"
                         - "null"
-                      minimum: 1
                     type:
                       type:
                         - "string"
@@ -6009,7 +6005,6 @@ components:
                 type:
                   - "number"
                   - "null"
-                minimum: 1
               type:
                 type:
                   - "string"
@@ -6439,7 +6434,6 @@ components:
                 type:
                   - "number"
                   - "null"
-                minimum: 1
               type:
                 type:
                   - "string"
@@ -6613,7 +6607,6 @@ components:
                 type:
                   - "number"
                   - "null"
-                minimum: 1
               type:
                 type:
                   - "string"

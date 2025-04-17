@@ -169,9 +169,12 @@ export class TicketService {
     return ticket;
   }
 
-  async generatePdfTicket(ticket: Ticket & { event: Event }): Promise<Blob> {
+  async generatePdfTicket(
+    ticket: Omit<Ticket, 'profileId'> & { event: Event },
+  ): Promise<Blob> {
     // Format date to a readable format
     const eventDate = new Date(ticket!.event.date);
+    const eventStartingDate = new Date(ticket!.event.startingDate);
     const formattedDate = eventDate.toLocaleDateString('es-ES', {
       weekday: 'long',
       year: 'numeric',
@@ -184,7 +187,7 @@ export class TicketService {
       );
     }
     // Format time
-    const formattedTime = eventDate.toLocaleTimeString('es-ES', {
+    const formattedTime = eventStartingDate.toLocaleTimeString('es-ES', {
       hour: '2-digit',
       minute: '2-digit',
     });
@@ -274,7 +277,7 @@ export class TicketService {
   }
 
   async generateMultiplePdfTickets(
-    tickets: Array<Ticket & { event: Event }>,
+    tickets: Array<Omit<Ticket, 'profileId'> & { event: Event }>,
   ): Promise<z.infer<typeof generateMultiplePdfTicketsSchema>> {
     // Generar PDFs para todos los tickets
     const pdfPromises = tickets.map(async (ticket) => {

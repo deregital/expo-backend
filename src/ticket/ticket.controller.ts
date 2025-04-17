@@ -171,7 +171,15 @@ export class TicketController {
       });
     }
 
-    return await this.ticketService.create({ ...createTicketDto, seat });
+    const ticket = await this.ticketService.create({
+      ...createTicketDto,
+      seat,
+    });
+
+    const ticketPDF = await this.ticketService.generatePdfTicket(ticket);
+    await this.mailService.sendTicket(ticket, ticketPDF);
+
+    return ticket;
   }
 
   @Roles(Role.ADMIN, Role.MI_EXPO, Role.TICKETS)
@@ -250,6 +258,14 @@ export class TicketController {
     await this.ticketGroupService.update(ticketGroupId, {
       status: isTicketFree ? 'FREE' : undefined,
     });
+
+    if (isTicketFree) {
+      const pdfs = await this.ticketService.generateMultiplePdfTickets(tickets);
+      await this.mailService.sendMultipleTickets(
+        tickets,
+        pdfs.map((pdf) => pdf.pdf),
+      );
+    }
 
     return tickets;
   }

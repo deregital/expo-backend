@@ -2,8 +2,10 @@ import { Roles } from '@/auth/decorators/rol.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
+import { MailService } from '@/mail/mail.service';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { TicketGroupService } from '@/ticket-group/ticket-group.service';
+import { TicketService } from '@/ticket/ticket.service';
 import {
   Body,
   Controller,
@@ -34,6 +36,8 @@ export class MercadoPagoController {
   constructor(
     private readonly mercadoPagoService: MercadoPagoService,
     private readonly ticketGroupService: TicketGroupService,
+    private readonly ticketService: TicketService,
+    private readonly mailService: MailService,
   ) {}
 
   @ApiOkResponse({
@@ -94,6 +98,18 @@ export class MercadoPagoController {
     await this.ticketGroupService.update(dataTicketGroup.id, {
       status: dataTicketGroup.status === 'approved' ? 'PAID' : 'BOOKED',
     });
+
+    if (dataTicketGroup.status === 'approved') {
+      const tickets = await this.ticketService.findByTicketGroupWithEvent(
+        dataTicketGroup.id,
+      );
+      const pdfs = await this.ticketService.generateMultiplePdfTickets(tickets);
+      await this.mailService.sendMultipleTickets(
+        tickets,
+        pdfs.map((pdf) => pdf.pdf),
+      );
+    }
+
     return res;
   }
 }
