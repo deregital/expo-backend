@@ -24,7 +24,9 @@ export function addEventTicketRefinements<T extends z.ZodTypeAny>(
       ctx.addIssue({
         path: ['amount'],
         code: z.ZodIssueCode.custom,
-        message: translate('model.eventTicket.amount.min', { type: data.type }),
+        message: translate('model.eventTicket.amount.min', {
+          type: `${translate(`prisma.ticketType.${data.type as TicketType}`)}`,
+        }),
       });
     }
   });
