@@ -19,19 +19,19 @@ export const eventSchema = z.object({
     invalid_type_error: translate('model.event.endingDate.invalid'),
   }),
   location: z.string().min(1, translate('model.event.location.required')),
-  eventPictureUrl: z
+  mainPictureUrl: z
     .string()
     .url({
       message: translate('model.event.eventPictureUrl.invalid'),
     })
     .nullable(),
-  eventBannerUrl: z
+  bannerUrl: z
     .string()
     .url({
       message: translate('model.event.eventBannerUrl.invalid'),
     })
     .nullable(),
-  eventDescription: z.string().nullable(),
+  description: z.string().nullable(),
 
   folderId: eventFolderSchema.shape.id.nullable(),
   tagAssistedId: tagSchema.shape.id,

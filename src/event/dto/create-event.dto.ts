@@ -12,30 +12,24 @@ export const createEventSchema = eventSchema
     endingDate: true,
     location: true,
     folderId: true,
-    eventPictureUrl: true,
-    eventBannerUrl: true,
-    eventDescription: true,
+    mainPictureUrl: true,
+    bannerUrl: true,
+    description: true,
   })
   .merge(
     z.object({
       subEvents: z
         .array(
-          eventSchema
-            .pick({
-              name: true,
-              date: true,
-              startingDate: true,
-              endingDate: true,
-              location: true,
-              eventPictureUrl: true,
-              eventBannerUrl: true,
-              eventDescription: true,
-            })
-            .extend({
-              eventPictureUrl: z.string().nullable().default(null),
-              eventBannerUrl: z.string().nullable().default(null),
-              eventDescription: z.string().nullable().default(null),
-            }),
+          eventSchema.pick({
+            name: true,
+            date: true,
+            startingDate: true,
+            endingDate: true,
+            location: true,
+            mainPictureUrl: true,
+            bannerUrl: true,
+            description: true,
+          }),
         )
         .optional(),
 
