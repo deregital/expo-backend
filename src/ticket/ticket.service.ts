@@ -18,11 +18,13 @@ import {
   UpdateTicketDto,
   updateTicketResponseSchema,
 } from '@/ticket/dto/update-ticket.dto';
+import { TZDate } from '@date-fns/tz';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Font, GenerateProps } from '@pdfme/common';
 import { generate } from '@pdfme/generator';
 import { barcodes, image, line, text } from '@pdfme/schemas';
 import { format } from 'date-fns/format';
+import { es } from 'date-fns/locale';
 import z from 'zod';
 import { Event, Profile, Ticket, TicketType } from '~/types';
 import {
@@ -173,23 +175,19 @@ export class TicketService {
     ticket: Omit<Ticket, 'profileId'> & { event: Event },
   ): Promise<Blob> {
     // Format date to a readable format
-    const eventDate = new Date(ticket!.event.date);
-    const eventStartingDate = new Date(ticket!.event.startingDate);
-    const formattedDate = eventDate.toLocaleDateString('es-ES', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+    const eventDate = new TZDate(
+      ticket!.event.startingDate,
+      'America/Argentina/Buenos_Aires',
+    );
     if (!ticket) {
       throw new NotFoundException(
         translate('route.pdf.generate-pdf.not-found'),
       );
     }
     // Format time
-    const formattedTime = eventStartingDate.toLocaleTimeString('es-ES', {
-      hour: '2-digit',
-      minute: '2-digit',
+    const formattedTime = format(eventDate, 'HH:mm');
+    const formattedDate = format(eventDate, 'PPPP', {
+      locale: es,
     });
 
     const normalizedDni = Number.isNaN(Number(ticket.dni))
