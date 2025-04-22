@@ -354,33 +354,7 @@ export class EventController {
     const event = await this.eventService.findById(id);
 
     await this.eventService.update(id, {
-      name: event.name,
-      date: event.date.toISOString(),
-      location: event.location,
-      startingDate: event.startingDate.toISOString(),
-      endingDate: event.endingDate.toISOString(),
-      bannerUrl: event.bannerUrl,
       mainPictureUrl: pictureUrl,
-      description: event.description,
-      tagsId: event.tags.map((tag) => tag.id),
-      folderId: event.folderId,
-      subEvents: event.subEvents.map((subEvent) => ({
-        id: subEvent.id,
-        name: subEvent.name,
-        location: subEvent.location,
-        date: subEvent.date.toISOString(),
-        startingDate: subEvent.startingDate.toISOString(),
-        endingDate: subEvent.endingDate.toISOString(),
-        bannerUrl: subEvent.bannerUrl,
-        mainPictureUrl: subEvent.mainPictureUrl,
-        description: subEvent.description,
-      })),
-      eventTickets: event.eventTickets.map((ticket) => ({
-        id: ticket.id,
-        type: ticket.type,
-        amount: ticket.amount,
-        price: ticket.price,
-      })),
     });
 
     return {
@@ -508,17 +482,21 @@ export class EventController {
     if (updateEventDto.eventTickets.length > 0) {
       eventTickets = await this.eventTicketsService.createMany(
         id,
-        updateEventDto.eventTickets,
+        updateEventDto.eventTickets.map((ticket) => ({
+          type: ticket?.type ?? 'PARTICIPANT',
+          amount: ticket?.amount ?? null,
+          price: ticket?.price ?? null,
+        })),
       );
     }
 
     const updatedStartingDate = setHoursAndMinutes(
-      updateEventDto.date,
-      updateEventDto.startingDate,
+      updateEventDto.date ?? event.date.toISOString(),
+      updateEventDto.startingDate ?? event.startingDate.toISOString(),
     );
     const updatedEndingDate = setHoursAndMinutes(
-      updateEventDto.date,
-      updateEventDto.endingDate,
+      updateEventDto.date ?? event.date.toISOString(),
+      updateEventDto.endingDate ?? event.endingDate.toISOString(),
     );
 
     const updatedEvent = await this.eventService.update(id, {

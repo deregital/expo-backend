@@ -145,8 +145,8 @@ export class EventService {
 
   async update(
     id: Event['id'],
-    updateEventDto: Omit<UpdateEventDto, 'eventTickets'> & {
-      eventTickets: Pick<EventTicket, 'id' | 'amount' | 'price' | 'type'>[];
+    updateEventDto: Partial<Omit<UpdateEventDto, 'eventTickets'>> & {
+      eventTickets?: Pick<EventTicket, 'id' | 'amount' | 'price' | 'type'>[];
     },
   ): Promise<z.infer<typeof updateEventResponseSchema>> {
     return await this.prisma.event.update({
@@ -160,18 +160,26 @@ export class EventService {
         bannerUrl: updateEventDto.bannerUrl,
         mainPictureUrl: updateEventDto.mainPictureUrl,
         description: updateEventDto.description,
-        eventTickets: {
-          set: updateEventDto.eventTickets.map((ticket) => ({
-            id: ticket.id,
-            amount: ticket.amount,
-            price: ticket.price,
-            type: ticket.type,
-          })),
-        },
-        tags: { set: updateEventDto.tagsId.map((tag) => ({ id: tag })) },
+        eventTickets: updateEventDto.eventTickets
+          ? {
+              set: updateEventDto.eventTickets.map((ticket) => ({
+                id: ticket.id,
+                amount: ticket.amount,
+                price: ticket.price,
+                type: ticket.type,
+              })),
+            }
+          : undefined,
+        tags: updateEventDto.tagsId
+          ? {
+              set: updateEventDto.tagsId.map((tag) => ({ id: tag })),
+            }
+          : undefined,
         folder: updateEventDto.folderId
           ? { connect: { id: updateEventDto.folderId } }
-          : { disconnect: true },
+          : updateEventDto.folderId === null
+            ? { disconnect: true }
+            : undefined,
       },
       include: {
         tagAssisted: { include: { group: true } },
