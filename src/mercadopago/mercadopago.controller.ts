@@ -10,6 +10,7 @@ import {
   Body,
   Controller,
   Headers,
+  HttpCode,
   NotFoundException,
   Post,
   Res,
@@ -71,15 +72,14 @@ export class MercadoPagoController {
     description: translate('route.mercadopago.webhook.error'),
     type: ErrorDto,
   })
+  @HttpCode(200)
   @Post('/webhook')
   async webhook(
     @Body() body: WebhookDto,
     @Res() res: Response,
     @Headers('x-signature') signature?: string,
     @Headers('x-request-id') requestId?: string,
-  ): Promise<Response> {
-    res.status(200);
-
+  ): Promise<void> {
     if (!signature || !requestId) {
       throw new NotFoundException(
         translate('route.mercadopago.webhook.signature-not-found'),
@@ -95,11 +95,17 @@ export class MercadoPagoController {
       throw new NotFoundException(translate('route.mercadopago.webhook.error'));
     }
 
-    await this.ticketGroupService.update(dataTicketGroup.id, {
-      status: dataTicketGroup.status === 'approved' ? 'PAID' : 'BOOKED',
-    });
+    const ticketGroup = await this.ticketGroupService.findGroup(
+      dataTicketGroup.id,
+    );
 
-    if (dataTicketGroup.status === 'approved') {
+    if (
+      dataTicketGroup.status === 'approved' &&
+      ticketGroup.status === 'BOOKED'
+    ) {
+      await this.ticketGroupService.update(dataTicketGroup.id, {
+        status: dataTicketGroup.status === 'approved' ? 'PAID' : 'BOOKED',
+      });
       const tickets = await this.ticketService.findByTicketGroupWithEvent(
         dataTicketGroup.id,
       );
@@ -110,6 +116,6 @@ export class MercadoPagoController {
       );
     }
 
-    return res;
+    res.status(200).send();
   }
 }
