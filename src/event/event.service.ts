@@ -211,12 +211,18 @@ export class EventService {
         endingDate: event.endingDate,
         location: event.location,
         name: event.name,
+        bannerUrl: event.bannerUrl,
+        mainPictureUrl: event.mainPictureUrl,
+        description: event.description,
       },
       create: {
         date: event.date,
         startingDate: event.startingDate,
         endingDate: event.endingDate,
         location: event.location,
+        bannerUrl: event.bannerUrl,
+        mainPictureUrl: event.mainPictureUrl,
+        description: event.description,
         name: event.name,
         supraEvent: { connect: { id: supraEventId } },
         tagAssisted: {
