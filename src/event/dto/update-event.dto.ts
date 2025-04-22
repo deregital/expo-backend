@@ -13,6 +13,9 @@ export const updateEventSchema = eventSchema
     location: true,
     startingDate: true,
     endingDate: true,
+    bannerUrl: true,
+    mainPictureUrl: true,
+    description: true,
   })
   .merge(
     z.object({
@@ -25,6 +28,9 @@ export const updateEventSchema = eventSchema
             date: true,
             startingDate: true,
             endingDate: true,
+            bannerUrl: true,
+            mainPictureUrl: true,
+            description: true,
           })
           .extend({
             id: eventSchema.shape.id.or(z.literal('')),

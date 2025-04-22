@@ -32,6 +32,7 @@ import {
 } from '@/event/dto/update-event.dto';
 import { EventService } from '@/event/event.service';
 import { translate } from '@/i18n/translate';
+import { ImageService } from '@/image/image.service';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { setHoursAndMinutes } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
@@ -44,21 +45,39 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   NotFoundException,
   Param,
+  ParseFilePipeBuilder,
   Patch,
   Post,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiConflictResponse,
+  ApiConsumes,
   ApiCreatedResponse,
   ApiGoneResponse,
+  ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
+  ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 import z from 'zod';
 import { Event, EventTicket, Role, Tag, TagGroup } from '~/types/prisma-schema';
+import { deleteBannerEventResponseSchema } from './dto/delete-banner-event.dto';
+import { deleteMainPictureEventResponseSchema } from './dto/delete-main-picture-event.dto';
+import {
+  UpdateBannerEventDto,
+  UpdateBannerEventResponseDto,
+} from './dto/update-banner-event.dto';
+import {
+  UpdateMainPictureEventDto,
+  UpdateMainPictureEventResponseDto,
+} from './dto/update-main-picture-event.dto';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -71,6 +90,7 @@ export class EventController {
     private readonly tagService: TagService,
     private readonly eventTicketsService: EventTicketService,
     private readonly ticketGroupService: TicketGroupService,
+    private readonly imageService: ImageService,
   ) {}
 
   @ApiCreatedResponse({
@@ -169,6 +189,177 @@ export class EventController {
     });
   }
 
+  @ApiOkResponse({
+    description: translate('route.image.update.success'),
+    type: UpdateBannerEventResponseDto,
+  })
+  @ApiInternalServerErrorResponse({
+    description: translate('route.image.update.error'),
+    type: ErrorDto,
+  })
+  @ApiUnprocessableEntityResponse({
+    description: translate('route.image.update.unprocessable-entity'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.image.update.conflict'),
+    type: ErrorDto,
+  })
+  @UseInterceptors(FileInterceptor('image'))
+  @ApiConsumes('multipart/form-data')
+  @Patch('/update-banner/:id')
+  async updateBanner(
+    @Param('id', new ExistingRecord('event')) id: string,
+    @Body() body: UpdateBannerEventDto,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: /(jpeg|png|webp)/, // Ver errores custom
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    file: Express.Multer.File,
+  ): Promise<UpdateBannerEventResponseDto> {
+    const currentPictureUrl = await this.eventService.getEventBannerUrl(id);
+
+    if (currentPictureUrl) {
+      await this.imageService.deleteImage(currentPictureUrl);
+    }
+
+    const pictureUrl = await this.imageService.updateImage(
+      `event-banner-${id}`,
+      file,
+    );
+
+    if (!pictureUrl) {
+      throw new ConflictException([translate('route.image.update.conflict')]);
+    }
+
+    await this.eventService.update(id, {
+      bannerUrl: pictureUrl,
+    });
+
+    return {
+      message: translate('route.image.update.success'),
+    };
+  }
+
+  @ApiOkResponse({
+    description: translate('route.image.delete.success'),
+    type: UpdateMainPictureEventResponseDto,
+  })
+  @ApiInternalServerErrorResponse({
+    description: translate('route.image.delete.error'),
+    type: ErrorDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.image.delete.not-found'),
+    type: ErrorDto,
+  })
+  @Delete('/delete-banner/:id')
+  async deleteBanner(
+    @Param('id', new ExistingRecord('event')) id: string,
+  ): Promise<z.infer<typeof deleteBannerEventResponseSchema>> {
+    const event = await this.eventService.findById(id);
+    if (event.bannerUrl) {
+      await this.imageService.deleteImage(event.bannerUrl);
+    } else {
+      throw new NotFoundException([translate('route.image.delete.not-found')]);
+    }
+    await this.eventService.deleteBanner(id);
+    return {
+      message: translate('route.image.delete.success'),
+    };
+  }
+
+  @ApiOkResponse({
+    description: translate('route.image.update.success'),
+    type: UpdateMainPictureEventResponseDto,
+  })
+  @ApiInternalServerErrorResponse({
+    description: translate('route.image.update.error'),
+    type: ErrorDto,
+  })
+  @ApiUnprocessableEntityResponse({
+    description: translate('route.image.update.unprocessable-entity'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.image.update.conflict'),
+    type: ErrorDto,
+  })
+  @UseInterceptors(FileInterceptor('image'))
+  @ApiConsumes('multipart/form-data')
+  @Patch('/update-main-picture/:id')
+  async updateMainPicture(
+    @Param('id', new ExistingRecord('event')) id: string,
+    @Body() body: UpdateMainPictureEventDto,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: /(jpeg|png|webp)/, // Ver errores custom
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    file: Express.Multer.File,
+  ): Promise<UpdateMainPictureEventResponseDto> {
+    const currentPictureUrl =
+      await this.eventService.getEventMainPictureUrl(id);
+
+    if (currentPictureUrl) {
+      await this.imageService.deleteImage(currentPictureUrl);
+    }
+
+    const pictureUrl = await this.imageService.updateImage(
+      `event-main-picture-${id}`,
+      file,
+    );
+
+    if (!pictureUrl) {
+      throw new ConflictException([translate('route.image.update.conflict')]);
+    }
+
+    await this.eventService.update(id, {
+      mainPictureUrl: pictureUrl,
+    });
+
+    return {
+      message: translate('route.image.update.success'),
+    };
+  }
+
+  @ApiOkResponse({
+    description: translate('route.image.delete.success'),
+    type: UpdateMainPictureEventResponseDto,
+  })
+  @ApiInternalServerErrorResponse({
+    description: translate('route.image.delete.error'),
+    type: ErrorDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.image.delete.not-found'),
+    type: ErrorDto,
+  })
+  @Delete('/delete-main-picture/:id')
+  async deleteMainPicture(
+    @Param('id', new ExistingRecord('event')) id: string,
+  ): Promise<z.infer<typeof deleteMainPictureEventResponseSchema>> {
+    const event = await this.eventService.findById(id);
+    if (event.mainPictureUrl) {
+      await this.imageService.deleteImage(event.mainPictureUrl);
+    } else {
+      throw new NotFoundException([translate('route.image.delete.not-found')]);
+    }
+    await this.eventService.deleteMainPicture(id);
+    return {
+      message: translate('route.image.update.success'),
+    };
+  }
+
   @Get('/all')
   @ApiOkResponse({
     description: translate('route.event.get-all.success'),
@@ -261,17 +452,21 @@ export class EventController {
     if (updateEventDto.eventTickets.length > 0) {
       eventTickets = await this.eventTicketsService.createMany(
         id,
-        updateEventDto.eventTickets,
+        updateEventDto.eventTickets.map((ticket) => ({
+          type: ticket?.type ?? 'PARTICIPANT',
+          amount: ticket?.amount ?? null,
+          price: ticket?.price ?? null,
+        })),
       );
     }
 
     const updatedStartingDate = setHoursAndMinutes(
-      updateEventDto.date,
-      updateEventDto.startingDate,
+      updateEventDto.date ?? event.date.toISOString(),
+      updateEventDto.startingDate ?? event.startingDate.toISOString(),
     );
     const updatedEndingDate = setHoursAndMinutes(
-      updateEventDto.date,
-      updateEventDto.endingDate,
+      updateEventDto.date ?? event.date.toISOString(),
+      updateEventDto.endingDate ?? event.endingDate.toISOString(),
     );
 
     const updatedEvent = await this.eventService.update(id, {
