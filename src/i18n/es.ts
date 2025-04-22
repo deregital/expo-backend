@@ -337,6 +337,7 @@ export default {
       'get-by-id': {
         success: 'Evento obtenido con éxito',
         'not-found': 'Evento no encontrado',
+        'not-found-description': 'Desfile de moda',
       },
       update: {
         success: 'Evento actualizado con éxito',

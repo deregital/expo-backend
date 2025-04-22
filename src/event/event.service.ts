@@ -130,7 +130,12 @@ export class EventService {
         tickets: true,
       },
     });
-    return event!;
+    return {
+      ...event!,
+      description:
+        event?.description ??
+        translate('route.event.get-by-id.not-found-description'),
+    };
   }
 
   async findBySupraEventId(
