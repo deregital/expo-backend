@@ -271,7 +271,7 @@ model Ticket {
   profile   Profile? @relation("PROFILE_X_TICKET", fields: [profileId], references: [id])
 
   ticketGroupId String?      @map("ticket_group_id")
-  ticketGroup   TicketGroup? @relation("TICKET_X_TICKET_GROUP", fields: [ticketGroupId], references: [id])
+  ticketGroup   TicketGroup? @relation("TICKET_X_TICKET_GROUP", fields: [ticketGroupId], references: [id], onDelete: Cascade)
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

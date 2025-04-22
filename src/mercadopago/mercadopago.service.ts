@@ -1,5 +1,6 @@
 import { EventTicketService } from '@/event-ticket/event-ticket.service';
 import { translate } from '@/i18n/translate';
+import { TicketGroupService } from '@/ticket-group/ticket-group.service';
 import { TicketService } from '@/ticket/ticket.service';
 import {
   ConflictException,
@@ -20,6 +21,7 @@ export class MercadoPagoService {
   constructor(
     private readonly ticketService: TicketService,
     private readonly eventTicketService: EventTicketService,
+    private readonly ticketGroupService: TicketGroupService,
   ) {}
 
   private mercadoPago(): MercadoPagoConfig {
@@ -57,8 +59,18 @@ export class MercadoPagoService {
           body.ticket_type,
         );
 
+      const amountTicketRequested = (
+        await this.ticketGroupService.findGroup(body.ticket_group_id)
+      ).amountTickets;
+
+      if (!amountTicketRequested) {
+        throw new ConflictException(
+          translate('route.mercadopago.create-preference.error'),
+        );
+      }
+
       if (
-        amountTicketsBought + eventTicketThisType.amount >
+        amountTicketsBought + amountTicketRequested >
         eventTicketThisType.amount
       ) {
         throw new ConflictException(
@@ -101,6 +113,8 @@ export class MercadoPagoService {
         },
       };
     } catch (error) {
+      console.log('cccc', error);
+
       throw new ConflictException(
         translate('route.mercadopago.create-preference.error'),
       );
