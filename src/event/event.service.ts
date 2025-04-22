@@ -157,6 +157,9 @@ export class EventService {
         location: updateEventDto.location,
         startingDate: updateEventDto.startingDate,
         endingDate: updateEventDto.endingDate,
+        bannerUrl: updateEventDto.bannerUrl,
+        mainPictureUrl: updateEventDto.mainPictureUrl,
+        description: updateEventDto.description,
         eventTickets: {
           set: updateEventDto.eventTickets.map((ticket) => ({
             id: ticket.id,
@@ -188,7 +191,14 @@ export class EventService {
     id: Event['id'];
     event: Pick<
       Event,
-      'date' | 'location' | 'name' | 'startingDate' | 'endingDate'
+      | 'date'
+      | 'location'
+      | 'name'
+      | 'startingDate'
+      | 'endingDate'
+      | 'bannerUrl'
+      | 'mainPictureUrl'
+      | 'description'
     >;
     supraEventId: Event['id'];
     tagGroupId: TagGroup['id'];
@@ -270,6 +280,30 @@ export class EventService {
         tags: { some: { id: { in: tagIds } } },
       },
       include: { tickets: true, eventTickets: true },
+    });
+  }
+
+  async getEventBannerUrl(id: Event['id']): Promise<string | null> {
+    const event = await this.prisma.event.findUnique({ where: { id } });
+    return event?.bannerUrl ?? null;
+  }
+
+  async getEventMainPictureUrl(id: Event['id']): Promise<string | null> {
+    const event = await this.prisma.event.findUnique({ where: { id } });
+    return event?.mainPictureUrl ?? null;
+  }
+
+  async deleteBanner(id: Event['id']): Promise<void> {
+    await this.prisma.event.update({
+      where: { id },
+      data: { bannerUrl: null },
+    });
+  }
+
+  async deleteMainPicture(id: Event['id']): Promise<void> {
+    await this.prisma.event.update({
+      where: { id },
+      data: { mainPictureUrl: null },
     });
   }
 }

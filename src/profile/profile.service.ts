@@ -544,4 +544,11 @@ export class ProfileService {
 
     return profile;
   }
+
+  async deleteImage(id: Profile['id']): Promise<void> {
+    await this.prisma.profile.update({
+      where: { id },
+      data: { profilePictureUrl: null },
+    });
+  }
 }

@@ -1,6 +1,7 @@
 import { AccountService } from '@/account/account.service';
 import { EventFolderService } from '@/event-folder/event-folder.service';
 import { EventTicketService } from '@/event-ticket/event-ticket.service';
+import { ImageService } from '@/image/image.service';
 import { ProfileService } from '@/profile/profile.service';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
@@ -20,6 +21,7 @@ import { EventService } from './event.service';
     EventTicketService,
     ProfileService,
     TicketGroupService,
+    ImageService,
   ],
   controllers: [EventController],
 })
