@@ -237,8 +237,6 @@ export class EventController {
       throw new ConflictException([translate('route.image.update.conflict')]);
     }
 
-    const event = await this.eventService.findById(id);
-
     await this.eventService.update(id, {
       bannerUrl: pictureUrl,
     });
@@ -324,8 +322,6 @@ export class EventController {
     if (!pictureUrl) {
       throw new ConflictException([translate('route.image.update.conflict')]);
     }
-
-    const event = await this.eventService.findById(id);
 
     await this.eventService.update(id, {
       mainPictureUrl: pictureUrl,

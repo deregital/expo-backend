@@ -145,9 +145,11 @@ export class EventService {
 
   async update(
     id: Event['id'],
-    updateEventDto: Partial<Omit<UpdateEventDto, 'eventTickets'>> & {
-      eventTickets?: Pick<EventTicket, 'id' | 'amount' | 'price' | 'type'>[];
-    },
+    updateEventDto: Partial<
+      Omit<UpdateEventDto, 'eventTickets'> & {
+        eventTickets: Pick<EventTicket, 'id' | 'amount' | 'price' | 'type'>[];
+      }
+    >,
   ): Promise<z.infer<typeof updateEventResponseSchema>> {
     return await this.prisma.event.update({
       where: { id },
