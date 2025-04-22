@@ -240,33 +240,7 @@ export class EventController {
     const event = await this.eventService.findById(id);
 
     await this.eventService.update(id, {
-      name: event.name,
-      date: event.date.toISOString(),
-      location: event.location,
-      startingDate: event.startingDate.toISOString(),
-      endingDate: event.endingDate.toISOString(),
       bannerUrl: pictureUrl,
-      mainPictureUrl: event.mainPictureUrl,
-      description: event.description,
-      tagsId: event.tags.map((tag) => tag.id),
-      folderId: event.folderId,
-      subEvents: event.subEvents.map((subEvent) => ({
-        id: subEvent.id,
-        name: subEvent.name,
-        location: subEvent.location,
-        date: subEvent.date.toISOString(),
-        startingDate: subEvent.startingDate.toISOString(),
-        endingDate: subEvent.endingDate.toISOString(),
-        bannerUrl: subEvent.bannerUrl,
-        mainPictureUrl: subEvent.mainPictureUrl,
-        description: subEvent.description,
-      })),
-      eventTickets: event.eventTickets.map((ticket) => ({
-        id: ticket.id,
-        type: ticket.type,
-        amount: ticket.amount,
-        price: ticket.price,
-      })),
     });
 
     return {
