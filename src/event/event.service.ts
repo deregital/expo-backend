@@ -23,6 +23,7 @@ import {
   Tag,
   TagGroup,
   TagType,
+  TicketType,
 } from '~/types/prisma-schema';
 import { deleteEventResponseSchema } from './dto/delete-event.dto';
 
@@ -138,6 +139,102 @@ export class EventService {
       include: { tagAssisted: true, tagConfirmed: true },
     });
     return events;
+  }
+
+  async findEstadisticasById(id: Event['id']): Promise<unknown> {
+    const event = await this.prisma.event.findUnique({
+      where: { id },
+      include: {
+        tickets: true,
+        eventTickets: true,
+      },
+    });
+    if (!event) {
+      return;
+    }
+
+    // Cantidad maxima de tickets
+    const maxTickets = event.eventTickets.reduce(
+      (total, ticket) => (total += ticket.amount ?? 0),
+      0,
+    );
+
+    const spectatorTicket = event.eventTickets.find(
+      (ticket) => ticket.type === TicketType.SPECTATOR,
+    );
+
+    const emmitedTickets = event.tickets.length;
+
+    // Porcentaje de tickets emitidos
+    const emittedTicketsPercent = parseFloat(
+      ((event.tickets.length / maxTickets) * 100).toFixed(2),
+    );
+
+    // Total recaudado (entradas emitidas de espectador)
+    const totalIncome = event.tickets.reduce((income, ticket) => {
+      if (ticket.type === TicketType.SPECTATOR) {
+        const price = spectatorTicket?.price ?? 0;
+        income += price;
+      }
+      return income;
+    }, 0);
+
+    // Maximo posible de recaudacion
+    const maxTotalIncome = event.eventTickets.reduce((maxIncome, ticket) => {
+      const price = ticket.price ?? 0;
+      const amount = ticket.amount ?? 1;
+      maxIncome += price * amount;
+      return maxIncome;
+    }, 0);
+
+    // Todas las posibles entradas y por tipo
+    const maxTicketPerType = event.eventTickets.reduce(
+      (counts, ticket) => {
+        const amount = ticket.amount ?? 0;
+
+        counts[ticket.type] = (counts[ticket.type] ?? 0) + amount;
+        return counts;
+      },
+      {} as Record<TicketType, number>,
+    );
+
+    // Entradas emitidas totales y por tipo
+    const emmitedticketPerType = event.tickets.reduce(
+      (counts, ticket) => {
+        counts[ticket.type] = (counts[ticket.type] ?? 0) + 1;
+        return counts;
+      },
+      {} as Record<TicketType, number>,
+    );
+
+    const totalTicketsScanned = event.tickets.reduce(
+      (totalTickets, ticket) => (totalTickets += ticket.scanned ? 1 : 0),
+      0,
+    );
+
+    const notScanned = emmitedTickets - totalTicketsScanned;
+
+    // Taza de asistencia en SPECTATORS
+    const attendancePercent = parseFloat(
+      (
+        (emmitedticketPerType.SPECTATOR / maxTicketPerType.SPECTATOR) *
+        100
+      ).toFixed(2),
+    );
+
+    return {
+      maxTickets,
+      emmitedTickets,
+      emittedTicketsPercent,
+      emmitedticketPerType,
+      totalIncome,
+      maxTotalIncome,
+      maxTicketPerType,
+      totalTicketsScanned,
+      notScanned,
+      attendancePercent,
+      event,
+    };
   }
 
   async update(
