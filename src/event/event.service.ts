@@ -226,6 +226,27 @@ export class EventService {
       ).toFixed(2),
     );
 
+    // Presentismo por hora (flujo de llegada)
+    const gteAttendance = new Date('2025-04-23T14:30:00');
+    const lteAttendance = new Date('2025-04-23T15:30:00');
+    const attendancePerHour = event.tickets.filter((ticket) => {
+      if (!ticket.scannedAt) {
+        const attendaneDate = new Date(ticket.scannedAt!);
+        if (gteAttendance >= attendaneDate && attendaneDate <= lteAttendance) {
+          return ticket.scannedAt;
+        }
+      }
+    });
+
+    // Promedio de entradas emitidas por ticket-group.
+    const { _avg: avgAmountPerTicketGroup } =
+      await this.prisma.ticketGroup.aggregate({
+        where: { eventId: event.id },
+        _avg: {
+          amountTickets: true,
+        },
+      });
+
     return {
       maxTickets,
       emmitedTickets,
@@ -237,6 +258,8 @@ export class EventService {
       totalTicketsScanned,
       notScanned,
       attendancePercent,
+      attendancePerHour,
+      avgAmountPerTicketGroup: avgAmountPerTicketGroup.amountTickets,
       event,
     };
   }
