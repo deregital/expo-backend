@@ -187,6 +187,17 @@ export class EventController {
     return await this.eventService.findActive();
   }
 
+  @Get('/statistics')
+  async getStatistics(): Promise<unknown> {
+    return await this.eventService.findStatistics();
+  }
+  // GENERALES (acumulado):
+  // Recaudación total de todos los eventos.
+  // ranking de mails que más aparecen en ticket-group y cuántos tickets sacaron.
+  // Entradas emitidas totales y por tipo
+  // Entradas emitidas / cupo (70% de entradas emitidas sobre el total de entradas disponibles)
+  // Tabla con precio unitario y porcentaje de ventas sobre cupo máximo
+
   @Roles(Role.TICKETS, Role.ADMIN, Role.USER)
   @Get('/:id')
   @ApiOkResponse({
@@ -208,7 +219,7 @@ export class EventController {
   async getStatisticsById(
     @Param('id', new ExistingRecord('event')) id: string,
   ): Promise<unknown> {
-    return await this.eventService.findEstadisticasById(id);
+    return await this.eventService.findStatisticsById(id);
   }
   // TICKETS
   // Entradas emitidas totales y por tipo ✅
@@ -221,12 +232,6 @@ export class EventController {
   // Días donde se emitieron más entradas en vista calendario con mapa de calor.
   // Promedio de entradas emitidas por ticket-group.
 
-  // GENERALES (acumulado):
-  // Recaudación total de todos los eventos.
-  // ranking de mails que más aparecen en ticket-group y cuántos tickets sacaron.
-  // Entradas emitidas totales y por tipo
-  // Entradas emitidas / cupo (70% de entradas emitidas sobre el total de entradas disponibles)
-  // Tabla con precio unitario y porcentaje de ventas sobre cupo máximo
   @Patch('/:id')
   @ApiOkResponse({
     description: translate('route.event.update.success'),

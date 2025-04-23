@@ -141,7 +141,11 @@ export class EventService {
     return events;
   }
 
-  async findEstadisticasById(id: Event['id']): Promise<unknown> {
+  async findStatistics(): Promise<unknown> {
+    return { test: 'Deregital' };
+  }
+
+  async findStatisticsById(id: Event['id']): Promise<unknown> {
     const event = await this.prisma.event.findUnique({
       where: { id },
       include: {

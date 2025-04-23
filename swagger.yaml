@@ -823,6 +823,15 @@ paths:
                 $ref: "#/components/schemas/GetActiveEventsResponseDto"
       tags:
         - "Event"
+  /event/statistics:
+    get:
+      operationId: "EventController_getStatistics"
+      parameters: []
+      responses:
+        200:
+          description: ""
+      tags:
+        - "Event"
   /event/{id}:
     get:
       operationId: "EventController_findById"
