@@ -23,9 +23,9 @@ import {
   Tag,
   TagGroup,
   TagType,
-  TicketType,
 } from '~/types/prisma-schema';
 import { deleteEventResponseSchema } from './dto/delete-event.dto';
+import { getStatisticsByIdResponseSchema } from './dto/get-statistics-by-id-event.dto';
 
 @Injectable()
 export class EventService {
@@ -145,7 +145,9 @@ export class EventService {
     return { test: 'Deregital' };
   }
 
-  async findStatisticsById(id: Event['id']): Promise<unknown> {
+  async findStatisticsById(
+    id: Event['id'],
+  ): Promise<z.infer<typeof getStatisticsByIdResponseSchema>> {
     const event = await this.prisma.event.findUnique({
       where: { id },
       include: {
@@ -153,115 +155,20 @@ export class EventService {
         eventTickets: true,
       },
     });
-    if (!event) {
-      return;
-    }
 
-    // Cantidad maxima de tickets
-    const maxTickets = event.eventTickets.reduce(
-      (total, ticket) => (total += ticket.amount ?? 0),
-      0,
-    );
+    return event!;
+  }
 
-    const spectatorTicket = event.eventTickets.find(
-      (ticket) => ticket.type === TicketType.SPECTATOR,
-    );
-
-    const emmitedTickets = event.tickets.length;
-
-    // Porcentaje de tickets emitidos
-    const emittedTicketsPercent = parseFloat(
-      ((event.tickets.length / maxTickets) * 100).toFixed(2),
-    );
-
-    // Total recaudado (entradas emitidas de espectador)
-    const totalIncome = event.tickets.reduce((income, ticket) => {
-      if (ticket.type === TicketType.SPECTATOR) {
-        const price = spectatorTicket?.price ?? 0;
-        income += price;
-      }
-      return income;
-    }, 0);
-
-    // Maximo posible de recaudacion
-    const maxTotalIncome = event.eventTickets.reduce((maxIncome, ticket) => {
-      const price = ticket.price ?? 0;
-      const amount = ticket.amount ?? 1;
-      maxIncome += price * amount;
-      return maxIncome;
-    }, 0);
-
-    // Todas las posibles entradas y por tipo
-    const maxTicketPerType = event.eventTickets.reduce(
-      (counts, ticket) => {
-        const amount = ticket.amount ?? 0;
-
-        counts[ticket.type] = (counts[ticket.type] ?? 0) + amount;
-        return counts;
+  async getAvgAmountTicketGroupByEventId(
+    id: Event['id'],
+  ): Promise<number | null> {
+    const { _avg } = await this.prisma.ticketGroup.aggregate({
+      where: { eventId: id },
+      _avg: {
+        amountTickets: true,
       },
-      {} as Record<TicketType, number>,
-    );
-
-    // Entradas emitidas totales y por tipo
-    const emmitedticketPerType = event.tickets.reduce(
-      (counts, ticket) => {
-        counts[ticket.type] = (counts[ticket.type] ?? 0) + 1;
-        return counts;
-      },
-      {} as Record<TicketType, number>,
-    );
-
-    const totalTicketsScanned = event.tickets.reduce(
-      (totalTickets, ticket) => (totalTickets += ticket.scanned ? 1 : 0),
-      0,
-    );
-
-    const notScanned = emmitedTickets - totalTicketsScanned;
-
-    // Taza de asistencia en SPECTATORS
-    const attendancePercent = parseFloat(
-      (
-        (emmitedticketPerType.SPECTATOR / maxTicketPerType.SPECTATOR) *
-        100
-      ).toFixed(2),
-    );
-
-    // Presentismo por hora (flujo de llegada)
-    const gteAttendance = new Date('2025-04-23T14:30:00');
-    const lteAttendance = new Date('2025-04-23T15:30:00');
-    const attendancePerHour = event.tickets.filter((ticket) => {
-      if (!ticket.scannedAt) {
-        const attendaneDate = new Date(ticket.scannedAt!);
-        if (gteAttendance >= attendaneDate && attendaneDate <= lteAttendance) {
-          return ticket.scannedAt;
-        }
-      }
     });
-
-    // Promedio de entradas emitidas por ticket-group.
-    const { _avg: avgAmountPerTicketGroup } =
-      await this.prisma.ticketGroup.aggregate({
-        where: { eventId: event.id },
-        _avg: {
-          amountTickets: true,
-        },
-      });
-
-    return {
-      maxTickets,
-      emmitedTickets,
-      emittedTicketsPercent,
-      emmitedticketPerType,
-      totalIncome,
-      maxTotalIncome,
-      maxTicketPerType,
-      totalTicketsScanned,
-      notScanned,
-      attendancePercent,
-      attendancePerHour,
-      avgAmountPerTicketGroup: avgAmountPerTicketGroup.amountTickets,
-      event,
-    };
+    return _avg.amountTickets;
   }
 
   async update(

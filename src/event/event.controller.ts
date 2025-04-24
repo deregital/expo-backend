@@ -58,7 +58,15 @@ import {
   ApiOkResponse,
 } from '@nestjs/swagger';
 import z from 'zod';
-import { Event, EventTicket, Role, Tag, TagGroup } from '~/types/prisma-schema';
+import {
+  Event,
+  EventTicket,
+  Role,
+  Tag,
+  TagGroup,
+  TicketType,
+} from '~/types/prisma-schema';
+import { getStatisticsByIdResponseSchema } from './dto/get-statistics-by-id-event.dto';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -218,8 +226,109 @@ export class EventController {
   @Get('/:id/statistics')
   async getStatisticsById(
     @Param('id', new ExistingRecord('event')) id: string,
-  ): Promise<unknown> {
-    return await this.eventService.findStatisticsById(id);
+  ): Promise<z.infer<typeof getStatisticsByIdResponseSchema>> {
+    const event = await this.eventService.findStatisticsById(id);
+
+    // Cantidad maxima de tickets
+    const maxTickets = event.eventTickets.reduce(
+      (total, ticket) => (total += ticket.amount ?? 0),
+      0,
+    );
+
+    const spectatorTicket = event.eventTickets.find(
+      (ticket) => ticket.type === TicketType.SPECTATOR,
+    );
+
+    const emmitedTickets = event.tickets.length;
+
+    // Porcentaje de tickets emitidos
+    const emittedTicketsPercent = parseFloat(
+      ((event.tickets.length / maxTickets) * 100).toFixed(2),
+    );
+
+    // Total recaudado (entradas emitidas de espectador)
+    const totalIncome = event.tickets.reduce((income, ticket) => {
+      if (ticket.type === TicketType.SPECTATOR) {
+        const price = spectatorTicket?.price ?? 0;
+        income += price;
+      }
+      return income;
+    }, 0);
+
+    // Maximo posible de recaudacion
+    const maxTotalIncome = event.eventTickets.reduce((maxIncome, ticket) => {
+      const price = ticket.price ?? 0;
+      const amount = ticket.amount ?? 1;
+      maxIncome += price * amount;
+      return maxIncome;
+    }, 0);
+
+    // Todas las posibles entradas y por tipo
+    const maxTicketPerType = event.eventTickets.reduce(
+      (counts, ticket) => {
+        const amount = ticket.amount ?? 0;
+
+        counts[ticket.type] = (counts[ticket.type] ?? 0) + amount;
+        return counts;
+      },
+      {} as Record<TicketType, number>,
+    );
+
+    // Entradas emitidas totales y por tipo
+    const emmitedticketPerType = event.tickets.reduce(
+      (counts, ticket) => {
+        counts[ticket.type] = (counts[ticket.type] ?? 0) + 1;
+        return counts;
+      },
+      {} as Record<TicketType, number>,
+    );
+
+    const totalTicketsScanned = event.tickets.reduce(
+      (totalTickets, ticket) => (totalTickets += ticket.scanned ? 1 : 0),
+      0,
+    );
+
+    const notScanned = emmitedTickets - totalTicketsScanned;
+
+    // Taza de asistencia en SPECTATORS
+    const attendancePercent = parseFloat(
+      (
+        (emmitedticketPerType.SPECTATOR / maxTicketPerType.SPECTATOR) *
+        100
+      ).toFixed(2),
+    );
+
+    // Presentismo por hora (flujo de llegada)
+    const gteAttendance = new Date('2025-04-23T14:30:00');
+    const lteAttendance = new Date('2025-04-23T15:30:00');
+    const attendancePerHour = event.tickets.filter((ticket) => {
+      if (!ticket.scannedAt) {
+        const attendaneDate = new Date(ticket.scannedAt!);
+        if (gteAttendance >= attendaneDate && attendaneDate <= lteAttendance) {
+          return ticket.scannedAt;
+        }
+      }
+    });
+
+    // Promedio de entradas emitidas por ticket-group.
+    const avgAmountPerTicketGroup =
+      await this.eventService.getAvgAmountTicketGroupByEventId(event.id);
+
+    event['statistics'] = {
+      maxTickets,
+      emmitedTickets,
+      emittedTicketsPercent,
+      emmitedticketPerType,
+      totalIncome,
+      maxTotalIncome,
+      maxTicketPerType,
+      totalTicketsScanned,
+      notScanned,
+      attendancePercent,
+      attendancePerHour,
+      avgAmountPerTicketGroup,
+    };
+    return event!;
   }
   // TICKETS
   // Entradas emitidas totales y por tipo ✅
@@ -228,9 +337,9 @@ export class EventController {
   // Ingresos totales del evento VS ingresos máximos posibles. ✅
   // Tasa de asistencia (entradas vendidas vs personas que asistieron) ✅
   // No-shows (personas que no asistieron teniendo entrada) ✅ // PUSE SOLO EL NUMERO, NO EL ARRAY DE PERSONAS/TICKETS
-  // Presentismo por hora (flujo de llegada)
+  // Presentismo por hora (flujo de llegada) ✅
   // Días donde se emitieron más entradas en vista calendario con mapa de calor.
-  // Promedio de entradas emitidas por ticket-group.
+  // Promedio de entradas emitidas por ticket-group. ✅
 
   @Patch('/:id')
   @ApiOkResponse({
@@ -255,18 +364,6 @@ export class EventController {
       throw new ConflictException([
         translate('route.event.update.active-event-not-editable'),
       ]);
-    }
-
-    if (updateEventDto.folderId) {
-      const eventFolder = await this.eventFolderService.getById(
-        updateEventDto.folderId,
-      );
-
-      if (!eventFolder) {
-        throw new NotFoundException([
-          translate('route.event.create.folder-not-found'),
-        ]);
-      }
     }
 
     if (event.eventTickets.length > 0) {
