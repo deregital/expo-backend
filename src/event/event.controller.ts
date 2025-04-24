@@ -314,7 +314,7 @@ export class EventController {
     const avgAmountPerTicketGroup =
       await this.eventService.getAvgAmountTicketGroupByEventId(event.id);
 
-    event['statistics'] = {
+    event.statistics = {
       maxTickets,
       emmitedTickets,
       emittedTicketsPercent,
