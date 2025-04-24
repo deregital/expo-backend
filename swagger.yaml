@@ -2505,6 +2505,7 @@ components:
             - "EVENT"
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
       required:
         - "id"
         - "name"
@@ -2541,6 +2542,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"
@@ -2625,6 +2627,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"
@@ -2702,6 +2705,7 @@ components:
             - "EVENT"
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
         created_at:
           type:
             - "string"
@@ -2792,6 +2796,7 @@ components:
             - "EVENT"
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
         created_at:
           type:
             - "string"
@@ -2831,6 +2836,7 @@ components:
             - "EVENT"
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
         created_at:
           type:
             - "string"
@@ -3320,6 +3326,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"
@@ -3374,6 +3381,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               group:
                 type:
                   - "object"
@@ -3463,6 +3471,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               group:
                 type:
                   - "object"
@@ -3515,6 +3524,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"
@@ -3655,6 +3665,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -3734,6 +3745,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -3832,6 +3844,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"
@@ -5252,7 +5265,7 @@ components:
                           - "supraEventId"
                           - "created_at"
                           - "updated_at"
-                    tags:
+                    profileTags:
                       type:
                         - "array"
                       items:
@@ -5275,6 +5288,7 @@ components:
                               - "EVENT"
                               - "PARTICIPANT"
                               - "NOT_IN_SYSTEM"
+                              - "PRODUCTION_ROLE"
                           group:
                             type:
                               - "object"
@@ -5353,7 +5367,7 @@ components:
                     - "updated_at"
                     - "supraEvent"
                     - "subEvents"
-                    - "tags"
+                    - "profileTags"
                     - "eventTickets"
             required:
               - "id"
@@ -5568,7 +5582,7 @@ components:
                     - "supraEventId"
                     - "created_at"
                     - "updated_at"
-              tags:
+              profileTags:
                 type:
                   - "array"
                 items:
@@ -5591,6 +5605,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     group:
                       type:
                         - "object"
@@ -5669,7 +5684,7 @@ components:
               - "updated_at"
               - "supraEvent"
               - "subEvents"
-              - "tags"
+              - "profileTags"
               - "eventTickets"
       required:
         - "folders"
@@ -6022,7 +6037,7 @@ components:
               - "amount"
               - "type"
               - "price"
-        tags:
+        profileTags:
           type:
             - "array"
           items:
@@ -6049,6 +6064,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"
@@ -6197,6 +6213,7 @@ components:
                 - "EVENT"
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
+                - "PRODUCTION_ROLE"
             created_at:
               type:
                 - "string"
@@ -6272,6 +6289,7 @@ components:
                 - "EVENT"
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
+                - "PRODUCTION_ROLE"
             created_at:
               type:
                 - "string"
@@ -6340,7 +6358,7 @@ components:
         - "subEvents"
         - "supraEvent"
         - "eventTickets"
-        - "tags"
+        - "profileTags"
         - "tickets"
         - "tagAssisted"
         - "tagConfirmed"
@@ -6541,6 +6559,7 @@ components:
                 - "EVENT"
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
+                - "PRODUCTION_ROLE"
             created_at:
               type:
                 - "string"
@@ -6855,6 +6874,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -7057,6 +7077,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -7336,6 +7357,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -7543,6 +7565,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -7728,6 +7751,7 @@ components:
                       - "EVENT"
                       - "PARTICIPANT"
                       - "NOT_IN_SYSTEM"
+                      - "PRODUCTION_ROLE"
                   created_at:
                     type:
                       - "string"
@@ -8419,6 +8443,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"

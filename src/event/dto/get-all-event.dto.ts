@@ -13,7 +13,7 @@ const eventWithAllThings = eventSchema.merge(
   z.object({
     supraEvent: eventSchema.nullable(),
     subEvents: z.array(eventSchema),
-    tags: z.array(
+    profileTags: z.array(
       tagSchema
         .pick({
           id: true,

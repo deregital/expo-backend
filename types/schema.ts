@@ -996,6 +996,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/ticket/get-pdfs-by-ticket-group/{ticketGroupId}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['TicketController_getPdfsByTicketGroup'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/ticket/all': {
     parameters: {
       query?: never;
@@ -1204,6 +1220,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/ticket-group/find-group/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['TicketGroupController_findGroup'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/ticket-group/update/{id}': {
     parameters: {
       query?: never;
@@ -1364,6 +1396,38 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/mercadopago/create-preference': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MercadoPagoController_createPreference'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/mercadopago/webhook': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MercadoPagoController_webhook'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1416,7 +1480,12 @@ export interface components {
       /** Format: uuid */
       groupId: string;
       /** @enum {string} */
-      type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+      type:
+        | 'PROFILE'
+        | 'EVENT'
+        | 'PARTICIPANT'
+        | 'NOT_IN_SYSTEM'
+        | 'PRODUCTION_ROLE';
     };
     FindAllTagResponseDto: {
       tags: {
@@ -1426,7 +1495,12 @@ export interface components {
         /** Format: uuid */
         groupId: string;
         /** @enum {string} */
-        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        type:
+          | 'PROFILE'
+          | 'EVENT'
+          | 'PARTICIPANT'
+          | 'NOT_IN_SYSTEM'
+          | 'PRODUCTION_ROLE';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1452,7 +1526,12 @@ export interface components {
         /** Format: uuid */
         groupId: string;
         /** @enum {string} */
-        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        type:
+          | 'PROFILE'
+          | 'EVENT'
+          | 'PARTICIPANT'
+          | 'NOT_IN_SYSTEM'
+          | 'PRODUCTION_ROLE';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1477,7 +1556,12 @@ export interface components {
       /** Format: uuid */
       groupId: string;
       /** @enum {string} */
-      type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+      type:
+        | 'PROFILE'
+        | 'EVENT'
+        | 'PARTICIPANT'
+        | 'NOT_IN_SYSTEM'
+        | 'PRODUCTION_ROLE';
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1506,7 +1590,12 @@ export interface components {
       /** Format: uuid */
       groupId: string;
       /** @enum {string} */
-      type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+      type:
+        | 'PROFILE'
+        | 'EVENT'
+        | 'PARTICIPANT'
+        | 'NOT_IN_SYSTEM'
+        | 'PRODUCTION_ROLE';
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1519,7 +1608,12 @@ export interface components {
       /** Format: uuid */
       groupId: string;
       /** @enum {string} */
-      type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+      type:
+        | 'PROFILE'
+        | 'EVENT'
+        | 'PARTICIPANT'
+        | 'NOT_IN_SYSTEM'
+        | 'PRODUCTION_ROLE';
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1657,7 +1751,12 @@ export interface components {
         /** Format: uuid */
         groupId: string;
         /** @enum {string} */
-        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        type:
+          | 'PROFILE'
+          | 'EVENT'
+          | 'PARTICIPANT'
+          | 'NOT_IN_SYSTEM'
+          | 'PRODUCTION_ROLE';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1672,7 +1771,12 @@ export interface components {
         id: string;
         name: string;
         /** @enum {string} */
-        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        type:
+          | 'PROFILE'
+          | 'EVENT'
+          | 'PARTICIPANT'
+          | 'NOT_IN_SYSTEM'
+          | 'PRODUCTION_ROLE';
         group: {
           /** Format: uuid */
           id: string;
@@ -1700,7 +1804,12 @@ export interface components {
         id: string;
         name: string;
         /** @enum {string} */
-        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        type:
+          | 'PROFILE'
+          | 'EVENT'
+          | 'PARTICIPANT'
+          | 'NOT_IN_SYSTEM'
+          | 'PRODUCTION_ROLE';
         group: {
           /** Format: uuid */
           id: string;
@@ -1715,7 +1824,12 @@ export interface components {
         /** Format: uuid */
         groupId: string;
         /** @enum {string} */
-        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        type:
+          | 'PROFILE'
+          | 'EVENT'
+          | 'PARTICIPANT'
+          | 'NOT_IN_SYSTEM'
+          | 'PRODUCTION_ROLE';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1756,7 +1870,12 @@ export interface components {
           /** Format: uuid */
           groupId: string;
           /** @enum {string} */
-          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          type:
+            | 'PROFILE'
+            | 'EVENT'
+            | 'PARTICIPANT'
+            | 'NOT_IN_SYSTEM'
+            | 'PRODUCTION_ROLE';
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -1778,7 +1897,12 @@ export interface components {
           /** Format: uuid */
           groupId: string;
           /** @enum {string} */
-          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          type:
+            | 'PROFILE'
+            | 'EVENT'
+            | 'PARTICIPANT'
+            | 'NOT_IN_SYSTEM'
+            | 'PRODUCTION_ROLE';
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -1809,7 +1933,12 @@ export interface components {
         /** Format: uuid */
         groupId: string;
         /** @enum {string} */
-        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        type:
+          | 'PROFILE'
+          | 'EVENT'
+          | 'PARTICIPANT'
+          | 'NOT_IN_SYSTEM'
+          | 'PRODUCTION_ROLE';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -2265,12 +2394,17 @@ export interface components {
             /** Format: date-time */
             updated_at: string;
           }[];
-          tags: {
+          profileTags: {
             /** Format: uuid */
             id: string;
             name: string;
             /** @enum {string} */
-            type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+            type:
+              | 'PROFILE'
+              | 'EVENT'
+              | 'PARTICIPANT'
+              | 'NOT_IN_SYSTEM'
+              | 'PRODUCTION_ROLE';
             group: {
               /** Format: uuid */
               id: string;
@@ -2363,12 +2497,17 @@ export interface components {
           /** Format: date-time */
           updated_at: string;
         }[];
-        tags: {
+        profileTags: {
           /** Format: uuid */
           id: string;
           name: string;
           /** @enum {string} */
-          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          type:
+            | 'PROFILE'
+            | 'EVENT'
+            | 'PARTICIPANT'
+            | 'NOT_IN_SYSTEM'
+            | 'PRODUCTION_ROLE';
           group: {
             /** Format: uuid */
             id: string;
@@ -2504,14 +2643,19 @@ export interface components {
         type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
         price: number | null;
       }[];
-      tags: {
+      profileTags: {
         /** Format: uuid */
         id: string;
         name: string;
         /** Format: uuid */
         groupId: string;
         /** @enum {string} */
-        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        type:
+          | 'PROFILE'
+          | 'EVENT'
+          | 'PARTICIPANT'
+          | 'NOT_IN_SYSTEM'
+          | 'PRODUCTION_ROLE';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -2557,7 +2701,12 @@ export interface components {
         /** Format: uuid */
         groupId: string;
         /** @enum {string} */
-        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        type:
+          | 'PROFILE'
+          | 'EVENT'
+          | 'PARTICIPANT'
+          | 'NOT_IN_SYSTEM'
+          | 'PRODUCTION_ROLE';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -2581,7 +2730,12 @@ export interface components {
         /** Format: uuid */
         groupId: string;
         /** @enum {string} */
-        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        type:
+          | 'PROFILE'
+          | 'EVENT'
+          | 'PARTICIPANT'
+          | 'NOT_IN_SYSTEM'
+          | 'PRODUCTION_ROLE';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -2660,7 +2814,12 @@ export interface components {
         /** Format: uuid */
         groupId: string;
         /** @enum {string} */
-        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        type:
+          | 'PROFILE'
+          | 'EVENT'
+          | 'PARTICIPANT'
+          | 'NOT_IN_SYSTEM'
+          | 'PRODUCTION_ROLE';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -2756,7 +2915,12 @@ export interface components {
           /** Format: uuid */
           groupId: string;
           /** @enum {string} */
-          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          type:
+            | 'PROFILE'
+            | 'EVENT'
+            | 'PARTICIPANT'
+            | 'NOT_IN_SYSTEM'
+            | 'PRODUCTION_ROLE';
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -2813,7 +2977,12 @@ export interface components {
           /** Format: uuid */
           groupId: string;
           /** @enum {string} */
-          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          type:
+            | 'PROFILE'
+            | 'EVENT'
+            | 'PARTICIPANT'
+            | 'NOT_IN_SYSTEM'
+            | 'PRODUCTION_ROLE';
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -2894,7 +3063,12 @@ export interface components {
           /** Format: uuid */
           groupId: string;
           /** @enum {string} */
-          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          type:
+            | 'PROFILE'
+            | 'EVENT'
+            | 'PARTICIPANT'
+            | 'NOT_IN_SYSTEM'
+            | 'PRODUCTION_ROLE';
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -2952,7 +3126,12 @@ export interface components {
           /** Format: uuid */
           groupId: string;
           /** @enum {string} */
-          type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+          type:
+            | 'PROFILE'
+            | 'EVENT'
+            | 'PARTICIPANT'
+            | 'NOT_IN_SYSTEM'
+            | 'PRODUCTION_ROLE';
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -3006,7 +3185,12 @@ export interface components {
               /** Format: uuid */
               groupId: string;
               /** @enum {string} */
-              type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+              type:
+                | 'PROFILE'
+                | 'EVENT'
+                | 'PARTICIPANT'
+                | 'NOT_IN_SYSTEM'
+                | 'PRODUCTION_ROLE';
               /** Format: date-time */
               created_at: string;
               /** Format: date-time */
@@ -3203,7 +3387,12 @@ export interface components {
         /** Format: uuid */
         groupId: string;
         /** @enum {string} */
-        type: 'PROFILE' | 'EVENT' | 'PARTICIPANT' | 'NOT_IN_SYSTEM';
+        type:
+          | 'PROFILE'
+          | 'EVENT'
+          | 'PARTICIPANT'
+          | 'NOT_IN_SYSTEM'
+          | 'PRODUCTION_ROLE';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -3492,54 +3681,54 @@ export interface components {
         profileId?: string;
       }[];
     };
-    CreateManyTicketWithPdfsResponseDto: {
-      tickets: {
+    CreateManyTicketResponseDto: {
+      /** Format: uuid */
+      id: string;
+      /** Format: uuid */
+      eventId: string;
+      /** @enum {string} */
+      type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
+      fullName: string;
+      /** Format: email */
+      mail: string;
+      dni: string;
+      seat: number | null;
+      scanned: boolean;
+      /** Format: date-time */
+      scannedAt: string | null;
+      /** Format: uuid */
+      ticketGroupId: string | null;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      event: {
         /** Format: uuid */
         id: string;
-        /** Format: uuid */
-        eventId: string;
-        /** @enum {string} */
-        type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
-        fullName: string;
-        /** Format: email */
-        mail: string;
-        dni: string;
-        seat: number | null;
-        scanned: boolean;
+        name: string;
         /** Format: date-time */
-        scannedAt: string | null;
+        date: string;
+        /** Format: date-time */
+        startingDate: string;
+        /** Format: date-time */
+        endingDate: string;
+        location: string;
         /** Format: uuid */
-        ticketGroupId: string | null;
+        folderId: string | null;
+        /** Format: uuid */
+        tagAssistedId: string;
+        /** Format: uuid */
+        tagConfirmedId: string;
+        active: boolean;
+        /** Format: uuid */
+        supraEventId: string | null;
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
         updated_at: string;
-        event: {
-          /** Format: uuid */
-          id: string;
-          name: string;
-          /** Format: date-time */
-          date: string;
-          /** Format: date-time */
-          startingDate: string;
-          /** Format: date-time */
-          endingDate: string;
-          location: string;
-          /** Format: uuid */
-          folderId: string | null;
-          /** Format: uuid */
-          tagAssistedId: string;
-          /** Format: uuid */
-          tagConfirmedId: string;
-          active: boolean;
-          /** Format: uuid */
-          supraEventId: string | null;
-          /** Format: date-time */
-          created_at: string;
-          /** Format: date-time */
-          updated_at: string;
-        };
-      }[];
+      };
+    }[];
+    GetPdfsByTicketGroupResponseDto: {
       pdfs: {
         ticketId: string;
         pdfBase64: string;
@@ -3926,10 +4115,31 @@ export interface components {
       updated_at: string;
     };
     ScanTicketDto: {
-      ticketBarcode: string;
+      /** @enum {string} */
+      type: 'id' | 'barcode';
+      value: string;
     };
     ScanTicketResponseDto: {
-      success: boolean;
+      /** Format: uuid */
+      id: string;
+      /** Format: uuid */
+      eventId: string;
+      /** @enum {string} */
+      type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
+      fullName: string;
+      /** Format: email */
+      mail: string;
+      dni: string;
+      seat: number | null;
+      scanned: boolean;
+      /** Format: date-time */
+      scannedAt: string | null;
+      /** Format: uuid */
+      ticketGroupId: string | null;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
     };
     SendEmailResponseDto: {
       mailId: string;
@@ -3938,8 +4148,6 @@ export interface components {
       /** Format: uuid */
       eventId: string;
       amountTickets: number;
-      /** @enum {string} */
-      status: 'BOOKED' | 'PAID' | 'FREE';
     };
     CreateTicketGroupResponseDto: {
       /** Format: uuid */
@@ -4003,6 +4211,19 @@ export interface components {
     };
     FindTicketsByEventDto: {
       tickets: number;
+    };
+    FindGroupTicketGroupDto: {
+      /** Format: uuid */
+      id: string;
+      amountTickets: number;
+      /** @enum {string} */
+      status: 'BOOKED' | 'PAID' | 'FREE';
+      /** Format: uuid */
+      eventId: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
     };
     UpdateTicketGroupDto: {
       /** @enum {string} */
@@ -4310,6 +4531,37 @@ export interface components {
         expiresIn: number;
       };
     };
+    CreatePreferenceDto: {
+      ticket_group_id: string;
+      /** @enum {string} */
+      ticket_type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
+    };
+    CreatePreferenceResponseDto: {
+      response:
+        | {
+            id: string;
+            init_point: string;
+          }
+        | {
+            message: string;
+            error: string;
+            status: string;
+            cause: string;
+          };
+    };
+    WebhookDto: {
+      data: {
+        id: string;
+      };
+      action: string;
+      api_version: string;
+      date_created: string;
+      id: number;
+      live_mode: boolean;
+      type: string;
+      user_id: number;
+    };
+    Response: Record<string, never>;
   };
   responses: never;
   parameters: never;
@@ -6419,7 +6671,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['CreateManyTicketWithPdfsResponseDto'];
+          'application/json': components['schemas']['CreateManyTicketResponseDto'];
         };
       };
       /** @description Evento no encontrado */
@@ -6432,6 +6684,46 @@ export interface operations {
         };
       };
       /** @description Error en la creación de los tickets */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  TicketController_getPdfsByTicketGroup: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        ticketGroupId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description PDFs de tickets obtenidos con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetPdfsByTicketGroupResponseDto'];
+        };
+      };
+      /** @description Grupo de tickets no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error al obtener los PDFs de los tickets */
       409: {
         headers: {
           [name: string]: unknown;
@@ -6878,6 +7170,46 @@ export interface operations {
       };
     };
   };
+  TicketGroupController_findGroup: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Grupo de tickets encontrado */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindGroupTicketGroupDto'];
+        };
+      };
+      /** @description Grupo de tickets no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error en la búsqueda del grupo de tickets */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
   TicketGroupController_update: {
     parameters: {
       query?: never;
@@ -7226,6 +7558,84 @@ export interface operations {
       };
       /** @description Credenciales inválidas */
       401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  MercadoPagoController_createPreference: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreatePreferenceDto'];
+      };
+    };
+    responses: {
+      /** @description Preferencia creada con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreatePreferenceResponseDto'];
+        };
+      };
+      /** @description Evento no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error en la creación de la preferencia */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  MercadoPagoController_webhook: {
+    parameters: {
+      query?: never;
+      header: {
+        'x-signature': string;
+        'x-request-id': string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['WebhookDto'];
+      };
+    };
+    responses: {
+      /** @description Webhook procesado con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['Response'];
+        };
+      };
+      /** @description Error al procesar el webhook */
+      409: {
         headers: {
           [name: string]: unknown;
         };
