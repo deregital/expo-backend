@@ -923,9 +923,29 @@ paths:
           in: "path"
           schema:
             type: "string"
+        - name: "gte"
+          required: true
+          in: "query"
+          schema:
+            type: "string"
+        - name: "lte"
+          required: true
+          in: "query"
+          schema:
+            type: "string"
       responses:
         200:
-          description: ""
+          description: "Estadisticas obtenidas con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetStatisticsByIdResponse"
+        404:
+          description: "Evento no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Event"
   /event/toggle-active/{id}:
@@ -6367,6 +6387,136 @@ components:
         - "tickets"
         - "tagAssisted"
         - "tagConfirmed"
+    GetStatisticsByIdResponse:
+      type:
+        - "object"
+      properties:
+        maxTickets:
+          type:
+            - "number"
+        emmitedTickets:
+          type:
+            - "number"
+        emittedTicketsPercent:
+          type:
+            - "number"
+        emmitedticketPerType:
+          type:
+            - "object"
+          additionalProperties:
+            type:
+              - "number"
+        totalIncome:
+          type:
+            - "number"
+        maxTotalIncome:
+          type:
+            - "number"
+        maxTicketPerType:
+          type:
+            - "object"
+          additionalProperties:
+            type:
+              - "number"
+        totalTicketsScanned:
+          type:
+            - "number"
+        notScanned:
+          type:
+            - "number"
+        attendancePercent:
+          type:
+            - "number"
+        attendancePerHour:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              eventId:
+                type:
+                  - "string"
+                format: "uuid"
+              type:
+                type:
+                  - "string"
+                enum:
+                  - "PARTICIPANT"
+                  - "STAFF"
+                  - "SPECTATOR"
+              fullName:
+                type:
+                  - "string"
+                minLength: 1
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              dni:
+                type:
+                  - "string"
+                minLength: 1
+              seat:
+                type:
+                  - "number"
+                  - "null"
+                minimum: 1
+              scanned:
+                type:
+                  - "boolean"
+              scannedAt:
+                type:
+                  - "string"
+                  - "null"
+                format: "date-time"
+              ticketGroupId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "eventId"
+              - "type"
+              - "fullName"
+              - "mail"
+              - "dni"
+              - "seat"
+              - "scanned"
+              - "scannedAt"
+              - "ticketGroupId"
+              - "created_at"
+              - "updated_at"
+        avgAmountPerTicketGroup:
+          type:
+            - "number"
+            - "null"
+      required:
+        - "maxTickets"
+        - "emmitedTickets"
+        - "emittedTicketsPercent"
+        - "emmitedticketPerType"
+        - "totalIncome"
+        - "maxTotalIncome"
+        - "maxTicketPerType"
+        - "totalTicketsScanned"
+        - "notScanned"
+        - "attendancePercent"
+        - "attendancePerHour"
+        - "avgAmountPerTicketGroup"
     UpdateEventDto:
       type:
         - "object"

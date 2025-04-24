@@ -25,7 +25,7 @@ import {
   TagType,
 } from '~/types/prisma-schema';
 import { deleteEventResponseSchema } from './dto/delete-event.dto';
-import { getStatisticsByIdResponseSchema } from './dto/get-statistics-by-id-event.dto';
+import { getStatisticsByIdSchema } from './dto/get-statistics-by-id-event.dto';
 
 @Injectable()
 export class EventService {
@@ -141,13 +141,13 @@ export class EventService {
     return events;
   }
 
-  async findStatistics(): Promise<unknown> {
+  async getAllEventWithTickets(): Promise<unknown> {
     return { test: 'Deregital' };
   }
 
-  async findStatisticsById(
+  async getEventWithTickets(
     id: Event['id'],
-  ): Promise<z.infer<typeof getStatisticsByIdResponseSchema>> {
+  ): Promise<z.infer<typeof getStatisticsByIdSchema>> {
     const event = await this.prisma.event.findUnique({
       where: { id },
       include: {

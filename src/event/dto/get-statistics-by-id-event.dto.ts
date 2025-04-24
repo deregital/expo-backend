@@ -1,27 +1,32 @@
+import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { ticketSchema } from '@/ticket/dto/ticket.dto';
 import z from 'zod';
+import { TicketType } from '~/types/prisma-schema';
 import { eventTicketsSchema } from './event-tickets.dto';
 import { eventSchema } from './event.dto';
 
-export const getStatisticsByIdResponseSchema = eventSchema.merge(
+export const getStatisticsByIdSchema = eventSchema.merge(
   z.object({
     tickets: z.array(ticketSchema),
     eventTickets: z.array(eventTicketsSchema),
-    statistics: z
-      .object({
-        maxTickets: z.number(),
-        emmitedTickets: z.number(),
-        emittedTicketsPercent: z.number(),
-        emmitedticketPerType: z.object({}),
-        totalIncome: z.number(),
-        maxTotalIncome: z.number(),
-        maxTicketPerType: z.object({}),
-        totalTicketsScanned: z.number(),
-        notScanned: z.number(),
-        attendancePercent: z.number(),
-        attendancePerHour: z.object({}),
-        avgAmountPerTicketGroup: z.object({}).nullable(),
-      })
-      .optional(),
   }),
 );
+
+export const getStatisticsByIdResponseSchema = z.object({
+  maxTickets: z.number(),
+  emmitedTickets: z.number(),
+  emittedTicketsPercent: z.number(),
+  emmitedticketPerType: z.record(z.nativeEnum(TicketType), z.number()),
+  totalIncome: z.number(),
+  maxTotalIncome: z.number(),
+  maxTicketPerType: z.record(z.nativeEnum(TicketType), z.number()),
+  totalTicketsScanned: z.number(),
+  notScanned: z.number(),
+  attendancePercent: z.number(),
+  attendancePerHour: ticketSchema.array(),
+  avgAmountPerTicketGroup: z.number().nullable(),
+});
+
+export class GetStatisticsByIdResponse extends createZodDtoWithoutDate(
+  getStatisticsByIdResponseSchema,
+) {}

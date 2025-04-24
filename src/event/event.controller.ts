@@ -48,6 +48,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -66,7 +67,10 @@ import {
   TagGroup,
   TicketType,
 } from '~/types/prisma-schema';
-import { getStatisticsByIdResponseSchema } from './dto/get-statistics-by-id-event.dto';
+import {
+  GetStatisticsByIdResponse,
+  getStatisticsByIdResponseSchema,
+} from './dto/get-statistics-by-id-event.dto';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -197,7 +201,7 @@ export class EventController {
 
   @Get('/statistics')
   async getStatistics(): Promise<unknown> {
-    return await this.eventService.findStatistics();
+    return await this.eventService.getAllEventWithTickets();
   }
   // GENERALES (acumulado):
   // Recaudación total de todos los eventos.
@@ -223,11 +227,22 @@ export class EventController {
     return await this.eventService.findById(id);
   }
 
+  @Roles(Role.ADMIN)
   @Get('/:id/statistics')
+  @ApiOkResponse({
+    description: translate('route.event.get-statistics.success'),
+    type: GetStatisticsByIdResponse,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.event.get-statistics.not-found'),
+    type: ErrorDto,
+  })
   async getStatisticsById(
     @Param('id', new ExistingRecord('event')) id: string,
+    @Query('gte') gte: string,
+    @Query('lte') lte: string,
   ): Promise<z.infer<typeof getStatisticsByIdResponseSchema>> {
-    const event = await this.eventService.findStatisticsById(id);
+    const event = await this.eventService.getEventWithTickets(id);
 
     // Cantidad maxima de tickets
     const maxTickets = event.eventTickets.reduce(
@@ -299,8 +314,13 @@ export class EventController {
     );
 
     // Presentismo por hora (flujo de llegada)
-    const gteAttendance = new Date('2025-04-23T14:30:00');
-    const lteAttendance = new Date('2025-04-23T15:30:00');
+    const gteAttendance = new Date(
+      gte ?? event.date.setHours(event.date.getHours() - 1),
+    );
+    const lteAttendance = new Date(
+      lte ?? event.date.setHours(event.date.getHours() + 1),
+    );
+    console.log(gteAttendance, lteAttendance);
     const attendancePerHour = event.tickets.filter((ticket) => {
       if (!ticket.scannedAt) {
         const attendaneDate = new Date(ticket.scannedAt!);
@@ -314,7 +334,7 @@ export class EventController {
     const avgAmountPerTicketGroup =
       await this.eventService.getAvgAmountTicketGroupByEventId(event.id);
 
-    event.statistics = {
+    return {
       maxTickets,
       emmitedTickets,
       emittedTicketsPercent,
@@ -328,7 +348,6 @@ export class EventController {
       attendancePerHour,
       avgAmountPerTicketGroup,
     };
-    return event!;
   }
   // TICKETS
   // Entradas emitidas totales y por tipo ✅
@@ -364,6 +383,18 @@ export class EventController {
       throw new ConflictException([
         translate('route.event.update.active-event-not-editable'),
       ]);
+    }
+
+    if (updateEventDto.folderId) {
+      const eventFolder = await this.eventFolderService.getById(
+        updateEventDto.folderId,
+      );
+
+      if (!eventFolder) {
+        throw new NotFoundException([
+          translate('route.event.create.folder-not-found'),
+        ]);
+      }
     }
 
     if (event.eventTickets.length > 0) {
