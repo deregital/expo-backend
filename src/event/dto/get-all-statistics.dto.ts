@@ -1,3 +1,4 @@
+import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { ticketGroupSchema } from '@/ticket-group/dto/ticket-group.dto';
 import { ticketSchema } from '@/ticket/dto/ticket.dto';
 import z from 'zod';
@@ -38,11 +39,6 @@ export const getAllStatisticsResponseSchema = z.object({
   ),
 });
 
-// return {
-//   totalIncome,
-//   emailByPurchasedTickets,
-//   attendancePercent,
-//   maxTicketPerTypeAll,
-//   emmitedticketPerTypeAll,
-//   eventDataIndividual,
-// };
+export class GetAllStatisticsResponseDto extends createZodDtoWithoutDate(
+  getAllStatisticsResponseSchema,
+) {}

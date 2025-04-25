@@ -829,7 +829,11 @@ paths:
       parameters: []
       responses:
         200:
-          description: ""
+          description: "Estadisticas obtenidas con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetAllStatisticsResponseDto"
       tags:
         - "Event"
   /event/{id}:
@@ -935,11 +939,11 @@ paths:
             type: "string"
       responses:
         200:
-          description: "Estadisticas obtenidas con éxito"
+          description: "Estadisticas del evento obtenidas con éxito"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GetStatisticsByIdResponse"
+                $ref: "#/components/schemas/GetStatisticsByIdResponseDto"
         404:
           description: "Evento no encontrado"
           content:
@@ -5830,6 +5834,87 @@ components:
               - "eventTickets"
       required:
         - "events"
+    GetAllStatisticsResponseDto:
+      type:
+        - "object"
+      properties:
+        totalIncome:
+          type:
+            - "number"
+        emailByPurchasedTickets:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              ticketsPurchased:
+                type:
+                  - "integer"
+            required:
+              - "mail"
+              - "ticketsPurchased"
+        attendancePercent:
+          type:
+            - "number"
+        maxTicketPerTypeAll:
+          type:
+            - "object"
+          additionalProperties:
+            type:
+              - "number"
+        emmitedticketPerTypeAll:
+          type:
+            - "object"
+          additionalProperties:
+            type:
+              - "number"
+        eventDataIndividual:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              name:
+                type:
+                  - "string"
+              price:
+                type:
+                  - "number"
+                  - "null"
+              purchasePercent:
+                type:
+                  - "number"
+              spectatorEventTicket:
+                type:
+                  - "number"
+                  - "null"
+              spectatorTicketsSold:
+                type:
+                  - "number"
+            required:
+              - "id"
+              - "name"
+              - "price"
+              - "purchasePercent"
+              - "spectatorEventTicket"
+              - "spectatorTicketsSold"
+      required:
+        - "totalIncome"
+        - "emailByPurchasedTickets"
+        - "attendancePercent"
+        - "maxTicketPerTypeAll"
+        - "emmitedticketPerTypeAll"
+        - "eventDataIndividual"
     GetByIdEventResponseDto:
       type:
         - "object"
@@ -6387,7 +6472,7 @@ components:
         - "tickets"
         - "tagAssisted"
         - "tagConfirmed"
-    GetStatisticsByIdResponse:
+    GetStatisticsByIdResponseDto:
       type:
         - "object"
       properties:
@@ -6504,6 +6589,13 @@ components:
           type:
             - "number"
             - "null"
+        heatMapDates:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+            format: "date-time"
       required:
         - "maxTickets"
         - "emmitedTickets"
@@ -6517,6 +6609,7 @@ components:
         - "attendancePercent"
         - "attendancePerHour"
         - "avgAmountPerTicketGroup"
+        - "heatMapDates"
     UpdateEventDto:
       type:
         - "object"

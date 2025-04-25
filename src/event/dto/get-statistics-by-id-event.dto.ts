@@ -25,8 +25,9 @@ export const getStatisticsByIdResponseSchema = z.object({
   attendancePercent: z.number(),
   attendancePerHour: ticketSchema.array(),
   avgAmountPerTicketGroup: z.number().nullable(),
+  heatMapDates: z.date().array(),
 });
 
-export class GetStatisticsByIdResponse extends createZodDtoWithoutDate(
+export class GetStatisticsByIdResponseDto extends createZodDtoWithoutDate(
   getStatisticsByIdResponseSchema,
 ) {}

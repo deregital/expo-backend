@@ -68,9 +68,12 @@ import {
   TagGroup,
   TicketType,
 } from '~/types/prisma-schema';
-import { getAllStatisticsResponseSchema } from './dto/get-all-statistics.dto';
 import {
-  GetStatisticsByIdResponse,
+  GetAllStatisticsResponseDto,
+  getAllStatisticsResponseSchema,
+} from './dto/get-all-statistics.dto';
+import {
+  GetStatisticsByIdResponseDto,
   getStatisticsByIdResponseSchema,
 } from './dto/get-statistics-by-id-event.dto';
 
@@ -202,7 +205,12 @@ export class EventController {
     return await this.eventService.findActive();
   }
 
+  @Roles(Role.ADMIN)
   @Get('/statistics')
+  @ApiOkResponse({
+    description: translate('route.event.get-statistics.success'),
+    type: GetAllStatisticsResponseDto,
+  })
   async getStatistics(): Promise<
     z.infer<typeof getAllStatisticsResponseSchema>
   > {
@@ -210,7 +218,6 @@ export class EventController {
 
     const totalIncome = events.reduce((total, event) => {
       if (event.tickets) {
-        //GET eventTicket SPECTATOR
         const eventTicketSpectator = event.eventTickets.find(
           (ticket) => ticket.type === TicketType.SPECTATOR,
         );
@@ -309,9 +316,9 @@ export class EventController {
     return {
       totalIncome,
       emailByPurchasedTickets,
+      emmitedticketPerTypeAll,
       attendancePercent,
       maxTicketPerTypeAll,
-      emmitedticketPerTypeAll,
       eventDataIndividual,
     };
   }
@@ -342,11 +349,11 @@ export class EventController {
   @Roles(Role.ADMIN)
   @Get('/:id/statistics')
   @ApiOkResponse({
-    description: translate('route.event.get-statistics.success'),
-    type: GetStatisticsByIdResponse,
+    description: translate('route.event.get-statistics-by-id.success'),
+    type: GetStatisticsByIdResponseDto,
   })
   @ApiNotFoundResponse({
-    description: translate('route.event.get-statistics.not-found'),
+    description: translate('route.event.get-statistics-by-id.not-found'),
     type: ErrorDto,
   })
   async getStatisticsById(
@@ -446,6 +453,8 @@ export class EventController {
     const avgAmountPerTicketGroup =
       await this.eventService.getAvgAmountTicketGroupByEventId(event.id);
 
+    const heatMapDates = event.tickets.map((ticket) => ticket.created_at);
+
     return {
       maxTickets,
       emmitedTickets,
@@ -459,6 +468,7 @@ export class EventController {
       attendancePercent,
       attendancePerHour,
       avgAmountPerTicketGroup,
+      heatMapDates,
     };
   }
   // TICKETS

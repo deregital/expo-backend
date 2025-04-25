@@ -336,6 +336,9 @@ export default {
       },
       'get-statistics': {
         success: 'Estadisticas obtenidas con éxito',
+      },
+      'get-statistics-by-id': {
+        success: 'Estadisticas del evento obtenidas con éxito',
         'not-found': 'Evento no encontrado',
       },
       update: {
