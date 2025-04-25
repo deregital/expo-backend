@@ -160,4 +160,8 @@ export class PrismaService implements OnModuleInit {
   get ticketGroup(): PrismaClient['ticketGroup'] {
     return this.db.ticketGroup;
   }
+
+  get production(): PrismaClient['production'] {
+    return this.db.production;
+  }
 }

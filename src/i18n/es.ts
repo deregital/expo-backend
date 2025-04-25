@@ -660,5 +660,10 @@ export default {
         'invalid-signature': 'Firma inválida',
       },
     },
+    production: {
+      create: {
+        success: 'Producción creada con éxito',
+      },
+    },
   },
 } as const;

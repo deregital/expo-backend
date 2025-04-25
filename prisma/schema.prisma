@@ -329,8 +329,8 @@ model Production {
 
   name String
 
-  adminstratorId String  @map("adminstrator_id")
-  administrator  Profile @relation("PRODUCTION_X_ADMINISTRATOR", fields: [adminstratorId], references: [id])
+  adminstratorId String?  @map("adminstrator_id")
+  administrator  Profile? @relation("PRODUCTION_X_ADMINISTRATOR", fields: [adminstratorId], references: [id])
 
   events              Event[]                        @relation("EVENT_X_PRODUCTION")
   affiliationRequests ProductionAffiliationRequest[] @relation("PRODUCTION_AFFILIATION_REQUEST")

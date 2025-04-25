@@ -2335,6 +2335,25 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "MercadoPago"
+  /production/create:
+    post:
+      operationId: "ProductionController_create"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductionDto"
+      responses:
+        200:
+          description: "Producción creada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateProductionDto"
+      tags:
+        - "Production"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -12376,3 +12395,13 @@ components:
     Response:
       type: "object"
       properties: {}
+    CreateProductionDto:
+      type:
+        - "object"
+      properties:
+        name:
+          type:
+            - "string"
+          minLength: 1
+      required:
+        - "name"
