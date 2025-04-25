@@ -25,6 +25,7 @@ import {
   TagType,
 } from '~/types/prisma-schema';
 import { deleteEventResponseSchema } from './dto/delete-event.dto';
+import { getAllStatisticsSchema } from './dto/get-all-statistics.dto';
 import { getStatisticsByIdSchema } from './dto/get-statistics-by-id-event.dto';
 
 @Injectable()
@@ -141,8 +142,18 @@ export class EventService {
     return events;
   }
 
-  async getAllEventWithTickets(): Promise<unknown> {
-    return { test: 'Deregital' };
+  async getAllEventWithTickets(): Promise<
+    z.infer<typeof getAllStatisticsSchema>
+  > {
+    const events = await this.prisma.event.findMany({
+      include: {
+        tickets: true,
+        eventTickets: true,
+        ticketGroups: true,
+      },
+    });
+
+    return events!;
   }
 
   async getEventWithTickets(

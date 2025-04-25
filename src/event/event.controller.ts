@@ -38,6 +38,7 @@ import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
 import { TicketGroupService } from '@/ticket-group/ticket-group.service';
+import { TicketService } from '@/ticket/ticket.service';
 import {
   Body,
   ConflictException,
@@ -67,6 +68,7 @@ import {
   TagGroup,
   TicketType,
 } from '~/types/prisma-schema';
+import { getAllStatisticsResponseSchema } from './dto/get-all-statistics.dto';
 import {
   GetStatisticsByIdResponse,
   getStatisticsByIdResponseSchema,
@@ -83,6 +85,7 @@ export class EventController {
     private readonly tagService: TagService,
     private readonly eventTicketsService: EventTicketService,
     private readonly ticketGroupService: TicketGroupService,
+    private readonly ticketService: TicketService,
   ) {}
 
   @ApiCreatedResponse({
@@ -200,15 +203,124 @@ export class EventController {
   }
 
   @Get('/statistics')
-  async getStatistics(): Promise<unknown> {
-    return await this.eventService.getAllEventWithTickets();
+  async getStatistics(): Promise<
+    z.infer<typeof getAllStatisticsResponseSchema>
+  > {
+    const events = await this.eventService.getAllEventWithTickets();
+
+    const totalIncome = events.reduce((total, event) => {
+      if (event.tickets) {
+        //GET eventTicket SPECTATOR
+        const eventTicketSpectator = event.eventTickets.find(
+          (ticket) => ticket.type === TicketType.SPECTATOR,
+        );
+
+        const soldTicketsSpectator = event.tickets.filter(
+          (ticket) => ticket.type === TicketType.SPECTATOR,
+        );
+
+        total +=
+          soldTicketsSpectator.length * (eventTicketSpectator?.amount ?? 0);
+      }
+      return total;
+    }, 0);
+
+    // Todas las posibles entradas y por tipo REFACTOR
+    const maxTicketPerTypeAll = events.reduce(
+      (counts, event) => {
+        const ticketsCount = event.eventTickets.reduce(
+          (counts, ticket) => {
+            const amount = ticket.amount ?? 0;
+
+            counts[ticket.type] = (counts[ticket.type] ?? 0) + amount;
+            return counts;
+          },
+          { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<
+            TicketType,
+            number
+          >,
+        );
+        counts.STAFF += ticketsCount.STAFF ?? 0;
+        counts.PARTICIPANT += ticketsCount.PARTICIPANT ?? 0;
+        counts.SPECTATOR += ticketsCount.SPECTATOR ?? 0;
+        return counts;
+      },
+      { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
+    );
+
+    // Entradas emitidas totales y por tipo REFACTOR
+    const emmitedticketPerTypeAll = events.reduce(
+      (counts, event) => {
+        const ticketsCount = event.tickets.reduce(
+          (ticketCount, ticket) => {
+            ticketCount[ticket.type] = (ticketCount[ticket.type] ?? 0) + 1;
+            return ticketCount;
+          },
+          { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<
+            TicketType,
+            number
+          >,
+        );
+        counts.STAFF += ticketsCount.STAFF ?? 0;
+        counts.PARTICIPANT += ticketsCount.PARTICIPANT ?? 0;
+        counts.SPECTATOR += ticketsCount.SPECTATOR ?? 0;
+        return counts;
+      },
+      { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
+    );
+
+    const attendancePercent = parseFloat(
+      (
+        (emmitedticketPerTypeAll.SPECTATOR / maxTicketPerTypeAll.SPECTATOR) *
+        100
+      ).toFixed(2),
+    );
+
+    const emailByPurchasedTickets =
+      await this.ticketService.getEmailsByTicketsPurchased();
+
+    const eventDataIndividual = events.map((event) => {
+      const spectatorEventTicket = event.eventTickets.filter(
+        (ticket) => ticket.type === TicketType.SPECTATOR,
+      );
+      const spectatorTicketsSold = event.tickets.filter(
+        (ticket) => ticket.type === TicketType.SPECTATOR,
+      );
+
+      // porcentaje de ventas sobre cupo máximo
+      const purchasePercent = parseFloat(
+        (
+          (spectatorTicketsSold.length /
+            (spectatorEventTicket[0]?.amount ?? 0)) *
+          100
+        ).toFixed(2),
+      );
+
+      return {
+        id: event.id,
+        name: event.name,
+        price: spectatorEventTicket[0]?.price ?? null,
+        purchasePercent,
+        spectatorEventTicket: spectatorEventTicket[0]?.amount ?? null,
+        spectatorTicketsSold: spectatorTicketsSold.length,
+      };
+    });
+
+    return {
+      totalIncome,
+      emailByPurchasedTickets,
+      attendancePercent,
+      maxTicketPerTypeAll,
+      emmitedticketPerTypeAll,
+      eventDataIndividual,
+    };
   }
   // GENERALES (acumulado):
-  // Recaudación total de todos los eventos.
-  // ranking de mails que más aparecen en ticket-group y cuántos tickets sacaron.
-  // Entradas emitidas totales y por tipo
-  // Entradas emitidas / cupo (70% de entradas emitidas sobre el total de entradas disponibles)
-  // Tabla con precio unitario y porcentaje de ventas sobre cupo máximo
+  // Recaudación total de todos los eventos. ✅?
+  // ranking de mails que más aparecen en ticket-group y cuántos tickets sacaron. ✅
+  // Entradas emitidas totales y por tipo ✅
+  // Entradas emitidas / cupo (70% de entradas emitidas sobre el total de entradas disponibles) ✅?
+  // Tabla con precio unitario y porcentaje de ventas sobre cupo máximo ✅?
 
   @Roles(Role.TICKETS, Role.ADMIN, Role.USER)
   @Get('/:id')
@@ -286,7 +398,7 @@ export class EventController {
         counts[ticket.type] = (counts[ticket.type] ?? 0) + amount;
         return counts;
       },
-      {} as Record<TicketType, number>,
+      { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
     );
 
     // Entradas emitidas totales y por tipo
@@ -295,7 +407,7 @@ export class EventController {
         counts[ticket.type] = (counts[ticket.type] ?? 0) + 1;
         return counts;
       },
-      {} as Record<TicketType, number>,
+      { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
     );
 
     const totalTicketsScanned = event.tickets.reduce(
