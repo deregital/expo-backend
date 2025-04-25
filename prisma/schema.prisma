@@ -81,7 +81,10 @@ model Profile {
   isInTrash        Boolean   @default(false) @map("is_in_trash")
   movedToTrashDate DateTime? @map("moved_to_trash_date")
 
-  Ticket Ticket[] @relation("PROFILE_X_TICKET")
+  tickets Ticket[] @relation("PROFILE_X_TICKET")
+
+  productionsAdministrated Production[]                   @relation("PRODUCTION_X_ADMINISTRATOR")
+  productionRequestsSent   ProductionAffiliationRequest[] @relation("PRODUCTION_AFILIATION_X_PROFILE")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -158,9 +161,11 @@ model Tag {
   profiles             Profile[] @relation("PROFILE_X_TAG")
   accountsGlobalFilter Account[] @relation("GLOBAL_FILTER_X_ACCOUNT")
 
+  profileEvents Event[] @relation("EVENT_X_PROFILE_TAGS")
+  roleEvents    Event[] @relation("EVENT_X_ROLES")
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  Event      Event[]  @relation("EVENT_X_TAGS")
 
   @@map("TAG")
 }
@@ -201,10 +206,13 @@ model Event {
   tickets      Ticket[]      @relation("EVENT_X_TICKET")
   ticketGroups TicketGroup[] @relation("EVENT_X_TICKET_GROUP")
   subEvents    Event[]       @relation("SubEvents")
-  tags         Tag[]         @relation("EVENT_X_TAGS")
+  profileTags  Tag[]         @relation("EVENT_X_PROFILE_TAGS")
   eventTickets EventTicket[] @relation("EVENT_X_EVENTTICKET")
 
   active Boolean @default(false)
+
+  productions      Production[] @relation("EVENT_X_PRODUCTION")
+  participantRoles Tag[]        @relation("EVENT_X_ROLES")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -316,6 +324,47 @@ model EventTicket {
   @@map("EVENT_TICKET")
 }
 
+model Production {
+  id String @id @default(uuid())
+
+  name String
+
+  adminstratorId String  @map("adminstrator_id")
+  administrator  Profile @relation("PRODUCTION_X_ADMINISTRATOR", fields: [adminstratorId], references: [id])
+
+  events              Event[]                        @relation("EVENT_X_PRODUCTION")
+  affiliationRequests ProductionAffiliationRequest[] @relation("PRODUCTION_AFFILIATION_REQUEST")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("PRODUCTION")
+}
+
+model ProductionAffiliationRequest {
+  id String @id @default(uuid())
+
+  productionId String     @map("production_id")
+  production   Production @relation(name: "PRODUCTION_AFFILIATION_REQUEST", fields: [productionId], references: [id], onDelete: Cascade)
+
+  profileId String
+  profile   Profile @relation(name: "PRODUCTION_AFILIATION_X_PROFILE", fields: [profileId], references: [id])
+
+  status     AffiliationStatus @default(PENDING)
+  reviewedAt DateTime?         @map("reviewed_at")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("PRODUCTION_AFFILIATION_REQUEST")
+}
+
+enum AffiliationStatus {
+  APPROVED
+  PENDING
+  REJECTED
+}
+
 enum TemplateStatus {
   APPROVED
   PENDING
@@ -333,6 +382,7 @@ enum TagType {
   EVENT
   PARTICIPANT
   NOT_IN_SYSTEM
+  PRODUCTION_ROLE
 }
 
 enum MessageState {

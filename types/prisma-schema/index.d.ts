@@ -87,6 +87,17 @@ export type Enums = $Result.DefaultSelection<Prisma.$EnumsPayload>;
  *
  */
 export type EventTicket = $Result.DefaultSelection<Prisma.$EventTicketPayload>;
+/**
+ * Model Production
+ *
+ */
+export type Production = $Result.DefaultSelection<Prisma.$ProductionPayload>;
+/**
+ * Model ProductionAffiliationRequest
+ *
+ */
+export type ProductionAffiliationRequest =
+  $Result.DefaultSelection<Prisma.$ProductionAffiliationRequestPayload>;
 
 /**
  * Enums
@@ -101,6 +112,15 @@ export namespace $Enums {
   };
 
   export type Role = (typeof Role)[keyof typeof Role];
+
+  export const AffiliationStatus: {
+    APPROVED: 'APPROVED';
+    PENDING: 'PENDING';
+    REJECTED: 'REJECTED';
+  };
+
+  export type AffiliationStatus =
+    (typeof AffiliationStatus)[keyof typeof AffiliationStatus];
 
   export const TemplateStatus: {
     APPROVED: 'APPROVED';
@@ -125,6 +145,7 @@ export namespace $Enums {
     EVENT: 'EVENT';
     PARTICIPANT: 'PARTICIPANT';
     NOT_IN_SYSTEM: 'NOT_IN_SYSTEM';
+    PRODUCTION_ROLE: 'PRODUCTION_ROLE';
   };
 
   export type TagType = (typeof TagType)[keyof typeof TagType];
@@ -158,6 +179,10 @@ export namespace $Enums {
 export type Role = $Enums.Role;
 
 export const Role: typeof $Enums.Role;
+
+export type AffiliationStatus = $Enums.AffiliationStatus;
+
+export const AffiliationStatus: typeof $Enums.AffiliationStatus;
 
 export type TemplateStatus = $Enums.TemplateStatus;
 
@@ -499,6 +524,29 @@ export class PrismaClient<
    * ```
    */
   get eventTicket(): Prisma.EventTicketDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.production`: Exposes CRUD operations for the **Production** model.
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more Productions
+   * const productions = await prisma.production.findMany()
+   * ```
+   */
+  get production(): Prisma.ProductionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.productionAffiliationRequest`: Exposes CRUD operations for the **ProductionAffiliationRequest** model.
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more ProductionAffiliationRequests
+   * const productionAffiliationRequests = await prisma.productionAffiliationRequest.findMany()
+   * ```
+   */
+  get productionAffiliationRequest(): Prisma.ProductionAffiliationRequestDelegate<
+    ExtArgs,
+    ClientOptions
+  >;
 }
 
 export namespace Prisma {
@@ -972,6 +1020,8 @@ export namespace Prisma {
     TicketGroup: 'TicketGroup';
     Enums: 'Enums';
     EventTicket: 'EventTicket';
+    Production: 'Production';
+    ProductionAffiliationRequest: 'ProductionAffiliationRequest';
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -1011,7 +1061,9 @@ export namespace Prisma {
         | 'ticket'
         | 'ticketGroup'
         | 'enums'
-        | 'eventTicket';
+        | 'eventTicket'
+        | 'production'
+        | 'productionAffiliationRequest';
       txIsolationLevel: Prisma.TransactionIsolationLevel;
     };
     model: {
@@ -2133,6 +2185,158 @@ export namespace Prisma {
           };
         };
       };
+      Production: {
+        payload: Prisma.$ProductionPayload<ExtArgs>;
+        fields: Prisma.ProductionFieldRefs;
+        operations: {
+          findUnique: {
+            args: Prisma.ProductionFindUniqueArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionPayload> | null;
+          };
+          findUniqueOrThrow: {
+            args: Prisma.ProductionFindUniqueOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionPayload>;
+          };
+          findFirst: {
+            args: Prisma.ProductionFindFirstArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionPayload> | null;
+          };
+          findFirstOrThrow: {
+            args: Prisma.ProductionFindFirstOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionPayload>;
+          };
+          findMany: {
+            args: Prisma.ProductionFindManyArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionPayload>[];
+          };
+          create: {
+            args: Prisma.ProductionCreateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionPayload>;
+          };
+          createMany: {
+            args: Prisma.ProductionCreateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          createManyAndReturn: {
+            args: Prisma.ProductionCreateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionPayload>[];
+          };
+          delete: {
+            args: Prisma.ProductionDeleteArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionPayload>;
+          };
+          update: {
+            args: Prisma.ProductionUpdateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionPayload>;
+          };
+          deleteMany: {
+            args: Prisma.ProductionDeleteManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateMany: {
+            args: Prisma.ProductionUpdateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateManyAndReturn: {
+            args: Prisma.ProductionUpdateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionPayload>[];
+          };
+          upsert: {
+            args: Prisma.ProductionUpsertArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionPayload>;
+          };
+          aggregate: {
+            args: Prisma.ProductionAggregateArgs<ExtArgs>;
+            result: $Utils.Optional<AggregateProduction>;
+          };
+          groupBy: {
+            args: Prisma.ProductionGroupByArgs<ExtArgs>;
+            result: $Utils.Optional<ProductionGroupByOutputType>[];
+          };
+          count: {
+            args: Prisma.ProductionCountArgs<ExtArgs>;
+            result:
+              | $Utils.Optional<ProductionCountAggregateOutputType>
+              | number;
+          };
+        };
+      };
+      ProductionAffiliationRequest: {
+        payload: Prisma.$ProductionAffiliationRequestPayload<ExtArgs>;
+        fields: Prisma.ProductionAffiliationRequestFieldRefs;
+        operations: {
+          findUnique: {
+            args: Prisma.ProductionAffiliationRequestFindUniqueArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionAffiliationRequestPayload> | null;
+          };
+          findUniqueOrThrow: {
+            args: Prisma.ProductionAffiliationRequestFindUniqueOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionAffiliationRequestPayload>;
+          };
+          findFirst: {
+            args: Prisma.ProductionAffiliationRequestFindFirstArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionAffiliationRequestPayload> | null;
+          };
+          findFirstOrThrow: {
+            args: Prisma.ProductionAffiliationRequestFindFirstOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionAffiliationRequestPayload>;
+          };
+          findMany: {
+            args: Prisma.ProductionAffiliationRequestFindManyArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionAffiliationRequestPayload>[];
+          };
+          create: {
+            args: Prisma.ProductionAffiliationRequestCreateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionAffiliationRequestPayload>;
+          };
+          createMany: {
+            args: Prisma.ProductionAffiliationRequestCreateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          createManyAndReturn: {
+            args: Prisma.ProductionAffiliationRequestCreateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionAffiliationRequestPayload>[];
+          };
+          delete: {
+            args: Prisma.ProductionAffiliationRequestDeleteArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionAffiliationRequestPayload>;
+          };
+          update: {
+            args: Prisma.ProductionAffiliationRequestUpdateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionAffiliationRequestPayload>;
+          };
+          deleteMany: {
+            args: Prisma.ProductionAffiliationRequestDeleteManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateMany: {
+            args: Prisma.ProductionAffiliationRequestUpdateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateManyAndReturn: {
+            args: Prisma.ProductionAffiliationRequestUpdateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionAffiliationRequestPayload>[];
+          };
+          upsert: {
+            args: Prisma.ProductionAffiliationRequestUpsertArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$ProductionAffiliationRequestPayload>;
+          };
+          aggregate: {
+            args: Prisma.ProductionAffiliationRequestAggregateArgs<ExtArgs>;
+            result: $Utils.Optional<AggregateProductionAffiliationRequest>;
+          };
+          groupBy: {
+            args: Prisma.ProductionAffiliationRequestGroupByArgs<ExtArgs>;
+            result: $Utils.Optional<ProductionAffiliationRequestGroupByOutputType>[];
+          };
+          count: {
+            args: Prisma.ProductionAffiliationRequestCountArgs<ExtArgs>;
+            result:
+              | $Utils.Optional<ProductionAffiliationRequestCountAggregateOutputType>
+              | number;
+          };
+        };
+      };
     };
   } & {
     other: {
@@ -2236,6 +2440,8 @@ export namespace Prisma {
     ticketGroup?: TicketGroupOmit;
     enums?: EnumsOmit;
     eventTicket?: EventTicketOmit;
+    production?: ProductionOmit;
+    productionAffiliationRequest?: ProductionAffiliationRequestOmit;
   };
 
   /* Types for Logging */
@@ -2418,7 +2624,9 @@ export namespace Prisma {
     comments: number;
     messages: number;
     tags: number;
-    Ticket: number;
+    tickets: number;
+    productionsAdministrated: number;
+    productionRequestsSent: number;
   };
 
   export type ProfileCountOutputTypeSelect<
@@ -2428,7 +2636,13 @@ export namespace Prisma {
     comments?: boolean | ProfileCountOutputTypeCountCommentsArgs;
     messages?: boolean | ProfileCountOutputTypeCountMessagesArgs;
     tags?: boolean | ProfileCountOutputTypeCountTagsArgs;
-    Ticket?: boolean | ProfileCountOutputTypeCountTicketArgs;
+    tickets?: boolean | ProfileCountOutputTypeCountTicketsArgs;
+    productionsAdministrated?:
+      | boolean
+      | ProfileCountOutputTypeCountProductionsAdministratedArgs;
+    productionRequestsSent?:
+      | boolean
+      | ProfileCountOutputTypeCountProductionRequestsSentArgs;
   };
 
   // Custom InputTypes
@@ -2483,10 +2697,28 @@ export namespace Prisma {
   /**
    * ProfileCountOutputType without action
    */
-  export type ProfileCountOutputTypeCountTicketArgs<
+  export type ProfileCountOutputTypeCountTicketsArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: TicketWhereInput;
+  };
+
+  /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeCountProductionsAdministratedArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: ProductionWhereInput;
+  };
+
+  /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeCountProductionRequestsSentArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: ProductionAffiliationRequestWhereInput;
   };
 
   /**
@@ -2546,7 +2778,8 @@ export namespace Prisma {
     accounts: number;
     profiles: number;
     accountsGlobalFilter: number;
-    Event: number;
+    profileEvents: number;
+    roleEvents: number;
   };
 
   export type TagCountOutputTypeSelect<
@@ -2557,7 +2790,8 @@ export namespace Prisma {
     accountsGlobalFilter?:
       | boolean
       | TagCountOutputTypeCountAccountsGlobalFilterArgs;
-    Event?: boolean | TagCountOutputTypeCountEventArgs;
+    profileEvents?: boolean | TagCountOutputTypeCountProfileEventsArgs;
+    roleEvents?: boolean | TagCountOutputTypeCountRoleEventsArgs;
   };
 
   // Custom InputTypes
@@ -2603,7 +2837,16 @@ export namespace Prisma {
   /**
    * TagCountOutputType without action
    */
-  export type TagCountOutputTypeCountEventArgs<
+  export type TagCountOutputTypeCountProfileEventsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: EventWhereInput;
+  };
+
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeCountRoleEventsArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: EventWhereInput;
@@ -2653,8 +2896,10 @@ export namespace Prisma {
     tickets: number;
     ticketGroups: number;
     subEvents: number;
-    tags: number;
+    profileTags: number;
     eventTickets: number;
+    productions: number;
+    participantRoles: number;
   };
 
   export type EventCountOutputTypeSelect<
@@ -2663,8 +2908,10 @@ export namespace Prisma {
     tickets?: boolean | EventCountOutputTypeCountTicketsArgs;
     ticketGroups?: boolean | EventCountOutputTypeCountTicketGroupsArgs;
     subEvents?: boolean | EventCountOutputTypeCountSubEventsArgs;
-    tags?: boolean | EventCountOutputTypeCountTagsArgs;
+    profileTags?: boolean | EventCountOutputTypeCountProfileTagsArgs;
     eventTickets?: boolean | EventCountOutputTypeCountEventTicketsArgs;
+    productions?: boolean | EventCountOutputTypeCountProductionsArgs;
+    participantRoles?: boolean | EventCountOutputTypeCountParticipantRolesArgs;
   };
 
   // Custom InputTypes
@@ -2710,7 +2957,7 @@ export namespace Prisma {
   /**
    * EventCountOutputType without action
    */
-  export type EventCountOutputTypeCountTagsArgs<
+  export type EventCountOutputTypeCountProfileTagsArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: TagWhereInput;
@@ -2723,6 +2970,24 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: EventTicketWhereInput;
+  };
+
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeCountProductionsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: ProductionWhereInput;
+  };
+
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeCountParticipantRolesArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: TagWhereInput;
   };
 
   /**
@@ -2795,6 +3060,55 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: TicketWhereInput;
+  };
+
+  /**
+   * Count Type ProductionCountOutputType
+   */
+
+  export type ProductionCountOutputType = {
+    events: number;
+    affiliationRequests: number;
+  };
+
+  export type ProductionCountOutputTypeSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    events?: boolean | ProductionCountOutputTypeCountEventsArgs;
+    affiliationRequests?:
+      | boolean
+      | ProductionCountOutputTypeCountAffiliationRequestsArgs;
+  };
+
+  // Custom InputTypes
+  /**
+   * ProductionCountOutputType without action
+   */
+  export type ProductionCountOutputTypeDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionCountOutputType
+     */
+    select?: ProductionCountOutputTypeSelect<ExtArgs> | null;
+  };
+
+  /**
+   * ProductionCountOutputType without action
+   */
+  export type ProductionCountOutputTypeCountEventsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: EventWhereInput;
+  };
+
+  /**
+   * ProductionCountOutputType without action
+   */
+  export type ProductionCountOutputTypeCountAffiliationRequestsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: ProductionAffiliationRequestWhereInput;
   };
 
   /**
@@ -4636,7 +4950,13 @@ export namespace Prisma {
       tags?: boolean | Profile$tagsArgs<ExtArgs>;
       birthLocation?: boolean | Profile$birthLocationArgs<ExtArgs>;
       residenceLocation?: boolean | Profile$residenceLocationArgs<ExtArgs>;
-      Ticket?: boolean | Profile$TicketArgs<ExtArgs>;
+      tickets?: boolean | Profile$ticketsArgs<ExtArgs>;
+      productionsAdministrated?:
+        | boolean
+        | Profile$productionsAdministratedArgs<ExtArgs>;
+      productionRequestsSent?:
+        | boolean
+        | Profile$productionRequestsSentArgs<ExtArgs>;
       _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['profile']
@@ -4775,7 +5095,13 @@ export namespace Prisma {
     tags?: boolean | Profile$tagsArgs<ExtArgs>;
     birthLocation?: boolean | Profile$birthLocationArgs<ExtArgs>;
     residenceLocation?: boolean | Profile$residenceLocationArgs<ExtArgs>;
-    Ticket?: boolean | Profile$TicketArgs<ExtArgs>;
+    tickets?: boolean | Profile$ticketsArgs<ExtArgs>;
+    productionsAdministrated?:
+      | boolean
+      | Profile$productionsAdministratedArgs<ExtArgs>;
+    productionRequestsSent?:
+      | boolean
+      | Profile$productionRequestsSentArgs<ExtArgs>;
     _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type ProfileIncludeCreateManyAndReturn<
@@ -4802,7 +5128,9 @@ export namespace Prisma {
       tags: Prisma.$TagPayload<ExtArgs>[];
       birthLocation: Prisma.$LocationPayload<ExtArgs> | null;
       residenceLocation: Prisma.$LocationPayload<ExtArgs> | null;
-      Ticket: Prisma.$TicketPayload<ExtArgs>[];
+      tickets: Prisma.$TicketPayload<ExtArgs>[];
+      productionsAdministrated: Prisma.$ProductionPayload<ExtArgs>[];
+      productionRequestsSent: Prisma.$ProductionAffiliationRequestPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -5446,11 +5774,37 @@ export namespace Prisma {
       ExtArgs,
       ClientOptions
     >;
-    Ticket<T extends Profile$TicketArgs<ExtArgs> = {}>(
-      args?: Subset<T, Profile$TicketArgs<ExtArgs>>,
+    tickets<T extends Profile$ticketsArgs<ExtArgs> = {}>(
+      args?: Subset<T, Profile$ticketsArgs<ExtArgs>>,
     ): Prisma.PrismaPromise<
       | $Result.GetResult<
           Prisma.$TicketPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
+    productionsAdministrated<
+      T extends Profile$productionsAdministratedArgs<ExtArgs> = {},
+    >(
+      args?: Subset<T, Profile$productionsAdministratedArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$ProductionPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
+    productionRequestsSent<
+      T extends Profile$productionRequestsSentArgs<ExtArgs> = {},
+    >(
+      args?: Subset<T, Profile$productionRequestsSentArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$ProductionAffiliationRequestPayload<ExtArgs>,
           T,
           'findMany',
           ClientOptions
@@ -6100,9 +6454,9 @@ export namespace Prisma {
   };
 
   /**
-   * Profile.Ticket
+   * Profile.tickets
    */
-  export type Profile$TicketArgs<
+  export type Profile$ticketsArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     /**
@@ -6123,6 +6477,64 @@ export namespace Prisma {
     take?: number;
     skip?: number;
     distinct?: TicketScalarFieldEnum | TicketScalarFieldEnum[];
+  };
+
+  /**
+   * Profile.productionsAdministrated
+   */
+  export type Profile$productionsAdministratedArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionInclude<ExtArgs> | null;
+    where?: ProductionWhereInput;
+    orderBy?:
+      | ProductionOrderByWithRelationInput
+      | ProductionOrderByWithRelationInput[];
+    cursor?: ProductionWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: ProductionScalarFieldEnum | ProductionScalarFieldEnum[];
+  };
+
+  /**
+   * Profile.productionRequestsSent
+   */
+  export type Profile$productionRequestsSentArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestInclude<ExtArgs> | null;
+    where?: ProductionAffiliationRequestWhereInput;
+    orderBy?:
+      | ProductionAffiliationRequestOrderByWithRelationInput
+      | ProductionAffiliationRequestOrderByWithRelationInput[];
+    cursor?: ProductionAffiliationRequestWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?:
+      | ProductionAffiliationRequestScalarFieldEnum
+      | ProductionAffiliationRequestScalarFieldEnum[];
   };
 
   /**
@@ -10512,7 +10924,8 @@ export namespace Prisma {
       accounts?: boolean | Tag$accountsArgs<ExtArgs>;
       profiles?: boolean | Tag$profilesArgs<ExtArgs>;
       accountsGlobalFilter?: boolean | Tag$accountsGlobalFilterArgs<ExtArgs>;
-      Event?: boolean | Tag$EventArgs<ExtArgs>;
+      profileEvents?: boolean | Tag$profileEventsArgs<ExtArgs>;
+      roleEvents?: boolean | Tag$roleEventsArgs<ExtArgs>;
       _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['tag']
@@ -10572,7 +10985,8 @@ export namespace Prisma {
     accounts?: boolean | Tag$accountsArgs<ExtArgs>;
     profiles?: boolean | Tag$profilesArgs<ExtArgs>;
     accountsGlobalFilter?: boolean | Tag$accountsGlobalFilterArgs<ExtArgs>;
-    Event?: boolean | Tag$EventArgs<ExtArgs>;
+    profileEvents?: boolean | Tag$profileEventsArgs<ExtArgs>;
+    roleEvents?: boolean | Tag$roleEventsArgs<ExtArgs>;
     _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type TagIncludeCreateManyAndReturn<
@@ -10597,7 +11011,8 @@ export namespace Prisma {
       accounts: Prisma.$AccountPayload<ExtArgs>[];
       profiles: Prisma.$ProfilePayload<ExtArgs>[];
       accountsGlobalFilter: Prisma.$AccountPayload<ExtArgs>[];
-      Event: Prisma.$EventPayload<ExtArgs>[];
+      profileEvents: Prisma.$EventPayload<ExtArgs>[];
+      roleEvents: Prisma.$EventPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -11225,8 +11640,19 @@ export namespace Prisma {
         >
       | Null
     >;
-    Event<T extends Tag$EventArgs<ExtArgs> = {}>(
-      args?: Subset<T, Tag$EventArgs<ExtArgs>>,
+    profileEvents<T extends Tag$profileEventsArgs<ExtArgs> = {}>(
+      args?: Subset<T, Tag$profileEventsArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$EventPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
+    roleEvents<T extends Tag$roleEventsArgs<ExtArgs> = {}>(
+      args?: Subset<T, Tag$roleEventsArgs<ExtArgs>>,
     ): Prisma.PrismaPromise<
       | $Result.GetResult<
           Prisma.$EventPayload<ExtArgs>,
@@ -11831,9 +12257,35 @@ export namespace Prisma {
   };
 
   /**
-   * Tag.Event
+   * Tag.profileEvents
    */
-  export type Tag$EventArgs<
+  export type Tag$profileEventsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null;
+    where?: EventWhereInput;
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[];
+    cursor?: EventWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[];
+  };
+
+  /**
+   * Tag.roleEvents
+   */
+  export type Tag$roleEventsArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     /**
@@ -13446,8 +13898,10 @@ export namespace Prisma {
       tickets?: boolean | Event$ticketsArgs<ExtArgs>;
       ticketGroups?: boolean | Event$ticketGroupsArgs<ExtArgs>;
       subEvents?: boolean | Event$subEventsArgs<ExtArgs>;
-      tags?: boolean | Event$tagsArgs<ExtArgs>;
+      profileTags?: boolean | Event$profileTagsArgs<ExtArgs>;
       eventTickets?: boolean | Event$eventTicketsArgs<ExtArgs>;
+      productions?: boolean | Event$productionsArgs<ExtArgs>;
+      participantRoles?: boolean | Event$participantRolesArgs<ExtArgs>;
       _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['event']
@@ -13547,8 +14001,10 @@ export namespace Prisma {
     tickets?: boolean | Event$ticketsArgs<ExtArgs>;
     ticketGroups?: boolean | Event$ticketGroupsArgs<ExtArgs>;
     subEvents?: boolean | Event$subEventsArgs<ExtArgs>;
-    tags?: boolean | Event$tagsArgs<ExtArgs>;
+    profileTags?: boolean | Event$profileTagsArgs<ExtArgs>;
     eventTickets?: boolean | Event$eventTicketsArgs<ExtArgs>;
+    productions?: boolean | Event$productionsArgs<ExtArgs>;
+    participantRoles?: boolean | Event$participantRolesArgs<ExtArgs>;
     _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type EventIncludeCreateManyAndReturn<
@@ -13580,8 +14036,10 @@ export namespace Prisma {
       tickets: Prisma.$TicketPayload<ExtArgs>[];
       ticketGroups: Prisma.$TicketGroupPayload<ExtArgs>[];
       subEvents: Prisma.$EventPayload<ExtArgs>[];
-      tags: Prisma.$TagPayload<ExtArgs>[];
+      profileTags: Prisma.$TagPayload<ExtArgs>[];
       eventTickets: Prisma.$EventTicketPayload<ExtArgs>[];
+      productions: Prisma.$ProductionPayload<ExtArgs>[];
+      participantRoles: Prisma.$TagPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -14231,8 +14689,8 @@ export namespace Prisma {
         >
       | Null
     >;
-    tags<T extends Event$tagsArgs<ExtArgs> = {}>(
-      args?: Subset<T, Event$tagsArgs<ExtArgs>>,
+    profileTags<T extends Event$profileTagsArgs<ExtArgs> = {}>(
+      args?: Subset<T, Event$profileTagsArgs<ExtArgs>>,
     ): Prisma.PrismaPromise<
       | $Result.GetResult<
           Prisma.$TagPayload<ExtArgs>,
@@ -14247,6 +14705,28 @@ export namespace Prisma {
     ): Prisma.PrismaPromise<
       | $Result.GetResult<
           Prisma.$EventTicketPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
+    productions<T extends Event$productionsArgs<ExtArgs> = {}>(
+      args?: Subset<T, Event$productionsArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$ProductionPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
+    participantRoles<T extends Event$participantRolesArgs<ExtArgs> = {}>(
+      args?: Subset<T, Event$participantRolesArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$TagPayload<ExtArgs>,
           T,
           'findMany',
           ClientOptions
@@ -14851,9 +15331,9 @@ export namespace Prisma {
   };
 
   /**
-   * Event.tags
+   * Event.profileTags
    */
-  export type Event$tagsArgs<
+  export type Event$profileTagsArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     /**
@@ -14902,6 +15382,60 @@ export namespace Prisma {
     take?: number;
     skip?: number;
     distinct?: EventTicketScalarFieldEnum | EventTicketScalarFieldEnum[];
+  };
+
+  /**
+   * Event.productions
+   */
+  export type Event$productionsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionInclude<ExtArgs> | null;
+    where?: ProductionWhereInput;
+    orderBy?:
+      | ProductionOrderByWithRelationInput
+      | ProductionOrderByWithRelationInput[];
+    cursor?: ProductionWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: ProductionScalarFieldEnum | ProductionScalarFieldEnum[];
+  };
+
+  /**
+   * Event.participantRoles
+   */
+  export type Event$participantRolesArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null;
+    where?: TagWhereInput;
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[];
+    cursor?: TagWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[];
   };
 
   /**
@@ -24298,6 +24832,2854 @@ export namespace Prisma {
   };
 
   /**
+   * Model Production
+   */
+
+  export type AggregateProduction = {
+    _count: ProductionCountAggregateOutputType | null;
+    _min: ProductionMinAggregateOutputType | null;
+    _max: ProductionMaxAggregateOutputType | null;
+  };
+
+  export type ProductionMinAggregateOutputType = {
+    id: string | null;
+    name: string | null;
+    adminstratorId: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type ProductionMaxAggregateOutputType = {
+    id: string | null;
+    name: string | null;
+    adminstratorId: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type ProductionCountAggregateOutputType = {
+    id: number;
+    name: number;
+    adminstratorId: number;
+    created_at: number;
+    updated_at: number;
+    _all: number;
+  };
+
+  export type ProductionMinAggregateInputType = {
+    id?: true;
+    name?: true;
+    adminstratorId?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type ProductionMaxAggregateInputType = {
+    id?: true;
+    name?: true;
+    adminstratorId?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type ProductionCountAggregateInputType = {
+    id?: true;
+    name?: true;
+    adminstratorId?: true;
+    created_at?: true;
+    updated_at?: true;
+    _all?: true;
+  };
+
+  export type ProductionAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which Production to aggregate.
+     */
+    where?: ProductionWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Productions to fetch.
+     */
+    orderBy?:
+      | ProductionOrderByWithRelationInput
+      | ProductionOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: ProductionWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Productions from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Productions.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned Productions
+     **/
+    _count?: true | ProductionCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+     **/
+    _min?: ProductionMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+     **/
+    _max?: ProductionMaxAggregateInputType;
+  };
+
+  export type GetProductionAggregateType<T extends ProductionAggregateArgs> = {
+    [P in keyof T & keyof AggregateProduction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProduction[P]>
+      : GetScalarType<T[P], AggregateProduction[P]>;
+  };
+
+  export type ProductionGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: ProductionWhereInput;
+    orderBy?:
+      | ProductionOrderByWithAggregationInput
+      | ProductionOrderByWithAggregationInput[];
+    by: ProductionScalarFieldEnum[] | ProductionScalarFieldEnum;
+    having?: ProductionScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: ProductionCountAggregateInputType | true;
+    _min?: ProductionMinAggregateInputType;
+    _max?: ProductionMaxAggregateInputType;
+  };
+
+  export type ProductionGroupByOutputType = {
+    id: string;
+    name: string;
+    adminstratorId: string;
+    created_at: Date;
+    updated_at: Date;
+    _count: ProductionCountAggregateOutputType | null;
+    _min: ProductionMinAggregateOutputType | null;
+    _max: ProductionMaxAggregateOutputType | null;
+  };
+
+  type GetProductionGroupByPayload<T extends ProductionGroupByArgs> =
+    Prisma.PrismaPromise<
+      Array<
+        PickEnumerable<ProductionGroupByOutputType, T['by']> & {
+          [P in keyof T & keyof ProductionGroupByOutputType]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProductionGroupByOutputType[P]>
+            : GetScalarType<T[P], ProductionGroupByOutputType[P]>;
+        }
+      >
+    >;
+
+  export type ProductionSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      name?: boolean;
+      adminstratorId?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      administrator?: boolean | ProfileDefaultArgs<ExtArgs>;
+      events?: boolean | Production$eventsArgs<ExtArgs>;
+      affiliationRequests?:
+        | boolean
+        | Production$affiliationRequestsArgs<ExtArgs>;
+      _count?: boolean | ProductionCountOutputTypeDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['production']
+  >;
+
+  export type ProductionSelectCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      name?: boolean;
+      adminstratorId?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      administrator?: boolean | ProfileDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['production']
+  >;
+
+  export type ProductionSelectUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      name?: boolean;
+      adminstratorId?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      administrator?: boolean | ProfileDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['production']
+  >;
+
+  export type ProductionSelectScalar = {
+    id?: boolean;
+    name?: boolean;
+    adminstratorId?: boolean;
+    created_at?: boolean;
+    updated_at?: boolean;
+  };
+
+  export type ProductionOmit<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetOmit<
+    'id' | 'name' | 'adminstratorId' | 'created_at' | 'updated_at',
+    ExtArgs['result']['production']
+  >;
+  export type ProductionInclude<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    administrator?: boolean | ProfileDefaultArgs<ExtArgs>;
+    events?: boolean | Production$eventsArgs<ExtArgs>;
+    affiliationRequests?: boolean | Production$affiliationRequestsArgs<ExtArgs>;
+    _count?: boolean | ProductionCountOutputTypeDefaultArgs<ExtArgs>;
+  };
+  export type ProductionIncludeCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    administrator?: boolean | ProfileDefaultArgs<ExtArgs>;
+  };
+  export type ProductionIncludeUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    administrator?: boolean | ProfileDefaultArgs<ExtArgs>;
+  };
+
+  export type $ProductionPayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    name: 'Production';
+    objects: {
+      administrator: Prisma.$ProfilePayload<ExtArgs>;
+      events: Prisma.$EventPayload<ExtArgs>[];
+      affiliationRequests: Prisma.$ProductionAffiliationRequestPayload<ExtArgs>[];
+    };
+    scalars: $Extensions.GetPayloadResult<
+      {
+        id: string;
+        name: string;
+        adminstratorId: string;
+        created_at: Date;
+        updated_at: Date;
+      },
+      ExtArgs['result']['production']
+    >;
+    composites: {};
+  };
+
+  type ProductionGetPayload<
+    S extends boolean | null | undefined | ProductionDefaultArgs,
+  > = $Result.GetResult<Prisma.$ProductionPayload, S>;
+
+  type ProductionCountArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = Omit<
+    ProductionFindManyArgs,
+    'select' | 'include' | 'distinct' | 'omit'
+  > & {
+    select?: ProductionCountAggregateInputType | true;
+  };
+
+  export interface ProductionDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['Production'];
+      meta: { name: 'Production' };
+    };
+    /**
+     * Find zero or one Production that matches the filter.
+     * @param {ProductionFindUniqueArgs} args - Arguments to find a Production
+     * @example
+     * // Get one Production
+     * const production = await prisma.production.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProductionFindUniqueArgs>(
+      args: SelectSubset<T, ProductionFindUniqueArgs<ExtArgs>>,
+    ): Prisma__ProductionClient<
+      $Result.GetResult<
+        Prisma.$ProductionPayload<ExtArgs>,
+        T,
+        'findUnique',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find one Production that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProductionFindUniqueOrThrowArgs} args - Arguments to find a Production
+     * @example
+     * // Get one Production
+     * const production = await prisma.production.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProductionFindUniqueOrThrowArgs>(
+      args: SelectSubset<T, ProductionFindUniqueOrThrowArgs<ExtArgs>>,
+    ): Prisma__ProductionClient<
+      $Result.GetResult<
+        Prisma.$ProductionPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first Production that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionFindFirstArgs} args - Arguments to find a Production
+     * @example
+     * // Get one Production
+     * const production = await prisma.production.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProductionFindFirstArgs>(
+      args?: SelectSubset<T, ProductionFindFirstArgs<ExtArgs>>,
+    ): Prisma__ProductionClient<
+      $Result.GetResult<
+        Prisma.$ProductionPayload<ExtArgs>,
+        T,
+        'findFirst',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first Production that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionFindFirstOrThrowArgs} args - Arguments to find a Production
+     * @example
+     * // Get one Production
+     * const production = await prisma.production.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProductionFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, ProductionFindFirstOrThrowArgs<ExtArgs>>,
+    ): Prisma__ProductionClient<
+      $Result.GetResult<
+        Prisma.$ProductionPayload<ExtArgs>,
+        T,
+        'findFirstOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find zero or more Productions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Productions
+     * const productions = await prisma.production.findMany()
+     *
+     * // Get first 10 Productions
+     * const productions = await prisma.production.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const productionWithIdOnly = await prisma.production.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends ProductionFindManyArgs>(
+      args?: SelectSubset<T, ProductionFindManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$ProductionPayload<ExtArgs>,
+        T,
+        'findMany',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create a Production.
+     * @param {ProductionCreateArgs} args - Arguments to create a Production.
+     * @example
+     * // Create one Production
+     * const Production = await prisma.production.create({
+     *   data: {
+     *     // ... data to create a Production
+     *   }
+     * })
+     *
+     */
+    create<T extends ProductionCreateArgs>(
+      args: SelectSubset<T, ProductionCreateArgs<ExtArgs>>,
+    ): Prisma__ProductionClient<
+      $Result.GetResult<
+        Prisma.$ProductionPayload<ExtArgs>,
+        T,
+        'create',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Create many Productions.
+     * @param {ProductionCreateManyArgs} args - Arguments to create many Productions.
+     * @example
+     * // Create many Productions
+     * const production = await prisma.production.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends ProductionCreateManyArgs>(
+      args?: SelectSubset<T, ProductionCreateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create many Productions and returns the data saved in the database.
+     * @param {ProductionCreateManyAndReturnArgs} args - Arguments to create many Productions.
+     * @example
+     * // Create many Productions
+     * const production = await prisma.production.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many Productions and only return the `id`
+     * const productionWithIdOnly = await prisma.production.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends ProductionCreateManyAndReturnArgs>(
+      args?: SelectSubset<T, ProductionCreateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$ProductionPayload<ExtArgs>,
+        T,
+        'createManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Delete a Production.
+     * @param {ProductionDeleteArgs} args - Arguments to delete one Production.
+     * @example
+     * // Delete one Production
+     * const Production = await prisma.production.delete({
+     *   where: {
+     *     // ... filter to delete one Production
+     *   }
+     * })
+     *
+     */
+    delete<T extends ProductionDeleteArgs>(
+      args: SelectSubset<T, ProductionDeleteArgs<ExtArgs>>,
+    ): Prisma__ProductionClient<
+      $Result.GetResult<
+        Prisma.$ProductionPayload<ExtArgs>,
+        T,
+        'delete',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Update one Production.
+     * @param {ProductionUpdateArgs} args - Arguments to update one Production.
+     * @example
+     * // Update one Production
+     * const production = await prisma.production.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends ProductionUpdateArgs>(
+      args: SelectSubset<T, ProductionUpdateArgs<ExtArgs>>,
+    ): Prisma__ProductionClient<
+      $Result.GetResult<
+        Prisma.$ProductionPayload<ExtArgs>,
+        T,
+        'update',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Delete zero or more Productions.
+     * @param {ProductionDeleteManyArgs} args - Arguments to filter Productions to delete.
+     * @example
+     * // Delete a few Productions
+     * const { count } = await prisma.production.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends ProductionDeleteManyArgs>(
+      args?: SelectSubset<T, ProductionDeleteManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more Productions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Productions
+     * const production = await prisma.production.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends ProductionUpdateManyArgs>(
+      args: SelectSubset<T, ProductionUpdateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more Productions and returns the data updated in the database.
+     * @param {ProductionUpdateManyAndReturnArgs} args - Arguments to update many Productions.
+     * @example
+     * // Update many Productions
+     * const production = await prisma.production.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more Productions and only return the `id`
+     * const productionWithIdOnly = await prisma.production.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends ProductionUpdateManyAndReturnArgs>(
+      args: SelectSubset<T, ProductionUpdateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$ProductionPayload<ExtArgs>,
+        T,
+        'updateManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create or update one Production.
+     * @param {ProductionUpsertArgs} args - Arguments to update or create a Production.
+     * @example
+     * // Update or create a Production
+     * const production = await prisma.production.upsert({
+     *   create: {
+     *     // ... data to create a Production
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Production we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProductionUpsertArgs>(
+      args: SelectSubset<T, ProductionUpsertArgs<ExtArgs>>,
+    ): Prisma__ProductionClient<
+      $Result.GetResult<
+        Prisma.$ProductionPayload<ExtArgs>,
+        T,
+        'upsert',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Count the number of Productions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionCountArgs} args - Arguments to filter Productions to count.
+     * @example
+     * // Count the number of Productions
+     * const count = await prisma.production.count({
+     *   where: {
+     *     // ... the filter for the Productions we want to count
+     *   }
+     * })
+     **/
+    count<T extends ProductionCountArgs>(
+      args?: Subset<T, ProductionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProductionCountAggregateOutputType>
+        : number
+    >;
+
+    /**
+     * Allows you to perform aggregations operations on a Production.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+     **/
+    aggregate<T extends ProductionAggregateArgs>(
+      args: Subset<T, ProductionAggregateArgs>,
+    ): Prisma.PrismaPromise<GetProductionAggregateType<T>>;
+
+    /**
+     * Group by Production.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+     **/
+    groupBy<
+      T extends ProductionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProductionGroupByArgs['orderBy'] }
+        : { orderBy?: ProductionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<
+        Keys<MaybeTupleToUnion<T['orderBy']>>
+      >,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ];
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields],
+    >(
+      args: SubsetIntersection<T, ProductionGroupByArgs, OrderByArg> &
+        InputErrors,
+    ): {} extends InputErrors
+      ? GetProductionGroupByPayload<T>
+      : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the Production model
+     */
+    readonly fields: ProductionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Production.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProductionClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    administrator<T extends ProfileDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, ProfileDefaultArgs<ExtArgs>>,
+    ): Prisma__ProfileClient<
+      | $Result.GetResult<
+          Prisma.$ProfilePayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          ClientOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      ClientOptions
+    >;
+    events<T extends Production$eventsArgs<ExtArgs> = {}>(
+      args?: Subset<T, Production$eventsArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$EventPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
+    affiliationRequests<
+      T extends Production$affiliationRequestsArgs<ExtArgs> = {},
+    >(
+      args?: Subset<T, Production$affiliationRequestsArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$ProductionAffiliationRequestPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?:
+        | ((value: T) => TResult1 | PromiseLike<TResult1>)
+        | undefined
+        | null,
+      onrejected?:
+        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?:
+        | ((reason: any) => TResult | PromiseLike<TResult>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+  /**
+   * Fields of the Production model
+   */
+  interface ProductionFieldRefs {
+    readonly id: FieldRef<'Production', 'String'>;
+    readonly name: FieldRef<'Production', 'String'>;
+    readonly adminstratorId: FieldRef<'Production', 'String'>;
+    readonly created_at: FieldRef<'Production', 'DateTime'>;
+    readonly updated_at: FieldRef<'Production', 'DateTime'>;
+  }
+
+  // Custom InputTypes
+  /**
+   * Production findUnique
+   */
+  export type ProductionFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionInclude<ExtArgs> | null;
+    /**
+     * Filter, which Production to fetch.
+     */
+    where: ProductionWhereUniqueInput;
+  };
+
+  /**
+   * Production findUniqueOrThrow
+   */
+  export type ProductionFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionInclude<ExtArgs> | null;
+    /**
+     * Filter, which Production to fetch.
+     */
+    where: ProductionWhereUniqueInput;
+  };
+
+  /**
+   * Production findFirst
+   */
+  export type ProductionFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionInclude<ExtArgs> | null;
+    /**
+     * Filter, which Production to fetch.
+     */
+    where?: ProductionWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Productions to fetch.
+     */
+    orderBy?:
+      | ProductionOrderByWithRelationInput
+      | ProductionOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Productions.
+     */
+    cursor?: ProductionWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Productions from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Productions.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Productions.
+     */
+    distinct?: ProductionScalarFieldEnum | ProductionScalarFieldEnum[];
+  };
+
+  /**
+   * Production findFirstOrThrow
+   */
+  export type ProductionFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionInclude<ExtArgs> | null;
+    /**
+     * Filter, which Production to fetch.
+     */
+    where?: ProductionWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Productions to fetch.
+     */
+    orderBy?:
+      | ProductionOrderByWithRelationInput
+      | ProductionOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Productions.
+     */
+    cursor?: ProductionWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Productions from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Productions.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Productions.
+     */
+    distinct?: ProductionScalarFieldEnum | ProductionScalarFieldEnum[];
+  };
+
+  /**
+   * Production findMany
+   */
+  export type ProductionFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionInclude<ExtArgs> | null;
+    /**
+     * Filter, which Productions to fetch.
+     */
+    where?: ProductionWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Productions to fetch.
+     */
+    orderBy?:
+      | ProductionOrderByWithRelationInput
+      | ProductionOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing Productions.
+     */
+    cursor?: ProductionWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Productions from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Productions.
+     */
+    skip?: number;
+    distinct?: ProductionScalarFieldEnum | ProductionScalarFieldEnum[];
+  };
+
+  /**
+   * Production create
+   */
+  export type ProductionCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a Production.
+     */
+    data: XOR<ProductionCreateInput, ProductionUncheckedCreateInput>;
+  };
+
+  /**
+   * Production createMany
+   */
+  export type ProductionCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to create many Productions.
+     */
+    data: ProductionCreateManyInput | ProductionCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * Production createManyAndReturn
+   */
+  export type ProductionCreateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * The data used to create many Productions.
+     */
+    data: ProductionCreateManyInput | ProductionCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionIncludeCreateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * Production update
+   */
+  export type ProductionUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a Production.
+     */
+    data: XOR<ProductionUpdateInput, ProductionUncheckedUpdateInput>;
+    /**
+     * Choose, which Production to update.
+     */
+    where: ProductionWhereUniqueInput;
+  };
+
+  /**
+   * Production updateMany
+   */
+  export type ProductionUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to update Productions.
+     */
+    data: XOR<
+      ProductionUpdateManyMutationInput,
+      ProductionUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which Productions to update
+     */
+    where?: ProductionWhereInput;
+    /**
+     * Limit how many Productions to update.
+     */
+    limit?: number;
+  };
+
+  /**
+   * Production updateManyAndReturn
+   */
+  export type ProductionUpdateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * The data used to update Productions.
+     */
+    data: XOR<
+      ProductionUpdateManyMutationInput,
+      ProductionUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which Productions to update
+     */
+    where?: ProductionWhereInput;
+    /**
+     * Limit how many Productions to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionIncludeUpdateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * Production upsert
+   */
+  export type ProductionUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the Production to update in case it exists.
+     */
+    where: ProductionWhereUniqueInput;
+    /**
+     * In case the Production found by the `where` argument doesn't exist, create a new Production with this data.
+     */
+    create: XOR<ProductionCreateInput, ProductionUncheckedCreateInput>;
+    /**
+     * In case the Production was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProductionUpdateInput, ProductionUncheckedUpdateInput>;
+  };
+
+  /**
+   * Production delete
+   */
+  export type ProductionDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionInclude<ExtArgs> | null;
+    /**
+     * Filter which Production to delete.
+     */
+    where: ProductionWhereUniqueInput;
+  };
+
+  /**
+   * Production deleteMany
+   */
+  export type ProductionDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which Productions to delete
+     */
+    where?: ProductionWhereInput;
+    /**
+     * Limit how many Productions to delete.
+     */
+    limit?: number;
+  };
+
+  /**
+   * Production.events
+   */
+  export type Production$eventsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null;
+    where?: EventWhereInput;
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[];
+    cursor?: EventWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[];
+  };
+
+  /**
+   * Production.affiliationRequests
+   */
+  export type Production$affiliationRequestsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestInclude<ExtArgs> | null;
+    where?: ProductionAffiliationRequestWhereInput;
+    orderBy?:
+      | ProductionAffiliationRequestOrderByWithRelationInput
+      | ProductionAffiliationRequestOrderByWithRelationInput[];
+    cursor?: ProductionAffiliationRequestWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?:
+      | ProductionAffiliationRequestScalarFieldEnum
+      | ProductionAffiliationRequestScalarFieldEnum[];
+  };
+
+  /**
+   * Production without action
+   */
+  export type ProductionDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Production
+     */
+    select?: ProductionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Production
+     */
+    omit?: ProductionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionInclude<ExtArgs> | null;
+  };
+
+  /**
+   * Model ProductionAffiliationRequest
+   */
+
+  export type AggregateProductionAffiliationRequest = {
+    _count: ProductionAffiliationRequestCountAggregateOutputType | null;
+    _min: ProductionAffiliationRequestMinAggregateOutputType | null;
+    _max: ProductionAffiliationRequestMaxAggregateOutputType | null;
+  };
+
+  export type ProductionAffiliationRequestMinAggregateOutputType = {
+    id: string | null;
+    productionId: string | null;
+    profileId: string | null;
+    status: $Enums.AffiliationStatus | null;
+    reviewedAt: Date | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type ProductionAffiliationRequestMaxAggregateOutputType = {
+    id: string | null;
+    productionId: string | null;
+    profileId: string | null;
+    status: $Enums.AffiliationStatus | null;
+    reviewedAt: Date | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type ProductionAffiliationRequestCountAggregateOutputType = {
+    id: number;
+    productionId: number;
+    profileId: number;
+    status: number;
+    reviewedAt: number;
+    created_at: number;
+    updated_at: number;
+    _all: number;
+  };
+
+  export type ProductionAffiliationRequestMinAggregateInputType = {
+    id?: true;
+    productionId?: true;
+    profileId?: true;
+    status?: true;
+    reviewedAt?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type ProductionAffiliationRequestMaxAggregateInputType = {
+    id?: true;
+    productionId?: true;
+    profileId?: true;
+    status?: true;
+    reviewedAt?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type ProductionAffiliationRequestCountAggregateInputType = {
+    id?: true;
+    productionId?: true;
+    profileId?: true;
+    status?: true;
+    reviewedAt?: true;
+    created_at?: true;
+    updated_at?: true;
+    _all?: true;
+  };
+
+  export type ProductionAffiliationRequestAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which ProductionAffiliationRequest to aggregate.
+     */
+    where?: ProductionAffiliationRequestWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of ProductionAffiliationRequests to fetch.
+     */
+    orderBy?:
+      | ProductionAffiliationRequestOrderByWithRelationInput
+      | ProductionAffiliationRequestOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: ProductionAffiliationRequestWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` ProductionAffiliationRequests from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` ProductionAffiliationRequests.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned ProductionAffiliationRequests
+     **/
+    _count?: true | ProductionAffiliationRequestCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+     **/
+    _min?: ProductionAffiliationRequestMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+     **/
+    _max?: ProductionAffiliationRequestMaxAggregateInputType;
+  };
+
+  export type GetProductionAffiliationRequestAggregateType<
+    T extends ProductionAffiliationRequestAggregateArgs,
+  > = {
+    [P in keyof T & keyof AggregateProductionAffiliationRequest]: P extends
+      | '_count'
+      | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProductionAffiliationRequest[P]>
+      : GetScalarType<T[P], AggregateProductionAffiliationRequest[P]>;
+  };
+
+  export type ProductionAffiliationRequestGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: ProductionAffiliationRequestWhereInput;
+    orderBy?:
+      | ProductionAffiliationRequestOrderByWithAggregationInput
+      | ProductionAffiliationRequestOrderByWithAggregationInput[];
+    by:
+      | ProductionAffiliationRequestScalarFieldEnum[]
+      | ProductionAffiliationRequestScalarFieldEnum;
+    having?: ProductionAffiliationRequestScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: ProductionAffiliationRequestCountAggregateInputType | true;
+    _min?: ProductionAffiliationRequestMinAggregateInputType;
+    _max?: ProductionAffiliationRequestMaxAggregateInputType;
+  };
+
+  export type ProductionAffiliationRequestGroupByOutputType = {
+    id: string;
+    productionId: string;
+    profileId: string;
+    status: $Enums.AffiliationStatus;
+    reviewedAt: Date | null;
+    created_at: Date;
+    updated_at: Date;
+    _count: ProductionAffiliationRequestCountAggregateOutputType | null;
+    _min: ProductionAffiliationRequestMinAggregateOutputType | null;
+    _max: ProductionAffiliationRequestMaxAggregateOutputType | null;
+  };
+
+  type GetProductionAffiliationRequestGroupByPayload<
+    T extends ProductionAffiliationRequestGroupByArgs,
+  > = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProductionAffiliationRequestGroupByOutputType, T['by']> & {
+        [P in keyof T &
+          keyof ProductionAffiliationRequestGroupByOutputType]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
+            : GetScalarType<
+                T[P],
+                ProductionAffiliationRequestGroupByOutputType[P]
+              >
+          : GetScalarType<
+              T[P],
+              ProductionAffiliationRequestGroupByOutputType[P]
+            >;
+      }
+    >
+  >;
+
+  export type ProductionAffiliationRequestSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      productionId?: boolean;
+      profileId?: boolean;
+      status?: boolean;
+      reviewedAt?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      production?: boolean | ProductionDefaultArgs<ExtArgs>;
+      profile?: boolean | ProfileDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['productionAffiliationRequest']
+  >;
+
+  export type ProductionAffiliationRequestSelectCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      productionId?: boolean;
+      profileId?: boolean;
+      status?: boolean;
+      reviewedAt?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      production?: boolean | ProductionDefaultArgs<ExtArgs>;
+      profile?: boolean | ProfileDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['productionAffiliationRequest']
+  >;
+
+  export type ProductionAffiliationRequestSelectUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      productionId?: boolean;
+      profileId?: boolean;
+      status?: boolean;
+      reviewedAt?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      production?: boolean | ProductionDefaultArgs<ExtArgs>;
+      profile?: boolean | ProfileDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['productionAffiliationRequest']
+  >;
+
+  export type ProductionAffiliationRequestSelectScalar = {
+    id?: boolean;
+    productionId?: boolean;
+    profileId?: boolean;
+    status?: boolean;
+    reviewedAt?: boolean;
+    created_at?: boolean;
+    updated_at?: boolean;
+  };
+
+  export type ProductionAffiliationRequestOmit<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetOmit<
+    | 'id'
+    | 'productionId'
+    | 'profileId'
+    | 'status'
+    | 'reviewedAt'
+    | 'created_at'
+    | 'updated_at',
+    ExtArgs['result']['productionAffiliationRequest']
+  >;
+  export type ProductionAffiliationRequestInclude<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    production?: boolean | ProductionDefaultArgs<ExtArgs>;
+    profile?: boolean | ProfileDefaultArgs<ExtArgs>;
+  };
+  export type ProductionAffiliationRequestIncludeCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    production?: boolean | ProductionDefaultArgs<ExtArgs>;
+    profile?: boolean | ProfileDefaultArgs<ExtArgs>;
+  };
+  export type ProductionAffiliationRequestIncludeUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    production?: boolean | ProductionDefaultArgs<ExtArgs>;
+    profile?: boolean | ProfileDefaultArgs<ExtArgs>;
+  };
+
+  export type $ProductionAffiliationRequestPayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    name: 'ProductionAffiliationRequest';
+    objects: {
+      production: Prisma.$ProductionPayload<ExtArgs>;
+      profile: Prisma.$ProfilePayload<ExtArgs>;
+    };
+    scalars: $Extensions.GetPayloadResult<
+      {
+        id: string;
+        productionId: string;
+        profileId: string;
+        status: $Enums.AffiliationStatus;
+        reviewedAt: Date | null;
+        created_at: Date;
+        updated_at: Date;
+      },
+      ExtArgs['result']['productionAffiliationRequest']
+    >;
+    composites: {};
+  };
+
+  type ProductionAffiliationRequestGetPayload<
+    S extends
+      | boolean
+      | null
+      | undefined
+      | ProductionAffiliationRequestDefaultArgs,
+  > = $Result.GetResult<Prisma.$ProductionAffiliationRequestPayload, S>;
+
+  type ProductionAffiliationRequestCountArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = Omit<
+    ProductionAffiliationRequestFindManyArgs,
+    'select' | 'include' | 'distinct' | 'omit'
+  > & {
+    select?: ProductionAffiliationRequestCountAggregateInputType | true;
+  };
+
+  export interface ProductionAffiliationRequestDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['ProductionAffiliationRequest'];
+      meta: { name: 'ProductionAffiliationRequest' };
+    };
+    /**
+     * Find zero or one ProductionAffiliationRequest that matches the filter.
+     * @param {ProductionAffiliationRequestFindUniqueArgs} args - Arguments to find a ProductionAffiliationRequest
+     * @example
+     * // Get one ProductionAffiliationRequest
+     * const productionAffiliationRequest = await prisma.productionAffiliationRequest.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProductionAffiliationRequestFindUniqueArgs>(
+      args: SelectSubset<
+        T,
+        ProductionAffiliationRequestFindUniqueArgs<ExtArgs>
+      >,
+    ): Prisma__ProductionAffiliationRequestClient<
+      $Result.GetResult<
+        Prisma.$ProductionAffiliationRequestPayload<ExtArgs>,
+        T,
+        'findUnique',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find one ProductionAffiliationRequest that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProductionAffiliationRequestFindUniqueOrThrowArgs} args - Arguments to find a ProductionAffiliationRequest
+     * @example
+     * // Get one ProductionAffiliationRequest
+     * const productionAffiliationRequest = await prisma.productionAffiliationRequest.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<
+      T extends ProductionAffiliationRequestFindUniqueOrThrowArgs,
+    >(
+      args: SelectSubset<
+        T,
+        ProductionAffiliationRequestFindUniqueOrThrowArgs<ExtArgs>
+      >,
+    ): Prisma__ProductionAffiliationRequestClient<
+      $Result.GetResult<
+        Prisma.$ProductionAffiliationRequestPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first ProductionAffiliationRequest that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionAffiliationRequestFindFirstArgs} args - Arguments to find a ProductionAffiliationRequest
+     * @example
+     * // Get one ProductionAffiliationRequest
+     * const productionAffiliationRequest = await prisma.productionAffiliationRequest.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProductionAffiliationRequestFindFirstArgs>(
+      args?: SelectSubset<
+        T,
+        ProductionAffiliationRequestFindFirstArgs<ExtArgs>
+      >,
+    ): Prisma__ProductionAffiliationRequestClient<
+      $Result.GetResult<
+        Prisma.$ProductionAffiliationRequestPayload<ExtArgs>,
+        T,
+        'findFirst',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first ProductionAffiliationRequest that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionAffiliationRequestFindFirstOrThrowArgs} args - Arguments to find a ProductionAffiliationRequest
+     * @example
+     * // Get one ProductionAffiliationRequest
+     * const productionAffiliationRequest = await prisma.productionAffiliationRequest.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<
+      T extends ProductionAffiliationRequestFindFirstOrThrowArgs,
+    >(
+      args?: SelectSubset<
+        T,
+        ProductionAffiliationRequestFindFirstOrThrowArgs<ExtArgs>
+      >,
+    ): Prisma__ProductionAffiliationRequestClient<
+      $Result.GetResult<
+        Prisma.$ProductionAffiliationRequestPayload<ExtArgs>,
+        T,
+        'findFirstOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find zero or more ProductionAffiliationRequests that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionAffiliationRequestFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProductionAffiliationRequests
+     * const productionAffiliationRequests = await prisma.productionAffiliationRequest.findMany()
+     *
+     * // Get first 10 ProductionAffiliationRequests
+     * const productionAffiliationRequests = await prisma.productionAffiliationRequest.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const productionAffiliationRequestWithIdOnly = await prisma.productionAffiliationRequest.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends ProductionAffiliationRequestFindManyArgs>(
+      args?: SelectSubset<T, ProductionAffiliationRequestFindManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$ProductionAffiliationRequestPayload<ExtArgs>,
+        T,
+        'findMany',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create a ProductionAffiliationRequest.
+     * @param {ProductionAffiliationRequestCreateArgs} args - Arguments to create a ProductionAffiliationRequest.
+     * @example
+     * // Create one ProductionAffiliationRequest
+     * const ProductionAffiliationRequest = await prisma.productionAffiliationRequest.create({
+     *   data: {
+     *     // ... data to create a ProductionAffiliationRequest
+     *   }
+     * })
+     *
+     */
+    create<T extends ProductionAffiliationRequestCreateArgs>(
+      args: SelectSubset<T, ProductionAffiliationRequestCreateArgs<ExtArgs>>,
+    ): Prisma__ProductionAffiliationRequestClient<
+      $Result.GetResult<
+        Prisma.$ProductionAffiliationRequestPayload<ExtArgs>,
+        T,
+        'create',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Create many ProductionAffiliationRequests.
+     * @param {ProductionAffiliationRequestCreateManyArgs} args - Arguments to create many ProductionAffiliationRequests.
+     * @example
+     * // Create many ProductionAffiliationRequests
+     * const productionAffiliationRequest = await prisma.productionAffiliationRequest.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends ProductionAffiliationRequestCreateManyArgs>(
+      args?: SelectSubset<
+        T,
+        ProductionAffiliationRequestCreateManyArgs<ExtArgs>
+      >,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create many ProductionAffiliationRequests and returns the data saved in the database.
+     * @param {ProductionAffiliationRequestCreateManyAndReturnArgs} args - Arguments to create many ProductionAffiliationRequests.
+     * @example
+     * // Create many ProductionAffiliationRequests
+     * const productionAffiliationRequest = await prisma.productionAffiliationRequest.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many ProductionAffiliationRequests and only return the `id`
+     * const productionAffiliationRequestWithIdOnly = await prisma.productionAffiliationRequest.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<
+      T extends ProductionAffiliationRequestCreateManyAndReturnArgs,
+    >(
+      args?: SelectSubset<
+        T,
+        ProductionAffiliationRequestCreateManyAndReturnArgs<ExtArgs>
+      >,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$ProductionAffiliationRequestPayload<ExtArgs>,
+        T,
+        'createManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Delete a ProductionAffiliationRequest.
+     * @param {ProductionAffiliationRequestDeleteArgs} args - Arguments to delete one ProductionAffiliationRequest.
+     * @example
+     * // Delete one ProductionAffiliationRequest
+     * const ProductionAffiliationRequest = await prisma.productionAffiliationRequest.delete({
+     *   where: {
+     *     // ... filter to delete one ProductionAffiliationRequest
+     *   }
+     * })
+     *
+     */
+    delete<T extends ProductionAffiliationRequestDeleteArgs>(
+      args: SelectSubset<T, ProductionAffiliationRequestDeleteArgs<ExtArgs>>,
+    ): Prisma__ProductionAffiliationRequestClient<
+      $Result.GetResult<
+        Prisma.$ProductionAffiliationRequestPayload<ExtArgs>,
+        T,
+        'delete',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Update one ProductionAffiliationRequest.
+     * @param {ProductionAffiliationRequestUpdateArgs} args - Arguments to update one ProductionAffiliationRequest.
+     * @example
+     * // Update one ProductionAffiliationRequest
+     * const productionAffiliationRequest = await prisma.productionAffiliationRequest.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends ProductionAffiliationRequestUpdateArgs>(
+      args: SelectSubset<T, ProductionAffiliationRequestUpdateArgs<ExtArgs>>,
+    ): Prisma__ProductionAffiliationRequestClient<
+      $Result.GetResult<
+        Prisma.$ProductionAffiliationRequestPayload<ExtArgs>,
+        T,
+        'update',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Delete zero or more ProductionAffiliationRequests.
+     * @param {ProductionAffiliationRequestDeleteManyArgs} args - Arguments to filter ProductionAffiliationRequests to delete.
+     * @example
+     * // Delete a few ProductionAffiliationRequests
+     * const { count } = await prisma.productionAffiliationRequest.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends ProductionAffiliationRequestDeleteManyArgs>(
+      args?: SelectSubset<
+        T,
+        ProductionAffiliationRequestDeleteManyArgs<ExtArgs>
+      >,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more ProductionAffiliationRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionAffiliationRequestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProductionAffiliationRequests
+     * const productionAffiliationRequest = await prisma.productionAffiliationRequest.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends ProductionAffiliationRequestUpdateManyArgs>(
+      args: SelectSubset<
+        T,
+        ProductionAffiliationRequestUpdateManyArgs<ExtArgs>
+      >,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more ProductionAffiliationRequests and returns the data updated in the database.
+     * @param {ProductionAffiliationRequestUpdateManyAndReturnArgs} args - Arguments to update many ProductionAffiliationRequests.
+     * @example
+     * // Update many ProductionAffiliationRequests
+     * const productionAffiliationRequest = await prisma.productionAffiliationRequest.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more ProductionAffiliationRequests and only return the `id`
+     * const productionAffiliationRequestWithIdOnly = await prisma.productionAffiliationRequest.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<
+      T extends ProductionAffiliationRequestUpdateManyAndReturnArgs,
+    >(
+      args: SelectSubset<
+        T,
+        ProductionAffiliationRequestUpdateManyAndReturnArgs<ExtArgs>
+      >,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$ProductionAffiliationRequestPayload<ExtArgs>,
+        T,
+        'updateManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create or update one ProductionAffiliationRequest.
+     * @param {ProductionAffiliationRequestUpsertArgs} args - Arguments to update or create a ProductionAffiliationRequest.
+     * @example
+     * // Update or create a ProductionAffiliationRequest
+     * const productionAffiliationRequest = await prisma.productionAffiliationRequest.upsert({
+     *   create: {
+     *     // ... data to create a ProductionAffiliationRequest
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProductionAffiliationRequest we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProductionAffiliationRequestUpsertArgs>(
+      args: SelectSubset<T, ProductionAffiliationRequestUpsertArgs<ExtArgs>>,
+    ): Prisma__ProductionAffiliationRequestClient<
+      $Result.GetResult<
+        Prisma.$ProductionAffiliationRequestPayload<ExtArgs>,
+        T,
+        'upsert',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Count the number of ProductionAffiliationRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionAffiliationRequestCountArgs} args - Arguments to filter ProductionAffiliationRequests to count.
+     * @example
+     * // Count the number of ProductionAffiliationRequests
+     * const count = await prisma.productionAffiliationRequest.count({
+     *   where: {
+     *     // ... the filter for the ProductionAffiliationRequests we want to count
+     *   }
+     * })
+     **/
+    count<T extends ProductionAffiliationRequestCountArgs>(
+      args?: Subset<T, ProductionAffiliationRequestCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<
+              T['select'],
+              ProductionAffiliationRequestCountAggregateOutputType
+            >
+        : number
+    >;
+
+    /**
+     * Allows you to perform aggregations operations on a ProductionAffiliationRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionAffiliationRequestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+     **/
+    aggregate<T extends ProductionAffiliationRequestAggregateArgs>(
+      args: Subset<T, ProductionAffiliationRequestAggregateArgs>,
+    ): Prisma.PrismaPromise<GetProductionAffiliationRequestAggregateType<T>>;
+
+    /**
+     * Group by ProductionAffiliationRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductionAffiliationRequestGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+     **/
+    groupBy<
+      T extends ProductionAffiliationRequestGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProductionAffiliationRequestGroupByArgs['orderBy'] }
+        : { orderBy?: ProductionAffiliationRequestGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<
+        Keys<MaybeTupleToUnion<T['orderBy']>>
+      >,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ];
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields],
+    >(
+      args: SubsetIntersection<
+        T,
+        ProductionAffiliationRequestGroupByArgs,
+        OrderByArg
+      > &
+        InputErrors,
+    ): {} extends InputErrors
+      ? GetProductionAffiliationRequestGroupByPayload<T>
+      : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the ProductionAffiliationRequest model
+     */
+    readonly fields: ProductionAffiliationRequestFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProductionAffiliationRequest.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProductionAffiliationRequestClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    production<T extends ProductionDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, ProductionDefaultArgs<ExtArgs>>,
+    ): Prisma__ProductionClient<
+      | $Result.GetResult<
+          Prisma.$ProductionPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          ClientOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      ClientOptions
+    >;
+    profile<T extends ProfileDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, ProfileDefaultArgs<ExtArgs>>,
+    ): Prisma__ProfileClient<
+      | $Result.GetResult<
+          Prisma.$ProfilePayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          ClientOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      ClientOptions
+    >;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?:
+        | ((value: T) => TResult1 | PromiseLike<TResult1>)
+        | undefined
+        | null,
+      onrejected?:
+        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?:
+        | ((reason: any) => TResult | PromiseLike<TResult>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+  /**
+   * Fields of the ProductionAffiliationRequest model
+   */
+  interface ProductionAffiliationRequestFieldRefs {
+    readonly id: FieldRef<'ProductionAffiliationRequest', 'String'>;
+    readonly productionId: FieldRef<'ProductionAffiliationRequest', 'String'>;
+    readonly profileId: FieldRef<'ProductionAffiliationRequest', 'String'>;
+    readonly status: FieldRef<
+      'ProductionAffiliationRequest',
+      'AffiliationStatus'
+    >;
+    readonly reviewedAt: FieldRef<'ProductionAffiliationRequest', 'DateTime'>;
+    readonly created_at: FieldRef<'ProductionAffiliationRequest', 'DateTime'>;
+    readonly updated_at: FieldRef<'ProductionAffiliationRequest', 'DateTime'>;
+  }
+
+  // Custom InputTypes
+  /**
+   * ProductionAffiliationRequest findUnique
+   */
+  export type ProductionAffiliationRequestFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestInclude<ExtArgs> | null;
+    /**
+     * Filter, which ProductionAffiliationRequest to fetch.
+     */
+    where: ProductionAffiliationRequestWhereUniqueInput;
+  };
+
+  /**
+   * ProductionAffiliationRequest findUniqueOrThrow
+   */
+  export type ProductionAffiliationRequestFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestInclude<ExtArgs> | null;
+    /**
+     * Filter, which ProductionAffiliationRequest to fetch.
+     */
+    where: ProductionAffiliationRequestWhereUniqueInput;
+  };
+
+  /**
+   * ProductionAffiliationRequest findFirst
+   */
+  export type ProductionAffiliationRequestFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestInclude<ExtArgs> | null;
+    /**
+     * Filter, which ProductionAffiliationRequest to fetch.
+     */
+    where?: ProductionAffiliationRequestWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of ProductionAffiliationRequests to fetch.
+     */
+    orderBy?:
+      | ProductionAffiliationRequestOrderByWithRelationInput
+      | ProductionAffiliationRequestOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for ProductionAffiliationRequests.
+     */
+    cursor?: ProductionAffiliationRequestWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` ProductionAffiliationRequests from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` ProductionAffiliationRequests.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of ProductionAffiliationRequests.
+     */
+    distinct?:
+      | ProductionAffiliationRequestScalarFieldEnum
+      | ProductionAffiliationRequestScalarFieldEnum[];
+  };
+
+  /**
+   * ProductionAffiliationRequest findFirstOrThrow
+   */
+  export type ProductionAffiliationRequestFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestInclude<ExtArgs> | null;
+    /**
+     * Filter, which ProductionAffiliationRequest to fetch.
+     */
+    where?: ProductionAffiliationRequestWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of ProductionAffiliationRequests to fetch.
+     */
+    orderBy?:
+      | ProductionAffiliationRequestOrderByWithRelationInput
+      | ProductionAffiliationRequestOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for ProductionAffiliationRequests.
+     */
+    cursor?: ProductionAffiliationRequestWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` ProductionAffiliationRequests from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` ProductionAffiliationRequests.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of ProductionAffiliationRequests.
+     */
+    distinct?:
+      | ProductionAffiliationRequestScalarFieldEnum
+      | ProductionAffiliationRequestScalarFieldEnum[];
+  };
+
+  /**
+   * ProductionAffiliationRequest findMany
+   */
+  export type ProductionAffiliationRequestFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestInclude<ExtArgs> | null;
+    /**
+     * Filter, which ProductionAffiliationRequests to fetch.
+     */
+    where?: ProductionAffiliationRequestWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of ProductionAffiliationRequests to fetch.
+     */
+    orderBy?:
+      | ProductionAffiliationRequestOrderByWithRelationInput
+      | ProductionAffiliationRequestOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing ProductionAffiliationRequests.
+     */
+    cursor?: ProductionAffiliationRequestWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` ProductionAffiliationRequests from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` ProductionAffiliationRequests.
+     */
+    skip?: number;
+    distinct?:
+      | ProductionAffiliationRequestScalarFieldEnum
+      | ProductionAffiliationRequestScalarFieldEnum[];
+  };
+
+  /**
+   * ProductionAffiliationRequest create
+   */
+  export type ProductionAffiliationRequestCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a ProductionAffiliationRequest.
+     */
+    data: XOR<
+      ProductionAffiliationRequestCreateInput,
+      ProductionAffiliationRequestUncheckedCreateInput
+    >;
+  };
+
+  /**
+   * ProductionAffiliationRequest createMany
+   */
+  export type ProductionAffiliationRequestCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to create many ProductionAffiliationRequests.
+     */
+    data:
+      | ProductionAffiliationRequestCreateManyInput
+      | ProductionAffiliationRequestCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * ProductionAffiliationRequest createManyAndReturn
+   */
+  export type ProductionAffiliationRequestCreateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * The data used to create many ProductionAffiliationRequests.
+     */
+    data:
+      | ProductionAffiliationRequestCreateManyInput
+      | ProductionAffiliationRequestCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestIncludeCreateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * ProductionAffiliationRequest update
+   */
+  export type ProductionAffiliationRequestUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a ProductionAffiliationRequest.
+     */
+    data: XOR<
+      ProductionAffiliationRequestUpdateInput,
+      ProductionAffiliationRequestUncheckedUpdateInput
+    >;
+    /**
+     * Choose, which ProductionAffiliationRequest to update.
+     */
+    where: ProductionAffiliationRequestWhereUniqueInput;
+  };
+
+  /**
+   * ProductionAffiliationRequest updateMany
+   */
+  export type ProductionAffiliationRequestUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to update ProductionAffiliationRequests.
+     */
+    data: XOR<
+      ProductionAffiliationRequestUpdateManyMutationInput,
+      ProductionAffiliationRequestUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which ProductionAffiliationRequests to update
+     */
+    where?: ProductionAffiliationRequestWhereInput;
+    /**
+     * Limit how many ProductionAffiliationRequests to update.
+     */
+    limit?: number;
+  };
+
+  /**
+   * ProductionAffiliationRequest updateManyAndReturn
+   */
+  export type ProductionAffiliationRequestUpdateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * The data used to update ProductionAffiliationRequests.
+     */
+    data: XOR<
+      ProductionAffiliationRequestUpdateManyMutationInput,
+      ProductionAffiliationRequestUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which ProductionAffiliationRequests to update
+     */
+    where?: ProductionAffiliationRequestWhereInput;
+    /**
+     * Limit how many ProductionAffiliationRequests to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestIncludeUpdateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * ProductionAffiliationRequest upsert
+   */
+  export type ProductionAffiliationRequestUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the ProductionAffiliationRequest to update in case it exists.
+     */
+    where: ProductionAffiliationRequestWhereUniqueInput;
+    /**
+     * In case the ProductionAffiliationRequest found by the `where` argument doesn't exist, create a new ProductionAffiliationRequest with this data.
+     */
+    create: XOR<
+      ProductionAffiliationRequestCreateInput,
+      ProductionAffiliationRequestUncheckedCreateInput
+    >;
+    /**
+     * In case the ProductionAffiliationRequest was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<
+      ProductionAffiliationRequestUpdateInput,
+      ProductionAffiliationRequestUncheckedUpdateInput
+    >;
+  };
+
+  /**
+   * ProductionAffiliationRequest delete
+   */
+  export type ProductionAffiliationRequestDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestInclude<ExtArgs> | null;
+    /**
+     * Filter which ProductionAffiliationRequest to delete.
+     */
+    where: ProductionAffiliationRequestWhereUniqueInput;
+  };
+
+  /**
+   * ProductionAffiliationRequest deleteMany
+   */
+  export type ProductionAffiliationRequestDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which ProductionAffiliationRequests to delete
+     */
+    where?: ProductionAffiliationRequestWhereInput;
+    /**
+     * Limit how many ProductionAffiliationRequests to delete.
+     */
+    limit?: number;
+  };
+
+  /**
+   * ProductionAffiliationRequest without action
+   */
+  export type ProductionAffiliationRequestDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the ProductionAffiliationRequest
+     */
+    select?: ProductionAffiliationRequestSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductionAffiliationRequest
+     */
+    omit?: ProductionAffiliationRequestOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductionAffiliationRequestInclude<ExtArgs> | null;
+  };
+
+  /**
    * Enums
    */
 
@@ -24527,6 +27909,30 @@ export namespace Prisma {
 
   export type EventTicketScalarFieldEnum =
     (typeof EventTicketScalarFieldEnum)[keyof typeof EventTicketScalarFieldEnum];
+
+  export const ProductionScalarFieldEnum: {
+    id: 'id';
+    name: 'name';
+    adminstratorId: 'adminstratorId';
+    created_at: 'created_at';
+    updated_at: 'updated_at';
+  };
+
+  export type ProductionScalarFieldEnum =
+    (typeof ProductionScalarFieldEnum)[keyof typeof ProductionScalarFieldEnum];
+
+  export const ProductionAffiliationRequestScalarFieldEnum: {
+    id: 'id';
+    productionId: 'productionId';
+    profileId: 'profileId';
+    status: 'status';
+    reviewedAt: 'reviewedAt';
+    created_at: 'created_at';
+    updated_at: 'updated_at';
+  };
+
+  export type ProductionAffiliationRequestScalarFieldEnum =
+    (typeof ProductionAffiliationRequestScalarFieldEnum)[keyof typeof ProductionAffiliationRequestScalarFieldEnum];
 
   export const SortOrder: {
     asc: 'asc';
@@ -24758,6 +28164,18 @@ export namespace Prisma {
     FieldRefInputType<$PrismaModel, 'TemplateCategory[]'>;
 
   /**
+   * Reference to a field of type 'AffiliationStatus'
+   */
+  export type EnumAffiliationStatusFieldRefInput<$PrismaModel> =
+    FieldRefInputType<$PrismaModel, 'AffiliationStatus'>;
+
+  /**
+   * Reference to a field of type 'AffiliationStatus[]'
+   */
+  export type ListEnumAffiliationStatusFieldRefInput<$PrismaModel> =
+    FieldRefInputType<$PrismaModel, 'AffiliationStatus[]'>;
+
+  /**
    * Deep Input Types
    */
 
@@ -24887,7 +28305,9 @@ export namespace Prisma {
       LocationNullableScalarRelationFilter,
       LocationWhereInput
     > | null;
-    Ticket?: TicketListRelationFilter;
+    tickets?: TicketListRelationFilter;
+    productionsAdministrated?: ProductionListRelationFilter;
+    productionRequestsSent?: ProductionAffiliationRequestListRelationFilter;
   };
 
   export type ProfileOrderByWithRelationInput = {
@@ -24921,7 +28341,9 @@ export namespace Prisma {
     tags?: TagOrderByRelationAggregateInput;
     birthLocation?: LocationOrderByWithRelationInput;
     residenceLocation?: LocationOrderByWithRelationInput;
-    Ticket?: TicketOrderByRelationAggregateInput;
+    tickets?: TicketOrderByRelationAggregateInput;
+    productionsAdministrated?: ProductionOrderByRelationAggregateInput;
+    productionRequestsSent?: ProductionAffiliationRequestOrderByRelationAggregateInput;
   };
 
   export type ProfileWhereUniqueInput = Prisma.AtLeast<
@@ -24969,7 +28391,9 @@ export namespace Prisma {
         LocationNullableScalarRelationFilter,
         LocationWhereInput
       > | null;
-      Ticket?: TicketListRelationFilter;
+      tickets?: TicketListRelationFilter;
+      productionsAdministrated?: ProductionListRelationFilter;
+      productionRequestsSent?: ProductionAffiliationRequestListRelationFilter;
     },
     'id' | 'username' | 'phoneNumber' | 'secondaryPhoneNumber'
   >;
@@ -25335,7 +28759,8 @@ export namespace Prisma {
     accounts?: AccountListRelationFilter;
     profiles?: ProfileListRelationFilter;
     accountsGlobalFilter?: AccountListRelationFilter;
-    Event?: EventListRelationFilter;
+    profileEvents?: EventListRelationFilter;
+    roleEvents?: EventListRelationFilter;
   };
 
   export type TagOrderByWithRelationInput = {
@@ -25351,7 +28776,8 @@ export namespace Prisma {
     accounts?: AccountOrderByRelationAggregateInput;
     profiles?: ProfileOrderByRelationAggregateInput;
     accountsGlobalFilter?: AccountOrderByRelationAggregateInput;
-    Event?: EventOrderByRelationAggregateInput;
+    profileEvents?: EventOrderByRelationAggregateInput;
+    roleEvents?: EventOrderByRelationAggregateInput;
   };
 
   export type TagWhereUniqueInput = Prisma.AtLeast<
@@ -25377,7 +28803,8 @@ export namespace Prisma {
       accounts?: AccountListRelationFilter;
       profiles?: ProfileListRelationFilter;
       accountsGlobalFilter?: AccountListRelationFilter;
-      Event?: EventListRelationFilter;
+      profileEvents?: EventListRelationFilter;
+      roleEvents?: EventListRelationFilter;
     },
     'id'
   >;
@@ -25504,8 +28931,10 @@ export namespace Prisma {
     tickets?: TicketListRelationFilter;
     ticketGroups?: TicketGroupListRelationFilter;
     subEvents?: EventListRelationFilter;
-    tags?: TagListRelationFilter;
+    profileTags?: TagListRelationFilter;
     eventTickets?: EventTicketListRelationFilter;
+    productions?: ProductionListRelationFilter;
+    participantRoles?: TagListRelationFilter;
   };
 
   export type EventOrderByWithRelationInput = {
@@ -25529,8 +28958,10 @@ export namespace Prisma {
     tickets?: TicketOrderByRelationAggregateInput;
     ticketGroups?: TicketGroupOrderByRelationAggregateInput;
     subEvents?: EventOrderByRelationAggregateInput;
-    tags?: TagOrderByRelationAggregateInput;
+    profileTags?: TagOrderByRelationAggregateInput;
     eventTickets?: EventTicketOrderByRelationAggregateInput;
+    productions?: ProductionOrderByRelationAggregateInput;
+    participantRoles?: TagOrderByRelationAggregateInput;
   };
 
   export type EventWhereUniqueInput = Prisma.AtLeast<
@@ -25564,8 +28995,10 @@ export namespace Prisma {
       tickets?: TicketListRelationFilter;
       ticketGroups?: TicketGroupListRelationFilter;
       subEvents?: EventListRelationFilter;
-      tags?: TagListRelationFilter;
+      profileTags?: TagListRelationFilter;
       eventTickets?: EventTicketListRelationFilter;
+      productions?: ProductionListRelationFilter;
+      participantRoles?: TagListRelationFilter;
     },
     'id' | 'tagAssistedId' | 'tagConfirmedId'
   >;
@@ -26149,6 +29582,191 @@ export namespace Prisma {
     updated_at?: DateTimeWithAggregatesFilter<'EventTicket'> | Date | string;
   };
 
+  export type ProductionWhereInput = {
+    AND?: ProductionWhereInput | ProductionWhereInput[];
+    OR?: ProductionWhereInput[];
+    NOT?: ProductionWhereInput | ProductionWhereInput[];
+    id?: StringFilter<'Production'> | string;
+    name?: StringFilter<'Production'> | string;
+    adminstratorId?: StringFilter<'Production'> | string;
+    created_at?: DateTimeFilter<'Production'> | Date | string;
+    updated_at?: DateTimeFilter<'Production'> | Date | string;
+    administrator?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>;
+    events?: EventListRelationFilter;
+    affiliationRequests?: ProductionAffiliationRequestListRelationFilter;
+  };
+
+  export type ProductionOrderByWithRelationInput = {
+    id?: SortOrder;
+    name?: SortOrder;
+    adminstratorId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    administrator?: ProfileOrderByWithRelationInput;
+    events?: EventOrderByRelationAggregateInput;
+    affiliationRequests?: ProductionAffiliationRequestOrderByRelationAggregateInput;
+  };
+
+  export type ProductionWhereUniqueInput = Prisma.AtLeast<
+    {
+      id?: string;
+      AND?: ProductionWhereInput | ProductionWhereInput[];
+      OR?: ProductionWhereInput[];
+      NOT?: ProductionWhereInput | ProductionWhereInput[];
+      name?: StringFilter<'Production'> | string;
+      adminstratorId?: StringFilter<'Production'> | string;
+      created_at?: DateTimeFilter<'Production'> | Date | string;
+      updated_at?: DateTimeFilter<'Production'> | Date | string;
+      administrator?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>;
+      events?: EventListRelationFilter;
+      affiliationRequests?: ProductionAffiliationRequestListRelationFilter;
+    },
+    'id'
+  >;
+
+  export type ProductionOrderByWithAggregationInput = {
+    id?: SortOrder;
+    name?: SortOrder;
+    adminstratorId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    _count?: ProductionCountOrderByAggregateInput;
+    _max?: ProductionMaxOrderByAggregateInput;
+    _min?: ProductionMinOrderByAggregateInput;
+  };
+
+  export type ProductionScalarWhereWithAggregatesInput = {
+    AND?:
+      | ProductionScalarWhereWithAggregatesInput
+      | ProductionScalarWhereWithAggregatesInput[];
+    OR?: ProductionScalarWhereWithAggregatesInput[];
+    NOT?:
+      | ProductionScalarWhereWithAggregatesInput
+      | ProductionScalarWhereWithAggregatesInput[];
+    id?: StringWithAggregatesFilter<'Production'> | string;
+    name?: StringWithAggregatesFilter<'Production'> | string;
+    adminstratorId?: StringWithAggregatesFilter<'Production'> | string;
+    created_at?: DateTimeWithAggregatesFilter<'Production'> | Date | string;
+    updated_at?: DateTimeWithAggregatesFilter<'Production'> | Date | string;
+  };
+
+  export type ProductionAffiliationRequestWhereInput = {
+    AND?:
+      | ProductionAffiliationRequestWhereInput
+      | ProductionAffiliationRequestWhereInput[];
+    OR?: ProductionAffiliationRequestWhereInput[];
+    NOT?:
+      | ProductionAffiliationRequestWhereInput
+      | ProductionAffiliationRequestWhereInput[];
+    id?: StringFilter<'ProductionAffiliationRequest'> | string;
+    productionId?: StringFilter<'ProductionAffiliationRequest'> | string;
+    profileId?: StringFilter<'ProductionAffiliationRequest'> | string;
+    status?:
+      | EnumAffiliationStatusFilter<'ProductionAffiliationRequest'>
+      | $Enums.AffiliationStatus;
+    reviewedAt?:
+      | DateTimeNullableFilter<'ProductionAffiliationRequest'>
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFilter<'ProductionAffiliationRequest'> | Date | string;
+    updated_at?: DateTimeFilter<'ProductionAffiliationRequest'> | Date | string;
+    production?: XOR<ProductionScalarRelationFilter, ProductionWhereInput>;
+    profile?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>;
+  };
+
+  export type ProductionAffiliationRequestOrderByWithRelationInput = {
+    id?: SortOrder;
+    productionId?: SortOrder;
+    profileId?: SortOrder;
+    status?: SortOrder;
+    reviewedAt?: SortOrderInput | SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    production?: ProductionOrderByWithRelationInput;
+    profile?: ProfileOrderByWithRelationInput;
+  };
+
+  export type ProductionAffiliationRequestWhereUniqueInput = Prisma.AtLeast<
+    {
+      id?: string;
+      AND?:
+        | ProductionAffiliationRequestWhereInput
+        | ProductionAffiliationRequestWhereInput[];
+      OR?: ProductionAffiliationRequestWhereInput[];
+      NOT?:
+        | ProductionAffiliationRequestWhereInput
+        | ProductionAffiliationRequestWhereInput[];
+      productionId?: StringFilter<'ProductionAffiliationRequest'> | string;
+      profileId?: StringFilter<'ProductionAffiliationRequest'> | string;
+      status?:
+        | EnumAffiliationStatusFilter<'ProductionAffiliationRequest'>
+        | $Enums.AffiliationStatus;
+      reviewedAt?:
+        | DateTimeNullableFilter<'ProductionAffiliationRequest'>
+        | Date
+        | string
+        | null;
+      created_at?:
+        | DateTimeFilter<'ProductionAffiliationRequest'>
+        | Date
+        | string;
+      updated_at?:
+        | DateTimeFilter<'ProductionAffiliationRequest'>
+        | Date
+        | string;
+      production?: XOR<ProductionScalarRelationFilter, ProductionWhereInput>;
+      profile?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>;
+    },
+    'id'
+  >;
+
+  export type ProductionAffiliationRequestOrderByWithAggregationInput = {
+    id?: SortOrder;
+    productionId?: SortOrder;
+    profileId?: SortOrder;
+    status?: SortOrder;
+    reviewedAt?: SortOrderInput | SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    _count?: ProductionAffiliationRequestCountOrderByAggregateInput;
+    _max?: ProductionAffiliationRequestMaxOrderByAggregateInput;
+    _min?: ProductionAffiliationRequestMinOrderByAggregateInput;
+  };
+
+  export type ProductionAffiliationRequestScalarWhereWithAggregatesInput = {
+    AND?:
+      | ProductionAffiliationRequestScalarWhereWithAggregatesInput
+      | ProductionAffiliationRequestScalarWhereWithAggregatesInput[];
+    OR?: ProductionAffiliationRequestScalarWhereWithAggregatesInput[];
+    NOT?:
+      | ProductionAffiliationRequestScalarWhereWithAggregatesInput
+      | ProductionAffiliationRequestScalarWhereWithAggregatesInput[];
+    id?: StringWithAggregatesFilter<'ProductionAffiliationRequest'> | string;
+    productionId?:
+      | StringWithAggregatesFilter<'ProductionAffiliationRequest'>
+      | string;
+    profileId?:
+      | StringWithAggregatesFilter<'ProductionAffiliationRequest'>
+      | string;
+    status?:
+      | EnumAffiliationStatusWithAggregatesFilter<'ProductionAffiliationRequest'>
+      | $Enums.AffiliationStatus;
+    reviewedAt?:
+      | DateTimeNullableWithAggregatesFilter<'ProductionAffiliationRequest'>
+      | Date
+      | string
+      | null;
+    created_at?:
+      | DateTimeWithAggregatesFilter<'ProductionAffiliationRequest'>
+      | Date
+      | string;
+    updated_at?:
+      | DateTimeWithAggregatesFilter<'ProductionAffiliationRequest'>
+      | Date
+      | string;
+  };
+
   export type AccountCreateInput = {
     id?: string;
     username: string;
@@ -26271,7 +29889,9 @@ export namespace Prisma {
     tags?: TagCreateNestedManyWithoutProfilesInput;
     birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
     residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
-    Ticket?: TicketCreateNestedManyWithoutProfileInput;
+    tickets?: TicketCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileUncheckedCreateInput = {
@@ -26303,7 +29923,9 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
     messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
     tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
-    Ticket?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileUpdateInput = {
@@ -26349,7 +29971,9 @@ export namespace Prisma {
     tags?: TagUpdateManyWithoutProfilesNestedInput;
     birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
     residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
-    Ticket?: TicketUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateInput = {
@@ -26398,7 +30022,9 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
     tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
-    Ticket?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
   };
 
   export type ProfileCreateManyInput = {
@@ -26774,7 +30400,8 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutTagsInput;
     profiles?: ProfileCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
-    Event?: EventCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagUncheckedCreateInput = {
@@ -26789,7 +30416,8 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutTagsInput;
     profiles?: ProfileUncheckedCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
-    Event?: EventUncheckedCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagUpdateInput = {
@@ -26804,7 +30432,8 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutTagsNestedInput;
     profiles?: ProfileUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
-    Event?: EventUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type TagUncheckedUpdateInput = {
@@ -26819,7 +30448,8 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutTagsNestedInput;
     profiles?: ProfileUncheckedUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
-    Event?: EventUncheckedUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type TagCreateManyInput = {
@@ -26932,8 +30562,10 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
-    tags?: TagCreateNestedManyWithoutEventInput;
+    profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
+    productions?: ProductionCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventUncheckedCreateInput = {
@@ -26953,8 +30585,10 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
-    tags?: TagUncheckedCreateNestedManyWithoutEventInput;
+    profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
+    productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventUpdateInput = {
@@ -26974,8 +30608,10 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type EventUncheckedUpdateInput = {
@@ -26995,8 +30631,10 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type EventCreateManyInput = {
@@ -27240,7 +30878,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
-    profile?: ProfileCreateNestedOneWithoutTicketInput;
+    profile?: ProfileCreateNestedOneWithoutTicketsInput;
     ticketGroup?: TicketGroupCreateNestedOneWithoutTicketsInput;
   };
 
@@ -27276,7 +30914,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
-    profile?: ProfileUpdateOneWithoutTicketNestedInput;
+    profile?: ProfileUpdateOneWithoutTicketsNestedInput;
     ticketGroup?: TicketGroupUpdateOneWithoutTicketsNestedInput;
   };
 
@@ -27554,6 +31192,161 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
+  export type ProductionCreateInput = {
+    id?: string;
+    name: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    administrator: ProfileCreateNestedOneWithoutProductionsAdministratedInput;
+    events?: EventCreateNestedManyWithoutProductionsInput;
+    affiliationRequests?: ProductionAffiliationRequestCreateNestedManyWithoutProductionInput;
+  };
+
+  export type ProductionUncheckedCreateInput = {
+    id?: string;
+    name: string;
+    adminstratorId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    events?: EventUncheckedCreateNestedManyWithoutProductionsInput;
+    affiliationRequests?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProductionInput;
+  };
+
+  export type ProductionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    administrator?: ProfileUpdateOneRequiredWithoutProductionsAdministratedNestedInput;
+    events?: EventUpdateManyWithoutProductionsNestedInput;
+    affiliationRequests?: ProductionAffiliationRequestUpdateManyWithoutProductionNestedInput;
+  };
+
+  export type ProductionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    adminstratorId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    events?: EventUncheckedUpdateManyWithoutProductionsNestedInput;
+    affiliationRequests?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProductionNestedInput;
+  };
+
+  export type ProductionCreateManyInput = {
+    id?: string;
+    name: string;
+    adminstratorId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type ProductionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type ProductionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    adminstratorId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type ProductionAffiliationRequestCreateInput = {
+    id?: string;
+    status?: $Enums.AffiliationStatus;
+    reviewedAt?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    production: ProductionCreateNestedOneWithoutAffiliationRequestsInput;
+    profile: ProfileCreateNestedOneWithoutProductionRequestsSentInput;
+  };
+
+  export type ProductionAffiliationRequestUncheckedCreateInput = {
+    id?: string;
+    productionId: string;
+    profileId: string;
+    status?: $Enums.AffiliationStatus;
+    reviewedAt?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type ProductionAffiliationRequestUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumAffiliationStatusFieldUpdateOperationsInput
+      | $Enums.AffiliationStatus;
+    reviewedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    production?: ProductionUpdateOneRequiredWithoutAffiliationRequestsNestedInput;
+    profile?: ProfileUpdateOneRequiredWithoutProductionRequestsSentNestedInput;
+  };
+
+  export type ProductionAffiliationRequestUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    productionId?: StringFieldUpdateOperationsInput | string;
+    profileId?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumAffiliationStatusFieldUpdateOperationsInput
+      | $Enums.AffiliationStatus;
+    reviewedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type ProductionAffiliationRequestCreateManyInput = {
+    id?: string;
+    productionId: string;
+    profileId: string;
+    status?: $Enums.AffiliationStatus;
+    reviewedAt?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type ProductionAffiliationRequestUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumAffiliationStatusFieldUpdateOperationsInput
+      | $Enums.AffiliationStatus;
+    reviewedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type ProductionAffiliationRequestUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    productionId?: StringFieldUpdateOperationsInput | string;
+    profileId?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumAffiliationStatusFieldUpdateOperationsInput
+      | $Enums.AffiliationStatus;
+    reviewedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>;
     in?: string[] | ListStringFieldRefInput<$PrismaModel>;
@@ -27761,6 +31554,18 @@ export namespace Prisma {
     none?: TicketWhereInput;
   };
 
+  export type ProductionListRelationFilter = {
+    every?: ProductionWhereInput;
+    some?: ProductionWhereInput;
+    none?: ProductionWhereInput;
+  };
+
+  export type ProductionAffiliationRequestListRelationFilter = {
+    every?: ProductionAffiliationRequestWhereInput;
+    some?: ProductionAffiliationRequestWhereInput;
+    none?: ProductionAffiliationRequestWhereInput;
+  };
+
   export type SortOrderInput = {
     sort: SortOrder;
     nulls?: NullsOrder;
@@ -27775,6 +31580,14 @@ export namespace Prisma {
   };
 
   export type TicketOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type ProductionOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type ProductionAffiliationRequestOrderByRelationAggregateInput = {
     _count?: SortOrder;
   };
 
@@ -28775,6 +32588,99 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>;
   };
 
+  export type ProductionCountOrderByAggregateInput = {
+    id?: SortOrder;
+    name?: SortOrder;
+    adminstratorId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type ProductionMaxOrderByAggregateInput = {
+    id?: SortOrder;
+    name?: SortOrder;
+    adminstratorId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type ProductionMinOrderByAggregateInput = {
+    id?: SortOrder;
+    name?: SortOrder;
+    adminstratorId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type EnumAffiliationStatusFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.AffiliationStatus
+      | EnumAffiliationStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.AffiliationStatus[]
+      | ListEnumAffiliationStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.AffiliationStatus[]
+      | ListEnumAffiliationStatusFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumAffiliationStatusFilter<$PrismaModel>
+      | $Enums.AffiliationStatus;
+  };
+
+  export type ProductionScalarRelationFilter = {
+    is?: ProductionWhereInput;
+    isNot?: ProductionWhereInput;
+  };
+
+  export type ProductionAffiliationRequestCountOrderByAggregateInput = {
+    id?: SortOrder;
+    productionId?: SortOrder;
+    profileId?: SortOrder;
+    status?: SortOrder;
+    reviewedAt?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type ProductionAffiliationRequestMaxOrderByAggregateInput = {
+    id?: SortOrder;
+    productionId?: SortOrder;
+    profileId?: SortOrder;
+    status?: SortOrder;
+    reviewedAt?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type ProductionAffiliationRequestMinOrderByAggregateInput = {
+    id?: SortOrder;
+    productionId?: SortOrder;
+    profileId?: SortOrder;
+    status?: SortOrder;
+    reviewedAt?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type EnumAffiliationStatusWithAggregatesFilter<$PrismaModel = never> =
+    {
+      equals?:
+        | $Enums.AffiliationStatus
+        | EnumAffiliationStatusFieldRefInput<$PrismaModel>;
+      in?:
+        | $Enums.AffiliationStatus[]
+        | ListEnumAffiliationStatusFieldRefInput<$PrismaModel>;
+      notIn?:
+        | $Enums.AffiliationStatus[]
+        | ListEnumAffiliationStatusFieldRefInput<$PrismaModel>;
+      not?:
+        | NestedEnumAffiliationStatusWithAggregatesFilter<$PrismaModel>
+        | $Enums.AffiliationStatus;
+      _count?: NestedIntFilter<$PrismaModel>;
+      _min?: NestedEnumAffiliationStatusFilter<$PrismaModel>;
+      _max?: NestedEnumAffiliationStatusFilter<$PrismaModel>;
+    };
+
   export type AccountCreatefcmTokenInput = {
     set: string[];
   };
@@ -29229,6 +33135,39 @@ export namespace Prisma {
     connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
   };
 
+  export type ProductionCreateNestedManyWithoutAdministratorInput = {
+    create?:
+      | XOR<
+          ProductionCreateWithoutAdministratorInput,
+          ProductionUncheckedCreateWithoutAdministratorInput
+        >
+      | ProductionCreateWithoutAdministratorInput[]
+      | ProductionUncheckedCreateWithoutAdministratorInput[];
+    connectOrCreate?:
+      | ProductionCreateOrConnectWithoutAdministratorInput
+      | ProductionCreateOrConnectWithoutAdministratorInput[];
+    createMany?: ProductionCreateManyAdministratorInputEnvelope;
+    connect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+  };
+
+  export type ProductionAffiliationRequestCreateNestedManyWithoutProfileInput =
+    {
+      create?:
+        | XOR<
+            ProductionAffiliationRequestCreateWithoutProfileInput,
+            ProductionAffiliationRequestUncheckedCreateWithoutProfileInput
+          >
+        | ProductionAffiliationRequestCreateWithoutProfileInput[]
+        | ProductionAffiliationRequestUncheckedCreateWithoutProfileInput[];
+      connectOrCreate?:
+        | ProductionAffiliationRequestCreateOrConnectWithoutProfileInput
+        | ProductionAffiliationRequestCreateOrConnectWithoutProfileInput[];
+      createMany?: ProductionAffiliationRequestCreateManyProfileInputEnvelope;
+      connect?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+    };
+
   export type OtpUncheckedCreateNestedManyWithoutOwnerInput = {
     create?:
       | XOR<OtpCreateWithoutOwnerInput, OtpUncheckedCreateWithoutOwnerInput>
@@ -29299,6 +33238,39 @@ export namespace Prisma {
     createMany?: TicketCreateManyProfileInputEnvelope;
     connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
   };
+
+  export type ProductionUncheckedCreateNestedManyWithoutAdministratorInput = {
+    create?:
+      | XOR<
+          ProductionCreateWithoutAdministratorInput,
+          ProductionUncheckedCreateWithoutAdministratorInput
+        >
+      | ProductionCreateWithoutAdministratorInput[]
+      | ProductionUncheckedCreateWithoutAdministratorInput[];
+    connectOrCreate?:
+      | ProductionCreateOrConnectWithoutAdministratorInput
+      | ProductionCreateOrConnectWithoutAdministratorInput[];
+    createMany?: ProductionCreateManyAdministratorInputEnvelope;
+    connect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+  };
+
+  export type ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput =
+    {
+      create?:
+        | XOR<
+            ProductionAffiliationRequestCreateWithoutProfileInput,
+            ProductionAffiliationRequestUncheckedCreateWithoutProfileInput
+          >
+        | ProductionAffiliationRequestCreateWithoutProfileInput[]
+        | ProductionAffiliationRequestUncheckedCreateWithoutProfileInput[];
+      connectOrCreate?:
+        | ProductionAffiliationRequestCreateOrConnectWithoutProfileInput
+        | ProductionAffiliationRequestCreateOrConnectWithoutProfileInput[];
+      createMany?: ProductionAffiliationRequestCreateManyProfileInputEnvelope;
+      connect?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+    };
 
   export type IntFieldUpdateOperationsInput = {
     set?: number;
@@ -29495,6 +33467,73 @@ export namespace Prisma {
     deleteMany?: TicketScalarWhereInput | TicketScalarWhereInput[];
   };
 
+  export type ProductionUpdateManyWithoutAdministratorNestedInput = {
+    create?:
+      | XOR<
+          ProductionCreateWithoutAdministratorInput,
+          ProductionUncheckedCreateWithoutAdministratorInput
+        >
+      | ProductionCreateWithoutAdministratorInput[]
+      | ProductionUncheckedCreateWithoutAdministratorInput[];
+    connectOrCreate?:
+      | ProductionCreateOrConnectWithoutAdministratorInput
+      | ProductionCreateOrConnectWithoutAdministratorInput[];
+    upsert?:
+      | ProductionUpsertWithWhereUniqueWithoutAdministratorInput
+      | ProductionUpsertWithWhereUniqueWithoutAdministratorInput[];
+    createMany?: ProductionCreateManyAdministratorInputEnvelope;
+    set?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    disconnect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    delete?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    connect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    update?:
+      | ProductionUpdateWithWhereUniqueWithoutAdministratorInput
+      | ProductionUpdateWithWhereUniqueWithoutAdministratorInput[];
+    updateMany?:
+      | ProductionUpdateManyWithWhereWithoutAdministratorInput
+      | ProductionUpdateManyWithWhereWithoutAdministratorInput[];
+    deleteMany?: ProductionScalarWhereInput | ProductionScalarWhereInput[];
+  };
+
+  export type ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput =
+    {
+      create?:
+        | XOR<
+            ProductionAffiliationRequestCreateWithoutProfileInput,
+            ProductionAffiliationRequestUncheckedCreateWithoutProfileInput
+          >
+        | ProductionAffiliationRequestCreateWithoutProfileInput[]
+        | ProductionAffiliationRequestUncheckedCreateWithoutProfileInput[];
+      connectOrCreate?:
+        | ProductionAffiliationRequestCreateOrConnectWithoutProfileInput
+        | ProductionAffiliationRequestCreateOrConnectWithoutProfileInput[];
+      upsert?:
+        | ProductionAffiliationRequestUpsertWithWhereUniqueWithoutProfileInput
+        | ProductionAffiliationRequestUpsertWithWhereUniqueWithoutProfileInput[];
+      createMany?: ProductionAffiliationRequestCreateManyProfileInputEnvelope;
+      set?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      disconnect?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      delete?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      connect?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      update?:
+        | ProductionAffiliationRequestUpdateWithWhereUniqueWithoutProfileInput
+        | ProductionAffiliationRequestUpdateWithWhereUniqueWithoutProfileInput[];
+      updateMany?:
+        | ProductionAffiliationRequestUpdateManyWithWhereWithoutProfileInput
+        | ProductionAffiliationRequestUpdateManyWithWhereWithoutProfileInput[];
+      deleteMany?:
+        | ProductionAffiliationRequestScalarWhereInput
+        | ProductionAffiliationRequestScalarWhereInput[];
+    };
+
   export type OtpUncheckedUpdateManyWithoutOwnerNestedInput = {
     create?:
       | XOR<OtpCreateWithoutOwnerInput, OtpUncheckedCreateWithoutOwnerInput>
@@ -29630,6 +33669,73 @@ export namespace Prisma {
       | TicketUpdateManyWithWhereWithoutProfileInput[];
     deleteMany?: TicketScalarWhereInput | TicketScalarWhereInput[];
   };
+
+  export type ProductionUncheckedUpdateManyWithoutAdministratorNestedInput = {
+    create?:
+      | XOR<
+          ProductionCreateWithoutAdministratorInput,
+          ProductionUncheckedCreateWithoutAdministratorInput
+        >
+      | ProductionCreateWithoutAdministratorInput[]
+      | ProductionUncheckedCreateWithoutAdministratorInput[];
+    connectOrCreate?:
+      | ProductionCreateOrConnectWithoutAdministratorInput
+      | ProductionCreateOrConnectWithoutAdministratorInput[];
+    upsert?:
+      | ProductionUpsertWithWhereUniqueWithoutAdministratorInput
+      | ProductionUpsertWithWhereUniqueWithoutAdministratorInput[];
+    createMany?: ProductionCreateManyAdministratorInputEnvelope;
+    set?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    disconnect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    delete?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    connect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    update?:
+      | ProductionUpdateWithWhereUniqueWithoutAdministratorInput
+      | ProductionUpdateWithWhereUniqueWithoutAdministratorInput[];
+    updateMany?:
+      | ProductionUpdateManyWithWhereWithoutAdministratorInput
+      | ProductionUpdateManyWithWhereWithoutAdministratorInput[];
+    deleteMany?: ProductionScalarWhereInput | ProductionScalarWhereInput[];
+  };
+
+  export type ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput =
+    {
+      create?:
+        | XOR<
+            ProductionAffiliationRequestCreateWithoutProfileInput,
+            ProductionAffiliationRequestUncheckedCreateWithoutProfileInput
+          >
+        | ProductionAffiliationRequestCreateWithoutProfileInput[]
+        | ProductionAffiliationRequestUncheckedCreateWithoutProfileInput[];
+      connectOrCreate?:
+        | ProductionAffiliationRequestCreateOrConnectWithoutProfileInput
+        | ProductionAffiliationRequestCreateOrConnectWithoutProfileInput[];
+      upsert?:
+        | ProductionAffiliationRequestUpsertWithWhereUniqueWithoutProfileInput
+        | ProductionAffiliationRequestUpsertWithWhereUniqueWithoutProfileInput[];
+      createMany?: ProductionAffiliationRequestCreateManyProfileInputEnvelope;
+      set?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      disconnect?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      delete?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      connect?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      update?:
+        | ProductionAffiliationRequestUpdateWithWhereUniqueWithoutProfileInput
+        | ProductionAffiliationRequestUpdateWithWhereUniqueWithoutProfileInput[];
+      updateMany?:
+        | ProductionAffiliationRequestUpdateManyWithWhereWithoutProfileInput
+        | ProductionAffiliationRequestUpdateManyWithWhereWithoutProfileInput[];
+      deleteMany?:
+        | ProductionAffiliationRequestScalarWhereInput
+        | ProductionAffiliationRequestScalarWhereInput[];
+    };
 
   export type ProfileCreateNestedOneWithoutOtpInput = {
     create?: XOR<
@@ -29986,14 +34092,31 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[];
   };
 
-  export type EventCreateNestedManyWithoutTagsInput = {
+  export type EventCreateNestedManyWithoutProfileTagsInput = {
     create?:
-      | XOR<EventCreateWithoutTagsInput, EventUncheckedCreateWithoutTagsInput>
-      | EventCreateWithoutTagsInput[]
-      | EventUncheckedCreateWithoutTagsInput[];
+      | XOR<
+          EventCreateWithoutProfileTagsInput,
+          EventUncheckedCreateWithoutProfileTagsInput
+        >
+      | EventCreateWithoutProfileTagsInput[]
+      | EventUncheckedCreateWithoutProfileTagsInput[];
     connectOrCreate?:
-      | EventCreateOrConnectWithoutTagsInput
-      | EventCreateOrConnectWithoutTagsInput[];
+      | EventCreateOrConnectWithoutProfileTagsInput
+      | EventCreateOrConnectWithoutProfileTagsInput[];
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
+  };
+
+  export type EventCreateNestedManyWithoutParticipantRolesInput = {
+    create?:
+      | XOR<
+          EventCreateWithoutParticipantRolesInput,
+          EventUncheckedCreateWithoutParticipantRolesInput
+        >
+      | EventCreateWithoutParticipantRolesInput[]
+      | EventUncheckedCreateWithoutParticipantRolesInput[];
+    connectOrCreate?:
+      | EventCreateOrConnectWithoutParticipantRolesInput
+      | EventCreateOrConnectWithoutParticipantRolesInput[];
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
   };
 
@@ -30057,14 +34180,31 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[];
   };
 
-  export type EventUncheckedCreateNestedManyWithoutTagsInput = {
+  export type EventUncheckedCreateNestedManyWithoutProfileTagsInput = {
     create?:
-      | XOR<EventCreateWithoutTagsInput, EventUncheckedCreateWithoutTagsInput>
-      | EventCreateWithoutTagsInput[]
-      | EventUncheckedCreateWithoutTagsInput[];
+      | XOR<
+          EventCreateWithoutProfileTagsInput,
+          EventUncheckedCreateWithoutProfileTagsInput
+        >
+      | EventCreateWithoutProfileTagsInput[]
+      | EventUncheckedCreateWithoutProfileTagsInput[];
     connectOrCreate?:
-      | EventCreateOrConnectWithoutTagsInput
-      | EventCreateOrConnectWithoutTagsInput[];
+      | EventCreateOrConnectWithoutProfileTagsInput
+      | EventCreateOrConnectWithoutProfileTagsInput[];
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
+  };
+
+  export type EventUncheckedCreateNestedManyWithoutParticipantRolesInput = {
+    create?:
+      | XOR<
+          EventCreateWithoutParticipantRolesInput,
+          EventUncheckedCreateWithoutParticipantRolesInput
+        >
+      | EventCreateWithoutParticipantRolesInput[]
+      | EventUncheckedCreateWithoutParticipantRolesInput[];
+    connectOrCreate?:
+      | EventCreateOrConnectWithoutParticipantRolesInput
+      | EventCreateOrConnectWithoutParticipantRolesInput[];
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
   };
 
@@ -30208,27 +34348,57 @@ export namespace Prisma {
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[];
   };
 
-  export type EventUpdateManyWithoutTagsNestedInput = {
+  export type EventUpdateManyWithoutProfileTagsNestedInput = {
     create?:
-      | XOR<EventCreateWithoutTagsInput, EventUncheckedCreateWithoutTagsInput>
-      | EventCreateWithoutTagsInput[]
-      | EventUncheckedCreateWithoutTagsInput[];
+      | XOR<
+          EventCreateWithoutProfileTagsInput,
+          EventUncheckedCreateWithoutProfileTagsInput
+        >
+      | EventCreateWithoutProfileTagsInput[]
+      | EventUncheckedCreateWithoutProfileTagsInput[];
     connectOrCreate?:
-      | EventCreateOrConnectWithoutTagsInput
-      | EventCreateOrConnectWithoutTagsInput[];
+      | EventCreateOrConnectWithoutProfileTagsInput
+      | EventCreateOrConnectWithoutProfileTagsInput[];
     upsert?:
-      | EventUpsertWithWhereUniqueWithoutTagsInput
-      | EventUpsertWithWhereUniqueWithoutTagsInput[];
+      | EventUpsertWithWhereUniqueWithoutProfileTagsInput
+      | EventUpsertWithWhereUniqueWithoutProfileTagsInput[];
     set?: EventWhereUniqueInput | EventWhereUniqueInput[];
     disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[];
     delete?: EventWhereUniqueInput | EventWhereUniqueInput[];
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
     update?:
-      | EventUpdateWithWhereUniqueWithoutTagsInput
-      | EventUpdateWithWhereUniqueWithoutTagsInput[];
+      | EventUpdateWithWhereUniqueWithoutProfileTagsInput
+      | EventUpdateWithWhereUniqueWithoutProfileTagsInput[];
     updateMany?:
-      | EventUpdateManyWithWhereWithoutTagsInput
-      | EventUpdateManyWithWhereWithoutTagsInput[];
+      | EventUpdateManyWithWhereWithoutProfileTagsInput
+      | EventUpdateManyWithWhereWithoutProfileTagsInput[];
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[];
+  };
+
+  export type EventUpdateManyWithoutParticipantRolesNestedInput = {
+    create?:
+      | XOR<
+          EventCreateWithoutParticipantRolesInput,
+          EventUncheckedCreateWithoutParticipantRolesInput
+        >
+      | EventCreateWithoutParticipantRolesInput[]
+      | EventUncheckedCreateWithoutParticipantRolesInput[];
+    connectOrCreate?:
+      | EventCreateOrConnectWithoutParticipantRolesInput
+      | EventCreateOrConnectWithoutParticipantRolesInput[];
+    upsert?:
+      | EventUpsertWithWhereUniqueWithoutParticipantRolesInput
+      | EventUpsertWithWhereUniqueWithoutParticipantRolesInput[];
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    update?:
+      | EventUpdateWithWhereUniqueWithoutParticipantRolesInput
+      | EventUpdateWithWhereUniqueWithoutParticipantRolesInput[];
+    updateMany?:
+      | EventUpdateManyWithWhereWithoutParticipantRolesInput
+      | EventUpdateManyWithWhereWithoutParticipantRolesInput[];
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[];
   };
 
@@ -30351,27 +34521,57 @@ export namespace Prisma {
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[];
   };
 
-  export type EventUncheckedUpdateManyWithoutTagsNestedInput = {
+  export type EventUncheckedUpdateManyWithoutProfileTagsNestedInput = {
     create?:
-      | XOR<EventCreateWithoutTagsInput, EventUncheckedCreateWithoutTagsInput>
-      | EventCreateWithoutTagsInput[]
-      | EventUncheckedCreateWithoutTagsInput[];
+      | XOR<
+          EventCreateWithoutProfileTagsInput,
+          EventUncheckedCreateWithoutProfileTagsInput
+        >
+      | EventCreateWithoutProfileTagsInput[]
+      | EventUncheckedCreateWithoutProfileTagsInput[];
     connectOrCreate?:
-      | EventCreateOrConnectWithoutTagsInput
-      | EventCreateOrConnectWithoutTagsInput[];
+      | EventCreateOrConnectWithoutProfileTagsInput
+      | EventCreateOrConnectWithoutProfileTagsInput[];
     upsert?:
-      | EventUpsertWithWhereUniqueWithoutTagsInput
-      | EventUpsertWithWhereUniqueWithoutTagsInput[];
+      | EventUpsertWithWhereUniqueWithoutProfileTagsInput
+      | EventUpsertWithWhereUniqueWithoutProfileTagsInput[];
     set?: EventWhereUniqueInput | EventWhereUniqueInput[];
     disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[];
     delete?: EventWhereUniqueInput | EventWhereUniqueInput[];
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
     update?:
-      | EventUpdateWithWhereUniqueWithoutTagsInput
-      | EventUpdateWithWhereUniqueWithoutTagsInput[];
+      | EventUpdateWithWhereUniqueWithoutProfileTagsInput
+      | EventUpdateWithWhereUniqueWithoutProfileTagsInput[];
     updateMany?:
-      | EventUpdateManyWithWhereWithoutTagsInput
-      | EventUpdateManyWithWhereWithoutTagsInput[];
+      | EventUpdateManyWithWhereWithoutProfileTagsInput
+      | EventUpdateManyWithWhereWithoutProfileTagsInput[];
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[];
+  };
+
+  export type EventUncheckedUpdateManyWithoutParticipantRolesNestedInput = {
+    create?:
+      | XOR<
+          EventCreateWithoutParticipantRolesInput,
+          EventUncheckedCreateWithoutParticipantRolesInput
+        >
+      | EventCreateWithoutParticipantRolesInput[]
+      | EventUncheckedCreateWithoutParticipantRolesInput[];
+    connectOrCreate?:
+      | EventCreateOrConnectWithoutParticipantRolesInput
+      | EventCreateOrConnectWithoutParticipantRolesInput[];
+    upsert?:
+      | EventUpsertWithWhereUniqueWithoutParticipantRolesInput
+      | EventUpsertWithWhereUniqueWithoutParticipantRolesInput[];
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    update?:
+      | EventUpdateWithWhereUniqueWithoutParticipantRolesInput
+      | EventUpdateWithWhereUniqueWithoutParticipantRolesInput[];
+    updateMany?:
+      | EventUpdateManyWithWhereWithoutParticipantRolesInput
+      | EventUpdateManyWithWhereWithoutParticipantRolesInput[];
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[];
   };
 
@@ -30530,14 +34730,17 @@ export namespace Prisma {
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
   };
 
-  export type TagCreateNestedManyWithoutEventInput = {
+  export type TagCreateNestedManyWithoutProfileEventsInput = {
     create?:
-      | XOR<TagCreateWithoutEventInput, TagUncheckedCreateWithoutEventInput>
-      | TagCreateWithoutEventInput[]
-      | TagUncheckedCreateWithoutEventInput[];
+      | XOR<
+          TagCreateWithoutProfileEventsInput,
+          TagUncheckedCreateWithoutProfileEventsInput
+        >
+      | TagCreateWithoutProfileEventsInput[]
+      | TagUncheckedCreateWithoutProfileEventsInput[];
     connectOrCreate?:
-      | TagCreateOrConnectWithoutEventInput
-      | TagCreateOrConnectWithoutEventInput[];
+      | TagCreateOrConnectWithoutProfileEventsInput
+      | TagCreateOrConnectWithoutProfileEventsInput[];
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[];
   };
 
@@ -30554,6 +34757,34 @@ export namespace Prisma {
       | EventTicketCreateOrConnectWithoutEventInput[];
     createMany?: EventTicketCreateManyEventInputEnvelope;
     connect?: EventTicketWhereUniqueInput | EventTicketWhereUniqueInput[];
+  };
+
+  export type ProductionCreateNestedManyWithoutEventsInput = {
+    create?:
+      | XOR<
+          ProductionCreateWithoutEventsInput,
+          ProductionUncheckedCreateWithoutEventsInput
+        >
+      | ProductionCreateWithoutEventsInput[]
+      | ProductionUncheckedCreateWithoutEventsInput[];
+    connectOrCreate?:
+      | ProductionCreateOrConnectWithoutEventsInput
+      | ProductionCreateOrConnectWithoutEventsInput[];
+    connect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+  };
+
+  export type TagCreateNestedManyWithoutRoleEventsInput = {
+    create?:
+      | XOR<
+          TagCreateWithoutRoleEventsInput,
+          TagUncheckedCreateWithoutRoleEventsInput
+        >
+      | TagCreateWithoutRoleEventsInput[]
+      | TagUncheckedCreateWithoutRoleEventsInput[];
+    connectOrCreate?:
+      | TagCreateOrConnectWithoutRoleEventsInput
+      | TagCreateOrConnectWithoutRoleEventsInput[];
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[];
   };
 
   export type TicketUncheckedCreateNestedManyWithoutEventInput = {
@@ -30601,14 +34832,17 @@ export namespace Prisma {
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
   };
 
-  export type TagUncheckedCreateNestedManyWithoutEventInput = {
+  export type TagUncheckedCreateNestedManyWithoutProfileEventsInput = {
     create?:
-      | XOR<TagCreateWithoutEventInput, TagUncheckedCreateWithoutEventInput>
-      | TagCreateWithoutEventInput[]
-      | TagUncheckedCreateWithoutEventInput[];
+      | XOR<
+          TagCreateWithoutProfileEventsInput,
+          TagUncheckedCreateWithoutProfileEventsInput
+        >
+      | TagCreateWithoutProfileEventsInput[]
+      | TagUncheckedCreateWithoutProfileEventsInput[];
     connectOrCreate?:
-      | TagCreateOrConnectWithoutEventInput
-      | TagCreateOrConnectWithoutEventInput[];
+      | TagCreateOrConnectWithoutProfileEventsInput
+      | TagCreateOrConnectWithoutProfileEventsInput[];
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[];
   };
 
@@ -30625,6 +34859,34 @@ export namespace Prisma {
       | EventTicketCreateOrConnectWithoutEventInput[];
     createMany?: EventTicketCreateManyEventInputEnvelope;
     connect?: EventTicketWhereUniqueInput | EventTicketWhereUniqueInput[];
+  };
+
+  export type ProductionUncheckedCreateNestedManyWithoutEventsInput = {
+    create?:
+      | XOR<
+          ProductionCreateWithoutEventsInput,
+          ProductionUncheckedCreateWithoutEventsInput
+        >
+      | ProductionCreateWithoutEventsInput[]
+      | ProductionUncheckedCreateWithoutEventsInput[];
+    connectOrCreate?:
+      | ProductionCreateOrConnectWithoutEventsInput
+      | ProductionCreateOrConnectWithoutEventsInput[];
+    connect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+  };
+
+  export type TagUncheckedCreateNestedManyWithoutRoleEventsInput = {
+    create?:
+      | XOR<
+          TagCreateWithoutRoleEventsInput,
+          TagUncheckedCreateWithoutRoleEventsInput
+        >
+      | TagCreateWithoutRoleEventsInput[]
+      | TagUncheckedCreateWithoutRoleEventsInput[];
+    connectOrCreate?:
+      | TagCreateOrConnectWithoutRoleEventsInput
+      | TagCreateOrConnectWithoutRoleEventsInput[];
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[];
   };
 
   export type EventFolderUpdateOneWithoutEventsNestedInput = {
@@ -30783,27 +35045,30 @@ export namespace Prisma {
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[];
   };
 
-  export type TagUpdateManyWithoutEventNestedInput = {
+  export type TagUpdateManyWithoutProfileEventsNestedInput = {
     create?:
-      | XOR<TagCreateWithoutEventInput, TagUncheckedCreateWithoutEventInput>
-      | TagCreateWithoutEventInput[]
-      | TagUncheckedCreateWithoutEventInput[];
+      | XOR<
+          TagCreateWithoutProfileEventsInput,
+          TagUncheckedCreateWithoutProfileEventsInput
+        >
+      | TagCreateWithoutProfileEventsInput[]
+      | TagUncheckedCreateWithoutProfileEventsInput[];
     connectOrCreate?:
-      | TagCreateOrConnectWithoutEventInput
-      | TagCreateOrConnectWithoutEventInput[];
+      | TagCreateOrConnectWithoutProfileEventsInput
+      | TagCreateOrConnectWithoutProfileEventsInput[];
     upsert?:
-      | TagUpsertWithWhereUniqueWithoutEventInput
-      | TagUpsertWithWhereUniqueWithoutEventInput[];
+      | TagUpsertWithWhereUniqueWithoutProfileEventsInput
+      | TagUpsertWithWhereUniqueWithoutProfileEventsInput[];
     set?: TagWhereUniqueInput | TagWhereUniqueInput[];
     disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[];
     delete?: TagWhereUniqueInput | TagWhereUniqueInput[];
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[];
     update?:
-      | TagUpdateWithWhereUniqueWithoutEventInput
-      | TagUpdateWithWhereUniqueWithoutEventInput[];
+      | TagUpdateWithWhereUniqueWithoutProfileEventsInput
+      | TagUpdateWithWhereUniqueWithoutProfileEventsInput[];
     updateMany?:
-      | TagUpdateManyWithWhereWithoutEventInput
-      | TagUpdateManyWithWhereWithoutEventInput[];
+      | TagUpdateManyWithWhereWithoutProfileEventsInput
+      | TagUpdateManyWithWhereWithoutProfileEventsInput[];
     deleteMany?: TagScalarWhereInput | TagScalarWhereInput[];
   };
 
@@ -30833,6 +35098,60 @@ export namespace Prisma {
       | EventTicketUpdateManyWithWhereWithoutEventInput
       | EventTicketUpdateManyWithWhereWithoutEventInput[];
     deleteMany?: EventTicketScalarWhereInput | EventTicketScalarWhereInput[];
+  };
+
+  export type ProductionUpdateManyWithoutEventsNestedInput = {
+    create?:
+      | XOR<
+          ProductionCreateWithoutEventsInput,
+          ProductionUncheckedCreateWithoutEventsInput
+        >
+      | ProductionCreateWithoutEventsInput[]
+      | ProductionUncheckedCreateWithoutEventsInput[];
+    connectOrCreate?:
+      | ProductionCreateOrConnectWithoutEventsInput
+      | ProductionCreateOrConnectWithoutEventsInput[];
+    upsert?:
+      | ProductionUpsertWithWhereUniqueWithoutEventsInput
+      | ProductionUpsertWithWhereUniqueWithoutEventsInput[];
+    set?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    disconnect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    delete?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    connect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    update?:
+      | ProductionUpdateWithWhereUniqueWithoutEventsInput
+      | ProductionUpdateWithWhereUniqueWithoutEventsInput[];
+    updateMany?:
+      | ProductionUpdateManyWithWhereWithoutEventsInput
+      | ProductionUpdateManyWithWhereWithoutEventsInput[];
+    deleteMany?: ProductionScalarWhereInput | ProductionScalarWhereInput[];
+  };
+
+  export type TagUpdateManyWithoutRoleEventsNestedInput = {
+    create?:
+      | XOR<
+          TagCreateWithoutRoleEventsInput,
+          TagUncheckedCreateWithoutRoleEventsInput
+        >
+      | TagCreateWithoutRoleEventsInput[]
+      | TagUncheckedCreateWithoutRoleEventsInput[];
+    connectOrCreate?:
+      | TagCreateOrConnectWithoutRoleEventsInput
+      | TagCreateOrConnectWithoutRoleEventsInput[];
+    upsert?:
+      | TagUpsertWithWhereUniqueWithoutRoleEventsInput
+      | TagUpsertWithWhereUniqueWithoutRoleEventsInput[];
+    set?: TagWhereUniqueInput | TagWhereUniqueInput[];
+    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[];
+    delete?: TagWhereUniqueInput | TagWhereUniqueInput[];
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[];
+    update?:
+      | TagUpdateWithWhereUniqueWithoutRoleEventsInput
+      | TagUpdateWithWhereUniqueWithoutRoleEventsInput[];
+    updateMany?:
+      | TagUpdateManyWithWhereWithoutRoleEventsInput
+      | TagUpdateManyWithWhereWithoutRoleEventsInput[];
+    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[];
   };
 
   export type TicketUncheckedUpdateManyWithoutEventNestedInput = {
@@ -30919,27 +35238,30 @@ export namespace Prisma {
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[];
   };
 
-  export type TagUncheckedUpdateManyWithoutEventNestedInput = {
+  export type TagUncheckedUpdateManyWithoutProfileEventsNestedInput = {
     create?:
-      | XOR<TagCreateWithoutEventInput, TagUncheckedCreateWithoutEventInput>
-      | TagCreateWithoutEventInput[]
-      | TagUncheckedCreateWithoutEventInput[];
+      | XOR<
+          TagCreateWithoutProfileEventsInput,
+          TagUncheckedCreateWithoutProfileEventsInput
+        >
+      | TagCreateWithoutProfileEventsInput[]
+      | TagUncheckedCreateWithoutProfileEventsInput[];
     connectOrCreate?:
-      | TagCreateOrConnectWithoutEventInput
-      | TagCreateOrConnectWithoutEventInput[];
+      | TagCreateOrConnectWithoutProfileEventsInput
+      | TagCreateOrConnectWithoutProfileEventsInput[];
     upsert?:
-      | TagUpsertWithWhereUniqueWithoutEventInput
-      | TagUpsertWithWhereUniqueWithoutEventInput[];
+      | TagUpsertWithWhereUniqueWithoutProfileEventsInput
+      | TagUpsertWithWhereUniqueWithoutProfileEventsInput[];
     set?: TagWhereUniqueInput | TagWhereUniqueInput[];
     disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[];
     delete?: TagWhereUniqueInput | TagWhereUniqueInput[];
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[];
     update?:
-      | TagUpdateWithWhereUniqueWithoutEventInput
-      | TagUpdateWithWhereUniqueWithoutEventInput[];
+      | TagUpdateWithWhereUniqueWithoutProfileEventsInput
+      | TagUpdateWithWhereUniqueWithoutProfileEventsInput[];
     updateMany?:
-      | TagUpdateManyWithWhereWithoutEventInput
-      | TagUpdateManyWithWhereWithoutEventInput[];
+      | TagUpdateManyWithWhereWithoutProfileEventsInput
+      | TagUpdateManyWithWhereWithoutProfileEventsInput[];
     deleteMany?: TagScalarWhereInput | TagScalarWhereInput[];
   };
 
@@ -30969,6 +35291,60 @@ export namespace Prisma {
       | EventTicketUpdateManyWithWhereWithoutEventInput
       | EventTicketUpdateManyWithWhereWithoutEventInput[];
     deleteMany?: EventTicketScalarWhereInput | EventTicketScalarWhereInput[];
+  };
+
+  export type ProductionUncheckedUpdateManyWithoutEventsNestedInput = {
+    create?:
+      | XOR<
+          ProductionCreateWithoutEventsInput,
+          ProductionUncheckedCreateWithoutEventsInput
+        >
+      | ProductionCreateWithoutEventsInput[]
+      | ProductionUncheckedCreateWithoutEventsInput[];
+    connectOrCreate?:
+      | ProductionCreateOrConnectWithoutEventsInput
+      | ProductionCreateOrConnectWithoutEventsInput[];
+    upsert?:
+      | ProductionUpsertWithWhereUniqueWithoutEventsInput
+      | ProductionUpsertWithWhereUniqueWithoutEventsInput[];
+    set?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    disconnect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    delete?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    connect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[];
+    update?:
+      | ProductionUpdateWithWhereUniqueWithoutEventsInput
+      | ProductionUpdateWithWhereUniqueWithoutEventsInput[];
+    updateMany?:
+      | ProductionUpdateManyWithWhereWithoutEventsInput
+      | ProductionUpdateManyWithWhereWithoutEventsInput[];
+    deleteMany?: ProductionScalarWhereInput | ProductionScalarWhereInput[];
+  };
+
+  export type TagUncheckedUpdateManyWithoutRoleEventsNestedInput = {
+    create?:
+      | XOR<
+          TagCreateWithoutRoleEventsInput,
+          TagUncheckedCreateWithoutRoleEventsInput
+        >
+      | TagCreateWithoutRoleEventsInput[]
+      | TagUncheckedCreateWithoutRoleEventsInput[];
+    connectOrCreate?:
+      | TagCreateOrConnectWithoutRoleEventsInput
+      | TagCreateOrConnectWithoutRoleEventsInput[];
+    upsert?:
+      | TagUpsertWithWhereUniqueWithoutRoleEventsInput
+      | TagUpsertWithWhereUniqueWithoutRoleEventsInput[];
+    set?: TagWhereUniqueInput | TagWhereUniqueInput[];
+    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[];
+    delete?: TagWhereUniqueInput | TagWhereUniqueInput[];
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[];
+    update?:
+      | TagUpdateWithWhereUniqueWithoutRoleEventsInput
+      | TagUpdateWithWhereUniqueWithoutRoleEventsInput[];
+    updateMany?:
+      | TagUpdateManyWithWhereWithoutRoleEventsInput
+      | TagUpdateManyWithWhereWithoutRoleEventsInput[];
+    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[];
   };
 
   export type EventCreateNestedManyWithoutFolderInput = {
@@ -31096,12 +35472,12 @@ export namespace Prisma {
     connect?: EventWhereUniqueInput;
   };
 
-  export type ProfileCreateNestedOneWithoutTicketInput = {
+  export type ProfileCreateNestedOneWithoutTicketsInput = {
     create?: XOR<
-      ProfileCreateWithoutTicketInput,
-      ProfileUncheckedCreateWithoutTicketInput
+      ProfileCreateWithoutTicketsInput,
+      ProfileUncheckedCreateWithoutTicketsInput
     >;
-    connectOrCreate?: ProfileCreateOrConnectWithoutTicketInput;
+    connectOrCreate?: ProfileCreateOrConnectWithoutTicketsInput;
     connect?: ProfileWhereUniqueInput;
   };
 
@@ -31143,22 +35519,22 @@ export namespace Prisma {
     >;
   };
 
-  export type ProfileUpdateOneWithoutTicketNestedInput = {
+  export type ProfileUpdateOneWithoutTicketsNestedInput = {
     create?: XOR<
-      ProfileCreateWithoutTicketInput,
-      ProfileUncheckedCreateWithoutTicketInput
+      ProfileCreateWithoutTicketsInput,
+      ProfileUncheckedCreateWithoutTicketsInput
     >;
-    connectOrCreate?: ProfileCreateOrConnectWithoutTicketInput;
-    upsert?: ProfileUpsertWithoutTicketInput;
+    connectOrCreate?: ProfileCreateOrConnectWithoutTicketsInput;
+    upsert?: ProfileUpsertWithoutTicketsInput;
     disconnect?: ProfileWhereInput | boolean;
     delete?: ProfileWhereInput | boolean;
     connect?: ProfileWhereUniqueInput;
     update?: XOR<
       XOR<
-        ProfileUpdateToOneWithWhereWithoutTicketInput,
-        ProfileUpdateWithoutTicketInput
+        ProfileUpdateToOneWithWhereWithoutTicketsInput,
+        ProfileUpdateWithoutTicketsInput
       >,
-      ProfileUncheckedUpdateWithoutTicketInput
+      ProfileUncheckedUpdateWithoutTicketsInput
     >;
   };
 
@@ -31338,6 +35714,287 @@ export namespace Prisma {
       EventUncheckedUpdateWithoutEventTicketsInput
     >;
   };
+
+  export type ProfileCreateNestedOneWithoutProductionsAdministratedInput = {
+    create?: XOR<
+      ProfileCreateWithoutProductionsAdministratedInput,
+      ProfileUncheckedCreateWithoutProductionsAdministratedInput
+    >;
+    connectOrCreate?: ProfileCreateOrConnectWithoutProductionsAdministratedInput;
+    connect?: ProfileWhereUniqueInput;
+  };
+
+  export type EventCreateNestedManyWithoutProductionsInput = {
+    create?:
+      | XOR<
+          EventCreateWithoutProductionsInput,
+          EventUncheckedCreateWithoutProductionsInput
+        >
+      | EventCreateWithoutProductionsInput[]
+      | EventUncheckedCreateWithoutProductionsInput[];
+    connectOrCreate?:
+      | EventCreateOrConnectWithoutProductionsInput
+      | EventCreateOrConnectWithoutProductionsInput[];
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
+  };
+
+  export type ProductionAffiliationRequestCreateNestedManyWithoutProductionInput =
+    {
+      create?:
+        | XOR<
+            ProductionAffiliationRequestCreateWithoutProductionInput,
+            ProductionAffiliationRequestUncheckedCreateWithoutProductionInput
+          >
+        | ProductionAffiliationRequestCreateWithoutProductionInput[]
+        | ProductionAffiliationRequestUncheckedCreateWithoutProductionInput[];
+      connectOrCreate?:
+        | ProductionAffiliationRequestCreateOrConnectWithoutProductionInput
+        | ProductionAffiliationRequestCreateOrConnectWithoutProductionInput[];
+      createMany?: ProductionAffiliationRequestCreateManyProductionInputEnvelope;
+      connect?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+    };
+
+  export type EventUncheckedCreateNestedManyWithoutProductionsInput = {
+    create?:
+      | XOR<
+          EventCreateWithoutProductionsInput,
+          EventUncheckedCreateWithoutProductionsInput
+        >
+      | EventCreateWithoutProductionsInput[]
+      | EventUncheckedCreateWithoutProductionsInput[];
+    connectOrCreate?:
+      | EventCreateOrConnectWithoutProductionsInput
+      | EventCreateOrConnectWithoutProductionsInput[];
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
+  };
+
+  export type ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProductionInput =
+    {
+      create?:
+        | XOR<
+            ProductionAffiliationRequestCreateWithoutProductionInput,
+            ProductionAffiliationRequestUncheckedCreateWithoutProductionInput
+          >
+        | ProductionAffiliationRequestCreateWithoutProductionInput[]
+        | ProductionAffiliationRequestUncheckedCreateWithoutProductionInput[];
+      connectOrCreate?:
+        | ProductionAffiliationRequestCreateOrConnectWithoutProductionInput
+        | ProductionAffiliationRequestCreateOrConnectWithoutProductionInput[];
+      createMany?: ProductionAffiliationRequestCreateManyProductionInputEnvelope;
+      connect?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+    };
+
+  export type ProfileUpdateOneRequiredWithoutProductionsAdministratedNestedInput =
+    {
+      create?: XOR<
+        ProfileCreateWithoutProductionsAdministratedInput,
+        ProfileUncheckedCreateWithoutProductionsAdministratedInput
+      >;
+      connectOrCreate?: ProfileCreateOrConnectWithoutProductionsAdministratedInput;
+      upsert?: ProfileUpsertWithoutProductionsAdministratedInput;
+      connect?: ProfileWhereUniqueInput;
+      update?: XOR<
+        XOR<
+          ProfileUpdateToOneWithWhereWithoutProductionsAdministratedInput,
+          ProfileUpdateWithoutProductionsAdministratedInput
+        >,
+        ProfileUncheckedUpdateWithoutProductionsAdministratedInput
+      >;
+    };
+
+  export type EventUpdateManyWithoutProductionsNestedInput = {
+    create?:
+      | XOR<
+          EventCreateWithoutProductionsInput,
+          EventUncheckedCreateWithoutProductionsInput
+        >
+      | EventCreateWithoutProductionsInput[]
+      | EventUncheckedCreateWithoutProductionsInput[];
+    connectOrCreate?:
+      | EventCreateOrConnectWithoutProductionsInput
+      | EventCreateOrConnectWithoutProductionsInput[];
+    upsert?:
+      | EventUpsertWithWhereUniqueWithoutProductionsInput
+      | EventUpsertWithWhereUniqueWithoutProductionsInput[];
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    update?:
+      | EventUpdateWithWhereUniqueWithoutProductionsInput
+      | EventUpdateWithWhereUniqueWithoutProductionsInput[];
+    updateMany?:
+      | EventUpdateManyWithWhereWithoutProductionsInput
+      | EventUpdateManyWithWhereWithoutProductionsInput[];
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[];
+  };
+
+  export type ProductionAffiliationRequestUpdateManyWithoutProductionNestedInput =
+    {
+      create?:
+        | XOR<
+            ProductionAffiliationRequestCreateWithoutProductionInput,
+            ProductionAffiliationRequestUncheckedCreateWithoutProductionInput
+          >
+        | ProductionAffiliationRequestCreateWithoutProductionInput[]
+        | ProductionAffiliationRequestUncheckedCreateWithoutProductionInput[];
+      connectOrCreate?:
+        | ProductionAffiliationRequestCreateOrConnectWithoutProductionInput
+        | ProductionAffiliationRequestCreateOrConnectWithoutProductionInput[];
+      upsert?:
+        | ProductionAffiliationRequestUpsertWithWhereUniqueWithoutProductionInput
+        | ProductionAffiliationRequestUpsertWithWhereUniqueWithoutProductionInput[];
+      createMany?: ProductionAffiliationRequestCreateManyProductionInputEnvelope;
+      set?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      disconnect?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      delete?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      connect?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      update?:
+        | ProductionAffiliationRequestUpdateWithWhereUniqueWithoutProductionInput
+        | ProductionAffiliationRequestUpdateWithWhereUniqueWithoutProductionInput[];
+      updateMany?:
+        | ProductionAffiliationRequestUpdateManyWithWhereWithoutProductionInput
+        | ProductionAffiliationRequestUpdateManyWithWhereWithoutProductionInput[];
+      deleteMany?:
+        | ProductionAffiliationRequestScalarWhereInput
+        | ProductionAffiliationRequestScalarWhereInput[];
+    };
+
+  export type EventUncheckedUpdateManyWithoutProductionsNestedInput = {
+    create?:
+      | XOR<
+          EventCreateWithoutProductionsInput,
+          EventUncheckedCreateWithoutProductionsInput
+        >
+      | EventCreateWithoutProductionsInput[]
+      | EventUncheckedCreateWithoutProductionsInput[];
+    connectOrCreate?:
+      | EventCreateOrConnectWithoutProductionsInput
+      | EventCreateOrConnectWithoutProductionsInput[];
+    upsert?:
+      | EventUpsertWithWhereUniqueWithoutProductionsInput
+      | EventUpsertWithWhereUniqueWithoutProductionsInput[];
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
+    update?:
+      | EventUpdateWithWhereUniqueWithoutProductionsInput
+      | EventUpdateWithWhereUniqueWithoutProductionsInput[];
+    updateMany?:
+      | EventUpdateManyWithWhereWithoutProductionsInput
+      | EventUpdateManyWithWhereWithoutProductionsInput[];
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[];
+  };
+
+  export type ProductionAffiliationRequestUncheckedUpdateManyWithoutProductionNestedInput =
+    {
+      create?:
+        | XOR<
+            ProductionAffiliationRequestCreateWithoutProductionInput,
+            ProductionAffiliationRequestUncheckedCreateWithoutProductionInput
+          >
+        | ProductionAffiliationRequestCreateWithoutProductionInput[]
+        | ProductionAffiliationRequestUncheckedCreateWithoutProductionInput[];
+      connectOrCreate?:
+        | ProductionAffiliationRequestCreateOrConnectWithoutProductionInput
+        | ProductionAffiliationRequestCreateOrConnectWithoutProductionInput[];
+      upsert?:
+        | ProductionAffiliationRequestUpsertWithWhereUniqueWithoutProductionInput
+        | ProductionAffiliationRequestUpsertWithWhereUniqueWithoutProductionInput[];
+      createMany?: ProductionAffiliationRequestCreateManyProductionInputEnvelope;
+      set?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      disconnect?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      delete?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      connect?:
+        | ProductionAffiliationRequestWhereUniqueInput
+        | ProductionAffiliationRequestWhereUniqueInput[];
+      update?:
+        | ProductionAffiliationRequestUpdateWithWhereUniqueWithoutProductionInput
+        | ProductionAffiliationRequestUpdateWithWhereUniqueWithoutProductionInput[];
+      updateMany?:
+        | ProductionAffiliationRequestUpdateManyWithWhereWithoutProductionInput
+        | ProductionAffiliationRequestUpdateManyWithWhereWithoutProductionInput[];
+      deleteMany?:
+        | ProductionAffiliationRequestScalarWhereInput
+        | ProductionAffiliationRequestScalarWhereInput[];
+    };
+
+  export type ProductionCreateNestedOneWithoutAffiliationRequestsInput = {
+    create?: XOR<
+      ProductionCreateWithoutAffiliationRequestsInput,
+      ProductionUncheckedCreateWithoutAffiliationRequestsInput
+    >;
+    connectOrCreate?: ProductionCreateOrConnectWithoutAffiliationRequestsInput;
+    connect?: ProductionWhereUniqueInput;
+  };
+
+  export type ProfileCreateNestedOneWithoutProductionRequestsSentInput = {
+    create?: XOR<
+      ProfileCreateWithoutProductionRequestsSentInput,
+      ProfileUncheckedCreateWithoutProductionRequestsSentInput
+    >;
+    connectOrCreate?: ProfileCreateOrConnectWithoutProductionRequestsSentInput;
+    connect?: ProfileWhereUniqueInput;
+  };
+
+  export type EnumAffiliationStatusFieldUpdateOperationsInput = {
+    set?: $Enums.AffiliationStatus;
+  };
+
+  export type ProductionUpdateOneRequiredWithoutAffiliationRequestsNestedInput =
+    {
+      create?: XOR<
+        ProductionCreateWithoutAffiliationRequestsInput,
+        ProductionUncheckedCreateWithoutAffiliationRequestsInput
+      >;
+      connectOrCreate?: ProductionCreateOrConnectWithoutAffiliationRequestsInput;
+      upsert?: ProductionUpsertWithoutAffiliationRequestsInput;
+      connect?: ProductionWhereUniqueInput;
+      update?: XOR<
+        XOR<
+          ProductionUpdateToOneWithWhereWithoutAffiliationRequestsInput,
+          ProductionUpdateWithoutAffiliationRequestsInput
+        >,
+        ProductionUncheckedUpdateWithoutAffiliationRequestsInput
+      >;
+    };
+
+  export type ProfileUpdateOneRequiredWithoutProductionRequestsSentNestedInput =
+    {
+      create?: XOR<
+        ProfileCreateWithoutProductionRequestsSentInput,
+        ProfileUncheckedCreateWithoutProductionRequestsSentInput
+      >;
+      connectOrCreate?: ProfileCreateOrConnectWithoutProductionRequestsSentInput;
+      upsert?: ProfileUpsertWithoutProductionRequestsSentInput;
+      connect?: ProfileWhereUniqueInput;
+      update?: XOR<
+        XOR<
+          ProfileUpdateToOneWithWhereWithoutProductionRequestsSentInput,
+          ProfileUpdateWithoutProductionRequestsSentInput
+        >,
+        ProfileUncheckedUpdateWithoutProductionRequestsSentInput
+      >;
+    };
 
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>;
@@ -31802,6 +36459,41 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>;
   };
 
+  export type NestedEnumAffiliationStatusFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.AffiliationStatus
+      | EnumAffiliationStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.AffiliationStatus[]
+      | ListEnumAffiliationStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.AffiliationStatus[]
+      | ListEnumAffiliationStatusFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumAffiliationStatusFilter<$PrismaModel>
+      | $Enums.AffiliationStatus;
+  };
+
+  export type NestedEnumAffiliationStatusWithAggregatesFilter<
+    $PrismaModel = never,
+  > = {
+    equals?:
+      | $Enums.AffiliationStatus
+      | EnumAffiliationStatusFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.AffiliationStatus[]
+      | ListEnumAffiliationStatusFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.AffiliationStatus[]
+      | ListEnumAffiliationStatusFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumAffiliationStatusWithAggregatesFilter<$PrismaModel>
+      | $Enums.AffiliationStatus;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedEnumAffiliationStatusFilter<$PrismaModel>;
+    _max?: NestedEnumAffiliationStatusFilter<$PrismaModel>;
+  };
+
   export type CommentCreateWithoutAccountInput = {
     id?: string;
     content: string;
@@ -31887,7 +36579,8 @@ export namespace Prisma {
     confirmedEvent?: EventCreateNestedOneWithoutTagConfirmedInput;
     profiles?: ProfileCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
-    Event?: EventCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagUncheckedCreateWithoutAccountsInput = {
@@ -31901,7 +36594,8 @@ export namespace Prisma {
     confirmedEvent?: EventUncheckedCreateNestedOneWithoutTagConfirmedInput;
     profiles?: ProfileUncheckedCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
-    Event?: EventUncheckedCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagCreateOrConnectWithoutAccountsInput = {
@@ -31923,7 +36617,8 @@ export namespace Prisma {
     confirmedEvent?: EventCreateNestedOneWithoutTagConfirmedInput;
     accounts?: AccountCreateNestedManyWithoutTagsInput;
     profiles?: ProfileCreateNestedManyWithoutTagsInput;
-    Event?: EventCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagUncheckedCreateWithoutAccountsGlobalFilterInput = {
@@ -31937,7 +36632,8 @@ export namespace Prisma {
     confirmedEvent?: EventUncheckedCreateNestedOneWithoutTagConfirmedInput;
     accounts?: AccountUncheckedCreateNestedManyWithoutTagsInput;
     profiles?: ProfileUncheckedCreateNestedManyWithoutTagsInput;
-    Event?: EventUncheckedCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagCreateOrConnectWithoutAccountsGlobalFilterInput = {
@@ -32196,7 +36892,8 @@ export namespace Prisma {
     confirmedEvent?: EventCreateNestedOneWithoutTagConfirmedInput;
     accounts?: AccountCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
-    Event?: EventCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagUncheckedCreateWithoutProfilesInput = {
@@ -32210,7 +36907,8 @@ export namespace Prisma {
     confirmedEvent?: EventUncheckedCreateNestedOneWithoutTagConfirmedInput;
     accounts?: AccountUncheckedCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
-    Event?: EventUncheckedCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagCreateOrConnectWithoutProfilesInput = {
@@ -32325,6 +37023,72 @@ export namespace Prisma {
 
   export type TicketCreateManyProfileInputEnvelope = {
     data: TicketCreateManyProfileInput | TicketCreateManyProfileInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type ProductionCreateWithoutAdministratorInput = {
+    id?: string;
+    name: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    events?: EventCreateNestedManyWithoutProductionsInput;
+    affiliationRequests?: ProductionAffiliationRequestCreateNestedManyWithoutProductionInput;
+  };
+
+  export type ProductionUncheckedCreateWithoutAdministratorInput = {
+    id?: string;
+    name: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    events?: EventUncheckedCreateNestedManyWithoutProductionsInput;
+    affiliationRequests?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProductionInput;
+  };
+
+  export type ProductionCreateOrConnectWithoutAdministratorInput = {
+    where: ProductionWhereUniqueInput;
+    create: XOR<
+      ProductionCreateWithoutAdministratorInput,
+      ProductionUncheckedCreateWithoutAdministratorInput
+    >;
+  };
+
+  export type ProductionCreateManyAdministratorInputEnvelope = {
+    data:
+      | ProductionCreateManyAdministratorInput
+      | ProductionCreateManyAdministratorInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type ProductionAffiliationRequestCreateWithoutProfileInput = {
+    id?: string;
+    status?: $Enums.AffiliationStatus;
+    reviewedAt?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    production: ProductionCreateNestedOneWithoutAffiliationRequestsInput;
+  };
+
+  export type ProductionAffiliationRequestUncheckedCreateWithoutProfileInput = {
+    id?: string;
+    productionId: string;
+    status?: $Enums.AffiliationStatus;
+    reviewedAt?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type ProductionAffiliationRequestCreateOrConnectWithoutProfileInput = {
+    where: ProductionAffiliationRequestWhereUniqueInput;
+    create: XOR<
+      ProductionAffiliationRequestCreateWithoutProfileInput,
+      ProductionAffiliationRequestUncheckedCreateWithoutProfileInput
+    >;
+  };
+
+  export type ProductionAffiliationRequestCreateManyProfileInputEnvelope = {
+    data:
+      | ProductionAffiliationRequestCreateManyProfileInput
+      | ProductionAffiliationRequestCreateManyProfileInput[];
     skipDuplicates?: boolean;
   };
 
@@ -32597,6 +37361,99 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<'Ticket'> | Date | string;
   };
 
+  export type ProductionUpsertWithWhereUniqueWithoutAdministratorInput = {
+    where: ProductionWhereUniqueInput;
+    update: XOR<
+      ProductionUpdateWithoutAdministratorInput,
+      ProductionUncheckedUpdateWithoutAdministratorInput
+    >;
+    create: XOR<
+      ProductionCreateWithoutAdministratorInput,
+      ProductionUncheckedCreateWithoutAdministratorInput
+    >;
+  };
+
+  export type ProductionUpdateWithWhereUniqueWithoutAdministratorInput = {
+    where: ProductionWhereUniqueInput;
+    data: XOR<
+      ProductionUpdateWithoutAdministratorInput,
+      ProductionUncheckedUpdateWithoutAdministratorInput
+    >;
+  };
+
+  export type ProductionUpdateManyWithWhereWithoutAdministratorInput = {
+    where: ProductionScalarWhereInput;
+    data: XOR<
+      ProductionUpdateManyMutationInput,
+      ProductionUncheckedUpdateManyWithoutAdministratorInput
+    >;
+  };
+
+  export type ProductionScalarWhereInput = {
+    AND?: ProductionScalarWhereInput | ProductionScalarWhereInput[];
+    OR?: ProductionScalarWhereInput[];
+    NOT?: ProductionScalarWhereInput | ProductionScalarWhereInput[];
+    id?: StringFilter<'Production'> | string;
+    name?: StringFilter<'Production'> | string;
+    adminstratorId?: StringFilter<'Production'> | string;
+    created_at?: DateTimeFilter<'Production'> | Date | string;
+    updated_at?: DateTimeFilter<'Production'> | Date | string;
+  };
+
+  export type ProductionAffiliationRequestUpsertWithWhereUniqueWithoutProfileInput =
+    {
+      where: ProductionAffiliationRequestWhereUniqueInput;
+      update: XOR<
+        ProductionAffiliationRequestUpdateWithoutProfileInput,
+        ProductionAffiliationRequestUncheckedUpdateWithoutProfileInput
+      >;
+      create: XOR<
+        ProductionAffiliationRequestCreateWithoutProfileInput,
+        ProductionAffiliationRequestUncheckedCreateWithoutProfileInput
+      >;
+    };
+
+  export type ProductionAffiliationRequestUpdateWithWhereUniqueWithoutProfileInput =
+    {
+      where: ProductionAffiliationRequestWhereUniqueInput;
+      data: XOR<
+        ProductionAffiliationRequestUpdateWithoutProfileInput,
+        ProductionAffiliationRequestUncheckedUpdateWithoutProfileInput
+      >;
+    };
+
+  export type ProductionAffiliationRequestUpdateManyWithWhereWithoutProfileInput =
+    {
+      where: ProductionAffiliationRequestScalarWhereInput;
+      data: XOR<
+        ProductionAffiliationRequestUpdateManyMutationInput,
+        ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileInput
+      >;
+    };
+
+  export type ProductionAffiliationRequestScalarWhereInput = {
+    AND?:
+      | ProductionAffiliationRequestScalarWhereInput
+      | ProductionAffiliationRequestScalarWhereInput[];
+    OR?: ProductionAffiliationRequestScalarWhereInput[];
+    NOT?:
+      | ProductionAffiliationRequestScalarWhereInput
+      | ProductionAffiliationRequestScalarWhereInput[];
+    id?: StringFilter<'ProductionAffiliationRequest'> | string;
+    productionId?: StringFilter<'ProductionAffiliationRequest'> | string;
+    profileId?: StringFilter<'ProductionAffiliationRequest'> | string;
+    status?:
+      | EnumAffiliationStatusFilter<'ProductionAffiliationRequest'>
+      | $Enums.AffiliationStatus;
+    reviewedAt?:
+      | DateTimeNullableFilter<'ProductionAffiliationRequest'>
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFilter<'ProductionAffiliationRequest'> | Date | string;
+    updated_at?: DateTimeFilter<'ProductionAffiliationRequest'> | Date | string;
+  };
+
   export type ProfileCreateWithoutOtpInput = {
     id?: string;
     shortId: number;
@@ -32625,7 +37482,9 @@ export namespace Prisma {
     tags?: TagCreateNestedManyWithoutProfilesInput;
     birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
     residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
-    Ticket?: TicketCreateNestedManyWithoutProfileInput;
+    tickets?: TicketCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutOtpInput = {
@@ -32656,7 +37515,9 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
     messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
     tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
-    Ticket?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutOtpInput = {
@@ -32729,7 +37590,9 @@ export namespace Prisma {
     tags?: TagUpdateManyWithoutProfilesNestedInput;
     birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
     residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
-    Ticket?: TicketUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutOtpInput = {
@@ -32777,7 +37640,9 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
     tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
-    Ticket?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
   };
 
   export type ProfileCreateWithoutBirthLocationInput = {
@@ -32808,7 +37673,9 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutProfileInput;
     tags?: TagCreateNestedManyWithoutProfilesInput;
     residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
-    Ticket?: TicketCreateNestedManyWithoutProfileInput;
+    tickets?: TicketCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutBirthLocationInput = {
@@ -32839,7 +37706,9 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
     messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
     tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
-    Ticket?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutBirthLocationInput = {
@@ -32885,7 +37754,9 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutProfileInput;
     tags?: TagCreateNestedManyWithoutProfilesInput;
     birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
-    Ticket?: TicketCreateNestedManyWithoutProfileInput;
+    tickets?: TicketCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutResidenceLocationInput = {
@@ -32916,7 +37787,9 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
     messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
     tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
-    Ticket?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutResidenceLocationInput = {
@@ -33084,7 +37957,9 @@ export namespace Prisma {
     tags?: TagCreateNestedManyWithoutProfilesInput;
     birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
     residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
-    Ticket?: TicketCreateNestedManyWithoutProfileInput;
+    tickets?: TicketCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutCommentsInput = {
@@ -33115,7 +37990,9 @@ export namespace Prisma {
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
     messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
     tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
-    Ticket?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutCommentsInput = {
@@ -33272,7 +38149,9 @@ export namespace Prisma {
     tags?: TagUpdateManyWithoutProfilesNestedInput;
     birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
     residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
-    Ticket?: TicketUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutCommentsInput = {
@@ -33320,7 +38199,9 @@ export namespace Prisma {
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
     tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
-    Ticket?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
   };
 
   export type AccountUpsertWithoutSolvableCommentsInput = {
@@ -33413,8 +38294,10 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
-    tags?: TagCreateNestedManyWithoutEventInput;
+    profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
+    productions?: ProductionCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventUncheckedCreateWithoutTagAssistedInput = {
@@ -33433,8 +38316,10 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
-    tags?: TagUncheckedCreateNestedManyWithoutEventInput;
+    profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
+    productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventCreateOrConnectWithoutTagAssistedInput = {
@@ -33461,8 +38346,10 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
-    tags?: TagCreateNestedManyWithoutEventInput;
+    profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
+    productions?: ProductionCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventUncheckedCreateWithoutTagConfirmedInput = {
@@ -33481,8 +38368,10 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
-    tags?: TagUncheckedCreateNestedManyWithoutEventInput;
+    profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
+    productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventCreateOrConnectWithoutTagConfirmedInput = {
@@ -33557,7 +38446,9 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutProfileInput;
     birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
     residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
-    Ticket?: TicketCreateNestedManyWithoutProfileInput;
+    tickets?: TicketCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutTagsInput = {
@@ -33588,7 +38479,9 @@ export namespace Prisma {
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
     messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
-    Ticket?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutTagsInput = {
@@ -33635,7 +38528,7 @@ export namespace Prisma {
     >;
   };
 
-  export type EventCreateWithoutTagsInput = {
+  export type EventCreateWithoutProfileTagsInput = {
     id?: string;
     name: string;
     date: Date | string;
@@ -33653,9 +38546,11 @@ export namespace Prisma {
     ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
+    productions?: ProductionCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
   };
 
-  export type EventUncheckedCreateWithoutTagsInput = {
+  export type EventUncheckedCreateWithoutProfileTagsInput = {
     id?: string;
     name: string;
     date: Date | string;
@@ -33673,13 +38568,67 @@ export namespace Prisma {
     ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
+    productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
   };
 
-  export type EventCreateOrConnectWithoutTagsInput = {
+  export type EventCreateOrConnectWithoutProfileTagsInput = {
     where: EventWhereUniqueInput;
     create: XOR<
-      EventCreateWithoutTagsInput,
-      EventUncheckedCreateWithoutTagsInput
+      EventCreateWithoutProfileTagsInput,
+      EventUncheckedCreateWithoutProfileTagsInput
+    >;
+  };
+
+  export type EventCreateWithoutParticipantRolesInput = {
+    id?: string;
+    name: string;
+    date: Date | string;
+    startingDate?: Date | string;
+    endingDate?: Date | string;
+    location: string;
+    active?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    folder?: EventFolderCreateNestedOneWithoutEventsInput;
+    tagAssisted: TagCreateNestedOneWithoutAssistedEventInput;
+    tagConfirmed: TagCreateNestedOneWithoutConfirmedEventInput;
+    supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
+    tickets?: TicketCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
+    subEvents?: EventCreateNestedManyWithoutSupraEventInput;
+    profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
+    eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
+    productions?: ProductionCreateNestedManyWithoutEventsInput;
+  };
+
+  export type EventUncheckedCreateWithoutParticipantRolesInput = {
+    id?: string;
+    name: string;
+    date: Date | string;
+    startingDate?: Date | string;
+    endingDate?: Date | string;
+    location: string;
+    folderId?: string | null;
+    tagAssistedId: string;
+    tagConfirmedId: string;
+    supraEventId?: string | null;
+    active?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
+    subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
+    profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
+    eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
+    productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
+  };
+
+  export type EventCreateOrConnectWithoutParticipantRolesInput = {
+    where: EventWhereUniqueInput;
+    create: XOR<
+      EventCreateWithoutParticipantRolesInput,
+      EventUncheckedCreateWithoutParticipantRolesInput
     >;
   };
 
@@ -33757,8 +38706,10 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutTagAssistedInput = {
@@ -33777,8 +38728,10 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type EventUpsertWithoutTagConfirmedInput = {
@@ -33817,8 +38770,10 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutTagConfirmedInput = {
@@ -33837,8 +38792,10 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type AccountUpsertWithWhereUniqueWithoutTagsInput = {
@@ -33939,31 +38896,31 @@ export namespace Prisma {
     >;
   };
 
-  export type EventUpsertWithWhereUniqueWithoutTagsInput = {
+  export type EventUpsertWithWhereUniqueWithoutProfileTagsInput = {
     where: EventWhereUniqueInput;
     update: XOR<
-      EventUpdateWithoutTagsInput,
-      EventUncheckedUpdateWithoutTagsInput
+      EventUpdateWithoutProfileTagsInput,
+      EventUncheckedUpdateWithoutProfileTagsInput
     >;
     create: XOR<
-      EventCreateWithoutTagsInput,
-      EventUncheckedCreateWithoutTagsInput
+      EventCreateWithoutProfileTagsInput,
+      EventUncheckedCreateWithoutProfileTagsInput
     >;
   };
 
-  export type EventUpdateWithWhereUniqueWithoutTagsInput = {
+  export type EventUpdateWithWhereUniqueWithoutProfileTagsInput = {
     where: EventWhereUniqueInput;
     data: XOR<
-      EventUpdateWithoutTagsInput,
-      EventUncheckedUpdateWithoutTagsInput
+      EventUpdateWithoutProfileTagsInput,
+      EventUncheckedUpdateWithoutProfileTagsInput
     >;
   };
 
-  export type EventUpdateManyWithWhereWithoutTagsInput = {
+  export type EventUpdateManyWithWhereWithoutProfileTagsInput = {
     where: EventScalarWhereInput;
     data: XOR<
       EventUpdateManyMutationInput,
-      EventUncheckedUpdateManyWithoutTagsInput
+      EventUncheckedUpdateManyWithoutProfileTagsInput
     >;
   };
 
@@ -33986,6 +38943,34 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<'Event'> | Date | string;
   };
 
+  export type EventUpsertWithWhereUniqueWithoutParticipantRolesInput = {
+    where: EventWhereUniqueInput;
+    update: XOR<
+      EventUpdateWithoutParticipantRolesInput,
+      EventUncheckedUpdateWithoutParticipantRolesInput
+    >;
+    create: XOR<
+      EventCreateWithoutParticipantRolesInput,
+      EventUncheckedCreateWithoutParticipantRolesInput
+    >;
+  };
+
+  export type EventUpdateWithWhereUniqueWithoutParticipantRolesInput = {
+    where: EventWhereUniqueInput;
+    data: XOR<
+      EventUpdateWithoutParticipantRolesInput,
+      EventUncheckedUpdateWithoutParticipantRolesInput
+    >;
+  };
+
+  export type EventUpdateManyWithWhereWithoutParticipantRolesInput = {
+    where: EventScalarWhereInput;
+    data: XOR<
+      EventUpdateManyMutationInput,
+      EventUncheckedUpdateManyWithoutParticipantRolesInput
+    >;
+  };
+
   export type TagCreateWithoutGroupInput = {
     id?: string;
     name: string;
@@ -33997,7 +38982,8 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutTagsInput;
     profiles?: ProfileCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
-    Event?: EventCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagUncheckedCreateWithoutGroupInput = {
@@ -34011,7 +38997,8 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutTagsInput;
     profiles?: ProfileUncheckedCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
-    Event?: EventUncheckedCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagCreateOrConnectWithoutGroupInput = {
@@ -34087,7 +39074,8 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutTagsInput;
     profiles?: ProfileCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
-    Event?: EventCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagUncheckedCreateWithoutAssistedEventInput = {
@@ -34101,7 +39089,8 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutTagsInput;
     profiles?: ProfileUncheckedCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
-    Event?: EventUncheckedCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagCreateOrConnectWithoutAssistedEventInput = {
@@ -34123,7 +39112,8 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutTagsInput;
     profiles?: ProfileCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
-    Event?: EventCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagUncheckedCreateWithoutConfirmedEventInput = {
@@ -34137,7 +39127,8 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutTagsInput;
     profiles?: ProfileUncheckedCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
-    Event?: EventUncheckedCreateNestedManyWithoutTagsInput;
+    profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
   };
 
   export type TagCreateOrConnectWithoutConfirmedEventInput = {
@@ -34164,8 +39155,10 @@ export namespace Prisma {
     supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
     tickets?: TicketCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
-    tags?: TagCreateNestedManyWithoutEventInput;
+    profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
+    productions?: ProductionCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventUncheckedCreateWithoutSubEventsInput = {
@@ -34184,8 +39177,10 @@ export namespace Prisma {
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
-    tags?: TagUncheckedCreateNestedManyWithoutEventInput;
+    profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
+    productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventCreateOrConnectWithoutSubEventsInput = {
@@ -34207,7 +39202,7 @@ export namespace Prisma {
     scannedAt?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
-    profile?: ProfileCreateNestedOneWithoutTicketInput;
+    profile?: ProfileCreateNestedOneWithoutTicketsInput;
     ticketGroup?: TicketGroupCreateNestedOneWithoutTicketsInput;
   };
 
@@ -34286,8 +39281,10 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
-    tags?: TagCreateNestedManyWithoutEventInput;
+    profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
+    productions?: ProductionCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventUncheckedCreateWithoutSupraEventInput = {
@@ -34306,8 +39303,10 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
-    tags?: TagUncheckedCreateNestedManyWithoutEventInput;
+    profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
+    productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventCreateOrConnectWithoutSupraEventInput = {
@@ -34323,7 +39322,7 @@ export namespace Prisma {
     skipDuplicates?: boolean;
   };
 
-  export type TagCreateWithoutEventInput = {
+  export type TagCreateWithoutProfileEventsInput = {
     id?: string;
     name: string;
     type?: $Enums.TagType;
@@ -34335,9 +39334,10 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutTagsInput;
     profiles?: ProfileCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
+    roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
   };
 
-  export type TagUncheckedCreateWithoutEventInput = {
+  export type TagUncheckedCreateWithoutProfileEventsInput = {
     id?: string;
     name: string;
     type?: $Enums.TagType;
@@ -34349,13 +39349,14 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutTagsInput;
     profiles?: ProfileUncheckedCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
+    roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
   };
 
-  export type TagCreateOrConnectWithoutEventInput = {
+  export type TagCreateOrConnectWithoutProfileEventsInput = {
     where: TagWhereUniqueInput;
     create: XOR<
-      TagCreateWithoutEventInput,
-      TagUncheckedCreateWithoutEventInput
+      TagCreateWithoutProfileEventsInput,
+      TagUncheckedCreateWithoutProfileEventsInput
     >;
   };
 
@@ -34388,6 +39389,70 @@ export namespace Prisma {
   export type EventTicketCreateManyEventInputEnvelope = {
     data: EventTicketCreateManyEventInput | EventTicketCreateManyEventInput[];
     skipDuplicates?: boolean;
+  };
+
+  export type ProductionCreateWithoutEventsInput = {
+    id?: string;
+    name: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    administrator: ProfileCreateNestedOneWithoutProductionsAdministratedInput;
+    affiliationRequests?: ProductionAffiliationRequestCreateNestedManyWithoutProductionInput;
+  };
+
+  export type ProductionUncheckedCreateWithoutEventsInput = {
+    id?: string;
+    name: string;
+    adminstratorId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    affiliationRequests?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProductionInput;
+  };
+
+  export type ProductionCreateOrConnectWithoutEventsInput = {
+    where: ProductionWhereUniqueInput;
+    create: XOR<
+      ProductionCreateWithoutEventsInput,
+      ProductionUncheckedCreateWithoutEventsInput
+    >;
+  };
+
+  export type TagCreateWithoutRoleEventsInput = {
+    id?: string;
+    name: string;
+    type?: $Enums.TagType;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    group: TagGroupCreateNestedOneWithoutTagsInput;
+    assistedEvent?: EventCreateNestedOneWithoutTagAssistedInput;
+    confirmedEvent?: EventCreateNestedOneWithoutTagConfirmedInput;
+    accounts?: AccountCreateNestedManyWithoutTagsInput;
+    profiles?: ProfileCreateNestedManyWithoutTagsInput;
+    accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
+    profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
+  };
+
+  export type TagUncheckedCreateWithoutRoleEventsInput = {
+    id?: string;
+    name: string;
+    type?: $Enums.TagType;
+    groupId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    assistedEvent?: EventUncheckedCreateNestedOneWithoutTagAssistedInput;
+    confirmedEvent?: EventUncheckedCreateNestedOneWithoutTagConfirmedInput;
+    accounts?: AccountUncheckedCreateNestedManyWithoutTagsInput;
+    profiles?: ProfileUncheckedCreateNestedManyWithoutTagsInput;
+    accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
+    profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
+  };
+
+  export type TagCreateOrConnectWithoutRoleEventsInput = {
+    where: TagWhereUniqueInput;
+    create: XOR<
+      TagCreateWithoutRoleEventsInput,
+      TagUncheckedCreateWithoutRoleEventsInput
+    >;
   };
 
   export type EventFolderUpsertWithoutEventsInput = {
@@ -34457,7 +39522,8 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutTagsNestedInput;
     profiles?: ProfileUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
-    Event?: EventUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutAssistedEventInput = {
@@ -34471,7 +39537,8 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutTagsNestedInput;
     profiles?: ProfileUncheckedUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
-    Event?: EventUncheckedUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type TagUpsertWithoutConfirmedEventInput = {
@@ -34505,7 +39572,8 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutTagsNestedInput;
     profiles?: ProfileUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
-    Event?: EventUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutConfirmedEventInput = {
@@ -34519,7 +39587,8 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutTagsNestedInput;
     profiles?: ProfileUncheckedUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
-    Event?: EventUncheckedUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type EventUpsertWithoutSubEventsInput = {
@@ -34558,8 +39627,10 @@ export namespace Prisma {
     supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
     tickets?: TicketUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
-    tags?: TagUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutSubEventsInput = {
@@ -34578,8 +39649,10 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
-    tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type TicketUpsertWithWhereUniqueWithoutEventInput = {
@@ -34680,28 +39753,31 @@ export namespace Prisma {
     >;
   };
 
-  export type TagUpsertWithWhereUniqueWithoutEventInput = {
+  export type TagUpsertWithWhereUniqueWithoutProfileEventsInput = {
     where: TagWhereUniqueInput;
     update: XOR<
-      TagUpdateWithoutEventInput,
-      TagUncheckedUpdateWithoutEventInput
+      TagUpdateWithoutProfileEventsInput,
+      TagUncheckedUpdateWithoutProfileEventsInput
     >;
     create: XOR<
-      TagCreateWithoutEventInput,
-      TagUncheckedCreateWithoutEventInput
+      TagCreateWithoutProfileEventsInput,
+      TagUncheckedCreateWithoutProfileEventsInput
     >;
   };
 
-  export type TagUpdateWithWhereUniqueWithoutEventInput = {
+  export type TagUpdateWithWhereUniqueWithoutProfileEventsInput = {
     where: TagWhereUniqueInput;
-    data: XOR<TagUpdateWithoutEventInput, TagUncheckedUpdateWithoutEventInput>;
+    data: XOR<
+      TagUpdateWithoutProfileEventsInput,
+      TagUncheckedUpdateWithoutProfileEventsInput
+    >;
   };
 
-  export type TagUpdateManyWithWhereWithoutEventInput = {
+  export type TagUpdateManyWithWhereWithoutProfileEventsInput = {
     where: TagScalarWhereInput;
     data: XOR<
       TagUpdateManyMutationInput,
-      TagUncheckedUpdateManyWithoutEventInput
+      TagUncheckedUpdateManyWithoutProfileEventsInput
     >;
   };
 
@@ -34746,6 +39822,62 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<'EventTicket'> | Date | string;
   };
 
+  export type ProductionUpsertWithWhereUniqueWithoutEventsInput = {
+    where: ProductionWhereUniqueInput;
+    update: XOR<
+      ProductionUpdateWithoutEventsInput,
+      ProductionUncheckedUpdateWithoutEventsInput
+    >;
+    create: XOR<
+      ProductionCreateWithoutEventsInput,
+      ProductionUncheckedCreateWithoutEventsInput
+    >;
+  };
+
+  export type ProductionUpdateWithWhereUniqueWithoutEventsInput = {
+    where: ProductionWhereUniqueInput;
+    data: XOR<
+      ProductionUpdateWithoutEventsInput,
+      ProductionUncheckedUpdateWithoutEventsInput
+    >;
+  };
+
+  export type ProductionUpdateManyWithWhereWithoutEventsInput = {
+    where: ProductionScalarWhereInput;
+    data: XOR<
+      ProductionUpdateManyMutationInput,
+      ProductionUncheckedUpdateManyWithoutEventsInput
+    >;
+  };
+
+  export type TagUpsertWithWhereUniqueWithoutRoleEventsInput = {
+    where: TagWhereUniqueInput;
+    update: XOR<
+      TagUpdateWithoutRoleEventsInput,
+      TagUncheckedUpdateWithoutRoleEventsInput
+    >;
+    create: XOR<
+      TagCreateWithoutRoleEventsInput,
+      TagUncheckedCreateWithoutRoleEventsInput
+    >;
+  };
+
+  export type TagUpdateWithWhereUniqueWithoutRoleEventsInput = {
+    where: TagWhereUniqueInput;
+    data: XOR<
+      TagUpdateWithoutRoleEventsInput,
+      TagUncheckedUpdateWithoutRoleEventsInput
+    >;
+  };
+
+  export type TagUpdateManyWithWhereWithoutRoleEventsInput = {
+    where: TagScalarWhereInput;
+    data: XOR<
+      TagUpdateManyMutationInput,
+      TagUncheckedUpdateManyWithoutRoleEventsInput
+    >;
+  };
+
   export type EventCreateWithoutFolderInput = {
     id?: string;
     name: string;
@@ -34762,8 +39894,10 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
-    tags?: TagCreateNestedManyWithoutEventInput;
+    profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
+    productions?: ProductionCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventUncheckedCreateWithoutFolderInput = {
@@ -34782,8 +39916,10 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
-    tags?: TagUncheckedCreateNestedManyWithoutEventInput;
+    profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
+    productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventCreateOrConnectWithoutFolderInput = {
@@ -34855,7 +39991,9 @@ export namespace Prisma {
     tags?: TagCreateNestedManyWithoutProfilesInput;
     birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
     residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
-    Ticket?: TicketCreateNestedManyWithoutProfileInput;
+    tickets?: TicketCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutMessagesInput = {
@@ -34886,7 +40024,9 @@ export namespace Prisma {
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
     tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
-    Ticket?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutMessagesInput = {
@@ -34959,7 +40099,9 @@ export namespace Prisma {
     tags?: TagUpdateManyWithoutProfilesNestedInput;
     birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
     residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
-    Ticket?: TicketUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutMessagesInput = {
@@ -35007,7 +40149,9 @@ export namespace Prisma {
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
     tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
-    Ticket?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
   };
 
   export type EventCreateWithoutTicketsInput = {
@@ -35026,8 +40170,10 @@ export namespace Prisma {
     supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
     ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
-    tags?: TagCreateNestedManyWithoutEventInput;
+    profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
+    productions?: ProductionCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventUncheckedCreateWithoutTicketsInput = {
@@ -35046,8 +40192,10 @@ export namespace Prisma {
     updated_at?: Date | string;
     ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
-    tags?: TagUncheckedCreateNestedManyWithoutEventInput;
+    profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
+    productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventCreateOrConnectWithoutTicketsInput = {
@@ -35058,7 +40206,7 @@ export namespace Prisma {
     >;
   };
 
-  export type ProfileCreateWithoutTicketInput = {
+  export type ProfileCreateWithoutTicketsInput = {
     id?: string;
     shortId: number;
     role?: $Enums.Role;
@@ -35087,9 +40235,11 @@ export namespace Prisma {
     tags?: TagCreateNestedManyWithoutProfilesInput;
     birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
     residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
+    productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
   };
 
-  export type ProfileUncheckedCreateWithoutTicketInput = {
+  export type ProfileUncheckedCreateWithoutTicketsInput = {
     id?: string;
     shortId: number;
     role?: $Enums.Role;
@@ -35118,13 +40268,15 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
     messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
     tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
+    productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
   };
 
-  export type ProfileCreateOrConnectWithoutTicketInput = {
+  export type ProfileCreateOrConnectWithoutTicketsInput = {
     where: ProfileWhereUniqueInput;
     create: XOR<
-      ProfileCreateWithoutTicketInput,
-      ProfileUncheckedCreateWithoutTicketInput
+      ProfileCreateWithoutTicketsInput,
+      ProfileUncheckedCreateWithoutTicketsInput
     >;
   };
 
@@ -35190,8 +40342,10 @@ export namespace Prisma {
     supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
     ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutTicketsInput = {
@@ -35210,31 +40364,33 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
   };
 
-  export type ProfileUpsertWithoutTicketInput = {
+  export type ProfileUpsertWithoutTicketsInput = {
     update: XOR<
-      ProfileUpdateWithoutTicketInput,
-      ProfileUncheckedUpdateWithoutTicketInput
+      ProfileUpdateWithoutTicketsInput,
+      ProfileUncheckedUpdateWithoutTicketsInput
     >;
     create: XOR<
-      ProfileCreateWithoutTicketInput,
-      ProfileUncheckedCreateWithoutTicketInput
+      ProfileCreateWithoutTicketsInput,
+      ProfileUncheckedCreateWithoutTicketsInput
     >;
     where?: ProfileWhereInput;
   };
 
-  export type ProfileUpdateToOneWithWhereWithoutTicketInput = {
+  export type ProfileUpdateToOneWithWhereWithoutTicketsInput = {
     where?: ProfileWhereInput;
     data: XOR<
-      ProfileUpdateWithoutTicketInput,
-      ProfileUncheckedUpdateWithoutTicketInput
+      ProfileUpdateWithoutTicketsInput,
+      ProfileUncheckedUpdateWithoutTicketsInput
     >;
   };
 
-  export type ProfileUpdateWithoutTicketInput = {
+  export type ProfileUpdateWithoutTicketsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
@@ -35277,9 +40433,11 @@ export namespace Prisma {
     tags?: TagUpdateManyWithoutProfilesNestedInput;
     birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
     residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
+    productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
   };
 
-  export type ProfileUncheckedUpdateWithoutTicketInput = {
+  export type ProfileUncheckedUpdateWithoutTicketsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     shortId?: IntFieldUpdateOperationsInput | number;
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
@@ -35325,6 +40483,8 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
     tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
+    productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
   };
 
   export type TicketGroupUpsertWithoutTicketsInput = {
@@ -35385,8 +40545,10 @@ export namespace Prisma {
     supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
     tickets?: TicketCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
-    tags?: TagCreateNestedManyWithoutEventInput;
+    profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
+    productions?: ProductionCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventUncheckedCreateWithoutTicketGroupsInput = {
@@ -35405,8 +40567,10 @@ export namespace Prisma {
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
-    tags?: TagUncheckedCreateNestedManyWithoutEventInput;
+    profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
+    productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventCreateOrConnectWithoutTicketGroupsInput = {
@@ -35429,7 +40593,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketsInput;
-    profile?: ProfileCreateNestedOneWithoutTicketInput;
+    profile?: ProfileCreateNestedOneWithoutTicketsInput;
   };
 
   export type TicketUncheckedCreateWithoutTicketGroupInput = {
@@ -35496,8 +40660,10 @@ export namespace Prisma {
     supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
     tickets?: TicketUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutTicketGroupsInput = {
@@ -35516,8 +40682,10 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type TicketUpsertWithWhereUniqueWithoutTicketGroupInput = {
@@ -35565,7 +40733,9 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
     subEvents?: EventCreateNestedManyWithoutSupraEventInput;
-    tags?: TagCreateNestedManyWithoutEventInput;
+    profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
+    productions?: ProductionCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventUncheckedCreateWithoutEventTicketsInput = {
@@ -35585,7 +40755,9 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
     ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
     subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
-    tags?: TagUncheckedCreateNestedManyWithoutEventInput;
+    profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
+    productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
   };
 
   export type EventCreateOrConnectWithoutEventTicketsInput = {
@@ -35633,7 +40805,9 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
+    productions?: ProductionUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutEventTicketsInput = {
@@ -35653,7 +40827,602 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
+    productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
+  };
+
+  export type ProfileCreateWithoutProductionsAdministratedInput = {
+    id?: string;
+    shortId: number;
+    role?: $Enums.Role;
+    firstTimeMiExpo?: boolean;
+    username?: string | null;
+    password?: string | null;
+    phoneNumber: string;
+    isPhoneVerified?: boolean;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    firstName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    otp?: OtpCreateNestedManyWithoutOwnerInput;
+    comments?: CommentCreateNestedManyWithoutProfileInput;
+    messages?: MessageCreateNestedManyWithoutProfileInput;
+    tags?: TagCreateNestedManyWithoutProfilesInput;
+    birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
+    residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
+    tickets?: TicketCreateNestedManyWithoutProfileInput;
+    productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+  };
+
+  export type ProfileUncheckedCreateWithoutProductionsAdministratedInput = {
+    id?: string;
+    shortId: number;
+    role?: $Enums.Role;
+    firstTimeMiExpo?: boolean;
+    username?: string | null;
+    password?: string | null;
+    phoneNumber: string;
+    isPhoneVerified?: boolean;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    firstName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    birthLocationId?: string | null;
+    residenceLocationId?: string | null;
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
+    comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
+    messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
+    tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
+    tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+  };
+
+  export type ProfileCreateOrConnectWithoutProductionsAdministratedInput = {
+    where: ProfileWhereUniqueInput;
+    create: XOR<
+      ProfileCreateWithoutProductionsAdministratedInput,
+      ProfileUncheckedCreateWithoutProductionsAdministratedInput
+    >;
+  };
+
+  export type EventCreateWithoutProductionsInput = {
+    id?: string;
+    name: string;
+    date: Date | string;
+    startingDate?: Date | string;
+    endingDate?: Date | string;
+    location: string;
+    active?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    folder?: EventFolderCreateNestedOneWithoutEventsInput;
+    tagAssisted: TagCreateNestedOneWithoutAssistedEventInput;
+    tagConfirmed: TagCreateNestedOneWithoutConfirmedEventInput;
+    supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
+    tickets?: TicketCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
+    subEvents?: EventCreateNestedManyWithoutSupraEventInput;
+    profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
+    eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
+    participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
+  };
+
+  export type EventUncheckedCreateWithoutProductionsInput = {
+    id?: string;
+    name: string;
+    date: Date | string;
+    startingDate?: Date | string;
+    endingDate?: Date | string;
+    location: string;
+    folderId?: string | null;
+    tagAssistedId: string;
+    tagConfirmedId: string;
+    supraEventId?: string | null;
+    active?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
+    subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
+    profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
+    eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
+    participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
+  };
+
+  export type EventCreateOrConnectWithoutProductionsInput = {
+    where: EventWhereUniqueInput;
+    create: XOR<
+      EventCreateWithoutProductionsInput,
+      EventUncheckedCreateWithoutProductionsInput
+    >;
+  };
+
+  export type ProductionAffiliationRequestCreateWithoutProductionInput = {
+    id?: string;
+    status?: $Enums.AffiliationStatus;
+    reviewedAt?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    profile: ProfileCreateNestedOneWithoutProductionRequestsSentInput;
+  };
+
+  export type ProductionAffiliationRequestUncheckedCreateWithoutProductionInput =
+    {
+      id?: string;
+      profileId: string;
+      status?: $Enums.AffiliationStatus;
+      reviewedAt?: Date | string | null;
+      created_at?: Date | string;
+      updated_at?: Date | string;
+    };
+
+  export type ProductionAffiliationRequestCreateOrConnectWithoutProductionInput =
+    {
+      where: ProductionAffiliationRequestWhereUniqueInput;
+      create: XOR<
+        ProductionAffiliationRequestCreateWithoutProductionInput,
+        ProductionAffiliationRequestUncheckedCreateWithoutProductionInput
+      >;
+    };
+
+  export type ProductionAffiliationRequestCreateManyProductionInputEnvelope = {
+    data:
+      | ProductionAffiliationRequestCreateManyProductionInput
+      | ProductionAffiliationRequestCreateManyProductionInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type ProfileUpsertWithoutProductionsAdministratedInput = {
+    update: XOR<
+      ProfileUpdateWithoutProductionsAdministratedInput,
+      ProfileUncheckedUpdateWithoutProductionsAdministratedInput
+    >;
+    create: XOR<
+      ProfileCreateWithoutProductionsAdministratedInput,
+      ProfileUncheckedCreateWithoutProductionsAdministratedInput
+    >;
+    where?: ProfileWhereInput;
+  };
+
+  export type ProfileUpdateToOneWithWhereWithoutProductionsAdministratedInput =
+    {
+      where?: ProfileWhereInput;
+      data: XOR<
+        ProfileUpdateWithoutProductionsAdministratedInput,
+        ProfileUncheckedUpdateWithoutProductionsAdministratedInput
+      >;
+    };
+
+  export type ProfileUpdateWithoutProductionsAdministratedInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
+    username?: NullableStringFieldUpdateOperationsInput | string | null;
+    password?: NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUpdateManyWithoutOwnerNestedInput;
+    comments?: CommentUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUpdateManyWithoutProfileNestedInput;
+    tags?: TagUpdateManyWithoutProfilesNestedInput;
+    birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
+    residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
+    tickets?: TicketUpdateManyWithoutProfileNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+  };
+
+  export type ProfileUncheckedUpdateWithoutProductionsAdministratedInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
+    username?: NullableStringFieldUpdateOperationsInput | string | null;
+    password?: NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    birthLocationId?: NullableStringFieldUpdateOperationsInput | string | null;
+    residenceLocationId?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
+    comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
+    tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
+    tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+  };
+
+  export type EventUpsertWithWhereUniqueWithoutProductionsInput = {
+    where: EventWhereUniqueInput;
+    update: XOR<
+      EventUpdateWithoutProductionsInput,
+      EventUncheckedUpdateWithoutProductionsInput
+    >;
+    create: XOR<
+      EventCreateWithoutProductionsInput,
+      EventUncheckedCreateWithoutProductionsInput
+    >;
+  };
+
+  export type EventUpdateWithWhereUniqueWithoutProductionsInput = {
+    where: EventWhereUniqueInput;
+    data: XOR<
+      EventUpdateWithoutProductionsInput,
+      EventUncheckedUpdateWithoutProductionsInput
+    >;
+  };
+
+  export type EventUpdateManyWithWhereWithoutProductionsInput = {
+    where: EventScalarWhereInput;
+    data: XOR<
+      EventUpdateManyMutationInput,
+      EventUncheckedUpdateManyWithoutProductionsInput
+    >;
+  };
+
+  export type ProductionAffiliationRequestUpsertWithWhereUniqueWithoutProductionInput =
+    {
+      where: ProductionAffiliationRequestWhereUniqueInput;
+      update: XOR<
+        ProductionAffiliationRequestUpdateWithoutProductionInput,
+        ProductionAffiliationRequestUncheckedUpdateWithoutProductionInput
+      >;
+      create: XOR<
+        ProductionAffiliationRequestCreateWithoutProductionInput,
+        ProductionAffiliationRequestUncheckedCreateWithoutProductionInput
+      >;
+    };
+
+  export type ProductionAffiliationRequestUpdateWithWhereUniqueWithoutProductionInput =
+    {
+      where: ProductionAffiliationRequestWhereUniqueInput;
+      data: XOR<
+        ProductionAffiliationRequestUpdateWithoutProductionInput,
+        ProductionAffiliationRequestUncheckedUpdateWithoutProductionInput
+      >;
+    };
+
+  export type ProductionAffiliationRequestUpdateManyWithWhereWithoutProductionInput =
+    {
+      where: ProductionAffiliationRequestScalarWhereInput;
+      data: XOR<
+        ProductionAffiliationRequestUpdateManyMutationInput,
+        ProductionAffiliationRequestUncheckedUpdateManyWithoutProductionInput
+      >;
+    };
+
+  export type ProductionCreateWithoutAffiliationRequestsInput = {
+    id?: string;
+    name: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    administrator: ProfileCreateNestedOneWithoutProductionsAdministratedInput;
+    events?: EventCreateNestedManyWithoutProductionsInput;
+  };
+
+  export type ProductionUncheckedCreateWithoutAffiliationRequestsInput = {
+    id?: string;
+    name: string;
+    adminstratorId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    events?: EventUncheckedCreateNestedManyWithoutProductionsInput;
+  };
+
+  export type ProductionCreateOrConnectWithoutAffiliationRequestsInput = {
+    where: ProductionWhereUniqueInput;
+    create: XOR<
+      ProductionCreateWithoutAffiliationRequestsInput,
+      ProductionUncheckedCreateWithoutAffiliationRequestsInput
+    >;
+  };
+
+  export type ProfileCreateWithoutProductionRequestsSentInput = {
+    id?: string;
+    shortId: number;
+    role?: $Enums.Role;
+    firstTimeMiExpo?: boolean;
+    username?: string | null;
+    password?: string | null;
+    phoneNumber: string;
+    isPhoneVerified?: boolean;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    firstName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    otp?: OtpCreateNestedManyWithoutOwnerInput;
+    comments?: CommentCreateNestedManyWithoutProfileInput;
+    messages?: MessageCreateNestedManyWithoutProfileInput;
+    tags?: TagCreateNestedManyWithoutProfilesInput;
+    birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
+    residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
+    tickets?: TicketCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
+  };
+
+  export type ProfileUncheckedCreateWithoutProductionRequestsSentInput = {
+    id?: string;
+    shortId: number;
+    role?: $Enums.Role;
+    firstTimeMiExpo?: boolean;
+    username?: string | null;
+    password?: string | null;
+    phoneNumber: string;
+    isPhoneVerified?: boolean;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    firstName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    birthLocationId?: string | null;
+    residenceLocationId?: string | null;
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
+    comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
+    messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
+    tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
+    tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
+  };
+
+  export type ProfileCreateOrConnectWithoutProductionRequestsSentInput = {
+    where: ProfileWhereUniqueInput;
+    create: XOR<
+      ProfileCreateWithoutProductionRequestsSentInput,
+      ProfileUncheckedCreateWithoutProductionRequestsSentInput
+    >;
+  };
+
+  export type ProductionUpsertWithoutAffiliationRequestsInput = {
+    update: XOR<
+      ProductionUpdateWithoutAffiliationRequestsInput,
+      ProductionUncheckedUpdateWithoutAffiliationRequestsInput
+    >;
+    create: XOR<
+      ProductionCreateWithoutAffiliationRequestsInput,
+      ProductionUncheckedCreateWithoutAffiliationRequestsInput
+    >;
+    where?: ProductionWhereInput;
+  };
+
+  export type ProductionUpdateToOneWithWhereWithoutAffiliationRequestsInput = {
+    where?: ProductionWhereInput;
+    data: XOR<
+      ProductionUpdateWithoutAffiliationRequestsInput,
+      ProductionUncheckedUpdateWithoutAffiliationRequestsInput
+    >;
+  };
+
+  export type ProductionUpdateWithoutAffiliationRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    administrator?: ProfileUpdateOneRequiredWithoutProductionsAdministratedNestedInput;
+    events?: EventUpdateManyWithoutProductionsNestedInput;
+  };
+
+  export type ProductionUncheckedUpdateWithoutAffiliationRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    adminstratorId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    events?: EventUncheckedUpdateManyWithoutProductionsNestedInput;
+  };
+
+  export type ProfileUpsertWithoutProductionRequestsSentInput = {
+    update: XOR<
+      ProfileUpdateWithoutProductionRequestsSentInput,
+      ProfileUncheckedUpdateWithoutProductionRequestsSentInput
+    >;
+    create: XOR<
+      ProfileCreateWithoutProductionRequestsSentInput,
+      ProfileUncheckedCreateWithoutProductionRequestsSentInput
+    >;
+    where?: ProfileWhereInput;
+  };
+
+  export type ProfileUpdateToOneWithWhereWithoutProductionRequestsSentInput = {
+    where?: ProfileWhereInput;
+    data: XOR<
+      ProfileUpdateWithoutProductionRequestsSentInput,
+      ProfileUncheckedUpdateWithoutProductionRequestsSentInput
+    >;
+  };
+
+  export type ProfileUpdateWithoutProductionRequestsSentInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
+    username?: NullableStringFieldUpdateOperationsInput | string | null;
+    password?: NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUpdateManyWithoutOwnerNestedInput;
+    comments?: CommentUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUpdateManyWithoutProfileNestedInput;
+    tags?: TagUpdateManyWithoutProfilesNestedInput;
+    birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
+    residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
+    tickets?: TicketUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
+  };
+
+  export type ProfileUncheckedUpdateWithoutProductionRequestsSentInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
+    username?: NullableStringFieldUpdateOperationsInput | string | null;
+    password?: NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    birthLocationId?: NullableStringFieldUpdateOperationsInput | string | null;
+    residenceLocationId?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
+    comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
+    tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
+    tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
   };
 
   export type CommentCreateManyAccountInput = {
@@ -35787,7 +41556,8 @@ export namespace Prisma {
     confirmedEvent?: EventUpdateOneWithoutTagConfirmedNestedInput;
     profiles?: ProfileUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
-    Event?: EventUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutAccountsInput = {
@@ -35801,7 +41571,8 @@ export namespace Prisma {
     confirmedEvent?: EventUncheckedUpdateOneWithoutTagConfirmedNestedInput;
     profiles?: ProfileUncheckedUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
-    Event?: EventUncheckedUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type TagUncheckedUpdateManyWithoutAccountsInput = {
@@ -35824,7 +41595,8 @@ export namespace Prisma {
     confirmedEvent?: EventUpdateOneWithoutTagConfirmedNestedInput;
     accounts?: AccountUpdateManyWithoutTagsNestedInput;
     profiles?: ProfileUpdateManyWithoutTagsNestedInput;
-    Event?: EventUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutAccountsGlobalFilterInput = {
@@ -35838,7 +41610,8 @@ export namespace Prisma {
     confirmedEvent?: EventUncheckedUpdateOneWithoutTagConfirmedNestedInput;
     accounts?: AccountUncheckedUpdateManyWithoutTagsNestedInput;
     profiles?: ProfileUncheckedUpdateManyWithoutTagsNestedInput;
-    Event?: EventUncheckedUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type TagUncheckedUpdateManyWithoutAccountsGlobalFilterInput = {
@@ -35890,6 +41663,22 @@ export namespace Prisma {
     scanned?: boolean;
     scannedAt?: Date | string | null;
     ticketGroupId?: string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type ProductionCreateManyAdministratorInput = {
+    id?: string;
+    name: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type ProductionAffiliationRequestCreateManyProfileInput = {
+    id?: string;
+    productionId: string;
+    status?: $Enums.AffiliationStatus;
+    reviewedAt?: Date | string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -36004,7 +41793,8 @@ export namespace Prisma {
     confirmedEvent?: EventUpdateOneWithoutTagConfirmedNestedInput;
     accounts?: AccountUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
-    Event?: EventUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutProfilesInput = {
@@ -36018,7 +41808,8 @@ export namespace Prisma {
     confirmedEvent?: EventUncheckedUpdateOneWithoutTagConfirmedNestedInput;
     accounts?: AccountUncheckedUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
-    Event?: EventUncheckedUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type TagUncheckedUpdateManyWithoutProfilesInput = {
@@ -36086,6 +41877,77 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
+
+  export type ProductionUpdateWithoutAdministratorInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    events?: EventUpdateManyWithoutProductionsNestedInput;
+    affiliationRequests?: ProductionAffiliationRequestUpdateManyWithoutProductionNestedInput;
+  };
+
+  export type ProductionUncheckedUpdateWithoutAdministratorInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    events?: EventUncheckedUpdateManyWithoutProductionsNestedInput;
+    affiliationRequests?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProductionNestedInput;
+  };
+
+  export type ProductionUncheckedUpdateManyWithoutAdministratorInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type ProductionAffiliationRequestUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumAffiliationStatusFieldUpdateOperationsInput
+      | $Enums.AffiliationStatus;
+    reviewedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    production?: ProductionUpdateOneRequiredWithoutAffiliationRequestsNestedInput;
+  };
+
+  export type ProductionAffiliationRequestUncheckedUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    productionId?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumAffiliationStatusFieldUpdateOperationsInput
+      | $Enums.AffiliationStatus;
+    reviewedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileInput =
+    {
+      id?: StringFieldUpdateOperationsInput | string;
+      productionId?: StringFieldUpdateOperationsInput | string;
+      status?:
+        | EnumAffiliationStatusFieldUpdateOperationsInput
+        | $Enums.AffiliationStatus;
+      reviewedAt?:
+        | NullableDateTimeFieldUpdateOperationsInput
+        | Date
+        | string
+        | null;
+      created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    };
 
   export type ProfileCreateManyBirthLocationInput = {
     id?: string;
@@ -36181,7 +42043,9 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutProfileNestedInput;
     tags?: TagUpdateManyWithoutProfilesNestedInput;
     residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
-    Ticket?: TicketUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutBirthLocationInput = {
@@ -36229,7 +42093,9 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
     tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
-    Ticket?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateManyWithoutBirthLocationInput = {
@@ -36317,7 +42183,9 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutProfileNestedInput;
     tags?: TagUpdateManyWithoutProfilesNestedInput;
     birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
-    Ticket?: TicketUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutResidenceLocationInput = {
@@ -36362,7 +42230,9 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
     tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
-    Ticket?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateManyWithoutResidenceLocationInput = {
@@ -36486,7 +42356,9 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutProfileNestedInput;
     birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
     residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
-    Ticket?: TicketUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutTagsInput = {
@@ -36534,7 +42406,9 @@ export namespace Prisma {
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
     messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
-    Ticket?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateManyWithoutTagsInput = {
@@ -36620,7 +42494,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
-  export type EventUpdateWithoutTagsInput = {
+  export type EventUpdateWithoutProfileTagsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
     date?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -36638,9 +42512,11 @@ export namespace Prisma {
     ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
   };
 
-  export type EventUncheckedUpdateWithoutTagsInput = {
+  export type EventUncheckedUpdateWithoutProfileTagsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
     date?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -36658,9 +42534,71 @@ export namespace Prisma {
     ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
   };
 
-  export type EventUncheckedUpdateManyWithoutTagsInput = {
+  export type EventUncheckedUpdateManyWithoutProfileTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    date?: DateTimeFieldUpdateOperationsInput | Date | string;
+    startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    location?: StringFieldUpdateOperationsInput | string;
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null;
+    tagAssistedId?: StringFieldUpdateOperationsInput | string;
+    tagConfirmedId?: StringFieldUpdateOperationsInput | string;
+    supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type EventUpdateWithoutParticipantRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    date?: DateTimeFieldUpdateOperationsInput | Date | string;
+    startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    location?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    folder?: EventFolderUpdateOneWithoutEventsNestedInput;
+    tagAssisted?: TagUpdateOneRequiredWithoutAssistedEventNestedInput;
+    tagConfirmed?: TagUpdateOneRequiredWithoutConfirmedEventNestedInput;
+    supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
+    tickets?: TicketUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
+    subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
+    profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
+    eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUpdateManyWithoutEventsNestedInput;
+  };
+
+  export type EventUncheckedUpdateWithoutParticipantRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    date?: DateTimeFieldUpdateOperationsInput | Date | string;
+    startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    location?: StringFieldUpdateOperationsInput | string;
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null;
+    tagAssistedId?: StringFieldUpdateOperationsInput | string;
+    tagConfirmedId?: StringFieldUpdateOperationsInput | string;
+    supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
+    subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
+    profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
+    eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
+  };
+
+  export type EventUncheckedUpdateManyWithoutParticipantRolesInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
     date?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -36695,7 +42633,8 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutTagsNestedInput;
     profiles?: ProfileUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
-    Event?: EventUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutGroupInput = {
@@ -36709,7 +42648,8 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutTagsNestedInput;
     profiles?: ProfileUncheckedUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
-    Event?: EventUncheckedUpdateManyWithoutTagsNestedInput;
+    profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
   };
 
   export type TagUncheckedUpdateManyWithoutGroupInput = {
@@ -36782,7 +42722,7 @@ export namespace Prisma {
       | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    profile?: ProfileUpdateOneWithoutTicketNestedInput;
+    profile?: ProfileUpdateOneWithoutTicketsNestedInput;
     ticketGroup?: TicketGroupUpdateOneWithoutTicketsNestedInput;
   };
 
@@ -36872,8 +42812,10 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutSupraEventInput = {
@@ -36892,8 +42834,10 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type EventUncheckedUpdateManyWithoutSupraEventInput = {
@@ -36911,7 +42855,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
-  export type TagUpdateWithoutEventInput = {
+  export type TagUpdateWithoutProfileEventsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
     type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType;
@@ -36923,9 +42867,10 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutTagsNestedInput;
     profiles?: ProfileUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
+    roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
   };
 
-  export type TagUncheckedUpdateWithoutEventInput = {
+  export type TagUncheckedUpdateWithoutProfileEventsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
     type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType;
@@ -36937,9 +42882,10 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutTagsNestedInput;
     profiles?: ProfileUncheckedUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
+    roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
   };
 
-  export type TagUncheckedUpdateManyWithoutEventInput = {
+  export type TagUncheckedUpdateManyWithoutProfileEventsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
     type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType;
@@ -36975,6 +42921,71 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
+  export type ProductionUpdateWithoutEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    administrator?: ProfileUpdateOneRequiredWithoutProductionsAdministratedNestedInput;
+    affiliationRequests?: ProductionAffiliationRequestUpdateManyWithoutProductionNestedInput;
+  };
+
+  export type ProductionUncheckedUpdateWithoutEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    adminstratorId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    affiliationRequests?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProductionNestedInput;
+  };
+
+  export type ProductionUncheckedUpdateManyWithoutEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    adminstratorId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type TagUpdateWithoutRoleEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    group?: TagGroupUpdateOneRequiredWithoutTagsNestedInput;
+    assistedEvent?: EventUpdateOneWithoutTagAssistedNestedInput;
+    confirmedEvent?: EventUpdateOneWithoutTagConfirmedNestedInput;
+    accounts?: AccountUpdateManyWithoutTagsNestedInput;
+    profiles?: ProfileUpdateManyWithoutTagsNestedInput;
+    accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
+    profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
+  };
+
+  export type TagUncheckedUpdateWithoutRoleEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType;
+    groupId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    assistedEvent?: EventUncheckedUpdateOneWithoutTagAssistedNestedInput;
+    confirmedEvent?: EventUncheckedUpdateOneWithoutTagConfirmedNestedInput;
+    accounts?: AccountUncheckedUpdateManyWithoutTagsNestedInput;
+    profiles?: ProfileUncheckedUpdateManyWithoutTagsNestedInput;
+    accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
+    profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
+  };
+
+  export type TagUncheckedUpdateManyWithoutRoleEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType;
+    groupId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
   export type EventCreateManyFolderInput = {
     id?: string;
     name: string;
@@ -37006,8 +43017,10 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
     subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutFolderInput = {
@@ -37026,8 +43039,10 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
     ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
     subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
-    tags?: TagUncheckedUpdateManyWithoutEventNestedInput;
+    profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type EventUncheckedUpdateManyWithoutFolderInput = {
@@ -37076,7 +43091,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketsNestedInput;
-    profile?: ProfileUpdateOneWithoutTicketNestedInput;
+    profile?: ProfileUpdateOneWithoutTicketsNestedInput;
   };
 
   export type TicketUncheckedUpdateWithoutTicketGroupInput = {
@@ -37116,6 +43131,122 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
+
+  export type ProductionAffiliationRequestCreateManyProductionInput = {
+    id?: string;
+    profileId: string;
+    status?: $Enums.AffiliationStatus;
+    reviewedAt?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type EventUpdateWithoutProductionsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    date?: DateTimeFieldUpdateOperationsInput | Date | string;
+    startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    location?: StringFieldUpdateOperationsInput | string;
+    active?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    folder?: EventFolderUpdateOneWithoutEventsNestedInput;
+    tagAssisted?: TagUpdateOneRequiredWithoutAssistedEventNestedInput;
+    tagConfirmed?: TagUpdateOneRequiredWithoutConfirmedEventNestedInput;
+    supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
+    tickets?: TicketUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
+    subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
+    profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
+    eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
+    participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
+  };
+
+  export type EventUncheckedUpdateWithoutProductionsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    date?: DateTimeFieldUpdateOperationsInput | Date | string;
+    startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    location?: StringFieldUpdateOperationsInput | string;
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null;
+    tagAssistedId?: StringFieldUpdateOperationsInput | string;
+    tagConfirmedId?: StringFieldUpdateOperationsInput | string;
+    supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
+    subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
+    profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
+    eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
+    participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
+  };
+
+  export type EventUncheckedUpdateManyWithoutProductionsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    date?: DateTimeFieldUpdateOperationsInput | Date | string;
+    startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    location?: StringFieldUpdateOperationsInput | string;
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null;
+    tagAssistedId?: StringFieldUpdateOperationsInput | string;
+    tagConfirmedId?: StringFieldUpdateOperationsInput | string;
+    supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type ProductionAffiliationRequestUpdateWithoutProductionInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumAffiliationStatusFieldUpdateOperationsInput
+      | $Enums.AffiliationStatus;
+    reviewedAt?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    profile?: ProfileUpdateOneRequiredWithoutProductionRequestsSentNestedInput;
+  };
+
+  export type ProductionAffiliationRequestUncheckedUpdateWithoutProductionInput =
+    {
+      id?: StringFieldUpdateOperationsInput | string;
+      profileId?: StringFieldUpdateOperationsInput | string;
+      status?:
+        | EnumAffiliationStatusFieldUpdateOperationsInput
+        | $Enums.AffiliationStatus;
+      reviewedAt?:
+        | NullableDateTimeFieldUpdateOperationsInput
+        | Date
+        | string
+        | null;
+      created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    };
+
+  export type ProductionAffiliationRequestUncheckedUpdateManyWithoutProductionInput =
+    {
+      id?: StringFieldUpdateOperationsInput | string;
+      profileId?: StringFieldUpdateOperationsInput | string;
+      status?:
+        | EnumAffiliationStatusFieldUpdateOperationsInput
+        | $Enums.AffiliationStatus;
+      reviewedAt?:
+        | NullableDateTimeFieldUpdateOperationsInput
+        | Date
+        | string
+        | null;
+      created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+      updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    };
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

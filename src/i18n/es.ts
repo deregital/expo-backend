@@ -15,6 +15,8 @@ export default {
       ticket: 'Ticket',
       eventTicket: 'Tickets del evento',
       ticketGroup: 'Grupo de tickets',
+      production: 'Producción',
+      productionAffiliationRequest: 'Solicitud de afiliación a producción',
     },
     tag: { assisted: 'Asistió', confirmed: 'Confirmó asistencia' },
     ticketType: {
@@ -182,6 +184,19 @@ export default {
         min: `La cantidad de tickets de \{\{type\}\} debe ser mayor a 0`,
       },
       price: { min: 'El precio de los tickets debe ser mayor a 0' },
+    },
+    production: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
+      name: {
+        min: 'El nombre de la producción debe tener al menos 1 caracter',
+      },
+    },
+    productionAffiliationRequest: {
+      id: {
+        uuid: 'El ID debe ser un UUID',
+      },
     },
   },
   route: {
