@@ -663,6 +663,15 @@ export default {
     production: {
       create: {
         success: 'Producción creada con éxito',
+        'already-exists': 'Producción ya existente',
+      },
+      delete: {
+        'event-active': `No se puede eliminar la producción \{\{productionName\}\} porque tiene eventos activos`,
+        success: 'Producción eliminada con éxito',
+      },
+      update: {
+        success: 'Producción actualizada con éxito',
+        'already-exists': 'Producción ya existente',
       },
     },
   },
