@@ -27,7 +27,11 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiConflictResponse, ApiOkResponse } from '@nestjs/swagger';
+import {
+  ApiConflictResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 import z from 'zod';
 import { Role } from '~/types/prisma-schema';
 import { ProductionService } from './production.service';
@@ -53,6 +57,10 @@ export class ProductionController {
     return await this.productionService.createProduction(body);
   }
 
+  @ApiNotFoundResponse({
+    description: translate('route.production.update.not-found'),
+    type: ErrorDto,
+  })
   @ApiConflictResponse({
     description: translate('route.production.update.already-exists'),
     type: ErrorDto,
@@ -75,6 +83,10 @@ export class ProductionController {
     }
   }
 
+  @ApiNotFoundResponse({
+    description: translate('route.production.delete.not-found'),
+    type: ErrorDto,
+  })
   @ApiOkResponse({
     description: translate('route.production.delete.success'),
     type: DeleteProductionResponseDto,
