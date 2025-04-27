@@ -27,6 +27,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE, ModuleRef } from '@nestjs/core';
 import { ProductionModule } from './production/production.module';
+import { ProductionAffiliationRequestModule } from './production-affiliation-request/production-affiliation-request.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { ProductionModule } from './production/production.module';
     }),
     MercadoPagoModule,
     ProductionModule,
+    ProductionAffiliationRequestModule,
   ],
   providers: [
     {

@@ -667,11 +667,30 @@ export default {
       },
       delete: {
         'event-active': `No se puede eliminar la producción \{\{productionName\}\} porque tiene eventos activos`,
+        'not-found': 'Producción no encontrada',
         success: 'Producción eliminada con éxito',
       },
       update: {
         success: 'Producción actualizada con éxito',
+        'not-found': 'Producción no encontrada',
         'already-exists': 'Producción ya existente',
+      },
+    },
+    'production-affiliation-request': {
+      create: {
+        success: 'Solicitud de afiliación a producción creada con éxito',
+        conflict: 'Error en la creación de la solicitud de afiliación',
+        'already-admin': 'Ya eres administrador de una producción',
+      },
+      update: {
+        success: 'Solicitud de afiliación a producción actualizada con éxito',
+        conflict: 'Error en la actualización de la solicitud de afiliación',
+        'not-found': 'Solicitud de afiliación no encontrada',
+        unauthorized: 'No tienes autorización para actualizar la solicitud',
+      },
+      'find-by-production': {
+        success: 'Solicitud de afiliación a producción obtenida con éxito',
+        'not-found': 'Producción no encontrada',
       },
     },
   },

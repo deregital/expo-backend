@@ -12,6 +12,6 @@ export const productionAffiliationRequestSchema = z.object({
   profileId: profileSchema.shape.id,
   status: z.nativeEnum(AffiliationStatus),
 
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  created_at: z.date(),
+  updated_at: z.date(),
 });

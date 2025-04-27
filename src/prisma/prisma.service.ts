@@ -164,4 +164,8 @@ export class PrismaService implements OnModuleInit {
   get production(): PrismaClient['production'] {
     return this.db.production;
   }
+
+  get productionAffiliationRequest(): PrismaClient['productionAffiliationRequest'] {
+    return this.db.productionAffiliationRequest;
+  }
 }
