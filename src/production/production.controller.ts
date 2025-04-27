@@ -21,6 +21,7 @@ import {
 } from '@/production/dto/update-production.dto';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
+import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
 import {
   Body,
@@ -49,6 +50,7 @@ export class ProductionController {
   constructor(
     private readonly productionService: ProductionService,
     private readonly tagService: TagService,
+    private readonly tagGroupService: TagGroupService,
   ) {}
 
   @ApiOkResponse({
@@ -74,10 +76,27 @@ export class ProductionController {
   async createRole(
     @Body() body: CreateProductionRoleDto,
   ): Promise<z.infer<typeof createProductionRoleResponseSchema>> {
+    let rolesGroupId: string | undefined;
+
+    rolesGroupId = (await this.tagService.findAll()).tags.find(
+      (tag) => tag.type === TagType.PRODUCTION_ROLE,
+    )?.groupId;
+
+    if (!rolesGroupId) {
+      // Create the group if it doesn't exist
+      rolesGroupId = await this.tagGroupService
+        .create({
+          name: translate('prisma.production-role'),
+          color: '#FF5733',
+          isExclusive: true,
+        })
+        .then((group) => group.id);
+    }
+
     return await this.tagService.create({
       name: body.name,
       type: TagType.PRODUCTION_ROLE,
-      groupId: body.groupId,
+      groupId: rolesGroupId!,
     });
   }
 

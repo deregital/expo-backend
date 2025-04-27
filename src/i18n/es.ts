@@ -24,6 +24,7 @@ export default {
       SPECTATOR: 'Espectador',
       PARTICIPANT: 'Participante',
     },
+    'production-role': 'Roles de producción',
     conflict: `Ya existe un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
     'not-found': `No se encontró un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
   },
@@ -677,6 +678,7 @@ export default {
       },
       'create-role': {
         success: 'Rol de producción creado con éxito',
+        'group-not-found': 'Grupo de etiquetas no encontrado',
       },
     },
     'production-affiliation-request': {

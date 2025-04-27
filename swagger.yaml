@@ -12632,13 +12632,8 @@ components:
           type:
             - "string"
           minLength: 1
-        groupId:
-          type:
-            - "string"
-          format: "uuid"
       required:
         - "name"
-        - "groupId"
     UpdateProductionDto:
       type:
         - "object"
