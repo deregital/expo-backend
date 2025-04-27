@@ -16,6 +16,7 @@ import z from 'zod';
 import {
   Account,
   Location,
+  Production,
   Profile,
   Tag,
   TagGroup,
@@ -60,6 +61,7 @@ export class ProfileService {
   ): Promise<
     z.infer<typeof findByIdProfileResponseSchema> & {
       password: Profile['password'];
+      productionAdministrated: Production | null;
     }
   > {
     const profile = await this.prisma.profile.findUnique({
@@ -85,6 +87,7 @@ export class ProfileService {
             },
           },
         },
+        productionAdministrated: true,
         residenceLocation: true,
         birthLocation: true,
       },
