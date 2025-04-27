@@ -7,6 +7,10 @@ import {
   createProductionResponseSchema,
 } from '@/production/dto/create-production.dto';
 import {
+  CreateProductionRoleDto,
+  createProductionRoleResponseSchema,
+} from '@/production/dto/create-role.dto';
+import {
   DeleteProductionResponseDto,
   deleteProductionResponseSchema,
 } from '@/production/dto/delete-production.dto';
@@ -17,6 +21,7 @@ import {
 } from '@/production/dto/update-production.dto';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
+import { TagService } from '@/tag/tag.service';
 import {
   Body,
   ConflictException,
@@ -29,18 +34,22 @@ import {
 } from '@nestjs/common';
 import {
   ApiConflictResponse,
+  ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
 import z from 'zod';
-import { Role } from '~/types/prisma-schema';
+import { Role, TagType } from '~/types/prisma-schema';
 import { ProductionService } from './production.service';
 
 @Roles(Role.ADMIN)
 @UseGuards(JwtGuard, RoleGuard)
 @Controller('production')
 export class ProductionController {
-  constructor(private readonly productionService: ProductionService) {}
+  constructor(
+    private readonly productionService: ProductionService,
+    private readonly tagService: TagService,
+  ) {}
 
   @ApiOkResponse({
     description: translate('route.production.create.success'),
@@ -55,6 +64,21 @@ export class ProductionController {
     @Body() body: CreateProductionDto,
   ): Promise<z.infer<typeof createProductionResponseSchema>> {
     return await this.productionService.createProduction(body);
+  }
+
+  @ApiCreatedResponse({
+    description: translate('route.production.create-role.success'),
+    type: CreateProductionDto,
+  })
+  @Post('create-role')
+  async createRole(
+    @Body() body: CreateProductionRoleDto,
+  ): Promise<z.infer<typeof createProductionRoleResponseSchema>> {
+    return await this.tagService.create({
+      name: body.name,
+      type: TagType.PRODUCTION_ROLE,
+      groupId: body.groupId,
+    });
   }
 
   @ApiNotFoundResponse({

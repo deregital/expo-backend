@@ -2360,6 +2360,25 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Production"
+  /production/create-role:
+    post:
+      operationId: "ProductionController_createRole"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductionRoleDto"
+      responses:
+        201:
+          description: "Rol de producción creado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateProductionDto"
+      tags:
+        - "Production"
   /production/update/{id}:
     patch:
       operationId: "ProductionController_update"
@@ -2678,6 +2697,15 @@ components:
           type:
             - "string"
           format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PROFILE"
+            - "EVENT"
+            - "PARTICIPANT"
+            - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
       required:
         - "name"
         - "groupId"
@@ -2706,11 +2734,21 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
       required:
         - "id"
         - "name"
         - "groupId"
         - "type"
+        - "created_at"
+        - "updated_at"
     FindAllTagResponseDto:
       type:
         - "object"
@@ -12586,6 +12624,21 @@ components:
           minLength: 1
       required:
         - "name"
+    CreateProductionRoleDto:
+      type:
+        - "object"
+      properties:
+        name:
+          type:
+            - "string"
+          minLength: 1
+        groupId:
+          type:
+            - "string"
+          format: "uuid"
+      required:
+        - "name"
+        - "groupId"
     UpdateProductionDto:
       type:
         - "object"

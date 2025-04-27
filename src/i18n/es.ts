@@ -675,6 +675,9 @@ export default {
         'not-found': 'Producción no encontrada',
         'already-exists': 'Producción ya existente',
       },
+      'create-role': {
+        success: 'Rol de producción creado con éxito',
+      },
     },
     'production-affiliation-request': {
       create: {
