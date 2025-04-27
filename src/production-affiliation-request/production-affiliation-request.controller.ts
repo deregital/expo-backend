@@ -128,6 +128,49 @@ export class ProductionAffiliationRequestController {
     description: translate(
       'route.production-affiliation-request.update.success',
     ),
+    type: UpdateProductionAffiliationRequestResponseDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate(
+      'route.production-affiliation-request.update.not-found',
+    ),
+    type: ErrorDto,
+  })
+  @ApiUnauthorizedResponse({
+    description: translate(
+      'route.production-affiliation-request.update.unauthorized',
+    ),
+    type: ErrorDto,
+  })
+  @Post('reject/:id')
+  async reject(
+    @Param('id', new ExistingRecord('productionAffiliationRequest')) id: string,
+    @Profile() profile: ProfileWithoutPassword,
+  ): Promise<z.infer<typeof updateProductionAffiliationRequestResponseSchema>> {
+    const request = await this.productionAffiliationRequestService.findById(id);
+    if (!request || request.status !== AffiliationStatus.PENDING) {
+      throw new NotFoundException([
+        translate('route.production-affiliation-request.update.not-found'),
+      ]);
+    }
+
+    if (request.production.administratorId !== profile.id) {
+      throw new UnauthorizedException([
+        translate('route.production-affiliation-request.update.unauthorized'),
+      ]);
+    }
+
+    return await this.productionAffiliationRequestService.update(id, {
+      reviewedAt: new Date(),
+      status: AffiliationStatus.REJECTED,
+    });
+  }
+
+  @Roles(Role.MI_EXPO)
+  @ApiOkResponse({
+    description: translate(
+      'route.production-affiliation-request.update.success',
+    ),
     type: FindByProductionAffiliationRequestResponseDto,
   })
   @ApiNotFoundResponse({
