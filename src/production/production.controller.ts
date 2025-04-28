@@ -15,6 +15,10 @@ import {
   deleteProductionResponseSchema,
 } from '@/production/dto/delete-production.dto';
 import {
+  GetAllProductionResponseDto,
+  getAllProductionResponseSchema,
+} from '@/production/dto/get-all-production.dto';
+import {
   UpdateProductionDto,
   UpdateProductionResponseDto,
   updateProductionResponseSchema,
@@ -28,6 +32,7 @@ import {
   ConflictException,
   Controller,
   Delete,
+  Get,
   Param,
   Patch,
   Post,
@@ -52,6 +57,16 @@ export class ProductionController {
     private readonly tagService: TagService,
     private readonly tagGroupService: TagGroupService,
   ) {}
+
+  @ApiOkResponse({
+    description: translate('route.production.get-all.success'),
+    type: GetAllProductionResponseDto,
+  })
+  @Get('all')
+  async getAll(): Promise<z.infer<typeof getAllProductionResponseSchema>> {
+    const productions = await this.productionService.getAll();
+    return { productions };
+  }
 
   @ApiOkResponse({
     description: translate('route.production.create.success'),
