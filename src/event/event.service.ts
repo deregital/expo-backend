@@ -25,6 +25,8 @@ import {
   TagType,
 } from '~/types/prisma-schema';
 import { deleteEventResponseSchema } from './dto/delete-event.dto';
+import { getAllStatisticsSchema } from './dto/get-all-statistics.dto';
+import { getStatisticsByIdSchema } from './dto/get-statistics-by-id-event.dto';
 
 @Injectable()
 export class EventService {
@@ -138,6 +140,46 @@ export class EventService {
       include: { tagAssisted: true, tagConfirmed: true },
     });
     return events;
+  }
+
+  async getAllEventWithTickets(): Promise<
+    z.infer<typeof getAllStatisticsSchema>
+  > {
+    const events = await this.prisma.event.findMany({
+      include: {
+        tickets: true,
+        eventTickets: true,
+        ticketGroups: true,
+      },
+    });
+
+    return events!;
+  }
+
+  async getEventWithTickets(
+    id: Event['id'],
+  ): Promise<z.infer<typeof getStatisticsByIdSchema>> {
+    const event = await this.prisma.event.findUnique({
+      where: { id },
+      include: {
+        tickets: true,
+        eventTickets: true,
+      },
+    });
+
+    return event!;
+  }
+
+  async getAvgAmountTicketGroupByEventId(
+    id: Event['id'],
+  ): Promise<number | null> {
+    const { _avg } = await this.prisma.ticketGroup.aggregate({
+      where: { eventId: id },
+      _avg: {
+        amountTickets: true,
+      },
+    });
+    return _avg.amountTickets;
   }
 
   async update(
