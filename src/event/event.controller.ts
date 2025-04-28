@@ -218,21 +218,25 @@ export class EventController {
 
     const totalIncome = events.reduce((total, event) => {
       if (event.tickets) {
-        const eventTicketSpectator = event.eventTickets.find(
-          (ticket) => ticket.type === TicketType.SPECTATOR,
-        );
+        const ticketTypesWithPrice = [
+          TicketType.SPECTATOR,
+          TicketType.PARTICIPANT,
+        ];
 
-        const soldTicketsSpectator = event.tickets.filter(
-          (ticket) => ticket.type === TicketType.SPECTATOR,
-        );
+        for (const type of ticketTypesWithPrice) {
+          const eventTicket = event.eventTickets.find(
+            (ticket) => ticket.type === type,
+          );
+          const soldTickets = event.tickets.filter(
+            (ticket) => ticket.type === type,
+          );
 
-        total +=
-          soldTicketsSpectator.length * (eventTicketSpectator?.amount ?? 0);
+          total += soldTickets.length * (eventTicket?.amount ?? 0);
+        }
       }
       return total;
     }, 0);
 
-    // Todas las posibles entradas y por tipo REFACTOR
     const maxTicketPerTypeAll = events.reduce(
       (counts, event) => {
         const ticketsCount = event.eventTickets.reduce(
@@ -255,7 +259,6 @@ export class EventController {
       { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
     );
 
-    // Entradas emitidas totales y por tipo REFACTOR
     const emmitedticketPerTypeAll = events.reduce(
       (counts, event) => {
         const ticketsCount = event.tickets.reduce(
@@ -294,7 +297,6 @@ export class EventController {
         (ticket) => ticket.type === TicketType.SPECTATOR,
       );
 
-      // porcentaje de ventas sobre cupo máximo
       const purchasePercent = parseFloat(
         (
           (spectatorTicketsSold.length /
@@ -322,12 +324,6 @@ export class EventController {
       eventDataIndividual,
     };
   }
-  // GENERALES (acumulado):
-  // Recaudación total de todos los eventos. ✅?
-  // ranking de mails que más aparecen en ticket-group y cuántos tickets sacaron. ✅
-  // Entradas emitidas totales y por tipo ✅
-  // Entradas emitidas / cupo (70% de entradas emitidas sobre el total de entradas disponibles) ✅?
-  // Tabla con precio unitario y porcentaje de ventas sobre cupo máximo ✅?
 
   @Roles(Role.TICKETS, Role.ADMIN, Role.USER)
   @Get('/:id')
@@ -363,7 +359,6 @@ export class EventController {
   ): Promise<z.infer<typeof getStatisticsByIdResponseSchema>> {
     const event = await this.eventService.getEventWithTickets(id);
 
-    // Cantidad maxima de tickets
     const maxTickets = event.eventTickets.reduce(
       (total, ticket) => (total += ticket.amount ?? 0),
       0,
@@ -375,21 +370,18 @@ export class EventController {
 
     const emmitedTickets = event.tickets.length;
 
-    // Porcentaje de tickets emitidos
     const emittedTicketsPercent = parseFloat(
       ((event.tickets.length / maxTickets) * 100).toFixed(2),
     );
 
-    // Total recaudado (entradas emitidas de espectador)
     const totalIncome = event.tickets.reduce((income, ticket) => {
-      if (ticket.type === TicketType.SPECTATOR) {
+      if (ticket.type !== TicketType.STAFF) {
         const price = spectatorTicket?.price ?? 0;
         income += price;
       }
       return income;
     }, 0);
 
-    // Maximo posible de recaudacion
     const maxTotalIncome = event.eventTickets.reduce((maxIncome, ticket) => {
       const price = ticket.price ?? 0;
       const amount = ticket.amount ?? 1;
@@ -397,7 +389,6 @@ export class EventController {
       return maxIncome;
     }, 0);
 
-    // Todas las posibles entradas y por tipo
     const maxTicketPerType = event.eventTickets.reduce(
       (counts, ticket) => {
         const amount = ticket.amount ?? 0;
@@ -408,7 +399,6 @@ export class EventController {
       { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
     );
 
-    // Entradas emitidas totales y por tipo
     const emmitedticketPerType = event.tickets.reduce(
       (counts, ticket) => {
         counts[ticket.type] = (counts[ticket.type] ?? 0) + 1;
@@ -424,7 +414,6 @@ export class EventController {
 
     const notScanned = emmitedTickets - totalTicketsScanned;
 
-    // Taza de asistencia en SPECTATORS
     const attendancePercent = parseFloat(
       (
         (emmitedticketPerType.SPECTATOR / maxTicketPerType.SPECTATOR) *
@@ -432,7 +421,6 @@ export class EventController {
       ).toFixed(2),
     );
 
-    // Presentismo por hora (flujo de llegada)
     const gteAttendance = new Date(
       gte ?? event.date.setHours(event.date.getHours() - 1),
     );
@@ -449,7 +437,6 @@ export class EventController {
       }
     });
 
-    // Promedio de entradas emitidas por ticket-group.
     const avgAmountPerTicketGroup =
       await this.eventService.getAvgAmountTicketGroupByEventId(event.id);
 
@@ -471,16 +458,6 @@ export class EventController {
       heatMapDates,
     };
   }
-  // TICKETS
-  // Entradas emitidas totales y por tipo ✅
-  // Entradas emitidas / cupo (70% de entradas emitidas sobre el total de entradas disponibles) ✅
-  // Ingresos totales del evento ✅
-  // Ingresos totales del evento VS ingresos máximos posibles. ✅
-  // Tasa de asistencia (entradas vendidas vs personas que asistieron) ✅
-  // No-shows (personas que no asistieron teniendo entrada) ✅ // PUSE SOLO EL NUMERO, NO EL ARRAY DE PERSONAS/TICKETS
-  // Presentismo por hora (flujo de llegada) ✅
-  // Días donde se emitieron más entradas en vista calendario con mapa de calor.
-  // Promedio de entradas emitidas por ticket-group. ✅
 
   @Patch('/:id')
   @ApiOkResponse({
