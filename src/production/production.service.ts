@@ -41,6 +41,18 @@ export class ProductionService {
     }
   }
 
+  async getAll(): Promise<
+    (Production & {
+      administrator: Profile | null;
+    })[]
+  > {
+    return await this.prisma.production.findMany({
+      include: {
+        administrator: true,
+      },
+    });
+  }
+
   async getById(id: string): Promise<
     | (CreateProductionDto & {
         administrator: Profile | null;

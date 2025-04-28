@@ -680,6 +680,10 @@ export default {
         success: 'Rol de producción creado con éxito',
         'group-not-found': 'Grupo de etiquetas no encontrado',
       },
+      'get-all': {
+        success: 'Producciones obtenidas con éxito',
+        'not-found': 'No se encontraron producciones',
+      },
     },
     'production-affiliation-request': {
       create: {

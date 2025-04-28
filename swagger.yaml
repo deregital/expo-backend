@@ -2335,6 +2335,19 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "MercadoPago"
+  /production/all:
+    get:
+      operationId: "ProductionController_getAll"
+      parameters: []
+      responses:
+        200:
+          description: "Producciones obtenidas con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetAllProductionResponseDto"
+      tags:
+        - "Production"
   /production/create:
     post:
       operationId: "ProductionController_create"
@@ -12614,6 +12627,182 @@ components:
     Response:
       type: "object"
       properties: {}
+    GetAllProductionResponseDto:
+      type:
+        - "object"
+      properties:
+        productions:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              name:
+                type:
+                  - "string"
+                minLength: 1
+              administratorId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              administrator:
+                type:
+                  - "object"
+                  - "null"
+                properties:
+                  id:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  shortId:
+                    type:
+                      - "number"
+                  role:
+                    default: "MI_EXPO"
+                    type:
+                      - "string"
+                    enum:
+                      - "USER"
+                      - "ADMIN"
+                      - "FORM"
+                      - "TICKETS"
+                      - "MI_EXPO"
+                  firstTimeMiExpo:
+                    type:
+                      - "boolean"
+                  username:
+                    type:
+                      - "string"
+                      - "null"
+                  password:
+                    type:
+                      - "string"
+                      - "null"
+                  phoneNumber:
+                    type:
+                      - "string"
+                    minLength: 1
+                  isPhoneVerified:
+                    type:
+                      - "boolean"
+                  secondaryPhoneNumber:
+                    type:
+                      - "string"
+                      - "null"
+                  fullName:
+                    type:
+                      - "string"
+                    minLength: 1
+                  firstName:
+                    type:
+                      - "string"
+                      - "null"
+                    minLength: 1
+                  gender:
+                    type:
+                      - "string"
+                      - "null"
+                  birthDate:
+                    type:
+                      - "string"
+                      - "null"
+                  profilePictureUrl:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uri"
+                  instagram:
+                    type:
+                      - "string"
+                      - "null"
+                  mail:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "email"
+                  dni:
+                    type:
+                      - "string"
+                      - "null"
+                  alternativeNames:
+                    type:
+                      - "array"
+                    items:
+                      type:
+                        - "string"
+                  birthLocationId:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uuid"
+                  residenceLocationId:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uuid"
+                  isInTrash:
+                    type:
+                      - "boolean"
+                  movedToTrashDate:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "date-time"
+                  created_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  updated_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "shortId"
+                  - "firstTimeMiExpo"
+                  - "username"
+                  - "password"
+                  - "phoneNumber"
+                  - "isPhoneVerified"
+                  - "secondaryPhoneNumber"
+                  - "fullName"
+                  - "firstName"
+                  - "gender"
+                  - "birthDate"
+                  - "profilePictureUrl"
+                  - "instagram"
+                  - "mail"
+                  - "dni"
+                  - "alternativeNames"
+                  - "birthLocationId"
+                  - "residenceLocationId"
+                  - "isInTrash"
+                  - "movedToTrashDate"
+                  - "created_at"
+                  - "updated_at"
+            required:
+              - "id"
+              - "name"
+              - "administratorId"
+              - "created_at"
+              - "updated_at"
+              - "administrator"
+      required:
+        - "productions"
     CreateProductionDto:
       type:
         - "object"
