@@ -12811,8 +12811,14 @@ components:
           type:
             - "string"
           minLength: 1
+        administratorId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
       required:
         - "name"
+        - "administratorId"
     CreateProductionRoleDto:
       type:
         - "object"

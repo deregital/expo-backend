@@ -3,6 +3,7 @@ import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dt
 
 export const createProductionSchema = productionSchema.pick({
   name: true,
+  administratorId: true,
 });
 
 export class CreateProductionDto extends createZodDtoWithoutDate(
