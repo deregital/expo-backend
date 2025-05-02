@@ -417,26 +417,22 @@ export class EventController {
       ((totalTicketsScanned / emmitedTickets) * 100).toFixed(2),
     );
 
-    const gteAttendance = new Date(
-      gte ?? event.date.setHours(event.date.getHours() - 1),
-    );
-    const lteAttendance = new Date(
-      lte ?? event.date.setHours(event.date.getHours() + 1),
-    );
+    const gteAttendance = new Date(gte || event.startingDate);
+    const lteAttendance = new Date(lte || event.endingDate);
+
     const attendancePerHour = event.tickets
       .filter((ticket) => {
         if (ticket.scannedAt) {
-          const attendaneDate = new Date(ticket.scannedAt!);
+          const attendanceDate = new Date(ticket.scannedAt!);
           if (
-            gteAttendance >= attendaneDate &&
-            attendaneDate <= lteAttendance
+            attendanceDate > gteAttendance &&
+            attendanceDate < lteAttendance
           ) {
             return ticket.scannedAt;
           }
         }
       })
       .map((ticket) => ticket.scannedAt);
-
     const avgAmountPerTicketGroup =
       await this.eventService.getAvgAmountTicketGroupByEventId(event.id);
 
