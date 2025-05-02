@@ -424,7 +424,12 @@ export class EventController {
   ): Promise<z.infer<typeof updateEventResponseSchema>> {
     const event = await this.eventService.findById(id);
 
-    if (event.active || event.tickets.length > 0) {
+    if (
+      (event.active || event.tickets.length > 0) &&
+      updateEventDto.description === undefined &&
+      updateEventDto.bannerUrl === undefined &&
+      updateEventDto.mainPictureUrl === undefined
+    ) {
       throw new ConflictException([
         translate('route.event.update.active-event-not-editable'),
       ]);
@@ -449,7 +454,7 @@ export class EventController {
     let eventTickets: Pick<EventTicket, 'id' | 'amount' | 'price' | 'type'>[] =
       [];
 
-    if (updateEventDto.eventTickets.length > 0) {
+    if (updateEventDto.eventTickets && updateEventDto.eventTickets.length > 0) {
       eventTickets = await this.eventTicketsService.createMany(
         id,
         updateEventDto.eventTickets.map((ticket) => ({
@@ -487,10 +492,10 @@ export class EventController {
     );
     const deletedSubEvents = subEvents.filter(
       (subEvent) =>
-        !updateEventDto.subEvents.some((sub) => sub.id === subEvent.id),
+        !updateEventDto.subEvents?.some((sub) => sub.id === subEvent.id),
     );
 
-    updateEventDto.subEvents.forEach(async (subEvent) => {
+    updateEventDto.subEvents?.forEach(async (subEvent) => {
       let tagGroupSubEventId: string;
       if (subEvents.map((sub) => sub.id).includes(subEvent.id)) {
         // if subEvent already exists, update it

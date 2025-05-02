@@ -42,7 +42,8 @@ export const updateEventSchema = eventSchema
         }),
       ),
     }),
-  );
+  )
+  .partial();
 
 export class UpdateEventDto extends createZodDtoWithoutDate(
   updateEventSchema,
