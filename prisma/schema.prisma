@@ -83,8 +83,8 @@ model Profile {
 
   tickets Ticket[] @relation("PROFILE_X_TICKET")
 
-  productionAdministrated Production?                    @relation("PRODUCTION_X_ADMINISTRATOR")
-  productionRequestsSent  ProductionAffiliationRequest[] @relation("PRODUCTION_AFILIATION_X_PROFILE")
+  productionsAdministrated Production[]                   @relation("PRODUCTION_X_ADMINISTRATOR")
+  productionRequestsSent   ProductionAffiliationRequest[] @relation("PRODUCTION_AFILIATION_X_PROFILE")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -329,7 +329,7 @@ model Production {
 
   name String @unique
 
-  administratorId String?  @unique @map("adminstrator_id")
+  administratorId String?  @map("adminstrator_id")
   administrator   Profile? @relation("PRODUCTION_X_ADMINISTRATOR", fields: [administratorId], references: [id])
 
   events              Event[]                        @relation("EVENT_X_PRODUCTION")

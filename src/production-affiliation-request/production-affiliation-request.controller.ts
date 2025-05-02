@@ -68,7 +68,7 @@ export class ProductionAffiliationRequestController {
     @Body() dto: CreateProductionAffiliationRequestDto,
     @Profile() profile: ProfileWithoutPassword,
   ): Promise<z.infer<typeof createProductionAffiliationRequestResponseSchema>> {
-    if (profile.productionAdministrated !== null) {
+    if (profile.productionsAdministrated.length !== 0) {
       throw new ConflictException([
         translate('route.production-affiliation-request.create.already-admin'),
       ]);

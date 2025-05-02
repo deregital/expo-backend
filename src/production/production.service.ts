@@ -35,6 +35,8 @@ export class ProductionService {
         },
       });
     } catch (error) {
+      console.log(error);
+
       throw new ConflictException([
         translate('route.production.create.already-exists'),
       ]);

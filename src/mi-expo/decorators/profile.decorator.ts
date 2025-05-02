@@ -6,7 +6,7 @@ import { type Request } from 'express';
 import { Production, type Profile as ProfileType } from '~/types/prisma-schema';
 
 export type ProfileWithoutPassword = Omit<ProfileType, 'password'> & {
-  productionAdministrated: Production | null;
+  productionsAdministrated: Production[];
 };
 
 export const Profile = createParamDecoratorWithInjections(
