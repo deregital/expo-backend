@@ -23,7 +23,7 @@ export const getStatisticsByIdResponseSchema = z.object({
   totalTicketsScanned: z.number(),
   notScanned: z.number(),
   attendancePercent: z.number(),
-  attendancePerHour: ticketSchema.array(),
+  attendancePerHour: ticketSchema.shape.scannedAt.array(),
   avgAmountPerTicketGroup: z.number().nullable(),
   heatMapDates: z.date().array(),
 });

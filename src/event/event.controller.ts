@@ -230,8 +230,7 @@ export class EventController {
           const soldTickets = event.tickets.filter(
             (ticket) => ticket.type === type,
           );
-
-          total += soldTickets.length * (eventTicket?.amount ?? 0);
+          total += soldTickets.length * (eventTicket?.price ?? 0);
         }
       }
       return total;
@@ -415,10 +414,7 @@ export class EventController {
     const notScanned = emmitedTickets - totalTicketsScanned;
 
     const attendancePercent = parseFloat(
-      (
-        (emmitedticketPerType.SPECTATOR / maxTicketPerType.SPECTATOR) *
-        100
-      ).toFixed(2),
+      ((totalTicketsScanned / emmitedTickets) * 100).toFixed(2),
     );
 
     const gteAttendance = new Date(
@@ -427,15 +423,19 @@ export class EventController {
     const lteAttendance = new Date(
       lte ?? event.date.setHours(event.date.getHours() + 1),
     );
-    console.log(gteAttendance, lteAttendance);
-    const attendancePerHour = event.tickets.filter((ticket) => {
-      if (!ticket.scannedAt) {
-        const attendaneDate = new Date(ticket.scannedAt!);
-        if (gteAttendance >= attendaneDate && attendaneDate <= lteAttendance) {
-          return ticket.scannedAt;
+    const attendancePerHour = event.tickets
+      .filter((ticket) => {
+        if (ticket.scannedAt) {
+          const attendaneDate = new Date(ticket.scannedAt!);
+          if (
+            gteAttendance >= attendaneDate &&
+            attendaneDate <= lteAttendance
+          ) {
+            return ticket.scannedAt;
+          }
         }
-      }
-    });
+      })
+      .map((ticket) => ticket.scannedAt);
 
     const avgAmountPerTicketGroup =
       await this.eventService.getAvgAmountTicketGroupByEventId(event.id);
