@@ -216,6 +216,12 @@ export class EventController {
   > {
     const events = await this.eventService.getAllEventWithTickets();
 
+    const ticketTypeTranslation: Record<TicketType, string> = {
+      STAFF: translate('prisma.ticketType.STAFF'),
+      PARTICIPANT: translate('prisma.ticketType.PARTICIPANT'),
+      SPECTATOR: translate('prisma.ticketType.SPECTATOR'),
+    };
+
     const totalIncome = events.reduce((total, event) => {
       if (event.tickets) {
         const ticketTypesWithPrice = [
@@ -236,7 +242,7 @@ export class EventController {
       return total;
     }, 0);
 
-    const maxTicketPerTypeAll = events.reduce(
+    const maxTicketPerTypeAllBase = events.reduce(
       (counts, event) => {
         const ticketsCount = event.eventTickets.reduce(
           (counts, ticket) => {
@@ -258,7 +264,14 @@ export class EventController {
       { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
     );
 
-    const emmitedticketPerTypeAll = events.reduce(
+    const maxTicketPerTypeAll: Record<string, number> = Object.fromEntries(
+      Object.entries(maxTicketPerTypeAllBase).map(([key, value]) => [
+        ticketTypeTranslation[key as TicketType],
+        value,
+      ]),
+    );
+
+    const emmitedticketPerTypeAllBase = events.reduce(
       (counts, event) => {
         const ticketsCount = event.tickets.reduce(
           (ticketCount, ticket) => {
@@ -278,9 +291,17 @@ export class EventController {
       { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
     );
 
+    const emmitedticketPerTypeAll: Record<string, number> = Object.fromEntries(
+      Object.entries(emmitedticketPerTypeAllBase).map(([key, value]) => [
+        ticketTypeTranslation[key as TicketType],
+        value,
+      ]),
+    );
+
     const attendancePercent = parseFloat(
       (
-        (emmitedticketPerTypeAll.SPECTATOR / maxTicketPerTypeAll.SPECTATOR) *
+        (emmitedticketPerTypeAllBase.SPECTATOR /
+          maxTicketPerTypeAllBase.SPECTATOR) *
         100
       ).toFixed(2),
     );
@@ -358,6 +379,13 @@ export class EventController {
   ): Promise<z.infer<typeof getStatisticsByIdResponseSchema>> {
     const event = await this.eventService.getEventWithTickets(id);
 
+    const ticketTypeTranslation: Record<TicketType, string> = {
+      STAFF: translate('prisma.ticketType.STAFF'),
+      PARTICIPANT: translate('prisma.ticketType.PARTICIPANT'),
+      SPECTATOR: translate('prisma.ticketType.SPECTATOR'),
+    };
+
+    console.log(ticketTypeTranslation);
     const maxTickets = event.eventTickets.reduce(
       (total, ticket) => (total += ticket.amount ?? 0),
       0,
@@ -388,7 +416,7 @@ export class EventController {
       return maxIncome;
     }, 0);
 
-    const maxTicketPerType = event.eventTickets.reduce(
+    const maxTicketPerTypeBase = event.eventTickets.reduce(
       (counts, ticket) => {
         const amount = ticket.amount ?? 0;
 
@@ -398,12 +426,26 @@ export class EventController {
       { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
     );
 
-    const emmitedticketPerType = event.tickets.reduce(
+    const maxTicketPerType: Record<string, number> = Object.fromEntries(
+      Object.entries(maxTicketPerTypeBase).map(([key, value]) => [
+        ticketTypeTranslation[key as TicketType],
+        value,
+      ]),
+    );
+
+    const emmitedticketPerTypeBase = event.tickets.reduce(
       (counts, ticket) => {
         counts[ticket.type] = (counts[ticket.type] ?? 0) + 1;
         return counts;
       },
       { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
+    );
+
+    const emmitedticketPerType: Record<string, number> = Object.fromEntries(
+      Object.entries(emmitedticketPerTypeBase).map(([key, value]) => [
+        ticketTypeTranslation[key as TicketType],
+        value,
+      ]),
     );
 
     const totalTicketsScanned = event.tickets.reduce(
