@@ -385,7 +385,6 @@ export class EventController {
       SPECTATOR: translate('prisma.ticketType.SPECTATOR'),
     };
 
-    console.log(ticketTypeTranslation);
     const maxTickets = event.eventTickets.reduce(
       (total, ticket) => (total += ticket.amount ?? 0),
       0,
@@ -478,7 +477,23 @@ export class EventController {
     const avgAmountPerTicketGroup =
       await this.eventService.getAvgAmountTicketGroupByEventId(event.id);
 
-    const heatMapDates = event.tickets.map((ticket) => ticket.created_at);
+    const ticketDates = event.tickets.map((ticket) => ticket.created_at);
+
+    const countMap = ticketDates.reduce(
+      (acc: { [key: string]: number }, date) => {
+        const key = date.toISOString().split('T')[0];
+        if (key) {
+          acc[key] = (acc[key] || 0) + 1;
+        }
+        return acc;
+      },
+      {},
+    );
+
+    const heatMapDates = Object.entries(countMap).map(([dateStr, count]) => ({
+      date: dateStr,
+      count,
+    }));
 
     return {
       maxTickets,

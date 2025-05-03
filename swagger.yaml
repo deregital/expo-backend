@@ -6529,8 +6529,17 @@ components:
             - "array"
           items:
             type:
-              - "string"
-            format: "date-time"
+              - "object"
+            properties:
+              date:
+                type:
+                  - "string"
+              count:
+                type:
+                  - "number"
+            required:
+              - "date"
+              - "count"
       required:
         - "maxTickets"
         - "emmitedTickets"
