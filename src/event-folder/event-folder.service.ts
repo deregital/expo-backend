@@ -54,7 +54,7 @@ export class EventFolderService {
           include: {
             subEvents: true,
             supraEvent: true,
-            tags: {
+            profileTags: {
               include: {
                 group: {
                   select: {

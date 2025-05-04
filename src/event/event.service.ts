@@ -63,7 +63,7 @@ export class EventService {
           ? { connect: dto.subEvents.map((subEvent) => ({ id: subEvent.id })) }
           : undefined,
 
-        tags: { connect: dto.tagsId.map((tag) => ({ id: tag })) },
+        profileTags: { connect: dto.tagsId.map((tag) => ({ id: tag })) },
         eventTickets: {
           create: dto.eventTickets.map((ticket) => ({
             amount: ticket.amount,
@@ -80,7 +80,7 @@ export class EventService {
       Event & {
         subEvents: Event[];
         supraEvent: Event | null;
-        tags: (Pick<Tag, 'id' | 'name' | 'type'> & {
+        profileTags: (Pick<Tag, 'id' | 'name' | 'type'> & {
           group: Pick<TagGroup, 'color' | 'isExclusive' | 'name' | 'id'>;
         })[];
         eventTickets: EventTicket[];
@@ -92,7 +92,7 @@ export class EventService {
       include: {
         subEvents: true,
         supraEvent: true,
-        tags: {
+        profileTags: {
           include: {
             group: {
               select: { id: true, color: true, name: true, isExclusive: true },
@@ -123,7 +123,7 @@ export class EventService {
         subEvents: true,
         eventTickets: true,
         supraEvent: true,
-        tags: { include: { group: true } },
+        profileTags: { include: { group: true } },
         tickets: true,
       },
     });
@@ -162,7 +162,7 @@ export class EventService {
             type: ticket.type,
           })),
         },
-        tags: { set: updateEventDto.tagsId.map((tag) => ({ id: tag })) },
+        profileTags: { set: updateEventDto.tagsId.map((tag) => ({ id: tag })) },
         folder: updateEventDto.folderId
           ? { connect: { id: updateEventDto.folderId } }
           : { disconnect: true },
@@ -264,7 +264,7 @@ export class EventService {
       where: {
         active: true,
         endingDate: { gt: new Date() },
-        tags: { some: { id: { in: tagIds } } },
+        profileTags: { some: { id: { in: tagIds } } },
       },
       include: { tickets: true, eventTickets: true },
     });
