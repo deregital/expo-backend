@@ -327,10 +327,10 @@ model EventTicket {
 model Production {
   id String @id @default(uuid())
 
-  name String
+  name String @unique
 
-  adminstratorId String  @map("adminstrator_id")
-  administrator  Profile @relation("PRODUCTION_X_ADMINISTRATOR", fields: [adminstratorId], references: [id])
+  administratorId String?  @map("adminstrator_id")
+  administrator   Profile? @relation("PRODUCTION_X_ADMINISTRATOR", fields: [administratorId], references: [id])
 
   events              Event[]                        @relation("EVENT_X_PRODUCTION")
   affiliationRequests ProductionAffiliationRequest[] @relation("PRODUCTION_AFFILIATION_REQUEST")

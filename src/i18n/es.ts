@@ -24,6 +24,7 @@ export default {
       SPECTATOR: 'Espectador',
       PARTICIPANT: 'Participante',
     },
+    'production-role': 'Roles de producción',
     conflict: `Ya existe un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
     'not-found': `No se encontró un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
   },
@@ -658,6 +659,47 @@ export default {
         error: 'Error al procesar el webhook',
         'signature-not-found': 'Firma no encontrada',
         'invalid-signature': 'Firma inválida',
+      },
+    },
+    production: {
+      create: {
+        success: 'Producción creada con éxito',
+        'already-exists': 'Producción ya existente',
+      },
+      delete: {
+        'event-active': `No se puede eliminar la producción \{\{productionName\}\} porque tiene eventos activos`,
+        'not-found': 'Producción no encontrada',
+        success: 'Producción eliminada con éxito',
+      },
+      update: {
+        success: 'Producción actualizada con éxito',
+        'not-found': 'Producción no encontrada',
+        'already-exists': 'Producción ya existente',
+      },
+      'create-role': {
+        success: 'Rol de producción creado con éxito',
+        'group-not-found': 'Grupo de etiquetas no encontrado',
+      },
+      'get-all': {
+        success: 'Producciones obtenidas con éxito',
+        'not-found': 'No se encontraron producciones',
+      },
+    },
+    'production-affiliation-request': {
+      create: {
+        success: 'Solicitud de afiliación a producción creada con éxito',
+        conflict: 'Error en la creación de la solicitud de afiliación',
+        'already-admin': 'Ya eres administrador de una producción',
+      },
+      update: {
+        success: 'Solicitud de afiliación a producción actualizada con éxito',
+        conflict: 'Error en la actualización de la solicitud de afiliación',
+        'not-found': 'Solicitud de afiliación no encontrada',
+        unauthorized: 'No tienes autorización para actualizar la solicitud',
+      },
+      'find-by-production': {
+        success: 'Solicitud de afiliación a producción obtenida con éxito',
+        'not-found': 'Producción no encontrada',
       },
     },
   },

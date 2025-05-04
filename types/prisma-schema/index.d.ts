@@ -24844,7 +24844,7 @@ export namespace Prisma {
   export type ProductionMinAggregateOutputType = {
     id: string | null;
     name: string | null;
-    adminstratorId: string | null;
+    administratorId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -24852,7 +24852,7 @@ export namespace Prisma {
   export type ProductionMaxAggregateOutputType = {
     id: string | null;
     name: string | null;
-    adminstratorId: string | null;
+    administratorId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -24860,7 +24860,7 @@ export namespace Prisma {
   export type ProductionCountAggregateOutputType = {
     id: number;
     name: number;
-    adminstratorId: number;
+    administratorId: number;
     created_at: number;
     updated_at: number;
     _all: number;
@@ -24869,7 +24869,7 @@ export namespace Prisma {
   export type ProductionMinAggregateInputType = {
     id?: true;
     name?: true;
-    adminstratorId?: true;
+    administratorId?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -24877,7 +24877,7 @@ export namespace Prisma {
   export type ProductionMaxAggregateInputType = {
     id?: true;
     name?: true;
-    adminstratorId?: true;
+    administratorId?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -24885,7 +24885,7 @@ export namespace Prisma {
   export type ProductionCountAggregateInputType = {
     id?: true;
     name?: true;
-    adminstratorId?: true;
+    administratorId?: true;
     created_at?: true;
     updated_at?: true;
     _all?: true;
@@ -24971,7 +24971,7 @@ export namespace Prisma {
   export type ProductionGroupByOutputType = {
     id: string;
     name: string;
-    adminstratorId: string;
+    administratorId: string | null;
     created_at: Date;
     updated_at: Date;
     _count: ProductionCountAggregateOutputType | null;
@@ -24998,10 +24998,10 @@ export namespace Prisma {
     {
       id?: boolean;
       name?: boolean;
-      adminstratorId?: boolean;
+      administratorId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
-      administrator?: boolean | ProfileDefaultArgs<ExtArgs>;
+      administrator?: boolean | Production$administratorArgs<ExtArgs>;
       events?: boolean | Production$eventsArgs<ExtArgs>;
       affiliationRequests?:
         | boolean
@@ -25017,10 +25017,10 @@ export namespace Prisma {
     {
       id?: boolean;
       name?: boolean;
-      adminstratorId?: boolean;
+      administratorId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
-      administrator?: boolean | ProfileDefaultArgs<ExtArgs>;
+      administrator?: boolean | Production$administratorArgs<ExtArgs>;
     },
     ExtArgs['result']['production']
   >;
@@ -25031,10 +25031,10 @@ export namespace Prisma {
     {
       id?: boolean;
       name?: boolean;
-      adminstratorId?: boolean;
+      administratorId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
-      administrator?: boolean | ProfileDefaultArgs<ExtArgs>;
+      administrator?: boolean | Production$administratorArgs<ExtArgs>;
     },
     ExtArgs['result']['production']
   >;
@@ -25042,7 +25042,7 @@ export namespace Prisma {
   export type ProductionSelectScalar = {
     id?: boolean;
     name?: boolean;
-    adminstratorId?: boolean;
+    administratorId?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
   };
@@ -25050,13 +25050,13 @@ export namespace Prisma {
   export type ProductionOmit<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = $Extensions.GetOmit<
-    'id' | 'name' | 'adminstratorId' | 'created_at' | 'updated_at',
+    'id' | 'name' | 'administratorId' | 'created_at' | 'updated_at',
     ExtArgs['result']['production']
   >;
   export type ProductionInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    administrator?: boolean | ProfileDefaultArgs<ExtArgs>;
+    administrator?: boolean | Production$administratorArgs<ExtArgs>;
     events?: boolean | Production$eventsArgs<ExtArgs>;
     affiliationRequests?: boolean | Production$affiliationRequestsArgs<ExtArgs>;
     _count?: boolean | ProductionCountOutputTypeDefaultArgs<ExtArgs>;
@@ -25064,12 +25064,12 @@ export namespace Prisma {
   export type ProductionIncludeCreateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    administrator?: boolean | ProfileDefaultArgs<ExtArgs>;
+    administrator?: boolean | Production$administratorArgs<ExtArgs>;
   };
   export type ProductionIncludeUpdateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
-    administrator?: boolean | ProfileDefaultArgs<ExtArgs>;
+    administrator?: boolean | Production$administratorArgs<ExtArgs>;
   };
 
   export type $ProductionPayload<
@@ -25077,7 +25077,7 @@ export namespace Prisma {
   > = {
     name: 'Production';
     objects: {
-      administrator: Prisma.$ProfilePayload<ExtArgs>;
+      administrator: Prisma.$ProfilePayload<ExtArgs> | null;
       events: Prisma.$EventPayload<ExtArgs>[];
       affiliationRequests: Prisma.$ProductionAffiliationRequestPayload<ExtArgs>[];
     };
@@ -25085,7 +25085,7 @@ export namespace Prisma {
       {
         id: string;
         name: string;
-        adminstratorId: string;
+        administratorId: string | null;
         created_at: Date;
         updated_at: Date;
       },
@@ -25638,17 +25638,16 @@ export namespace Prisma {
     ClientOptions = {},
   > extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
-    administrator<T extends ProfileDefaultArgs<ExtArgs> = {}>(
-      args?: Subset<T, ProfileDefaultArgs<ExtArgs>>,
+    administrator<T extends Production$administratorArgs<ExtArgs> = {}>(
+      args?: Subset<T, Production$administratorArgs<ExtArgs>>,
     ): Prisma__ProfileClient<
-      | $Result.GetResult<
-          Prisma.$ProfilePayload<ExtArgs>,
-          T,
-          'findUniqueOrThrow',
-          ClientOptions
-        >
-      | Null,
-      Null,
+      $Result.GetResult<
+        Prisma.$ProfilePayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        ClientOptions
+      > | null,
+      null,
       ExtArgs,
       ClientOptions
     >;
@@ -25718,7 +25717,7 @@ export namespace Prisma {
   interface ProductionFieldRefs {
     readonly id: FieldRef<'Production', 'String'>;
     readonly name: FieldRef<'Production', 'String'>;
-    readonly adminstratorId: FieldRef<'Production', 'String'>;
+    readonly administratorId: FieldRef<'Production', 'String'>;
     readonly created_at: FieldRef<'Production', 'DateTime'>;
     readonly updated_at: FieldRef<'Production', 'DateTime'>;
   }
@@ -26153,6 +26152,27 @@ export namespace Prisma {
      * Limit how many Productions to delete.
      */
     limit?: number;
+  };
+
+  /**
+   * Production.administrator
+   */
+  export type Production$administratorArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null;
+    where?: ProfileWhereInput;
   };
 
   /**
@@ -27913,7 +27933,7 @@ export namespace Prisma {
   export const ProductionScalarFieldEnum: {
     id: 'id';
     name: 'name';
-    adminstratorId: 'adminstratorId';
+    administratorId: 'administratorId';
     created_at: 'created_at';
     updated_at: 'updated_at';
   };
@@ -29588,10 +29608,13 @@ export namespace Prisma {
     NOT?: ProductionWhereInput | ProductionWhereInput[];
     id?: StringFilter<'Production'> | string;
     name?: StringFilter<'Production'> | string;
-    adminstratorId?: StringFilter<'Production'> | string;
+    administratorId?: StringNullableFilter<'Production'> | string | null;
     created_at?: DateTimeFilter<'Production'> | Date | string;
     updated_at?: DateTimeFilter<'Production'> | Date | string;
-    administrator?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>;
+    administrator?: XOR<
+      ProfileNullableScalarRelationFilter,
+      ProfileWhereInput
+    > | null;
     events?: EventListRelationFilter;
     affiliationRequests?: ProductionAffiliationRequestListRelationFilter;
   };
@@ -29599,7 +29622,7 @@ export namespace Prisma {
   export type ProductionOrderByWithRelationInput = {
     id?: SortOrder;
     name?: SortOrder;
-    adminstratorId?: SortOrder;
+    administratorId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     administrator?: ProfileOrderByWithRelationInput;
@@ -29610,24 +29633,27 @@ export namespace Prisma {
   export type ProductionWhereUniqueInput = Prisma.AtLeast<
     {
       id?: string;
+      name?: string;
       AND?: ProductionWhereInput | ProductionWhereInput[];
       OR?: ProductionWhereInput[];
       NOT?: ProductionWhereInput | ProductionWhereInput[];
-      name?: StringFilter<'Production'> | string;
-      adminstratorId?: StringFilter<'Production'> | string;
+      administratorId?: StringNullableFilter<'Production'> | string | null;
       created_at?: DateTimeFilter<'Production'> | Date | string;
       updated_at?: DateTimeFilter<'Production'> | Date | string;
-      administrator?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>;
+      administrator?: XOR<
+        ProfileNullableScalarRelationFilter,
+        ProfileWhereInput
+      > | null;
       events?: EventListRelationFilter;
       affiliationRequests?: ProductionAffiliationRequestListRelationFilter;
     },
-    'id'
+    'id' | 'name'
   >;
 
   export type ProductionOrderByWithAggregationInput = {
     id?: SortOrder;
     name?: SortOrder;
-    adminstratorId?: SortOrder;
+    administratorId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     _count?: ProductionCountOrderByAggregateInput;
@@ -29645,7 +29671,10 @@ export namespace Prisma {
       | ProductionScalarWhereWithAggregatesInput[];
     id?: StringWithAggregatesFilter<'Production'> | string;
     name?: StringWithAggregatesFilter<'Production'> | string;
-    adminstratorId?: StringWithAggregatesFilter<'Production'> | string;
+    administratorId?:
+      | StringNullableWithAggregatesFilter<'Production'>
+      | string
+      | null;
     created_at?: DateTimeWithAggregatesFilter<'Production'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Production'> | Date | string;
   };
@@ -31197,7 +31226,7 @@ export namespace Prisma {
     name: string;
     created_at?: Date | string;
     updated_at?: Date | string;
-    administrator: ProfileCreateNestedOneWithoutProductionsAdministratedInput;
+    administrator?: ProfileCreateNestedOneWithoutProductionsAdministratedInput;
     events?: EventCreateNestedManyWithoutProductionsInput;
     affiliationRequests?: ProductionAffiliationRequestCreateNestedManyWithoutProductionInput;
   };
@@ -31205,7 +31234,7 @@ export namespace Prisma {
   export type ProductionUncheckedCreateInput = {
     id?: string;
     name: string;
-    adminstratorId: string;
+    administratorId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     events?: EventUncheckedCreateNestedManyWithoutProductionsInput;
@@ -31217,7 +31246,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    administrator?: ProfileUpdateOneRequiredWithoutProductionsAdministratedNestedInput;
+    administrator?: ProfileUpdateOneWithoutProductionsAdministratedNestedInput;
     events?: EventUpdateManyWithoutProductionsNestedInput;
     affiliationRequests?: ProductionAffiliationRequestUpdateManyWithoutProductionNestedInput;
   };
@@ -31225,7 +31254,7 @@ export namespace Prisma {
   export type ProductionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
-    adminstratorId?: StringFieldUpdateOperationsInput | string;
+    administratorId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     events?: EventUncheckedUpdateManyWithoutProductionsNestedInput;
@@ -31235,7 +31264,7 @@ export namespace Prisma {
   export type ProductionCreateManyInput = {
     id?: string;
     name: string;
-    adminstratorId: string;
+    administratorId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -31250,7 +31279,7 @@ export namespace Prisma {
   export type ProductionUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
-    adminstratorId?: StringFieldUpdateOperationsInput | string;
+    administratorId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -32591,7 +32620,7 @@ export namespace Prisma {
   export type ProductionCountOrderByAggregateInput = {
     id?: SortOrder;
     name?: SortOrder;
-    adminstratorId?: SortOrder;
+    administratorId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -32599,7 +32628,7 @@ export namespace Prisma {
   export type ProductionMaxOrderByAggregateInput = {
     id?: SortOrder;
     name?: SortOrder;
-    adminstratorId?: SortOrder;
+    administratorId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -32607,7 +32636,7 @@ export namespace Prisma {
   export type ProductionMinOrderByAggregateInput = {
     id?: SortOrder;
     name?: SortOrder;
-    adminstratorId?: SortOrder;
+    administratorId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -35788,23 +35817,24 @@ export namespace Prisma {
         | ProductionAffiliationRequestWhereUniqueInput[];
     };
 
-  export type ProfileUpdateOneRequiredWithoutProductionsAdministratedNestedInput =
-    {
-      create?: XOR<
-        ProfileCreateWithoutProductionsAdministratedInput,
-        ProfileUncheckedCreateWithoutProductionsAdministratedInput
-      >;
-      connectOrCreate?: ProfileCreateOrConnectWithoutProductionsAdministratedInput;
-      upsert?: ProfileUpsertWithoutProductionsAdministratedInput;
-      connect?: ProfileWhereUniqueInput;
-      update?: XOR<
-        XOR<
-          ProfileUpdateToOneWithWhereWithoutProductionsAdministratedInput,
-          ProfileUpdateWithoutProductionsAdministratedInput
-        >,
-        ProfileUncheckedUpdateWithoutProductionsAdministratedInput
-      >;
-    };
+  export type ProfileUpdateOneWithoutProductionsAdministratedNestedInput = {
+    create?: XOR<
+      ProfileCreateWithoutProductionsAdministratedInput,
+      ProfileUncheckedCreateWithoutProductionsAdministratedInput
+    >;
+    connectOrCreate?: ProfileCreateOrConnectWithoutProductionsAdministratedInput;
+    upsert?: ProfileUpsertWithoutProductionsAdministratedInput;
+    disconnect?: ProfileWhereInput | boolean;
+    delete?: ProfileWhereInput | boolean;
+    connect?: ProfileWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        ProfileUpdateToOneWithWhereWithoutProductionsAdministratedInput,
+        ProfileUpdateWithoutProductionsAdministratedInput
+      >,
+      ProfileUncheckedUpdateWithoutProductionsAdministratedInput
+    >;
+  };
 
   export type EventUpdateManyWithoutProductionsNestedInput = {
     create?:
@@ -37395,7 +37425,7 @@ export namespace Prisma {
     NOT?: ProductionScalarWhereInput | ProductionScalarWhereInput[];
     id?: StringFilter<'Production'> | string;
     name?: StringFilter<'Production'> | string;
-    adminstratorId?: StringFilter<'Production'> | string;
+    administratorId?: StringNullableFilter<'Production'> | string | null;
     created_at?: DateTimeFilter<'Production'> | Date | string;
     updated_at?: DateTimeFilter<'Production'> | Date | string;
   };
@@ -39396,14 +39426,14 @@ export namespace Prisma {
     name: string;
     created_at?: Date | string;
     updated_at?: Date | string;
-    administrator: ProfileCreateNestedOneWithoutProductionsAdministratedInput;
+    administrator?: ProfileCreateNestedOneWithoutProductionsAdministratedInput;
     affiliationRequests?: ProductionAffiliationRequestCreateNestedManyWithoutProductionInput;
   };
 
   export type ProductionUncheckedCreateWithoutEventsInput = {
     id?: string;
     name: string;
-    adminstratorId: string;
+    administratorId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     affiliationRequests?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProductionInput;
@@ -41175,14 +41205,14 @@ export namespace Prisma {
     name: string;
     created_at?: Date | string;
     updated_at?: Date | string;
-    administrator: ProfileCreateNestedOneWithoutProductionsAdministratedInput;
+    administrator?: ProfileCreateNestedOneWithoutProductionsAdministratedInput;
     events?: EventCreateNestedManyWithoutProductionsInput;
   };
 
   export type ProductionUncheckedCreateWithoutAffiliationRequestsInput = {
     id?: string;
     name: string;
-    adminstratorId: string;
+    administratorId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     events?: EventUncheckedCreateNestedManyWithoutProductionsInput;
@@ -41295,14 +41325,14 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    administrator?: ProfileUpdateOneRequiredWithoutProductionsAdministratedNestedInput;
+    administrator?: ProfileUpdateOneWithoutProductionsAdministratedNestedInput;
     events?: EventUpdateManyWithoutProductionsNestedInput;
   };
 
   export type ProductionUncheckedUpdateWithoutAffiliationRequestsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
-    adminstratorId?: StringFieldUpdateOperationsInput | string;
+    administratorId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     events?: EventUncheckedUpdateManyWithoutProductionsNestedInput;
@@ -42926,14 +42956,14 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    administrator?: ProfileUpdateOneRequiredWithoutProductionsAdministratedNestedInput;
+    administrator?: ProfileUpdateOneWithoutProductionsAdministratedNestedInput;
     affiliationRequests?: ProductionAffiliationRequestUpdateManyWithoutProductionNestedInput;
   };
 
   export type ProductionUncheckedUpdateWithoutEventsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
-    adminstratorId?: StringFieldUpdateOperationsInput | string;
+    administratorId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     affiliationRequests?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProductionNestedInput;
@@ -42942,7 +42972,7 @@ export namespace Prisma {
   export type ProductionUncheckedUpdateManyWithoutEventsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
-    adminstratorId?: StringFieldUpdateOperationsInput | string;
+    administratorId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };

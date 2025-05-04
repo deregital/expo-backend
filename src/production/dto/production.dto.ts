@@ -9,7 +9,7 @@ export const productionSchema = z.object({
   name: z.string().min(1, {
     message: translate('model.production.name.min'),
   }),
-  administratorId: profileSchema.shape.id,
+  administratorId: profileSchema.shape.id.nullable(),
 
   created_at: z.date(),
   updated_at: z.date(),
