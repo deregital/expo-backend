@@ -149,6 +149,29 @@ export class TicketService {
     return tickets;
   }
 
+  async getEmailsByTicketsPurchased(): Promise<
+    Array<{ mail: string; ticketsPurchased: number }>
+  > {
+    const query = await this.prisma.ticket.groupBy({
+      by: ['mail'],
+      _count: {
+        mail: true,
+      },
+      orderBy: {
+        _count: {
+          mail: 'desc',
+        },
+      },
+    });
+
+    const emailByPurchasedTickets = query.map((item) => ({
+      mail: item.mail,
+      ticketsPurchased: item._count.mail,
+    }));
+
+    return emailByPurchasedTickets;
+  }
+
   async update(
     id: string,
     dto: UpdateTicketDto,

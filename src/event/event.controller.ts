@@ -38,6 +38,7 @@ import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
 import { TicketGroupService } from '@/ticket-group/ticket-group.service';
+import { TicketService } from '@/ticket/ticket.service';
 import {
   Body,
   ConflictException,
@@ -48,6 +49,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -58,7 +60,22 @@ import {
   ApiOkResponse,
 } from '@nestjs/swagger';
 import z from 'zod';
-import { Event, EventTicket, Role, Tag, TagGroup } from '~/types/prisma-schema';
+import {
+  Event,
+  EventTicket,
+  Role,
+  Tag,
+  TagGroup,
+  TicketType,
+} from '~/types/prisma-schema';
+import {
+  GetAllStatisticsResponseDto,
+  getAllStatisticsResponseSchema,
+} from './dto/get-all-statistics.dto';
+import {
+  GetStatisticsByIdResponseDto,
+  getStatisticsByIdResponseSchema,
+} from './dto/get-statistics-by-id-event.dto';
 
 @Roles(Role.ADMIN, Role.USER)
 @UseGuards(JwtGuard, RoleGuard)
@@ -71,6 +88,7 @@ export class EventController {
     private readonly tagService: TagService,
     private readonly eventTicketsService: EventTicketService,
     private readonly ticketGroupService: TicketGroupService,
+    private readonly ticketService: TicketService,
   ) {}
 
   @ApiCreatedResponse({
@@ -187,6 +205,146 @@ export class EventController {
     return await this.eventService.findActive();
   }
 
+  @Roles(Role.ADMIN)
+  @Get('/statistics')
+  @ApiOkResponse({
+    description: translate('route.event.get-statistics.success'),
+    type: GetAllStatisticsResponseDto,
+  })
+  async getStatistics(): Promise<
+    z.infer<typeof getAllStatisticsResponseSchema>
+  > {
+    const events = await this.eventService.getAllEventWithTickets();
+
+    const ticketTypeTranslation: Record<TicketType, string> = {
+      STAFF: translate('prisma.ticketType.STAFF'),
+      PARTICIPANT: translate('prisma.ticketType.PARTICIPANT'),
+      SPECTATOR: translate('prisma.ticketType.SPECTATOR'),
+    };
+
+    const totalIncome = events.reduce((total, event) => {
+      if (event.tickets) {
+        const ticketTypesWithPrice = [
+          TicketType.SPECTATOR,
+          TicketType.PARTICIPANT,
+        ];
+
+        for (const type of ticketTypesWithPrice) {
+          const eventTicket = event.eventTickets.find(
+            (ticket) => ticket.type === type,
+          );
+          const soldTickets = event.tickets.filter(
+            (ticket) => ticket.type === type,
+          );
+          total += soldTickets.length * (eventTicket?.price ?? 0);
+        }
+      }
+      return total;
+    }, 0);
+
+    const maxTicketPerTypeAllBase = events.reduce(
+      (counts, event) => {
+        const ticketsCount = event.eventTickets.reduce(
+          (counts, ticket) => {
+            const amount = ticket.amount ?? 0;
+
+            counts[ticket.type] = (counts[ticket.type] ?? 0) + amount;
+            return counts;
+          },
+          { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<
+            TicketType,
+            number
+          >,
+        );
+        counts.STAFF += ticketsCount.STAFF ?? 0;
+        counts.PARTICIPANT += ticketsCount.PARTICIPANT ?? 0;
+        counts.SPECTATOR += ticketsCount.SPECTATOR ?? 0;
+        return counts;
+      },
+      { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
+    );
+
+    const maxTicketPerTypeAll: Record<string, number> = Object.fromEntries(
+      Object.entries(maxTicketPerTypeAllBase).map(([key, value]) => [
+        ticketTypeTranslation[key as TicketType],
+        value,
+      ]),
+    );
+
+    const emmitedticketPerTypeAllBase = events.reduce(
+      (counts, event) => {
+        const ticketsCount = event.tickets.reduce(
+          (ticketCount, ticket) => {
+            ticketCount[ticket.type] = (ticketCount[ticket.type] ?? 0) + 1;
+            return ticketCount;
+          },
+          { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<
+            TicketType,
+            number
+          >,
+        );
+        counts.STAFF += ticketsCount.STAFF ?? 0;
+        counts.PARTICIPANT += ticketsCount.PARTICIPANT ?? 0;
+        counts.SPECTATOR += ticketsCount.SPECTATOR ?? 0;
+        return counts;
+      },
+      { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
+    );
+
+    const emmitedticketPerTypeAll: Record<string, number> = Object.fromEntries(
+      Object.entries(emmitedticketPerTypeAllBase).map(([key, value]) => [
+        ticketTypeTranslation[key as TicketType],
+        value,
+      ]),
+    );
+
+    const attendancePercent = parseFloat(
+      (
+        (emmitedticketPerTypeAllBase.SPECTATOR /
+          maxTicketPerTypeAllBase.SPECTATOR) *
+        100
+      ).toFixed(2),
+    );
+
+    const emailByPurchasedTickets =
+      await this.ticketService.getEmailsByTicketsPurchased();
+
+    const eventDataIndividual = events.map((event) => {
+      const spectatorEventTicket = event.eventTickets.filter(
+        (ticket) => ticket.type === TicketType.SPECTATOR,
+      );
+      const spectatorTicketsSold = event.tickets.filter(
+        (ticket) => ticket.type === TicketType.SPECTATOR,
+      );
+
+      const purchasePercent = parseFloat(
+        (
+          (spectatorTicketsSold.length /
+            (spectatorEventTicket[0]?.amount ?? 0)) *
+          100
+        ).toFixed(2),
+      );
+
+      return {
+        id: event.id,
+        name: event.name,
+        price: spectatorEventTicket[0]?.price ?? null,
+        purchasePercent,
+        spectatorEventTicket: spectatorEventTicket[0]?.amount ?? null,
+        spectatorTicketsSold: spectatorTicketsSold.length,
+      };
+    });
+
+    return {
+      totalIncome,
+      emailByPurchasedTickets,
+      emmitedticketPerTypeAll,
+      attendancePercent: isNaN(attendancePercent) ? 0 : attendancePercent,
+      maxTicketPerTypeAll,
+      eventDataIndividual,
+    };
+  }
+
   @Roles(Role.TICKETS, Role.ADMIN, Role.USER)
   @Get('/:id')
   @ApiOkResponse({
@@ -202,6 +360,156 @@ export class EventController {
   ): Promise<z.infer<typeof getByIdEventResponseSchema>> {
     await this.ticketGroupService.deleteBookedTicketsGroup(id);
     return await this.eventService.findById(id);
+  }
+
+  @Roles(Role.ADMIN)
+  @Get('/:id/statistics')
+  @ApiOkResponse({
+    description: translate('route.event.get-statistics-by-id.success'),
+    type: GetStatisticsByIdResponseDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.event.get-statistics-by-id.not-found'),
+    type: ErrorDto,
+  })
+  async getStatisticsById(
+    @Param('id', new ExistingRecord('event')) id: string,
+    @Query('gte') gte: string,
+    @Query('lte') lte: string,
+  ): Promise<z.infer<typeof getStatisticsByIdResponseSchema>> {
+    const event = await this.eventService.getEventWithTickets(id);
+
+    const ticketTypeTranslation: Record<TicketType, string> = {
+      STAFF: translate('prisma.ticketType.STAFF'),
+      PARTICIPANT: translate('prisma.ticketType.PARTICIPANT'),
+      SPECTATOR: translate('prisma.ticketType.SPECTATOR'),
+    };
+
+    const maxTickets = event.eventTickets.reduce(
+      (total, ticket) => (total += ticket.amount ?? 0),
+      0,
+    );
+
+    const spectatorTicket = event.eventTickets.find(
+      (ticket) => ticket.type === TicketType.SPECTATOR,
+    );
+
+    const emmitedTickets = event.tickets.length;
+
+    const emittedTicketsPercent = parseFloat(
+      ((event.tickets.length / maxTickets) * 100).toFixed(2),
+    );
+
+    const totalIncome = event.tickets.reduce((income, ticket) => {
+      if (ticket.type !== TicketType.STAFF) {
+        const price = spectatorTicket?.price ?? 0;
+        income += price;
+      }
+      return income;
+    }, 0);
+
+    const maxTotalIncome = event.eventTickets.reduce((maxIncome, ticket) => {
+      const price = ticket.price ?? 0;
+      const amount = ticket.amount ?? 1;
+      maxIncome += price * amount;
+      return maxIncome;
+    }, 0);
+
+    const maxTicketPerTypeBase = event.eventTickets.reduce(
+      (counts, ticket) => {
+        const amount = ticket.amount ?? 0;
+
+        counts[ticket.type] = (counts[ticket.type] ?? 0) + amount;
+        return counts;
+      },
+      { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
+    );
+
+    const maxTicketPerType: Record<string, number> = Object.fromEntries(
+      Object.entries(maxTicketPerTypeBase).map(([key, value]) => [
+        ticketTypeTranslation[key as TicketType],
+        value,
+      ]),
+    );
+
+    const emmitedticketPerTypeBase = event.tickets.reduce(
+      (counts, ticket) => {
+        counts[ticket.type] = (counts[ticket.type] ?? 0) + 1;
+        return counts;
+      },
+      { STAFF: 0, PARTICIPANT: 0, SPECTATOR: 0 } as Record<TicketType, number>,
+    );
+
+    const emmitedticketPerType: Record<string, number> = Object.fromEntries(
+      Object.entries(emmitedticketPerTypeBase).map(([key, value]) => [
+        ticketTypeTranslation[key as TicketType],
+        value,
+      ]),
+    );
+
+    const totalTicketsScanned = event.tickets.reduce(
+      (totalTickets, ticket) => (totalTickets += ticket.scanned ? 1 : 0),
+      0,
+    );
+
+    const notScanned = emmitedTickets - totalTicketsScanned;
+
+    const attendancePercent = parseFloat(
+      ((totalTicketsScanned / emmitedTickets) * 100).toFixed(2),
+    );
+
+    const gteAttendance = new Date(gte || event.startingDate);
+    const lteAttendance = new Date(lte || event.endingDate);
+
+    const attendancePerHour = event.tickets
+      .filter((ticket) => {
+        if (ticket.scannedAt) {
+          const attendanceDate = new Date(ticket.scannedAt!);
+          if (
+            attendanceDate > gteAttendance &&
+            attendanceDate < lteAttendance
+          ) {
+            return ticket.scannedAt;
+          }
+        }
+      })
+      .map((ticket) => ticket.scannedAt);
+    const avgAmountPerTicketGroup =
+      await this.eventService.getAvgAmountTicketGroupByEventId(event.id);
+
+    const ticketDates = event.tickets.map((ticket) => ticket.created_at);
+
+    const countMap = ticketDates.reduce(
+      (acc: { [key: string]: number }, date) => {
+        const key = date.toISOString().split('T')[0];
+        if (key) {
+          acc[key] = (acc[key] || 0) + 1;
+        }
+        return acc;
+      },
+      {},
+    );
+
+    const heatMapDates = Object.entries(countMap).map(([dateStr, count]) => ({
+      date: dateStr,
+      count,
+    }));
+
+    return {
+      maxTickets,
+      emmitedTickets,
+      emittedTicketsPercent,
+      emmitedticketPerType,
+      totalIncome,
+      maxTotalIncome,
+      maxTicketPerType,
+      totalTicketsScanned,
+      notScanned,
+      attendancePercent,
+      attendancePerHour,
+      avgAmountPerTicketGroup,
+      heatMapDates,
+    };
   }
 
   @Patch('/:id')

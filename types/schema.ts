@@ -564,6 +564,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/event/statistics': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['EventController_getStatistics'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/event/{id}': {
     parameters: {
       query?: never;
@@ -578,6 +594,22 @@ export interface paths {
     options?: never;
     head?: never;
     patch: operations['EventController_update'];
+    trace?: never;
+  };
+  '/event/{id}/statistics': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['EventController_getStatisticsById'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
     trace?: never;
   };
   '/event/toggle-active/{id}': {
@@ -2561,6 +2593,30 @@ export interface components {
         }[];
       }[];
     };
+    GetAllStatisticsResponseDto: {
+      totalIncome: number;
+      emailByPurchasedTickets: {
+        /** Format: email */
+        mail: string;
+        ticketsPurchased: number;
+      }[];
+      attendancePercent: number;
+      maxTicketPerTypeAll: {
+        [key: string]: number | undefined;
+      };
+      emmitedticketPerTypeAll: {
+        [key: string]: number | undefined;
+      };
+      eventDataIndividual: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        price: number | null;
+        purchasePercent: number;
+        spectatorEventTicket: number | null;
+        spectatorTicketsSold: number;
+      }[];
+    };
     GetByIdEventResponseDto: {
       /** Format: uuid */
       id: string;
@@ -2752,6 +2808,28 @@ export interface components {
           updated_at: string;
         };
       };
+    };
+    GetStatisticsByIdResponseDto: {
+      maxTickets: number;
+      emmitedTickets: number;
+      emittedTicketsPercent: number;
+      emmitedticketPerType: {
+        [key: string]: number | undefined;
+      };
+      totalIncome: number;
+      maxTotalIncome: number;
+      maxTicketPerType: {
+        [key: string]: number | undefined;
+      };
+      totalTicketsScanned: number;
+      notScanned: number;
+      attendancePercent: number;
+      attendancePerHour: (string | null)[];
+      avgAmountPerTicketGroup: number | null;
+      heatMapDates: {
+        date: string;
+        count: number;
+      }[];
     };
     UpdateEventDto: {
       name: string;
@@ -5670,6 +5748,26 @@ export interface operations {
       };
     };
   };
+  EventController_getStatistics: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Estadisticas obtenidas con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetAllStatisticsResponseDto'];
+        };
+      };
+    };
+  };
   EventController_findById: {
     parameters: {
       query?: never;
@@ -5767,6 +5865,40 @@ export interface operations {
       };
       /** @description Evento activo no editable */
       409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  EventController_getStatisticsById: {
+    parameters: {
+      query: {
+        gte: string;
+        lte: string;
+      };
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Estadisticas del evento obtenidas con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetStatisticsByIdResponseDto'];
+        };
+      };
+      /** @description Evento no encontrado */
+      404: {
         headers: {
           [name: string]: unknown;
         };
