@@ -23,9 +23,14 @@ export const getStatisticsByIdResponseSchema = z.object({
   totalTicketsScanned: z.number(),
   notScanned: z.number(),
   attendancePercent: z.number(),
-  attendancePerHour: ticketSchema.array(),
+  attendancePerHour: ticketSchema.shape.scannedAt.array(),
   avgAmountPerTicketGroup: z.number().nullable(),
-  heatMapDates: z.date().array(),
+  heatMapDates: z
+    .object({
+      date: z.string().date(),
+      count: z.number(),
+    })
+    .array(),
 });
 
 export class GetStatisticsByIdResponseDto extends createZodDtoWithoutDate(

@@ -6517,74 +6517,9 @@ components:
             - "array"
           items:
             type:
-              - "object"
-            properties:
-              id:
-                type:
-                  - "string"
-                format: "uuid"
-              eventId:
-                type:
-                  - "string"
-                format: "uuid"
-              type:
-                type:
-                  - "string"
-                enum:
-                  - "PARTICIPANT"
-                  - "STAFF"
-                  - "SPECTATOR"
-              fullName:
-                type:
-                  - "string"
-                minLength: 1
-              mail:
-                type:
-                  - "string"
-                format: "email"
-              dni:
-                type:
-                  - "string"
-                minLength: 1
-              seat:
-                type:
-                  - "number"
-                  - "null"
-                minimum: 1
-              scanned:
-                type:
-                  - "boolean"
-              scannedAt:
-                type:
-                  - "string"
-                  - "null"
-                format: "date-time"
-              ticketGroupId:
-                type:
-                  - "string"
-                  - "null"
-                format: "uuid"
-              created_at:
-                type:
-                  - "string"
-                format: "date-time"
-              updated_at:
-                type:
-                  - "string"
-                format: "date-time"
-            required:
-              - "id"
-              - "eventId"
-              - "type"
-              - "fullName"
-              - "mail"
-              - "dni"
-              - "seat"
-              - "scanned"
-              - "scannedAt"
-              - "ticketGroupId"
-              - "created_at"
-              - "updated_at"
+              - "string"
+              - "null"
+            format: "date-time"
         avgAmountPerTicketGroup:
           type:
             - "number"
@@ -6594,8 +6529,17 @@ components:
             - "array"
           items:
             type:
-              - "string"
-            format: "date-time"
+              - "object"
+            properties:
+              date:
+                type:
+                  - "string"
+              count:
+                type:
+                  - "number"
+            required:
+              - "date"
+              - "count"
       required:
         - "maxTickets"
         - "emmitedTickets"
