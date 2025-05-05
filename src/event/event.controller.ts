@@ -509,7 +509,7 @@ export class EventController {
         await this.updateEventTags({
           assistedTagId: inputSubEvent.tagAssistedId,
           confirmedTagId: inputSubEvent.tagConfirmedId,
-          eventName: subEvent.name,
+          eventName: subEvent.name ?? '',
           groupId: inputSubEvent.tagAssisted.groupId,
         });
 
@@ -519,19 +519,24 @@ export class EventController {
         const tagGroupSubEvent = await this.tagGroupService.create({
           color: '#666666',
           isExclusive: true,
-          name: subEvent.name,
+          name: subEvent.name ?? '',
         });
         tagGroupSubEventId = tagGroupSubEvent.id;
       }
 
-      const newDate = new Date(subEvent.date);
+      const newDate = new Date(subEvent.date ?? '');
 
       await this.eventService.upsert({
         event: {
           ...subEvent,
           date: newDate,
-          startingDate: new Date(subEvent.startingDate),
-          endingDate: new Date(subEvent.endingDate),
+          startingDate: new Date(subEvent.startingDate ?? ''),
+          endingDate: new Date(subEvent.endingDate ?? ''),
+          location: subEvent.location ?? '',
+          name: subEvent.name ?? '',
+          description: subEvent.description ?? null,
+          bannerUrl: subEvent.bannerUrl ?? null,
+          mainPictureUrl: subEvent.mainPictureUrl ?? null,
         },
         id: subEvent.id,
         supraEventId: updatedEvent.id,

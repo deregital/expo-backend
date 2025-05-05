@@ -32,14 +32,17 @@ export const updateEventSchema = eventSchema
             mainPictureUrl: true,
             description: true,
           })
+          .partial()
           .extend({
             id: eventSchema.shape.id.or(z.literal('')),
           }),
       ),
       eventTickets: z.array(
-        eventTicketsSchema.omit({
-          id: true,
-        }),
+        eventTicketsSchema
+          .omit({
+            id: true,
+          })
+          .partial(),
       ),
     }),
   )
