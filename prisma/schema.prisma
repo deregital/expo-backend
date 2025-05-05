@@ -84,6 +84,7 @@ model Profile {
   tickets Ticket[] @relation("PROFILE_X_TICKET")
 
   productionsAdministrated Production[]                   @relation("PRODUCTION_X_ADMINISTRATOR")
+  productionsParticipated  Production[]                   @relation("PRODUCTION_X_PARTICIPANT")
   productionRequestsSent   ProductionAffiliationRequest[] @relation("PRODUCTION_AFILIATION_X_PROFILE")
 
   created_at DateTime @default(now())
@@ -332,6 +333,7 @@ model Production {
   administratorId String?  @map("adminstrator_id")
   administrator   Profile? @relation("PRODUCTION_X_ADMINISTRATOR", fields: [administratorId], references: [id])
 
+  participants        Profile[]                      @relation("PRODUCTION_X_PARTICIPANT")
   events              Event[]                        @relation("EVENT_X_PRODUCTION")
   affiliationRequests ProductionAffiliationRequest[] @relation("PRODUCTION_AFFILIATION_REQUEST")
 

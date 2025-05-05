@@ -88,4 +88,25 @@ export class ProductionService {
       data: production,
     });
   }
+
+  async addParticipant(
+    productionId: string,
+    profileId: string,
+  ): Promise<
+    Production & {
+      participants: Profile[];
+    }
+  > {
+    return await this.prisma.production.update({
+      where: { id: productionId },
+      data: {
+        participants: {
+          connect: { id: profileId },
+        },
+      },
+      include: {
+        participants: true,
+      },
+    });
+  }
 }

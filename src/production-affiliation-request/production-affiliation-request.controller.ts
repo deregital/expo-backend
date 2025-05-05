@@ -14,6 +14,7 @@ import {
   UpdateProductionAffiliationRequestResponseDto,
   updateProductionAffiliationRequestResponseSchema,
 } from '@/production-affiliation-request/dto/update-production-affiliation-request.dto';
+import { ProductionService } from '@/production/production.service';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import {
@@ -48,6 +49,7 @@ import { ProductionAffiliationRequestService } from './production-affiliation-re
 export class ProductionAffiliationRequestController {
   constructor(
     private readonly productionAffiliationRequestService: ProductionAffiliationRequestService,
+    private readonly productionService: ProductionService,
   ) {}
 
   @ApiCreatedResponse({
@@ -116,6 +118,11 @@ export class ProductionAffiliationRequestController {
         translate('route.production-affiliation-request.update.unauthorized'),
       ]);
     }
+
+    await this.productionService.addParticipant(
+      request.productionId,
+      request.profileId,
+    );
 
     return await this.productionAffiliationRequestService.update(id, {
       reviewedAt: new Date(),
