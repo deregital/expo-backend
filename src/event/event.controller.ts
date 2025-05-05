@@ -339,7 +339,7 @@ export class EventController {
       totalIncome,
       emailByPurchasedTickets,
       emmitedticketPerTypeAll,
-      attendancePercent,
+      attendancePercent: isNaN(attendancePercent) ? 0 : attendancePercent,
       maxTicketPerTypeAll,
       eventDataIndividual,
     };
