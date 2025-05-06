@@ -447,14 +447,11 @@ export class EventController {
       }
     }
 
-    if (event.eventTickets.length > 0) {
-      await this.eventTicketsService.deleteByEventId(id);
-    }
-
     let eventTickets: Pick<EventTicket, 'id' | 'amount' | 'price' | 'type'>[] =
-      [];
+      event.eventTickets;
 
     if (updateEventDto.eventTickets && updateEventDto.eventTickets.length > 0) {
+      await this.eventTicketsService.deleteByEventId(id);
       eventTickets = await this.eventTicketsService.createMany(
         id,
         updateEventDto.eventTickets.map((ticket) => ({
