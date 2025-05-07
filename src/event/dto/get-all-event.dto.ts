@@ -1,5 +1,8 @@
 import { eventFolderSchema } from '@/event-folder/dto/event-folder.dto';
-import { eventTicketsSchema } from '@/event/dto/event-tickets.dto';
+import {
+  addEventTicketRefinements,
+  baseEventTicketsSchema,
+} from '@/event/dto/event-tickets.dto';
 import { eventSchema } from '@/event/dto/event.dto';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
@@ -10,7 +13,7 @@ const eventWithAllThings = eventSchema.merge(
   z.object({
     supraEvent: eventSchema.nullable(),
     subEvents: z.array(eventSchema),
-    tags: z.array(
+    profileTags: z.array(
       tagSchema
         .pick({
           id: true,
@@ -27,12 +30,14 @@ const eventWithAllThings = eventSchema.merge(
         }),
     ),
     eventTickets: z.array(
-      eventTicketsSchema.pick({
-        id: true,
-        amount: true,
-        type: true,
-        price: true,
-      }),
+      addEventTicketRefinements(
+        baseEventTicketsSchema.pick({
+          id: true,
+          amount: true,
+          type: true,
+          price: true,
+        }),
+      ),
     ),
   }),
 );

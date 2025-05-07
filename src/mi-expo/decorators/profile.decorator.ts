@@ -3,9 +3,11 @@ import { getProfileFromReq } from '@/shared/decorators/get-profile-from-req';
 import { createParamDecoratorWithInjections } from '@/shared/decorators/param-decorator-with-injections';
 import { ExecutionContext } from '@nestjs/common';
 import { type Request } from 'express';
-import { type Profile as ProfileType } from '~/types/prisma-schema';
+import { Production, type Profile as ProfileType } from '~/types/prisma-schema';
 
-export type ProfileWithoutPassword = Omit<ProfileType, 'password'>;
+export type ProfileWithoutPassword = Omit<ProfileType, 'password'> & {
+  productionsAdministrated: Production[];
+};
 
 export const Profile = createParamDecoratorWithInjections(
   async (data: unknown, context: ExecutionContext, { prismaService }) => {

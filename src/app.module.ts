@@ -26,6 +26,8 @@ import { WebhookModule } from '@/webhook/webhook.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE, ModuleRef } from '@nestjs/core';
+import { ProductionModule } from './production/production.module';
+import { ProductionAffiliationRequestModule } from './production-affiliation-request/production-affiliation-request.module';
 
 @Module({
   imports: [
@@ -53,6 +55,8 @@ import { APP_PIPE, ModuleRef } from '@nestjs/core';
       apiKey: process.env.RESEND_API_KEY ?? 're_JUST_FOR_ACTION',
     }),
     MercadoPagoModule,
+    ProductionModule,
+    ProductionAffiliationRequestModule,
   ],
   providers: [
     {

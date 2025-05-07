@@ -2,12 +2,15 @@ import { Roles } from '@/auth/decorators/rol.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
+import { MailService } from '@/mail/mail.service';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { TicketGroupService } from '@/ticket-group/ticket-group.service';
+import { TicketService } from '@/ticket/ticket.service';
 import {
   Body,
   Controller,
   Headers,
+  HttpCode,
   NotFoundException,
   Post,
   Res,
@@ -34,6 +37,8 @@ export class MercadoPagoController {
   constructor(
     private readonly mercadoPagoService: MercadoPagoService,
     private readonly ticketGroupService: TicketGroupService,
+    private readonly ticketService: TicketService,
+    private readonly mailService: MailService,
   ) {}
 
   @ApiOkResponse({
@@ -67,15 +72,14 @@ export class MercadoPagoController {
     description: translate('route.mercadopago.webhook.error'),
     type: ErrorDto,
   })
+  @HttpCode(200)
   @Post('/webhook')
   async webhook(
     @Body() body: WebhookDto,
     @Res() res: Response,
     @Headers('x-signature') signature?: string,
     @Headers('x-request-id') requestId?: string,
-  ): Promise<Response> {
-    res.status(200);
-
+  ): Promise<void> {
     if (!signature || !requestId) {
       throw new NotFoundException(
         translate('route.mercadopago.webhook.signature-not-found'),
@@ -91,9 +95,27 @@ export class MercadoPagoController {
       throw new NotFoundException(translate('route.mercadopago.webhook.error'));
     }
 
-    await this.ticketGroupService.update(dataTicketGroup.id, {
-      status: dataTicketGroup.status === 'approved' ? 'PAID' : 'BOOKED',
-    });
-    return res;
+    const ticketGroup = await this.ticketGroupService.findGroup(
+      dataTicketGroup.id,
+    );
+
+    if (
+      dataTicketGroup.status === 'approved' &&
+      ticketGroup.status === 'BOOKED'
+    ) {
+      await this.ticketGroupService.update(dataTicketGroup.id, {
+        status: dataTicketGroup.status === 'approved' ? 'PAID' : 'BOOKED',
+      });
+      const tickets = await this.ticketService.findByTicketGroupWithEvent(
+        dataTicketGroup.id,
+      );
+      const pdfs = await this.ticketService.generateMultiplePdfTickets(tickets);
+      await this.mailService.sendMultipleTickets(
+        tickets,
+        pdfs.map((pdf) => pdf.pdf),
+      );
+    }
+
+    res.status(200).send();
   }
 }

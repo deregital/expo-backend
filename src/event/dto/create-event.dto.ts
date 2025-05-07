@@ -1,4 +1,7 @@
-import { eventTicketsSchema } from '@/event/dto/event-tickets.dto';
+import {
+  addEventTicketRefinements,
+  baseEventTicketsSchema,
+} from '@/event/dto/event-tickets.dto';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagSchema } from '@/tag/dto/tag.dto';
 import z from 'zod';
@@ -35,7 +38,9 @@ export const createEventSchema = eventSchema
 
       tagsId: z.array(tagSchema.shape.id),
 
-      eventTickets: z.array(eventTicketsSchema.omit({ id: true })),
+      eventTickets: z.array(
+        addEventTicketRefinements(baseEventTicketsSchema.omit({ id: true })),
+      ),
     }),
   );
 

@@ -25,6 +25,8 @@ import {
   TagType,
 } from '~/types/prisma-schema';
 import { deleteEventResponseSchema } from './dto/delete-event.dto';
+import { getAllStatisticsSchema } from './dto/get-all-statistics.dto';
+import { getStatisticsByIdSchema } from './dto/get-statistics-by-id-event.dto';
 
 @Injectable()
 export class EventService {
@@ -66,7 +68,7 @@ export class EventService {
           ? { connect: dto.subEvents.map((subEvent) => ({ id: subEvent.id })) }
           : undefined,
 
-        tags: { connect: dto.tagsId.map((tag) => ({ id: tag })) },
+        profileTags: { connect: dto.tagsId.map((tag) => ({ id: tag })) },
         eventTickets: {
           create: dto.eventTickets.map((ticket) => ({
             amount: ticket.amount,
@@ -83,7 +85,7 @@ export class EventService {
       Event & {
         subEvents: Event[];
         supraEvent: Event | null;
-        tags: (Pick<Tag, 'id' | 'name' | 'type'> & {
+        profileTags: (Pick<Tag, 'id' | 'name' | 'type'> & {
           group: Pick<TagGroup, 'color' | 'isExclusive' | 'name' | 'id'>;
         })[];
         eventTickets: EventTicket[];
@@ -95,7 +97,7 @@ export class EventService {
       include: {
         subEvents: true,
         supraEvent: true,
-        tags: {
+        profileTags: {
           include: {
             group: {
               select: { id: true, color: true, name: true, isExclusive: true },
@@ -126,7 +128,7 @@ export class EventService {
         subEvents: true,
         eventTickets: true,
         supraEvent: true,
-        tags: { include: { group: true } },
+        profileTags: { include: { group: true } },
         tickets: true,
       },
     });
@@ -146,6 +148,46 @@ export class EventService {
       include: { tagAssisted: true, tagConfirmed: true },
     });
     return events;
+  }
+
+  async getAllEventWithTickets(): Promise<
+    z.infer<typeof getAllStatisticsSchema>
+  > {
+    const events = await this.prisma.event.findMany({
+      include: {
+        tickets: true,
+        eventTickets: true,
+        ticketGroups: true,
+      },
+    });
+
+    return events!;
+  }
+
+  async getEventWithTickets(
+    id: Event['id'],
+  ): Promise<z.infer<typeof getStatisticsByIdSchema>> {
+    const event = await this.prisma.event.findUnique({
+      where: { id },
+      include: {
+        tickets: true,
+        eventTickets: true,
+      },
+    });
+
+    return event!;
+  }
+
+  async getAvgAmountTicketGroupByEventId(
+    id: Event['id'],
+  ): Promise<number | null> {
+    const { _avg } = await this.prisma.ticketGroup.aggregate({
+      where: { eventId: id },
+      _avg: {
+        amountTickets: true,
+      },
+    });
+    return _avg.amountTickets;
   }
 
   async update(
@@ -177,10 +219,8 @@ export class EventService {
               })),
             }
           : undefined,
-        tags: updateEventDto.tagsId
-          ? {
-              set: updateEventDto.tagsId.map((tag) => ({ id: tag })),
-            }
+        profileTags: updateEventDto.tagsId
+          ? { set: updateEventDto.tagsId.map((tag) => ({ id: tag })) }
           : undefined,
         folder: updateEventDto.folderId
           ? { connect: { id: updateEventDto.folderId } }
@@ -298,7 +338,7 @@ export class EventService {
       where: {
         active: true,
         endingDate: { gt: new Date() },
-        tags: { some: { id: { in: tagIds } } },
+        profileTags: { some: { id: { in: tagIds } } },
       },
       include: { tickets: true, eventTickets: true },
     });

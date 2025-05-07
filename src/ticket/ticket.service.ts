@@ -18,11 +18,13 @@ import {
   UpdateTicketDto,
   updateTicketResponseSchema,
 } from '@/ticket/dto/update-ticket.dto';
+import { TZDate } from '@date-fns/tz';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Font, GenerateProps } from '@pdfme/common';
 import { generate } from '@pdfme/generator';
 import { barcodes, image, line, text } from '@pdfme/schemas';
 import { format } from 'date-fns/format';
+import { es } from 'date-fns/locale';
 import z from 'zod';
 import { Event, Profile, Ticket, TicketType } from '~/types';
 import {
@@ -147,6 +149,29 @@ export class TicketService {
     return tickets;
   }
 
+  async getEmailsByTicketsPurchased(): Promise<
+    Array<{ mail: string; ticketsPurchased: number }>
+  > {
+    const query = await this.prisma.ticket.groupBy({
+      by: ['mail'],
+      _count: {
+        mail: true,
+      },
+      orderBy: {
+        _count: {
+          mail: 'desc',
+        },
+      },
+    });
+
+    const emailByPurchasedTickets = query.map((item) => ({
+      mail: item.mail,
+      ticketsPurchased: item._count.mail,
+    }));
+
+    return emailByPurchasedTickets;
+  }
+
   async update(
     id: string,
     dto: UpdateTicketDto,
@@ -169,24 +194,23 @@ export class TicketService {
     return ticket;
   }
 
-  async generatePdfTicket(ticket: Ticket & { event: Event }): Promise<Blob> {
+  async generatePdfTicket(
+    ticket: Omit<Ticket, 'profileId'> & { event: Event },
+  ): Promise<Blob> {
     // Format date to a readable format
-    const eventDate = new Date(ticket!.event.date);
-    const formattedDate = eventDate.toLocaleDateString('es-ES', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+    const eventDate = new TZDate(
+      ticket!.event.startingDate,
+      'America/Argentina/Buenos_Aires',
+    );
     if (!ticket) {
       throw new NotFoundException(
         translate('route.pdf.generate-pdf.not-found'),
       );
     }
     // Format time
-    const formattedTime = eventDate.toLocaleTimeString('es-ES', {
-      hour: '2-digit',
-      minute: '2-digit',
+    const formattedTime = format(eventDate, 'HH:mm');
+    const formattedDate = format(eventDate, 'PPPP', {
+      locale: es,
     });
 
     const normalizedDni = Number.isNaN(Number(ticket.dni))
@@ -274,7 +298,7 @@ export class TicketService {
   }
 
   async generateMultiplePdfTickets(
-    tickets: Array<Ticket & { event: Event }>,
+    tickets: Array<Omit<Ticket, 'profileId'> & { event: Event }>,
   ): Promise<z.infer<typeof generateMultiplePdfTicketsSchema>> {
     // Generar PDFs para todos los tickets
     const pdfPromises = tickets.map(async (ticket) => {

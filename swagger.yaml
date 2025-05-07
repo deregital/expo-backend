@@ -791,6 +791,150 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Event"
+  /event/update-banner/{id}:
+    patch:
+      operationId: "EventController_updateBanner"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UpdateBannerEventDto"
+      responses:
+        200:
+          description: "Imagen actualizada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateBannerEventResponseDto"
+        409:
+          description: "Conflicto al actualizar la imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        422:
+          description: "La imagen no es válida, debe ser un archivo de imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al subir la imagen al CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Event"
+  /event/delete-banner/{id}:
+    delete:
+      operationId: "EventController_deleteBanner"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Imagen eliminada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateMainPictureEventResponseDto"
+        404:
+          description: "Perfil o foto no encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al eliminar la imagen del CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Event"
+  /event/update-main-picture/{id}:
+    patch:
+      operationId: "EventController_updateMainPicture"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UpdateMainPictureEventDto"
+      responses:
+        200:
+          description: "Imagen actualizada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateMainPictureEventResponseDto"
+        409:
+          description: "Conflicto al actualizar la imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        422:
+          description: "La imagen no es válida, debe ser un archivo de imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al subir la imagen al CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Event"
+  /event/delete-main-picture/{id}:
+    delete:
+      operationId: "EventController_deleteMainPicture"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Imagen eliminada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateMainPictureEventResponseDto"
+        404:
+          description: "Perfil o foto no encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al eliminar la imagen del CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Event"
   /event/all:
     get:
       operationId: "EventController_findAll"
@@ -821,6 +965,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetActiveEventsResponseDto"
+      tags:
+        - "Event"
+  /event/statistics:
+    get:
+      operationId: "EventController_getStatistics"
+      parameters: []
+      responses:
+        200:
+          description: "Estadisticas obtenidas con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetAllStatisticsResponseDto"
       tags:
         - "Event"
   /event/{id}:
@@ -903,6 +1060,40 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DeleteEventResponseDto"
+      tags:
+        - "Event"
+  /event/{id}/statistics:
+    get:
+      operationId: "EventController_getStatisticsById"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+        - name: "gte"
+          required: true
+          in: "query"
+          schema:
+            type: "string"
+        - name: "lte"
+          required: true
+          in: "query"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Estadisticas del evento obtenidas con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetStatisticsByIdResponseDto"
+        404:
+          description: "Evento no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Event"
   /event/toggle-active/{id}:
@@ -1110,6 +1301,78 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Profile"
+  /profile/update-image/{id}:
+    patch:
+      operationId: "ProfileController_updateImage"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UpdateImageProfileDto"
+      responses:
+        200:
+          description: "Imagen actualizada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateImageProfileResponseDto"
+        409:
+          description: "Conflicto al actualizar la imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        422:
+          description: "La imagen no es válida, debe ser un archivo de imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al subir la imagen al CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Profile"
+  /profile/delete-image/{id}:
+    delete:
+      operationId: "ProfileController_deleteImage"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Imagen eliminada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteImageProfileResponseDto"
+        404:
+          description: "Perfil o foto no encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al eliminar la imagen del CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Profile"
   /profile/{id}:
     get:
       operationId: "ProfileController_findById"
@@ -1192,78 +1455,6 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Profile"
-  /image/update/{id}:
-    patch:
-      operationId: "ImageController_updateImage"
-      parameters:
-        - name: "id"
-          required: true
-          in: "path"
-          schema:
-            type: "string"
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              $ref: "#/components/schemas/UpdateImageDto"
-      responses:
-        200:
-          description: "Imagen actualizada exitosamente"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UpdateImageResponseDto"
-        409:
-          description: "Conflicto al actualizar la imagen"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorDto"
-        422:
-          description: "La imagen no es válida, debe ser un archivo de imagen"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorDto"
-        500:
-          description: "Error al subir la imagen al CDN"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorDto"
-      tags:
-        - "Image"
-  /image/delete/{id}:
-    delete:
-      operationId: "ImageController_deleteImage"
-      parameters:
-        - name: "id"
-          required: true
-          in: "path"
-          schema:
-            type: "string"
-      responses:
-        200:
-          description: "Imagen eliminada exitosamente"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DeleteImageResponseDto"
-        404:
-          description: "Perfil o foto no encontrados"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorDto"
-        500:
-          description: "Error al eliminar la imagen del CDN"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorDto"
-      tags:
-        - "Image"
   /csv/download-profiles:
     post:
       operationId: "CsvController_downloadProfiles"
@@ -2335,6 +2526,238 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "MercadoPago"
+  /production/all:
+    get:
+      operationId: "ProductionController_getAll"
+      parameters: []
+      responses:
+        200:
+          description: "Producciones obtenidas con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetAllProductionResponseDto"
+      tags:
+        - "Production"
+  /production/create:
+    post:
+      operationId: "ProductionController_create"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductionDto"
+      responses:
+        200:
+          description: "Producción creada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateProductionDto"
+        409:
+          description: "Producción ya existente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Production"
+  /production/create-role:
+    post:
+      operationId: "ProductionController_createRole"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductionRoleDto"
+      responses:
+        201:
+          description: "Rol de producción creado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateProductionDto"
+      tags:
+        - "Production"
+  /production/update/{id}:
+    patch:
+      operationId: "ProductionController_update"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProductionDto"
+      responses:
+        200:
+          description: "Producción actualizada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateProductionResponseDto"
+        404:
+          description: "Producción no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "Producción ya existente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Production"
+  /production/delete/{id}:
+    delete:
+      operationId: "ProductionController_deleteProduction"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Producción eliminada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteProductionResponseDto"
+        404:
+          description: "Producción no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "No se puede eliminar la producción  porque tiene eventos activos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Production"
+  /production-affiliation-request/create:
+    post:
+      operationId: "ProductionAffiliationRequestController_create"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductionAffiliationRequestDto"
+      responses:
+        201:
+          description: "Solicitud de afiliación a producción creada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateProductionAffiliationRequestDto"
+        409:
+          description: "Ya eres administrador de una producción"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "ProductionAffiliationRequest"
+  /production-affiliation-request/accept/{id}:
+    post:
+      operationId: "ProductionAffiliationRequestController_accept"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Solicitud de afiliación a producción actualizada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateProductionAffiliationRequestResponseDto"
+        401:
+          description: "No tienes autorización para actualizar la solicitud"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        404:
+          description: "Solicitud de afiliación no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "ProductionAffiliationRequest"
+  /production-affiliation-request/reject/{id}:
+    post:
+      operationId: "ProductionAffiliationRequestController_reject"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Solicitud de afiliación a producción actualizada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateProductionAffiliationRequestResponseDto"
+        401:
+          description: "No tienes autorización para actualizar la solicitud"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        404:
+          description: "Solicitud de afiliación no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "ProductionAffiliationRequest"
+  /production-affiliation-request/get-by-production/{id}:
+    get:
+      operationId: "ProductionAffiliationRequestController_findByProduction"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Solicitud de afiliación a producción actualizada con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByProductionAffiliationRequestResponseDto"
+        404:
+          description: "Producción no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "ProductionAffiliationRequest"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -2478,6 +2901,15 @@ components:
           type:
             - "string"
           format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PROFILE"
+            - "EVENT"
+            - "PARTICIPANT"
+            - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
       required:
         - "name"
         - "groupId"
@@ -2505,11 +2937,22 @@ components:
             - "EVENT"
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
       required:
         - "id"
         - "name"
         - "groupId"
         - "type"
+        - "created_at"
+        - "updated_at"
     FindAllTagResponseDto:
       type:
         - "object"
@@ -2541,6 +2984,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"
@@ -2625,6 +3069,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"
@@ -2702,6 +3147,7 @@ components:
             - "EVENT"
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
         created_at:
           type:
             - "string"
@@ -2792,6 +3238,7 @@ components:
             - "EVENT"
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
         created_at:
           type:
             - "string"
@@ -2831,6 +3278,7 @@ components:
             - "EVENT"
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
         created_at:
           type:
             - "string"
@@ -3320,6 +3768,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"
@@ -3374,6 +3823,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               group:
                 type:
                   - "object"
@@ -3463,6 +3913,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               group:
                 type:
                   - "object"
@@ -3515,6 +3966,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"
@@ -3655,6 +4107,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -3734,6 +4187,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -3832,6 +4286,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"
@@ -4602,6 +5057,20 @@ components:
                       type:
                         - "string"
                       minLength: 1
+                    mainPictureUrl:
+                      type:
+                        - "string"
+                        - "null"
+                      format: "uri"
+                    bannerUrl:
+                      type:
+                        - "string"
+                        - "null"
+                      format: "uri"
+                    description:
+                      type:
+                        - "string"
+                        - "null"
                     folderId:
                       type:
                         - "string"
@@ -4638,6 +5107,9 @@ components:
                     - "startingDate"
                     - "endingDate"
                     - "location"
+                    - "mainPictureUrl"
+                    - "bannerUrl"
+                    - "description"
                     - "folderId"
                     - "tagAssistedId"
                     - "tagConfirmedId"
@@ -4710,6 +5182,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
               folderId:
                 type:
                   - "string"
@@ -4746,6 +5232,9 @@ components:
               - "startingDate"
               - "endingDate"
               - "location"
+              - "mainPictureUrl"
+              - "bannerUrl"
+              - "description"
               - "folderId"
               - "tagAssistedId"
               - "tagConfirmedId"
@@ -4867,6 +5356,20 @@ components:
             - "string"
             - "null"
           format: "uuid"
+        mainPictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        bannerUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        description:
+          type:
+            - "string"
+            - "null"
         subEvents:
           type:
             - "array"
@@ -4894,12 +5397,29 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
             required:
               - "name"
               - "date"
               - "startingDate"
               - "endingDate"
               - "location"
+              - "mainPictureUrl"
+              - "bannerUrl"
+              - "description"
         tagsId:
           type:
             - "array"
@@ -4918,7 +5438,6 @@ components:
                 type:
                   - "number"
                   - "null"
-                minimum: 1
               type:
                 type:
                   - "string"
@@ -4942,6 +5461,9 @@ components:
         - "endingDate"
         - "location"
         - "folderId"
+        - "mainPictureUrl"
+        - "bannerUrl"
+        - "description"
         - "tagsId"
         - "eventTickets"
     CreateEventResponseDto:
@@ -4972,6 +5494,20 @@ components:
           type:
             - "string"
           minLength: 1
+        mainPictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        bannerUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        description:
+          type:
+            - "string"
+            - "null"
         folderId:
           type:
             - "string"
@@ -5008,6 +5544,9 @@ components:
         - "startingDate"
         - "endingDate"
         - "location"
+        - "mainPictureUrl"
+        - "bannerUrl"
+        - "description"
         - "folderId"
         - "tagAssistedId"
         - "tagConfirmedId"
@@ -5015,6 +5554,38 @@ components:
         - "supraEventId"
         - "created_at"
         - "updated_at"
+    UpdateBannerEventDto:
+      type:
+        - "object"
+      properties:
+        image:
+          type: "object"
+          format: "binary"
+    UpdateBannerEventResponseDto:
+      type:
+        - "object"
+      properties:
+        message:
+          type:
+            - "string"
+      required:
+        - "message"
+    UpdateMainPictureEventResponseDto:
+      type:
+        - "object"
+      properties:
+        message:
+          type:
+            - "string"
+      required:
+        - "message"
+    UpdateMainPictureEventDto:
+      type:
+        - "object"
+      properties:
+        image:
+          type: "object"
+          format: "binary"
     GetAllEventsResponseDto:
       type:
         - "object"
@@ -5078,6 +5649,20 @@ components:
                       type:
                         - "string"
                       minLength: 1
+                    mainPictureUrl:
+                      type:
+                        - "string"
+                        - "null"
+                      format: "uri"
+                    bannerUrl:
+                      type:
+                        - "string"
+                        - "null"
+                      format: "uri"
+                    description:
+                      type:
+                        - "string"
+                        - "null"
                     folderId:
                       type:
                         - "string"
@@ -5136,6 +5721,20 @@ components:
                           type:
                             - "string"
                           minLength: 1
+                        mainPictureUrl:
+                          type:
+                            - "string"
+                            - "null"
+                          format: "uri"
+                        bannerUrl:
+                          type:
+                            - "string"
+                            - "null"
+                          format: "uri"
+                        description:
+                          type:
+                            - "string"
+                            - "null"
                         folderId:
                           type:
                             - "string"
@@ -5172,6 +5771,9 @@ components:
                         - "startingDate"
                         - "endingDate"
                         - "location"
+                        - "mainPictureUrl"
+                        - "bannerUrl"
+                        - "description"
                         - "folderId"
                         - "tagAssistedId"
                         - "tagConfirmedId"
@@ -5210,6 +5812,20 @@ components:
                             type:
                               - "string"
                             minLength: 1
+                          mainPictureUrl:
+                            type:
+                              - "string"
+                              - "null"
+                            format: "uri"
+                          bannerUrl:
+                            type:
+                              - "string"
+                              - "null"
+                            format: "uri"
+                          description:
+                            type:
+                              - "string"
+                              - "null"
                           folderId:
                             type:
                               - "string"
@@ -5246,6 +5862,9 @@ components:
                           - "startingDate"
                           - "endingDate"
                           - "location"
+                          - "mainPictureUrl"
+                          - "bannerUrl"
+                          - "description"
                           - "folderId"
                           - "tagAssistedId"
                           - "tagConfirmedId"
@@ -5253,7 +5872,7 @@ components:
                           - "supraEventId"
                           - "created_at"
                           - "updated_at"
-                    tags:
+                    profileTags:
                       type:
                         - "array"
                       items:
@@ -5276,6 +5895,7 @@ components:
                               - "EVENT"
                               - "PARTICIPANT"
                               - "NOT_IN_SYSTEM"
+                              - "PRODUCTION_ROLE"
                           group:
                             type:
                               - "object"
@@ -5321,7 +5941,6 @@ components:
                             type:
                               - "number"
                               - "null"
-                            minimum: 1
                           type:
                             type:
                               - "string"
@@ -5346,6 +5965,9 @@ components:
                     - "startingDate"
                     - "endingDate"
                     - "location"
+                    - "mainPictureUrl"
+                    - "bannerUrl"
+                    - "description"
                     - "folderId"
                     - "tagAssistedId"
                     - "tagConfirmedId"
@@ -5355,7 +5977,7 @@ components:
                     - "updated_at"
                     - "supraEvent"
                     - "subEvents"
-                    - "tags"
+                    - "profileTags"
                     - "eventTickets"
             required:
               - "id"
@@ -5395,6 +6017,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
               folderId:
                 type:
                   - "string"
@@ -5453,6 +6089,20 @@ components:
                     type:
                       - "string"
                     minLength: 1
+                  mainPictureUrl:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uri"
+                  bannerUrl:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uri"
+                  description:
+                    type:
+                      - "string"
+                      - "null"
                   folderId:
                     type:
                       - "string"
@@ -5489,6 +6139,9 @@ components:
                   - "startingDate"
                   - "endingDate"
                   - "location"
+                  - "mainPictureUrl"
+                  - "bannerUrl"
+                  - "description"
                   - "folderId"
                   - "tagAssistedId"
                   - "tagConfirmedId"
@@ -5527,6 +6180,20 @@ components:
                       type:
                         - "string"
                       minLength: 1
+                    mainPictureUrl:
+                      type:
+                        - "string"
+                        - "null"
+                      format: "uri"
+                    bannerUrl:
+                      type:
+                        - "string"
+                        - "null"
+                      format: "uri"
+                    description:
+                      type:
+                        - "string"
+                        - "null"
                     folderId:
                       type:
                         - "string"
@@ -5563,6 +6230,9 @@ components:
                     - "startingDate"
                     - "endingDate"
                     - "location"
+                    - "mainPictureUrl"
+                    - "bannerUrl"
+                    - "description"
                     - "folderId"
                     - "tagAssistedId"
                     - "tagConfirmedId"
@@ -5570,7 +6240,7 @@ components:
                     - "supraEventId"
                     - "created_at"
                     - "updated_at"
-              tags:
+              profileTags:
                 type:
                   - "array"
                 items:
@@ -5593,6 +6263,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     group:
                       type:
                         - "object"
@@ -5638,7 +6309,6 @@ components:
                       type:
                         - "number"
                         - "null"
-                      minimum: 1
                     type:
                       type:
                         - "string"
@@ -5663,6 +6333,9 @@ components:
               - "startingDate"
               - "endingDate"
               - "location"
+              - "mainPictureUrl"
+              - "bannerUrl"
+              - "description"
               - "folderId"
               - "tagAssistedId"
               - "tagConfirmedId"
@@ -5672,7 +6345,7 @@ components:
               - "updated_at"
               - "supraEvent"
               - "subEvents"
-              - "tags"
+              - "profileTags"
               - "eventTickets"
       required:
         - "folders"
@@ -5712,6 +6385,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
               folderId:
                 type:
                   - "string"
@@ -5756,7 +6443,6 @@ components:
                       type:
                         - "number"
                         - "null"
-                      minimum: 1
                     type:
                       type:
                         - "string"
@@ -5781,6 +6467,9 @@ components:
               - "startingDate"
               - "endingDate"
               - "location"
+              - "mainPictureUrl"
+              - "bannerUrl"
+              - "description"
               - "folderId"
               - "tagAssistedId"
               - "tagConfirmedId"
@@ -5791,6 +6480,87 @@ components:
               - "eventTickets"
       required:
         - "events"
+    GetAllStatisticsResponseDto:
+      type:
+        - "object"
+      properties:
+        totalIncome:
+          type:
+            - "number"
+        emailByPurchasedTickets:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              ticketsPurchased:
+                type:
+                  - "integer"
+            required:
+              - "mail"
+              - "ticketsPurchased"
+        attendancePercent:
+          type:
+            - "number"
+        maxTicketPerTypeAll:
+          type:
+            - "object"
+          additionalProperties:
+            type:
+              - "number"
+        emmitedticketPerTypeAll:
+          type:
+            - "object"
+          additionalProperties:
+            type:
+              - "number"
+        eventDataIndividual:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              name:
+                type:
+                  - "string"
+              price:
+                type:
+                  - "number"
+                  - "null"
+              purchasePercent:
+                type:
+                  - "number"
+              spectatorEventTicket:
+                type:
+                  - "number"
+                  - "null"
+              spectatorTicketsSold:
+                type:
+                  - "number"
+            required:
+              - "id"
+              - "name"
+              - "price"
+              - "purchasePercent"
+              - "spectatorEventTicket"
+              - "spectatorTicketsSold"
+      required:
+        - "totalIncome"
+        - "emailByPurchasedTickets"
+        - "attendancePercent"
+        - "maxTicketPerTypeAll"
+        - "emmitedticketPerTypeAll"
+        - "eventDataIndividual"
     GetByIdEventResponseDto:
       type:
         - "object"
@@ -5819,6 +6589,20 @@ components:
           type:
             - "string"
           minLength: 1
+        mainPictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        bannerUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        description:
+          type:
+            - "string"
+            - "null"
         folderId:
           type:
             - "string"
@@ -5879,6 +6663,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
               folderId:
                 type:
                   - "string"
@@ -5915,6 +6713,9 @@ components:
               - "startingDate"
               - "endingDate"
               - "location"
+              - "mainPictureUrl"
+              - "bannerUrl"
+              - "description"
               - "folderId"
               - "tagAssistedId"
               - "tagConfirmedId"
@@ -5951,6 +6752,20 @@ components:
               type:
                 - "string"
               minLength: 1
+            mainPictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            bannerUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            description:
+              type:
+                - "string"
+                - "null"
             folderId:
               type:
                 - "string"
@@ -5987,6 +6802,9 @@ components:
             - "startingDate"
             - "endingDate"
             - "location"
+            - "mainPictureUrl"
+            - "bannerUrl"
+            - "description"
             - "folderId"
             - "tagAssistedId"
             - "tagConfirmedId"
@@ -6009,7 +6827,6 @@ components:
                 type:
                   - "number"
                   - "null"
-                minimum: 1
               type:
                 type:
                   - "string"
@@ -6027,7 +6844,7 @@ components:
               - "amount"
               - "type"
               - "price"
-        tags:
+        profileTags:
           type:
             - "array"
           items:
@@ -6054,6 +6871,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"
@@ -6202,6 +7020,7 @@ components:
                 - "EVENT"
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
+                - "PRODUCTION_ROLE"
             created_at:
               type:
                 - "string"
@@ -6277,6 +7096,7 @@ components:
                 - "EVENT"
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
+                - "PRODUCTION_ROLE"
             created_at:
               type:
                 - "string"
@@ -6335,6 +7155,9 @@ components:
         - "startingDate"
         - "endingDate"
         - "location"
+        - "mainPictureUrl"
+        - "bannerUrl"
+        - "description"
         - "folderId"
         - "tagAssistedId"
         - "tagConfirmedId"
@@ -6345,10 +7168,92 @@ components:
         - "subEvents"
         - "supraEvent"
         - "eventTickets"
-        - "tags"
+        - "profileTags"
         - "tickets"
         - "tagAssisted"
         - "tagConfirmed"
+    GetStatisticsByIdResponseDto:
+      type:
+        - "object"
+      properties:
+        maxTickets:
+          type:
+            - "number"
+        emmitedTickets:
+          type:
+            - "number"
+        emittedTicketsPercent:
+          type:
+            - "number"
+        emmitedticketPerType:
+          type:
+            - "object"
+          additionalProperties:
+            type:
+              - "number"
+        totalIncome:
+          type:
+            - "number"
+        maxTotalIncome:
+          type:
+            - "number"
+        maxTicketPerType:
+          type:
+            - "object"
+          additionalProperties:
+            type:
+              - "number"
+        totalTicketsScanned:
+          type:
+            - "number"
+        notScanned:
+          type:
+            - "number"
+        attendancePercent:
+          type:
+            - "number"
+        attendancePerHour:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+              - "null"
+            format: "date-time"
+        avgAmountPerTicketGroup:
+          type:
+            - "number"
+            - "null"
+        heatMapDates:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              date:
+                type:
+                  - "string"
+              count:
+                type:
+                  - "number"
+            required:
+              - "date"
+              - "count"
+      required:
+        - "maxTickets"
+        - "emmitedTickets"
+        - "emittedTicketsPercent"
+        - "emmitedticketPerType"
+        - "totalIncome"
+        - "maxTotalIncome"
+        - "maxTicketPerType"
+        - "totalTicketsScanned"
+        - "notScanned"
+        - "attendancePercent"
+        - "attendancePerHour"
+        - "avgAmountPerTicketGroup"
+        - "heatMapDates"
     UpdateEventDto:
       type:
         - "object"
@@ -6378,6 +7283,20 @@ components:
           type:
             - "string"
           format: "date-time"
+        bannerUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        mainPictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        description:
+          type:
+            - "string"
+            - "null"
         tagsId:
           type:
             - "array"
@@ -6412,6 +7331,20 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
               id:
                 oneOf:
                   - type:
@@ -6422,11 +7355,6 @@ components:
                     enum:
                       - ""
             required:
-              - "name"
-              - "location"
-              - "date"
-              - "startingDate"
-              - "endingDate"
               - "id"
         eventTickets:
           type:
@@ -6439,7 +7367,6 @@ components:
                 type:
                   - "number"
                   - "null"
-                minimum: 1
               type:
                 type:
                   - "string"
@@ -6456,16 +7383,6 @@ components:
               - "amount"
               - "type"
               - "price"
-      required:
-        - "name"
-        - "folderId"
-        - "date"
-        - "location"
-        - "startingDate"
-        - "endingDate"
-        - "tagsId"
-        - "subEvents"
-        - "eventTickets"
     UpdateEventResponseDto:
       type:
         - "object"
@@ -6494,6 +7411,20 @@ components:
           type:
             - "string"
           minLength: 1
+        mainPictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        bannerUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        description:
+          type:
+            - "string"
+            - "null"
         folderId:
           type:
             - "string"
@@ -6547,6 +7478,7 @@ components:
                 - "EVENT"
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
+                - "PRODUCTION_ROLE"
             created_at:
               type:
                 - "string"
@@ -6613,7 +7545,6 @@ components:
                 type:
                   - "number"
                   - "null"
-                minimum: 1
               type:
                 type:
                   - "string"
@@ -6638,6 +7569,9 @@ components:
         - "startingDate"
         - "endingDate"
         - "location"
+        - "mainPictureUrl"
+        - "bannerUrl"
+        - "description"
         - "folderId"
         - "tagAssistedId"
         - "tagConfirmedId"
@@ -6675,6 +7609,20 @@ components:
           type:
             - "string"
           minLength: 1
+        mainPictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        bannerUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        description:
+          type:
+            - "string"
+            - "null"
         folderId:
           type:
             - "string"
@@ -6711,6 +7659,9 @@ components:
         - "startingDate"
         - "endingDate"
         - "location"
+        - "mainPictureUrl"
+        - "bannerUrl"
+        - "description"
         - "folderId"
         - "tagAssistedId"
         - "tagConfirmedId"
@@ -6862,6 +7813,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -7064,6 +8016,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -7343,6 +8296,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -7550,6 +8504,7 @@ components:
                         - "EVENT"
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
+                        - "PRODUCTION_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -7735,6 +8690,7 @@ components:
                       - "EVENT"
                       - "PARTICIPANT"
                       - "NOT_IN_SYSTEM"
+                      - "PRODUCTION_ROLE"
                   created_at:
                     type:
                       - "string"
@@ -8203,6 +9159,31 @@ components:
                 - "type"
       required:
         - "response"
+    UpdateImageProfileDto:
+      type:
+        - "object"
+      properties:
+        image:
+          type: "object"
+          format: "binary"
+    UpdateImageProfileResponseDto:
+      type:
+        - "object"
+      properties:
+        message:
+          type:
+            - "string"
+      required:
+        - "message"
+    DeleteImageProfileResponseDto:
+      type:
+        - "object"
+      properties:
+        message:
+          type:
+            - "string"
+      required:
+        - "message"
     FindByIdProfileResponseDto:
       type:
         - "object"
@@ -8426,6 +9407,7 @@ components:
                   - "EVENT"
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
+                  - "PRODUCTION_ROLE"
               created_at:
                 type:
                   - "string"
@@ -8754,31 +9736,6 @@ components:
             type:
               - "string"
             format: "uuid"
-    UpdateImageDto:
-      type:
-        - "object"
-      properties:
-        image:
-          type: "object"
-          format: "binary"
-    UpdateImageResponseDto:
-      type:
-        - "object"
-      properties:
-        message:
-          type:
-            - "string"
-      required:
-        - "message"
-    DeleteImageResponseDto:
-      type:
-        - "object"
-      properties:
-        message:
-          type:
-            - "string"
-      required:
-        - "message"
     DownloadProfilesDto:
       type:
         - "object"
@@ -9311,6 +10268,20 @@ components:
               type:
                 - "string"
               minLength: 1
+            mainPictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            bannerUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            description:
+              type:
+                - "string"
+                - "null"
             folderId:
               type:
                 - "string"
@@ -9347,6 +10318,9 @@ components:
             - "startingDate"
             - "endingDate"
             - "location"
+            - "mainPictureUrl"
+            - "bannerUrl"
+            - "description"
             - "folderId"
             - "tagAssistedId"
             - "tagConfirmedId"
@@ -9508,6 +10482,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
               folderId:
                 type:
                   - "string"
@@ -9544,6 +10532,9 @@ components:
               - "startingDate"
               - "endingDate"
               - "location"
+              - "mainPictureUrl"
+              - "bannerUrl"
+              - "description"
               - "folderId"
               - "tagAssistedId"
               - "tagConfirmedId"
@@ -9776,6 +10767,20 @@ components:
                   type:
                     - "string"
                   minLength: 1
+                mainPictureUrl:
+                  type:
+                    - "string"
+                    - "null"
+                  format: "uri"
+                bannerUrl:
+                  type:
+                    - "string"
+                    - "null"
+                  format: "uri"
+                description:
+                  type:
+                    - "string"
+                    - "null"
                 folderId:
                   type:
                     - "string"
@@ -9812,6 +10817,9 @@ components:
                 - "startingDate"
                 - "endingDate"
                 - "location"
+                - "mainPictureUrl"
+                - "bannerUrl"
+                - "description"
                 - "folderId"
                 - "tagAssistedId"
                 - "tagConfirmedId"
@@ -10541,6 +11549,20 @@ components:
                     type:
                       - "string"
                     minLength: 1
+                  mainPictureUrl:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uri"
+                  bannerUrl:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uri"
+                  description:
+                    type:
+                      - "string"
+                      - "null"
                   folderId:
                     type:
                       - "string"
@@ -10577,6 +11599,9 @@ components:
                   - "startingDate"
                   - "endingDate"
                   - "location"
+                  - "mainPictureUrl"
+                  - "bannerUrl"
+                  - "description"
                   - "folderId"
                   - "tagAssistedId"
                   - "tagConfirmedId"
@@ -11080,6 +12105,20 @@ components:
               type:
                 - "string"
               minLength: 1
+            mainPictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            bannerUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            description:
+              type:
+                - "string"
+                - "null"
             folderId:
               type:
                 - "string"
@@ -11116,6 +12155,9 @@ components:
             - "startingDate"
             - "endingDate"
             - "location"
+            - "mainPictureUrl"
+            - "bannerUrl"
+            - "description"
             - "folderId"
             - "tagAssistedId"
             - "tagConfirmedId"
@@ -12358,3 +13400,709 @@ components:
     Response:
       type: "object"
       properties: {}
+    GetAllProductionResponseDto:
+      type:
+        - "object"
+      properties:
+        productions:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              name:
+                type:
+                  - "string"
+                minLength: 1
+              administratorId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              administrator:
+                type:
+                  - "object"
+                  - "null"
+                properties:
+                  id:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  shortId:
+                    type:
+                      - "number"
+                  role:
+                    default: "MI_EXPO"
+                    type:
+                      - "string"
+                    enum:
+                      - "USER"
+                      - "ADMIN"
+                      - "FORM"
+                      - "TICKETS"
+                      - "MI_EXPO"
+                  firstTimeMiExpo:
+                    type:
+                      - "boolean"
+                  username:
+                    type:
+                      - "string"
+                      - "null"
+                  password:
+                    type:
+                      - "string"
+                      - "null"
+                  phoneNumber:
+                    type:
+                      - "string"
+                    minLength: 1
+                  isPhoneVerified:
+                    type:
+                      - "boolean"
+                  secondaryPhoneNumber:
+                    type:
+                      - "string"
+                      - "null"
+                  fullName:
+                    type:
+                      - "string"
+                    minLength: 1
+                  firstName:
+                    type:
+                      - "string"
+                      - "null"
+                    minLength: 1
+                  gender:
+                    type:
+                      - "string"
+                      - "null"
+                  birthDate:
+                    type:
+                      - "string"
+                      - "null"
+                  profilePictureUrl:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uri"
+                  instagram:
+                    type:
+                      - "string"
+                      - "null"
+                  mail:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "email"
+                  dni:
+                    type:
+                      - "string"
+                      - "null"
+                  alternativeNames:
+                    type:
+                      - "array"
+                    items:
+                      type:
+                        - "string"
+                  birthLocationId:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uuid"
+                  residenceLocationId:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uuid"
+                  isInTrash:
+                    type:
+                      - "boolean"
+                  movedToTrashDate:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "date-time"
+                  created_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  updated_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "shortId"
+                  - "firstTimeMiExpo"
+                  - "username"
+                  - "password"
+                  - "phoneNumber"
+                  - "isPhoneVerified"
+                  - "secondaryPhoneNumber"
+                  - "fullName"
+                  - "firstName"
+                  - "gender"
+                  - "birthDate"
+                  - "profilePictureUrl"
+                  - "instagram"
+                  - "mail"
+                  - "dni"
+                  - "alternativeNames"
+                  - "birthLocationId"
+                  - "residenceLocationId"
+                  - "isInTrash"
+                  - "movedToTrashDate"
+                  - "created_at"
+                  - "updated_at"
+            required:
+              - "id"
+              - "name"
+              - "administratorId"
+              - "created_at"
+              - "updated_at"
+              - "administrator"
+      required:
+        - "productions"
+    CreateProductionDto:
+      type:
+        - "object"
+      properties:
+        name:
+          type:
+            - "string"
+          minLength: 1
+        administratorId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+      required:
+        - "name"
+        - "administratorId"
+    CreateProductionRoleDto:
+      type:
+        - "object"
+      properties:
+        name:
+          type:
+            - "string"
+          minLength: 1
+      required:
+        - "name"
+    UpdateProductionDto:
+      type:
+        - "object"
+      properties:
+        name:
+          type:
+            - "string"
+          minLength: 1
+        administratorId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+    UpdateProductionResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        administratorId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "administratorId"
+        - "created_at"
+        - "updated_at"
+    DeleteProductionResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        administratorId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "administratorId"
+        - "created_at"
+        - "updated_at"
+    CreateProductionAffiliationRequestDto:
+      type:
+        - "object"
+      properties:
+        productionId:
+          type:
+            - "string"
+          format: "uuid"
+      required:
+        - "productionId"
+    UpdateProductionAffiliationRequestResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        productionId:
+          type:
+            - "string"
+          format: "uuid"
+        profileId:
+          type:
+            - "string"
+          format: "uuid"
+        status:
+          type:
+            - "string"
+          enum:
+            - "APPROVED"
+            - "PENDING"
+            - "REJECTED"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+        production:
+          type:
+            - "object"
+          properties:
+            id:
+              type:
+                - "string"
+              format: "uuid"
+            name:
+              type:
+                - "string"
+              minLength: 1
+            administratorId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            created_at:
+              type:
+                - "string"
+              format: "date-time"
+            updated_at:
+              type:
+                - "string"
+              format: "date-time"
+          required:
+            - "id"
+            - "name"
+            - "administratorId"
+            - "created_at"
+            - "updated_at"
+        profile:
+          type:
+            - "object"
+          properties:
+            id:
+              type:
+                - "string"
+              format: "uuid"
+            shortId:
+              type:
+                - "number"
+            role:
+              default: "MI_EXPO"
+              type:
+                - "string"
+              enum:
+                - "USER"
+                - "ADMIN"
+                - "FORM"
+                - "TICKETS"
+                - "MI_EXPO"
+            firstTimeMiExpo:
+              type:
+                - "boolean"
+            username:
+              type:
+                - "string"
+                - "null"
+            password:
+              type:
+                - "string"
+                - "null"
+            phoneNumber:
+              type:
+                - "string"
+              minLength: 1
+            isPhoneVerified:
+              type:
+                - "boolean"
+            secondaryPhoneNumber:
+              type:
+                - "string"
+                - "null"
+            fullName:
+              type:
+                - "string"
+              minLength: 1
+            firstName:
+              type:
+                - "string"
+                - "null"
+              minLength: 1
+            gender:
+              type:
+                - "string"
+                - "null"
+            birthDate:
+              type:
+                - "string"
+                - "null"
+            profilePictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            instagram:
+              type:
+                - "string"
+                - "null"
+            mail:
+              type:
+                - "string"
+                - "null"
+              format: "email"
+            dni:
+              type:
+                - "string"
+                - "null"
+            alternativeNames:
+              type:
+                - "array"
+              items:
+                type:
+                  - "string"
+            birthLocationId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            residenceLocationId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            isInTrash:
+              type:
+                - "boolean"
+            movedToTrashDate:
+              type:
+                - "string"
+                - "null"
+              format: "date-time"
+            created_at:
+              type:
+                - "string"
+              format: "date-time"
+            updated_at:
+              type:
+                - "string"
+              format: "date-time"
+          required:
+            - "id"
+            - "shortId"
+            - "firstTimeMiExpo"
+            - "username"
+            - "password"
+            - "phoneNumber"
+            - "isPhoneVerified"
+            - "secondaryPhoneNumber"
+            - "fullName"
+            - "firstName"
+            - "gender"
+            - "birthDate"
+            - "profilePictureUrl"
+            - "instagram"
+            - "mail"
+            - "dni"
+            - "alternativeNames"
+            - "birthLocationId"
+            - "residenceLocationId"
+            - "isInTrash"
+            - "movedToTrashDate"
+            - "created_at"
+            - "updated_at"
+      required:
+        - "id"
+        - "productionId"
+        - "profileId"
+        - "status"
+        - "created_at"
+        - "updated_at"
+        - "production"
+        - "profile"
+    FindByProductionAffiliationRequestResponseDto:
+      type:
+        - "object"
+      properties:
+        productions:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              productionId:
+                type:
+                  - "string"
+                format: "uuid"
+              profileId:
+                type:
+                  - "string"
+                format: "uuid"
+              status:
+                type:
+                  - "string"
+                enum:
+                  - "APPROVED"
+                  - "PENDING"
+                  - "REJECTED"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              production:
+                type:
+                  - "object"
+                properties:
+                  id:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  name:
+                    type:
+                      - "string"
+                    minLength: 1
+                  administratorId:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uuid"
+                  created_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  updated_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "name"
+                  - "administratorId"
+                  - "created_at"
+                  - "updated_at"
+              profile:
+                type:
+                  - "object"
+                properties:
+                  id:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  shortId:
+                    type:
+                      - "number"
+                  role:
+                    default: "MI_EXPO"
+                    type:
+                      - "string"
+                    enum:
+                      - "USER"
+                      - "ADMIN"
+                      - "FORM"
+                      - "TICKETS"
+                      - "MI_EXPO"
+                  firstTimeMiExpo:
+                    type:
+                      - "boolean"
+                  username:
+                    type:
+                      - "string"
+                      - "null"
+                  password:
+                    type:
+                      - "string"
+                      - "null"
+                  phoneNumber:
+                    type:
+                      - "string"
+                    minLength: 1
+                  isPhoneVerified:
+                    type:
+                      - "boolean"
+                  secondaryPhoneNumber:
+                    type:
+                      - "string"
+                      - "null"
+                  fullName:
+                    type:
+                      - "string"
+                    minLength: 1
+                  firstName:
+                    type:
+                      - "string"
+                      - "null"
+                    minLength: 1
+                  gender:
+                    type:
+                      - "string"
+                      - "null"
+                  birthDate:
+                    type:
+                      - "string"
+                      - "null"
+                  profilePictureUrl:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uri"
+                  instagram:
+                    type:
+                      - "string"
+                      - "null"
+                  mail:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "email"
+                  dni:
+                    type:
+                      - "string"
+                      - "null"
+                  alternativeNames:
+                    type:
+                      - "array"
+                    items:
+                      type:
+                        - "string"
+                  birthLocationId:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uuid"
+                  residenceLocationId:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uuid"
+                  isInTrash:
+                    type:
+                      - "boolean"
+                  movedToTrashDate:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "date-time"
+                  created_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  updated_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "shortId"
+                  - "firstTimeMiExpo"
+                  - "username"
+                  - "password"
+                  - "phoneNumber"
+                  - "isPhoneVerified"
+                  - "secondaryPhoneNumber"
+                  - "fullName"
+                  - "firstName"
+                  - "gender"
+                  - "birthDate"
+                  - "profilePictureUrl"
+                  - "instagram"
+                  - "mail"
+                  - "dni"
+                  - "alternativeNames"
+                  - "birthLocationId"
+                  - "residenceLocationId"
+                  - "isInTrash"
+                  - "movedToTrashDate"
+                  - "created_at"
+                  - "updated_at"
+            required:
+              - "id"
+              - "productionId"
+              - "profileId"
+              - "status"
+              - "created_at"
+              - "updated_at"
+              - "production"
+              - "profile"
+      required:
+        - "productions"

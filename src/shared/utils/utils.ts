@@ -80,6 +80,8 @@ export function setHoursAndMinutes(
 ): Date {
   const newDate = new Date(newDateString);
   const updatedDate = new Date(dateString);
+
+  updatedDate.setDate(newDate.getDate()); // Ensure the day is synchronized
   updatedDate.setHours(newDate.getHours());
   updatedDate.setMinutes(newDate.getMinutes());
 

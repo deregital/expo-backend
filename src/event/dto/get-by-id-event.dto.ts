@@ -12,7 +12,7 @@ export const getByIdEventResponseSchema = eventSchema.merge(
     subEvents: z.array(eventSchema),
     supraEvent: eventSchema.nullable(),
     eventTickets: z.array(eventTicketsSchema),
-    tags: z.array(tagSchema.extend({ group: tagGroupSchema })),
+    profileTags: z.array(tagSchema.extend({ group: tagGroupSchema })),
     tickets: z.array(ticketSchema),
     tagAssisted: tagSchema.extend({ group: tagGroupSchema }),
     tagConfirmed: tagSchema.extend({ group: tagGroupSchema }),
