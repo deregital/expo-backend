@@ -6,6 +6,7 @@ import { Roles } from '@/auth/decorators/rol.decorator';
 import { JwtGuard } from '@/auth/guards/jwt.guard';
 import { RoleGuard } from '@/auth/guards/role.guard';
 import { translate } from '@/i18n/translate';
+import { ImageService } from '@/image/image.service';
 import {
   CreateProfileDto,
   CreateProfileResponseDto,
@@ -70,24 +71,39 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   NotFoundException,
   Param,
   ParseArrayPipe,
+  ParseFilePipeBuilder,
   Patch,
   Post,
   Query,
+  UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiConflictResponse,
+  ApiConsumes,
+  ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiPreconditionFailedResponse,
+  ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 import levenshtein from 'string-comparison';
 import z from 'zod';
 import { Prisma, Profile, Role, Tag } from '~/types';
+import {
+  DeleteImageProfileResponseDto,
+  deleteImageProfileResponseSchema,
+} from './dto/delete-image-profile.dto';
+import {
+  UpdateImageProfileDto,
+  UpdateImageProfileResponseDto,
+} from './dto/update-image-profile.dto';
 
 @UseInterceptors(GlobalFilterInterceptor)
 @Roles(Role.ADMIN, Role.USER)
@@ -98,6 +114,7 @@ export class ProfileController {
     private readonly profileService: ProfileService,
     private readonly tagService: TagService,
     private readonly tagGroupService: TagGroupService,
+    private readonly imageService: ImageService,
   ) {}
 
   @ApiOkResponse({
@@ -332,6 +349,97 @@ export class ProfileController {
         type: 'created',
         id: profileCreated.id,
       },
+    };
+  }
+
+  @ApiOkResponse({
+    description: translate('route.image.update.success'),
+    type: UpdateImageProfileResponseDto,
+  })
+  @ApiInternalServerErrorResponse({
+    description: translate('route.image.update.error'),
+    type: ErrorDto,
+  })
+  @ApiUnprocessableEntityResponse({
+    description: translate('route.image.update.unprocessable-entity'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.image.update.conflict'),
+    type: ErrorDto,
+  })
+  @UseInterceptors(FileInterceptor('image'))
+  @ApiConsumes('multipart/form-data')
+  @Patch('/update-image/:id')
+  async updateImage(
+    @Param('id', new ExistingRecord('profile')) id: string,
+    @Body() body: UpdateImageProfileDto,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: /(jpeg|png|webp)/, // Ver errores custom
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    file: Express.Multer.File,
+  ): Promise<UpdateImageProfileResponseDto> {
+    const currentPictureUrl =
+      await this.profileService.getProfilePictureUrl(id);
+
+    if (currentPictureUrl) {
+      await this.imageService.deleteImage(currentPictureUrl);
+    }
+
+    const pictureUrl = await this.imageService.updateImage(
+      `profile-${id}`,
+      file,
+    );
+
+    if (!pictureUrl) {
+      throw new ConflictException([translate('route.image.update.conflict')]);
+    }
+
+    await this.profileService.update(
+      id,
+      {
+        profilePictureUrl: pictureUrl,
+      },
+      undefined,
+    );
+
+    return {
+      message: translate('route.image.update.success'),
+    };
+  }
+
+  @ApiOkResponse({
+    description: translate('route.image.delete.success'),
+    type: DeleteImageProfileResponseDto,
+  })
+  @ApiInternalServerErrorResponse({
+    description: translate('route.image.delete.error'),
+    type: ErrorDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.image.delete.not-found'),
+    type: ErrorDto,
+  })
+  @Delete('/delete-image/:id')
+  async deleteImage(
+    @Param('id', new ExistingRecord('profile')) id: string,
+  ): Promise<z.infer<typeof deleteImageProfileResponseSchema>> {
+    const currentPictureUrl =
+      await this.profileService.getProfilePictureUrl(id);
+    if (currentPictureUrl) {
+      await this.imageService.deleteImage(currentPictureUrl);
+    } else {
+      throw new NotFoundException([translate('route.image.delete.not-found')]);
+    }
+    await this.profileService.deleteImage(id);
+    return {
+      message: translate('route.image.delete.success'),
     };
   }
 

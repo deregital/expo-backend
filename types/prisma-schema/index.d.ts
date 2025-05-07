@@ -13748,6 +13748,9 @@ export namespace Prisma {
     startingDate: Date | null;
     endingDate: Date | null;
     location: string | null;
+    mainPictureUrl: string | null;
+    bannerUrl: string | null;
+    description: string | null;
     folderId: string | null;
     tagAssistedId: string | null;
     tagConfirmedId: string | null;
@@ -13764,6 +13767,9 @@ export namespace Prisma {
     startingDate: Date | null;
     endingDate: Date | null;
     location: string | null;
+    mainPictureUrl: string | null;
+    bannerUrl: string | null;
+    description: string | null;
     folderId: string | null;
     tagAssistedId: string | null;
     tagConfirmedId: string | null;
@@ -13780,6 +13786,9 @@ export namespace Prisma {
     startingDate: number;
     endingDate: number;
     location: number;
+    mainPictureUrl: number;
+    bannerUrl: number;
+    description: number;
     folderId: number;
     tagAssistedId: number;
     tagConfirmedId: number;
@@ -13797,6 +13806,9 @@ export namespace Prisma {
     startingDate?: true;
     endingDate?: true;
     location?: true;
+    mainPictureUrl?: true;
+    bannerUrl?: true;
+    description?: true;
     folderId?: true;
     tagAssistedId?: true;
     tagConfirmedId?: true;
@@ -13813,6 +13825,9 @@ export namespace Prisma {
     startingDate?: true;
     endingDate?: true;
     location?: true;
+    mainPictureUrl?: true;
+    bannerUrl?: true;
+    description?: true;
     folderId?: true;
     tagAssistedId?: true;
     tagConfirmedId?: true;
@@ -13829,6 +13844,9 @@ export namespace Prisma {
     startingDate?: true;
     endingDate?: true;
     location?: true;
+    mainPictureUrl?: true;
+    bannerUrl?: true;
+    description?: true;
     folderId?: true;
     tagAssistedId?: true;
     tagConfirmedId?: true;
@@ -13921,6 +13939,9 @@ export namespace Prisma {
     startingDate: Date;
     endingDate: Date;
     location: string;
+    mainPictureUrl: string | null;
+    bannerUrl: string | null;
+    description: string | null;
     folderId: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
@@ -13956,6 +13977,9 @@ export namespace Prisma {
       startingDate?: boolean;
       endingDate?: boolean;
       location?: boolean;
+      mainPictureUrl?: boolean;
+      bannerUrl?: boolean;
+      description?: boolean;
       folderId?: boolean;
       tagAssistedId?: boolean;
       tagConfirmedId?: boolean;
@@ -13989,6 +14013,9 @@ export namespace Prisma {
       startingDate?: boolean;
       endingDate?: boolean;
       location?: boolean;
+      mainPictureUrl?: boolean;
+      bannerUrl?: boolean;
+      description?: boolean;
       folderId?: boolean;
       tagAssistedId?: boolean;
       tagConfirmedId?: boolean;
@@ -14014,6 +14041,9 @@ export namespace Prisma {
       startingDate?: boolean;
       endingDate?: boolean;
       location?: boolean;
+      mainPictureUrl?: boolean;
+      bannerUrl?: boolean;
+      description?: boolean;
       folderId?: boolean;
       tagAssistedId?: boolean;
       tagConfirmedId?: boolean;
@@ -14036,6 +14066,9 @@ export namespace Prisma {
     startingDate?: boolean;
     endingDate?: boolean;
     location?: boolean;
+    mainPictureUrl?: boolean;
+    bannerUrl?: boolean;
+    description?: boolean;
     folderId?: boolean;
     tagAssistedId?: boolean;
     tagConfirmedId?: boolean;
@@ -14054,6 +14087,9 @@ export namespace Prisma {
     | 'startingDate'
     | 'endingDate'
     | 'location'
+    | 'mainPictureUrl'
+    | 'bannerUrl'
+    | 'description'
     | 'folderId'
     | 'tagAssistedId'
     | 'tagConfirmedId'
@@ -14121,6 +14157,9 @@ export namespace Prisma {
         startingDate: Date;
         endingDate: Date;
         location: string;
+        mainPictureUrl: string | null;
+        bannerUrl: string | null;
+        description: string | null;
         folderId: string | null;
         tagAssistedId: string;
         tagConfirmedId: string;
@@ -14851,6 +14890,9 @@ export namespace Prisma {
     readonly startingDate: FieldRef<'Event', 'DateTime'>;
     readonly endingDate: FieldRef<'Event', 'DateTime'>;
     readonly location: FieldRef<'Event', 'String'>;
+    readonly mainPictureUrl: FieldRef<'Event', 'String'>;
+    readonly bannerUrl: FieldRef<'Event', 'String'>;
+    readonly description: FieldRef<'Event', 'String'>;
     readonly folderId: FieldRef<'Event', 'String'>;
     readonly tagAssistedId: FieldRef<'Event', 'String'>;
     readonly tagConfirmedId: FieldRef<'Event', 'String'>;
@@ -27944,6 +27986,9 @@ export namespace Prisma {
     startingDate: 'startingDate';
     endingDate: 'endingDate';
     location: 'location';
+    mainPictureUrl: 'mainPictureUrl';
+    bannerUrl: 'bannerUrl';
+    description: 'description';
     folderId: 'folderId';
     tagAssistedId: 'tagAssistedId';
     tagConfirmedId: 'tagConfirmedId';
@@ -29051,6 +29096,9 @@ export namespace Prisma {
     startingDate?: DateTimeFilter<'Event'> | Date | string;
     endingDate?: DateTimeFilter<'Event'> | Date | string;
     location?: StringFilter<'Event'> | string;
+    mainPictureUrl?: StringNullableFilter<'Event'> | string | null;
+    bannerUrl?: StringNullableFilter<'Event'> | string | null;
+    description?: StringNullableFilter<'Event'> | string | null;
     folderId?: StringNullableFilter<'Event'> | string | null;
     tagAssistedId?: StringFilter<'Event'> | string;
     tagConfirmedId?: StringFilter<'Event'> | string;
@@ -29081,6 +29129,9 @@ export namespace Prisma {
     startingDate?: SortOrder;
     endingDate?: SortOrder;
     location?: SortOrder;
+    mainPictureUrl?: SortOrderInput | SortOrder;
+    bannerUrl?: SortOrderInput | SortOrder;
+    description?: SortOrderInput | SortOrder;
     folderId?: SortOrderInput | SortOrder;
     tagAssistedId?: SortOrder;
     tagConfirmedId?: SortOrder;
@@ -29114,6 +29165,9 @@ export namespace Prisma {
       startingDate?: DateTimeFilter<'Event'> | Date | string;
       endingDate?: DateTimeFilter<'Event'> | Date | string;
       location?: StringFilter<'Event'> | string;
+      mainPictureUrl?: StringNullableFilter<'Event'> | string | null;
+      bannerUrl?: StringNullableFilter<'Event'> | string | null;
+      description?: StringNullableFilter<'Event'> | string | null;
       folderId?: StringNullableFilter<'Event'> | string | null;
       supraEventId?: StringNullableFilter<'Event'> | string | null;
       active?: BoolFilter<'Event'> | boolean;
@@ -29147,6 +29201,9 @@ export namespace Prisma {
     startingDate?: SortOrder;
     endingDate?: SortOrder;
     location?: SortOrder;
+    mainPictureUrl?: SortOrderInput | SortOrder;
+    bannerUrl?: SortOrderInput | SortOrder;
+    description?: SortOrderInput | SortOrder;
     folderId?: SortOrderInput | SortOrder;
     tagAssistedId?: SortOrder;
     tagConfirmedId?: SortOrder;
@@ -29173,6 +29230,12 @@ export namespace Prisma {
     startingDate?: DateTimeWithAggregatesFilter<'Event'> | Date | string;
     endingDate?: DateTimeWithAggregatesFilter<'Event'> | Date | string;
     location?: StringWithAggregatesFilter<'Event'> | string;
+    mainPictureUrl?:
+      | StringNullableWithAggregatesFilter<'Event'>
+      | string
+      | null;
+    bannerUrl?: StringNullableWithAggregatesFilter<'Event'> | string | null;
+    description?: StringNullableWithAggregatesFilter<'Event'> | string | null;
     folderId?: StringNullableWithAggregatesFilter<'Event'> | string | null;
     tagAssistedId?: StringWithAggregatesFilter<'Event'> | string;
     tagConfirmedId?: StringWithAggregatesFilter<'Event'> | string;
@@ -30705,6 +30768,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -30728,6 +30794,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     folderId?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
@@ -30751,6 +30820,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -30774,6 +30846,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
@@ -30797,6 +30872,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     folderId?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
@@ -30813,6 +30891,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -30825,6 +30906,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
@@ -32194,6 +32278,9 @@ export namespace Prisma {
     startingDate?: SortOrder;
     endingDate?: SortOrder;
     location?: SortOrder;
+    mainPictureUrl?: SortOrder;
+    bannerUrl?: SortOrder;
+    description?: SortOrder;
     folderId?: SortOrder;
     tagAssistedId?: SortOrder;
     tagConfirmedId?: SortOrder;
@@ -32210,6 +32297,9 @@ export namespace Prisma {
     startingDate?: SortOrder;
     endingDate?: SortOrder;
     location?: SortOrder;
+    mainPictureUrl?: SortOrder;
+    bannerUrl?: SortOrder;
+    description?: SortOrder;
     folderId?: SortOrder;
     tagAssistedId?: SortOrder;
     tagConfirmedId?: SortOrder;
@@ -32226,6 +32316,9 @@ export namespace Prisma {
     startingDate?: SortOrder;
     endingDate?: SortOrder;
     location?: SortOrder;
+    mainPictureUrl?: SortOrder;
+    bannerUrl?: SortOrder;
+    description?: SortOrder;
     folderId?: SortOrder;
     tagAssistedId?: SortOrder;
     tagConfirmedId?: SortOrder;
@@ -38679,6 +38772,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -38701,6 +38797,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     folderId?: string | null;
     tagConfirmedId: string;
     supraEventId?: string | null;
@@ -38731,6 +38830,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -38753,6 +38855,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     folderId?: string | null;
     tagAssistedId: string;
     supraEventId?: string | null;
@@ -38931,6 +39036,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -38953,6 +39061,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     folderId?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
@@ -38983,6 +39094,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -39005,6 +39119,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     folderId?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
@@ -39093,6 +39210,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -39115,6 +39235,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -39157,6 +39280,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -39179,6 +39305,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -39330,6 +39459,9 @@ export namespace Prisma {
     startingDate?: DateTimeFilter<'Event'> | Date | string;
     endingDate?: DateTimeFilter<'Event'> | Date | string;
     location?: StringFilter<'Event'> | string;
+    mainPictureUrl?: StringNullableFilter<'Event'> | string | null;
+    bannerUrl?: StringNullableFilter<'Event'> | string | null;
+    description?: StringNullableFilter<'Event'> | string | null;
     folderId?: StringNullableFilter<'Event'> | string | null;
     tagAssistedId?: StringFilter<'Event'> | string;
     tagConfirmedId?: StringFilter<'Event'> | string;
@@ -39542,6 +39674,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -39564,6 +39699,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     folderId?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
@@ -39668,6 +39806,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -39690,6 +39831,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     folderId?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
@@ -40016,6 +40160,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -40038,6 +40185,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
@@ -40283,6 +40433,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -40305,6 +40458,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
     supraEventId?: string | null;
@@ -40563,6 +40719,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -40585,6 +40744,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     folderId?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
@@ -40737,6 +40899,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -40759,6 +40924,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
@@ -40942,6 +41110,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -40964,6 +41135,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     folderId?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
@@ -41057,6 +41231,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -41079,6 +41256,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
@@ -41129,6 +41309,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -41151,6 +41334,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     folderId?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
@@ -41201,6 +41387,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -41223,6 +41412,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
@@ -41397,6 +41589,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     active?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -41419,6 +41614,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     folderId?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
@@ -43061,6 +43259,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -43083,6 +43284,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
@@ -43105,6 +43309,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
@@ -43121,6 +43328,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -43143,6 +43353,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
@@ -43165,6 +43378,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
@@ -43250,6 +43466,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     folderId?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
@@ -43363,6 +43582,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -43385,6 +43607,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
@@ -43407,6 +43632,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
@@ -43555,6 +43783,9 @@ export namespace Prisma {
     startingDate?: Date | string;
     endingDate?: Date | string;
     location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
     tagAssistedId: string;
     tagConfirmedId: string;
     supraEventId?: string | null;
@@ -43570,6 +43801,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -43592,6 +43826,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -43614,6 +43851,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
     supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
@@ -43853,6 +44093,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     active?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -43875,6 +44118,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;
@@ -43897,6 +44143,9 @@ export namespace Prisma {
     startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
     location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
     folderId?: NullableStringFieldUpdateOperationsInput | string | null;
     tagAssistedId?: StringFieldUpdateOperationsInput | string;
     tagConfirmedId?: StringFieldUpdateOperationsInput | string;

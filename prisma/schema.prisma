@@ -190,7 +190,10 @@ model Event {
   date         DateTime
   startingDate DateTime @default(now()) @map("starting_date")
   endingDate   DateTime @default(now()) @map("ending_date")
-  location     String
+  location          String
+  mainPictureUrl   String? @map("main_picture_url")
+  bannerUrl    String? @map("banner_url")
+  description  String? @map("description")
 
   folderId String?      @map("folder_id")
   folder   EventFolder? @relation("EVENT_FOLDER_X_EVENT", fields: [folderId], references: [id], onDelete: Cascade)

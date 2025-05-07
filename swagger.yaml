@@ -791,6 +791,150 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Event"
+  /event/update-banner/{id}:
+    patch:
+      operationId: "EventController_updateBanner"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UpdateBannerEventDto"
+      responses:
+        200:
+          description: "Imagen actualizada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateBannerEventResponseDto"
+        409:
+          description: "Conflicto al actualizar la imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        422:
+          description: "La imagen no es válida, debe ser un archivo de imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al subir la imagen al CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Event"
+  /event/delete-banner/{id}:
+    delete:
+      operationId: "EventController_deleteBanner"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Imagen eliminada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateMainPictureEventResponseDto"
+        404:
+          description: "Perfil o foto no encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al eliminar la imagen del CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Event"
+  /event/update-main-picture/{id}:
+    patch:
+      operationId: "EventController_updateMainPicture"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UpdateMainPictureEventDto"
+      responses:
+        200:
+          description: "Imagen actualizada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateMainPictureEventResponseDto"
+        409:
+          description: "Conflicto al actualizar la imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        422:
+          description: "La imagen no es válida, debe ser un archivo de imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al subir la imagen al CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Event"
+  /event/delete-main-picture/{id}:
+    delete:
+      operationId: "EventController_deleteMainPicture"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Imagen eliminada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateMainPictureEventResponseDto"
+        404:
+          description: "Perfil o foto no encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al eliminar la imagen del CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Event"
   /event/all:
     get:
       operationId: "EventController_findAll"
@@ -1157,6 +1301,78 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Profile"
+  /profile/update-image/{id}:
+    patch:
+      operationId: "ProfileController_updateImage"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UpdateImageProfileDto"
+      responses:
+        200:
+          description: "Imagen actualizada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateImageProfileResponseDto"
+        409:
+          description: "Conflicto al actualizar la imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        422:
+          description: "La imagen no es válida, debe ser un archivo de imagen"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al subir la imagen al CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Profile"
+  /profile/delete-image/{id}:
+    delete:
+      operationId: "ProfileController_deleteImage"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Imagen eliminada exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteImageProfileResponseDto"
+        404:
+          description: "Perfil o foto no encontrados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        500:
+          description: "Error al eliminar la imagen del CDN"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Profile"
   /profile/{id}:
     get:
       operationId: "ProfileController_findById"
@@ -1239,78 +1455,6 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Profile"
-  /image/update/{id}:
-    patch:
-      operationId: "ImageController_updateImage"
-      parameters:
-        - name: "id"
-          required: true
-          in: "path"
-          schema:
-            type: "string"
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              $ref: "#/components/schemas/UpdateImageDto"
-      responses:
-        200:
-          description: "Imagen actualizada exitosamente"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UpdateImageResponseDto"
-        409:
-          description: "Conflicto al actualizar la imagen"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorDto"
-        422:
-          description: "La imagen no es válida, debe ser un archivo de imagen"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorDto"
-        500:
-          description: "Error al subir la imagen al CDN"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorDto"
-      tags:
-        - "Image"
-  /image/delete/{id}:
-    delete:
-      operationId: "ImageController_deleteImage"
-      parameters:
-        - name: "id"
-          required: true
-          in: "path"
-          schema:
-            type: "string"
-      responses:
-        200:
-          description: "Imagen eliminada exitosamente"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DeleteImageResponseDto"
-        404:
-          description: "Perfil o foto no encontrados"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorDto"
-        500:
-          description: "Error al eliminar la imagen del CDN"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorDto"
-      tags:
-        - "Image"
   /csv/download-profiles:
     post:
       operationId: "CsvController_downloadProfiles"
@@ -4913,6 +5057,20 @@ components:
                       type:
                         - "string"
                       minLength: 1
+                    mainPictureUrl:
+                      type:
+                        - "string"
+                        - "null"
+                      format: "uri"
+                    bannerUrl:
+                      type:
+                        - "string"
+                        - "null"
+                      format: "uri"
+                    description:
+                      type:
+                        - "string"
+                        - "null"
                     folderId:
                       type:
                         - "string"
@@ -4949,6 +5107,9 @@ components:
                     - "startingDate"
                     - "endingDate"
                     - "location"
+                    - "mainPictureUrl"
+                    - "bannerUrl"
+                    - "description"
                     - "folderId"
                     - "tagAssistedId"
                     - "tagConfirmedId"
@@ -5021,6 +5182,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
               folderId:
                 type:
                   - "string"
@@ -5057,6 +5232,9 @@ components:
               - "startingDate"
               - "endingDate"
               - "location"
+              - "mainPictureUrl"
+              - "bannerUrl"
+              - "description"
               - "folderId"
               - "tagAssistedId"
               - "tagConfirmedId"
@@ -5178,6 +5356,20 @@ components:
             - "string"
             - "null"
           format: "uuid"
+        mainPictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        bannerUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        description:
+          type:
+            - "string"
+            - "null"
         subEvents:
           type:
             - "array"
@@ -5205,12 +5397,29 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
             required:
               - "name"
               - "date"
               - "startingDate"
               - "endingDate"
               - "location"
+              - "mainPictureUrl"
+              - "bannerUrl"
+              - "description"
         tagsId:
           type:
             - "array"
@@ -5252,6 +5461,9 @@ components:
         - "endingDate"
         - "location"
         - "folderId"
+        - "mainPictureUrl"
+        - "bannerUrl"
+        - "description"
         - "tagsId"
         - "eventTickets"
     CreateEventResponseDto:
@@ -5282,6 +5494,20 @@ components:
           type:
             - "string"
           minLength: 1
+        mainPictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        bannerUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        description:
+          type:
+            - "string"
+            - "null"
         folderId:
           type:
             - "string"
@@ -5318,6 +5544,9 @@ components:
         - "startingDate"
         - "endingDate"
         - "location"
+        - "mainPictureUrl"
+        - "bannerUrl"
+        - "description"
         - "folderId"
         - "tagAssistedId"
         - "tagConfirmedId"
@@ -5325,6 +5554,38 @@ components:
         - "supraEventId"
         - "created_at"
         - "updated_at"
+    UpdateBannerEventDto:
+      type:
+        - "object"
+      properties:
+        image:
+          type: "object"
+          format: "binary"
+    UpdateBannerEventResponseDto:
+      type:
+        - "object"
+      properties:
+        message:
+          type:
+            - "string"
+      required:
+        - "message"
+    UpdateMainPictureEventResponseDto:
+      type:
+        - "object"
+      properties:
+        message:
+          type:
+            - "string"
+      required:
+        - "message"
+    UpdateMainPictureEventDto:
+      type:
+        - "object"
+      properties:
+        image:
+          type: "object"
+          format: "binary"
     GetAllEventsResponseDto:
       type:
         - "object"
@@ -5388,6 +5649,20 @@ components:
                       type:
                         - "string"
                       minLength: 1
+                    mainPictureUrl:
+                      type:
+                        - "string"
+                        - "null"
+                      format: "uri"
+                    bannerUrl:
+                      type:
+                        - "string"
+                        - "null"
+                      format: "uri"
+                    description:
+                      type:
+                        - "string"
+                        - "null"
                     folderId:
                       type:
                         - "string"
@@ -5446,6 +5721,20 @@ components:
                           type:
                             - "string"
                           minLength: 1
+                        mainPictureUrl:
+                          type:
+                            - "string"
+                            - "null"
+                          format: "uri"
+                        bannerUrl:
+                          type:
+                            - "string"
+                            - "null"
+                          format: "uri"
+                        description:
+                          type:
+                            - "string"
+                            - "null"
                         folderId:
                           type:
                             - "string"
@@ -5482,6 +5771,9 @@ components:
                         - "startingDate"
                         - "endingDate"
                         - "location"
+                        - "mainPictureUrl"
+                        - "bannerUrl"
+                        - "description"
                         - "folderId"
                         - "tagAssistedId"
                         - "tagConfirmedId"
@@ -5520,6 +5812,20 @@ components:
                             type:
                               - "string"
                             minLength: 1
+                          mainPictureUrl:
+                            type:
+                              - "string"
+                              - "null"
+                            format: "uri"
+                          bannerUrl:
+                            type:
+                              - "string"
+                              - "null"
+                            format: "uri"
+                          description:
+                            type:
+                              - "string"
+                              - "null"
                           folderId:
                             type:
                               - "string"
@@ -5556,6 +5862,9 @@ components:
                           - "startingDate"
                           - "endingDate"
                           - "location"
+                          - "mainPictureUrl"
+                          - "bannerUrl"
+                          - "description"
                           - "folderId"
                           - "tagAssistedId"
                           - "tagConfirmedId"
@@ -5656,6 +5965,9 @@ components:
                     - "startingDate"
                     - "endingDate"
                     - "location"
+                    - "mainPictureUrl"
+                    - "bannerUrl"
+                    - "description"
                     - "folderId"
                     - "tagAssistedId"
                     - "tagConfirmedId"
@@ -5705,6 +6017,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
               folderId:
                 type:
                   - "string"
@@ -5763,6 +6089,20 @@ components:
                     type:
                       - "string"
                     minLength: 1
+                  mainPictureUrl:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uri"
+                  bannerUrl:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uri"
+                  description:
+                    type:
+                      - "string"
+                      - "null"
                   folderId:
                     type:
                       - "string"
@@ -5799,6 +6139,9 @@ components:
                   - "startingDate"
                   - "endingDate"
                   - "location"
+                  - "mainPictureUrl"
+                  - "bannerUrl"
+                  - "description"
                   - "folderId"
                   - "tagAssistedId"
                   - "tagConfirmedId"
@@ -5837,6 +6180,20 @@ components:
                       type:
                         - "string"
                       minLength: 1
+                    mainPictureUrl:
+                      type:
+                        - "string"
+                        - "null"
+                      format: "uri"
+                    bannerUrl:
+                      type:
+                        - "string"
+                        - "null"
+                      format: "uri"
+                    description:
+                      type:
+                        - "string"
+                        - "null"
                     folderId:
                       type:
                         - "string"
@@ -5873,6 +6230,9 @@ components:
                     - "startingDate"
                     - "endingDate"
                     - "location"
+                    - "mainPictureUrl"
+                    - "bannerUrl"
+                    - "description"
                     - "folderId"
                     - "tagAssistedId"
                     - "tagConfirmedId"
@@ -5973,6 +6333,9 @@ components:
               - "startingDate"
               - "endingDate"
               - "location"
+              - "mainPictureUrl"
+              - "bannerUrl"
+              - "description"
               - "folderId"
               - "tagAssistedId"
               - "tagConfirmedId"
@@ -6022,6 +6385,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
               folderId:
                 type:
                   - "string"
@@ -6090,6 +6467,9 @@ components:
               - "startingDate"
               - "endingDate"
               - "location"
+              - "mainPictureUrl"
+              - "bannerUrl"
+              - "description"
               - "folderId"
               - "tagAssistedId"
               - "tagConfirmedId"
@@ -6209,6 +6589,20 @@ components:
           type:
             - "string"
           minLength: 1
+        mainPictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        bannerUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        description:
+          type:
+            - "string"
+            - "null"
         folderId:
           type:
             - "string"
@@ -6269,6 +6663,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
               folderId:
                 type:
                   - "string"
@@ -6305,6 +6713,9 @@ components:
               - "startingDate"
               - "endingDate"
               - "location"
+              - "mainPictureUrl"
+              - "bannerUrl"
+              - "description"
               - "folderId"
               - "tagAssistedId"
               - "tagConfirmedId"
@@ -6341,6 +6752,20 @@ components:
               type:
                 - "string"
               minLength: 1
+            mainPictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            bannerUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            description:
+              type:
+                - "string"
+                - "null"
             folderId:
               type:
                 - "string"
@@ -6377,6 +6802,9 @@ components:
             - "startingDate"
             - "endingDate"
             - "location"
+            - "mainPictureUrl"
+            - "bannerUrl"
+            - "description"
             - "folderId"
             - "tagAssistedId"
             - "tagConfirmedId"
@@ -6727,6 +7155,9 @@ components:
         - "startingDate"
         - "endingDate"
         - "location"
+        - "mainPictureUrl"
+        - "bannerUrl"
+        - "description"
         - "folderId"
         - "tagAssistedId"
         - "tagConfirmedId"
@@ -6852,6 +7283,20 @@ components:
           type:
             - "string"
           format: "date-time"
+        bannerUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        mainPictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        description:
+          type:
+            - "string"
+            - "null"
         tagsId:
           type:
             - "array"
@@ -6886,6 +7331,20 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
               id:
                 oneOf:
                   - type:
@@ -6896,11 +7355,6 @@ components:
                     enum:
                       - ""
             required:
-              - "name"
-              - "location"
-              - "date"
-              - "startingDate"
-              - "endingDate"
               - "id"
         eventTickets:
           type:
@@ -6929,16 +7383,6 @@ components:
               - "amount"
               - "type"
               - "price"
-      required:
-        - "name"
-        - "folderId"
-        - "date"
-        - "location"
-        - "startingDate"
-        - "endingDate"
-        - "tagsId"
-        - "subEvents"
-        - "eventTickets"
     UpdateEventResponseDto:
       type:
         - "object"
@@ -6967,6 +7411,20 @@ components:
           type:
             - "string"
           minLength: 1
+        mainPictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        bannerUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        description:
+          type:
+            - "string"
+            - "null"
         folderId:
           type:
             - "string"
@@ -7111,6 +7569,9 @@ components:
         - "startingDate"
         - "endingDate"
         - "location"
+        - "mainPictureUrl"
+        - "bannerUrl"
+        - "description"
         - "folderId"
         - "tagAssistedId"
         - "tagConfirmedId"
@@ -7148,6 +7609,20 @@ components:
           type:
             - "string"
           minLength: 1
+        mainPictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        bannerUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        description:
+          type:
+            - "string"
+            - "null"
         folderId:
           type:
             - "string"
@@ -7184,6 +7659,9 @@ components:
         - "startingDate"
         - "endingDate"
         - "location"
+        - "mainPictureUrl"
+        - "bannerUrl"
+        - "description"
         - "folderId"
         - "tagAssistedId"
         - "tagConfirmedId"
@@ -8681,6 +9159,31 @@ components:
                 - "type"
       required:
         - "response"
+    UpdateImageProfileDto:
+      type:
+        - "object"
+      properties:
+        image:
+          type: "object"
+          format: "binary"
+    UpdateImageProfileResponseDto:
+      type:
+        - "object"
+      properties:
+        message:
+          type:
+            - "string"
+      required:
+        - "message"
+    DeleteImageProfileResponseDto:
+      type:
+        - "object"
+      properties:
+        message:
+          type:
+            - "string"
+      required:
+        - "message"
     FindByIdProfileResponseDto:
       type:
         - "object"
@@ -9233,31 +9736,6 @@ components:
             type:
               - "string"
             format: "uuid"
-    UpdateImageDto:
-      type:
-        - "object"
-      properties:
-        image:
-          type: "object"
-          format: "binary"
-    UpdateImageResponseDto:
-      type:
-        - "object"
-      properties:
-        message:
-          type:
-            - "string"
-      required:
-        - "message"
-    DeleteImageResponseDto:
-      type:
-        - "object"
-      properties:
-        message:
-          type:
-            - "string"
-      required:
-        - "message"
     DownloadProfilesDto:
       type:
         - "object"
@@ -9790,6 +10268,20 @@ components:
               type:
                 - "string"
               minLength: 1
+            mainPictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            bannerUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            description:
+              type:
+                - "string"
+                - "null"
             folderId:
               type:
                 - "string"
@@ -9826,6 +10318,9 @@ components:
             - "startingDate"
             - "endingDate"
             - "location"
+            - "mainPictureUrl"
+            - "bannerUrl"
+            - "description"
             - "folderId"
             - "tagAssistedId"
             - "tagConfirmedId"
@@ -9987,6 +10482,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              mainPictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              bannerUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              description:
+                type:
+                  - "string"
+                  - "null"
               folderId:
                 type:
                   - "string"
@@ -10023,6 +10532,9 @@ components:
               - "startingDate"
               - "endingDate"
               - "location"
+              - "mainPictureUrl"
+              - "bannerUrl"
+              - "description"
               - "folderId"
               - "tagAssistedId"
               - "tagConfirmedId"
@@ -10255,6 +10767,20 @@ components:
                   type:
                     - "string"
                   minLength: 1
+                mainPictureUrl:
+                  type:
+                    - "string"
+                    - "null"
+                  format: "uri"
+                bannerUrl:
+                  type:
+                    - "string"
+                    - "null"
+                  format: "uri"
+                description:
+                  type:
+                    - "string"
+                    - "null"
                 folderId:
                   type:
                     - "string"
@@ -10291,6 +10817,9 @@ components:
                 - "startingDate"
                 - "endingDate"
                 - "location"
+                - "mainPictureUrl"
+                - "bannerUrl"
+                - "description"
                 - "folderId"
                 - "tagAssistedId"
                 - "tagConfirmedId"
@@ -11020,6 +11549,20 @@ components:
                     type:
                       - "string"
                     minLength: 1
+                  mainPictureUrl:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uri"
+                  bannerUrl:
+                    type:
+                      - "string"
+                      - "null"
+                    format: "uri"
+                  description:
+                    type:
+                      - "string"
+                      - "null"
                   folderId:
                     type:
                       - "string"
@@ -11056,6 +11599,9 @@ components:
                   - "startingDate"
                   - "endingDate"
                   - "location"
+                  - "mainPictureUrl"
+                  - "bannerUrl"
+                  - "description"
                   - "folderId"
                   - "tagAssistedId"
                   - "tagConfirmedId"
@@ -11559,6 +12105,20 @@ components:
               type:
                 - "string"
               minLength: 1
+            mainPictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            bannerUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            description:
+              type:
+                - "string"
+                - "null"
             folderId:
               type:
                 - "string"
@@ -11595,6 +12155,9 @@ components:
             - "startingDate"
             - "endingDate"
             - "location"
+            - "mainPictureUrl"
+            - "bannerUrl"
+            - "description"
             - "folderId"
             - "tagAssistedId"
             - "tagConfirmedId"

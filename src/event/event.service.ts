@@ -46,6 +46,9 @@ export class EventService {
         startingDate: dto.startingDate,
         endingDate: dto.endingDate,
         location: dto.location,
+        mainPictureUrl: dto.mainPictureUrl ?? undefined,
+        bannerUrl: dto.bannerUrl ?? undefined,
+        description: dto.description ?? undefined,
         folder: dto.folderId ? { connect: { id: dto.folderId } } : undefined,
         tagAssisted: {
           create: {
@@ -129,7 +132,12 @@ export class EventService {
         tickets: true,
       },
     });
-    return event!;
+    return {
+      ...event!,
+      description:
+        event?.description ??
+        translate('route.event.get-by-id.not-found-description'),
+    };
   }
 
   async findBySupraEventId(
@@ -184,9 +192,11 @@ export class EventService {
 
   async update(
     id: Event['id'],
-    updateEventDto: Omit<UpdateEventDto, 'eventTickets'> & {
-      eventTickets: Pick<EventTicket, 'id' | 'amount' | 'price' | 'type'>[];
-    },
+    updateEventDto: Partial<
+      Omit<UpdateEventDto, 'eventTickets'> & {
+        eventTickets: Pick<EventTicket, 'id' | 'amount' | 'price' | 'type'>[];
+      }
+    >,
   ): Promise<z.infer<typeof updateEventResponseSchema>> {
     return await this.prisma.event.update({
       where: { id },
@@ -196,18 +206,27 @@ export class EventService {
         location: updateEventDto.location,
         startingDate: updateEventDto.startingDate,
         endingDate: updateEventDto.endingDate,
-        eventTickets: {
-          set: updateEventDto.eventTickets.map((ticket) => ({
-            id: ticket.id,
-            amount: ticket.amount,
-            price: ticket.price,
-            type: ticket.type,
-          })),
-        },
-        profileTags: { set: updateEventDto.tagsId.map((tag) => ({ id: tag })) },
+        bannerUrl: updateEventDto.bannerUrl,
+        mainPictureUrl: updateEventDto.mainPictureUrl,
+        description: updateEventDto.description,
+        eventTickets: updateEventDto.eventTickets
+          ? {
+              set: updateEventDto.eventTickets.map((ticket) => ({
+                id: ticket.id,
+                amount: ticket.amount,
+                price: ticket.price,
+                type: ticket.type,
+              })),
+            }
+          : undefined,
+        profileTags: updateEventDto.tagsId
+          ? { set: updateEventDto.tagsId.map((tag) => ({ id: tag })) }
+          : undefined,
         folder: updateEventDto.folderId
           ? { connect: { id: updateEventDto.folderId } }
-          : { disconnect: true },
+          : updateEventDto.folderId === null
+            ? { disconnect: true }
+            : undefined,
       },
       include: {
         tagAssisted: { include: { group: true } },
@@ -227,7 +246,14 @@ export class EventService {
     id: Event['id'];
     event: Pick<
       Event,
-      'date' | 'location' | 'name' | 'startingDate' | 'endingDate'
+      | 'date'
+      | 'location'
+      | 'name'
+      | 'startingDate'
+      | 'endingDate'
+      | 'bannerUrl'
+      | 'mainPictureUrl'
+      | 'description'
     >;
     supraEventId: Event['id'];
     tagGroupId: TagGroup['id'];
@@ -240,12 +266,18 @@ export class EventService {
         endingDate: event.endingDate,
         location: event.location,
         name: event.name,
+        bannerUrl: event.bannerUrl,
+        mainPictureUrl: event.mainPictureUrl,
+        description: event.description,
       },
       create: {
         date: event.date,
         startingDate: event.startingDate,
         endingDate: event.endingDate,
         location: event.location,
+        bannerUrl: event.bannerUrl,
+        mainPictureUrl: event.mainPictureUrl,
+        description: event.description,
         name: event.name,
         supraEvent: { connect: { id: supraEventId } },
         tagAssisted: {
@@ -309,6 +341,30 @@ export class EventService {
         profileTags: { some: { id: { in: tagIds } } },
       },
       include: { tickets: true, eventTickets: true },
+    });
+  }
+
+  async getEventBannerUrl(id: Event['id']): Promise<string | null> {
+    const event = await this.prisma.event.findUnique({ where: { id } });
+    return event?.bannerUrl ?? null;
+  }
+
+  async getEventMainPictureUrl(id: Event['id']): Promise<string | null> {
+    const event = await this.prisma.event.findUnique({ where: { id } });
+    return event?.mainPictureUrl ?? null;
+  }
+
+  async deleteBanner(id: Event['id']): Promise<void> {
+    await this.prisma.event.update({
+      where: { id },
+      data: { bannerUrl: null },
+    });
+  }
+
+  async deleteMainPicture(id: Event['id']): Promise<void> {
+    await this.prisma.event.update({
+      where: { id },
+      data: { mainPictureUrl: null },
     });
   }
 }

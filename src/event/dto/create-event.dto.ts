@@ -15,6 +15,9 @@ export const createEventSchema = eventSchema
     endingDate: true,
     location: true,
     folderId: true,
+    mainPictureUrl: true,
+    bannerUrl: true,
+    description: true,
   })
   .merge(
     z.object({
@@ -26,6 +29,9 @@ export const createEventSchema = eventSchema
             startingDate: true,
             endingDate: true,
             location: true,
+            mainPictureUrl: true,
+            bannerUrl: true,
+            description: true,
           }),
         )
         .optional(),

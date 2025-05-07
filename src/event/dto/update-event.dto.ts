@@ -17,6 +17,9 @@ export const updateEventSchema = eventSchema
     location: true,
     startingDate: true,
     endingDate: true,
+    bannerUrl: true,
+    mainPictureUrl: true,
+    description: true,
   })
   .merge(
     z.object({
@@ -29,7 +32,11 @@ export const updateEventSchema = eventSchema
             date: true,
             startingDate: true,
             endingDate: true,
+            bannerUrl: true,
+            mainPictureUrl: true,
+            description: true,
           })
+          .partial()
           .extend({
             id: eventSchema.shape.id.or(z.literal('')),
           }),
@@ -42,7 +49,8 @@ export const updateEventSchema = eventSchema
         ),
       ),
     }),
-  );
+  )
+  .partial();
 
 export class UpdateEventDto extends createZodDtoWithoutDate(
   updateEventSchema,
