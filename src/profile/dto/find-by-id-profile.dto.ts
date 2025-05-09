@@ -1,3 +1,4 @@
+import { productionSchema } from '@/production/dto/production.dto';
 import { locationSchema } from '@/schema/location.schema';
 import { profileSchema } from '@/schema/profile.schema';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
@@ -11,6 +12,8 @@ export const findByIdProfileResponseSchema = profileSchema
     z.object({
       residenceLocation: locationSchema.nullable(),
       birthLocation: locationSchema.nullable(),
+      productionsAdministrated: productionSchema.array(),
+      productionsParticipated: productionSchema.array(),
       tags: z.array(
         tagSchema.merge(
           z.object({
