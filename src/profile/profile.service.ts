@@ -17,6 +17,7 @@ import {
   Account,
   Location,
   Production,
+  ProductionAffiliationRequest,
   Profile,
   Tag,
   TagGroup,
@@ -63,6 +64,7 @@ export class ProfileService {
       password: Profile['password'];
       productionsAdministrated: Production[];
       productionsParticipated: Production[];
+      productionRequestsSent: ProductionAffiliationRequest[];
     }
   > {
     const profile = await this.prisma.profile.findUnique({
@@ -90,6 +92,7 @@ export class ProfileService {
         },
         productionsAdministrated: true,
         productionsParticipated: true,
+        productionRequestsSent: true,
         residenceLocation: true,
         birthLocation: true,
       },

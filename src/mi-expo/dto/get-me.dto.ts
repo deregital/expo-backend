@@ -1,3 +1,4 @@
+import { productionAffiliationRequestSchema } from '@/production-affiliation-request/dto/production-affiliation-request.dto';
 import { productionSchema } from '@/production/dto/production.dto';
 import { locationSchema } from '@/schema/location.schema';
 import { profileSchema } from '@/schema/profile.schema';
@@ -10,6 +11,7 @@ export const getMiExpoMeResponseSchema = profileSchema
     birthLocation: locationSchema.nullable(),
     productionsAdministrated: productionSchema.array(),
     productionsParticipated: productionSchema.array(),
+    productionRequestsSent: productionAffiliationRequestSchema.array(),
   });
 
 export class GetMiExpoMeResponseDto extends createZodDtoWithoutDate(
