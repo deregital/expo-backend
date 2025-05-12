@@ -12941,6 +12941,115 @@ components:
             - "city"
             - "created_at"
             - "updated_at"
+        productionsAdministrated:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              name:
+                type:
+                  - "string"
+                minLength: 1
+              administratorId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "name"
+              - "administratorId"
+              - "created_at"
+              - "updated_at"
+        productionsParticipated:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              name:
+                type:
+                  - "string"
+                minLength: 1
+              administratorId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "name"
+              - "administratorId"
+              - "created_at"
+              - "updated_at"
+        productionRequestsSent:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              productionId:
+                type:
+                  - "string"
+                format: "uuid"
+              profileId:
+                type:
+                  - "string"
+                format: "uuid"
+              status:
+                type:
+                  - "string"
+                enum:
+                  - "APPROVED"
+                  - "PENDING"
+                  - "REJECTED"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "productionId"
+              - "profileId"
+              - "status"
+              - "created_at"
+              - "updated_at"
       required:
         - "id"
         - "shortId"
@@ -12966,6 +13075,9 @@ components:
         - "updated_at"
         - "residenceLocation"
         - "birthLocation"
+        - "productionsAdministrated"
+        - "productionsParticipated"
+        - "productionRequestsSent"
     UpdateMiExpoMeDto:
       type:
         - "object"
