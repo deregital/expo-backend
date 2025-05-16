@@ -58,6 +58,7 @@ export class ProductionController {
     private readonly tagGroupService: TagGroupService,
   ) {}
 
+  @Roles(Role.MI_EXPO)
   @ApiOkResponse({
     description: translate('route.production.get-all.success'),
     type: GetAllProductionResponseDto,
