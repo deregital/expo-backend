@@ -10224,6 +10224,10 @@ components:
           type:
             - "string"
           minLength: 1
+        referralCode:
+          type:
+            - "string"
+            - "null"
         profileId:
           type:
             - "string"
@@ -10238,6 +10242,7 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "referralCode"
     CreateTicketResponseDto:
       type:
         - "object"
@@ -10441,6 +10446,10 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
+              referralCode:
+                type:
+                  - "string"
+                  - "null"
               profileId:
                 type:
                   - "string"
@@ -10452,6 +10461,7 @@ components:
               - "mail"
               - "dni"
               - "ticketGroupId"
+              - "referralCode"
       required:
         - "tickets"
     CreateManyTicketResponseDto:

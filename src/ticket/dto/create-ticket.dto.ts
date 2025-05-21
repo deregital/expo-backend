@@ -11,6 +11,7 @@ export const createTicketSchema = ticketSchema
     fullName: true,
     mail: true,
     dni: true,
+    referralCode: true,
   })
   .extend({
     profileId: profileSchema.shape.id.optional(),
