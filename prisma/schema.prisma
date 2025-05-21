@@ -87,6 +87,8 @@ model Profile {
   productionsParticipated  Production[]                   @relation("PRODUCTION_X_PARTICIPANT")
   productionRequestsSent   ProductionAffiliationRequest[] @relation("PRODUCTION_AFILIATION_X_PROFILE")
 
+  referralCode String?
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -185,15 +187,15 @@ model TagGroup {
 }
 
 model Event {
-  id           String   @id @default(uuid())
-  name         String
-  date         DateTime
-  startingDate DateTime @default(now()) @map("starting_date")
-  endingDate   DateTime @default(now()) @map("ending_date")
-  location          String
-  mainPictureUrl   String? @map("main_picture_url")
-  bannerUrl    String? @map("banner_url")
-  description  String? @map("description")
+  id             String   @id @default(uuid())
+  name           String
+  date           DateTime
+  startingDate   DateTime @default(now()) @map("starting_date")
+  endingDate     DateTime @default(now()) @map("ending_date")
+  location       String
+  mainPictureUrl String?  @map("main_picture_url")
+  bannerUrl      String?  @map("banner_url")
+  description    String?  @map("description")
 
   folderId String?      @map("folder_id")
   folder   EventFolder? @relation("EVENT_FOLDER_X_EVENT", fields: [folderId], references: [id], onDelete: Cascade)
@@ -301,6 +303,8 @@ model TicketGroup {
   event         Event             @relation("EVENT_X_TICKET_GROUP", fields: [eventId], references: [id], onDelete: Cascade)
 
   tickets Ticket[] @relation("TICKET_X_TICKET_GROUP")
+
+  referralCode String?
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

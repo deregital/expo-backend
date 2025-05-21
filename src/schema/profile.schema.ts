@@ -117,4 +117,6 @@ export const profileSchema = z.object({
 
   created_at: z.date(),
   updated_at: z.date(),
+
+  referralCode: z.string().nullable(),
 });

@@ -114,3 +114,7 @@ export async function getDMSansFonts(): Promise<{
 
   return { fontBold, fontSemiBold, fontLight };
 }
+
+export function generateRefferalCode(): string {
+  return 'codigo.con.formato';
+}
