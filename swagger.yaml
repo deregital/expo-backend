@@ -2220,20 +2220,6 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "TicketGroup"
-  /ticket-group/find-amount-referral-code/{code}:
-    get:
-      operationId: "TicketGroupController_findCountByReferralCode"
-      parameters:
-        - name: "code"
-          required: true
-          in: "path"
-          schema:
-            type: "string"
-      responses:
-        200:
-          description: ""
-      tags:
-        - "TicketGroup"
   /ticket-group/update/{id}:
     patch:
       operationId: "TicketGroupController_update"
