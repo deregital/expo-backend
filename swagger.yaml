@@ -1281,12 +1281,16 @@ paths:
             type: "string"
       responses:
         200:
-          description: ""
+          description: "Perfil creado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindReferralCodeUsageResponseDto"
       tags:
         - "Profile"
   /profile/referral-code-exists/{code}:
     get:
-      operationId: "ProfileController_referralCodeExists"
+      operationId: "ProfileController_findReferralCodeExists"
       parameters:
         - name: "code"
           required: true
@@ -1295,7 +1299,11 @@ paths:
             type: "string"
       responses:
         200:
-          description: ""
+          description: "Se ha encontrado la existencia del codigo de referido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindReferralCodeExistsResponseDto"
       tags:
         - "Profile"
   /profile/create:
@@ -8986,6 +8994,24 @@ components:
               - "movedToTrashDate"
       required:
         - "profiles"
+    FindReferralCodeUsageResponseDto:
+      type:
+        - "object"
+      properties:
+        amount:
+          type:
+            - "number"
+      required:
+        - "amount"
+    FindReferralCodeExistsResponseDto:
+      type:
+        - "object"
+      properties:
+        exists:
+          type:
+            - "boolean"
+      required:
+        - "exists"
     CreateProfileDto:
       type:
         - "object"

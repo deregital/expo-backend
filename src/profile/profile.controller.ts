@@ -102,6 +102,14 @@ import {
   deleteImageProfileResponseSchema,
 } from './dto/delete-image-profile.dto';
 import {
+  FindReferralCodeExistsResponseDto,
+  findReferralCodeExistsResponseSchema,
+} from './dto/find-referral-code-exists.dto';
+import {
+  FindReferralCodeUsageResponseDto,
+  findReferralCodeUsageResponseSchema,
+} from './dto/find-referral-code-usage.dto';
+import {
   UpdateImageProfileDto,
   UpdateImageProfileResponseDto,
 } from './dto/update-image-profile.dto';
@@ -261,20 +269,32 @@ export class ProfileController {
     };
   }
 
+  @Roles(Role.TICKETS)
+  @UseGuards(JwtGuard, RoleGuard)
+  @ApiOkResponse({
+    type: FindReferralCodeUsageResponseDto,
+    description: translate('route.profile.referral-code-usage.success'),
+  })
   @Get('/referral-code-usage/:code')
   async findReferralCodeUsage(
     @Param('code') code: string,
-  ): Promise<{ amount: number }> {
+  ): Promise<z.infer<typeof findReferralCodeUsageResponseSchema>> {
     const amount = await this.ticketGroupService.findCountByReferralCode(code);
     return {
       amount,
     };
   }
 
+  @Roles(Role.TICKETS)
+  @UseGuards(JwtGuard, RoleGuard)
+  @ApiOkResponse({
+    type: FindReferralCodeExistsResponseDto,
+    description: translate('route.profile.referral-code-exists.success'),
+  })
   @Get('/referral-code-exists/:code')
-  async referralCodeExists(
+  async findReferralCodeExists(
     @Param('code') code: string,
-  ): Promise<{ exists: boolean }> {
+  ): Promise<z.infer<typeof findReferralCodeExistsResponseSchema>> {
     const exists = await this.profileService.findReferralCode(code);
 
     return {
