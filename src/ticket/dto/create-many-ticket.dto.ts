@@ -14,7 +14,6 @@ export const createManyTicketSchema = z.object({
         mail: true,
         dni: true,
         ticketGroupId: true,
-        referralCode: true,
       })
       .extend({
         profileId: profileSchema.shape.id.optional(),

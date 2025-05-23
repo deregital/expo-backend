@@ -13,6 +13,9 @@ export const ticketGroupSchema = z.object({
     message: translate('model.ticketGroup.status.invalid'),
   }),
   eventId: eventSchema.shape.id,
+
+  referralCode: z.string().nullable().optional(),
+
   created_at: z.date(),
   updated_at: z.date(),
 });
