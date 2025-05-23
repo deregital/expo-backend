@@ -257,6 +257,7 @@ export class TicketController {
 
     await this.ticketGroupService.update(ticketGroupId, {
       status: isTicketFree ? 'FREE' : undefined,
+      referralCode: createManyTicketDto.tickets[0]?.referralCode,
     });
 
     if (isTicketFree) {
