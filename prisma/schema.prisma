@@ -87,7 +87,9 @@ model Profile {
   productionsParticipated  Production[]                   @relation("PRODUCTION_X_PARTICIPANT")
   productionRequestsSent   ProductionAffiliationRequest[] @relation("PRODUCTION_AFILIATION_X_PROFILE")
 
-  referralCode String @default("")
+  referralCode String @unique @default("")
+
+  referralCodeUsed TicketGroup[] @relation("PROFILE_X_TICKET_GROUP")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -307,6 +309,8 @@ model TicketGroup {
   tickets Ticket[] @relation("TICKET_X_TICKET_GROUP")
 
   referralCode String?
+
+  referralCodeProfile Profile? @relation("PROFILE_X_TICKET_GROUP", fields: [referralCode], references: [referralCode])
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
