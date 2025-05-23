@@ -23,6 +23,8 @@ export const ticketSchema = z.object({
 
   ticketGroupId: ticketGroupSchema.shape.id.nullable(),
 
+  referralCode: ticketGroupSchema.shape.referralCode,
+
   created_at: z.date(),
   updated_at: z.date(),
 });

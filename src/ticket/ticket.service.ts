@@ -195,7 +195,7 @@ export class TicketService {
   }
 
   async generatePdfTicket(
-    ticket: Omit<Ticket, 'profileId'> & { event: Event },
+    ticket: Omit<Ticket, 'profileId' | 'referralCode'> & { event: Event },
   ): Promise<Blob> {
     // Format date to a readable format
     const eventDate = new TZDate(
@@ -298,7 +298,9 @@ export class TicketService {
   }
 
   async generateMultiplePdfTickets(
-    tickets: Array<Omit<Ticket, 'profileId'> & { event: Event }>,
+    tickets: Array<
+      Omit<Ticket, 'profileId' | 'referralCode'> & { event: Event }
+    >,
   ): Promise<z.infer<typeof generateMultiplePdfTicketsSchema>> {
     // Generar PDFs para todos los tickets
     const pdfPromises = tickets.map(async (ticket) => {

@@ -14,7 +14,7 @@ export const ticketGroupSchema = z.object({
   }),
   eventId: eventSchema.shape.id,
 
-  referralCode: z.string().nullable().optional(),
+  referralCode: z.string().nullable(),
 
   created_at: z.date(),
   updated_at: z.date(),
