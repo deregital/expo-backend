@@ -193,7 +193,10 @@ export class ProfileService {
   ): Promise<Profile> {
     const highestShortId = await this.getHighestShortId();
 
-    const referralCode = generateReferralCode();
+    let referralCode = generateReferralCode();
+    while (this.findReferralCode(referralCode)) {
+      referralCode = generateReferralCode();
+    }
 
     const profileCreated = await this.prisma.profile.create({
       data: {
