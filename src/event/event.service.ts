@@ -2,7 +2,7 @@ import {
   CreateEventDto,
   createEventResponseSchema,
 } from '@/event/dto/create-event.dto';
-import { getAllEventsResponseSchema } from '@/event/dto/get-all-event.dto';
+import { getActiveEventsResponseSchema } from '@/event/dto/get-active-events.dto';
 import {
   getByIdEventResponseSchema,
   getBySupraEventResponseSchema,
@@ -16,8 +16,17 @@ import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Inject, Injectable } from '@nestjs/common';
 import { z } from 'zod';
-import { Event, TagGroup, TagType } from '~/types';
+import {
+  Event,
+  EventTicket,
+  Prisma,
+  Tag,
+  TagGroup,
+  TagType,
+} from '~/types/prisma-schema';
 import { deleteEventResponseSchema } from './dto/delete-event.dto';
+import { getAllStatisticsSchema } from './dto/get-all-statistics.dto';
+import { getStatisticsByIdSchema } from './dto/get-statistics-by-id-event.dto';
 
 @Injectable()
 export class EventService {
@@ -34,64 +43,68 @@ export class EventService {
       data: {
         name: dto.name,
         date: dto.date,
+        startingDate: dto.startingDate,
+        endingDate: dto.endingDate,
         location: dto.location,
+        mainPictureUrl: dto.mainPictureUrl ?? undefined,
+        bannerUrl: dto.bannerUrl ?? undefined,
+        description: dto.description ?? undefined,
         folder: dto.folderId ? { connect: { id: dto.folderId } } : undefined,
         tagAssisted: {
           create: {
-            group: {
-              connect: {
-                id: dto.tagGroupId,
-              },
-            },
+            group: { connect: { id: dto.tagGroupId } },
             name: `${dto.name} - ${translate('prisma.tag.assisted')}`,
             type: TagType.EVENT,
           },
         },
         tagConfirmed: {
           create: {
-            group: {
-              connect: {
-                id: dto.tagGroupId,
-              },
-            },
+            group: { connect: { id: dto.tagGroupId } },
             name: `${dto.name} - ${translate('prisma.tag.confirmed')}`,
             type: TagType.EVENT,
           },
         },
         subEvents: dto.subEvents
-          ? {
-              connect: dto.subEvents.map((subEvent) => ({ id: subEvent.id })),
-            }
+          ? { connect: dto.subEvents.map((subEvent) => ({ id: subEvent.id })) }
           : undefined,
-      },
-    });
-  }
 
-  async findAll(): Promise<
-    z.infer<typeof getAllEventsResponseSchema.shape.withoutFolder>
-  > {
-    const events = await this.prisma.event.findMany({
-      include: {
-        folder: true,
-        tagAssisted: true,
-        tagConfirmed: true,
-        subEvents: true,
-        supraEvent: true,
+        profileTags: { connect: dto.tagsId.map((tag) => ({ id: tag })) },
+        eventTickets: {
+          create: dto.eventTickets.map((ticket) => ({
+            amount: ticket.amount,
+            type: ticket.type,
+            price: ticket.price,
+          })),
+        },
       },
     });
-    return events;
   }
 
   async findWithoutFolder(): Promise<
-    Array<Event & { subEvents: Event[]; supraEvent: Event | null }>
+    Array<
+      Event & {
+        subEvents: Event[];
+        supraEvent: Event | null;
+        profileTags: (Pick<Tag, 'id' | 'name' | 'type'> & {
+          group: Pick<TagGroup, 'color' | 'isExclusive' | 'name' | 'id'>;
+        })[];
+        eventTickets: EventTicket[];
+      }
+    >
   > {
     return await this.prisma.event.findMany({
-      where: {
-        folderId: null,
-      },
+      where: { folderId: null },
       include: {
         subEvents: true,
         supraEvent: true,
+        profileTags: {
+          include: {
+            group: {
+              select: { id: true, color: true, name: true, isExclusive: true },
+            },
+          },
+        },
+        eventTickets: true,
       },
     });
   }
@@ -102,31 +115,88 @@ export class EventService {
     const event = await this.prisma.event.findUnique({
       where: { id },
       include: {
+        tagAssisted: {
+          include: {
+            group: true,
+          },
+        },
+        tagConfirmed: {
+          include: {
+            group: true,
+          },
+        },
         subEvents: true,
+        eventTickets: true,
         supraEvent: true,
+        profileTags: { include: { group: true } },
+        tickets: true,
       },
     });
-    return event!;
+    return {
+      ...event!,
+      description:
+        event?.description ??
+        translate('route.event.get-by-id.not-found-description'),
+    };
   }
 
   async findBySupraEventId(
     id: Event['id'],
   ): Promise<z.infer<typeof getBySupraEventResponseSchema>> {
     const events = await this.prisma.event.findMany({
-      where: {
-        supraEventId: id,
-      },
-      include: {
-        tagAssisted: true,
-        tagConfirmed: true,
-      },
+      where: { supraEventId: id },
+      include: { tagAssisted: true, tagConfirmed: true },
     });
     return events;
   }
 
+  async getAllEventWithTickets(): Promise<
+    z.infer<typeof getAllStatisticsSchema>
+  > {
+    const events = await this.prisma.event.findMany({
+      include: {
+        tickets: true,
+        eventTickets: true,
+        ticketGroups: true,
+      },
+    });
+
+    return events!;
+  }
+
+  async getEventWithTickets(
+    id: Event['id'],
+  ): Promise<z.infer<typeof getStatisticsByIdSchema>> {
+    const event = await this.prisma.event.findUnique({
+      where: { id },
+      include: {
+        tickets: true,
+        eventTickets: true,
+      },
+    });
+
+    return event!;
+  }
+
+  async getAvgAmountTicketGroupByEventId(
+    id: Event['id'],
+  ): Promise<number | null> {
+    const { _avg } = await this.prisma.ticketGroup.aggregate({
+      where: { eventId: id },
+      _avg: {
+        amountTickets: true,
+      },
+    });
+    return _avg.amountTickets;
+  }
+
   async update(
     id: Event['id'],
-    updateEventDto: UpdateEventDto,
+    updateEventDto: Partial<
+      Omit<UpdateEventDto, 'eventTickets'> & {
+        eventTickets: Pick<EventTicket, 'id' | 'amount' | 'price' | 'type'>[];
+      }
+    >,
   ): Promise<z.infer<typeof updateEventResponseSchema>> {
     return await this.prisma.event.update({
       where: { id },
@@ -134,15 +204,34 @@ export class EventService {
         name: updateEventDto.name,
         date: updateEventDto.date,
         location: updateEventDto.location,
+        startingDate: updateEventDto.startingDate,
+        endingDate: updateEventDto.endingDate,
+        bannerUrl: updateEventDto.bannerUrl,
+        mainPictureUrl: updateEventDto.mainPictureUrl,
+        description: updateEventDto.description,
+        eventTickets: updateEventDto.eventTickets
+          ? {
+              set: updateEventDto.eventTickets.map((ticket) => ({
+                id: ticket.id,
+                amount: ticket.amount,
+                price: ticket.price,
+                type: ticket.type,
+              })),
+            }
+          : undefined,
+        profileTags: updateEventDto.tagsId
+          ? { set: updateEventDto.tagsId.map((tag) => ({ id: tag })) }
+          : undefined,
         folder: updateEventDto.folderId
           ? { connect: { id: updateEventDto.folderId } }
-          : { disconnect: true },
+          : updateEventDto.folderId === null
+            ? { disconnect: true }
+            : undefined,
       },
       include: {
-        tagAssisted: {
-          include: {
-            group: true,
-          },
+        tagAssisted: { include: { group: true } },
+        eventTickets: {
+          select: { id: true, amount: true, price: true, type: true },
         },
       },
     });
@@ -155,46 +244,52 @@ export class EventService {
     tagGroupId,
   }: {
     id: Event['id'];
-    event: Pick<Event, 'date' | 'location' | 'name'>;
+    event: Pick<
+      Event,
+      | 'date'
+      | 'location'
+      | 'name'
+      | 'startingDate'
+      | 'endingDate'
+      | 'bannerUrl'
+      | 'mainPictureUrl'
+      | 'description'
+    >;
     supraEventId: Event['id'];
     tagGroupId: TagGroup['id'];
   }): Promise<Event> {
     return await this.prisma.event.upsert({
-      where: {
-        id,
-      },
+      where: { id },
       update: {
         date: event.date,
+        startingDate: event.startingDate,
+        endingDate: event.endingDate,
         location: event.location,
         name: event.name,
+        bannerUrl: event.bannerUrl,
+        mainPictureUrl: event.mainPictureUrl,
+        description: event.description,
       },
       create: {
         date: event.date,
+        startingDate: event.startingDate,
+        endingDate: event.endingDate,
         location: event.location,
+        bannerUrl: event.bannerUrl,
+        mainPictureUrl: event.mainPictureUrl,
+        description: event.description,
         name: event.name,
-        supraEvent: {
-          connect: {
-            id: supraEventId,
-          },
-        },
+        supraEvent: { connect: { id: supraEventId } },
         tagAssisted: {
           create: {
-            group: {
-              connect: {
-                id: tagGroupId,
-              },
-            },
+            group: { connect: { id: tagGroupId } },
             name: `${event.name} - ${translate('prisma.tag.assisted')}`,
             type: TagType.EVENT,
           },
         },
         tagConfirmed: {
           create: {
-            group: {
-              connect: {
-                id: tagGroupId,
-              },
-            },
+            group: { connect: { id: tagGroupId } },
             name: `${event.name} - ${translate('prisma.tag.confirmed')}`,
             type: TagType.EVENT,
           },
@@ -204,9 +299,72 @@ export class EventService {
   }
 
   async delete(id: string): Promise<z.infer<typeof deleteEventResponseSchema>> {
-    const deletedEvent = await this.prisma.event.delete({
-      where: { id },
-    });
+    const deletedEvent = await this.prisma.event.delete({ where: { id } });
     return deletedEvent;
+  }
+
+  async toggleActive(
+    id: string,
+    { active }: { active: boolean },
+  ): Promise<Event> {
+    return await this.prisma.event.update({ where: { id }, data: { active } });
+  }
+
+  async findActive(): Promise<z.infer<typeof getActiveEventsResponseSchema>> {
+    const events = await this.prisma.event.findMany({
+      where: {
+        active: true,
+        endingDate: {
+          gt: new Date(),
+        },
+      },
+      orderBy: {
+        endingDate: 'asc',
+      },
+      include: {
+        eventTickets: true,
+      },
+    });
+
+    return { events };
+  }
+
+  async findActiveByTags(
+    tagIds: Tag['id'][],
+  ): Promise<
+    Prisma.EventGetPayload<{ include: { tickets: true; eventTickets: true } }>[]
+  > {
+    return await this.prisma.event.findMany({
+      where: {
+        active: true,
+        endingDate: { gt: new Date() },
+        profileTags: { some: { id: { in: tagIds } } },
+      },
+      include: { tickets: true, eventTickets: true },
+    });
+  }
+
+  async getEventBannerUrl(id: Event['id']): Promise<string | null> {
+    const event = await this.prisma.event.findUnique({ where: { id } });
+    return event?.bannerUrl ?? null;
+  }
+
+  async getEventMainPictureUrl(id: Event['id']): Promise<string | null> {
+    const event = await this.prisma.event.findUnique({ where: { id } });
+    return event?.mainPictureUrl ?? null;
+  }
+
+  async deleteBanner(id: Event['id']): Promise<void> {
+    await this.prisma.event.update({
+      where: { id },
+      data: { bannerUrl: null },
+    });
+  }
+
+  async deleteMainPicture(id: Event['id']): Promise<void> {
+    await this.prisma.event.update({
+      where: { id },
+      data: { mainPictureUrl: null },
+    });
   }
 }

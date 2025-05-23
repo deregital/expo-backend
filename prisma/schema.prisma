@@ -38,13 +38,25 @@ enum Role {
   USER
   ADMIN
   FORM
+  TICKETS
+  MI_EXPO
 }
 
 model Profile {
   id      String @id @default(uuid())
   shortId Int    @map("short_id")
 
-  phoneNumber          String    @unique @map("phone_number")
+  role Role @default(MI_EXPO)
+
+  firstTimeMiExpo Boolean @default(true) @map("first_time_mi_expo")
+
+  username String? @unique
+  password String?
+
+  phoneNumber     String  @unique @map("phone_number")
+  isPhoneVerified Boolean @default(false) @map("is_phone_verified")
+  otp             Otp[]
+
   secondaryPhoneNumber String?   @unique @map("secondary_phone_number")
   fullName             String    @map("full_name")
   firstName            String?   @map("first_name")
@@ -69,10 +81,29 @@ model Profile {
   isInTrash        Boolean   @default(false) @map("is_in_trash")
   movedToTrashDate DateTime? @map("moved_to_trash_date")
 
+  tickets Ticket[] @relation("PROFILE_X_TICKET")
+
+  productionsAdministrated Production[]                   @relation("PRODUCTION_X_ADMINISTRATOR")
+  productionsParticipated  Production[]                   @relation("PRODUCTION_X_PARTICIPANT")
+  productionRequestsSent   ProductionAffiliationRequest[] @relation("PRODUCTION_AFILIATION_X_PROFILE")
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
   @@map("PROFILE")
+}
+
+model Otp {
+  id               String   @id @default(uuid())
+  code             String
+  ownerPhoneNumber String   @map("account_id")
+  owner            Profile  @relation(fields: [ownerPhoneNumber], references: [phoneNumber])
+  expiresAt        DateTime @map("expires_at")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("OTP")
 }
 
 model Location {
@@ -131,6 +162,9 @@ model Tag {
   profiles             Profile[] @relation("PROFILE_X_TAG")
   accountsGlobalFilter Account[] @relation("GLOBAL_FILTER_X_ACCOUNT")
 
+  profileEvents Event[] @relation("EVENT_X_PROFILE_TAGS")
+  roleEvents    Event[] @relation("EVENT_X_ROLES")
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -151,10 +185,15 @@ model TagGroup {
 }
 
 model Event {
-  id       String   @id @default(uuid())
-  name     String
-  date     DateTime
-  location String
+  id           String   @id @default(uuid())
+  name         String
+  date         DateTime
+  startingDate DateTime @default(now()) @map("starting_date")
+  endingDate   DateTime @default(now()) @map("ending_date")
+  location          String
+  mainPictureUrl   String? @map("main_picture_url")
+  bannerUrl    String? @map("banner_url")
+  description  String? @map("description")
 
   folderId String?      @map("folder_id")
   folder   EventFolder? @relation("EVENT_FOLDER_X_EVENT", fields: [folderId], references: [id], onDelete: Cascade)
@@ -168,7 +207,16 @@ model Event {
   supraEventId String? @map("supra_event_id")
   supraEvent   Event?  @relation("SubEvents", fields: [supraEventId], references: [id], onDelete: Cascade)
 
-  subEvents Event[] @relation("SubEvents")
+  tickets      Ticket[]      @relation("EVENT_X_TICKET")
+  ticketGroups TicketGroup[] @relation("EVENT_X_TICKET_GROUP")
+  subEvents    Event[]       @relation("SubEvents")
+  profileTags  Tag[]         @relation("EVENT_X_PROFILE_TAGS")
+  eventTickets EventTicket[] @relation("EVENT_X_EVENTTICKET")
+
+  active Boolean @default(false)
+
+  productions      Production[] @relation("EVENT_X_PRODUCTION")
+  participantRoles Tag[]        @relation("EVENT_X_ROLES")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -215,10 +263,111 @@ model CannedResponse {
   @@map("CANNED_RESPONSE")
 }
 
+model Ticket {
+  id String @id @default(uuid())
+
+  event   Event  @relation("EVENT_X_TICKET", fields: [eventId], references: [id], onDelete: Cascade)
+  eventId String @map("event_id")
+
+  type TicketType
+
+  fullName String
+  mail     String
+  dni      String
+
+  seat      Int?
+  scanned   Boolean   @default(false)
+  scannedAt DateTime? @map("scanned_at")
+
+  profileId String?  @map("profile_id")
+  profile   Profile? @relation("PROFILE_X_TICKET", fields: [profileId], references: [id])
+
+  ticketGroupId String?      @map("ticket_group_id")
+  ticketGroup   TicketGroup? @relation("TICKET_X_TICKET_GROUP", fields: [ticketGroupId], references: [id], onDelete: Cascade)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([eventId, seat], name: "unique_seat_per_event")
+  @@map("TICKET")
+}
+
+model TicketGroup {
+  id String @id @default(uuid())
+
+  status        TicketGroupStatus
+  amountTickets Int               @default(0)
+  eventId       String            @map("event_id")
+  event         Event             @relation("EVENT_X_TICKET_GROUP", fields: [eventId], references: [id], onDelete: Cascade)
+
+  tickets Ticket[] @relation("TICKET_X_TICKET_GROUP")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("TICKET_GROUP")
+}
+
 model Enums {
   id               String           @id
   templateStatus   TemplateStatus
   templateCategory TemplateCategory
+}
+
+model EventTicket {
+  id      String     @id @default(uuid())
+  eventId String     @map("event_id")
+  event   Event      @relation("EVENT_X_EVENTTICKET", fields: [eventId], references: [id], onDelete: Cascade)
+  amount  Int?
+  type    TicketType
+  price   Float?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("EVENT_TICKET")
+}
+
+model Production {
+  id String @id @default(uuid())
+
+  name String @unique
+
+  administratorId String?  @map("adminstrator_id")
+  administrator   Profile? @relation("PRODUCTION_X_ADMINISTRATOR", fields: [administratorId], references: [id])
+
+  participants        Profile[]                      @relation("PRODUCTION_X_PARTICIPANT")
+  events              Event[]                        @relation("EVENT_X_PRODUCTION")
+  affiliationRequests ProductionAffiliationRequest[] @relation("PRODUCTION_AFFILIATION_REQUEST")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("PRODUCTION")
+}
+
+model ProductionAffiliationRequest {
+  id String @id @default(uuid())
+
+  productionId String     @map("production_id")
+  production   Production @relation(name: "PRODUCTION_AFFILIATION_REQUEST", fields: [productionId], references: [id], onDelete: Cascade)
+
+  profileId String
+  profile   Profile @relation(name: "PRODUCTION_AFILIATION_X_PROFILE", fields: [profileId], references: [id])
+
+  status     AffiliationStatus @default(PENDING)
+  reviewedAt DateTime?         @map("reviewed_at")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("PRODUCTION_AFFILIATION_REQUEST")
+}
+
+enum AffiliationStatus {
+  APPROVED
+  PENDING
+  REJECTED
 }
 
 enum TemplateStatus {
@@ -238,10 +387,23 @@ enum TagType {
   EVENT
   PARTICIPANT
   NOT_IN_SYSTEM
+  PRODUCTION_ROLE
 }
 
 enum MessageState {
   SENT
   RECEIVED
   SEEN
+}
+
+enum TicketType {
+  PARTICIPANT
+  STAFF
+  SPECTATOR
+}
+
+enum TicketGroupStatus {
+  BOOKED
+  PAID
+  FREE
 }

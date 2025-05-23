@@ -1,6 +1,9 @@
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
-import { CreateTagDto, CreateTagResponseDto } from '@/tag/dto/create-tag.dto';
+import {
+  CreateTagDto,
+  createTagResponseSchema,
+} from '@/tag/dto/create-tag.dto';
 import { deleteTagResponseSchema } from '@/tag/dto/delete-tag.dto';
 import { findAllTagResponseSchema } from '@/tag/dto/find-all-tag.dto';
 import { findByGroupTagResponseSchema } from '@/tag/dto/find-by-group-tag.dto';
@@ -26,9 +29,12 @@ import { Profile, Tag, TagType } from '~/types';
 export class TagService {
   constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
-  async create(dto: CreateTagDto): Promise<CreateTagResponseDto> {
+  async create(
+    dto: CreateTagDto,
+  ): Promise<z.infer<typeof createTagResponseSchema>> {
     return await this.prisma.tag.create({
       data: {
+        type: dto.type,
         name: dto.name,
         group: {
           connect: {

@@ -12,9 +12,9 @@ import { ErrorDto } from '@/shared/errors/errorType';
 import {
   Body,
   Controller,
-  Get,
   Header,
   InternalServerErrorException,
+  Post,
   Response,
   StreamableFile,
   UseGuards,
@@ -51,7 +51,7 @@ export class CsvController {
     description: translate('route.csv.download-profiles.error'),
   })
   @Header('Content-Type', 'text/csv')
-  @Get('/download-profiles')
+  @Post('/download-profiles')
   async downloadProfiles(
     @Body() dto: DownloadProfilesDto,
     @Account() account: AccountWithoutPassword,
@@ -92,7 +92,7 @@ export class CsvController {
     description: translate('route.csv.download-all-tables.unauthorized'),
   })
   @Header('Content-Type', 'application/zip')
-  @Get('download-all-tables')
+  @Post('download-all-tables')
   async downloadAllTables(
     @Body() dto: DownloadAllTablesDto,
     @Account() account: AccountWithoutPassword,
@@ -100,22 +100,16 @@ export class CsvController {
   ): Promise<Buffer> {
     await this.accountService.checkPassword(account.id, dto.password);
 
-    try {
-      const zipData = await this.csvService.exportAllTables();
+    const zipData = await this.csvService.exportAllTables();
 
-      const timestamp = this.csvService.generateTimestamp();
-      const filename = `${timestamp}-todas_las_tablas.zip`;
+    const timestamp = this.csvService.generateTimestamp();
+    const filename = `${timestamp}-todas_las_tablas.zip`;
 
-      res.set({
-        type: 'application/zip',
-        'Content-Disposition': `attachment; filename=${filename}`,
-      });
-      res.send(zipData);
-      return zipData;
-    } catch (error) {
-      throw new InternalServerErrorException([
-        translate('route.csv.download-all-tables.error'),
-      ]);
-    }
+    res.set({
+      type: 'application/zip',
+      'Content-Disposition': `attachment; filename=${filename}`,
+    });
+    res.send(zipData);
+    return zipData;
   }
 }

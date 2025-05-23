@@ -1,4 +1,4 @@
-import { profileSchema } from '@/profile/dto/profile.dto';
+import { profileSchema } from '@/schema/profile.schema';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 import { tagSchema } from '@/tag/dto/tag.dto';
@@ -13,6 +13,8 @@ export const findByTagsProfileResponseSchema = z.object({
             z.object({
               group: tagGroupSchema.pick({
                 isExclusive: true,
+                name: true,
+                color: true,
               }),
             }),
           ),

@@ -80,6 +80,10 @@ export class LocationService {
       (city) => city.provincia.nombre === argState,
     );
 
+    const uniqueCities: {
+      [key: string]: boolean;
+    } = {};
+
     return {
       cities: citiesByArgState
         .map((city) => ({
@@ -90,7 +94,15 @@ export class LocationService {
             lat: city.centroide.lat,
           },
         }))
-        .sort((a, b) => a.name.localeCompare(b.name)),
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .filter((obj) => {
+          if (uniqueCities[obj.name]) {
+            return false; // Filter out if name already exists
+          } else {
+            uniqueCities[obj.name] = true; // Mark name as seen
+            return true; // Keep if name is new
+          }
+        }),
     };
   }
 

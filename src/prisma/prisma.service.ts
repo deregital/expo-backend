@@ -77,7 +77,7 @@ export class PrismaService implements OnModuleInit {
           },
         },
       },
-    }) as PrismaClient;
+    }) as unknown as PrismaClient;
   }
 
   extendWithChat(): PrismaClient {
@@ -129,6 +129,10 @@ export class PrismaService implements OnModuleInit {
     return this.db.event;
   }
 
+  get eventTicket(): PrismaClient['eventTicket'] {
+    return this.db.eventTicket;
+  }
+
   get eventFolder(): PrismaClient['eventFolder'] {
     return this.db.eventFolder;
   }
@@ -143,5 +147,25 @@ export class PrismaService implements OnModuleInit {
 
   get message(): PrismaClient['message'] {
     return this.db.message;
+  }
+
+  get otp(): PrismaClient['otp'] {
+    return this.db.otp;
+  }
+
+  get ticket(): PrismaClient['ticket'] {
+    return this.db.ticket;
+  }
+
+  get ticketGroup(): PrismaClient['ticketGroup'] {
+    return this.db.ticketGroup;
+  }
+
+  get production(): PrismaClient['production'] {
+    return this.db.production;
+  }
+
+  get productionAffiliationRequest(): PrismaClient['productionAffiliationRequest'] {
+    return this.db.productionAffiliationRequest;
   }
 }

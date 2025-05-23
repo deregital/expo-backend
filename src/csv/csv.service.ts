@@ -10,6 +10,7 @@ import ExcelJS from 'exceljs';
 import * as fastCsv from 'fast-csv';
 import JSZip from 'jszip';
 import { Readable } from 'stream';
+import { Prisma } from '~/types/prisma-schema';
 
 @Injectable()
 export class CsvService {
@@ -38,15 +39,15 @@ export class CsvService {
       const zip = new JSZip();
       const workbook = new ExcelJS.Workbook();
 
-      for (const table in this.prisma) {
-        const dataTables = [];
-        if (
-          table.charAt(0) === '_' ||
-          table.charAt(0) === '$' ||
-          ['enums'].includes(table)
-        ) {
+      for (const modelName of Object.values(Prisma.ModelName).filter(
+        (k) => k !== 'Enums',
+      )) {
+        if (!modelName) {
           continue;
         }
+        const table = (modelName![0]!.toLowerCase() +
+          modelName.slice(1)) as Uncapitalize<Prisma.ModelName>;
+        const dataTables = [];
         if (table === 'profile' || table === 'account') {
           dataTables.push(
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -108,6 +109,8 @@ export class CsvService {
       const zipData = await zipBlob.arrayBuffer();
       return Buffer.from(zipData);
     } catch (error) {
+      console.log(error);
+
       throw new InternalServerErrorException([
         translate('route.csv.download-all-tables.error'),
       ]);

@@ -1,5 +1,7 @@
 import { AccountService } from '@/account/account.service';
 import { translate } from '@/i18n/translate';
+import { ProfileService } from '@/profile/profile.service';
+import { TokenPayload } from '@/shared/auth/auth-utils';
 import {
   CanActivate,
   ExecutionContext,
@@ -8,12 +10,14 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import { Role } from '~/types';
 
 @Injectable()
 export class JwtGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly cuentaService: AccountService,
+    private readonly accountService: AccountService,
+    private readonly profileService: ProfileService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -25,18 +29,32 @@ export class JwtGuard implements CanActivate {
     }
 
     try {
-      const payload = await this.jwtService.verifyAsync(token, {
+      const payload: TokenPayload = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET,
       });
 
-      const user = await this.cuentaService.findByUsername(payload.username);
+      if (payload.role === Role.MI_EXPO) {
+        const profile = await this.profileService.findById(payload.id);
+        if (!profile) {
+          throw new UnauthorizedException([
+            translate('route.auth.user-not-found'),
+          ]);
+        }
+        req.user = profile;
+      } else if (
+        [Role.ADMIN, Role.USER, Role.FORM, Role.TICKETS].includes(payload.role)
+      ) {
+        const account = await this.accountService.findByUsername(
+          payload.username,
+        );
 
-      if (!user) {
-        throw new UnauthorizedException([
-          translate('route.auth.user-not-found'),
-        ]);
+        if (!account) {
+          throw new UnauthorizedException([
+            translate('route.auth.user-not-found'),
+          ]);
+        }
+        req.user = account;
       }
-      req.user = user;
     } catch (error) {
       throw new UnauthorizedException([translate('route.auth.invalid-token')]);
     }
