@@ -175,6 +175,17 @@ export class ProfileService {
     return profile;
   }
 
+  async findReferralCode(code: Profile['referralCode']): Promise<boolean> {
+    const profile = await this.prisma.profile.findFirst({
+      where: {
+        referralCode: code,
+      },
+      select: { id: true },
+    });
+
+    return profile ? true : false;
+  }
+
   async create(
     dto: CreateProfileDto['profile'],
     participantTagId: Tag['id'],

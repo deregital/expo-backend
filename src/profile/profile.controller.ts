@@ -65,6 +65,7 @@ import { ParseDateIsoPipe } from '@/shared/validation/parse-date-iso.pipe';
 import { normalize } from '@/shared/validation/string';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
+import { TicketGroupService } from '@/ticket-group/ticket-group.service';
 import {
   Body,
   ConflictException,
@@ -115,6 +116,7 @@ export class ProfileController {
     private readonly tagService: TagService,
     private readonly tagGroupService: TagGroupService,
     private readonly imageService: ImageService,
+    private readonly ticketGroupService: TicketGroupService,
   ) {}
 
   @ApiOkResponse({
@@ -256,6 +258,27 @@ export class ProfileController {
 
     return {
       profiles,
+    };
+  }
+
+  @Get('/referral-code-usage/:code')
+  async findReferralCodeUsage(
+    @Param('code') code: string,
+  ): Promise<{ amount: number }> {
+    const amount = await this.ticketGroupService.findCountByReferralCode(code);
+    return {
+      amount,
+    };
+  }
+
+  @Get('/referral-code-exists/:code')
+  async referralCodeExists(
+    @Param('code') code: string,
+  ): Promise<{ exists: boolean }> {
+    const exists = await this.profileService.findReferralCode(code);
+
+    return {
+      exists,
     };
   }
 

@@ -1270,6 +1270,34 @@ paths:
                 $ref: "#/components/schemas/FindTrashResponseDto"
       tags:
         - "Profile"
+  /profile/referral-code-usage/{code}:
+    get:
+      operationId: "ProfileController_findReferralCodeUsage"
+      parameters:
+        - name: "code"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: ""
+      tags:
+        - "Profile"
+  /profile/referral-code-exists/{code}:
+    get:
+      operationId: "ProfileController_referralCodeExists"
+      parameters:
+        - name: "code"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: ""
+      tags:
+        - "Profile"
   /profile/create:
     post:
       operationId: "ProfileController_create"
@@ -2190,6 +2218,20 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "TicketGroup"
+  /ticket-group/find-amount-referral-code/{code}:
+    get:
+      operationId: "TicketGroupController_findCountByReferralCode"
+      parameters:
+        - name: "code"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: ""
       tags:
         - "TicketGroup"
   /ticket-group/update/{id}:
