@@ -1281,7 +1281,7 @@ paths:
             type: "string"
       responses:
         200:
-          description: "Perfil creado con éxito"
+          description: "Se ha encontrado la cantidad de veces usadas el codigo de referido"
           content:
             application/json:
               schema:
