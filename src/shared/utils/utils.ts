@@ -1,4 +1,5 @@
 import { translate } from '@/i18n/translate';
+import { fakerES as faker } from '@faker-js/faker';
 import { ConflictException } from '@nestjs/common';
 import {
   createCipheriv,
@@ -115,6 +116,9 @@ export async function getDMSansFonts(): Promise<{
   return { fontBold, fontSemiBold, fontLight };
 }
 
-export function generateRefferalCode(): string {
-  return 'codigo.con.formato';
+export function generateReferralCode(): string {
+  let code = faker.word.sample();
+  code += '.' + faker.word.sample();
+  code += '.' + faker.word.sample();
+  return code;
 }
