@@ -129,7 +129,7 @@ export class MercadoPagoService {
     const ts = signature.split(',')[0]?.split('=')[1];
     const v1 = signature.split(',')[1]?.split('=')[1];
     const manifest = `id:${data_id};request-id:${request_id};ts:${ts?.trim()};`;
-    const secretKey = process.env.SECRET_KEY!;
+    const secretKey = process.env.MERCADO_PAGO_SECRET_KEY!;
     const signatureDecrypted = createHmac('sha256', secretKey)
       .update(manifest)
       .digest('hex');
