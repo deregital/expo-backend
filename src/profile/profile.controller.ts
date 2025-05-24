@@ -60,7 +60,6 @@ import {
   VisibleTagsType,
 } from '@/shared/decorators/visible-tags.decorator';
 import { ErrorDto } from '@/shared/errors/errorType';
-import { generateReferralCode } from '@/shared/utils/utils';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { ParseDateIsoPipe } from '@/shared/validation/parse-date-iso.pipe';
 import { normalize } from '@/shared/validation/string';
@@ -301,11 +300,6 @@ export class ProfileController {
     return {
       exists,
     };
-  }
-
-  @Get('/test')
-  async test(): Promise<unknown> {
-    return generateReferralCode();
   }
 
   @Roles(Role.ADMIN, Role.FORM)
