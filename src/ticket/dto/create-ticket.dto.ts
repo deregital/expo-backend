@@ -15,6 +15,7 @@ export const createTicketSchema = ticketSchema
   .extend({
     profileId: profileSchema.shape.id.optional(),
     ticketGroupId: ticketGroupSchema.shape.id.optional(),
+    referralCode: ticketGroupSchema.shape.referralCode.optional(),
   });
 
 export class CreateTicketDto extends createZodDtoWithoutDate(

@@ -1270,6 +1270,42 @@ paths:
                 $ref: "#/components/schemas/FindTrashResponseDto"
       tags:
         - "Profile"
+  /profile/referral-code-usage/{code}:
+    get:
+      operationId: "ProfileController_findReferralCodeUsage"
+      parameters:
+        - name: "code"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Se ha encontrado la cantidad de veces usadas el codigo de referido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindReferralCodeUsageResponseDto"
+      tags:
+        - "Profile"
+  /profile/referral-code-exists/{code}:
+    get:
+      operationId: "ProfileController_findReferralCodeExists"
+      parameters:
+        - name: "code"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Se ha encontrado la existencia del codigo de referido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindReferralCodeExistsResponseDto"
+      tags:
+        - "Profile"
   /profile/create:
     post:
       operationId: "ProfileController_create"
@@ -3432,6 +3468,9 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              referralCode:
+                type:
+                  - "string"
             required:
               - "id"
               - "shortId"
@@ -3456,6 +3495,7 @@ components:
               - "movedToTrashDate"
               - "created_at"
               - "updated_at"
+              - "referralCode"
       required:
         - "profiles"
     MassiveDeallocationDto:
@@ -3596,6 +3636,9 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              referralCode:
+                type:
+                  - "string"
             required:
               - "id"
               - "shortId"
@@ -3620,6 +3663,7 @@ components:
               - "movedToTrashDate"
               - "created_at"
               - "updated_at"
+              - "referralCode"
       required:
         - "profiles"
     CreateAccountDto:
@@ -6975,6 +7019,10 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
+              referralCode:
+                type:
+                  - "string"
+                  - "null"
               created_at:
                 type:
                   - "string"
@@ -6994,6 +7042,7 @@ components:
               - "scanned"
               - "scannedAt"
               - "ticketGroupId"
+              - "referralCode"
               - "created_at"
               - "updated_at"
         tagAssisted:
@@ -7786,6 +7835,9 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              referralCode:
+                type:
+                  - "string"
               tags:
                 type:
                   - "array"
@@ -7869,6 +7921,7 @@ components:
               - "movedToTrashDate"
               - "created_at"
               - "updated_at"
+              - "referralCode"
               - "tags"
       required:
         - "profiles"
@@ -7989,6 +8042,9 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              referralCode:
+                type:
+                  - "string"
               tags:
                 type:
                   - "array"
@@ -8147,6 +8203,7 @@ components:
               - "movedToTrashDate"
               - "created_at"
               - "updated_at"
+              - "referralCode"
               - "tags"
               - "inChat"
               - "messages"
@@ -8269,6 +8326,9 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              referralCode:
+                type:
+                  - "string"
               tags:
                 type:
                   - "array"
@@ -8357,6 +8417,7 @@ components:
               - "movedToTrashDate"
               - "created_at"
               - "updated_at"
+              - "referralCode"
               - "tags"
       required:
         - "profiles"
@@ -8477,6 +8538,9 @@ components:
                 type:
                   - "string"
                 format: "date-time"
+              referralCode:
+                type:
+                  - "string"
               tags:
                 type:
                   - "array"
@@ -8544,6 +8608,7 @@ components:
               - "movedToTrashDate"
               - "created_at"
               - "updated_at"
+              - "referralCode"
               - "tags"
       required:
         - "profiles"
@@ -8663,6 +8728,9 @@ components:
               type:
                 - "string"
               format: "date-time"
+            referralCode:
+              type:
+                - "string"
             tags:
               type:
                 - "array"
@@ -8741,6 +8809,7 @@ components:
             - "movedToTrashDate"
             - "created_at"
             - "updated_at"
+            - "referralCode"
             - "tags"
     FindByPhoneNumberResponseDto:
       type:
@@ -8852,6 +8921,9 @@ components:
           type:
             - "string"
           format: "date-time"
+        referralCode:
+          type:
+            - "string"
       required:
         - "id"
         - "shortId"
@@ -8876,6 +8948,7 @@ components:
         - "movedToTrashDate"
         - "created_at"
         - "updated_at"
+        - "referralCode"
     FindTrashResponseDto:
       type:
         - "object"
@@ -8926,6 +8999,24 @@ components:
               - "movedToTrashDate"
       required:
         - "profiles"
+    FindReferralCodeUsageResponseDto:
+      type:
+        - "object"
+      properties:
+        amount:
+          type:
+            - "number"
+      required:
+        - "amount"
+    FindReferralCodeExistsResponseDto:
+      type:
+        - "object"
+      properties:
+        exists:
+          type:
+            - "boolean"
+      required:
+        - "exists"
     CreateProfileDto:
       type:
         - "object"
@@ -9290,6 +9381,9 @@ components:
           type:
             - "string"
           format: "date-time"
+        referralCode:
+          type:
+            - "string"
         residenceLocation:
           type:
             - "object"
@@ -9467,6 +9561,7 @@ components:
         - "movedToTrashDate"
         - "created_at"
         - "updated_at"
+        - "referralCode"
         - "residenceLocation"
         - "birthLocation"
         - "tags"
@@ -9580,6 +9675,9 @@ components:
           type:
             - "string"
           format: "date-time"
+        referralCode:
+          type:
+            - "string"
       required:
         - "id"
         - "shortId"
@@ -9604,6 +9702,7 @@ components:
         - "movedToTrashDate"
         - "created_at"
         - "updated_at"
+        - "referralCode"
     UpdateProfileDto:
       type:
         - "object"
@@ -10177,6 +10276,10 @@ components:
           type:
             - "string"
           format: "uuid"
+        referralCode:
+          type:
+            - "string"
+            - "null"
       required:
         - "eventId"
         - "type"
@@ -10232,6 +10335,10 @@ components:
             - "string"
             - "null"
           format: "uuid"
+        referralCode:
+          type:
+            - "string"
+            - "null"
         created_at:
           type:
             - "string"
@@ -10339,6 +10446,7 @@ components:
         - "scanned"
         - "scannedAt"
         - "ticketGroupId"
+        - "referralCode"
         - "created_at"
         - "updated_at"
         - "event"
@@ -10385,6 +10493,10 @@ components:
                 type:
                   - "string"
                 format: "uuid"
+              referralCode:
+                type:
+                  - "string"
+                  - "null"
             required:
               - "eventId"
               - "type"
@@ -10446,6 +10558,10 @@ components:
               - "string"
               - "null"
             format: "uuid"
+          referralCode:
+            type:
+              - "string"
+              - "null"
           created_at:
             type:
               - "string"
@@ -10553,6 +10669,7 @@ components:
           - "scanned"
           - "scannedAt"
           - "ticketGroupId"
+          - "referralCode"
           - "created_at"
           - "updated_at"
           - "event"
@@ -10634,6 +10751,10 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
+              referralCode:
+                type:
+                  - "string"
+                  - "null"
               created_at:
                 type:
                   - "string"
@@ -10673,6 +10794,7 @@ components:
               - "scanned"
               - "scannedAt"
               - "ticketGroupId"
+              - "referralCode"
               - "created_at"
               - "updated_at"
               - "event"
@@ -10731,6 +10853,10 @@ components:
                 - "string"
                 - "null"
               format: "uuid"
+            referralCode:
+              type:
+                - "string"
+                - "null"
             created_at:
               type:
                 - "string"
@@ -10938,6 +11064,9 @@ components:
                   type:
                     - "string"
                   format: "date-time"
+                referralCode:
+                  type:
+                    - "string"
               required:
                 - "id"
                 - "shortId"
@@ -10962,6 +11091,7 @@ components:
                 - "movedToTrashDate"
                 - "created_at"
                 - "updated_at"
+                - "referralCode"
             profileId:
               type:
                 - "string"
@@ -10978,6 +11108,7 @@ components:
             - "scanned"
             - "scannedAt"
             - "ticketGroupId"
+            - "referralCode"
             - "created_at"
             - "updated_at"
             - "event"
@@ -11041,6 +11172,10 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
+              referralCode:
+                type:
+                  - "string"
+                  - "null"
               created_at:
                 type:
                   - "string"
@@ -11180,6 +11315,9 @@ components:
                     type:
                       - "string"
                     format: "date-time"
+                  referralCode:
+                    type:
+                      - "string"
                 required:
                   - "id"
                   - "shortId"
@@ -11204,6 +11342,7 @@ components:
                   - "movedToTrashDate"
                   - "created_at"
                   - "updated_at"
+                  - "referralCode"
             required:
               - "id"
               - "eventId"
@@ -11215,6 +11354,7 @@ components:
               - "scanned"
               - "scannedAt"
               - "ticketGroupId"
+              - "referralCode"
               - "created_at"
               - "updated_at"
               - "event"
@@ -11277,6 +11417,10 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
+              referralCode:
+                type:
+                  - "string"
+                  - "null"
               created_at:
                 type:
                   - "string"
@@ -11416,6 +11560,9 @@ components:
                     type:
                       - "string"
                     format: "date-time"
+                  referralCode:
+                    type:
+                      - "string"
                 required:
                   - "id"
                   - "shortId"
@@ -11440,6 +11587,7 @@ components:
                   - "movedToTrashDate"
                   - "created_at"
                   - "updated_at"
+                  - "referralCode"
             required:
               - "id"
               - "eventId"
@@ -11451,6 +11599,7 @@ components:
               - "scanned"
               - "scannedAt"
               - "ticketGroupId"
+              - "referralCode"
               - "created_at"
               - "updated_at"
               - "event"
@@ -11513,6 +11662,10 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
+              referralCode:
+                type:
+                  - "string"
+                  - "null"
               created_at:
                 type:
                   - "string"
@@ -11620,6 +11773,7 @@ components:
               - "scanned"
               - "scannedAt"
               - "ticketGroupId"
+              - "referralCode"
               - "created_at"
               - "updated_at"
               - "event"
@@ -11702,6 +11856,10 @@ components:
             - "string"
             - "null"
           format: "uuid"
+        referralCode:
+          type:
+            - "string"
+            - "null"
         created_at:
           type:
             - "string"
@@ -11721,6 +11879,7 @@ components:
         - "scanned"
         - "scannedAt"
         - "ticketGroupId"
+        - "referralCode"
         - "created_at"
         - "updated_at"
     DeleteTicketResponseDto:
@@ -11772,6 +11931,10 @@ components:
             - "string"
             - "null"
           format: "uuid"
+        referralCode:
+          type:
+            - "string"
+            - "null"
         created_at:
           type:
             - "string"
@@ -11791,6 +11954,7 @@ components:
         - "scanned"
         - "scannedAt"
         - "ticketGroupId"
+        - "referralCode"
         - "created_at"
         - "updated_at"
     FindTicketResponseDto:
@@ -11842,6 +12006,10 @@ components:
             - "string"
             - "null"
           format: "uuid"
+        referralCode:
+          type:
+            - "string"
+            - "null"
         created_at:
           type:
             - "string"
@@ -11861,6 +12029,7 @@ components:
         - "scanned"
         - "scannedAt"
         - "ticketGroupId"
+        - "referralCode"
         - "created_at"
         - "updated_at"
     ScanTicketDto:
@@ -11928,6 +12097,10 @@ components:
             - "string"
             - "null"
           format: "uuid"
+        referralCode:
+          type:
+            - "string"
+            - "null"
         created_at:
           type:
             - "string"
@@ -11947,6 +12120,7 @@ components:
         - "scanned"
         - "scannedAt"
         - "ticketGroupId"
+        - "referralCode"
         - "created_at"
         - "updated_at"
     SendEmailResponseDto:
@@ -11996,6 +12170,10 @@ components:
           type:
             - "string"
           format: "uuid"
+        referralCode:
+          type:
+            - "string"
+            - "null"
         created_at:
           type:
             - "string"
@@ -12056,6 +12234,10 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
+              referralCode:
+                type:
+                  - "string"
+                  - "null"
               created_at:
                 type:
                   - "string"
@@ -12075,6 +12257,7 @@ components:
               - "scanned"
               - "scannedAt"
               - "ticketGroupId"
+              - "referralCode"
               - "created_at"
               - "updated_at"
         event:
@@ -12170,6 +12353,7 @@ components:
         - "amountTickets"
         - "status"
         - "eventId"
+        - "referralCode"
         - "created_at"
         - "updated_at"
         - "tickets"
@@ -12206,6 +12390,10 @@ components:
           type:
             - "string"
           format: "uuid"
+        referralCode:
+          type:
+            - "string"
+            - "null"
         created_at:
           type:
             - "string"
@@ -12219,6 +12407,7 @@ components:
         - "amountTickets"
         - "status"
         - "eventId"
+        - "referralCode"
         - "created_at"
         - "updated_at"
     UpdateTicketGroupDto:
@@ -12232,6 +12421,10 @@ components:
             - "BOOKED"
             - "PAID"
             - "FREE"
+        referralCode:
+          type:
+            - "string"
+            - "null"
     UpdateTicketGroupResponseDto:
       type:
         - "object"
@@ -12255,6 +12448,10 @@ components:
           type:
             - "string"
           format: "uuid"
+        referralCode:
+          type:
+            - "string"
+            - "null"
         created_at:
           type:
             - "string"
@@ -12268,6 +12465,7 @@ components:
         - "amountTickets"
         - "status"
         - "eventId"
+        - "referralCode"
         - "created_at"
         - "updated_at"
     DeleteTicketGroupResponseDto:
@@ -12293,6 +12491,10 @@ components:
           type:
             - "string"
           format: "uuid"
+        referralCode:
+          type:
+            - "string"
+            - "null"
         created_at:
           type:
             - "string"
@@ -12306,6 +12508,7 @@ components:
         - "amountTickets"
         - "status"
         - "eventId"
+        - "referralCode"
         - "created_at"
         - "updated_at"
     SendOtpDto:
@@ -12501,6 +12704,9 @@ components:
               type:
                 - "string"
               format: "date-time"
+            referralCode:
+              type:
+                - "string"
             residenceLocation:
               type:
                 - "object"
@@ -12577,6 +12783,7 @@ components:
             - "movedToTrashDate"
             - "created_at"
             - "updated_at"
+            - "referralCode"
             - "residenceLocation"
             - "birthLocation"
       required:
@@ -12719,6 +12926,9 @@ components:
               type:
                 - "string"
               format: "date-time"
+            referralCode:
+              type:
+                - "string"
           required:
             - "id"
             - "shortId"
@@ -12742,6 +12952,7 @@ components:
             - "movedToTrashDate"
             - "created_at"
             - "updated_at"
+            - "referralCode"
       required:
         - "tokens"
         - "profile"
@@ -12851,6 +13062,9 @@ components:
           type:
             - "string"
           format: "date-time"
+        referralCode:
+          type:
+            - "string"
         residenceLocation:
           type:
             - "object"
@@ -12964,6 +13178,7 @@ components:
         - "movedToTrashDate"
         - "created_at"
         - "updated_at"
+        - "referralCode"
         - "residenceLocation"
         - "birthLocation"
     UpdateMiExpoMeDto:
@@ -13254,6 +13469,9 @@ components:
               type:
                 - "string"
               format: "date-time"
+            referralCode:
+              type:
+                - "string"
           required:
             - "id"
             - "shortId"
@@ -13277,6 +13495,7 @@ components:
             - "movedToTrashDate"
             - "created_at"
             - "updated_at"
+            - "referralCode"
         backendTokens:
           type:
             - "object"
@@ -13543,6 +13762,9 @@ components:
                     type:
                       - "string"
                     format: "date-time"
+                  referralCode:
+                    type:
+                      - "string"
                 required:
                   - "id"
                   - "shortId"
@@ -13567,6 +13789,7 @@ components:
                   - "movedToTrashDate"
                   - "created_at"
                   - "updated_at"
+                  - "referralCode"
             required:
               - "id"
               - "name"
@@ -13859,6 +14082,9 @@ components:
               type:
                 - "string"
               format: "date-time"
+            referralCode:
+              type:
+                - "string"
           required:
             - "id"
             - "shortId"
@@ -13883,6 +14109,7 @@ components:
             - "movedToTrashDate"
             - "created_at"
             - "updated_at"
+            - "referralCode"
       required:
         - "id"
         - "productionId"
@@ -14071,6 +14298,9 @@ components:
                     type:
                       - "string"
                     format: "date-time"
+                  referralCode:
+                    type:
+                      - "string"
                 required:
                   - "id"
                   - "shortId"
@@ -14095,6 +14325,7 @@ components:
                   - "movedToTrashDate"
                   - "created_at"
                   - "updated_at"
+                  - "referralCode"
             required:
               - "id"
               - "productionId"

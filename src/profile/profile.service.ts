@@ -10,6 +10,7 @@ import { findTrashResponseSchema } from '@/profile/dto/find-trash.dto';
 import { findWithActiveChatResponseSchema } from '@/profile/dto/find-with-active-chat.dto';
 import { UpdateProfileDto } from '@/profile/dto/update-profile.dto';
 import { VisibleTagsType } from '@/shared/decorators/visible-tags.decorator';
+import { generateReferralCode } from '@/shared/utils/utils';
 import { Inject, Injectable } from '@nestjs/common';
 import { hash } from 'bcrypt';
 import z from 'zod';
@@ -174,12 +175,28 @@ export class ProfileService {
     return profile;
   }
 
+  async findReferralCode(code: Profile['referralCode']): Promise<boolean> {
+    const profile = await this.prisma.profile.findFirst({
+      where: {
+        referralCode: code,
+      },
+      select: { id: true },
+    });
+
+    return profile ? true : false;
+  }
+
   async create(
     dto: CreateProfileDto['profile'],
     participantTagId: Tag['id'],
     accountId: Account['id'],
   ): Promise<Profile> {
     const highestShortId = await this.getHighestShortId();
+
+    let referralCode = generateReferralCode();
+    while (this.findReferralCode(referralCode)) {
+      referralCode = generateReferralCode();
+    }
 
     const profileCreated = await this.prisma.profile.create({
       data: {
@@ -237,6 +254,7 @@ export class ProfileService {
             })),
           },
         },
+        referralCode,
       },
     });
 

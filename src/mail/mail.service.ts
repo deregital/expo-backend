@@ -15,7 +15,7 @@ export class MailService {
   constructor(private readonly resendService: ResendService) {}
 
   async sendTicket(
-    ticket: Omit<Ticket, 'profileId'> & { event: Event },
+    ticket: Omit<Ticket, 'profileId' | 'referralCode'> & { event: Event },
     pdf: Blob,
   ): Promise<string> {
     const date = new TZDate(
@@ -58,7 +58,7 @@ export class MailService {
   }
 
   async sendMultipleTickets(
-    tickets: (Omit<Ticket, 'profileId'> & { event: Event })[],
+    tickets: (Omit<Ticket, 'profileId' | 'referralCode'> & { event: Event })[],
     pdfs: Blob[],
   ): Promise<string> {
     const event = tickets[0]!.event;

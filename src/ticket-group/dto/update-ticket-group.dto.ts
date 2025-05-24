@@ -4,6 +4,7 @@ import { ticketGroupSchema } from '@/ticket-group/dto/ticket-group.dto';
 export const updateTicketGroupSchema = ticketGroupSchema
   .pick({
     status: true,
+    referralCode: true,
   })
   .partial();
 

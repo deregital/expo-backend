@@ -65,6 +65,7 @@ import { ParseDateIsoPipe } from '@/shared/validation/parse-date-iso.pipe';
 import { normalize } from '@/shared/validation/string';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
+import { TicketGroupService } from '@/ticket-group/ticket-group.service';
 import {
   Body,
   ConflictException,
@@ -101,6 +102,14 @@ import {
   deleteImageProfileResponseSchema,
 } from './dto/delete-image-profile.dto';
 import {
+  FindReferralCodeExistsResponseDto,
+  findReferralCodeExistsResponseSchema,
+} from './dto/find-referral-code-exists.dto';
+import {
+  FindReferralCodeUsageResponseDto,
+  findReferralCodeUsageResponseSchema,
+} from './dto/find-referral-code-usage.dto';
+import {
   UpdateImageProfileDto,
   UpdateImageProfileResponseDto,
 } from './dto/update-image-profile.dto';
@@ -115,6 +124,7 @@ export class ProfileController {
     private readonly tagService: TagService,
     private readonly tagGroupService: TagGroupService,
     private readonly imageService: ImageService,
+    private readonly ticketGroupService: TicketGroupService,
   ) {}
 
   @ApiOkResponse({
@@ -256,6 +266,39 @@ export class ProfileController {
 
     return {
       profiles,
+    };
+  }
+
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtGuard, RoleGuard)
+  @ApiOkResponse({
+    type: FindReferralCodeUsageResponseDto,
+    description: translate('route.profile.referral-code-usage.success'),
+  })
+  @Get('/referral-code-usage/:code')
+  async findReferralCodeUsage(
+    @Param('code') code: string,
+  ): Promise<z.infer<typeof findReferralCodeUsageResponseSchema>> {
+    const amount = await this.ticketGroupService.findCountByReferralCode(code);
+    return {
+      amount,
+    };
+  }
+
+  @Roles(Role.TICKETS)
+  @UseGuards(JwtGuard, RoleGuard)
+  @ApiOkResponse({
+    type: FindReferralCodeExistsResponseDto,
+    description: translate('route.profile.referral-code-exists.success'),
+  })
+  @Get('/referral-code-exists/:code')
+  async findReferralCodeExists(
+    @Param('code') code: string,
+  ): Promise<z.infer<typeof findReferralCodeExistsResponseSchema>> {
+    const exists = await this.profileService.findReferralCode(code);
+
+    return {
+      exists,
     };
   }
 

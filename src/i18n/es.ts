@@ -445,6 +445,13 @@ export default {
       },
       'find-trash': { success: 'Perfiles obtenidos' },
       'find-all-with-active-chat': { success: 'Perfiles obtenido' },
+      'referral-code-exists': {
+        success: 'Se ha encontrado la existencia del codigo de referido',
+      },
+      'referral-code-usage': {
+        success:
+          'Se ha encontrado la cantidad de veces usadas el codigo de referido',
+      },
     },
     image: {
       update: {
