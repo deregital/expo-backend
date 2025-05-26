@@ -10271,10 +10271,6 @@ components:
           type:
             - "string"
           format: "uuid"
-        referralCode:
-          type:
-            - "string"
-            - "null"
       required:
         - "eventId"
         - "type"
