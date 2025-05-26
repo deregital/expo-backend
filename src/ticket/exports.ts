@@ -1,3 +1,4 @@
+export * from './dto/create-many-ticket.dto';
 export * from './dto/create-ticket.dto';
 export * from './dto/delete-ticket.dto';
 export * from './dto/find-all-tickets.dto';
