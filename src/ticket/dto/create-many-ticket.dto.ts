@@ -18,9 +18,9 @@ export const createManyTicketSchema = z.object({
       })
       .extend({
         profileId: profileSchema.shape.id.optional(),
-        referralCode: ticketGroupSchema.shape.referralCode.optional(),
       }),
   ),
+  referralCode: ticketGroupSchema.shape.referralCode.optional(),
 });
 
 export class CreateManyTicketDto extends createZodDtoWithoutDate(

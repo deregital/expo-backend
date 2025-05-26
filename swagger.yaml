@@ -7019,10 +7019,6 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
-              referralCode:
-                type:
-                  - "string"
-                  - "null"
               created_at:
                 type:
                   - "string"
@@ -7042,7 +7038,6 @@ components:
               - "scanned"
               - "scannedAt"
               - "ticketGroupId"
-              - "referralCode"
               - "created_at"
               - "updated_at"
         tagAssisted:
@@ -10335,10 +10330,6 @@ components:
             - "string"
             - "null"
           format: "uuid"
-        referralCode:
-          type:
-            - "string"
-            - "null"
         created_at:
           type:
             - "string"
@@ -10446,7 +10437,6 @@ components:
         - "scanned"
         - "scannedAt"
         - "ticketGroupId"
-        - "referralCode"
         - "created_at"
         - "updated_at"
         - "event"
@@ -10493,10 +10483,6 @@ components:
                 type:
                   - "string"
                 format: "uuid"
-              referralCode:
-                type:
-                  - "string"
-                  - "null"
             required:
               - "eventId"
               - "type"
@@ -10504,6 +10490,10 @@ components:
               - "mail"
               - "dni"
               - "ticketGroupId"
+        referralCode:
+          type:
+            - "string"
+            - "null"
       required:
         - "tickets"
     CreateManyTicketResponseDto:
@@ -10558,10 +10548,6 @@ components:
               - "string"
               - "null"
             format: "uuid"
-          referralCode:
-            type:
-              - "string"
-              - "null"
           created_at:
             type:
               - "string"
@@ -10669,7 +10655,6 @@ components:
           - "scanned"
           - "scannedAt"
           - "ticketGroupId"
-          - "referralCode"
           - "created_at"
           - "updated_at"
           - "event"
@@ -10751,10 +10736,6 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
-              referralCode:
-                type:
-                  - "string"
-                  - "null"
               created_at:
                 type:
                   - "string"
@@ -10794,7 +10775,6 @@ components:
               - "scanned"
               - "scannedAt"
               - "ticketGroupId"
-              - "referralCode"
               - "created_at"
               - "updated_at"
               - "event"
@@ -10853,10 +10833,6 @@ components:
                 - "string"
                 - "null"
               format: "uuid"
-            referralCode:
-              type:
-                - "string"
-                - "null"
             created_at:
               type:
                 - "string"
@@ -11108,7 +11084,6 @@ components:
             - "scanned"
             - "scannedAt"
             - "ticketGroupId"
-            - "referralCode"
             - "created_at"
             - "updated_at"
             - "event"
@@ -11172,10 +11147,6 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
-              referralCode:
-                type:
-                  - "string"
-                  - "null"
               created_at:
                 type:
                   - "string"
@@ -11354,7 +11325,6 @@ components:
               - "scanned"
               - "scannedAt"
               - "ticketGroupId"
-              - "referralCode"
               - "created_at"
               - "updated_at"
               - "event"
@@ -11417,10 +11387,6 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
-              referralCode:
-                type:
-                  - "string"
-                  - "null"
               created_at:
                 type:
                   - "string"
@@ -11599,7 +11565,6 @@ components:
               - "scanned"
               - "scannedAt"
               - "ticketGroupId"
-              - "referralCode"
               - "created_at"
               - "updated_at"
               - "event"
@@ -11662,10 +11627,6 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
-              referralCode:
-                type:
-                  - "string"
-                  - "null"
               created_at:
                 type:
                   - "string"
@@ -11773,7 +11734,6 @@ components:
               - "scanned"
               - "scannedAt"
               - "ticketGroupId"
-              - "referralCode"
               - "created_at"
               - "updated_at"
               - "event"
@@ -11856,10 +11816,6 @@ components:
             - "string"
             - "null"
           format: "uuid"
-        referralCode:
-          type:
-            - "string"
-            - "null"
         created_at:
           type:
             - "string"
@@ -11879,7 +11835,6 @@ components:
         - "scanned"
         - "scannedAt"
         - "ticketGroupId"
-        - "referralCode"
         - "created_at"
         - "updated_at"
     DeleteTicketResponseDto:
@@ -11931,10 +11886,6 @@ components:
             - "string"
             - "null"
           format: "uuid"
-        referralCode:
-          type:
-            - "string"
-            - "null"
         created_at:
           type:
             - "string"
@@ -11954,7 +11905,6 @@ components:
         - "scanned"
         - "scannedAt"
         - "ticketGroupId"
-        - "referralCode"
         - "created_at"
         - "updated_at"
     FindTicketResponseDto:
@@ -12006,10 +11956,6 @@ components:
             - "string"
             - "null"
           format: "uuid"
-        referralCode:
-          type:
-            - "string"
-            - "null"
         created_at:
           type:
             - "string"
@@ -12029,7 +11975,6 @@ components:
         - "scanned"
         - "scannedAt"
         - "ticketGroupId"
-        - "referralCode"
         - "created_at"
         - "updated_at"
     ScanTicketDto:
@@ -12097,10 +12042,6 @@ components:
             - "string"
             - "null"
           format: "uuid"
-        referralCode:
-          type:
-            - "string"
-            - "null"
         created_at:
           type:
             - "string"
@@ -12120,7 +12061,6 @@ components:
         - "scanned"
         - "scannedAt"
         - "ticketGroupId"
-        - "referralCode"
         - "created_at"
         - "updated_at"
     SendEmailResponseDto:
@@ -12234,10 +12174,6 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
-              referralCode:
-                type:
-                  - "string"
-                  - "null"
               created_at:
                 type:
                   - "string"
@@ -12257,7 +12193,6 @@ components:
               - "scanned"
               - "scannedAt"
               - "ticketGroupId"
-              - "referralCode"
               - "created_at"
               - "updated_at"
         event:

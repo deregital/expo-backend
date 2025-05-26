@@ -256,9 +256,10 @@ export class TicketController {
     const isTicketFree = ticketPrice === null;
 
     const referralCode =
-      createManyTicketDto.tickets[0]?.referralCode?.length != 0
-        ? createManyTicketDto.tickets[0]?.referralCode
+      createManyTicketDto.referralCode?.length != 0
+        ? createManyTicketDto.referralCode
         : null;
+
     await this.ticketGroupService.update(ticketGroupId, {
       status: isTicketFree ? 'FREE' : undefined,
       referralCode,

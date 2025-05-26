@@ -289,8 +289,6 @@ model Ticket {
   ticketGroupId String?      @map("ticket_group_id")
   ticketGroup   TicketGroup? @relation("TICKET_X_TICKET_GROUP", fields: [ticketGroupId], references: [id], onDelete: Cascade)
 
-  referralCode String?
-
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
