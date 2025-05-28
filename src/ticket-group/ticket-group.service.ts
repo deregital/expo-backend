@@ -58,6 +58,12 @@ export class TicketGroupService {
     });
   }
 
+  async findCountByReferralCode(referralCode: string): Promise<number> {
+    return await this.prisma.ticketGroup.count({
+      where: { referralCode },
+    });
+  }
+
   async update(
     id: string,
     updateTicketGroupDto: UpdateTicketGroupDto,

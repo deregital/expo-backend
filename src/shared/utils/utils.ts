@@ -1,5 +1,6 @@
 import { translate } from '@/i18n/translate';
 import { ConflictException } from '@nestjs/common';
+import words from 'an-array-of-spanish-words';
 import {
   createCipheriv,
   createDecipheriv,
@@ -113,4 +114,15 @@ export async function getDMSansFonts(): Promise<{
   const fontLight = await fs.promises.readFile(fontLightPath);
 
   return { fontBold, fontSemiBold, fontLight };
+}
+
+export function generateReferralCode(): string {
+  const wordsArray: string[] = words as string[];
+  const shortWords = wordsArray.filter((w) => w.length <= 6);
+
+  const randomWord = (): string => {
+    return shortWords[Math.floor(Math.random() * shortWords.length)]!;
+  };
+
+  return `${randomWord()}.${randomWord()}.${randomWord()}`;
 }

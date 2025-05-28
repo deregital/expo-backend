@@ -1,6 +1,7 @@
 import { eventSchema } from '@/event/dto/event.dto';
 import { profileSchema } from '@/schema/profile.schema';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
+import { ticketGroupSchema } from '@/ticket-group/dto/ticket-group.dto';
 import z from 'zod';
 import { ticketSchema } from './ticket.dto';
 
@@ -19,6 +20,7 @@ export const createManyTicketSchema = z.object({
         profileId: profileSchema.shape.id.optional(),
       }),
   ),
+  referralCode: ticketGroupSchema.shape.referralCode.optional(),
 });
 
 export class CreateManyTicketDto extends createZodDtoWithoutDate(

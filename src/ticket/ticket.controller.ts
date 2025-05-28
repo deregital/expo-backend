@@ -255,8 +255,14 @@ export class TicketController {
     // Si el precio es null (gratuito), cambiar el estado del ticketGroup a FREE
     const isTicketFree = ticketPrice === null;
 
+    const referralCode =
+      createManyTicketDto.referralCode?.length != 0
+        ? createManyTicketDto.referralCode
+        : null;
+
     await this.ticketGroupService.update(ticketGroupId, {
       status: isTicketFree ? 'FREE' : undefined,
+      referralCode,
     });
 
     if (isTicketFree) {
