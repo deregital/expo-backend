@@ -415,10 +415,11 @@ model DynamicOption {
   tagId String @map("tag_id")
   tag   Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
-  created_at        DateTime         @default(now())
-  updated_at        DateTime         @updatedAt
-  DynamicQuestion   DynamicQuestion? @relation(fields: [dynamicQuestionId], references: [id])
-  dynamicQuestionId String?
+  question   DynamicQuestion @relation(fields: [questionId], references: [id])
+  questionId String          @map("question_id")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("DYNAMIC_OPTION")
 }
@@ -447,6 +448,7 @@ enum TagType {
   PARTICIPANT
   NOT_IN_SYSTEM
   PRODUCTION_ROLE
+  FORM_OPTION
 }
 
 enum MessageState {

@@ -31224,27 +31224,27 @@ export namespace Prisma {
     id: string | null;
     text: string | null;
     tagId: string | null;
+    questionId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
-    dynamicQuestionId: string | null;
   };
 
   export type DynamicOptionMaxAggregateOutputType = {
     id: string | null;
     text: string | null;
     tagId: string | null;
+    questionId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
-    dynamicQuestionId: string | null;
   };
 
   export type DynamicOptionCountAggregateOutputType = {
     id: number;
     text: number;
     tagId: number;
+    questionId: number;
     created_at: number;
     updated_at: number;
-    dynamicQuestionId: number;
     _all: number;
   };
 
@@ -31252,27 +31252,27 @@ export namespace Prisma {
     id?: true;
     text?: true;
     tagId?: true;
+    questionId?: true;
     created_at?: true;
     updated_at?: true;
-    dynamicQuestionId?: true;
   };
 
   export type DynamicOptionMaxAggregateInputType = {
     id?: true;
     text?: true;
     tagId?: true;
+    questionId?: true;
     created_at?: true;
     updated_at?: true;
-    dynamicQuestionId?: true;
   };
 
   export type DynamicOptionCountAggregateInputType = {
     id?: true;
     text?: true;
     tagId?: true;
+    questionId?: true;
     created_at?: true;
     updated_at?: true;
-    dynamicQuestionId?: true;
     _all?: true;
   };
 
@@ -31359,9 +31359,9 @@ export namespace Prisma {
     id: string;
     text: string;
     tagId: string;
+    questionId: string;
     created_at: Date;
     updated_at: Date;
-    dynamicQuestionId: string | null;
     _count: DynamicOptionCountAggregateOutputType | null;
     _min: DynamicOptionMinAggregateOutputType | null;
     _max: DynamicOptionMaxAggregateOutputType | null;
@@ -31388,11 +31388,11 @@ export namespace Prisma {
       id?: boolean;
       text?: boolean;
       tagId?: boolean;
+      questionId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
-      dynamicQuestionId?: boolean;
       tag?: boolean | TagDefaultArgs<ExtArgs>;
-      DynamicQuestion?: boolean | DynamicOption$DynamicQuestionArgs<ExtArgs>;
+      question?: boolean | DynamicQuestionDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['dynamicOption']
   >;
@@ -31404,11 +31404,11 @@ export namespace Prisma {
       id?: boolean;
       text?: boolean;
       tagId?: boolean;
+      questionId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
-      dynamicQuestionId?: boolean;
       tag?: boolean | TagDefaultArgs<ExtArgs>;
-      DynamicQuestion?: boolean | DynamicOption$DynamicQuestionArgs<ExtArgs>;
+      question?: boolean | DynamicQuestionDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['dynamicOption']
   >;
@@ -31420,11 +31420,11 @@ export namespace Prisma {
       id?: boolean;
       text?: boolean;
       tagId?: boolean;
+      questionId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
-      dynamicQuestionId?: boolean;
       tag?: boolean | TagDefaultArgs<ExtArgs>;
-      DynamicQuestion?: boolean | DynamicOption$DynamicQuestionArgs<ExtArgs>;
+      question?: boolean | DynamicQuestionDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['dynamicOption']
   >;
@@ -31433,34 +31433,34 @@ export namespace Prisma {
     id?: boolean;
     text?: boolean;
     tagId?: boolean;
+    questionId?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
-    dynamicQuestionId?: boolean;
   };
 
   export type DynamicOptionOmit<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = $Extensions.GetOmit<
-    'id' | 'text' | 'tagId' | 'created_at' | 'updated_at' | 'dynamicQuestionId',
+    'id' | 'text' | 'tagId' | 'questionId' | 'created_at' | 'updated_at',
     ExtArgs['result']['dynamicOption']
   >;
   export type DynamicOptionInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     tag?: boolean | TagDefaultArgs<ExtArgs>;
-    DynamicQuestion?: boolean | DynamicOption$DynamicQuestionArgs<ExtArgs>;
+    question?: boolean | DynamicQuestionDefaultArgs<ExtArgs>;
   };
   export type DynamicOptionIncludeCreateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     tag?: boolean | TagDefaultArgs<ExtArgs>;
-    DynamicQuestion?: boolean | DynamicOption$DynamicQuestionArgs<ExtArgs>;
+    question?: boolean | DynamicQuestionDefaultArgs<ExtArgs>;
   };
   export type DynamicOptionIncludeUpdateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     tag?: boolean | TagDefaultArgs<ExtArgs>;
-    DynamicQuestion?: boolean | DynamicOption$DynamicQuestionArgs<ExtArgs>;
+    question?: boolean | DynamicQuestionDefaultArgs<ExtArgs>;
   };
 
   export type $DynamicOptionPayload<
@@ -31469,16 +31469,16 @@ export namespace Prisma {
     name: 'DynamicOption';
     objects: {
       tag: Prisma.$TagPayload<ExtArgs>;
-      DynamicQuestion: Prisma.$DynamicQuestionPayload<ExtArgs> | null;
+      question: Prisma.$DynamicQuestionPayload<ExtArgs>;
     };
     scalars: $Extensions.GetPayloadResult<
       {
         id: string;
         text: string;
         tagId: string;
+        questionId: string;
         created_at: Date;
         updated_at: Date;
-        dynamicQuestionId: string | null;
       },
       ExtArgs['result']['dynamicOption']
     >;
@@ -32043,16 +32043,17 @@ export namespace Prisma {
       ExtArgs,
       ClientOptions
     >;
-    DynamicQuestion<T extends DynamicOption$DynamicQuestionArgs<ExtArgs> = {}>(
-      args?: Subset<T, DynamicOption$DynamicQuestionArgs<ExtArgs>>,
+    question<T extends DynamicQuestionDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, DynamicQuestionDefaultArgs<ExtArgs>>,
     ): Prisma__DynamicQuestionClient<
-      $Result.GetResult<
-        Prisma.$DynamicQuestionPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        ClientOptions
-      > | null,
-      null,
+      | $Result.GetResult<
+          Prisma.$DynamicQuestionPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          ClientOptions
+        >
+      | Null,
+      Null,
       ExtArgs,
       ClientOptions
     >;
@@ -32099,9 +32100,9 @@ export namespace Prisma {
     readonly id: FieldRef<'DynamicOption', 'String'>;
     readonly text: FieldRef<'DynamicOption', 'String'>;
     readonly tagId: FieldRef<'DynamicOption', 'String'>;
+    readonly questionId: FieldRef<'DynamicOption', 'String'>;
     readonly created_at: FieldRef<'DynamicOption', 'DateTime'>;
     readonly updated_at: FieldRef<'DynamicOption', 'DateTime'>;
-    readonly dynamicQuestionId: FieldRef<'DynamicOption', 'String'>;
   }
 
   // Custom InputTypes
@@ -32537,27 +32538,6 @@ export namespace Prisma {
   };
 
   /**
-   * DynamicOption.DynamicQuestion
-   */
-  export type DynamicOption$DynamicQuestionArgs<
-    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
-  > = {
-    /**
-     * Select specific fields to fetch from the DynamicQuestion
-     */
-    select?: DynamicQuestionSelect<ExtArgs> | null;
-    /**
-     * Omit specific fields from the DynamicQuestion
-     */
-    omit?: DynamicQuestionOmit<ExtArgs> | null;
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DynamicQuestionInclude<ExtArgs> | null;
-    where?: DynamicQuestionWhereInput;
-  };
-
-  /**
    * DynamicOption without action
    */
   export type DynamicOptionDefaultArgs<
@@ -32866,9 +32846,9 @@ export namespace Prisma {
     id: 'id';
     text: 'text';
     tagId: 'tagId';
+    questionId: 'questionId';
     created_at: 'created_at';
     updated_at: 'updated_at';
-    dynamicQuestionId: 'dynamicQuestionId';
   };
 
   export type DynamicOptionScalarFieldEnum =
@@ -34935,25 +34915,25 @@ export namespace Prisma {
     id?: StringFilter<'DynamicOption'> | string;
     text?: StringFilter<'DynamicOption'> | string;
     tagId?: StringFilter<'DynamicOption'> | string;
+    questionId?: StringFilter<'DynamicOption'> | string;
     created_at?: DateTimeFilter<'DynamicOption'> | Date | string;
     updated_at?: DateTimeFilter<'DynamicOption'> | Date | string;
-    dynamicQuestionId?: StringNullableFilter<'DynamicOption'> | string | null;
     tag?: XOR<TagScalarRelationFilter, TagWhereInput>;
-    DynamicQuestion?: XOR<
-      DynamicQuestionNullableScalarRelationFilter,
+    question?: XOR<
+      DynamicQuestionScalarRelationFilter,
       DynamicQuestionWhereInput
-    > | null;
+    >;
   };
 
   export type DynamicOptionOrderByWithRelationInput = {
     id?: SortOrder;
     text?: SortOrder;
     tagId?: SortOrder;
+    questionId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    dynamicQuestionId?: SortOrderInput | SortOrder;
     tag?: TagOrderByWithRelationInput;
-    DynamicQuestion?: DynamicQuestionOrderByWithRelationInput;
+    question?: DynamicQuestionOrderByWithRelationInput;
   };
 
   export type DynamicOptionWhereUniqueInput = Prisma.AtLeast<
@@ -34964,14 +34944,14 @@ export namespace Prisma {
       NOT?: DynamicOptionWhereInput | DynamicOptionWhereInput[];
       text?: StringFilter<'DynamicOption'> | string;
       tagId?: StringFilter<'DynamicOption'> | string;
+      questionId?: StringFilter<'DynamicOption'> | string;
       created_at?: DateTimeFilter<'DynamicOption'> | Date | string;
       updated_at?: DateTimeFilter<'DynamicOption'> | Date | string;
-      dynamicQuestionId?: StringNullableFilter<'DynamicOption'> | string | null;
       tag?: XOR<TagScalarRelationFilter, TagWhereInput>;
-      DynamicQuestion?: XOR<
-        DynamicQuestionNullableScalarRelationFilter,
+      question?: XOR<
+        DynamicQuestionScalarRelationFilter,
         DynamicQuestionWhereInput
-      > | null;
+      >;
     },
     'id'
   >;
@@ -34980,9 +34960,9 @@ export namespace Prisma {
     id?: SortOrder;
     text?: SortOrder;
     tagId?: SortOrder;
+    questionId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    dynamicQuestionId?: SortOrderInput | SortOrder;
     _count?: DynamicOptionCountOrderByAggregateInput;
     _max?: DynamicOptionMaxOrderByAggregateInput;
     _min?: DynamicOptionMinOrderByAggregateInput;
@@ -34999,12 +34979,9 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<'DynamicOption'> | string;
     text?: StringWithAggregatesFilter<'DynamicOption'> | string;
     tagId?: StringWithAggregatesFilter<'DynamicOption'> | string;
+    questionId?: StringWithAggregatesFilter<'DynamicOption'> | string;
     created_at?: DateTimeWithAggregatesFilter<'DynamicOption'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'DynamicOption'> | Date | string;
-    dynamicQuestionId?:
-      | StringNullableWithAggregatesFilter<'DynamicOption'>
-      | string
-      | null;
   };
 
   export type AccountCreateInput = {
@@ -36704,7 +36681,7 @@ export namespace Prisma {
     updated_at?: Date | string;
     form: DynamicFormCreateNestedOneWithoutQuestionsInput;
     tagGroup: TagGroupCreateNestedOneWithoutQuestionInput;
-    options?: DynamicOptionCreateNestedManyWithoutDynamicQuestionInput;
+    options?: DynamicOptionCreateNestedManyWithoutQuestionInput;
   };
 
   export type DynamicQuestionUncheckedCreateInput = {
@@ -36717,7 +36694,7 @@ export namespace Prisma {
     multipleChoice?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
-    options?: DynamicOptionUncheckedCreateNestedManyWithoutDynamicQuestionInput;
+    options?: DynamicOptionUncheckedCreateNestedManyWithoutQuestionInput;
   };
 
   export type DynamicQuestionUpdateInput = {
@@ -36730,7 +36707,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     form?: DynamicFormUpdateOneRequiredWithoutQuestionsNestedInput;
     tagGroup?: TagGroupUpdateOneRequiredWithoutQuestionNestedInput;
-    options?: DynamicOptionUpdateManyWithoutDynamicQuestionNestedInput;
+    options?: DynamicOptionUpdateManyWithoutQuestionNestedInput;
   };
 
   export type DynamicQuestionUncheckedUpdateInput = {
@@ -36743,7 +36720,7 @@ export namespace Prisma {
     multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    options?: DynamicOptionUncheckedUpdateManyWithoutDynamicQuestionNestedInput;
+    options?: DynamicOptionUncheckedUpdateManyWithoutQuestionNestedInput;
   };
 
   export type DynamicQuestionCreateManyInput = {
@@ -36786,16 +36763,16 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tag: TagCreateNestedOneWithoutDynamicOptionInput;
-    DynamicQuestion?: DynamicQuestionCreateNestedOneWithoutOptionsInput;
+    question: DynamicQuestionCreateNestedOneWithoutOptionsInput;
   };
 
   export type DynamicOptionUncheckedCreateInput = {
     id?: string;
     text: string;
     tagId: string;
+    questionId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
-    dynamicQuestionId?: string | null;
   };
 
   export type DynamicOptionUpdateInput = {
@@ -36804,28 +36781,25 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tag?: TagUpdateOneRequiredWithoutDynamicOptionNestedInput;
-    DynamicQuestion?: DynamicQuestionUpdateOneWithoutOptionsNestedInput;
+    question?: DynamicQuestionUpdateOneRequiredWithoutOptionsNestedInput;
   };
 
   export type DynamicOptionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     text?: StringFieldUpdateOperationsInput | string;
     tagId?: StringFieldUpdateOperationsInput | string;
+    questionId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    dynamicQuestionId?:
-      | NullableStringFieldUpdateOperationsInput
-      | string
-      | null;
   };
 
   export type DynamicOptionCreateManyInput = {
     id?: string;
     text: string;
     tagId: string;
+    questionId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
-    dynamicQuestionId?: string | null;
   };
 
   export type DynamicOptionUpdateManyMutationInput = {
@@ -36839,12 +36813,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string;
     text?: StringFieldUpdateOperationsInput | string;
     tagId?: StringFieldUpdateOperationsInput | string;
+    questionId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    dynamicQuestionId?:
-      | NullableStringFieldUpdateOperationsInput
-      | string
-      | null;
   };
 
   export type StringFilter<$PrismaModel = never> = {
@@ -38283,31 +38254,36 @@ export namespace Prisma {
     updated_at?: SortOrder;
   };
 
+  export type DynamicQuestionScalarRelationFilter = {
+    is?: DynamicQuestionWhereInput;
+    isNot?: DynamicQuestionWhereInput;
+  };
+
   export type DynamicOptionCountOrderByAggregateInput = {
     id?: SortOrder;
     text?: SortOrder;
     tagId?: SortOrder;
+    questionId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    dynamicQuestionId?: SortOrder;
   };
 
   export type DynamicOptionMaxOrderByAggregateInput = {
     id?: SortOrder;
     text?: SortOrder;
     tagId?: SortOrder;
+    questionId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    dynamicQuestionId?: SortOrder;
   };
 
   export type DynamicOptionMinOrderByAggregateInput = {
     id?: SortOrder;
     text?: SortOrder;
     tagId?: SortOrder;
+    questionId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
-    dynamicQuestionId?: SortOrder;
   };
 
   export type AccountCreatefcmTokenInput = {
@@ -42182,36 +42158,35 @@ export namespace Prisma {
     connect?: TagGroupWhereUniqueInput;
   };
 
-  export type DynamicOptionCreateNestedManyWithoutDynamicQuestionInput = {
+  export type DynamicOptionCreateNestedManyWithoutQuestionInput = {
     create?:
       | XOR<
-          DynamicOptionCreateWithoutDynamicQuestionInput,
-          DynamicOptionUncheckedCreateWithoutDynamicQuestionInput
+          DynamicOptionCreateWithoutQuestionInput,
+          DynamicOptionUncheckedCreateWithoutQuestionInput
         >
-      | DynamicOptionCreateWithoutDynamicQuestionInput[]
-      | DynamicOptionUncheckedCreateWithoutDynamicQuestionInput[];
+      | DynamicOptionCreateWithoutQuestionInput[]
+      | DynamicOptionUncheckedCreateWithoutQuestionInput[];
     connectOrCreate?:
-      | DynamicOptionCreateOrConnectWithoutDynamicQuestionInput
-      | DynamicOptionCreateOrConnectWithoutDynamicQuestionInput[];
-    createMany?: DynamicOptionCreateManyDynamicQuestionInputEnvelope;
+      | DynamicOptionCreateOrConnectWithoutQuestionInput
+      | DynamicOptionCreateOrConnectWithoutQuestionInput[];
+    createMany?: DynamicOptionCreateManyQuestionInputEnvelope;
     connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
   };
 
-  export type DynamicOptionUncheckedCreateNestedManyWithoutDynamicQuestionInput =
-    {
-      create?:
-        | XOR<
-            DynamicOptionCreateWithoutDynamicQuestionInput,
-            DynamicOptionUncheckedCreateWithoutDynamicQuestionInput
-          >
-        | DynamicOptionCreateWithoutDynamicQuestionInput[]
-        | DynamicOptionUncheckedCreateWithoutDynamicQuestionInput[];
-      connectOrCreate?:
-        | DynamicOptionCreateOrConnectWithoutDynamicQuestionInput
-        | DynamicOptionCreateOrConnectWithoutDynamicQuestionInput[];
-      createMany?: DynamicOptionCreateManyDynamicQuestionInputEnvelope;
-      connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
-    };
+  export type DynamicOptionUncheckedCreateNestedManyWithoutQuestionInput = {
+    create?:
+      | XOR<
+          DynamicOptionCreateWithoutQuestionInput,
+          DynamicOptionUncheckedCreateWithoutQuestionInput
+        >
+      | DynamicOptionCreateWithoutQuestionInput[]
+      | DynamicOptionUncheckedCreateWithoutQuestionInput[];
+    connectOrCreate?:
+      | DynamicOptionCreateOrConnectWithoutQuestionInput
+      | DynamicOptionCreateOrConnectWithoutQuestionInput[];
+    createMany?: DynamicOptionCreateManyQuestionInputEnvelope;
+    connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+  };
 
   export type DynamicFormUpdateOneRequiredWithoutQuestionsNestedInput = {
     create?: XOR<
@@ -42247,21 +42222,21 @@ export namespace Prisma {
     >;
   };
 
-  export type DynamicOptionUpdateManyWithoutDynamicQuestionNestedInput = {
+  export type DynamicOptionUpdateManyWithoutQuestionNestedInput = {
     create?:
       | XOR<
-          DynamicOptionCreateWithoutDynamicQuestionInput,
-          DynamicOptionUncheckedCreateWithoutDynamicQuestionInput
+          DynamicOptionCreateWithoutQuestionInput,
+          DynamicOptionUncheckedCreateWithoutQuestionInput
         >
-      | DynamicOptionCreateWithoutDynamicQuestionInput[]
-      | DynamicOptionUncheckedCreateWithoutDynamicQuestionInput[];
+      | DynamicOptionCreateWithoutQuestionInput[]
+      | DynamicOptionUncheckedCreateWithoutQuestionInput[];
     connectOrCreate?:
-      | DynamicOptionCreateOrConnectWithoutDynamicQuestionInput
-      | DynamicOptionCreateOrConnectWithoutDynamicQuestionInput[];
+      | DynamicOptionCreateOrConnectWithoutQuestionInput
+      | DynamicOptionCreateOrConnectWithoutQuestionInput[];
     upsert?:
-      | DynamicOptionUpsertWithWhereUniqueWithoutDynamicQuestionInput
-      | DynamicOptionUpsertWithWhereUniqueWithoutDynamicQuestionInput[];
-    createMany?: DynamicOptionCreateManyDynamicQuestionInputEnvelope;
+      | DynamicOptionUpsertWithWhereUniqueWithoutQuestionInput
+      | DynamicOptionUpsertWithWhereUniqueWithoutQuestionInput[];
+    createMany?: DynamicOptionCreateManyQuestionInputEnvelope;
     set?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
     disconnect?:
       | DynamicOptionWhereUniqueInput
@@ -42269,48 +42244,47 @@ export namespace Prisma {
     delete?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
     connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
     update?:
-      | DynamicOptionUpdateWithWhereUniqueWithoutDynamicQuestionInput
-      | DynamicOptionUpdateWithWhereUniqueWithoutDynamicQuestionInput[];
+      | DynamicOptionUpdateWithWhereUniqueWithoutQuestionInput
+      | DynamicOptionUpdateWithWhereUniqueWithoutQuestionInput[];
     updateMany?:
-      | DynamicOptionUpdateManyWithWhereWithoutDynamicQuestionInput
-      | DynamicOptionUpdateManyWithWhereWithoutDynamicQuestionInput[];
+      | DynamicOptionUpdateManyWithWhereWithoutQuestionInput
+      | DynamicOptionUpdateManyWithWhereWithoutQuestionInput[];
     deleteMany?:
       | DynamicOptionScalarWhereInput
       | DynamicOptionScalarWhereInput[];
   };
 
-  export type DynamicOptionUncheckedUpdateManyWithoutDynamicQuestionNestedInput =
-    {
-      create?:
-        | XOR<
-            DynamicOptionCreateWithoutDynamicQuestionInput,
-            DynamicOptionUncheckedCreateWithoutDynamicQuestionInput
-          >
-        | DynamicOptionCreateWithoutDynamicQuestionInput[]
-        | DynamicOptionUncheckedCreateWithoutDynamicQuestionInput[];
-      connectOrCreate?:
-        | DynamicOptionCreateOrConnectWithoutDynamicQuestionInput
-        | DynamicOptionCreateOrConnectWithoutDynamicQuestionInput[];
-      upsert?:
-        | DynamicOptionUpsertWithWhereUniqueWithoutDynamicQuestionInput
-        | DynamicOptionUpsertWithWhereUniqueWithoutDynamicQuestionInput[];
-      createMany?: DynamicOptionCreateManyDynamicQuestionInputEnvelope;
-      set?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
-      disconnect?:
-        | DynamicOptionWhereUniqueInput
-        | DynamicOptionWhereUniqueInput[];
-      delete?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
-      connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
-      update?:
-        | DynamicOptionUpdateWithWhereUniqueWithoutDynamicQuestionInput
-        | DynamicOptionUpdateWithWhereUniqueWithoutDynamicQuestionInput[];
-      updateMany?:
-        | DynamicOptionUpdateManyWithWhereWithoutDynamicQuestionInput
-        | DynamicOptionUpdateManyWithWhereWithoutDynamicQuestionInput[];
-      deleteMany?:
-        | DynamicOptionScalarWhereInput
-        | DynamicOptionScalarWhereInput[];
-    };
+  export type DynamicOptionUncheckedUpdateManyWithoutQuestionNestedInput = {
+    create?:
+      | XOR<
+          DynamicOptionCreateWithoutQuestionInput,
+          DynamicOptionUncheckedCreateWithoutQuestionInput
+        >
+      | DynamicOptionCreateWithoutQuestionInput[]
+      | DynamicOptionUncheckedCreateWithoutQuestionInput[];
+    connectOrCreate?:
+      | DynamicOptionCreateOrConnectWithoutQuestionInput
+      | DynamicOptionCreateOrConnectWithoutQuestionInput[];
+    upsert?:
+      | DynamicOptionUpsertWithWhereUniqueWithoutQuestionInput
+      | DynamicOptionUpsertWithWhereUniqueWithoutQuestionInput[];
+    createMany?: DynamicOptionCreateManyQuestionInputEnvelope;
+    set?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    disconnect?:
+      | DynamicOptionWhereUniqueInput
+      | DynamicOptionWhereUniqueInput[];
+    delete?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    update?:
+      | DynamicOptionUpdateWithWhereUniqueWithoutQuestionInput
+      | DynamicOptionUpdateWithWhereUniqueWithoutQuestionInput[];
+    updateMany?:
+      | DynamicOptionUpdateManyWithWhereWithoutQuestionInput
+      | DynamicOptionUpdateManyWithWhereWithoutQuestionInput[];
+    deleteMany?:
+      | DynamicOptionScalarWhereInput
+      | DynamicOptionScalarWhereInput[];
+  };
 
   export type TagCreateNestedOneWithoutDynamicOptionInput = {
     create?: XOR<
@@ -42347,15 +42321,13 @@ export namespace Prisma {
     >;
   };
 
-  export type DynamicQuestionUpdateOneWithoutOptionsNestedInput = {
+  export type DynamicQuestionUpdateOneRequiredWithoutOptionsNestedInput = {
     create?: XOR<
       DynamicQuestionCreateWithoutOptionsInput,
       DynamicQuestionUncheckedCreateWithoutOptionsInput
     >;
     connectOrCreate?: DynamicQuestionCreateOrConnectWithoutOptionsInput;
     upsert?: DynamicQuestionUpsertWithoutOptionsInput;
-    disconnect?: DynamicQuestionWhereInput | boolean;
-    delete?: DynamicQuestionWhereInput | boolean;
     connect?: DynamicQuestionWhereUniqueInput;
     update?: XOR<
       XOR<
@@ -45220,15 +45192,15 @@ export namespace Prisma {
     text: string;
     created_at?: Date | string;
     updated_at?: Date | string;
-    DynamicQuestion?: DynamicQuestionCreateNestedOneWithoutOptionsInput;
+    question: DynamicQuestionCreateNestedOneWithoutOptionsInput;
   };
 
   export type DynamicOptionUncheckedCreateWithoutTagInput = {
     id?: string;
     text: string;
+    questionId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
-    dynamicQuestionId?: string | null;
   };
 
   export type DynamicOptionCreateOrConnectWithoutTagInput = {
@@ -45635,9 +45607,9 @@ export namespace Prisma {
     id?: StringFilter<'DynamicOption'> | string;
     text?: StringFilter<'DynamicOption'> | string;
     tagId?: StringFilter<'DynamicOption'> | string;
+    questionId?: StringFilter<'DynamicOption'> | string;
     created_at?: DateTimeFilter<'DynamicOption'> | Date | string;
     updated_at?: DateTimeFilter<'DynamicOption'> | Date | string;
-    dynamicQuestionId?: StringNullableFilter<'DynamicOption'> | string | null;
   };
 
   export type TagCreateWithoutGroupInput = {
@@ -45694,7 +45666,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     form: DynamicFormCreateNestedOneWithoutQuestionsInput;
-    options?: DynamicOptionCreateNestedManyWithoutDynamicQuestionInput;
+    options?: DynamicOptionCreateNestedManyWithoutQuestionInput;
   };
 
   export type DynamicQuestionUncheckedCreateWithoutTagGroupInput = {
@@ -45706,7 +45678,7 @@ export namespace Prisma {
     multipleChoice?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
-    options?: DynamicOptionUncheckedCreateNestedManyWithoutDynamicQuestionInput;
+    options?: DynamicOptionUncheckedCreateNestedManyWithoutQuestionInput;
   };
 
   export type DynamicQuestionCreateOrConnectWithoutTagGroupInput = {
@@ -45771,7 +45743,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     form?: DynamicFormUpdateOneRequiredWithoutQuestionsNestedInput;
-    options?: DynamicOptionUpdateManyWithoutDynamicQuestionNestedInput;
+    options?: DynamicOptionUpdateManyWithoutQuestionNestedInput;
   };
 
   export type DynamicQuestionUncheckedUpdateWithoutTagGroupInput = {
@@ -45783,7 +45755,7 @@ export namespace Prisma {
     multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    options?: DynamicOptionUncheckedUpdateManyWithoutDynamicQuestionNestedInput;
+    options?: DynamicOptionUncheckedUpdateManyWithoutQuestionNestedInput;
   };
 
   export type EventFolderCreateWithoutEventsInput = {
@@ -48618,7 +48590,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tagGroup: TagGroupCreateNestedOneWithoutQuestionInput;
-    options?: DynamicOptionCreateNestedManyWithoutDynamicQuestionInput;
+    options?: DynamicOptionCreateNestedManyWithoutQuestionInput;
   };
 
   export type DynamicQuestionUncheckedCreateWithoutFormInput = {
@@ -48630,7 +48602,7 @@ export namespace Prisma {
     multipleChoice?: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
-    options?: DynamicOptionUncheckedCreateNestedManyWithoutDynamicQuestionInput;
+    options?: DynamicOptionUncheckedCreateNestedManyWithoutQuestionInput;
   };
 
   export type DynamicQuestionCreateOrConnectWithoutFormInput = {
@@ -48741,7 +48713,7 @@ export namespace Prisma {
     >;
   };
 
-  export type DynamicOptionCreateWithoutDynamicQuestionInput = {
+  export type DynamicOptionCreateWithoutQuestionInput = {
     id?: string;
     text: string;
     created_at?: Date | string;
@@ -48749,7 +48721,7 @@ export namespace Prisma {
     tag: TagCreateNestedOneWithoutDynamicOptionInput;
   };
 
-  export type DynamicOptionUncheckedCreateWithoutDynamicQuestionInput = {
+  export type DynamicOptionUncheckedCreateWithoutQuestionInput = {
     id?: string;
     text: string;
     tagId: string;
@@ -48757,18 +48729,18 @@ export namespace Prisma {
     updated_at?: Date | string;
   };
 
-  export type DynamicOptionCreateOrConnectWithoutDynamicQuestionInput = {
+  export type DynamicOptionCreateOrConnectWithoutQuestionInput = {
     where: DynamicOptionWhereUniqueInput;
     create: XOR<
-      DynamicOptionCreateWithoutDynamicQuestionInput,
-      DynamicOptionUncheckedCreateWithoutDynamicQuestionInput
+      DynamicOptionCreateWithoutQuestionInput,
+      DynamicOptionUncheckedCreateWithoutQuestionInput
     >;
   };
 
-  export type DynamicOptionCreateManyDynamicQuestionInputEnvelope = {
+  export type DynamicOptionCreateManyQuestionInputEnvelope = {
     data:
-      | DynamicOptionCreateManyDynamicQuestionInput
-      | DynamicOptionCreateManyDynamicQuestionInput[];
+      | DynamicOptionCreateManyQuestionInput
+      | DynamicOptionCreateManyQuestionInput[];
     skipDuplicates?: boolean;
   };
 
@@ -48846,31 +48818,31 @@ export namespace Prisma {
     tags?: TagUncheckedUpdateManyWithoutGroupNestedInput;
   };
 
-  export type DynamicOptionUpsertWithWhereUniqueWithoutDynamicQuestionInput = {
+  export type DynamicOptionUpsertWithWhereUniqueWithoutQuestionInput = {
     where: DynamicOptionWhereUniqueInput;
     update: XOR<
-      DynamicOptionUpdateWithoutDynamicQuestionInput,
-      DynamicOptionUncheckedUpdateWithoutDynamicQuestionInput
+      DynamicOptionUpdateWithoutQuestionInput,
+      DynamicOptionUncheckedUpdateWithoutQuestionInput
     >;
     create: XOR<
-      DynamicOptionCreateWithoutDynamicQuestionInput,
-      DynamicOptionUncheckedCreateWithoutDynamicQuestionInput
+      DynamicOptionCreateWithoutQuestionInput,
+      DynamicOptionUncheckedCreateWithoutQuestionInput
     >;
   };
 
-  export type DynamicOptionUpdateWithWhereUniqueWithoutDynamicQuestionInput = {
+  export type DynamicOptionUpdateWithWhereUniqueWithoutQuestionInput = {
     where: DynamicOptionWhereUniqueInput;
     data: XOR<
-      DynamicOptionUpdateWithoutDynamicQuestionInput,
-      DynamicOptionUncheckedUpdateWithoutDynamicQuestionInput
+      DynamicOptionUpdateWithoutQuestionInput,
+      DynamicOptionUncheckedUpdateWithoutQuestionInput
     >;
   };
 
-  export type DynamicOptionUpdateManyWithWhereWithoutDynamicQuestionInput = {
+  export type DynamicOptionUpdateManyWithWhereWithoutQuestionInput = {
     where: DynamicOptionScalarWhereInput;
     data: XOR<
       DynamicOptionUpdateManyMutationInput,
-      DynamicOptionUncheckedUpdateManyWithoutDynamicQuestionInput
+      DynamicOptionUncheckedUpdateManyWithoutQuestionInput
     >;
   };
 
@@ -49991,9 +49963,9 @@ export namespace Prisma {
   export type DynamicOptionCreateManyTagInput = {
     id?: string;
     text: string;
+    questionId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
-    dynamicQuestionId?: string | null;
   };
 
   export type AccountUpdateWithoutTagsInput = {
@@ -50365,29 +50337,23 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    DynamicQuestion?: DynamicQuestionUpdateOneWithoutOptionsNestedInput;
+    question?: DynamicQuestionUpdateOneRequiredWithoutOptionsNestedInput;
   };
 
   export type DynamicOptionUncheckedUpdateWithoutTagInput = {
     id?: StringFieldUpdateOperationsInput | string;
     text?: StringFieldUpdateOperationsInput | string;
+    questionId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    dynamicQuestionId?:
-      | NullableStringFieldUpdateOperationsInput
-      | string
-      | null;
   };
 
   export type DynamicOptionUncheckedUpdateManyWithoutTagInput = {
     id?: StringFieldUpdateOperationsInput | string;
     text?: StringFieldUpdateOperationsInput | string;
+    questionId?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    dynamicQuestionId?:
-      | NullableStringFieldUpdateOperationsInput
-      | string
-      | null;
   };
 
   export type TagCreateManyGroupInput = {
@@ -51237,7 +51203,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tagGroup?: TagGroupUpdateOneRequiredWithoutQuestionNestedInput;
-    options?: DynamicOptionUpdateManyWithoutDynamicQuestionNestedInput;
+    options?: DynamicOptionUpdateManyWithoutQuestionNestedInput;
   };
 
   export type DynamicQuestionUncheckedUpdateWithoutFormInput = {
@@ -51249,7 +51215,7 @@ export namespace Prisma {
     multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    options?: DynamicOptionUncheckedUpdateManyWithoutDynamicQuestionNestedInput;
+    options?: DynamicOptionUncheckedUpdateManyWithoutQuestionNestedInput;
   };
 
   export type DynamicQuestionUncheckedUpdateManyWithoutFormInput = {
@@ -51263,7 +51229,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
-  export type DynamicOptionCreateManyDynamicQuestionInput = {
+  export type DynamicOptionCreateManyQuestionInput = {
     id?: string;
     text: string;
     tagId: string;
@@ -51271,7 +51237,7 @@ export namespace Prisma {
     updated_at?: Date | string;
   };
 
-  export type DynamicOptionUpdateWithoutDynamicQuestionInput = {
+  export type DynamicOptionUpdateWithoutQuestionInput = {
     id?: StringFieldUpdateOperationsInput | string;
     text?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -51279,7 +51245,7 @@ export namespace Prisma {
     tag?: TagUpdateOneRequiredWithoutDynamicOptionNestedInput;
   };
 
-  export type DynamicOptionUncheckedUpdateWithoutDynamicQuestionInput = {
+  export type DynamicOptionUncheckedUpdateWithoutQuestionInput = {
     id?: StringFieldUpdateOperationsInput | string;
     text?: StringFieldUpdateOperationsInput | string;
     tagId?: StringFieldUpdateOperationsInput | string;
@@ -51287,7 +51253,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
-  export type DynamicOptionUncheckedUpdateManyWithoutDynamicQuestionInput = {
+  export type DynamicOptionUncheckedUpdateManyWithoutQuestionInput = {
     id?: StringFieldUpdateOperationsInput | string;
     text?: StringFieldUpdateOperationsInput | string;
     tagId?: StringFieldUpdateOperationsInput | string;
