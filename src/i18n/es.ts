@@ -17,6 +17,9 @@ export default {
       ticketGroup: 'Grupo de tickets',
       production: 'Producción',
       productionAffiliationRequest: 'Solicitud de afiliación a producción',
+      dynamicForm: 'Formulario dinámico',
+      dynamicQuestion: 'Pregunta dinámica',
+      dynamicOption: 'Opción dinámica',
     },
     tag: { assisted: 'Asistió', confirmed: 'Confirmó asistencia' },
     ticketType: {
