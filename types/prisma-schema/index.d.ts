@@ -98,6 +98,23 @@ export type Production = $Result.DefaultSelection<Prisma.$ProductionPayload>;
  */
 export type ProductionAffiliationRequest =
   $Result.DefaultSelection<Prisma.$ProductionAffiliationRequestPayload>;
+/**
+ * Model DynamicForm
+ *
+ */
+export type DynamicForm = $Result.DefaultSelection<Prisma.$DynamicFormPayload>;
+/**
+ * Model DynamicQuestion
+ *
+ */
+export type DynamicQuestion =
+  $Result.DefaultSelection<Prisma.$DynamicQuestionPayload>;
+/**
+ * Model DynamicOption
+ *
+ */
+export type DynamicOption =
+  $Result.DefaultSelection<Prisma.$DynamicOptionPayload>;
 
 /**
  * Enums
@@ -547,6 +564,36 @@ export class PrismaClient<
     ExtArgs,
     ClientOptions
   >;
+
+  /**
+   * `prisma.dynamicForm`: Exposes CRUD operations for the **DynamicForm** model.
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more DynamicForms
+   * const dynamicForms = await prisma.dynamicForm.findMany()
+   * ```
+   */
+  get dynamicForm(): Prisma.DynamicFormDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dynamicQuestion`: Exposes CRUD operations for the **DynamicQuestion** model.
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more DynamicQuestions
+   * const dynamicQuestions = await prisma.dynamicQuestion.findMany()
+   * ```
+   */
+  get dynamicQuestion(): Prisma.DynamicQuestionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dynamicOption`: Exposes CRUD operations for the **DynamicOption** model.
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more DynamicOptions
+   * const dynamicOptions = await prisma.dynamicOption.findMany()
+   * ```
+   */
+  get dynamicOption(): Prisma.DynamicOptionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1022,6 +1069,9 @@ export namespace Prisma {
     EventTicket: 'EventTicket';
     Production: 'Production';
     ProductionAffiliationRequest: 'ProductionAffiliationRequest';
+    DynamicForm: 'DynamicForm';
+    DynamicQuestion: 'DynamicQuestion';
+    DynamicOption: 'DynamicOption';
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -1063,7 +1113,10 @@ export namespace Prisma {
         | 'enums'
         | 'eventTicket'
         | 'production'
-        | 'productionAffiliationRequest';
+        | 'productionAffiliationRequest'
+        | 'dynamicForm'
+        | 'dynamicQuestion'
+        | 'dynamicOption';
       txIsolationLevel: Prisma.TransactionIsolationLevel;
     };
     model: {
@@ -2337,6 +2390,234 @@ export namespace Prisma {
           };
         };
       };
+      DynamicForm: {
+        payload: Prisma.$DynamicFormPayload<ExtArgs>;
+        fields: Prisma.DynamicFormFieldRefs;
+        operations: {
+          findUnique: {
+            args: Prisma.DynamicFormFindUniqueArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicFormPayload> | null;
+          };
+          findUniqueOrThrow: {
+            args: Prisma.DynamicFormFindUniqueOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicFormPayload>;
+          };
+          findFirst: {
+            args: Prisma.DynamicFormFindFirstArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicFormPayload> | null;
+          };
+          findFirstOrThrow: {
+            args: Prisma.DynamicFormFindFirstOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicFormPayload>;
+          };
+          findMany: {
+            args: Prisma.DynamicFormFindManyArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicFormPayload>[];
+          };
+          create: {
+            args: Prisma.DynamicFormCreateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicFormPayload>;
+          };
+          createMany: {
+            args: Prisma.DynamicFormCreateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          createManyAndReturn: {
+            args: Prisma.DynamicFormCreateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicFormPayload>[];
+          };
+          delete: {
+            args: Prisma.DynamicFormDeleteArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicFormPayload>;
+          };
+          update: {
+            args: Prisma.DynamicFormUpdateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicFormPayload>;
+          };
+          deleteMany: {
+            args: Prisma.DynamicFormDeleteManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateMany: {
+            args: Prisma.DynamicFormUpdateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateManyAndReturn: {
+            args: Prisma.DynamicFormUpdateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicFormPayload>[];
+          };
+          upsert: {
+            args: Prisma.DynamicFormUpsertArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicFormPayload>;
+          };
+          aggregate: {
+            args: Prisma.DynamicFormAggregateArgs<ExtArgs>;
+            result: $Utils.Optional<AggregateDynamicForm>;
+          };
+          groupBy: {
+            args: Prisma.DynamicFormGroupByArgs<ExtArgs>;
+            result: $Utils.Optional<DynamicFormGroupByOutputType>[];
+          };
+          count: {
+            args: Prisma.DynamicFormCountArgs<ExtArgs>;
+            result:
+              | $Utils.Optional<DynamicFormCountAggregateOutputType>
+              | number;
+          };
+        };
+      };
+      DynamicQuestion: {
+        payload: Prisma.$DynamicQuestionPayload<ExtArgs>;
+        fields: Prisma.DynamicQuestionFieldRefs;
+        operations: {
+          findUnique: {
+            args: Prisma.DynamicQuestionFindUniqueArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicQuestionPayload> | null;
+          };
+          findUniqueOrThrow: {
+            args: Prisma.DynamicQuestionFindUniqueOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicQuestionPayload>;
+          };
+          findFirst: {
+            args: Prisma.DynamicQuestionFindFirstArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicQuestionPayload> | null;
+          };
+          findFirstOrThrow: {
+            args: Prisma.DynamicQuestionFindFirstOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicQuestionPayload>;
+          };
+          findMany: {
+            args: Prisma.DynamicQuestionFindManyArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicQuestionPayload>[];
+          };
+          create: {
+            args: Prisma.DynamicQuestionCreateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicQuestionPayload>;
+          };
+          createMany: {
+            args: Prisma.DynamicQuestionCreateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          createManyAndReturn: {
+            args: Prisma.DynamicQuestionCreateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicQuestionPayload>[];
+          };
+          delete: {
+            args: Prisma.DynamicQuestionDeleteArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicQuestionPayload>;
+          };
+          update: {
+            args: Prisma.DynamicQuestionUpdateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicQuestionPayload>;
+          };
+          deleteMany: {
+            args: Prisma.DynamicQuestionDeleteManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateMany: {
+            args: Prisma.DynamicQuestionUpdateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateManyAndReturn: {
+            args: Prisma.DynamicQuestionUpdateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicQuestionPayload>[];
+          };
+          upsert: {
+            args: Prisma.DynamicQuestionUpsertArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicQuestionPayload>;
+          };
+          aggregate: {
+            args: Prisma.DynamicQuestionAggregateArgs<ExtArgs>;
+            result: $Utils.Optional<AggregateDynamicQuestion>;
+          };
+          groupBy: {
+            args: Prisma.DynamicQuestionGroupByArgs<ExtArgs>;
+            result: $Utils.Optional<DynamicQuestionGroupByOutputType>[];
+          };
+          count: {
+            args: Prisma.DynamicQuestionCountArgs<ExtArgs>;
+            result:
+              | $Utils.Optional<DynamicQuestionCountAggregateOutputType>
+              | number;
+          };
+        };
+      };
+      DynamicOption: {
+        payload: Prisma.$DynamicOptionPayload<ExtArgs>;
+        fields: Prisma.DynamicOptionFieldRefs;
+        operations: {
+          findUnique: {
+            args: Prisma.DynamicOptionFindUniqueArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicOptionPayload> | null;
+          };
+          findUniqueOrThrow: {
+            args: Prisma.DynamicOptionFindUniqueOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicOptionPayload>;
+          };
+          findFirst: {
+            args: Prisma.DynamicOptionFindFirstArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicOptionPayload> | null;
+          };
+          findFirstOrThrow: {
+            args: Prisma.DynamicOptionFindFirstOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicOptionPayload>;
+          };
+          findMany: {
+            args: Prisma.DynamicOptionFindManyArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicOptionPayload>[];
+          };
+          create: {
+            args: Prisma.DynamicOptionCreateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicOptionPayload>;
+          };
+          createMany: {
+            args: Prisma.DynamicOptionCreateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          createManyAndReturn: {
+            args: Prisma.DynamicOptionCreateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicOptionPayload>[];
+          };
+          delete: {
+            args: Prisma.DynamicOptionDeleteArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicOptionPayload>;
+          };
+          update: {
+            args: Prisma.DynamicOptionUpdateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicOptionPayload>;
+          };
+          deleteMany: {
+            args: Prisma.DynamicOptionDeleteManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateMany: {
+            args: Prisma.DynamicOptionUpdateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateManyAndReturn: {
+            args: Prisma.DynamicOptionUpdateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicOptionPayload>[];
+          };
+          upsert: {
+            args: Prisma.DynamicOptionUpsertArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$DynamicOptionPayload>;
+          };
+          aggregate: {
+            args: Prisma.DynamicOptionAggregateArgs<ExtArgs>;
+            result: $Utils.Optional<AggregateDynamicOption>;
+          };
+          groupBy: {
+            args: Prisma.DynamicOptionGroupByArgs<ExtArgs>;
+            result: $Utils.Optional<DynamicOptionGroupByOutputType>[];
+          };
+          count: {
+            args: Prisma.DynamicOptionCountArgs<ExtArgs>;
+            result:
+              | $Utils.Optional<DynamicOptionCountAggregateOutputType>
+              | number;
+          };
+        };
+      };
     };
   } & {
     other: {
@@ -2442,6 +2723,9 @@ export namespace Prisma {
     eventTicket?: EventTicketOmit;
     production?: ProductionOmit;
     productionAffiliationRequest?: ProductionAffiliationRequestOmit;
+    dynamicForm?: DynamicFormOmit;
+    dynamicQuestion?: DynamicQuestionOmit;
+    dynamicOption?: DynamicOptionOmit;
   };
 
   /* Types for Logging */
@@ -2628,6 +2912,7 @@ export namespace Prisma {
     productionsAdministrated: number;
     productionsParticipated: number;
     productionRequestsSent: number;
+    referralCodeUsed: number;
   };
 
   export type ProfileCountOutputTypeSelect<
@@ -2647,6 +2932,9 @@ export namespace Prisma {
     productionRequestsSent?:
       | boolean
       | ProfileCountOutputTypeCountProductionRequestsSentArgs;
+    referralCodeUsed?:
+      | boolean
+      | ProfileCountOutputTypeCountReferralCodeUsedArgs;
   };
 
   // Custom InputTypes
@@ -2735,6 +3023,15 @@ export namespace Prisma {
   };
 
   /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeCountReferralCodeUsedArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: TicketGroupWhereInput;
+  };
+
+  /**
    * Count Type LocationCountOutputType
    */
 
@@ -2793,6 +3090,7 @@ export namespace Prisma {
     accountsGlobalFilter: number;
     profileEvents: number;
     roleEvents: number;
+    DynamicOption: number;
   };
 
   export type TagCountOutputTypeSelect<
@@ -2805,6 +3103,7 @@ export namespace Prisma {
       | TagCountOutputTypeCountAccountsGlobalFilterArgs;
     profileEvents?: boolean | TagCountOutputTypeCountProfileEventsArgs;
     roleEvents?: boolean | TagCountOutputTypeCountRoleEventsArgs;
+    DynamicOption?: boolean | TagCountOutputTypeCountDynamicOptionArgs;
   };
 
   // Custom InputTypes
@@ -2863,6 +3162,15 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: EventWhereInput;
+  };
+
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeCountDynamicOptionArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: DynamicOptionWhereInput;
   };
 
   /**
@@ -3133,6 +3441,78 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: ProductionAffiliationRequestWhereInput;
+  };
+
+  /**
+   * Count Type DynamicFormCountOutputType
+   */
+
+  export type DynamicFormCountOutputType = {
+    questions: number;
+  };
+
+  export type DynamicFormCountOutputTypeSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    questions?: boolean | DynamicFormCountOutputTypeCountQuestionsArgs;
+  };
+
+  // Custom InputTypes
+  /**
+   * DynamicFormCountOutputType without action
+   */
+  export type DynamicFormCountOutputTypeDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicFormCountOutputType
+     */
+    select?: DynamicFormCountOutputTypeSelect<ExtArgs> | null;
+  };
+
+  /**
+   * DynamicFormCountOutputType without action
+   */
+  export type DynamicFormCountOutputTypeCountQuestionsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: DynamicQuestionWhereInput;
+  };
+
+  /**
+   * Count Type DynamicQuestionCountOutputType
+   */
+
+  export type DynamicQuestionCountOutputType = {
+    options: number;
+  };
+
+  export type DynamicQuestionCountOutputTypeSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    options?: boolean | DynamicQuestionCountOutputTypeCountOptionsArgs;
+  };
+
+  // Custom InputTypes
+  /**
+   * DynamicQuestionCountOutputType without action
+   */
+  export type DynamicQuestionCountOutputTypeDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestionCountOutputType
+     */
+    select?: DynamicQuestionCountOutputTypeSelect<ExtArgs> | null;
+  };
+
+  /**
+   * DynamicQuestionCountOutputType without action
+   */
+  export type DynamicQuestionCountOutputTypeCountOptionsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: DynamicOptionWhereInput;
   };
 
   /**
@@ -4658,6 +5038,7 @@ export namespace Prisma {
     residenceLocationId: string | null;
     isInTrash: boolean | null;
     movedToTrashDate: Date | null;
+    referralCode: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -4684,6 +5065,7 @@ export namespace Prisma {
     residenceLocationId: string | null;
     isInTrash: boolean | null;
     movedToTrashDate: Date | null;
+    referralCode: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -4711,6 +5093,7 @@ export namespace Prisma {
     residenceLocationId: number;
     isInTrash: number;
     movedToTrashDate: number;
+    referralCode: number;
     created_at: number;
     updated_at: number;
     _all: number;
@@ -4746,6 +5129,7 @@ export namespace Prisma {
     residenceLocationId?: true;
     isInTrash?: true;
     movedToTrashDate?: true;
+    referralCode?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -4772,6 +5156,7 @@ export namespace Prisma {
     residenceLocationId?: true;
     isInTrash?: true;
     movedToTrashDate?: true;
+    referralCode?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -4799,6 +5184,7 @@ export namespace Prisma {
     residenceLocationId?: true;
     isInTrash?: true;
     movedToTrashDate?: true;
+    referralCode?: true;
     created_at?: true;
     updated_at?: true;
     _all?: true;
@@ -4918,6 +5304,7 @@ export namespace Prisma {
     residenceLocationId: string | null;
     isInTrash: boolean;
     movedToTrashDate: Date | null;
+    referralCode: string;
     created_at: Date;
     updated_at: Date;
     _count: ProfileCountAggregateOutputType | null;
@@ -4966,6 +5353,7 @@ export namespace Prisma {
       residenceLocationId?: boolean;
       isInTrash?: boolean;
       movedToTrashDate?: boolean;
+      referralCode?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       otp?: boolean | Profile$otpArgs<ExtArgs>;
@@ -4984,6 +5372,7 @@ export namespace Prisma {
       productionRequestsSent?:
         | boolean
         | Profile$productionRequestsSentArgs<ExtArgs>;
+      referralCodeUsed?: boolean | Profile$referralCodeUsedArgs<ExtArgs>;
       _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['profile']
@@ -5015,6 +5404,7 @@ export namespace Prisma {
       residenceLocationId?: boolean;
       isInTrash?: boolean;
       movedToTrashDate?: boolean;
+      referralCode?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       birthLocation?: boolean | Profile$birthLocationArgs<ExtArgs>;
@@ -5049,6 +5439,7 @@ export namespace Prisma {
       residenceLocationId?: boolean;
       isInTrash?: boolean;
       movedToTrashDate?: boolean;
+      referralCode?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       birthLocation?: boolean | Profile$birthLocationArgs<ExtArgs>;
@@ -5080,6 +5471,7 @@ export namespace Prisma {
     residenceLocationId?: boolean;
     isInTrash?: boolean;
     movedToTrashDate?: boolean;
+    referralCode?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
   };
@@ -5109,6 +5501,7 @@ export namespace Prisma {
     | 'residenceLocationId'
     | 'isInTrash'
     | 'movedToTrashDate'
+    | 'referralCode'
     | 'created_at'
     | 'updated_at',
     ExtArgs['result']['profile']
@@ -5132,6 +5525,7 @@ export namespace Prisma {
     productionRequestsSent?:
       | boolean
       | Profile$productionRequestsSentArgs<ExtArgs>;
+    referralCodeUsed?: boolean | Profile$referralCodeUsedArgs<ExtArgs>;
     _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type ProfileIncludeCreateManyAndReturn<
@@ -5162,6 +5556,7 @@ export namespace Prisma {
       productionsAdministrated: Prisma.$ProductionPayload<ExtArgs>[];
       productionsParticipated: Prisma.$ProductionPayload<ExtArgs>[];
       productionRequestsSent: Prisma.$ProductionAffiliationRequestPayload<ExtArgs>[];
+      referralCodeUsed: Prisma.$TicketGroupPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -5187,6 +5582,7 @@ export namespace Prisma {
         residenceLocationId: string | null;
         isInTrash: boolean;
         movedToTrashDate: Date | null;
+        referralCode: string;
         created_at: Date;
         updated_at: Date;
       },
@@ -5855,6 +6251,17 @@ export namespace Prisma {
         >
       | Null
     >;
+    referralCodeUsed<T extends Profile$referralCodeUsedArgs<ExtArgs> = {}>(
+      args?: Subset<T, Profile$referralCodeUsedArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$TicketGroupPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5917,6 +6324,7 @@ export namespace Prisma {
     readonly residenceLocationId: FieldRef<'Profile', 'String'>;
     readonly isInTrash: FieldRef<'Profile', 'Boolean'>;
     readonly movedToTrashDate: FieldRef<'Profile', 'DateTime'>;
+    readonly referralCode: FieldRef<'Profile', 'String'>;
     readonly created_at: FieldRef<'Profile', 'DateTime'>;
     readonly updated_at: FieldRef<'Profile', 'DateTime'>;
   }
@@ -6607,6 +7015,34 @@ export namespace Prisma {
     distinct?:
       | ProductionAffiliationRequestScalarFieldEnum
       | ProductionAffiliationRequestScalarFieldEnum[];
+  };
+
+  /**
+   * Profile.referralCodeUsed
+   */
+  export type Profile$referralCodeUsedArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    where?: TicketGroupWhereInput;
+    orderBy?:
+      | TicketGroupOrderByWithRelationInput
+      | TicketGroupOrderByWithRelationInput[];
+    cursor?: TicketGroupWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: TicketGroupScalarFieldEnum | TicketGroupScalarFieldEnum[];
   };
 
   /**
@@ -10998,6 +11434,7 @@ export namespace Prisma {
       accountsGlobalFilter?: boolean | Tag$accountsGlobalFilterArgs<ExtArgs>;
       profileEvents?: boolean | Tag$profileEventsArgs<ExtArgs>;
       roleEvents?: boolean | Tag$roleEventsArgs<ExtArgs>;
+      DynamicOption?: boolean | Tag$DynamicOptionArgs<ExtArgs>;
       _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['tag']
@@ -11059,6 +11496,7 @@ export namespace Prisma {
     accountsGlobalFilter?: boolean | Tag$accountsGlobalFilterArgs<ExtArgs>;
     profileEvents?: boolean | Tag$profileEventsArgs<ExtArgs>;
     roleEvents?: boolean | Tag$roleEventsArgs<ExtArgs>;
+    DynamicOption?: boolean | Tag$DynamicOptionArgs<ExtArgs>;
     _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type TagIncludeCreateManyAndReturn<
@@ -11085,6 +11523,7 @@ export namespace Prisma {
       accountsGlobalFilter: Prisma.$AccountPayload<ExtArgs>[];
       profileEvents: Prisma.$EventPayload<ExtArgs>[];
       roleEvents: Prisma.$EventPayload<ExtArgs>[];
+      DynamicOption: Prisma.$DynamicOptionPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -11728,6 +12167,17 @@ export namespace Prisma {
     ): Prisma.PrismaPromise<
       | $Result.GetResult<
           Prisma.$EventPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
+    DynamicOption<T extends Tag$DynamicOptionArgs<ExtArgs> = {}>(
+      args?: Subset<T, Tag$DynamicOptionArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$DynamicOptionPayload<ExtArgs>,
           T,
           'findMany',
           ClientOptions
@@ -12381,6 +12831,34 @@ export namespace Prisma {
   };
 
   /**
+   * Tag.DynamicOption
+   */
+  export type Tag$DynamicOptionArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionInclude<ExtArgs> | null;
+    where?: DynamicOptionWhereInput;
+    orderBy?:
+      | DynamicOptionOrderByWithRelationInput
+      | DynamicOptionOrderByWithRelationInput[];
+    cursor?: DynamicOptionWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: DynamicOptionScalarFieldEnum | DynamicOptionScalarFieldEnum[];
+  };
+
+  /**
    * Tag without action
    */
   export type TagDefaultArgs<
@@ -12579,6 +13057,7 @@ export namespace Prisma {
       created_at?: boolean;
       updated_at?: boolean;
       tags?: boolean | TagGroup$tagsArgs<ExtArgs>;
+      question?: boolean | TagGroup$questionArgs<ExtArgs>;
       _count?: boolean | TagGroupCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['tagGroup']
@@ -12631,6 +13110,7 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     tags?: boolean | TagGroup$tagsArgs<ExtArgs>;
+    question?: boolean | TagGroup$questionArgs<ExtArgs>;
     _count?: boolean | TagGroupCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type TagGroupIncludeCreateManyAndReturn<
@@ -12646,6 +13126,7 @@ export namespace Prisma {
     name: 'TagGroup';
     objects: {
       tags: Prisma.$TagPayload<ExtArgs>[];
+      question: Prisma.$DynamicQuestionPayload<ExtArgs> | null;
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -13213,6 +13694,19 @@ export namespace Prisma {
         >
       | Null
     >;
+    question<T extends TagGroup$questionArgs<ExtArgs> = {}>(
+      args?: Subset<T, TagGroup$questionArgs<ExtArgs>>,
+    ): Prisma__DynamicQuestionClient<
+      $Result.GetResult<
+        Prisma.$DynamicQuestionPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13709,6 +14203,27 @@ export namespace Prisma {
     take?: number;
     skip?: number;
     distinct?: TagScalarFieldEnum | TagScalarFieldEnum[];
+  };
+
+  /**
+   * TagGroup.question
+   */
+  export type TagGroup$questionArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionInclude<ExtArgs> | null;
+    where?: DynamicQuestionWhereInput;
   };
 
   /**
@@ -21003,6 +21518,7 @@ export namespace Prisma {
     status: $Enums.TicketGroupStatus | null;
     amountTickets: number | null;
     eventId: string | null;
+    referralCode: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -21012,6 +21528,7 @@ export namespace Prisma {
     status: $Enums.TicketGroupStatus | null;
     amountTickets: number | null;
     eventId: string | null;
+    referralCode: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -21021,6 +21538,7 @@ export namespace Prisma {
     status: number;
     amountTickets: number;
     eventId: number;
+    referralCode: number;
     created_at: number;
     updated_at: number;
     _all: number;
@@ -21039,6 +21557,7 @@ export namespace Prisma {
     status?: true;
     amountTickets?: true;
     eventId?: true;
+    referralCode?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -21048,6 +21567,7 @@ export namespace Prisma {
     status?: true;
     amountTickets?: true;
     eventId?: true;
+    referralCode?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -21057,6 +21577,7 @@ export namespace Prisma {
     status?: true;
     amountTickets?: true;
     eventId?: true;
+    referralCode?: true;
     created_at?: true;
     updated_at?: true;
     _all?: true;
@@ -21159,6 +21680,7 @@ export namespace Prisma {
     status: $Enums.TicketGroupStatus;
     amountTickets: number;
     eventId: string;
+    referralCode: string | null;
     created_at: Date;
     updated_at: Date;
     _count: TicketGroupCountAggregateOutputType | null;
@@ -21190,10 +21712,14 @@ export namespace Prisma {
       status?: boolean;
       amountTickets?: boolean;
       eventId?: boolean;
+      referralCode?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
       tickets?: boolean | TicketGroup$ticketsArgs<ExtArgs>;
+      referralCodeProfile?:
+        | boolean
+        | TicketGroup$referralCodeProfileArgs<ExtArgs>;
       _count?: boolean | TicketGroupCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['ticketGroup']
@@ -21207,9 +21733,13 @@ export namespace Prisma {
       status?: boolean;
       amountTickets?: boolean;
       eventId?: boolean;
+      referralCode?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
+      referralCodeProfile?:
+        | boolean
+        | TicketGroup$referralCodeProfileArgs<ExtArgs>;
     },
     ExtArgs['result']['ticketGroup']
   >;
@@ -21222,9 +21752,13 @@ export namespace Prisma {
       status?: boolean;
       amountTickets?: boolean;
       eventId?: boolean;
+      referralCode?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
+      referralCodeProfile?:
+        | boolean
+        | TicketGroup$referralCodeProfileArgs<ExtArgs>;
     },
     ExtArgs['result']['ticketGroup']
   >;
@@ -21234,6 +21768,7 @@ export namespace Prisma {
     status?: boolean;
     amountTickets?: boolean;
     eventId?: boolean;
+    referralCode?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
   };
@@ -21241,7 +21776,13 @@ export namespace Prisma {
   export type TicketGroupOmit<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = $Extensions.GetOmit<
-    'id' | 'status' | 'amountTickets' | 'eventId' | 'created_at' | 'updated_at',
+    | 'id'
+    | 'status'
+    | 'amountTickets'
+    | 'eventId'
+    | 'referralCode'
+    | 'created_at'
+    | 'updated_at',
     ExtArgs['result']['ticketGroup']
   >;
   export type TicketGroupInclude<
@@ -21249,17 +21790,26 @@ export namespace Prisma {
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
     tickets?: boolean | TicketGroup$ticketsArgs<ExtArgs>;
+    referralCodeProfile?:
+      | boolean
+      | TicketGroup$referralCodeProfileArgs<ExtArgs>;
     _count?: boolean | TicketGroupCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type TicketGroupIncludeCreateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
+    referralCodeProfile?:
+      | boolean
+      | TicketGroup$referralCodeProfileArgs<ExtArgs>;
   };
   export type TicketGroupIncludeUpdateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
+    referralCodeProfile?:
+      | boolean
+      | TicketGroup$referralCodeProfileArgs<ExtArgs>;
   };
 
   export type $TicketGroupPayload<
@@ -21269,6 +21819,7 @@ export namespace Prisma {
     objects: {
       event: Prisma.$EventPayload<ExtArgs>;
       tickets: Prisma.$TicketPayload<ExtArgs>[];
+      referralCodeProfile: Prisma.$ProfilePayload<ExtArgs> | null;
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -21276,6 +21827,7 @@ export namespace Prisma {
         status: $Enums.TicketGroupStatus;
         amountTickets: number;
         eventId: string;
+        referralCode: string | null;
         created_at: Date;
         updated_at: Date;
       },
@@ -21853,6 +22405,21 @@ export namespace Prisma {
         >
       | Null
     >;
+    referralCodeProfile<
+      T extends TicketGroup$referralCodeProfileArgs<ExtArgs> = {},
+    >(
+      args?: Subset<T, TicketGroup$referralCodeProfileArgs<ExtArgs>>,
+    ): Prisma__ProfileClient<
+      $Result.GetResult<
+        Prisma.$ProfilePayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -21897,6 +22464,7 @@ export namespace Prisma {
     readonly status: FieldRef<'TicketGroup', 'TicketGroupStatus'>;
     readonly amountTickets: FieldRef<'TicketGroup', 'Int'>;
     readonly eventId: FieldRef<'TicketGroup', 'String'>;
+    readonly referralCode: FieldRef<'TicketGroup', 'String'>;
     readonly created_at: FieldRef<'TicketGroup', 'DateTime'>;
     readonly updated_at: FieldRef<'TicketGroup', 'DateTime'>;
   }
@@ -22357,6 +22925,27 @@ export namespace Prisma {
     take?: number;
     skip?: number;
     distinct?: TicketScalarFieldEnum | TicketScalarFieldEnum[];
+  };
+
+  /**
+   * TicketGroup.referralCodeProfile
+   */
+  export type TicketGroup$referralCodeProfileArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null;
+    where?: ProfileWhereInput;
   };
 
   /**
@@ -27856,6 +28445,4119 @@ export namespace Prisma {
   };
 
   /**
+   * Model DynamicForm
+   */
+
+  export type AggregateDynamicForm = {
+    _count: DynamicFormCountAggregateOutputType | null;
+    _min: DynamicFormMinAggregateOutputType | null;
+    _max: DynamicFormMaxAggregateOutputType | null;
+  };
+
+  export type DynamicFormMinAggregateOutputType = {
+    id: string | null;
+    name: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type DynamicFormMaxAggregateOutputType = {
+    id: string | null;
+    name: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type DynamicFormCountAggregateOutputType = {
+    id: number;
+    name: number;
+    created_at: number;
+    updated_at: number;
+    _all: number;
+  };
+
+  export type DynamicFormMinAggregateInputType = {
+    id?: true;
+    name?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type DynamicFormMaxAggregateInputType = {
+    id?: true;
+    name?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type DynamicFormCountAggregateInputType = {
+    id?: true;
+    name?: true;
+    created_at?: true;
+    updated_at?: true;
+    _all?: true;
+  };
+
+  export type DynamicFormAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which DynamicForm to aggregate.
+     */
+    where?: DynamicFormWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of DynamicForms to fetch.
+     */
+    orderBy?:
+      | DynamicFormOrderByWithRelationInput
+      | DynamicFormOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: DynamicFormWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` DynamicForms from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` DynamicForms.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned DynamicForms
+     **/
+    _count?: true | DynamicFormCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+     **/
+    _min?: DynamicFormMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+     **/
+    _max?: DynamicFormMaxAggregateInputType;
+  };
+
+  export type GetDynamicFormAggregateType<T extends DynamicFormAggregateArgs> =
+    {
+      [P in keyof T & keyof AggregateDynamicForm]: P extends '_count' | 'count'
+        ? T[P] extends true
+          ? number
+          : GetScalarType<T[P], AggregateDynamicForm[P]>
+        : GetScalarType<T[P], AggregateDynamicForm[P]>;
+    };
+
+  export type DynamicFormGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: DynamicFormWhereInput;
+    orderBy?:
+      | DynamicFormOrderByWithAggregationInput
+      | DynamicFormOrderByWithAggregationInput[];
+    by: DynamicFormScalarFieldEnum[] | DynamicFormScalarFieldEnum;
+    having?: DynamicFormScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: DynamicFormCountAggregateInputType | true;
+    _min?: DynamicFormMinAggregateInputType;
+    _max?: DynamicFormMaxAggregateInputType;
+  };
+
+  export type DynamicFormGroupByOutputType = {
+    id: string;
+    name: string;
+    created_at: Date;
+    updated_at: Date;
+    _count: DynamicFormCountAggregateOutputType | null;
+    _min: DynamicFormMinAggregateOutputType | null;
+    _max: DynamicFormMaxAggregateOutputType | null;
+  };
+
+  type GetDynamicFormGroupByPayload<T extends DynamicFormGroupByArgs> =
+    Prisma.PrismaPromise<
+      Array<
+        PickEnumerable<DynamicFormGroupByOutputType, T['by']> & {
+          [P in keyof T &
+            keyof DynamicFormGroupByOutputType]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DynamicFormGroupByOutputType[P]>
+            : GetScalarType<T[P], DynamicFormGroupByOutputType[P]>;
+        }
+      >
+    >;
+
+  export type DynamicFormSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      name?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      questions?: boolean | DynamicForm$questionsArgs<ExtArgs>;
+      _count?: boolean | DynamicFormCountOutputTypeDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['dynamicForm']
+  >;
+
+  export type DynamicFormSelectCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      name?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+    },
+    ExtArgs['result']['dynamicForm']
+  >;
+
+  export type DynamicFormSelectUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      name?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+    },
+    ExtArgs['result']['dynamicForm']
+  >;
+
+  export type DynamicFormSelectScalar = {
+    id?: boolean;
+    name?: boolean;
+    created_at?: boolean;
+    updated_at?: boolean;
+  };
+
+  export type DynamicFormOmit<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetOmit<
+    'id' | 'name' | 'created_at' | 'updated_at',
+    ExtArgs['result']['dynamicForm']
+  >;
+  export type DynamicFormInclude<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    questions?: boolean | DynamicForm$questionsArgs<ExtArgs>;
+    _count?: boolean | DynamicFormCountOutputTypeDefaultArgs<ExtArgs>;
+  };
+  export type DynamicFormIncludeCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {};
+  export type DynamicFormIncludeUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {};
+
+  export type $DynamicFormPayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    name: 'DynamicForm';
+    objects: {
+      questions: Prisma.$DynamicQuestionPayload<ExtArgs>[];
+    };
+    scalars: $Extensions.GetPayloadResult<
+      {
+        id: string;
+        name: string;
+        created_at: Date;
+        updated_at: Date;
+      },
+      ExtArgs['result']['dynamicForm']
+    >;
+    composites: {};
+  };
+
+  type DynamicFormGetPayload<
+    S extends boolean | null | undefined | DynamicFormDefaultArgs,
+  > = $Result.GetResult<Prisma.$DynamicFormPayload, S>;
+
+  type DynamicFormCountArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = Omit<
+    DynamicFormFindManyArgs,
+    'select' | 'include' | 'distinct' | 'omit'
+  > & {
+    select?: DynamicFormCountAggregateInputType | true;
+  };
+
+  export interface DynamicFormDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['DynamicForm'];
+      meta: { name: 'DynamicForm' };
+    };
+    /**
+     * Find zero or one DynamicForm that matches the filter.
+     * @param {DynamicFormFindUniqueArgs} args - Arguments to find a DynamicForm
+     * @example
+     * // Get one DynamicForm
+     * const dynamicForm = await prisma.dynamicForm.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DynamicFormFindUniqueArgs>(
+      args: SelectSubset<T, DynamicFormFindUniqueArgs<ExtArgs>>,
+    ): Prisma__DynamicFormClient<
+      $Result.GetResult<
+        Prisma.$DynamicFormPayload<ExtArgs>,
+        T,
+        'findUnique',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find one DynamicForm that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DynamicFormFindUniqueOrThrowArgs} args - Arguments to find a DynamicForm
+     * @example
+     * // Get one DynamicForm
+     * const dynamicForm = await prisma.dynamicForm.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DynamicFormFindUniqueOrThrowArgs>(
+      args: SelectSubset<T, DynamicFormFindUniqueOrThrowArgs<ExtArgs>>,
+    ): Prisma__DynamicFormClient<
+      $Result.GetResult<
+        Prisma.$DynamicFormPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first DynamicForm that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicFormFindFirstArgs} args - Arguments to find a DynamicForm
+     * @example
+     * // Get one DynamicForm
+     * const dynamicForm = await prisma.dynamicForm.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DynamicFormFindFirstArgs>(
+      args?: SelectSubset<T, DynamicFormFindFirstArgs<ExtArgs>>,
+    ): Prisma__DynamicFormClient<
+      $Result.GetResult<
+        Prisma.$DynamicFormPayload<ExtArgs>,
+        T,
+        'findFirst',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first DynamicForm that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicFormFindFirstOrThrowArgs} args - Arguments to find a DynamicForm
+     * @example
+     * // Get one DynamicForm
+     * const dynamicForm = await prisma.dynamicForm.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DynamicFormFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, DynamicFormFindFirstOrThrowArgs<ExtArgs>>,
+    ): Prisma__DynamicFormClient<
+      $Result.GetResult<
+        Prisma.$DynamicFormPayload<ExtArgs>,
+        T,
+        'findFirstOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find zero or more DynamicForms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicFormFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DynamicForms
+     * const dynamicForms = await prisma.dynamicForm.findMany()
+     *
+     * // Get first 10 DynamicForms
+     * const dynamicForms = await prisma.dynamicForm.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const dynamicFormWithIdOnly = await prisma.dynamicForm.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends DynamicFormFindManyArgs>(
+      args?: SelectSubset<T, DynamicFormFindManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$DynamicFormPayload<ExtArgs>,
+        T,
+        'findMany',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create a DynamicForm.
+     * @param {DynamicFormCreateArgs} args - Arguments to create a DynamicForm.
+     * @example
+     * // Create one DynamicForm
+     * const DynamicForm = await prisma.dynamicForm.create({
+     *   data: {
+     *     // ... data to create a DynamicForm
+     *   }
+     * })
+     *
+     */
+    create<T extends DynamicFormCreateArgs>(
+      args: SelectSubset<T, DynamicFormCreateArgs<ExtArgs>>,
+    ): Prisma__DynamicFormClient<
+      $Result.GetResult<
+        Prisma.$DynamicFormPayload<ExtArgs>,
+        T,
+        'create',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Create many DynamicForms.
+     * @param {DynamicFormCreateManyArgs} args - Arguments to create many DynamicForms.
+     * @example
+     * // Create many DynamicForms
+     * const dynamicForm = await prisma.dynamicForm.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends DynamicFormCreateManyArgs>(
+      args?: SelectSubset<T, DynamicFormCreateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create many DynamicForms and returns the data saved in the database.
+     * @param {DynamicFormCreateManyAndReturnArgs} args - Arguments to create many DynamicForms.
+     * @example
+     * // Create many DynamicForms
+     * const dynamicForm = await prisma.dynamicForm.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many DynamicForms and only return the `id`
+     * const dynamicFormWithIdOnly = await prisma.dynamicForm.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends DynamicFormCreateManyAndReturnArgs>(
+      args?: SelectSubset<T, DynamicFormCreateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$DynamicFormPayload<ExtArgs>,
+        T,
+        'createManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Delete a DynamicForm.
+     * @param {DynamicFormDeleteArgs} args - Arguments to delete one DynamicForm.
+     * @example
+     * // Delete one DynamicForm
+     * const DynamicForm = await prisma.dynamicForm.delete({
+     *   where: {
+     *     // ... filter to delete one DynamicForm
+     *   }
+     * })
+     *
+     */
+    delete<T extends DynamicFormDeleteArgs>(
+      args: SelectSubset<T, DynamicFormDeleteArgs<ExtArgs>>,
+    ): Prisma__DynamicFormClient<
+      $Result.GetResult<
+        Prisma.$DynamicFormPayload<ExtArgs>,
+        T,
+        'delete',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Update one DynamicForm.
+     * @param {DynamicFormUpdateArgs} args - Arguments to update one DynamicForm.
+     * @example
+     * // Update one DynamicForm
+     * const dynamicForm = await prisma.dynamicForm.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends DynamicFormUpdateArgs>(
+      args: SelectSubset<T, DynamicFormUpdateArgs<ExtArgs>>,
+    ): Prisma__DynamicFormClient<
+      $Result.GetResult<
+        Prisma.$DynamicFormPayload<ExtArgs>,
+        T,
+        'update',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Delete zero or more DynamicForms.
+     * @param {DynamicFormDeleteManyArgs} args - Arguments to filter DynamicForms to delete.
+     * @example
+     * // Delete a few DynamicForms
+     * const { count } = await prisma.dynamicForm.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends DynamicFormDeleteManyArgs>(
+      args?: SelectSubset<T, DynamicFormDeleteManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more DynamicForms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicFormUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DynamicForms
+     * const dynamicForm = await prisma.dynamicForm.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends DynamicFormUpdateManyArgs>(
+      args: SelectSubset<T, DynamicFormUpdateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more DynamicForms and returns the data updated in the database.
+     * @param {DynamicFormUpdateManyAndReturnArgs} args - Arguments to update many DynamicForms.
+     * @example
+     * // Update many DynamicForms
+     * const dynamicForm = await prisma.dynamicForm.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more DynamicForms and only return the `id`
+     * const dynamicFormWithIdOnly = await prisma.dynamicForm.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends DynamicFormUpdateManyAndReturnArgs>(
+      args: SelectSubset<T, DynamicFormUpdateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$DynamicFormPayload<ExtArgs>,
+        T,
+        'updateManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create or update one DynamicForm.
+     * @param {DynamicFormUpsertArgs} args - Arguments to update or create a DynamicForm.
+     * @example
+     * // Update or create a DynamicForm
+     * const dynamicForm = await prisma.dynamicForm.upsert({
+     *   create: {
+     *     // ... data to create a DynamicForm
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DynamicForm we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DynamicFormUpsertArgs>(
+      args: SelectSubset<T, DynamicFormUpsertArgs<ExtArgs>>,
+    ): Prisma__DynamicFormClient<
+      $Result.GetResult<
+        Prisma.$DynamicFormPayload<ExtArgs>,
+        T,
+        'upsert',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Count the number of DynamicForms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicFormCountArgs} args - Arguments to filter DynamicForms to count.
+     * @example
+     * // Count the number of DynamicForms
+     * const count = await prisma.dynamicForm.count({
+     *   where: {
+     *     // ... the filter for the DynamicForms we want to count
+     *   }
+     * })
+     **/
+    count<T extends DynamicFormCountArgs>(
+      args?: Subset<T, DynamicFormCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DynamicFormCountAggregateOutputType>
+        : number
+    >;
+
+    /**
+     * Allows you to perform aggregations operations on a DynamicForm.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicFormAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+     **/
+    aggregate<T extends DynamicFormAggregateArgs>(
+      args: Subset<T, DynamicFormAggregateArgs>,
+    ): Prisma.PrismaPromise<GetDynamicFormAggregateType<T>>;
+
+    /**
+     * Group by DynamicForm.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicFormGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+     **/
+    groupBy<
+      T extends DynamicFormGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DynamicFormGroupByArgs['orderBy'] }
+        : { orderBy?: DynamicFormGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<
+        Keys<MaybeTupleToUnion<T['orderBy']>>
+      >,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ];
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields],
+    >(
+      args: SubsetIntersection<T, DynamicFormGroupByArgs, OrderByArg> &
+        InputErrors,
+    ): {} extends InputErrors
+      ? GetDynamicFormGroupByPayload<T>
+      : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the DynamicForm model
+     */
+    readonly fields: DynamicFormFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DynamicForm.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DynamicFormClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    questions<T extends DynamicForm$questionsArgs<ExtArgs> = {}>(
+      args?: Subset<T, DynamicForm$questionsArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$DynamicQuestionPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?:
+        | ((value: T) => TResult1 | PromiseLike<TResult1>)
+        | undefined
+        | null,
+      onrejected?:
+        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?:
+        | ((reason: any) => TResult | PromiseLike<TResult>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+  /**
+   * Fields of the DynamicForm model
+   */
+  interface DynamicFormFieldRefs {
+    readonly id: FieldRef<'DynamicForm', 'String'>;
+    readonly name: FieldRef<'DynamicForm', 'String'>;
+    readonly created_at: FieldRef<'DynamicForm', 'DateTime'>;
+    readonly updated_at: FieldRef<'DynamicForm', 'DateTime'>;
+  }
+
+  // Custom InputTypes
+  /**
+   * DynamicForm findUnique
+   */
+  export type DynamicFormFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicForm
+     */
+    select?: DynamicFormSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicForm
+     */
+    omit?: DynamicFormOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicFormInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicForm to fetch.
+     */
+    where: DynamicFormWhereUniqueInput;
+  };
+
+  /**
+   * DynamicForm findUniqueOrThrow
+   */
+  export type DynamicFormFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicForm
+     */
+    select?: DynamicFormSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicForm
+     */
+    omit?: DynamicFormOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicFormInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicForm to fetch.
+     */
+    where: DynamicFormWhereUniqueInput;
+  };
+
+  /**
+   * DynamicForm findFirst
+   */
+  export type DynamicFormFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicForm
+     */
+    select?: DynamicFormSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicForm
+     */
+    omit?: DynamicFormOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicFormInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicForm to fetch.
+     */
+    where?: DynamicFormWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of DynamicForms to fetch.
+     */
+    orderBy?:
+      | DynamicFormOrderByWithRelationInput
+      | DynamicFormOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for DynamicForms.
+     */
+    cursor?: DynamicFormWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` DynamicForms from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` DynamicForms.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of DynamicForms.
+     */
+    distinct?: DynamicFormScalarFieldEnum | DynamicFormScalarFieldEnum[];
+  };
+
+  /**
+   * DynamicForm findFirstOrThrow
+   */
+  export type DynamicFormFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicForm
+     */
+    select?: DynamicFormSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicForm
+     */
+    omit?: DynamicFormOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicFormInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicForm to fetch.
+     */
+    where?: DynamicFormWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of DynamicForms to fetch.
+     */
+    orderBy?:
+      | DynamicFormOrderByWithRelationInput
+      | DynamicFormOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for DynamicForms.
+     */
+    cursor?: DynamicFormWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` DynamicForms from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` DynamicForms.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of DynamicForms.
+     */
+    distinct?: DynamicFormScalarFieldEnum | DynamicFormScalarFieldEnum[];
+  };
+
+  /**
+   * DynamicForm findMany
+   */
+  export type DynamicFormFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicForm
+     */
+    select?: DynamicFormSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicForm
+     */
+    omit?: DynamicFormOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicFormInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicForms to fetch.
+     */
+    where?: DynamicFormWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of DynamicForms to fetch.
+     */
+    orderBy?:
+      | DynamicFormOrderByWithRelationInput
+      | DynamicFormOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing DynamicForms.
+     */
+    cursor?: DynamicFormWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` DynamicForms from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` DynamicForms.
+     */
+    skip?: number;
+    distinct?: DynamicFormScalarFieldEnum | DynamicFormScalarFieldEnum[];
+  };
+
+  /**
+   * DynamicForm create
+   */
+  export type DynamicFormCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicForm
+     */
+    select?: DynamicFormSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicForm
+     */
+    omit?: DynamicFormOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicFormInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a DynamicForm.
+     */
+    data: XOR<DynamicFormCreateInput, DynamicFormUncheckedCreateInput>;
+  };
+
+  /**
+   * DynamicForm createMany
+   */
+  export type DynamicFormCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to create many DynamicForms.
+     */
+    data: DynamicFormCreateManyInput | DynamicFormCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * DynamicForm createManyAndReturn
+   */
+  export type DynamicFormCreateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicForm
+     */
+    select?: DynamicFormSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicForm
+     */
+    omit?: DynamicFormOmit<ExtArgs> | null;
+    /**
+     * The data used to create many DynamicForms.
+     */
+    data: DynamicFormCreateManyInput | DynamicFormCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * DynamicForm update
+   */
+  export type DynamicFormUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicForm
+     */
+    select?: DynamicFormSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicForm
+     */
+    omit?: DynamicFormOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicFormInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a DynamicForm.
+     */
+    data: XOR<DynamicFormUpdateInput, DynamicFormUncheckedUpdateInput>;
+    /**
+     * Choose, which DynamicForm to update.
+     */
+    where: DynamicFormWhereUniqueInput;
+  };
+
+  /**
+   * DynamicForm updateMany
+   */
+  export type DynamicFormUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to update DynamicForms.
+     */
+    data: XOR<
+      DynamicFormUpdateManyMutationInput,
+      DynamicFormUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which DynamicForms to update
+     */
+    where?: DynamicFormWhereInput;
+    /**
+     * Limit how many DynamicForms to update.
+     */
+    limit?: number;
+  };
+
+  /**
+   * DynamicForm updateManyAndReturn
+   */
+  export type DynamicFormUpdateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicForm
+     */
+    select?: DynamicFormSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicForm
+     */
+    omit?: DynamicFormOmit<ExtArgs> | null;
+    /**
+     * The data used to update DynamicForms.
+     */
+    data: XOR<
+      DynamicFormUpdateManyMutationInput,
+      DynamicFormUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which DynamicForms to update
+     */
+    where?: DynamicFormWhereInput;
+    /**
+     * Limit how many DynamicForms to update.
+     */
+    limit?: number;
+  };
+
+  /**
+   * DynamicForm upsert
+   */
+  export type DynamicFormUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicForm
+     */
+    select?: DynamicFormSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicForm
+     */
+    omit?: DynamicFormOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicFormInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the DynamicForm to update in case it exists.
+     */
+    where: DynamicFormWhereUniqueInput;
+    /**
+     * In case the DynamicForm found by the `where` argument doesn't exist, create a new DynamicForm with this data.
+     */
+    create: XOR<DynamicFormCreateInput, DynamicFormUncheckedCreateInput>;
+    /**
+     * In case the DynamicForm was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DynamicFormUpdateInput, DynamicFormUncheckedUpdateInput>;
+  };
+
+  /**
+   * DynamicForm delete
+   */
+  export type DynamicFormDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicForm
+     */
+    select?: DynamicFormSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicForm
+     */
+    omit?: DynamicFormOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicFormInclude<ExtArgs> | null;
+    /**
+     * Filter which DynamicForm to delete.
+     */
+    where: DynamicFormWhereUniqueInput;
+  };
+
+  /**
+   * DynamicForm deleteMany
+   */
+  export type DynamicFormDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which DynamicForms to delete
+     */
+    where?: DynamicFormWhereInput;
+    /**
+     * Limit how many DynamicForms to delete.
+     */
+    limit?: number;
+  };
+
+  /**
+   * DynamicForm.questions
+   */
+  export type DynamicForm$questionsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionInclude<ExtArgs> | null;
+    where?: DynamicQuestionWhereInput;
+    orderBy?:
+      | DynamicQuestionOrderByWithRelationInput
+      | DynamicQuestionOrderByWithRelationInput[];
+    cursor?: DynamicQuestionWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?:
+      | DynamicQuestionScalarFieldEnum
+      | DynamicQuestionScalarFieldEnum[];
+  };
+
+  /**
+   * DynamicForm without action
+   */
+  export type DynamicFormDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicForm
+     */
+    select?: DynamicFormSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicForm
+     */
+    omit?: DynamicFormOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicFormInclude<ExtArgs> | null;
+  };
+
+  /**
+   * Model DynamicQuestion
+   */
+
+  export type AggregateDynamicQuestion = {
+    _count: DynamicQuestionCountAggregateOutputType | null;
+    _min: DynamicQuestionMinAggregateOutputType | null;
+    _max: DynamicQuestionMaxAggregateOutputType | null;
+  };
+
+  export type DynamicQuestionMinAggregateOutputType = {
+    id: string | null;
+    formId: string | null;
+    text: string | null;
+    tagGroupId: string | null;
+    disabled: boolean | null;
+    required: boolean | null;
+    multipleChoice: boolean | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type DynamicQuestionMaxAggregateOutputType = {
+    id: string | null;
+    formId: string | null;
+    text: string | null;
+    tagGroupId: string | null;
+    disabled: boolean | null;
+    required: boolean | null;
+    multipleChoice: boolean | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type DynamicQuestionCountAggregateOutputType = {
+    id: number;
+    formId: number;
+    text: number;
+    tagGroupId: number;
+    disabled: number;
+    required: number;
+    multipleChoice: number;
+    created_at: number;
+    updated_at: number;
+    _all: number;
+  };
+
+  export type DynamicQuestionMinAggregateInputType = {
+    id?: true;
+    formId?: true;
+    text?: true;
+    tagGroupId?: true;
+    disabled?: true;
+    required?: true;
+    multipleChoice?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type DynamicQuestionMaxAggregateInputType = {
+    id?: true;
+    formId?: true;
+    text?: true;
+    tagGroupId?: true;
+    disabled?: true;
+    required?: true;
+    multipleChoice?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type DynamicQuestionCountAggregateInputType = {
+    id?: true;
+    formId?: true;
+    text?: true;
+    tagGroupId?: true;
+    disabled?: true;
+    required?: true;
+    multipleChoice?: true;
+    created_at?: true;
+    updated_at?: true;
+    _all?: true;
+  };
+
+  export type DynamicQuestionAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which DynamicQuestion to aggregate.
+     */
+    where?: DynamicQuestionWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of DynamicQuestions to fetch.
+     */
+    orderBy?:
+      | DynamicQuestionOrderByWithRelationInput
+      | DynamicQuestionOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: DynamicQuestionWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` DynamicQuestions from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` DynamicQuestions.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned DynamicQuestions
+     **/
+    _count?: true | DynamicQuestionCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+     **/
+    _min?: DynamicQuestionMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+     **/
+    _max?: DynamicQuestionMaxAggregateInputType;
+  };
+
+  export type GetDynamicQuestionAggregateType<
+    T extends DynamicQuestionAggregateArgs,
+  > = {
+    [P in keyof T & keyof AggregateDynamicQuestion]: P extends
+      | '_count'
+      | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDynamicQuestion[P]>
+      : GetScalarType<T[P], AggregateDynamicQuestion[P]>;
+  };
+
+  export type DynamicQuestionGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: DynamicQuestionWhereInput;
+    orderBy?:
+      | DynamicQuestionOrderByWithAggregationInput
+      | DynamicQuestionOrderByWithAggregationInput[];
+    by: DynamicQuestionScalarFieldEnum[] | DynamicQuestionScalarFieldEnum;
+    having?: DynamicQuestionScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: DynamicQuestionCountAggregateInputType | true;
+    _min?: DynamicQuestionMinAggregateInputType;
+    _max?: DynamicQuestionMaxAggregateInputType;
+  };
+
+  export type DynamicQuestionGroupByOutputType = {
+    id: string;
+    formId: string;
+    text: string;
+    tagGroupId: string;
+    disabled: boolean;
+    required: boolean;
+    multipleChoice: boolean;
+    created_at: Date;
+    updated_at: Date;
+    _count: DynamicQuestionCountAggregateOutputType | null;
+    _min: DynamicQuestionMinAggregateOutputType | null;
+    _max: DynamicQuestionMaxAggregateOutputType | null;
+  };
+
+  type GetDynamicQuestionGroupByPayload<T extends DynamicQuestionGroupByArgs> =
+    Prisma.PrismaPromise<
+      Array<
+        PickEnumerable<DynamicQuestionGroupByOutputType, T['by']> & {
+          [P in keyof T &
+            keyof DynamicQuestionGroupByOutputType]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DynamicQuestionGroupByOutputType[P]>
+            : GetScalarType<T[P], DynamicQuestionGroupByOutputType[P]>;
+        }
+      >
+    >;
+
+  export type DynamicQuestionSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      formId?: boolean;
+      text?: boolean;
+      tagGroupId?: boolean;
+      disabled?: boolean;
+      required?: boolean;
+      multipleChoice?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      form?: boolean | DynamicFormDefaultArgs<ExtArgs>;
+      tagGroup?: boolean | TagGroupDefaultArgs<ExtArgs>;
+      options?: boolean | DynamicQuestion$optionsArgs<ExtArgs>;
+      _count?: boolean | DynamicQuestionCountOutputTypeDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['dynamicQuestion']
+  >;
+
+  export type DynamicQuestionSelectCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      formId?: boolean;
+      text?: boolean;
+      tagGroupId?: boolean;
+      disabled?: boolean;
+      required?: boolean;
+      multipleChoice?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      form?: boolean | DynamicFormDefaultArgs<ExtArgs>;
+      tagGroup?: boolean | TagGroupDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['dynamicQuestion']
+  >;
+
+  export type DynamicQuestionSelectUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      formId?: boolean;
+      text?: boolean;
+      tagGroupId?: boolean;
+      disabled?: boolean;
+      required?: boolean;
+      multipleChoice?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      form?: boolean | DynamicFormDefaultArgs<ExtArgs>;
+      tagGroup?: boolean | TagGroupDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['dynamicQuestion']
+  >;
+
+  export type DynamicQuestionSelectScalar = {
+    id?: boolean;
+    formId?: boolean;
+    text?: boolean;
+    tagGroupId?: boolean;
+    disabled?: boolean;
+    required?: boolean;
+    multipleChoice?: boolean;
+    created_at?: boolean;
+    updated_at?: boolean;
+  };
+
+  export type DynamicQuestionOmit<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetOmit<
+    | 'id'
+    | 'formId'
+    | 'text'
+    | 'tagGroupId'
+    | 'disabled'
+    | 'required'
+    | 'multipleChoice'
+    | 'created_at'
+    | 'updated_at',
+    ExtArgs['result']['dynamicQuestion']
+  >;
+  export type DynamicQuestionInclude<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    form?: boolean | DynamicFormDefaultArgs<ExtArgs>;
+    tagGroup?: boolean | TagGroupDefaultArgs<ExtArgs>;
+    options?: boolean | DynamicQuestion$optionsArgs<ExtArgs>;
+    _count?: boolean | DynamicQuestionCountOutputTypeDefaultArgs<ExtArgs>;
+  };
+  export type DynamicQuestionIncludeCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    form?: boolean | DynamicFormDefaultArgs<ExtArgs>;
+    tagGroup?: boolean | TagGroupDefaultArgs<ExtArgs>;
+  };
+  export type DynamicQuestionIncludeUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    form?: boolean | DynamicFormDefaultArgs<ExtArgs>;
+    tagGroup?: boolean | TagGroupDefaultArgs<ExtArgs>;
+  };
+
+  export type $DynamicQuestionPayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    name: 'DynamicQuestion';
+    objects: {
+      form: Prisma.$DynamicFormPayload<ExtArgs>;
+      tagGroup: Prisma.$TagGroupPayload<ExtArgs>;
+      options: Prisma.$DynamicOptionPayload<ExtArgs>[];
+    };
+    scalars: $Extensions.GetPayloadResult<
+      {
+        id: string;
+        formId: string;
+        text: string;
+        tagGroupId: string;
+        disabled: boolean;
+        required: boolean;
+        multipleChoice: boolean;
+        created_at: Date;
+        updated_at: Date;
+      },
+      ExtArgs['result']['dynamicQuestion']
+    >;
+    composites: {};
+  };
+
+  type DynamicQuestionGetPayload<
+    S extends boolean | null | undefined | DynamicQuestionDefaultArgs,
+  > = $Result.GetResult<Prisma.$DynamicQuestionPayload, S>;
+
+  type DynamicQuestionCountArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = Omit<
+    DynamicQuestionFindManyArgs,
+    'select' | 'include' | 'distinct' | 'omit'
+  > & {
+    select?: DynamicQuestionCountAggregateInputType | true;
+  };
+
+  export interface DynamicQuestionDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['DynamicQuestion'];
+      meta: { name: 'DynamicQuestion' };
+    };
+    /**
+     * Find zero or one DynamicQuestion that matches the filter.
+     * @param {DynamicQuestionFindUniqueArgs} args - Arguments to find a DynamicQuestion
+     * @example
+     * // Get one DynamicQuestion
+     * const dynamicQuestion = await prisma.dynamicQuestion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DynamicQuestionFindUniqueArgs>(
+      args: SelectSubset<T, DynamicQuestionFindUniqueArgs<ExtArgs>>,
+    ): Prisma__DynamicQuestionClient<
+      $Result.GetResult<
+        Prisma.$DynamicQuestionPayload<ExtArgs>,
+        T,
+        'findUnique',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find one DynamicQuestion that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DynamicQuestionFindUniqueOrThrowArgs} args - Arguments to find a DynamicQuestion
+     * @example
+     * // Get one DynamicQuestion
+     * const dynamicQuestion = await prisma.dynamicQuestion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DynamicQuestionFindUniqueOrThrowArgs>(
+      args: SelectSubset<T, DynamicQuestionFindUniqueOrThrowArgs<ExtArgs>>,
+    ): Prisma__DynamicQuestionClient<
+      $Result.GetResult<
+        Prisma.$DynamicQuestionPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first DynamicQuestion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicQuestionFindFirstArgs} args - Arguments to find a DynamicQuestion
+     * @example
+     * // Get one DynamicQuestion
+     * const dynamicQuestion = await prisma.dynamicQuestion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DynamicQuestionFindFirstArgs>(
+      args?: SelectSubset<T, DynamicQuestionFindFirstArgs<ExtArgs>>,
+    ): Prisma__DynamicQuestionClient<
+      $Result.GetResult<
+        Prisma.$DynamicQuestionPayload<ExtArgs>,
+        T,
+        'findFirst',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first DynamicQuestion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicQuestionFindFirstOrThrowArgs} args - Arguments to find a DynamicQuestion
+     * @example
+     * // Get one DynamicQuestion
+     * const dynamicQuestion = await prisma.dynamicQuestion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DynamicQuestionFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, DynamicQuestionFindFirstOrThrowArgs<ExtArgs>>,
+    ): Prisma__DynamicQuestionClient<
+      $Result.GetResult<
+        Prisma.$DynamicQuestionPayload<ExtArgs>,
+        T,
+        'findFirstOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find zero or more DynamicQuestions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicQuestionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DynamicQuestions
+     * const dynamicQuestions = await prisma.dynamicQuestion.findMany()
+     *
+     * // Get first 10 DynamicQuestions
+     * const dynamicQuestions = await prisma.dynamicQuestion.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const dynamicQuestionWithIdOnly = await prisma.dynamicQuestion.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends DynamicQuestionFindManyArgs>(
+      args?: SelectSubset<T, DynamicQuestionFindManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$DynamicQuestionPayload<ExtArgs>,
+        T,
+        'findMany',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create a DynamicQuestion.
+     * @param {DynamicQuestionCreateArgs} args - Arguments to create a DynamicQuestion.
+     * @example
+     * // Create one DynamicQuestion
+     * const DynamicQuestion = await prisma.dynamicQuestion.create({
+     *   data: {
+     *     // ... data to create a DynamicQuestion
+     *   }
+     * })
+     *
+     */
+    create<T extends DynamicQuestionCreateArgs>(
+      args: SelectSubset<T, DynamicQuestionCreateArgs<ExtArgs>>,
+    ): Prisma__DynamicQuestionClient<
+      $Result.GetResult<
+        Prisma.$DynamicQuestionPayload<ExtArgs>,
+        T,
+        'create',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Create many DynamicQuestions.
+     * @param {DynamicQuestionCreateManyArgs} args - Arguments to create many DynamicQuestions.
+     * @example
+     * // Create many DynamicQuestions
+     * const dynamicQuestion = await prisma.dynamicQuestion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends DynamicQuestionCreateManyArgs>(
+      args?: SelectSubset<T, DynamicQuestionCreateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create many DynamicQuestions and returns the data saved in the database.
+     * @param {DynamicQuestionCreateManyAndReturnArgs} args - Arguments to create many DynamicQuestions.
+     * @example
+     * // Create many DynamicQuestions
+     * const dynamicQuestion = await prisma.dynamicQuestion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many DynamicQuestions and only return the `id`
+     * const dynamicQuestionWithIdOnly = await prisma.dynamicQuestion.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends DynamicQuestionCreateManyAndReturnArgs>(
+      args?: SelectSubset<T, DynamicQuestionCreateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$DynamicQuestionPayload<ExtArgs>,
+        T,
+        'createManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Delete a DynamicQuestion.
+     * @param {DynamicQuestionDeleteArgs} args - Arguments to delete one DynamicQuestion.
+     * @example
+     * // Delete one DynamicQuestion
+     * const DynamicQuestion = await prisma.dynamicQuestion.delete({
+     *   where: {
+     *     // ... filter to delete one DynamicQuestion
+     *   }
+     * })
+     *
+     */
+    delete<T extends DynamicQuestionDeleteArgs>(
+      args: SelectSubset<T, DynamicQuestionDeleteArgs<ExtArgs>>,
+    ): Prisma__DynamicQuestionClient<
+      $Result.GetResult<
+        Prisma.$DynamicQuestionPayload<ExtArgs>,
+        T,
+        'delete',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Update one DynamicQuestion.
+     * @param {DynamicQuestionUpdateArgs} args - Arguments to update one DynamicQuestion.
+     * @example
+     * // Update one DynamicQuestion
+     * const dynamicQuestion = await prisma.dynamicQuestion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends DynamicQuestionUpdateArgs>(
+      args: SelectSubset<T, DynamicQuestionUpdateArgs<ExtArgs>>,
+    ): Prisma__DynamicQuestionClient<
+      $Result.GetResult<
+        Prisma.$DynamicQuestionPayload<ExtArgs>,
+        T,
+        'update',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Delete zero or more DynamicQuestions.
+     * @param {DynamicQuestionDeleteManyArgs} args - Arguments to filter DynamicQuestions to delete.
+     * @example
+     * // Delete a few DynamicQuestions
+     * const { count } = await prisma.dynamicQuestion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends DynamicQuestionDeleteManyArgs>(
+      args?: SelectSubset<T, DynamicQuestionDeleteManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more DynamicQuestions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicQuestionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DynamicQuestions
+     * const dynamicQuestion = await prisma.dynamicQuestion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends DynamicQuestionUpdateManyArgs>(
+      args: SelectSubset<T, DynamicQuestionUpdateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more DynamicQuestions and returns the data updated in the database.
+     * @param {DynamicQuestionUpdateManyAndReturnArgs} args - Arguments to update many DynamicQuestions.
+     * @example
+     * // Update many DynamicQuestions
+     * const dynamicQuestion = await prisma.dynamicQuestion.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more DynamicQuestions and only return the `id`
+     * const dynamicQuestionWithIdOnly = await prisma.dynamicQuestion.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends DynamicQuestionUpdateManyAndReturnArgs>(
+      args: SelectSubset<T, DynamicQuestionUpdateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$DynamicQuestionPayload<ExtArgs>,
+        T,
+        'updateManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create or update one DynamicQuestion.
+     * @param {DynamicQuestionUpsertArgs} args - Arguments to update or create a DynamicQuestion.
+     * @example
+     * // Update or create a DynamicQuestion
+     * const dynamicQuestion = await prisma.dynamicQuestion.upsert({
+     *   create: {
+     *     // ... data to create a DynamicQuestion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DynamicQuestion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DynamicQuestionUpsertArgs>(
+      args: SelectSubset<T, DynamicQuestionUpsertArgs<ExtArgs>>,
+    ): Prisma__DynamicQuestionClient<
+      $Result.GetResult<
+        Prisma.$DynamicQuestionPayload<ExtArgs>,
+        T,
+        'upsert',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Count the number of DynamicQuestions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicQuestionCountArgs} args - Arguments to filter DynamicQuestions to count.
+     * @example
+     * // Count the number of DynamicQuestions
+     * const count = await prisma.dynamicQuestion.count({
+     *   where: {
+     *     // ... the filter for the DynamicQuestions we want to count
+     *   }
+     * })
+     **/
+    count<T extends DynamicQuestionCountArgs>(
+      args?: Subset<T, DynamicQuestionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DynamicQuestionCountAggregateOutputType>
+        : number
+    >;
+
+    /**
+     * Allows you to perform aggregations operations on a DynamicQuestion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicQuestionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+     **/
+    aggregate<T extends DynamicQuestionAggregateArgs>(
+      args: Subset<T, DynamicQuestionAggregateArgs>,
+    ): Prisma.PrismaPromise<GetDynamicQuestionAggregateType<T>>;
+
+    /**
+     * Group by DynamicQuestion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicQuestionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+     **/
+    groupBy<
+      T extends DynamicQuestionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DynamicQuestionGroupByArgs['orderBy'] }
+        : { orderBy?: DynamicQuestionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<
+        Keys<MaybeTupleToUnion<T['orderBy']>>
+      >,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ];
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields],
+    >(
+      args: SubsetIntersection<T, DynamicQuestionGroupByArgs, OrderByArg> &
+        InputErrors,
+    ): {} extends InputErrors
+      ? GetDynamicQuestionGroupByPayload<T>
+      : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the DynamicQuestion model
+     */
+    readonly fields: DynamicQuestionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DynamicQuestion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DynamicQuestionClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    form<T extends DynamicFormDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, DynamicFormDefaultArgs<ExtArgs>>,
+    ): Prisma__DynamicFormClient<
+      | $Result.GetResult<
+          Prisma.$DynamicFormPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          ClientOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      ClientOptions
+    >;
+    tagGroup<T extends TagGroupDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, TagGroupDefaultArgs<ExtArgs>>,
+    ): Prisma__TagGroupClient<
+      | $Result.GetResult<
+          Prisma.$TagGroupPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          ClientOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      ClientOptions
+    >;
+    options<T extends DynamicQuestion$optionsArgs<ExtArgs> = {}>(
+      args?: Subset<T, DynamicQuestion$optionsArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$DynamicOptionPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?:
+        | ((value: T) => TResult1 | PromiseLike<TResult1>)
+        | undefined
+        | null,
+      onrejected?:
+        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?:
+        | ((reason: any) => TResult | PromiseLike<TResult>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+  /**
+   * Fields of the DynamicQuestion model
+   */
+  interface DynamicQuestionFieldRefs {
+    readonly id: FieldRef<'DynamicQuestion', 'String'>;
+    readonly formId: FieldRef<'DynamicQuestion', 'String'>;
+    readonly text: FieldRef<'DynamicQuestion', 'String'>;
+    readonly tagGroupId: FieldRef<'DynamicQuestion', 'String'>;
+    readonly disabled: FieldRef<'DynamicQuestion', 'Boolean'>;
+    readonly required: FieldRef<'DynamicQuestion', 'Boolean'>;
+    readonly multipleChoice: FieldRef<'DynamicQuestion', 'Boolean'>;
+    readonly created_at: FieldRef<'DynamicQuestion', 'DateTime'>;
+    readonly updated_at: FieldRef<'DynamicQuestion', 'DateTime'>;
+  }
+
+  // Custom InputTypes
+  /**
+   * DynamicQuestion findUnique
+   */
+  export type DynamicQuestionFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicQuestion to fetch.
+     */
+    where: DynamicQuestionWhereUniqueInput;
+  };
+
+  /**
+   * DynamicQuestion findUniqueOrThrow
+   */
+  export type DynamicQuestionFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicQuestion to fetch.
+     */
+    where: DynamicQuestionWhereUniqueInput;
+  };
+
+  /**
+   * DynamicQuestion findFirst
+   */
+  export type DynamicQuestionFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicQuestion to fetch.
+     */
+    where?: DynamicQuestionWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of DynamicQuestions to fetch.
+     */
+    orderBy?:
+      | DynamicQuestionOrderByWithRelationInput
+      | DynamicQuestionOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for DynamicQuestions.
+     */
+    cursor?: DynamicQuestionWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` DynamicQuestions from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` DynamicQuestions.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of DynamicQuestions.
+     */
+    distinct?:
+      | DynamicQuestionScalarFieldEnum
+      | DynamicQuestionScalarFieldEnum[];
+  };
+
+  /**
+   * DynamicQuestion findFirstOrThrow
+   */
+  export type DynamicQuestionFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicQuestion to fetch.
+     */
+    where?: DynamicQuestionWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of DynamicQuestions to fetch.
+     */
+    orderBy?:
+      | DynamicQuestionOrderByWithRelationInput
+      | DynamicQuestionOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for DynamicQuestions.
+     */
+    cursor?: DynamicQuestionWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` DynamicQuestions from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` DynamicQuestions.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of DynamicQuestions.
+     */
+    distinct?:
+      | DynamicQuestionScalarFieldEnum
+      | DynamicQuestionScalarFieldEnum[];
+  };
+
+  /**
+   * DynamicQuestion findMany
+   */
+  export type DynamicQuestionFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicQuestions to fetch.
+     */
+    where?: DynamicQuestionWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of DynamicQuestions to fetch.
+     */
+    orderBy?:
+      | DynamicQuestionOrderByWithRelationInput
+      | DynamicQuestionOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing DynamicQuestions.
+     */
+    cursor?: DynamicQuestionWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` DynamicQuestions from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` DynamicQuestions.
+     */
+    skip?: number;
+    distinct?:
+      | DynamicQuestionScalarFieldEnum
+      | DynamicQuestionScalarFieldEnum[];
+  };
+
+  /**
+   * DynamicQuestion create
+   */
+  export type DynamicQuestionCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a DynamicQuestion.
+     */
+    data: XOR<DynamicQuestionCreateInput, DynamicQuestionUncheckedCreateInput>;
+  };
+
+  /**
+   * DynamicQuestion createMany
+   */
+  export type DynamicQuestionCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to create many DynamicQuestions.
+     */
+    data: DynamicQuestionCreateManyInput | DynamicQuestionCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * DynamicQuestion createManyAndReturn
+   */
+  export type DynamicQuestionCreateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * The data used to create many DynamicQuestions.
+     */
+    data: DynamicQuestionCreateManyInput | DynamicQuestionCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionIncludeCreateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * DynamicQuestion update
+   */
+  export type DynamicQuestionUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a DynamicQuestion.
+     */
+    data: XOR<DynamicQuestionUpdateInput, DynamicQuestionUncheckedUpdateInput>;
+    /**
+     * Choose, which DynamicQuestion to update.
+     */
+    where: DynamicQuestionWhereUniqueInput;
+  };
+
+  /**
+   * DynamicQuestion updateMany
+   */
+  export type DynamicQuestionUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to update DynamicQuestions.
+     */
+    data: XOR<
+      DynamicQuestionUpdateManyMutationInput,
+      DynamicQuestionUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which DynamicQuestions to update
+     */
+    where?: DynamicQuestionWhereInput;
+    /**
+     * Limit how many DynamicQuestions to update.
+     */
+    limit?: number;
+  };
+
+  /**
+   * DynamicQuestion updateManyAndReturn
+   */
+  export type DynamicQuestionUpdateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * The data used to update DynamicQuestions.
+     */
+    data: XOR<
+      DynamicQuestionUpdateManyMutationInput,
+      DynamicQuestionUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which DynamicQuestions to update
+     */
+    where?: DynamicQuestionWhereInput;
+    /**
+     * Limit how many DynamicQuestions to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionIncludeUpdateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * DynamicQuestion upsert
+   */
+  export type DynamicQuestionUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the DynamicQuestion to update in case it exists.
+     */
+    where: DynamicQuestionWhereUniqueInput;
+    /**
+     * In case the DynamicQuestion found by the `where` argument doesn't exist, create a new DynamicQuestion with this data.
+     */
+    create: XOR<
+      DynamicQuestionCreateInput,
+      DynamicQuestionUncheckedCreateInput
+    >;
+    /**
+     * In case the DynamicQuestion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<
+      DynamicQuestionUpdateInput,
+      DynamicQuestionUncheckedUpdateInput
+    >;
+  };
+
+  /**
+   * DynamicQuestion delete
+   */
+  export type DynamicQuestionDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionInclude<ExtArgs> | null;
+    /**
+     * Filter which DynamicQuestion to delete.
+     */
+    where: DynamicQuestionWhereUniqueInput;
+  };
+
+  /**
+   * DynamicQuestion deleteMany
+   */
+  export type DynamicQuestionDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which DynamicQuestions to delete
+     */
+    where?: DynamicQuestionWhereInput;
+    /**
+     * Limit how many DynamicQuestions to delete.
+     */
+    limit?: number;
+  };
+
+  /**
+   * DynamicQuestion.options
+   */
+  export type DynamicQuestion$optionsArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionInclude<ExtArgs> | null;
+    where?: DynamicOptionWhereInput;
+    orderBy?:
+      | DynamicOptionOrderByWithRelationInput
+      | DynamicOptionOrderByWithRelationInput[];
+    cursor?: DynamicOptionWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: DynamicOptionScalarFieldEnum | DynamicOptionScalarFieldEnum[];
+  };
+
+  /**
+   * DynamicQuestion without action
+   */
+  export type DynamicQuestionDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicQuestion
+     */
+    select?: DynamicQuestionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicQuestion
+     */
+    omit?: DynamicQuestionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicQuestionInclude<ExtArgs> | null;
+  };
+
+  /**
+   * Model DynamicOption
+   */
+
+  export type AggregateDynamicOption = {
+    _count: DynamicOptionCountAggregateOutputType | null;
+    _min: DynamicOptionMinAggregateOutputType | null;
+    _max: DynamicOptionMaxAggregateOutputType | null;
+  };
+
+  export type DynamicOptionMinAggregateOutputType = {
+    id: string | null;
+    text: string | null;
+    tagId: string | null;
+    questionId: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type DynamicOptionMaxAggregateOutputType = {
+    id: string | null;
+    text: string | null;
+    tagId: string | null;
+    questionId: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type DynamicOptionCountAggregateOutputType = {
+    id: number;
+    text: number;
+    tagId: number;
+    questionId: number;
+    created_at: number;
+    updated_at: number;
+    _all: number;
+  };
+
+  export type DynamicOptionMinAggregateInputType = {
+    id?: true;
+    text?: true;
+    tagId?: true;
+    questionId?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type DynamicOptionMaxAggregateInputType = {
+    id?: true;
+    text?: true;
+    tagId?: true;
+    questionId?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type DynamicOptionCountAggregateInputType = {
+    id?: true;
+    text?: true;
+    tagId?: true;
+    questionId?: true;
+    created_at?: true;
+    updated_at?: true;
+    _all?: true;
+  };
+
+  export type DynamicOptionAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which DynamicOption to aggregate.
+     */
+    where?: DynamicOptionWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of DynamicOptions to fetch.
+     */
+    orderBy?:
+      | DynamicOptionOrderByWithRelationInput
+      | DynamicOptionOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: DynamicOptionWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` DynamicOptions from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` DynamicOptions.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned DynamicOptions
+     **/
+    _count?: true | DynamicOptionCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+     **/
+    _min?: DynamicOptionMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+     **/
+    _max?: DynamicOptionMaxAggregateInputType;
+  };
+
+  export type GetDynamicOptionAggregateType<
+    T extends DynamicOptionAggregateArgs,
+  > = {
+    [P in keyof T & keyof AggregateDynamicOption]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDynamicOption[P]>
+      : GetScalarType<T[P], AggregateDynamicOption[P]>;
+  };
+
+  export type DynamicOptionGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: DynamicOptionWhereInput;
+    orderBy?:
+      | DynamicOptionOrderByWithAggregationInput
+      | DynamicOptionOrderByWithAggregationInput[];
+    by: DynamicOptionScalarFieldEnum[] | DynamicOptionScalarFieldEnum;
+    having?: DynamicOptionScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: DynamicOptionCountAggregateInputType | true;
+    _min?: DynamicOptionMinAggregateInputType;
+    _max?: DynamicOptionMaxAggregateInputType;
+  };
+
+  export type DynamicOptionGroupByOutputType = {
+    id: string;
+    text: string;
+    tagId: string;
+    questionId: string;
+    created_at: Date;
+    updated_at: Date;
+    _count: DynamicOptionCountAggregateOutputType | null;
+    _min: DynamicOptionMinAggregateOutputType | null;
+    _max: DynamicOptionMaxAggregateOutputType | null;
+  };
+
+  type GetDynamicOptionGroupByPayload<T extends DynamicOptionGroupByArgs> =
+    Prisma.PrismaPromise<
+      Array<
+        PickEnumerable<DynamicOptionGroupByOutputType, T['by']> & {
+          [P in keyof T &
+            keyof DynamicOptionGroupByOutputType]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DynamicOptionGroupByOutputType[P]>
+            : GetScalarType<T[P], DynamicOptionGroupByOutputType[P]>;
+        }
+      >
+    >;
+
+  export type DynamicOptionSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      text?: boolean;
+      tagId?: boolean;
+      questionId?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      tag?: boolean | TagDefaultArgs<ExtArgs>;
+      question?: boolean | DynamicQuestionDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['dynamicOption']
+  >;
+
+  export type DynamicOptionSelectCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      text?: boolean;
+      tagId?: boolean;
+      questionId?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      tag?: boolean | TagDefaultArgs<ExtArgs>;
+      question?: boolean | DynamicQuestionDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['dynamicOption']
+  >;
+
+  export type DynamicOptionSelectUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      text?: boolean;
+      tagId?: boolean;
+      questionId?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      tag?: boolean | TagDefaultArgs<ExtArgs>;
+      question?: boolean | DynamicQuestionDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['dynamicOption']
+  >;
+
+  export type DynamicOptionSelectScalar = {
+    id?: boolean;
+    text?: boolean;
+    tagId?: boolean;
+    questionId?: boolean;
+    created_at?: boolean;
+    updated_at?: boolean;
+  };
+
+  export type DynamicOptionOmit<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetOmit<
+    'id' | 'text' | 'tagId' | 'questionId' | 'created_at' | 'updated_at',
+    ExtArgs['result']['dynamicOption']
+  >;
+  export type DynamicOptionInclude<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    tag?: boolean | TagDefaultArgs<ExtArgs>;
+    question?: boolean | DynamicQuestionDefaultArgs<ExtArgs>;
+  };
+  export type DynamicOptionIncludeCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    tag?: boolean | TagDefaultArgs<ExtArgs>;
+    question?: boolean | DynamicQuestionDefaultArgs<ExtArgs>;
+  };
+  export type DynamicOptionIncludeUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    tag?: boolean | TagDefaultArgs<ExtArgs>;
+    question?: boolean | DynamicQuestionDefaultArgs<ExtArgs>;
+  };
+
+  export type $DynamicOptionPayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    name: 'DynamicOption';
+    objects: {
+      tag: Prisma.$TagPayload<ExtArgs>;
+      question: Prisma.$DynamicQuestionPayload<ExtArgs>;
+    };
+    scalars: $Extensions.GetPayloadResult<
+      {
+        id: string;
+        text: string;
+        tagId: string;
+        questionId: string;
+        created_at: Date;
+        updated_at: Date;
+      },
+      ExtArgs['result']['dynamicOption']
+    >;
+    composites: {};
+  };
+
+  type DynamicOptionGetPayload<
+    S extends boolean | null | undefined | DynamicOptionDefaultArgs,
+  > = $Result.GetResult<Prisma.$DynamicOptionPayload, S>;
+
+  type DynamicOptionCountArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = Omit<
+    DynamicOptionFindManyArgs,
+    'select' | 'include' | 'distinct' | 'omit'
+  > & {
+    select?: DynamicOptionCountAggregateInputType | true;
+  };
+
+  export interface DynamicOptionDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['DynamicOption'];
+      meta: { name: 'DynamicOption' };
+    };
+    /**
+     * Find zero or one DynamicOption that matches the filter.
+     * @param {DynamicOptionFindUniqueArgs} args - Arguments to find a DynamicOption
+     * @example
+     * // Get one DynamicOption
+     * const dynamicOption = await prisma.dynamicOption.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DynamicOptionFindUniqueArgs>(
+      args: SelectSubset<T, DynamicOptionFindUniqueArgs<ExtArgs>>,
+    ): Prisma__DynamicOptionClient<
+      $Result.GetResult<
+        Prisma.$DynamicOptionPayload<ExtArgs>,
+        T,
+        'findUnique',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find one DynamicOption that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DynamicOptionFindUniqueOrThrowArgs} args - Arguments to find a DynamicOption
+     * @example
+     * // Get one DynamicOption
+     * const dynamicOption = await prisma.dynamicOption.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DynamicOptionFindUniqueOrThrowArgs>(
+      args: SelectSubset<T, DynamicOptionFindUniqueOrThrowArgs<ExtArgs>>,
+    ): Prisma__DynamicOptionClient<
+      $Result.GetResult<
+        Prisma.$DynamicOptionPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first DynamicOption that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicOptionFindFirstArgs} args - Arguments to find a DynamicOption
+     * @example
+     * // Get one DynamicOption
+     * const dynamicOption = await prisma.dynamicOption.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DynamicOptionFindFirstArgs>(
+      args?: SelectSubset<T, DynamicOptionFindFirstArgs<ExtArgs>>,
+    ): Prisma__DynamicOptionClient<
+      $Result.GetResult<
+        Prisma.$DynamicOptionPayload<ExtArgs>,
+        T,
+        'findFirst',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first DynamicOption that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicOptionFindFirstOrThrowArgs} args - Arguments to find a DynamicOption
+     * @example
+     * // Get one DynamicOption
+     * const dynamicOption = await prisma.dynamicOption.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DynamicOptionFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, DynamicOptionFindFirstOrThrowArgs<ExtArgs>>,
+    ): Prisma__DynamicOptionClient<
+      $Result.GetResult<
+        Prisma.$DynamicOptionPayload<ExtArgs>,
+        T,
+        'findFirstOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find zero or more DynamicOptions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicOptionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DynamicOptions
+     * const dynamicOptions = await prisma.dynamicOption.findMany()
+     *
+     * // Get first 10 DynamicOptions
+     * const dynamicOptions = await prisma.dynamicOption.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const dynamicOptionWithIdOnly = await prisma.dynamicOption.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends DynamicOptionFindManyArgs>(
+      args?: SelectSubset<T, DynamicOptionFindManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$DynamicOptionPayload<ExtArgs>,
+        T,
+        'findMany',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create a DynamicOption.
+     * @param {DynamicOptionCreateArgs} args - Arguments to create a DynamicOption.
+     * @example
+     * // Create one DynamicOption
+     * const DynamicOption = await prisma.dynamicOption.create({
+     *   data: {
+     *     // ... data to create a DynamicOption
+     *   }
+     * })
+     *
+     */
+    create<T extends DynamicOptionCreateArgs>(
+      args: SelectSubset<T, DynamicOptionCreateArgs<ExtArgs>>,
+    ): Prisma__DynamicOptionClient<
+      $Result.GetResult<
+        Prisma.$DynamicOptionPayload<ExtArgs>,
+        T,
+        'create',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Create many DynamicOptions.
+     * @param {DynamicOptionCreateManyArgs} args - Arguments to create many DynamicOptions.
+     * @example
+     * // Create many DynamicOptions
+     * const dynamicOption = await prisma.dynamicOption.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends DynamicOptionCreateManyArgs>(
+      args?: SelectSubset<T, DynamicOptionCreateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create many DynamicOptions and returns the data saved in the database.
+     * @param {DynamicOptionCreateManyAndReturnArgs} args - Arguments to create many DynamicOptions.
+     * @example
+     * // Create many DynamicOptions
+     * const dynamicOption = await prisma.dynamicOption.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many DynamicOptions and only return the `id`
+     * const dynamicOptionWithIdOnly = await prisma.dynamicOption.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends DynamicOptionCreateManyAndReturnArgs>(
+      args?: SelectSubset<T, DynamicOptionCreateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$DynamicOptionPayload<ExtArgs>,
+        T,
+        'createManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Delete a DynamicOption.
+     * @param {DynamicOptionDeleteArgs} args - Arguments to delete one DynamicOption.
+     * @example
+     * // Delete one DynamicOption
+     * const DynamicOption = await prisma.dynamicOption.delete({
+     *   where: {
+     *     // ... filter to delete one DynamicOption
+     *   }
+     * })
+     *
+     */
+    delete<T extends DynamicOptionDeleteArgs>(
+      args: SelectSubset<T, DynamicOptionDeleteArgs<ExtArgs>>,
+    ): Prisma__DynamicOptionClient<
+      $Result.GetResult<
+        Prisma.$DynamicOptionPayload<ExtArgs>,
+        T,
+        'delete',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Update one DynamicOption.
+     * @param {DynamicOptionUpdateArgs} args - Arguments to update one DynamicOption.
+     * @example
+     * // Update one DynamicOption
+     * const dynamicOption = await prisma.dynamicOption.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends DynamicOptionUpdateArgs>(
+      args: SelectSubset<T, DynamicOptionUpdateArgs<ExtArgs>>,
+    ): Prisma__DynamicOptionClient<
+      $Result.GetResult<
+        Prisma.$DynamicOptionPayload<ExtArgs>,
+        T,
+        'update',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Delete zero or more DynamicOptions.
+     * @param {DynamicOptionDeleteManyArgs} args - Arguments to filter DynamicOptions to delete.
+     * @example
+     * // Delete a few DynamicOptions
+     * const { count } = await prisma.dynamicOption.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends DynamicOptionDeleteManyArgs>(
+      args?: SelectSubset<T, DynamicOptionDeleteManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more DynamicOptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicOptionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DynamicOptions
+     * const dynamicOption = await prisma.dynamicOption.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends DynamicOptionUpdateManyArgs>(
+      args: SelectSubset<T, DynamicOptionUpdateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more DynamicOptions and returns the data updated in the database.
+     * @param {DynamicOptionUpdateManyAndReturnArgs} args - Arguments to update many DynamicOptions.
+     * @example
+     * // Update many DynamicOptions
+     * const dynamicOption = await prisma.dynamicOption.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more DynamicOptions and only return the `id`
+     * const dynamicOptionWithIdOnly = await prisma.dynamicOption.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends DynamicOptionUpdateManyAndReturnArgs>(
+      args: SelectSubset<T, DynamicOptionUpdateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$DynamicOptionPayload<ExtArgs>,
+        T,
+        'updateManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create or update one DynamicOption.
+     * @param {DynamicOptionUpsertArgs} args - Arguments to update or create a DynamicOption.
+     * @example
+     * // Update or create a DynamicOption
+     * const dynamicOption = await prisma.dynamicOption.upsert({
+     *   create: {
+     *     // ... data to create a DynamicOption
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DynamicOption we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DynamicOptionUpsertArgs>(
+      args: SelectSubset<T, DynamicOptionUpsertArgs<ExtArgs>>,
+    ): Prisma__DynamicOptionClient<
+      $Result.GetResult<
+        Prisma.$DynamicOptionPayload<ExtArgs>,
+        T,
+        'upsert',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Count the number of DynamicOptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicOptionCountArgs} args - Arguments to filter DynamicOptions to count.
+     * @example
+     * // Count the number of DynamicOptions
+     * const count = await prisma.dynamicOption.count({
+     *   where: {
+     *     // ... the filter for the DynamicOptions we want to count
+     *   }
+     * })
+     **/
+    count<T extends DynamicOptionCountArgs>(
+      args?: Subset<T, DynamicOptionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DynamicOptionCountAggregateOutputType>
+        : number
+    >;
+
+    /**
+     * Allows you to perform aggregations operations on a DynamicOption.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicOptionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+     **/
+    aggregate<T extends DynamicOptionAggregateArgs>(
+      args: Subset<T, DynamicOptionAggregateArgs>,
+    ): Prisma.PrismaPromise<GetDynamicOptionAggregateType<T>>;
+
+    /**
+     * Group by DynamicOption.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DynamicOptionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+     **/
+    groupBy<
+      T extends DynamicOptionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DynamicOptionGroupByArgs['orderBy'] }
+        : { orderBy?: DynamicOptionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<
+        Keys<MaybeTupleToUnion<T['orderBy']>>
+      >,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ];
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields],
+    >(
+      args: SubsetIntersection<T, DynamicOptionGroupByArgs, OrderByArg> &
+        InputErrors,
+    ): {} extends InputErrors
+      ? GetDynamicOptionGroupByPayload<T>
+      : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the DynamicOption model
+     */
+    readonly fields: DynamicOptionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DynamicOption.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DynamicOptionClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    tag<T extends TagDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, TagDefaultArgs<ExtArgs>>,
+    ): Prisma__TagClient<
+      | $Result.GetResult<
+          Prisma.$TagPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          ClientOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      ClientOptions
+    >;
+    question<T extends DynamicQuestionDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, DynamicQuestionDefaultArgs<ExtArgs>>,
+    ): Prisma__DynamicQuestionClient<
+      | $Result.GetResult<
+          Prisma.$DynamicQuestionPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          ClientOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      ClientOptions
+    >;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?:
+        | ((value: T) => TResult1 | PromiseLike<TResult1>)
+        | undefined
+        | null,
+      onrejected?:
+        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?:
+        | ((reason: any) => TResult | PromiseLike<TResult>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+  /**
+   * Fields of the DynamicOption model
+   */
+  interface DynamicOptionFieldRefs {
+    readonly id: FieldRef<'DynamicOption', 'String'>;
+    readonly text: FieldRef<'DynamicOption', 'String'>;
+    readonly tagId: FieldRef<'DynamicOption', 'String'>;
+    readonly questionId: FieldRef<'DynamicOption', 'String'>;
+    readonly created_at: FieldRef<'DynamicOption', 'DateTime'>;
+    readonly updated_at: FieldRef<'DynamicOption', 'DateTime'>;
+  }
+
+  // Custom InputTypes
+  /**
+   * DynamicOption findUnique
+   */
+  export type DynamicOptionFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicOption to fetch.
+     */
+    where: DynamicOptionWhereUniqueInput;
+  };
+
+  /**
+   * DynamicOption findUniqueOrThrow
+   */
+  export type DynamicOptionFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicOption to fetch.
+     */
+    where: DynamicOptionWhereUniqueInput;
+  };
+
+  /**
+   * DynamicOption findFirst
+   */
+  export type DynamicOptionFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicOption to fetch.
+     */
+    where?: DynamicOptionWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of DynamicOptions to fetch.
+     */
+    orderBy?:
+      | DynamicOptionOrderByWithRelationInput
+      | DynamicOptionOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for DynamicOptions.
+     */
+    cursor?: DynamicOptionWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` DynamicOptions from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` DynamicOptions.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of DynamicOptions.
+     */
+    distinct?: DynamicOptionScalarFieldEnum | DynamicOptionScalarFieldEnum[];
+  };
+
+  /**
+   * DynamicOption findFirstOrThrow
+   */
+  export type DynamicOptionFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicOption to fetch.
+     */
+    where?: DynamicOptionWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of DynamicOptions to fetch.
+     */
+    orderBy?:
+      | DynamicOptionOrderByWithRelationInput
+      | DynamicOptionOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for DynamicOptions.
+     */
+    cursor?: DynamicOptionWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` DynamicOptions from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` DynamicOptions.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of DynamicOptions.
+     */
+    distinct?: DynamicOptionScalarFieldEnum | DynamicOptionScalarFieldEnum[];
+  };
+
+  /**
+   * DynamicOption findMany
+   */
+  export type DynamicOptionFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionInclude<ExtArgs> | null;
+    /**
+     * Filter, which DynamicOptions to fetch.
+     */
+    where?: DynamicOptionWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of DynamicOptions to fetch.
+     */
+    orderBy?:
+      | DynamicOptionOrderByWithRelationInput
+      | DynamicOptionOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing DynamicOptions.
+     */
+    cursor?: DynamicOptionWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` DynamicOptions from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` DynamicOptions.
+     */
+    skip?: number;
+    distinct?: DynamicOptionScalarFieldEnum | DynamicOptionScalarFieldEnum[];
+  };
+
+  /**
+   * DynamicOption create
+   */
+  export type DynamicOptionCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a DynamicOption.
+     */
+    data: XOR<DynamicOptionCreateInput, DynamicOptionUncheckedCreateInput>;
+  };
+
+  /**
+   * DynamicOption createMany
+   */
+  export type DynamicOptionCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to create many DynamicOptions.
+     */
+    data: DynamicOptionCreateManyInput | DynamicOptionCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * DynamicOption createManyAndReturn
+   */
+  export type DynamicOptionCreateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * The data used to create many DynamicOptions.
+     */
+    data: DynamicOptionCreateManyInput | DynamicOptionCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionIncludeCreateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * DynamicOption update
+   */
+  export type DynamicOptionUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a DynamicOption.
+     */
+    data: XOR<DynamicOptionUpdateInput, DynamicOptionUncheckedUpdateInput>;
+    /**
+     * Choose, which DynamicOption to update.
+     */
+    where: DynamicOptionWhereUniqueInput;
+  };
+
+  /**
+   * DynamicOption updateMany
+   */
+  export type DynamicOptionUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to update DynamicOptions.
+     */
+    data: XOR<
+      DynamicOptionUpdateManyMutationInput,
+      DynamicOptionUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which DynamicOptions to update
+     */
+    where?: DynamicOptionWhereInput;
+    /**
+     * Limit how many DynamicOptions to update.
+     */
+    limit?: number;
+  };
+
+  /**
+   * DynamicOption updateManyAndReturn
+   */
+  export type DynamicOptionUpdateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * The data used to update DynamicOptions.
+     */
+    data: XOR<
+      DynamicOptionUpdateManyMutationInput,
+      DynamicOptionUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which DynamicOptions to update
+     */
+    where?: DynamicOptionWhereInput;
+    /**
+     * Limit how many DynamicOptions to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionIncludeUpdateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * DynamicOption upsert
+   */
+  export type DynamicOptionUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the DynamicOption to update in case it exists.
+     */
+    where: DynamicOptionWhereUniqueInput;
+    /**
+     * In case the DynamicOption found by the `where` argument doesn't exist, create a new DynamicOption with this data.
+     */
+    create: XOR<DynamicOptionCreateInput, DynamicOptionUncheckedCreateInput>;
+    /**
+     * In case the DynamicOption was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DynamicOptionUpdateInput, DynamicOptionUncheckedUpdateInput>;
+  };
+
+  /**
+   * DynamicOption delete
+   */
+  export type DynamicOptionDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionInclude<ExtArgs> | null;
+    /**
+     * Filter which DynamicOption to delete.
+     */
+    where: DynamicOptionWhereUniqueInput;
+  };
+
+  /**
+   * DynamicOption deleteMany
+   */
+  export type DynamicOptionDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which DynamicOptions to delete
+     */
+    where?: DynamicOptionWhereInput;
+    /**
+     * Limit how many DynamicOptions to delete.
+     */
+    limit?: number;
+  };
+
+  /**
+   * DynamicOption without action
+   */
+  export type DynamicOptionDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the DynamicOption
+     */
+    select?: DynamicOptionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the DynamicOption
+     */
+    omit?: DynamicOptionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DynamicOptionInclude<ExtArgs> | null;
+  };
+
+  /**
    * Enums
    */
 
@@ -27906,6 +32608,7 @@ export namespace Prisma {
     residenceLocationId: 'residenceLocationId';
     isInTrash: 'isInTrash';
     movedToTrashDate: 'movedToTrashDate';
+    referralCode: 'referralCode';
     created_at: 'created_at';
     updated_at: 'updated_at';
   };
@@ -28060,6 +32763,7 @@ export namespace Prisma {
     status: 'status';
     amountTickets: 'amountTickets';
     eventId: 'eventId';
+    referralCode: 'referralCode';
     created_at: 'created_at';
     updated_at: 'updated_at';
   };
@@ -28112,6 +32816,43 @@ export namespace Prisma {
 
   export type ProductionAffiliationRequestScalarFieldEnum =
     (typeof ProductionAffiliationRequestScalarFieldEnum)[keyof typeof ProductionAffiliationRequestScalarFieldEnum];
+
+  export const DynamicFormScalarFieldEnum: {
+    id: 'id';
+    name: 'name';
+    created_at: 'created_at';
+    updated_at: 'updated_at';
+  };
+
+  export type DynamicFormScalarFieldEnum =
+    (typeof DynamicFormScalarFieldEnum)[keyof typeof DynamicFormScalarFieldEnum];
+
+  export const DynamicQuestionScalarFieldEnum: {
+    id: 'id';
+    formId: 'formId';
+    text: 'text';
+    tagGroupId: 'tagGroupId';
+    disabled: 'disabled';
+    required: 'required';
+    multipleChoice: 'multipleChoice';
+    created_at: 'created_at';
+    updated_at: 'updated_at';
+  };
+
+  export type DynamicQuestionScalarFieldEnum =
+    (typeof DynamicQuestionScalarFieldEnum)[keyof typeof DynamicQuestionScalarFieldEnum];
+
+  export const DynamicOptionScalarFieldEnum: {
+    id: 'id';
+    text: 'text';
+    tagId: 'tagId';
+    questionId: 'questionId';
+    created_at: 'created_at';
+    updated_at: 'updated_at';
+  };
+
+  export type DynamicOptionScalarFieldEnum =
+    (typeof DynamicOptionScalarFieldEnum)[keyof typeof DynamicOptionScalarFieldEnum];
 
   export const SortOrder: {
     asc: 'asc';
@@ -28470,6 +33211,7 @@ export namespace Prisma {
     residenceLocationId?: StringNullableFilter<'Profile'> | string | null;
     isInTrash?: BoolFilter<'Profile'> | boolean;
     movedToTrashDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
+    referralCode?: StringFilter<'Profile'> | string;
     created_at?: DateTimeFilter<'Profile'> | Date | string;
     updated_at?: DateTimeFilter<'Profile'> | Date | string;
     otp?: OtpListRelationFilter;
@@ -28488,6 +33230,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionListRelationFilter;
     productionsParticipated?: ProductionListRelationFilter;
     productionRequestsSent?: ProductionAffiliationRequestListRelationFilter;
+    referralCodeUsed?: TicketGroupListRelationFilter;
   };
 
   export type ProfileOrderByWithRelationInput = {
@@ -28513,6 +33256,7 @@ export namespace Prisma {
     residenceLocationId?: SortOrderInput | SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrderInput | SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     otp?: OtpOrderByRelationAggregateInput;
@@ -28525,6 +33269,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionOrderByRelationAggregateInput;
     productionsParticipated?: ProductionOrderByRelationAggregateInput;
     productionRequestsSent?: ProductionAffiliationRequestOrderByRelationAggregateInput;
+    referralCodeUsed?: TicketGroupOrderByRelationAggregateInput;
   };
 
   export type ProfileWhereUniqueInput = Prisma.AtLeast<
@@ -28533,6 +33278,7 @@ export namespace Prisma {
       username?: string;
       phoneNumber?: string;
       secondaryPhoneNumber?: string;
+      referralCode?: string;
       AND?: ProfileWhereInput | ProfileWhereInput[];
       OR?: ProfileWhereInput[];
       NOT?: ProfileWhereInput | ProfileWhereInput[];
@@ -28576,8 +33322,9 @@ export namespace Prisma {
       productionsAdministrated?: ProductionListRelationFilter;
       productionsParticipated?: ProductionListRelationFilter;
       productionRequestsSent?: ProductionAffiliationRequestListRelationFilter;
+      referralCodeUsed?: TicketGroupListRelationFilter;
     },
-    'id' | 'username' | 'phoneNumber' | 'secondaryPhoneNumber'
+    'id' | 'username' | 'phoneNumber' | 'secondaryPhoneNumber' | 'referralCode'
   >;
 
   export type ProfileOrderByWithAggregationInput = {
@@ -28603,6 +33350,7 @@ export namespace Prisma {
     residenceLocationId?: SortOrderInput | SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrderInput | SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     _count?: ProfileCountOrderByAggregateInput;
@@ -28662,6 +33410,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringWithAggregatesFilter<'Profile'> | string;
     created_at?: DateTimeWithAggregatesFilter<'Profile'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Profile'> | Date | string;
   };
@@ -28943,6 +33692,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountListRelationFilter;
     profileEvents?: EventListRelationFilter;
     roleEvents?: EventListRelationFilter;
+    DynamicOption?: DynamicOptionListRelationFilter;
   };
 
   export type TagOrderByWithRelationInput = {
@@ -28960,6 +33710,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountOrderByRelationAggregateInput;
     profileEvents?: EventOrderByRelationAggregateInput;
     roleEvents?: EventOrderByRelationAggregateInput;
+    DynamicOption?: DynamicOptionOrderByRelationAggregateInput;
   };
 
   export type TagWhereUniqueInput = Prisma.AtLeast<
@@ -28987,6 +33738,7 @@ export namespace Prisma {
       accountsGlobalFilter?: AccountListRelationFilter;
       profileEvents?: EventListRelationFilter;
       roleEvents?: EventListRelationFilter;
+      DynamicOption?: DynamicOptionListRelationFilter;
     },
     'id'
   >;
@@ -29030,6 +33782,10 @@ export namespace Prisma {
     created_at?: DateTimeFilter<'TagGroup'> | Date | string;
     updated_at?: DateTimeFilter<'TagGroup'> | Date | string;
     tags?: TagListRelationFilter;
+    question?: XOR<
+      DynamicQuestionNullableScalarRelationFilter,
+      DynamicQuestionWhereInput
+    > | null;
   };
 
   export type TagGroupOrderByWithRelationInput = {
@@ -29040,6 +33796,7 @@ export namespace Prisma {
     created_at?: SortOrder;
     updated_at?: SortOrder;
     tags?: TagOrderByRelationAggregateInput;
+    question?: DynamicQuestionOrderByWithRelationInput;
   };
 
   export type TagGroupWhereUniqueInput = Prisma.AtLeast<
@@ -29054,6 +33811,10 @@ export namespace Prisma {
       created_at?: DateTimeFilter<'TagGroup'> | Date | string;
       updated_at?: DateTimeFilter<'TagGroup'> | Date | string;
       tags?: TagListRelationFilter;
+      question?: XOR<
+        DynamicQuestionNullableScalarRelationFilter,
+        DynamicQuestionWhereInput
+      > | null;
     },
     'id'
   >;
@@ -29579,10 +34340,15 @@ export namespace Prisma {
       | $Enums.TicketGroupStatus;
     amountTickets?: IntFilter<'TicketGroup'> | number;
     eventId?: StringFilter<'TicketGroup'> | string;
+    referralCode?: StringNullableFilter<'TicketGroup'> | string | null;
     created_at?: DateTimeFilter<'TicketGroup'> | Date | string;
     updated_at?: DateTimeFilter<'TicketGroup'> | Date | string;
     event?: XOR<EventScalarRelationFilter, EventWhereInput>;
     tickets?: TicketListRelationFilter;
+    referralCodeProfile?: XOR<
+      ProfileNullableScalarRelationFilter,
+      ProfileWhereInput
+    > | null;
   };
 
   export type TicketGroupOrderByWithRelationInput = {
@@ -29590,10 +34356,12 @@ export namespace Prisma {
     status?: SortOrder;
     amountTickets?: SortOrder;
     eventId?: SortOrder;
+    referralCode?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     event?: EventOrderByWithRelationInput;
     tickets?: TicketOrderByRelationAggregateInput;
+    referralCodeProfile?: ProfileOrderByWithRelationInput;
   };
 
   export type TicketGroupWhereUniqueInput = Prisma.AtLeast<
@@ -29607,10 +34375,15 @@ export namespace Prisma {
         | $Enums.TicketGroupStatus;
       amountTickets?: IntFilter<'TicketGroup'> | number;
       eventId?: StringFilter<'TicketGroup'> | string;
+      referralCode?: StringNullableFilter<'TicketGroup'> | string | null;
       created_at?: DateTimeFilter<'TicketGroup'> | Date | string;
       updated_at?: DateTimeFilter<'TicketGroup'> | Date | string;
       event?: XOR<EventScalarRelationFilter, EventWhereInput>;
       tickets?: TicketListRelationFilter;
+      referralCodeProfile?: XOR<
+        ProfileNullableScalarRelationFilter,
+        ProfileWhereInput
+      > | null;
     },
     'id'
   >;
@@ -29620,6 +34393,7 @@ export namespace Prisma {
     status?: SortOrder;
     amountTickets?: SortOrder;
     eventId?: SortOrder;
+    referralCode?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     _count?: TicketGroupCountOrderByAggregateInput;
@@ -29643,6 +34417,10 @@ export namespace Prisma {
       | $Enums.TicketGroupStatus;
     amountTickets?: IntWithAggregatesFilter<'TicketGroup'> | number;
     eventId?: StringWithAggregatesFilter<'TicketGroup'> | string;
+    referralCode?:
+      | StringNullableWithAggregatesFilter<'TicketGroup'>
+      | string
+      | null;
     created_at?: DateTimeWithAggregatesFilter<'TicketGroup'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'TicketGroup'> | Date | string;
   };
@@ -29979,6 +34757,233 @@ export namespace Prisma {
       | string;
   };
 
+  export type DynamicFormWhereInput = {
+    AND?: DynamicFormWhereInput | DynamicFormWhereInput[];
+    OR?: DynamicFormWhereInput[];
+    NOT?: DynamicFormWhereInput | DynamicFormWhereInput[];
+    id?: StringFilter<'DynamicForm'> | string;
+    name?: StringFilter<'DynamicForm'> | string;
+    created_at?: DateTimeFilter<'DynamicForm'> | Date | string;
+    updated_at?: DateTimeFilter<'DynamicForm'> | Date | string;
+    questions?: DynamicQuestionListRelationFilter;
+  };
+
+  export type DynamicFormOrderByWithRelationInput = {
+    id?: SortOrder;
+    name?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    questions?: DynamicQuestionOrderByRelationAggregateInput;
+  };
+
+  export type DynamicFormWhereUniqueInput = Prisma.AtLeast<
+    {
+      id?: string;
+      name?: string;
+      AND?: DynamicFormWhereInput | DynamicFormWhereInput[];
+      OR?: DynamicFormWhereInput[];
+      NOT?: DynamicFormWhereInput | DynamicFormWhereInput[];
+      created_at?: DateTimeFilter<'DynamicForm'> | Date | string;
+      updated_at?: DateTimeFilter<'DynamicForm'> | Date | string;
+      questions?: DynamicQuestionListRelationFilter;
+    },
+    'id' | 'name'
+  >;
+
+  export type DynamicFormOrderByWithAggregationInput = {
+    id?: SortOrder;
+    name?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    _count?: DynamicFormCountOrderByAggregateInput;
+    _max?: DynamicFormMaxOrderByAggregateInput;
+    _min?: DynamicFormMinOrderByAggregateInput;
+  };
+
+  export type DynamicFormScalarWhereWithAggregatesInput = {
+    AND?:
+      | DynamicFormScalarWhereWithAggregatesInput
+      | DynamicFormScalarWhereWithAggregatesInput[];
+    OR?: DynamicFormScalarWhereWithAggregatesInput[];
+    NOT?:
+      | DynamicFormScalarWhereWithAggregatesInput
+      | DynamicFormScalarWhereWithAggregatesInput[];
+    id?: StringWithAggregatesFilter<'DynamicForm'> | string;
+    name?: StringWithAggregatesFilter<'DynamicForm'> | string;
+    created_at?: DateTimeWithAggregatesFilter<'DynamicForm'> | Date | string;
+    updated_at?: DateTimeWithAggregatesFilter<'DynamicForm'> | Date | string;
+  };
+
+  export type DynamicQuestionWhereInput = {
+    AND?: DynamicQuestionWhereInput | DynamicQuestionWhereInput[];
+    OR?: DynamicQuestionWhereInput[];
+    NOT?: DynamicQuestionWhereInput | DynamicQuestionWhereInput[];
+    id?: StringFilter<'DynamicQuestion'> | string;
+    formId?: StringFilter<'DynamicQuestion'> | string;
+    text?: StringFilter<'DynamicQuestion'> | string;
+    tagGroupId?: StringFilter<'DynamicQuestion'> | string;
+    disabled?: BoolFilter<'DynamicQuestion'> | boolean;
+    required?: BoolFilter<'DynamicQuestion'> | boolean;
+    multipleChoice?: BoolFilter<'DynamicQuestion'> | boolean;
+    created_at?: DateTimeFilter<'DynamicQuestion'> | Date | string;
+    updated_at?: DateTimeFilter<'DynamicQuestion'> | Date | string;
+    form?: XOR<DynamicFormScalarRelationFilter, DynamicFormWhereInput>;
+    tagGroup?: XOR<TagGroupScalarRelationFilter, TagGroupWhereInput>;
+    options?: DynamicOptionListRelationFilter;
+  };
+
+  export type DynamicQuestionOrderByWithRelationInput = {
+    id?: SortOrder;
+    formId?: SortOrder;
+    text?: SortOrder;
+    tagGroupId?: SortOrder;
+    disabled?: SortOrder;
+    required?: SortOrder;
+    multipleChoice?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    form?: DynamicFormOrderByWithRelationInput;
+    tagGroup?: TagGroupOrderByWithRelationInput;
+    options?: DynamicOptionOrderByRelationAggregateInput;
+  };
+
+  export type DynamicQuestionWhereUniqueInput = Prisma.AtLeast<
+    {
+      id?: string;
+      tagGroupId?: string;
+      AND?: DynamicQuestionWhereInput | DynamicQuestionWhereInput[];
+      OR?: DynamicQuestionWhereInput[];
+      NOT?: DynamicQuestionWhereInput | DynamicQuestionWhereInput[];
+      formId?: StringFilter<'DynamicQuestion'> | string;
+      text?: StringFilter<'DynamicQuestion'> | string;
+      disabled?: BoolFilter<'DynamicQuestion'> | boolean;
+      required?: BoolFilter<'DynamicQuestion'> | boolean;
+      multipleChoice?: BoolFilter<'DynamicQuestion'> | boolean;
+      created_at?: DateTimeFilter<'DynamicQuestion'> | Date | string;
+      updated_at?: DateTimeFilter<'DynamicQuestion'> | Date | string;
+      form?: XOR<DynamicFormScalarRelationFilter, DynamicFormWhereInput>;
+      tagGroup?: XOR<TagGroupScalarRelationFilter, TagGroupWhereInput>;
+      options?: DynamicOptionListRelationFilter;
+    },
+    'id' | 'tagGroupId'
+  >;
+
+  export type DynamicQuestionOrderByWithAggregationInput = {
+    id?: SortOrder;
+    formId?: SortOrder;
+    text?: SortOrder;
+    tagGroupId?: SortOrder;
+    disabled?: SortOrder;
+    required?: SortOrder;
+    multipleChoice?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    _count?: DynamicQuestionCountOrderByAggregateInput;
+    _max?: DynamicQuestionMaxOrderByAggregateInput;
+    _min?: DynamicQuestionMinOrderByAggregateInput;
+  };
+
+  export type DynamicQuestionScalarWhereWithAggregatesInput = {
+    AND?:
+      | DynamicQuestionScalarWhereWithAggregatesInput
+      | DynamicQuestionScalarWhereWithAggregatesInput[];
+    OR?: DynamicQuestionScalarWhereWithAggregatesInput[];
+    NOT?:
+      | DynamicQuestionScalarWhereWithAggregatesInput
+      | DynamicQuestionScalarWhereWithAggregatesInput[];
+    id?: StringWithAggregatesFilter<'DynamicQuestion'> | string;
+    formId?: StringWithAggregatesFilter<'DynamicQuestion'> | string;
+    text?: StringWithAggregatesFilter<'DynamicQuestion'> | string;
+    tagGroupId?: StringWithAggregatesFilter<'DynamicQuestion'> | string;
+    disabled?: BoolWithAggregatesFilter<'DynamicQuestion'> | boolean;
+    required?: BoolWithAggregatesFilter<'DynamicQuestion'> | boolean;
+    multipleChoice?: BoolWithAggregatesFilter<'DynamicQuestion'> | boolean;
+    created_at?:
+      | DateTimeWithAggregatesFilter<'DynamicQuestion'>
+      | Date
+      | string;
+    updated_at?:
+      | DateTimeWithAggregatesFilter<'DynamicQuestion'>
+      | Date
+      | string;
+  };
+
+  export type DynamicOptionWhereInput = {
+    AND?: DynamicOptionWhereInput | DynamicOptionWhereInput[];
+    OR?: DynamicOptionWhereInput[];
+    NOT?: DynamicOptionWhereInput | DynamicOptionWhereInput[];
+    id?: StringFilter<'DynamicOption'> | string;
+    text?: StringFilter<'DynamicOption'> | string;
+    tagId?: StringFilter<'DynamicOption'> | string;
+    questionId?: StringFilter<'DynamicOption'> | string;
+    created_at?: DateTimeFilter<'DynamicOption'> | Date | string;
+    updated_at?: DateTimeFilter<'DynamicOption'> | Date | string;
+    tag?: XOR<TagScalarRelationFilter, TagWhereInput>;
+    question?: XOR<
+      DynamicQuestionScalarRelationFilter,
+      DynamicQuestionWhereInput
+    >;
+  };
+
+  export type DynamicOptionOrderByWithRelationInput = {
+    id?: SortOrder;
+    text?: SortOrder;
+    tagId?: SortOrder;
+    questionId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    tag?: TagOrderByWithRelationInput;
+    question?: DynamicQuestionOrderByWithRelationInput;
+  };
+
+  export type DynamicOptionWhereUniqueInput = Prisma.AtLeast<
+    {
+      id?: string;
+      AND?: DynamicOptionWhereInput | DynamicOptionWhereInput[];
+      OR?: DynamicOptionWhereInput[];
+      NOT?: DynamicOptionWhereInput | DynamicOptionWhereInput[];
+      text?: StringFilter<'DynamicOption'> | string;
+      tagId?: StringFilter<'DynamicOption'> | string;
+      questionId?: StringFilter<'DynamicOption'> | string;
+      created_at?: DateTimeFilter<'DynamicOption'> | Date | string;
+      updated_at?: DateTimeFilter<'DynamicOption'> | Date | string;
+      tag?: XOR<TagScalarRelationFilter, TagWhereInput>;
+      question?: XOR<
+        DynamicQuestionScalarRelationFilter,
+        DynamicQuestionWhereInput
+      >;
+    },
+    'id'
+  >;
+
+  export type DynamicOptionOrderByWithAggregationInput = {
+    id?: SortOrder;
+    text?: SortOrder;
+    tagId?: SortOrder;
+    questionId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    _count?: DynamicOptionCountOrderByAggregateInput;
+    _max?: DynamicOptionMaxOrderByAggregateInput;
+    _min?: DynamicOptionMinOrderByAggregateInput;
+  };
+
+  export type DynamicOptionScalarWhereWithAggregatesInput = {
+    AND?:
+      | DynamicOptionScalarWhereWithAggregatesInput
+      | DynamicOptionScalarWhereWithAggregatesInput[];
+    OR?: DynamicOptionScalarWhereWithAggregatesInput[];
+    NOT?:
+      | DynamicOptionScalarWhereWithAggregatesInput
+      | DynamicOptionScalarWhereWithAggregatesInput[];
+    id?: StringWithAggregatesFilter<'DynamicOption'> | string;
+    text?: StringWithAggregatesFilter<'DynamicOption'> | string;
+    tagId?: StringWithAggregatesFilter<'DynamicOption'> | string;
+    questionId?: StringWithAggregatesFilter<'DynamicOption'> | string;
+    created_at?: DateTimeWithAggregatesFilter<'DynamicOption'> | Date | string;
+    updated_at?: DateTimeWithAggregatesFilter<'DynamicOption'> | Date | string;
+  };
+
   export type AccountCreateInput = {
     id?: string;
     username: string;
@@ -30093,6 +35098,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -30105,6 +35111,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateInput = {
@@ -30130,6 +35137,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -30140,6 +35148,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUpdateInput = {
@@ -30177,6 +35186,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -30189,6 +35199,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateInput = {
@@ -30231,6 +35242,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -30241,6 +35253,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileCreateManyInput = {
@@ -30266,6 +35279,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -30305,6 +35319,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -30349,6 +35364,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -30618,6 +35634,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionCreateNestedManyWithoutTagInput;
   };
 
   export type TagUncheckedCreateInput = {
@@ -30634,6 +35651,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionUncheckedCreateNestedManyWithoutTagInput;
   };
 
   export type TagUpdateInput = {
@@ -30650,6 +35668,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateInput = {
@@ -30666,6 +35685,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUncheckedUpdateManyWithoutTagNestedInput;
   };
 
   export type TagCreateManyInput = {
@@ -30702,6 +35722,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tags?: TagCreateNestedManyWithoutGroupInput;
+    question?: DynamicQuestionCreateNestedOneWithoutTagGroupInput;
   };
 
   export type TagGroupUncheckedCreateInput = {
@@ -30712,6 +35733,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tags?: TagUncheckedCreateNestedManyWithoutGroupInput;
+    question?: DynamicQuestionUncheckedCreateNestedOneWithoutTagGroupInput;
   };
 
   export type TagGroupUpdateInput = {
@@ -30722,6 +35744,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tags?: TagUpdateManyWithoutGroupNestedInput;
+    question?: DynamicQuestionUpdateOneWithoutTagGroupNestedInput;
   };
 
   export type TagGroupUncheckedUpdateInput = {
@@ -30732,6 +35755,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tags?: TagUncheckedUpdateManyWithoutGroupNestedInput;
+    question?: DynamicQuestionUncheckedUpdateOneWithoutTagGroupNestedInput;
   };
 
   export type TagGroupCreateManyInput = {
@@ -31236,6 +36260,7 @@ export namespace Prisma {
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketGroupsInput;
     tickets?: TicketCreateNestedManyWithoutTicketGroupInput;
+    referralCodeProfile?: ProfileCreateNestedOneWithoutReferralCodeUsedInput;
   };
 
   export type TicketGroupUncheckedCreateInput = {
@@ -31243,6 +36268,7 @@ export namespace Prisma {
     status: $Enums.TicketGroupStatus;
     amountTickets?: number;
     eventId: string;
+    referralCode?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutTicketGroupInput;
@@ -31258,6 +36284,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketGroupsNestedInput;
     tickets?: TicketUpdateManyWithoutTicketGroupNestedInput;
+    referralCodeProfile?: ProfileUpdateOneWithoutReferralCodeUsedNestedInput;
   };
 
   export type TicketGroupUncheckedUpdateInput = {
@@ -31267,6 +36294,7 @@ export namespace Prisma {
       | $Enums.TicketGroupStatus;
     amountTickets?: IntFieldUpdateOperationsInput | number;
     eventId?: StringFieldUpdateOperationsInput | string;
+    referralCode?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutTicketGroupNestedInput;
@@ -31277,6 +36305,7 @@ export namespace Prisma {
     status: $Enums.TicketGroupStatus;
     amountTickets?: number;
     eventId: string;
+    referralCode?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -31298,6 +36327,7 @@ export namespace Prisma {
       | $Enums.TicketGroupStatus;
     amountTickets?: IntFieldUpdateOperationsInput | number;
     eventId?: StringFieldUpdateOperationsInput | string;
+    referralCode?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -31588,6 +36618,206 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
+  export type DynamicFormCreateInput = {
+    id?: string;
+    name: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    questions?: DynamicQuestionCreateNestedManyWithoutFormInput;
+  };
+
+  export type DynamicFormUncheckedCreateInput = {
+    id?: string;
+    name: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    questions?: DynamicQuestionUncheckedCreateNestedManyWithoutFormInput;
+  };
+
+  export type DynamicFormUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    questions?: DynamicQuestionUpdateManyWithoutFormNestedInput;
+  };
+
+  export type DynamicFormUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    questions?: DynamicQuestionUncheckedUpdateManyWithoutFormNestedInput;
+  };
+
+  export type DynamicFormCreateManyInput = {
+    id?: string;
+    name: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type DynamicFormUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type DynamicFormUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type DynamicQuestionCreateInput = {
+    id?: string;
+    text: string;
+    disabled?: boolean;
+    required?: boolean;
+    multipleChoice?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    form: DynamicFormCreateNestedOneWithoutQuestionsInput;
+    tagGroup: TagGroupCreateNestedOneWithoutQuestionInput;
+    options?: DynamicOptionCreateNestedManyWithoutQuestionInput;
+  };
+
+  export type DynamicQuestionUncheckedCreateInput = {
+    id?: string;
+    formId: string;
+    text: string;
+    tagGroupId: string;
+    disabled?: boolean;
+    required?: boolean;
+    multipleChoice?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    options?: DynamicOptionUncheckedCreateNestedManyWithoutQuestionInput;
+  };
+
+  export type DynamicQuestionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    disabled?: BoolFieldUpdateOperationsInput | boolean;
+    required?: BoolFieldUpdateOperationsInput | boolean;
+    multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    form?: DynamicFormUpdateOneRequiredWithoutQuestionsNestedInput;
+    tagGroup?: TagGroupUpdateOneRequiredWithoutQuestionNestedInput;
+    options?: DynamicOptionUpdateManyWithoutQuestionNestedInput;
+  };
+
+  export type DynamicQuestionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    formId?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    tagGroupId?: StringFieldUpdateOperationsInput | string;
+    disabled?: BoolFieldUpdateOperationsInput | boolean;
+    required?: BoolFieldUpdateOperationsInput | boolean;
+    multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    options?: DynamicOptionUncheckedUpdateManyWithoutQuestionNestedInput;
+  };
+
+  export type DynamicQuestionCreateManyInput = {
+    id?: string;
+    formId: string;
+    text: string;
+    tagGroupId: string;
+    disabled?: boolean;
+    required?: boolean;
+    multipleChoice?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type DynamicQuestionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    disabled?: BoolFieldUpdateOperationsInput | boolean;
+    required?: BoolFieldUpdateOperationsInput | boolean;
+    multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type DynamicQuestionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    formId?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    tagGroupId?: StringFieldUpdateOperationsInput | string;
+    disabled?: BoolFieldUpdateOperationsInput | boolean;
+    required?: BoolFieldUpdateOperationsInput | boolean;
+    multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type DynamicOptionCreateInput = {
+    id?: string;
+    text: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tag: TagCreateNestedOneWithoutDynamicOptionInput;
+    question: DynamicQuestionCreateNestedOneWithoutOptionsInput;
+  };
+
+  export type DynamicOptionUncheckedCreateInput = {
+    id?: string;
+    text: string;
+    tagId: string;
+    questionId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type DynamicOptionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tag?: TagUpdateOneRequiredWithoutDynamicOptionNestedInput;
+    question?: DynamicQuestionUpdateOneRequiredWithoutOptionsNestedInput;
+  };
+
+  export type DynamicOptionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    tagId?: StringFieldUpdateOperationsInput | string;
+    questionId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type DynamicOptionCreateManyInput = {
+    id?: string;
+    text: string;
+    tagId: string;
+    questionId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type DynamicOptionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type DynamicOptionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    tagId?: StringFieldUpdateOperationsInput | string;
+    questionId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>;
     in?: string[] | ListStringFieldRefInput<$PrismaModel>;
@@ -31807,6 +37037,12 @@ export namespace Prisma {
     none?: ProductionAffiliationRequestWhereInput;
   };
 
+  export type TicketGroupListRelationFilter = {
+    every?: TicketGroupWhereInput;
+    some?: TicketGroupWhereInput;
+    none?: TicketGroupWhereInput;
+  };
+
   export type SortOrderInput = {
     sort: SortOrder;
     nulls?: NullsOrder;
@@ -31829,6 +37065,10 @@ export namespace Prisma {
   };
 
   export type ProductionAffiliationRequestOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type TicketGroupOrderByRelationAggregateInput = {
     _count?: SortOrder;
   };
 
@@ -31855,6 +37095,7 @@ export namespace Prisma {
     residenceLocationId?: SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -31885,6 +37126,7 @@ export namespace Prisma {
     residenceLocationId?: SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -31911,6 +37153,7 @@ export namespace Prisma {
     residenceLocationId?: SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -32169,11 +37412,21 @@ export namespace Prisma {
     none?: EventWhereInput;
   };
 
+  export type DynamicOptionListRelationFilter = {
+    every?: DynamicOptionWhereInput;
+    some?: DynamicOptionWhereInput;
+    none?: DynamicOptionWhereInput;
+  };
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder;
   };
 
   export type EventOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type DynamicOptionOrderByRelationAggregateInput = {
     _count?: SortOrder;
   };
 
@@ -32214,6 +37467,11 @@ export namespace Prisma {
     _max?: NestedEnumTagTypeFilter<$PrismaModel>;
   };
 
+  export type DynamicQuestionNullableScalarRelationFilter = {
+    is?: DynamicQuestionWhereInput | null;
+    isNot?: DynamicQuestionWhereInput | null;
+  };
+
   export type TagGroupCountOrderByAggregateInput = {
     id?: SortOrder;
     name?: SortOrder;
@@ -32251,20 +37509,10 @@ export namespace Prisma {
     isNot?: TagWhereInput;
   };
 
-  export type TicketGroupListRelationFilter = {
-    every?: TicketGroupWhereInput;
-    some?: TicketGroupWhereInput;
-    none?: TicketGroupWhereInput;
-  };
-
   export type EventTicketListRelationFilter = {
     every?: EventTicketWhereInput;
     some?: EventTicketWhereInput;
     none?: EventTicketWhereInput;
-  };
-
-  export type TicketGroupOrderByRelationAggregateInput = {
-    _count?: SortOrder;
   };
 
   export type EventTicketOrderByRelationAggregateInput = {
@@ -32640,6 +37888,7 @@ export namespace Prisma {
     status?: SortOrder;
     amountTickets?: SortOrder;
     eventId?: SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -32653,6 +37902,7 @@ export namespace Prisma {
     status?: SortOrder;
     amountTickets?: SortOrder;
     eventId?: SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -32662,6 +37912,7 @@ export namespace Prisma {
     status?: SortOrder;
     amountTickets?: SortOrder;
     eventId?: SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -32930,6 +38181,110 @@ export namespace Prisma {
       _min?: NestedEnumAffiliationStatusFilter<$PrismaModel>;
       _max?: NestedEnumAffiliationStatusFilter<$PrismaModel>;
     };
+
+  export type DynamicQuestionListRelationFilter = {
+    every?: DynamicQuestionWhereInput;
+    some?: DynamicQuestionWhereInput;
+    none?: DynamicQuestionWhereInput;
+  };
+
+  export type DynamicQuestionOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type DynamicFormCountOrderByAggregateInput = {
+    id?: SortOrder;
+    name?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type DynamicFormMaxOrderByAggregateInput = {
+    id?: SortOrder;
+    name?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type DynamicFormMinOrderByAggregateInput = {
+    id?: SortOrder;
+    name?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type DynamicFormScalarRelationFilter = {
+    is?: DynamicFormWhereInput;
+    isNot?: DynamicFormWhereInput;
+  };
+
+  export type DynamicQuestionCountOrderByAggregateInput = {
+    id?: SortOrder;
+    formId?: SortOrder;
+    text?: SortOrder;
+    tagGroupId?: SortOrder;
+    disabled?: SortOrder;
+    required?: SortOrder;
+    multipleChoice?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type DynamicQuestionMaxOrderByAggregateInput = {
+    id?: SortOrder;
+    formId?: SortOrder;
+    text?: SortOrder;
+    tagGroupId?: SortOrder;
+    disabled?: SortOrder;
+    required?: SortOrder;
+    multipleChoice?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type DynamicQuestionMinOrderByAggregateInput = {
+    id?: SortOrder;
+    formId?: SortOrder;
+    text?: SortOrder;
+    tagGroupId?: SortOrder;
+    disabled?: SortOrder;
+    required?: SortOrder;
+    multipleChoice?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type DynamicQuestionScalarRelationFilter = {
+    is?: DynamicQuestionWhereInput;
+    isNot?: DynamicQuestionWhereInput;
+  };
+
+  export type DynamicOptionCountOrderByAggregateInput = {
+    id?: SortOrder;
+    text?: SortOrder;
+    tagId?: SortOrder;
+    questionId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type DynamicOptionMaxOrderByAggregateInput = {
+    id?: SortOrder;
+    text?: SortOrder;
+    tagId?: SortOrder;
+    questionId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type DynamicOptionMinOrderByAggregateInput = {
+    id?: SortOrder;
+    text?: SortOrder;
+    tagId?: SortOrder;
+    questionId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
 
   export type AccountCreatefcmTokenInput = {
     set: string[];
@@ -33432,6 +38787,21 @@ export namespace Prisma {
         | ProductionAffiliationRequestWhereUniqueInput[];
     };
 
+  export type TicketGroupCreateNestedManyWithoutReferralCodeProfileInput = {
+    create?:
+      | XOR<
+          TicketGroupCreateWithoutReferralCodeProfileInput,
+          TicketGroupUncheckedCreateWithoutReferralCodeProfileInput
+        >
+      | TicketGroupCreateWithoutReferralCodeProfileInput[]
+      | TicketGroupUncheckedCreateWithoutReferralCodeProfileInput[];
+    connectOrCreate?:
+      | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput
+      | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput[];
+    createMany?: TicketGroupCreateManyReferralCodeProfileInputEnvelope;
+    connect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+  };
+
   export type OtpUncheckedCreateNestedManyWithoutOwnerInput = {
     create?:
       | XOR<OtpCreateWithoutOwnerInput, OtpUncheckedCreateWithoutOwnerInput>
@@ -33548,6 +38918,22 @@ export namespace Prisma {
       connect?:
         | ProductionAffiliationRequestWhereUniqueInput
         | ProductionAffiliationRequestWhereUniqueInput[];
+    };
+
+  export type TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput =
+    {
+      create?:
+        | XOR<
+            TicketGroupCreateWithoutReferralCodeProfileInput,
+            TicketGroupUncheckedCreateWithoutReferralCodeProfileInput
+          >
+        | TicketGroupCreateWithoutReferralCodeProfileInput[]
+        | TicketGroupUncheckedCreateWithoutReferralCodeProfileInput[];
+      connectOrCreate?:
+        | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput
+        | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput[];
+      createMany?: TicketGroupCreateManyReferralCodeProfileInputEnvelope;
+      connect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
     };
 
   export type IntFieldUpdateOperationsInput = {
@@ -33839,6 +39225,34 @@ export namespace Prisma {
         | ProductionAffiliationRequestScalarWhereInput[];
     };
 
+  export type TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput = {
+    create?:
+      | XOR<
+          TicketGroupCreateWithoutReferralCodeProfileInput,
+          TicketGroupUncheckedCreateWithoutReferralCodeProfileInput
+        >
+      | TicketGroupCreateWithoutReferralCodeProfileInput[]
+      | TicketGroupUncheckedCreateWithoutReferralCodeProfileInput[];
+    connectOrCreate?:
+      | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput
+      | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput[];
+    upsert?:
+      | TicketGroupUpsertWithWhereUniqueWithoutReferralCodeProfileInput
+      | TicketGroupUpsertWithWhereUniqueWithoutReferralCodeProfileInput[];
+    createMany?: TicketGroupCreateManyReferralCodeProfileInputEnvelope;
+    set?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    disconnect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    delete?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    connect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    update?:
+      | TicketGroupUpdateWithWhereUniqueWithoutReferralCodeProfileInput
+      | TicketGroupUpdateWithWhereUniqueWithoutReferralCodeProfileInput[];
+    updateMany?:
+      | TicketGroupUpdateManyWithWhereWithoutReferralCodeProfileInput
+      | TicketGroupUpdateManyWithWhereWithoutReferralCodeProfileInput[];
+    deleteMany?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
+  };
+
   export type OtpUncheckedUpdateManyWithoutOwnerNestedInput = {
     create?:
       | XOR<OtpCreateWithoutOwnerInput, OtpUncheckedCreateWithoutOwnerInput>
@@ -34067,6 +39481,35 @@ export namespace Prisma {
       deleteMany?:
         | ProductionAffiliationRequestScalarWhereInput
         | ProductionAffiliationRequestScalarWhereInput[];
+    };
+
+  export type TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput =
+    {
+      create?:
+        | XOR<
+            TicketGroupCreateWithoutReferralCodeProfileInput,
+            TicketGroupUncheckedCreateWithoutReferralCodeProfileInput
+          >
+        | TicketGroupCreateWithoutReferralCodeProfileInput[]
+        | TicketGroupUncheckedCreateWithoutReferralCodeProfileInput[];
+      connectOrCreate?:
+        | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput
+        | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput[];
+      upsert?:
+        | TicketGroupUpsertWithWhereUniqueWithoutReferralCodeProfileInput
+        | TicketGroupUpsertWithWhereUniqueWithoutReferralCodeProfileInput[];
+      createMany?: TicketGroupCreateManyReferralCodeProfileInputEnvelope;
+      set?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+      disconnect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+      delete?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+      connect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+      update?:
+        | TicketGroupUpdateWithWhereUniqueWithoutReferralCodeProfileInput
+        | TicketGroupUpdateWithWhereUniqueWithoutReferralCodeProfileInput[];
+      updateMany?:
+        | TicketGroupUpdateManyWithWhereWithoutReferralCodeProfileInput
+        | TicketGroupUpdateManyWithWhereWithoutReferralCodeProfileInput[];
+      deleteMany?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
     };
 
   export type ProfileCreateNestedOneWithoutOtpInput = {
@@ -34452,6 +39895,21 @@ export namespace Prisma {
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
   };
 
+  export type DynamicOptionCreateNestedManyWithoutTagInput = {
+    create?:
+      | XOR<
+          DynamicOptionCreateWithoutTagInput,
+          DynamicOptionUncheckedCreateWithoutTagInput
+        >
+      | DynamicOptionCreateWithoutTagInput[]
+      | DynamicOptionUncheckedCreateWithoutTagInput[];
+    connectOrCreate?:
+      | DynamicOptionCreateOrConnectWithoutTagInput
+      | DynamicOptionCreateOrConnectWithoutTagInput[];
+    createMany?: DynamicOptionCreateManyTagInputEnvelope;
+    connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+  };
+
   export type EventUncheckedCreateNestedOneWithoutTagAssistedInput = {
     create?: XOR<
       EventCreateWithoutTagAssistedInput,
@@ -34538,6 +39996,21 @@ export namespace Prisma {
       | EventCreateOrConnectWithoutParticipantRolesInput
       | EventCreateOrConnectWithoutParticipantRolesInput[];
     connect?: EventWhereUniqueInput | EventWhereUniqueInput[];
+  };
+
+  export type DynamicOptionUncheckedCreateNestedManyWithoutTagInput = {
+    create?:
+      | XOR<
+          DynamicOptionCreateWithoutTagInput,
+          DynamicOptionUncheckedCreateWithoutTagInput
+        >
+      | DynamicOptionCreateWithoutTagInput[]
+      | DynamicOptionUncheckedCreateWithoutTagInput[];
+    connectOrCreate?:
+      | DynamicOptionCreateOrConnectWithoutTagInput
+      | DynamicOptionCreateOrConnectWithoutTagInput[];
+    createMany?: DynamicOptionCreateManyTagInputEnvelope;
+    connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
   };
 
   export type EnumTagTypeFieldUpdateOperationsInput = {
@@ -34734,6 +40207,38 @@ export namespace Prisma {
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[];
   };
 
+  export type DynamicOptionUpdateManyWithoutTagNestedInput = {
+    create?:
+      | XOR<
+          DynamicOptionCreateWithoutTagInput,
+          DynamicOptionUncheckedCreateWithoutTagInput
+        >
+      | DynamicOptionCreateWithoutTagInput[]
+      | DynamicOptionUncheckedCreateWithoutTagInput[];
+    connectOrCreate?:
+      | DynamicOptionCreateOrConnectWithoutTagInput
+      | DynamicOptionCreateOrConnectWithoutTagInput[];
+    upsert?:
+      | DynamicOptionUpsertWithWhereUniqueWithoutTagInput
+      | DynamicOptionUpsertWithWhereUniqueWithoutTagInput[];
+    createMany?: DynamicOptionCreateManyTagInputEnvelope;
+    set?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    disconnect?:
+      | DynamicOptionWhereUniqueInput
+      | DynamicOptionWhereUniqueInput[];
+    delete?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    update?:
+      | DynamicOptionUpdateWithWhereUniqueWithoutTagInput
+      | DynamicOptionUpdateWithWhereUniqueWithoutTagInput[];
+    updateMany?:
+      | DynamicOptionUpdateManyWithWhereWithoutTagInput
+      | DynamicOptionUpdateManyWithWhereWithoutTagInput[];
+    deleteMany?:
+      | DynamicOptionScalarWhereInput
+      | DynamicOptionScalarWhereInput[];
+  };
+
   export type EventUncheckedUpdateOneWithoutTagAssistedNestedInput = {
     create?: XOR<
       EventCreateWithoutTagAssistedInput,
@@ -34907,6 +40412,38 @@ export namespace Prisma {
     deleteMany?: EventScalarWhereInput | EventScalarWhereInput[];
   };
 
+  export type DynamicOptionUncheckedUpdateManyWithoutTagNestedInput = {
+    create?:
+      | XOR<
+          DynamicOptionCreateWithoutTagInput,
+          DynamicOptionUncheckedCreateWithoutTagInput
+        >
+      | DynamicOptionCreateWithoutTagInput[]
+      | DynamicOptionUncheckedCreateWithoutTagInput[];
+    connectOrCreate?:
+      | DynamicOptionCreateOrConnectWithoutTagInput
+      | DynamicOptionCreateOrConnectWithoutTagInput[];
+    upsert?:
+      | DynamicOptionUpsertWithWhereUniqueWithoutTagInput
+      | DynamicOptionUpsertWithWhereUniqueWithoutTagInput[];
+    createMany?: DynamicOptionCreateManyTagInputEnvelope;
+    set?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    disconnect?:
+      | DynamicOptionWhereUniqueInput
+      | DynamicOptionWhereUniqueInput[];
+    delete?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    update?:
+      | DynamicOptionUpdateWithWhereUniqueWithoutTagInput
+      | DynamicOptionUpdateWithWhereUniqueWithoutTagInput[];
+    updateMany?:
+      | DynamicOptionUpdateManyWithWhereWithoutTagInput
+      | DynamicOptionUpdateManyWithWhereWithoutTagInput[];
+    deleteMany?:
+      | DynamicOptionScalarWhereInput
+      | DynamicOptionScalarWhereInput[];
+  };
+
   export type TagCreateNestedManyWithoutGroupInput = {
     create?:
       | XOR<TagCreateWithoutGroupInput, TagUncheckedCreateWithoutGroupInput>
@@ -34919,6 +40456,15 @@ export namespace Prisma {
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[];
   };
 
+  export type DynamicQuestionCreateNestedOneWithoutTagGroupInput = {
+    create?: XOR<
+      DynamicQuestionCreateWithoutTagGroupInput,
+      DynamicQuestionUncheckedCreateWithoutTagGroupInput
+    >;
+    connectOrCreate?: DynamicQuestionCreateOrConnectWithoutTagGroupInput;
+    connect?: DynamicQuestionWhereUniqueInput;
+  };
+
   export type TagUncheckedCreateNestedManyWithoutGroupInput = {
     create?:
       | XOR<TagCreateWithoutGroupInput, TagUncheckedCreateWithoutGroupInput>
@@ -34929,6 +40475,15 @@ export namespace Prisma {
       | TagCreateOrConnectWithoutGroupInput[];
     createMany?: TagCreateManyGroupInputEnvelope;
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[];
+  };
+
+  export type DynamicQuestionUncheckedCreateNestedOneWithoutTagGroupInput = {
+    create?: XOR<
+      DynamicQuestionCreateWithoutTagGroupInput,
+      DynamicQuestionUncheckedCreateWithoutTagGroupInput
+    >;
+    connectOrCreate?: DynamicQuestionCreateOrConnectWithoutTagGroupInput;
+    connect?: DynamicQuestionWhereUniqueInput;
   };
 
   export type TagUpdateManyWithoutGroupNestedInput = {
@@ -34956,6 +40511,25 @@ export namespace Prisma {
     deleteMany?: TagScalarWhereInput | TagScalarWhereInput[];
   };
 
+  export type DynamicQuestionUpdateOneWithoutTagGroupNestedInput = {
+    create?: XOR<
+      DynamicQuestionCreateWithoutTagGroupInput,
+      DynamicQuestionUncheckedCreateWithoutTagGroupInput
+    >;
+    connectOrCreate?: DynamicQuestionCreateOrConnectWithoutTagGroupInput;
+    upsert?: DynamicQuestionUpsertWithoutTagGroupInput;
+    disconnect?: DynamicQuestionWhereInput | boolean;
+    delete?: DynamicQuestionWhereInput | boolean;
+    connect?: DynamicQuestionWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        DynamicQuestionUpdateToOneWithWhereWithoutTagGroupInput,
+        DynamicQuestionUpdateWithoutTagGroupInput
+      >,
+      DynamicQuestionUncheckedUpdateWithoutTagGroupInput
+    >;
+  };
+
   export type TagUncheckedUpdateManyWithoutGroupNestedInput = {
     create?:
       | XOR<TagCreateWithoutGroupInput, TagUncheckedCreateWithoutGroupInput>
@@ -34979,6 +40553,25 @@ export namespace Prisma {
       | TagUpdateManyWithWhereWithoutGroupInput
       | TagUpdateManyWithWhereWithoutGroupInput[];
     deleteMany?: TagScalarWhereInput | TagScalarWhereInput[];
+  };
+
+  export type DynamicQuestionUncheckedUpdateOneWithoutTagGroupNestedInput = {
+    create?: XOR<
+      DynamicQuestionCreateWithoutTagGroupInput,
+      DynamicQuestionUncheckedCreateWithoutTagGroupInput
+    >;
+    connectOrCreate?: DynamicQuestionCreateOrConnectWithoutTagGroupInput;
+    upsert?: DynamicQuestionUpsertWithoutTagGroupInput;
+    disconnect?: DynamicQuestionWhereInput | boolean;
+    delete?: DynamicQuestionWhereInput | boolean;
+    connect?: DynamicQuestionWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        DynamicQuestionUpdateToOneWithWhereWithoutTagGroupInput,
+        DynamicQuestionUpdateWithoutTagGroupInput
+      >,
+      DynamicQuestionUncheckedUpdateWithoutTagGroupInput
+    >;
   };
 
   export type EventFolderCreateNestedOneWithoutEventsInput = {
@@ -35913,6 +41506,15 @@ export namespace Prisma {
     connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
   };
 
+  export type ProfileCreateNestedOneWithoutReferralCodeUsedInput = {
+    create?: XOR<
+      ProfileCreateWithoutReferralCodeUsedInput,
+      ProfileUncheckedCreateWithoutReferralCodeUsedInput
+    >;
+    connectOrCreate?: ProfileCreateOrConnectWithoutReferralCodeUsedInput;
+    connect?: ProfileWhereUniqueInput;
+  };
+
   export type TicketUncheckedCreateNestedManyWithoutTicketGroupInput = {
     create?:
       | XOR<
@@ -35975,6 +41577,25 @@ export namespace Prisma {
       | TicketUpdateManyWithWhereWithoutTicketGroupInput
       | TicketUpdateManyWithWhereWithoutTicketGroupInput[];
     deleteMany?: TicketScalarWhereInput | TicketScalarWhereInput[];
+  };
+
+  export type ProfileUpdateOneWithoutReferralCodeUsedNestedInput = {
+    create?: XOR<
+      ProfileCreateWithoutReferralCodeUsedInput,
+      ProfileUncheckedCreateWithoutReferralCodeUsedInput
+    >;
+    connectOrCreate?: ProfileCreateOrConnectWithoutReferralCodeUsedInput;
+    upsert?: ProfileUpsertWithoutReferralCodeUsedInput;
+    disconnect?: ProfileWhereInput | boolean;
+    delete?: ProfileWhereInput | boolean;
+    connect?: ProfileWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        ProfileUpdateToOneWithWhereWithoutReferralCodeUsedInput,
+        ProfileUpdateWithoutReferralCodeUsedInput
+      >,
+      ProfileUncheckedUpdateWithoutReferralCodeUsedInput
+    >;
   };
 
   export type TicketUncheckedUpdateManyWithoutTicketGroupNestedInput = {
@@ -36412,6 +42033,310 @@ export namespace Prisma {
         ProfileUncheckedUpdateWithoutProductionRequestsSentInput
       >;
     };
+
+  export type DynamicQuestionCreateNestedManyWithoutFormInput = {
+    create?:
+      | XOR<
+          DynamicQuestionCreateWithoutFormInput,
+          DynamicQuestionUncheckedCreateWithoutFormInput
+        >
+      | DynamicQuestionCreateWithoutFormInput[]
+      | DynamicQuestionUncheckedCreateWithoutFormInput[];
+    connectOrCreate?:
+      | DynamicQuestionCreateOrConnectWithoutFormInput
+      | DynamicQuestionCreateOrConnectWithoutFormInput[];
+    createMany?: DynamicQuestionCreateManyFormInputEnvelope;
+    connect?:
+      | DynamicQuestionWhereUniqueInput
+      | DynamicQuestionWhereUniqueInput[];
+  };
+
+  export type DynamicQuestionUncheckedCreateNestedManyWithoutFormInput = {
+    create?:
+      | XOR<
+          DynamicQuestionCreateWithoutFormInput,
+          DynamicQuestionUncheckedCreateWithoutFormInput
+        >
+      | DynamicQuestionCreateWithoutFormInput[]
+      | DynamicQuestionUncheckedCreateWithoutFormInput[];
+    connectOrCreate?:
+      | DynamicQuestionCreateOrConnectWithoutFormInput
+      | DynamicQuestionCreateOrConnectWithoutFormInput[];
+    createMany?: DynamicQuestionCreateManyFormInputEnvelope;
+    connect?:
+      | DynamicQuestionWhereUniqueInput
+      | DynamicQuestionWhereUniqueInput[];
+  };
+
+  export type DynamicQuestionUpdateManyWithoutFormNestedInput = {
+    create?:
+      | XOR<
+          DynamicQuestionCreateWithoutFormInput,
+          DynamicQuestionUncheckedCreateWithoutFormInput
+        >
+      | DynamicQuestionCreateWithoutFormInput[]
+      | DynamicQuestionUncheckedCreateWithoutFormInput[];
+    connectOrCreate?:
+      | DynamicQuestionCreateOrConnectWithoutFormInput
+      | DynamicQuestionCreateOrConnectWithoutFormInput[];
+    upsert?:
+      | DynamicQuestionUpsertWithWhereUniqueWithoutFormInput
+      | DynamicQuestionUpsertWithWhereUniqueWithoutFormInput[];
+    createMany?: DynamicQuestionCreateManyFormInputEnvelope;
+    set?: DynamicQuestionWhereUniqueInput | DynamicQuestionWhereUniqueInput[];
+    disconnect?:
+      | DynamicQuestionWhereUniqueInput
+      | DynamicQuestionWhereUniqueInput[];
+    delete?:
+      | DynamicQuestionWhereUniqueInput
+      | DynamicQuestionWhereUniqueInput[];
+    connect?:
+      | DynamicQuestionWhereUniqueInput
+      | DynamicQuestionWhereUniqueInput[];
+    update?:
+      | DynamicQuestionUpdateWithWhereUniqueWithoutFormInput
+      | DynamicQuestionUpdateWithWhereUniqueWithoutFormInput[];
+    updateMany?:
+      | DynamicQuestionUpdateManyWithWhereWithoutFormInput
+      | DynamicQuestionUpdateManyWithWhereWithoutFormInput[];
+    deleteMany?:
+      | DynamicQuestionScalarWhereInput
+      | DynamicQuestionScalarWhereInput[];
+  };
+
+  export type DynamicQuestionUncheckedUpdateManyWithoutFormNestedInput = {
+    create?:
+      | XOR<
+          DynamicQuestionCreateWithoutFormInput,
+          DynamicQuestionUncheckedCreateWithoutFormInput
+        >
+      | DynamicQuestionCreateWithoutFormInput[]
+      | DynamicQuestionUncheckedCreateWithoutFormInput[];
+    connectOrCreate?:
+      | DynamicQuestionCreateOrConnectWithoutFormInput
+      | DynamicQuestionCreateOrConnectWithoutFormInput[];
+    upsert?:
+      | DynamicQuestionUpsertWithWhereUniqueWithoutFormInput
+      | DynamicQuestionUpsertWithWhereUniqueWithoutFormInput[];
+    createMany?: DynamicQuestionCreateManyFormInputEnvelope;
+    set?: DynamicQuestionWhereUniqueInput | DynamicQuestionWhereUniqueInput[];
+    disconnect?:
+      | DynamicQuestionWhereUniqueInput
+      | DynamicQuestionWhereUniqueInput[];
+    delete?:
+      | DynamicQuestionWhereUniqueInput
+      | DynamicQuestionWhereUniqueInput[];
+    connect?:
+      | DynamicQuestionWhereUniqueInput
+      | DynamicQuestionWhereUniqueInput[];
+    update?:
+      | DynamicQuestionUpdateWithWhereUniqueWithoutFormInput
+      | DynamicQuestionUpdateWithWhereUniqueWithoutFormInput[];
+    updateMany?:
+      | DynamicQuestionUpdateManyWithWhereWithoutFormInput
+      | DynamicQuestionUpdateManyWithWhereWithoutFormInput[];
+    deleteMany?:
+      | DynamicQuestionScalarWhereInput
+      | DynamicQuestionScalarWhereInput[];
+  };
+
+  export type DynamicFormCreateNestedOneWithoutQuestionsInput = {
+    create?: XOR<
+      DynamicFormCreateWithoutQuestionsInput,
+      DynamicFormUncheckedCreateWithoutQuestionsInput
+    >;
+    connectOrCreate?: DynamicFormCreateOrConnectWithoutQuestionsInput;
+    connect?: DynamicFormWhereUniqueInput;
+  };
+
+  export type TagGroupCreateNestedOneWithoutQuestionInput = {
+    create?: XOR<
+      TagGroupCreateWithoutQuestionInput,
+      TagGroupUncheckedCreateWithoutQuestionInput
+    >;
+    connectOrCreate?: TagGroupCreateOrConnectWithoutQuestionInput;
+    connect?: TagGroupWhereUniqueInput;
+  };
+
+  export type DynamicOptionCreateNestedManyWithoutQuestionInput = {
+    create?:
+      | XOR<
+          DynamicOptionCreateWithoutQuestionInput,
+          DynamicOptionUncheckedCreateWithoutQuestionInput
+        >
+      | DynamicOptionCreateWithoutQuestionInput[]
+      | DynamicOptionUncheckedCreateWithoutQuestionInput[];
+    connectOrCreate?:
+      | DynamicOptionCreateOrConnectWithoutQuestionInput
+      | DynamicOptionCreateOrConnectWithoutQuestionInput[];
+    createMany?: DynamicOptionCreateManyQuestionInputEnvelope;
+    connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+  };
+
+  export type DynamicOptionUncheckedCreateNestedManyWithoutQuestionInput = {
+    create?:
+      | XOR<
+          DynamicOptionCreateWithoutQuestionInput,
+          DynamicOptionUncheckedCreateWithoutQuestionInput
+        >
+      | DynamicOptionCreateWithoutQuestionInput[]
+      | DynamicOptionUncheckedCreateWithoutQuestionInput[];
+    connectOrCreate?:
+      | DynamicOptionCreateOrConnectWithoutQuestionInput
+      | DynamicOptionCreateOrConnectWithoutQuestionInput[];
+    createMany?: DynamicOptionCreateManyQuestionInputEnvelope;
+    connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+  };
+
+  export type DynamicFormUpdateOneRequiredWithoutQuestionsNestedInput = {
+    create?: XOR<
+      DynamicFormCreateWithoutQuestionsInput,
+      DynamicFormUncheckedCreateWithoutQuestionsInput
+    >;
+    connectOrCreate?: DynamicFormCreateOrConnectWithoutQuestionsInput;
+    upsert?: DynamicFormUpsertWithoutQuestionsInput;
+    connect?: DynamicFormWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        DynamicFormUpdateToOneWithWhereWithoutQuestionsInput,
+        DynamicFormUpdateWithoutQuestionsInput
+      >,
+      DynamicFormUncheckedUpdateWithoutQuestionsInput
+    >;
+  };
+
+  export type TagGroupUpdateOneRequiredWithoutQuestionNestedInput = {
+    create?: XOR<
+      TagGroupCreateWithoutQuestionInput,
+      TagGroupUncheckedCreateWithoutQuestionInput
+    >;
+    connectOrCreate?: TagGroupCreateOrConnectWithoutQuestionInput;
+    upsert?: TagGroupUpsertWithoutQuestionInput;
+    connect?: TagGroupWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        TagGroupUpdateToOneWithWhereWithoutQuestionInput,
+        TagGroupUpdateWithoutQuestionInput
+      >,
+      TagGroupUncheckedUpdateWithoutQuestionInput
+    >;
+  };
+
+  export type DynamicOptionUpdateManyWithoutQuestionNestedInput = {
+    create?:
+      | XOR<
+          DynamicOptionCreateWithoutQuestionInput,
+          DynamicOptionUncheckedCreateWithoutQuestionInput
+        >
+      | DynamicOptionCreateWithoutQuestionInput[]
+      | DynamicOptionUncheckedCreateWithoutQuestionInput[];
+    connectOrCreate?:
+      | DynamicOptionCreateOrConnectWithoutQuestionInput
+      | DynamicOptionCreateOrConnectWithoutQuestionInput[];
+    upsert?:
+      | DynamicOptionUpsertWithWhereUniqueWithoutQuestionInput
+      | DynamicOptionUpsertWithWhereUniqueWithoutQuestionInput[];
+    createMany?: DynamicOptionCreateManyQuestionInputEnvelope;
+    set?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    disconnect?:
+      | DynamicOptionWhereUniqueInput
+      | DynamicOptionWhereUniqueInput[];
+    delete?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    update?:
+      | DynamicOptionUpdateWithWhereUniqueWithoutQuestionInput
+      | DynamicOptionUpdateWithWhereUniqueWithoutQuestionInput[];
+    updateMany?:
+      | DynamicOptionUpdateManyWithWhereWithoutQuestionInput
+      | DynamicOptionUpdateManyWithWhereWithoutQuestionInput[];
+    deleteMany?:
+      | DynamicOptionScalarWhereInput
+      | DynamicOptionScalarWhereInput[];
+  };
+
+  export type DynamicOptionUncheckedUpdateManyWithoutQuestionNestedInput = {
+    create?:
+      | XOR<
+          DynamicOptionCreateWithoutQuestionInput,
+          DynamicOptionUncheckedCreateWithoutQuestionInput
+        >
+      | DynamicOptionCreateWithoutQuestionInput[]
+      | DynamicOptionUncheckedCreateWithoutQuestionInput[];
+    connectOrCreate?:
+      | DynamicOptionCreateOrConnectWithoutQuestionInput
+      | DynamicOptionCreateOrConnectWithoutQuestionInput[];
+    upsert?:
+      | DynamicOptionUpsertWithWhereUniqueWithoutQuestionInput
+      | DynamicOptionUpsertWithWhereUniqueWithoutQuestionInput[];
+    createMany?: DynamicOptionCreateManyQuestionInputEnvelope;
+    set?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    disconnect?:
+      | DynamicOptionWhereUniqueInput
+      | DynamicOptionWhereUniqueInput[];
+    delete?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    connect?: DynamicOptionWhereUniqueInput | DynamicOptionWhereUniqueInput[];
+    update?:
+      | DynamicOptionUpdateWithWhereUniqueWithoutQuestionInput
+      | DynamicOptionUpdateWithWhereUniqueWithoutQuestionInput[];
+    updateMany?:
+      | DynamicOptionUpdateManyWithWhereWithoutQuestionInput
+      | DynamicOptionUpdateManyWithWhereWithoutQuestionInput[];
+    deleteMany?:
+      | DynamicOptionScalarWhereInput
+      | DynamicOptionScalarWhereInput[];
+  };
+
+  export type TagCreateNestedOneWithoutDynamicOptionInput = {
+    create?: XOR<
+      TagCreateWithoutDynamicOptionInput,
+      TagUncheckedCreateWithoutDynamicOptionInput
+    >;
+    connectOrCreate?: TagCreateOrConnectWithoutDynamicOptionInput;
+    connect?: TagWhereUniqueInput;
+  };
+
+  export type DynamicQuestionCreateNestedOneWithoutOptionsInput = {
+    create?: XOR<
+      DynamicQuestionCreateWithoutOptionsInput,
+      DynamicQuestionUncheckedCreateWithoutOptionsInput
+    >;
+    connectOrCreate?: DynamicQuestionCreateOrConnectWithoutOptionsInput;
+    connect?: DynamicQuestionWhereUniqueInput;
+  };
+
+  export type TagUpdateOneRequiredWithoutDynamicOptionNestedInput = {
+    create?: XOR<
+      TagCreateWithoutDynamicOptionInput,
+      TagUncheckedCreateWithoutDynamicOptionInput
+    >;
+    connectOrCreate?: TagCreateOrConnectWithoutDynamicOptionInput;
+    upsert?: TagUpsertWithoutDynamicOptionInput;
+    connect?: TagWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        TagUpdateToOneWithWhereWithoutDynamicOptionInput,
+        TagUpdateWithoutDynamicOptionInput
+      >,
+      TagUncheckedUpdateWithoutDynamicOptionInput
+    >;
+  };
+
+  export type DynamicQuestionUpdateOneRequiredWithoutOptionsNestedInput = {
+    create?: XOR<
+      DynamicQuestionCreateWithoutOptionsInput,
+      DynamicQuestionUncheckedCreateWithoutOptionsInput
+    >;
+    connectOrCreate?: DynamicQuestionCreateOrConnectWithoutOptionsInput;
+    upsert?: DynamicQuestionUpsertWithoutOptionsInput;
+    connect?: DynamicQuestionWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        DynamicQuestionUpdateToOneWithWhereWithoutOptionsInput,
+        DynamicQuestionUpdateWithoutOptionsInput
+      >,
+      DynamicQuestionUncheckedUpdateWithoutOptionsInput
+    >;
+  };
 
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>;
@@ -36998,6 +42923,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionCreateNestedManyWithoutTagInput;
   };
 
   export type TagUncheckedCreateWithoutAccountsInput = {
@@ -37013,6 +42939,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionUncheckedCreateNestedManyWithoutTagInput;
   };
 
   export type TagCreateOrConnectWithoutAccountsInput = {
@@ -37036,6 +42963,7 @@ export namespace Prisma {
     profiles?: ProfileCreateNestedManyWithoutTagsInput;
     profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionCreateNestedManyWithoutTagInput;
   };
 
   export type TagUncheckedCreateWithoutAccountsGlobalFilterInput = {
@@ -37051,6 +42979,7 @@ export namespace Prisma {
     profiles?: ProfileUncheckedCreateNestedManyWithoutTagsInput;
     profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionUncheckedCreateNestedManyWithoutTagInput;
   };
 
   export type TagCreateOrConnectWithoutAccountsGlobalFilterInput = {
@@ -37311,6 +43240,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionCreateNestedManyWithoutTagInput;
   };
 
   export type TagUncheckedCreateWithoutProfilesInput = {
@@ -37326,6 +43256,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionUncheckedCreateNestedManyWithoutTagInput;
   };
 
   export type TagCreateOrConnectWithoutProfilesInput = {
@@ -37536,6 +43467,41 @@ export namespace Prisma {
     data:
       | ProductionAffiliationRequestCreateManyProfileInput
       | ProductionAffiliationRequestCreateManyProfileInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type TicketGroupCreateWithoutReferralCodeProfileInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    event: EventCreateNestedOneWithoutTicketGroupsInput;
+    tickets?: TicketCreateNestedManyWithoutTicketGroupInput;
+  };
+
+  export type TicketGroupUncheckedCreateWithoutReferralCodeProfileInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
+    eventId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tickets?: TicketUncheckedCreateNestedManyWithoutTicketGroupInput;
+  };
+
+  export type TicketGroupCreateOrConnectWithoutReferralCodeProfileInput = {
+    where: TicketGroupWhereUniqueInput;
+    create: XOR<
+      TicketGroupCreateWithoutReferralCodeProfileInput,
+      TicketGroupUncheckedCreateWithoutReferralCodeProfileInput
+    >;
+  };
+
+  export type TicketGroupCreateManyReferralCodeProfileInputEnvelope = {
+    data:
+      | TicketGroupCreateManyReferralCodeProfileInput
+      | TicketGroupCreateManyReferralCodeProfileInput[];
     skipDuplicates?: boolean;
   };
 
@@ -37929,6 +43895,51 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<'ProductionAffiliationRequest'> | Date | string;
   };
 
+  export type TicketGroupUpsertWithWhereUniqueWithoutReferralCodeProfileInput =
+    {
+      where: TicketGroupWhereUniqueInput;
+      update: XOR<
+        TicketGroupUpdateWithoutReferralCodeProfileInput,
+        TicketGroupUncheckedUpdateWithoutReferralCodeProfileInput
+      >;
+      create: XOR<
+        TicketGroupCreateWithoutReferralCodeProfileInput,
+        TicketGroupUncheckedCreateWithoutReferralCodeProfileInput
+      >;
+    };
+
+  export type TicketGroupUpdateWithWhereUniqueWithoutReferralCodeProfileInput =
+    {
+      where: TicketGroupWhereUniqueInput;
+      data: XOR<
+        TicketGroupUpdateWithoutReferralCodeProfileInput,
+        TicketGroupUncheckedUpdateWithoutReferralCodeProfileInput
+      >;
+    };
+
+  export type TicketGroupUpdateManyWithWhereWithoutReferralCodeProfileInput = {
+    where: TicketGroupScalarWhereInput;
+    data: XOR<
+      TicketGroupUpdateManyMutationInput,
+      TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileInput
+    >;
+  };
+
+  export type TicketGroupScalarWhereInput = {
+    AND?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
+    OR?: TicketGroupScalarWhereInput[];
+    NOT?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
+    id?: StringFilter<'TicketGroup'> | string;
+    status?:
+      | EnumTicketGroupStatusFilter<'TicketGroup'>
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFilter<'TicketGroup'> | number;
+    eventId?: StringFilter<'TicketGroup'> | string;
+    referralCode?: StringNullableFilter<'TicketGroup'> | string | null;
+    created_at?: DateTimeFilter<'TicketGroup'> | Date | string;
+    updated_at?: DateTimeFilter<'TicketGroup'> | Date | string;
+  };
+
   export type ProfileCreateWithoutOtpInput = {
     id?: string;
     shortId: number;
@@ -37950,6 +43961,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     comments?: CommentCreateNestedManyWithoutProfileInput;
@@ -37961,6 +43973,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutOtpInput = {
@@ -37986,6 +43999,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
@@ -37995,6 +44009,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutOtpInput = {
@@ -38060,6 +44075,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     comments?: CommentUpdateManyWithoutProfileNestedInput;
@@ -38071,6 +44087,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutOtpInput = {
@@ -38113,6 +44130,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
@@ -38122,6 +44140,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileCreateWithoutBirthLocationInput = {
@@ -38145,6 +44164,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -38156,6 +44176,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutBirthLocationInput = {
@@ -38180,6 +44201,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -38190,6 +44212,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutBirthLocationInput = {
@@ -38228,6 +44251,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -38239,6 +44263,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutResidenceLocationInput = {
@@ -38263,6 +44288,7 @@ export namespace Prisma {
     birthLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -38273,6 +44299,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutResidenceLocationInput = {
@@ -38344,6 +44371,7 @@ export namespace Prisma {
     residenceLocationId?: StringNullableFilter<'Profile'> | string | null;
     isInTrash?: BoolFilter<'Profile'> | boolean;
     movedToTrashDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
+    referralCode?: StringFilter<'Profile'> | string;
     created_at?: DateTimeFilter<'Profile'> | Date | string;
     updated_at?: DateTimeFilter<'Profile'> | Date | string;
   };
@@ -38433,6 +44461,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -38444,6 +44473,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutCommentsInput = {
@@ -38469,6 +44499,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -38478,6 +44509,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutCommentsInput = {
@@ -38627,6 +44659,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -38638,6 +44671,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutCommentsInput = {
@@ -38680,6 +44714,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -38689,6 +44724,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type AccountUpsertWithoutSolvableCommentsInput = {
@@ -38746,6 +44782,7 @@ export namespace Prisma {
     isExclusive: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
+    question?: DynamicQuestionCreateNestedOneWithoutTagGroupInput;
   };
 
   export type TagGroupUncheckedCreateWithoutTagsInput = {
@@ -38755,6 +44792,7 @@ export namespace Prisma {
     isExclusive: boolean;
     created_at?: Date | string;
     updated_at?: Date | string;
+    question?: DynamicQuestionUncheckedCreateNestedOneWithoutTagGroupInput;
   };
 
   export type TagGroupCreateOrConnectWithoutTagsInput = {
@@ -38938,6 +44976,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -38949,6 +44988,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutTagsInput = {
@@ -38974,6 +45014,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -38983,6 +45024,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutTagsInput = {
@@ -39145,6 +45187,35 @@ export namespace Prisma {
     >;
   };
 
+  export type DynamicOptionCreateWithoutTagInput = {
+    id?: string;
+    text: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    question: DynamicQuestionCreateNestedOneWithoutOptionsInput;
+  };
+
+  export type DynamicOptionUncheckedCreateWithoutTagInput = {
+    id?: string;
+    text: string;
+    questionId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type DynamicOptionCreateOrConnectWithoutTagInput = {
+    where: DynamicOptionWhereUniqueInput;
+    create: XOR<
+      DynamicOptionCreateWithoutTagInput,
+      DynamicOptionUncheckedCreateWithoutTagInput
+    >;
+  };
+
+  export type DynamicOptionCreateManyTagInputEnvelope = {
+    data: DynamicOptionCreateManyTagInput | DynamicOptionCreateManyTagInput[];
+    skipDuplicates?: boolean;
+  };
+
   export type TagGroupUpsertWithoutTagsInput = {
     update: XOR<
       TagGroupUpdateWithoutTagsInput,
@@ -39172,6 +45243,7 @@ export namespace Prisma {
     isExclusive?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    question?: DynamicQuestionUpdateOneWithoutTagGroupNestedInput;
   };
 
   export type TagGroupUncheckedUpdateWithoutTagsInput = {
@@ -39181,6 +45253,7 @@ export namespace Prisma {
     isExclusive?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    question?: DynamicQuestionUncheckedUpdateOneWithoutTagGroupNestedInput;
   };
 
   export type EventUpsertWithoutTagAssistedInput = {
@@ -39499,6 +45572,46 @@ export namespace Prisma {
     >;
   };
 
+  export type DynamicOptionUpsertWithWhereUniqueWithoutTagInput = {
+    where: DynamicOptionWhereUniqueInput;
+    update: XOR<
+      DynamicOptionUpdateWithoutTagInput,
+      DynamicOptionUncheckedUpdateWithoutTagInput
+    >;
+    create: XOR<
+      DynamicOptionCreateWithoutTagInput,
+      DynamicOptionUncheckedCreateWithoutTagInput
+    >;
+  };
+
+  export type DynamicOptionUpdateWithWhereUniqueWithoutTagInput = {
+    where: DynamicOptionWhereUniqueInput;
+    data: XOR<
+      DynamicOptionUpdateWithoutTagInput,
+      DynamicOptionUncheckedUpdateWithoutTagInput
+    >;
+  };
+
+  export type DynamicOptionUpdateManyWithWhereWithoutTagInput = {
+    where: DynamicOptionScalarWhereInput;
+    data: XOR<
+      DynamicOptionUpdateManyMutationInput,
+      DynamicOptionUncheckedUpdateManyWithoutTagInput
+    >;
+  };
+
+  export type DynamicOptionScalarWhereInput = {
+    AND?: DynamicOptionScalarWhereInput | DynamicOptionScalarWhereInput[];
+    OR?: DynamicOptionScalarWhereInput[];
+    NOT?: DynamicOptionScalarWhereInput | DynamicOptionScalarWhereInput[];
+    id?: StringFilter<'DynamicOption'> | string;
+    text?: StringFilter<'DynamicOption'> | string;
+    tagId?: StringFilter<'DynamicOption'> | string;
+    questionId?: StringFilter<'DynamicOption'> | string;
+    created_at?: DateTimeFilter<'DynamicOption'> | Date | string;
+    updated_at?: DateTimeFilter<'DynamicOption'> | Date | string;
+  };
+
   export type TagCreateWithoutGroupInput = {
     id?: string;
     name: string;
@@ -39512,6 +45625,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionCreateNestedManyWithoutTagInput;
   };
 
   export type TagUncheckedCreateWithoutGroupInput = {
@@ -39527,6 +45641,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionUncheckedCreateNestedManyWithoutTagInput;
   };
 
   export type TagCreateOrConnectWithoutGroupInput = {
@@ -39540,6 +45655,38 @@ export namespace Prisma {
   export type TagCreateManyGroupInputEnvelope = {
     data: TagCreateManyGroupInput | TagCreateManyGroupInput[];
     skipDuplicates?: boolean;
+  };
+
+  export type DynamicQuestionCreateWithoutTagGroupInput = {
+    id?: string;
+    text: string;
+    disabled?: boolean;
+    required?: boolean;
+    multipleChoice?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    form: DynamicFormCreateNestedOneWithoutQuestionsInput;
+    options?: DynamicOptionCreateNestedManyWithoutQuestionInput;
+  };
+
+  export type DynamicQuestionUncheckedCreateWithoutTagGroupInput = {
+    id?: string;
+    formId: string;
+    text: string;
+    disabled?: boolean;
+    required?: boolean;
+    multipleChoice?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    options?: DynamicOptionUncheckedCreateNestedManyWithoutQuestionInput;
+  };
+
+  export type DynamicQuestionCreateOrConnectWithoutTagGroupInput = {
+    where: DynamicQuestionWhereUniqueInput;
+    create: XOR<
+      DynamicQuestionCreateWithoutTagGroupInput,
+      DynamicQuestionUncheckedCreateWithoutTagGroupInput
+    >;
   };
 
   export type TagUpsertWithWhereUniqueWithoutGroupInput = {
@@ -39565,6 +45712,50 @@ export namespace Prisma {
       TagUpdateManyMutationInput,
       TagUncheckedUpdateManyWithoutGroupInput
     >;
+  };
+
+  export type DynamicQuestionUpsertWithoutTagGroupInput = {
+    update: XOR<
+      DynamicQuestionUpdateWithoutTagGroupInput,
+      DynamicQuestionUncheckedUpdateWithoutTagGroupInput
+    >;
+    create: XOR<
+      DynamicQuestionCreateWithoutTagGroupInput,
+      DynamicQuestionUncheckedCreateWithoutTagGroupInput
+    >;
+    where?: DynamicQuestionWhereInput;
+  };
+
+  export type DynamicQuestionUpdateToOneWithWhereWithoutTagGroupInput = {
+    where?: DynamicQuestionWhereInput;
+    data: XOR<
+      DynamicQuestionUpdateWithoutTagGroupInput,
+      DynamicQuestionUncheckedUpdateWithoutTagGroupInput
+    >;
+  };
+
+  export type DynamicQuestionUpdateWithoutTagGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    disabled?: BoolFieldUpdateOperationsInput | boolean;
+    required?: BoolFieldUpdateOperationsInput | boolean;
+    multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    form?: DynamicFormUpdateOneRequiredWithoutQuestionsNestedInput;
+    options?: DynamicOptionUpdateManyWithoutQuestionNestedInput;
+  };
+
+  export type DynamicQuestionUncheckedUpdateWithoutTagGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    formId?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    disabled?: BoolFieldUpdateOperationsInput | boolean;
+    required?: BoolFieldUpdateOperationsInput | boolean;
+    multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    options?: DynamicOptionUncheckedUpdateManyWithoutQuestionNestedInput;
   };
 
   export type EventFolderCreateWithoutEventsInput = {
@@ -39604,6 +45795,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionCreateNestedManyWithoutTagInput;
   };
 
   export type TagUncheckedCreateWithoutAssistedEventInput = {
@@ -39619,6 +45811,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionUncheckedCreateNestedManyWithoutTagInput;
   };
 
   export type TagCreateOrConnectWithoutAssistedEventInput = {
@@ -39642,6 +45835,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionCreateNestedManyWithoutTagInput;
   };
 
   export type TagUncheckedCreateWithoutConfirmedEventInput = {
@@ -39657,6 +45851,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
     roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionUncheckedCreateNestedManyWithoutTagInput;
   };
 
   export type TagCreateOrConnectWithoutConfirmedEventInput = {
@@ -39775,12 +45970,14 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketCreateNestedManyWithoutTicketGroupInput;
+    referralCodeProfile?: ProfileCreateNestedOneWithoutReferralCodeUsedInput;
   };
 
   export type TicketGroupUncheckedCreateWithoutEventInput = {
     id?: string;
     status: $Enums.TicketGroupStatus;
     amountTickets?: number;
+    referralCode?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutTicketGroupInput;
@@ -39875,6 +46072,7 @@ export namespace Prisma {
     profiles?: ProfileCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
     roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionCreateNestedManyWithoutTagInput;
   };
 
   export type TagUncheckedCreateWithoutProfileEventsInput = {
@@ -39890,6 +46088,7 @@ export namespace Prisma {
     profiles?: ProfileUncheckedCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
     roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
+    DynamicOption?: DynamicOptionUncheckedCreateNestedManyWithoutTagInput;
   };
 
   export type TagCreateOrConnectWithoutProfileEventsInput = {
@@ -39972,6 +46171,7 @@ export namespace Prisma {
     profiles?: ProfileCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
+    DynamicOption?: DynamicOptionCreateNestedManyWithoutTagInput;
   };
 
   export type TagUncheckedCreateWithoutRoleEventsInput = {
@@ -39987,6 +46187,7 @@ export namespace Prisma {
     profiles?: ProfileUncheckedCreateNestedManyWithoutTagsInput;
     accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
     profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
+    DynamicOption?: DynamicOptionUncheckedCreateNestedManyWithoutTagInput;
   };
 
   export type TagCreateOrConnectWithoutRoleEventsInput = {
@@ -40066,6 +46267,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutAssistedEventInput = {
@@ -40081,6 +46283,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUncheckedUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUpsertWithoutConfirmedEventInput = {
@@ -40116,6 +46319,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutConfirmedEventInput = {
@@ -40131,6 +46335,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUncheckedUpdateManyWithoutTagNestedInput;
   };
 
   export type EventUpsertWithoutSubEventsInput = {
@@ -40257,20 +46462,6 @@ export namespace Prisma {
       TicketGroupUpdateManyMutationInput,
       TicketGroupUncheckedUpdateManyWithoutEventInput
     >;
-  };
-
-  export type TicketGroupScalarWhereInput = {
-    AND?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
-    OR?: TicketGroupScalarWhereInput[];
-    NOT?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
-    id?: StringFilter<'TicketGroup'> | string;
-    status?:
-      | EnumTicketGroupStatusFilter<'TicketGroup'>
-      | $Enums.TicketGroupStatus;
-    amountTickets?: IntFilter<'TicketGroup'> | number;
-    eventId?: StringFilter<'TicketGroup'> | string;
-    created_at?: DateTimeFilter<'TicketGroup'> | Date | string;
-    updated_at?: DateTimeFilter<'TicketGroup'> | Date | string;
   };
 
   export type EventUpsertWithWhereUniqueWithoutSupraEventInput = {
@@ -40538,6 +46729,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -40549,6 +46741,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutMessagesInput = {
@@ -40574,6 +46767,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -40583,6 +46777,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutMessagesInput = {
@@ -40648,6 +46843,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -40659,6 +46855,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutMessagesInput = {
@@ -40701,6 +46898,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -40710,6 +46908,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type EventCreateWithoutTicketsInput = {
@@ -40791,6 +46990,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -40802,6 +47002,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutTicketsInput = {
@@ -40827,6 +47028,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -40836,6 +47038,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutTicketsInput = {
@@ -40853,6 +47056,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketGroupsInput;
+    referralCodeProfile?: ProfileCreateNestedOneWithoutReferralCodeUsedInput;
   };
 
   export type TicketGroupUncheckedCreateWithoutTicketsInput = {
@@ -40860,6 +47064,7 @@ export namespace Prisma {
     status: $Enums.TicketGroupStatus;
     amountTickets?: number;
     eventId: string;
+    referralCode?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -40997,6 +47202,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -41008,6 +47214,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutTicketsInput = {
@@ -41050,6 +47257,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -41059,6 +47267,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type TicketGroupUpsertWithoutTicketsInput = {
@@ -41090,6 +47299,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketGroupsNestedInput;
+    referralCodeProfile?: ProfileUpdateOneWithoutReferralCodeUsedNestedInput;
   };
 
   export type TicketGroupUncheckedUpdateWithoutTicketsInput = {
@@ -41099,6 +47309,7 @@ export namespace Prisma {
       | $Enums.TicketGroupStatus;
     amountTickets?: IntFieldUpdateOperationsInput | number;
     eventId?: StringFieldUpdateOperationsInput | string;
+    referralCode?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -41204,6 +47415,86 @@ export namespace Prisma {
     skipDuplicates?: boolean;
   };
 
+  export type ProfileCreateWithoutReferralCodeUsedInput = {
+    id?: string;
+    shortId: number;
+    role?: $Enums.Role;
+    firstTimeMiExpo?: boolean;
+    username?: string | null;
+    password?: string | null;
+    phoneNumber: string;
+    isPhoneVerified?: boolean;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    firstName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    referralCode?: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    otp?: OtpCreateNestedManyWithoutOwnerInput;
+    comments?: CommentCreateNestedManyWithoutProfileInput;
+    messages?: MessageCreateNestedManyWithoutProfileInput;
+    tags?: TagCreateNestedManyWithoutProfilesInput;
+    birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
+    residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
+    tickets?: TicketCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
+    productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
+    productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+  };
+
+  export type ProfileUncheckedCreateWithoutReferralCodeUsedInput = {
+    id?: string;
+    shortId: number;
+    role?: $Enums.Role;
+    firstTimeMiExpo?: boolean;
+    username?: string | null;
+    password?: string | null;
+    phoneNumber: string;
+    isPhoneVerified?: boolean;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    firstName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    birthLocationId?: string | null;
+    residenceLocationId?: string | null;
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    referralCode?: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
+    comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
+    messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
+    tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
+    tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
+    productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+  };
+
+  export type ProfileCreateOrConnectWithoutReferralCodeUsedInput = {
+    where: ProfileWhereUniqueInput;
+    create: XOR<
+      ProfileCreateWithoutReferralCodeUsedInput,
+      ProfileUncheckedCreateWithoutReferralCodeUsedInput
+    >;
+  };
+
   export type EventUpsertWithoutTicketGroupsInput = {
     update: XOR<
       EventUpdateWithoutTicketGroupsInput,
@@ -41300,6 +47591,129 @@ export namespace Prisma {
       TicketUpdateManyMutationInput,
       TicketUncheckedUpdateManyWithoutTicketGroupInput
     >;
+  };
+
+  export type ProfileUpsertWithoutReferralCodeUsedInput = {
+    update: XOR<
+      ProfileUpdateWithoutReferralCodeUsedInput,
+      ProfileUncheckedUpdateWithoutReferralCodeUsedInput
+    >;
+    create: XOR<
+      ProfileCreateWithoutReferralCodeUsedInput,
+      ProfileUncheckedCreateWithoutReferralCodeUsedInput
+    >;
+    where?: ProfileWhereInput;
+  };
+
+  export type ProfileUpdateToOneWithWhereWithoutReferralCodeUsedInput = {
+    where?: ProfileWhereInput;
+    data: XOR<
+      ProfileUpdateWithoutReferralCodeUsedInput,
+      ProfileUncheckedUpdateWithoutReferralCodeUsedInput
+    >;
+  };
+
+  export type ProfileUpdateWithoutReferralCodeUsedInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
+    username?: NullableStringFieldUpdateOperationsInput | string | null;
+    password?: NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUpdateManyWithoutOwnerNestedInput;
+    comments?: CommentUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUpdateManyWithoutProfileNestedInput;
+    tags?: TagUpdateManyWithoutProfilesNestedInput;
+    birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
+    residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
+    tickets?: TicketUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
+    productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+  };
+
+  export type ProfileUncheckedUpdateWithoutReferralCodeUsedInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
+    username?: NullableStringFieldUpdateOperationsInput | string | null;
+    password?: NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    birthLocationId?: NullableStringFieldUpdateOperationsInput | string | null;
+    residenceLocationId?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
+    comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
+    tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
+    tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
+    productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
   };
 
   export type EventCreateWithoutEventTicketsInput = {
@@ -41451,6 +47865,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -41462,6 +47877,7 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutProfileInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutProductionsAdministratedInput = {
@@ -41487,6 +47903,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -41496,6 +47913,7 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutProductionsAdministratedInput = {
@@ -41527,6 +47945,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -41538,6 +47957,7 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutProfileInput;
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutProductionsParticipatedInput = {
@@ -41563,6 +47983,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -41572,6 +47993,7 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutProductionsParticipatedInput = {
@@ -41731,6 +48153,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -41742,6 +48165,7 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutProfileNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutProductionsAdministratedInput = {
@@ -41784,6 +48208,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -41793,6 +48218,7 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUpsertWithWhereUniqueWithoutProductionsParticipatedInput =
@@ -41933,6 +48359,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -41944,6 +48371,7 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutProfileInput;
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutProductionRequestsSentInput = {
@@ -41969,6 +48397,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -41978,6 +48407,7 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutProductionRequestsSentInput = {
@@ -42083,6 +48513,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -42094,6 +48525,7 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutProfileNestedInput;
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutProductionRequestsSentInput = {
@@ -42136,6 +48568,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -42145,6 +48578,440 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
+  };
+
+  export type DynamicQuestionCreateWithoutFormInput = {
+    id?: string;
+    text: string;
+    disabled?: boolean;
+    required?: boolean;
+    multipleChoice?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tagGroup: TagGroupCreateNestedOneWithoutQuestionInput;
+    options?: DynamicOptionCreateNestedManyWithoutQuestionInput;
+  };
+
+  export type DynamicQuestionUncheckedCreateWithoutFormInput = {
+    id?: string;
+    text: string;
+    tagGroupId: string;
+    disabled?: boolean;
+    required?: boolean;
+    multipleChoice?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    options?: DynamicOptionUncheckedCreateNestedManyWithoutQuestionInput;
+  };
+
+  export type DynamicQuestionCreateOrConnectWithoutFormInput = {
+    where: DynamicQuestionWhereUniqueInput;
+    create: XOR<
+      DynamicQuestionCreateWithoutFormInput,
+      DynamicQuestionUncheckedCreateWithoutFormInput
+    >;
+  };
+
+  export type DynamicQuestionCreateManyFormInputEnvelope = {
+    data:
+      | DynamicQuestionCreateManyFormInput
+      | DynamicQuestionCreateManyFormInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type DynamicQuestionUpsertWithWhereUniqueWithoutFormInput = {
+    where: DynamicQuestionWhereUniqueInput;
+    update: XOR<
+      DynamicQuestionUpdateWithoutFormInput,
+      DynamicQuestionUncheckedUpdateWithoutFormInput
+    >;
+    create: XOR<
+      DynamicQuestionCreateWithoutFormInput,
+      DynamicQuestionUncheckedCreateWithoutFormInput
+    >;
+  };
+
+  export type DynamicQuestionUpdateWithWhereUniqueWithoutFormInput = {
+    where: DynamicQuestionWhereUniqueInput;
+    data: XOR<
+      DynamicQuestionUpdateWithoutFormInput,
+      DynamicQuestionUncheckedUpdateWithoutFormInput
+    >;
+  };
+
+  export type DynamicQuestionUpdateManyWithWhereWithoutFormInput = {
+    where: DynamicQuestionScalarWhereInput;
+    data: XOR<
+      DynamicQuestionUpdateManyMutationInput,
+      DynamicQuestionUncheckedUpdateManyWithoutFormInput
+    >;
+  };
+
+  export type DynamicQuestionScalarWhereInput = {
+    AND?: DynamicQuestionScalarWhereInput | DynamicQuestionScalarWhereInput[];
+    OR?: DynamicQuestionScalarWhereInput[];
+    NOT?: DynamicQuestionScalarWhereInput | DynamicQuestionScalarWhereInput[];
+    id?: StringFilter<'DynamicQuestion'> | string;
+    formId?: StringFilter<'DynamicQuestion'> | string;
+    text?: StringFilter<'DynamicQuestion'> | string;
+    tagGroupId?: StringFilter<'DynamicQuestion'> | string;
+    disabled?: BoolFilter<'DynamicQuestion'> | boolean;
+    required?: BoolFilter<'DynamicQuestion'> | boolean;
+    multipleChoice?: BoolFilter<'DynamicQuestion'> | boolean;
+    created_at?: DateTimeFilter<'DynamicQuestion'> | Date | string;
+    updated_at?: DateTimeFilter<'DynamicQuestion'> | Date | string;
+  };
+
+  export type DynamicFormCreateWithoutQuestionsInput = {
+    id?: string;
+    name: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type DynamicFormUncheckedCreateWithoutQuestionsInput = {
+    id?: string;
+    name: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type DynamicFormCreateOrConnectWithoutQuestionsInput = {
+    where: DynamicFormWhereUniqueInput;
+    create: XOR<
+      DynamicFormCreateWithoutQuestionsInput,
+      DynamicFormUncheckedCreateWithoutQuestionsInput
+    >;
+  };
+
+  export type TagGroupCreateWithoutQuestionInput = {
+    id?: string;
+    name: string;
+    color: string;
+    isExclusive: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tags?: TagCreateNestedManyWithoutGroupInput;
+  };
+
+  export type TagGroupUncheckedCreateWithoutQuestionInput = {
+    id?: string;
+    name: string;
+    color: string;
+    isExclusive: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tags?: TagUncheckedCreateNestedManyWithoutGroupInput;
+  };
+
+  export type TagGroupCreateOrConnectWithoutQuestionInput = {
+    where: TagGroupWhereUniqueInput;
+    create: XOR<
+      TagGroupCreateWithoutQuestionInput,
+      TagGroupUncheckedCreateWithoutQuestionInput
+    >;
+  };
+
+  export type DynamicOptionCreateWithoutQuestionInput = {
+    id?: string;
+    text: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tag: TagCreateNestedOneWithoutDynamicOptionInput;
+  };
+
+  export type DynamicOptionUncheckedCreateWithoutQuestionInput = {
+    id?: string;
+    text: string;
+    tagId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type DynamicOptionCreateOrConnectWithoutQuestionInput = {
+    where: DynamicOptionWhereUniqueInput;
+    create: XOR<
+      DynamicOptionCreateWithoutQuestionInput,
+      DynamicOptionUncheckedCreateWithoutQuestionInput
+    >;
+  };
+
+  export type DynamicOptionCreateManyQuestionInputEnvelope = {
+    data:
+      | DynamicOptionCreateManyQuestionInput
+      | DynamicOptionCreateManyQuestionInput[];
+    skipDuplicates?: boolean;
+  };
+
+  export type DynamicFormUpsertWithoutQuestionsInput = {
+    update: XOR<
+      DynamicFormUpdateWithoutQuestionsInput,
+      DynamicFormUncheckedUpdateWithoutQuestionsInput
+    >;
+    create: XOR<
+      DynamicFormCreateWithoutQuestionsInput,
+      DynamicFormUncheckedCreateWithoutQuestionsInput
+    >;
+    where?: DynamicFormWhereInput;
+  };
+
+  export type DynamicFormUpdateToOneWithWhereWithoutQuestionsInput = {
+    where?: DynamicFormWhereInput;
+    data: XOR<
+      DynamicFormUpdateWithoutQuestionsInput,
+      DynamicFormUncheckedUpdateWithoutQuestionsInput
+    >;
+  };
+
+  export type DynamicFormUpdateWithoutQuestionsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type DynamicFormUncheckedUpdateWithoutQuestionsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type TagGroupUpsertWithoutQuestionInput = {
+    update: XOR<
+      TagGroupUpdateWithoutQuestionInput,
+      TagGroupUncheckedUpdateWithoutQuestionInput
+    >;
+    create: XOR<
+      TagGroupCreateWithoutQuestionInput,
+      TagGroupUncheckedCreateWithoutQuestionInput
+    >;
+    where?: TagGroupWhereInput;
+  };
+
+  export type TagGroupUpdateToOneWithWhereWithoutQuestionInput = {
+    where?: TagGroupWhereInput;
+    data: XOR<
+      TagGroupUpdateWithoutQuestionInput,
+      TagGroupUncheckedUpdateWithoutQuestionInput
+    >;
+  };
+
+  export type TagGroupUpdateWithoutQuestionInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    color?: StringFieldUpdateOperationsInput | string;
+    isExclusive?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tags?: TagUpdateManyWithoutGroupNestedInput;
+  };
+
+  export type TagGroupUncheckedUpdateWithoutQuestionInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    color?: StringFieldUpdateOperationsInput | string;
+    isExclusive?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tags?: TagUncheckedUpdateManyWithoutGroupNestedInput;
+  };
+
+  export type DynamicOptionUpsertWithWhereUniqueWithoutQuestionInput = {
+    where: DynamicOptionWhereUniqueInput;
+    update: XOR<
+      DynamicOptionUpdateWithoutQuestionInput,
+      DynamicOptionUncheckedUpdateWithoutQuestionInput
+    >;
+    create: XOR<
+      DynamicOptionCreateWithoutQuestionInput,
+      DynamicOptionUncheckedCreateWithoutQuestionInput
+    >;
+  };
+
+  export type DynamicOptionUpdateWithWhereUniqueWithoutQuestionInput = {
+    where: DynamicOptionWhereUniqueInput;
+    data: XOR<
+      DynamicOptionUpdateWithoutQuestionInput,
+      DynamicOptionUncheckedUpdateWithoutQuestionInput
+    >;
+  };
+
+  export type DynamicOptionUpdateManyWithWhereWithoutQuestionInput = {
+    where: DynamicOptionScalarWhereInput;
+    data: XOR<
+      DynamicOptionUpdateManyMutationInput,
+      DynamicOptionUncheckedUpdateManyWithoutQuestionInput
+    >;
+  };
+
+  export type TagCreateWithoutDynamicOptionInput = {
+    id?: string;
+    name: string;
+    type?: $Enums.TagType;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    group: TagGroupCreateNestedOneWithoutTagsInput;
+    assistedEvent?: EventCreateNestedOneWithoutTagAssistedInput;
+    confirmedEvent?: EventCreateNestedOneWithoutTagConfirmedInput;
+    accounts?: AccountCreateNestedManyWithoutTagsInput;
+    profiles?: ProfileCreateNestedManyWithoutTagsInput;
+    accountsGlobalFilter?: AccountCreateNestedManyWithoutGlobalFilterInput;
+    profileEvents?: EventCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventCreateNestedManyWithoutParticipantRolesInput;
+  };
+
+  export type TagUncheckedCreateWithoutDynamicOptionInput = {
+    id?: string;
+    name: string;
+    type?: $Enums.TagType;
+    groupId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    assistedEvent?: EventUncheckedCreateNestedOneWithoutTagAssistedInput;
+    confirmedEvent?: EventUncheckedCreateNestedOneWithoutTagConfirmedInput;
+    accounts?: AccountUncheckedCreateNestedManyWithoutTagsInput;
+    profiles?: ProfileUncheckedCreateNestedManyWithoutTagsInput;
+    accountsGlobalFilter?: AccountUncheckedCreateNestedManyWithoutGlobalFilterInput;
+    profileEvents?: EventUncheckedCreateNestedManyWithoutProfileTagsInput;
+    roleEvents?: EventUncheckedCreateNestedManyWithoutParticipantRolesInput;
+  };
+
+  export type TagCreateOrConnectWithoutDynamicOptionInput = {
+    where: TagWhereUniqueInput;
+    create: XOR<
+      TagCreateWithoutDynamicOptionInput,
+      TagUncheckedCreateWithoutDynamicOptionInput
+    >;
+  };
+
+  export type DynamicQuestionCreateWithoutOptionsInput = {
+    id?: string;
+    text: string;
+    disabled?: boolean;
+    required?: boolean;
+    multipleChoice?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    form: DynamicFormCreateNestedOneWithoutQuestionsInput;
+    tagGroup: TagGroupCreateNestedOneWithoutQuestionInput;
+  };
+
+  export type DynamicQuestionUncheckedCreateWithoutOptionsInput = {
+    id?: string;
+    formId: string;
+    text: string;
+    tagGroupId: string;
+    disabled?: boolean;
+    required?: boolean;
+    multipleChoice?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type DynamicQuestionCreateOrConnectWithoutOptionsInput = {
+    where: DynamicQuestionWhereUniqueInput;
+    create: XOR<
+      DynamicQuestionCreateWithoutOptionsInput,
+      DynamicQuestionUncheckedCreateWithoutOptionsInput
+    >;
+  };
+
+  export type TagUpsertWithoutDynamicOptionInput = {
+    update: XOR<
+      TagUpdateWithoutDynamicOptionInput,
+      TagUncheckedUpdateWithoutDynamicOptionInput
+    >;
+    create: XOR<
+      TagCreateWithoutDynamicOptionInput,
+      TagUncheckedCreateWithoutDynamicOptionInput
+    >;
+    where?: TagWhereInput;
+  };
+
+  export type TagUpdateToOneWithWhereWithoutDynamicOptionInput = {
+    where?: TagWhereInput;
+    data: XOR<
+      TagUpdateWithoutDynamicOptionInput,
+      TagUncheckedUpdateWithoutDynamicOptionInput
+    >;
+  };
+
+  export type TagUpdateWithoutDynamicOptionInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    group?: TagGroupUpdateOneRequiredWithoutTagsNestedInput;
+    assistedEvent?: EventUpdateOneWithoutTagAssistedNestedInput;
+    confirmedEvent?: EventUpdateOneWithoutTagConfirmedNestedInput;
+    accounts?: AccountUpdateManyWithoutTagsNestedInput;
+    profiles?: ProfileUpdateManyWithoutTagsNestedInput;
+    accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
+    profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
+  };
+
+  export type TagUncheckedUpdateWithoutDynamicOptionInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    type?: EnumTagTypeFieldUpdateOperationsInput | $Enums.TagType;
+    groupId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    assistedEvent?: EventUncheckedUpdateOneWithoutTagAssistedNestedInput;
+    confirmedEvent?: EventUncheckedUpdateOneWithoutTagConfirmedNestedInput;
+    accounts?: AccountUncheckedUpdateManyWithoutTagsNestedInput;
+    profiles?: ProfileUncheckedUpdateManyWithoutTagsNestedInput;
+    accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
+    profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
+    roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
+  };
+
+  export type DynamicQuestionUpsertWithoutOptionsInput = {
+    update: XOR<
+      DynamicQuestionUpdateWithoutOptionsInput,
+      DynamicQuestionUncheckedUpdateWithoutOptionsInput
+    >;
+    create: XOR<
+      DynamicQuestionCreateWithoutOptionsInput,
+      DynamicQuestionUncheckedCreateWithoutOptionsInput
+    >;
+    where?: DynamicQuestionWhereInput;
+  };
+
+  export type DynamicQuestionUpdateToOneWithWhereWithoutOptionsInput = {
+    where?: DynamicQuestionWhereInput;
+    data: XOR<
+      DynamicQuestionUpdateWithoutOptionsInput,
+      DynamicQuestionUncheckedUpdateWithoutOptionsInput
+    >;
+  };
+
+  export type DynamicQuestionUpdateWithoutOptionsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    disabled?: BoolFieldUpdateOperationsInput | boolean;
+    required?: BoolFieldUpdateOperationsInput | boolean;
+    multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    form?: DynamicFormUpdateOneRequiredWithoutQuestionsNestedInput;
+    tagGroup?: TagGroupUpdateOneRequiredWithoutQuestionNestedInput;
+  };
+
+  export type DynamicQuestionUncheckedUpdateWithoutOptionsInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    formId?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    tagGroupId?: StringFieldUpdateOperationsInput | string;
+    disabled?: BoolFieldUpdateOperationsInput | boolean;
+    required?: BoolFieldUpdateOperationsInput | boolean;
+    multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type CommentCreateManyAccountInput = {
@@ -42280,6 +49147,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutAccountsInput = {
@@ -42295,6 +49163,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUncheckedUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateManyWithoutAccountsInput = {
@@ -42319,6 +49188,7 @@ export namespace Prisma {
     profiles?: ProfileUpdateManyWithoutTagsNestedInput;
     profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutAccountsGlobalFilterInput = {
@@ -42334,6 +49204,7 @@ export namespace Prisma {
     profiles?: ProfileUncheckedUpdateManyWithoutTagsNestedInput;
     profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUncheckedUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateManyWithoutAccountsGlobalFilterInput = {
@@ -42401,6 +49272,15 @@ export namespace Prisma {
     productionId: string;
     status?: $Enums.AffiliationStatus;
     reviewedAt?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type TicketGroupCreateManyReferralCodeProfileInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
+    eventId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -42517,6 +49397,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutProfilesInput = {
@@ -42532,6 +49413,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUncheckedUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateManyWithoutProfilesInput = {
@@ -42701,6 +49583,41 @@ export namespace Prisma {
       updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     };
 
+  export type TicketGroupUpdateWithoutReferralCodeProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    event?: EventUpdateOneRequiredWithoutTicketGroupsNestedInput;
+    tickets?: TicketUpdateManyWithoutTicketGroupNestedInput;
+  };
+
+  export type TicketGroupUncheckedUpdateWithoutReferralCodeProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    eventId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tickets?: TicketUncheckedUpdateManyWithoutTicketGroupNestedInput;
+  };
+
+  export type TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    eventId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
   export type ProfileCreateManyBirthLocationInput = {
     id?: string;
     shortId: number;
@@ -42723,6 +49640,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -42749,6 +49667,7 @@ export namespace Prisma {
     birthLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -42788,6 +49707,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -42799,6 +49719,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutBirthLocationInput = {
@@ -42840,6 +49761,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -42850,6 +49772,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateManyWithoutBirthLocationInput = {
@@ -42891,6 +49814,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -42930,6 +49854,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -42941,6 +49866,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutResidenceLocationInput = {
@@ -42979,6 +49905,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -42989,6 +49916,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateManyWithoutResidenceLocationInput = {
@@ -43027,8 +49955,17 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type DynamicOptionCreateManyTagInput = {
+    id?: string;
+    text: string;
+    questionId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
   };
 
   export type AccountUpdateWithoutTagsInput = {
@@ -43105,6 +50042,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -43116,6 +50054,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutTagsInput = {
@@ -43158,6 +50097,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -43167,6 +50107,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateManyWithoutTagsInput = {
@@ -43209,6 +50150,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -43390,6 +50332,30 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
+  export type DynamicOptionUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    question?: DynamicQuestionUpdateOneRequiredWithoutOptionsNestedInput;
+  };
+
+  export type DynamicOptionUncheckedUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    questionId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type DynamicOptionUncheckedUpdateManyWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    questionId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
   export type TagCreateManyGroupInput = {
     id?: string;
     name: string;
@@ -43411,6 +50377,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutGroupInput = {
@@ -43426,6 +50393,7 @@ export namespace Prisma {
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
     roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUncheckedUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateManyWithoutGroupInput = {
@@ -43455,6 +50423,7 @@ export namespace Prisma {
     id?: string;
     status: $Enums.TicketGroupStatus;
     amountTickets?: number;
+    referralCode?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -43552,6 +50521,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUpdateManyWithoutTicketGroupNestedInput;
+    referralCodeProfile?: ProfileUpdateOneWithoutReferralCodeUsedNestedInput;
   };
 
   export type TicketGroupUncheckedUpdateWithoutEventInput = {
@@ -43560,6 +50530,7 @@ export namespace Prisma {
       | EnumTicketGroupStatusFieldUpdateOperationsInput
       | $Enums.TicketGroupStatus;
     amountTickets?: IntFieldUpdateOperationsInput | number;
+    referralCode?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutTicketGroupNestedInput;
@@ -43571,6 +50542,7 @@ export namespace Prisma {
       | EnumTicketGroupStatusFieldUpdateOperationsInput
       | $Enums.TicketGroupStatus;
     amountTickets?: IntFieldUpdateOperationsInput | number;
+    referralCode?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -43656,6 +50628,7 @@ export namespace Prisma {
     profiles?: ProfileUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
     roleEvents?: EventUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutProfileEventsInput = {
@@ -43671,6 +50644,7 @@ export namespace Prisma {
     profiles?: ProfileUncheckedUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
     roleEvents?: EventUncheckedUpdateManyWithoutParticipantRolesNestedInput;
+    DynamicOption?: DynamicOptionUncheckedUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateManyWithoutProfileEventsInput = {
@@ -43750,6 +50724,7 @@ export namespace Prisma {
     profiles?: ProfileUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUpdateManyWithoutProfileTagsNestedInput;
+    DynamicOption?: DynamicOptionUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateWithoutRoleEventsInput = {
@@ -43765,6 +50740,7 @@ export namespace Prisma {
     profiles?: ProfileUncheckedUpdateManyWithoutTagsNestedInput;
     accountsGlobalFilter?: AccountUncheckedUpdateManyWithoutGlobalFilterNestedInput;
     profileEvents?: EventUncheckedUpdateManyWithoutProfileTagsNestedInput;
+    DynamicOption?: DynamicOptionUncheckedUpdateManyWithoutTagNestedInput;
   };
 
   export type TagUncheckedUpdateManyWithoutRoleEventsInput = {
@@ -43978,6 +50954,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -43989,6 +50966,7 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutProfileNestedInput;
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutProductionsParticipatedInput = {
@@ -44031,6 +51009,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -44040,6 +51019,7 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateManyWithoutProductionsParticipatedInput = {
@@ -44082,6 +51062,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -44201,6 +51182,84 @@ export namespace Prisma {
       created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
       updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     };
+
+  export type DynamicQuestionCreateManyFormInput = {
+    id?: string;
+    text: string;
+    tagGroupId: string;
+    disabled?: boolean;
+    required?: boolean;
+    multipleChoice?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type DynamicQuestionUpdateWithoutFormInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    disabled?: BoolFieldUpdateOperationsInput | boolean;
+    required?: BoolFieldUpdateOperationsInput | boolean;
+    multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tagGroup?: TagGroupUpdateOneRequiredWithoutQuestionNestedInput;
+    options?: DynamicOptionUpdateManyWithoutQuestionNestedInput;
+  };
+
+  export type DynamicQuestionUncheckedUpdateWithoutFormInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    tagGroupId?: StringFieldUpdateOperationsInput | string;
+    disabled?: BoolFieldUpdateOperationsInput | boolean;
+    required?: BoolFieldUpdateOperationsInput | boolean;
+    multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    options?: DynamicOptionUncheckedUpdateManyWithoutQuestionNestedInput;
+  };
+
+  export type DynamicQuestionUncheckedUpdateManyWithoutFormInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    tagGroupId?: StringFieldUpdateOperationsInput | string;
+    disabled?: BoolFieldUpdateOperationsInput | boolean;
+    required?: BoolFieldUpdateOperationsInput | boolean;
+    multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type DynamicOptionCreateManyQuestionInput = {
+    id?: string;
+    text: string;
+    tagId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type DynamicOptionUpdateWithoutQuestionInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tag?: TagUpdateOneRequiredWithoutDynamicOptionNestedInput;
+  };
+
+  export type DynamicOptionUncheckedUpdateWithoutQuestionInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    tagId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type DynamicOptionUncheckedUpdateManyWithoutQuestionInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    text?: StringFieldUpdateOperationsInput | string;
+    tagId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

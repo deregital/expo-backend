@@ -90,9 +90,9 @@ export function setHoursAndMinutes(
 }
 
 export async function getDMSansFonts(): Promise<{
-  fontBold: Buffer;
-  fontSemiBold: Buffer;
-  fontLight: Buffer;
+  fontBold: ArrayBuffer;
+  fontSemiBold: ArrayBuffer;
+  fontLight: ArrayBuffer;
 }> {
   const fontFolderPath = path.join(
     __dirname,
