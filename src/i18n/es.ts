@@ -208,6 +208,23 @@ export default {
         uuid: 'El ID debe ser un UUID',
       },
     },
+    dynamicOption: {
+      id: { uuid: 'El ID debe ser un UUID' },
+    },
+    dynamicQuestion: {
+      id: { uuid: 'El ID debe ser un UUID' },
+      text: {
+        required: 'La pregunta es requerida',
+        min: 'La pregunta debe tener al menos 1 caracter',
+      },
+    },
+    dynamicForm: {
+      id: { uuid: 'El ID debe ser un UUID' },
+      name: {
+        required: 'El nombre es requerido',
+        min: 'El nombre debe tener al menos 1 caracter',
+      },
+    },
   },
   route: {
     auth: {

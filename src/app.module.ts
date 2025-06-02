@@ -28,6 +28,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE, ModuleRef } from '@nestjs/core';
 import { ProductionModule } from './production/production.module';
 import { ProductionAffiliationRequestModule } from './production-affiliation-request/production-affiliation-request.module';
+import { DynamicFormModule } from './dynamic-form/dynamic-form.module';
 
 @Module({
   imports: [
@@ -57,6 +58,7 @@ import { ProductionAffiliationRequestModule } from './production-affiliation-req
     MercadoPagoModule,
     ProductionModule,
     ProductionAffiliationRequestModule,
+    DynamicFormModule,
   ],
   providers: [
     {
