@@ -743,5 +743,11 @@ export default {
         'not-found': 'Producción no encontrada',
       },
     },
+    'dynamic-form': {
+      create: {
+        success: 'Formulario dinámico creado con éxito',
+        conflict: 'Error en la creación del formulario dinámico',
+      },
+    },
   },
 } as const;

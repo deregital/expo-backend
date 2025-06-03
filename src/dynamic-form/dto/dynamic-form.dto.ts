@@ -1,5 +1,6 @@
 import { translate } from '@/i18n/translate';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
+import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 import { tagSchema } from '@/tag/dto/tag.dto';
 import z from 'zod';
 
@@ -35,6 +36,7 @@ export const dynamicQuestionSchema = z.object({
   disabled: z.boolean().default(false),
   required: z.boolean().default(true),
   multipleChoice: z.boolean().default(false),
+  tagGroupId: tagGroupSchema.shape.id,
 
   created_at: z.date(),
   updated_at: z.date(),

@@ -168,4 +168,16 @@ export class PrismaService implements OnModuleInit {
   get productionAffiliationRequest(): PrismaClient['productionAffiliationRequest'] {
     return this.db.productionAffiliationRequest;
   }
+
+  get dynamicForm(): PrismaClient['dynamicForm'] {
+    return this.db.dynamicForm;
+  }
+
+  get dynamicQuestion(): PrismaClient['dynamicQuestion'] {
+    return this.db.dynamicQuestion;
+  }
+
+  get dynamicOption(): PrismaClient['dynamicOption'] {
+    return this.db.dynamicOption;
+  }
 }
