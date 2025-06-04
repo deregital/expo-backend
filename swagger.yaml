@@ -2811,6 +2811,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CreateDynamicFormResponseDto"
+        400:
+          description: "Error en la creación del formulario dinámico"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
         409:
           description: "Error en la creación del formulario dinámico"
           content:

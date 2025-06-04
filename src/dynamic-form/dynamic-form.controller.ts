@@ -6,13 +6,18 @@ import { ErrorDto } from '@/shared/errors/errorType';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
 import {
+  BadRequestException,
   Body,
   ConflictException,
   Controller,
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiConflictResponse, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiConflictResponse,
+  ApiCreatedResponse,
+} from '@nestjs/swagger';
 import z from 'zod';
 import { Role } from '~/types';
 import {
@@ -21,6 +26,7 @@ import {
   createDynamicFormResponseSchema,
 } from './dto/create-dynamic-form.dto';
 import { DynamicFormService } from './dynamic-form.service';
+
 @Roles(Role.ADMIN)
 @UseGuards(JwtGuard, RoleGuard)
 @Controller('dynamic-form')
@@ -39,6 +45,10 @@ export class DynamicFormController {
     description: translate('route.dynamic-form.create.conflict'),
     type: ErrorDto,
   })
+  @ApiBadRequestResponse({
+    description: translate('route.dynamic-form.create.conflict'),
+    type: ErrorDto,
+  })
   @Post('/create')
   async create(
     @Body() createDynamicFormDto: CreateDynamicFormDto,
@@ -51,6 +61,23 @@ export class DynamicFormController {
       throw new ConflictException([
         translate('route.dynamic-form.create.conflict'),
       ]);
+    }
+
+    const emptyQuestions = createDynamicFormDto.questions.length === 0;
+    const emptyOptions = createDynamicFormDto.questions.some(
+      (question) => question.options.length === 0,
+    );
+
+    if (emptyQuestions) {
+      throw new BadRequestException(
+        translate('model.dynamicForm.questions.min'),
+      );
+    }
+
+    if (emptyOptions) {
+      throw new BadRequestException(
+        translate('model.dynamicQuestion.options.min'),
+      );
     }
 
     return await this.dynamicFormService.create(createDynamicFormDto);

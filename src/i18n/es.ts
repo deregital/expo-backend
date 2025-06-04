@@ -210,6 +210,10 @@ export default {
     },
     dynamicOption: {
       id: { uuid: 'El ID debe ser un UUID' },
+      text: {
+        required: 'La opción es requerida',
+        min: 'La opción debe tener al menos 1 caracter',
+      },
     },
     dynamicQuestion: {
       id: { uuid: 'El ID debe ser un UUID' },
@@ -217,12 +221,18 @@ export default {
         required: 'La pregunta es requerida',
         min: 'La pregunta debe tener al menos 1 caracter',
       },
+      options: {
+        min: 'La pregunta debe tener al menos 1 opción',
+      },
     },
     dynamicForm: {
       id: { uuid: 'El ID debe ser un UUID' },
       name: {
         required: 'El nombre es requerido',
-        min: 'El nombre debe tener al menos 1 caracter',
+        min: 'El nombre del formulario debe tener al menos 1 caracter',
+      },
+      questions: {
+        min: 'El formulario debe tener al menos 1 pregunta',
       },
     },
   },

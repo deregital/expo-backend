@@ -10,24 +10,28 @@ export const createDynamicFormSchema = dynamicFormSchema
   .pick({
     name: true,
   })
-  .extend({
-    questions: z.array(
-      dynamicQuestionSchema
+  .merge(
+    z.object({
+      questions: dynamicQuestionSchema
         .pick({
           text: true,
           disabled: true,
           required: true,
           multipleChoice: true,
         })
-        .extend({
-          options: z.array(
-            dynamicOptionSchema.pick({
-              text: true,
-            }),
-          ),
-        }),
-    ),
-  });
+        .merge(
+          z.object({
+            options: dynamicOptionSchema
+              .pick({
+                text: true,
+              })
+              .array(),
+          }),
+        )
+        .array(),
+    }),
+  )
+  .strict();
 
 export class CreateDynamicFormDto extends createZodDtoWithoutDate(
   createDynamicFormSchema,
