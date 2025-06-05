@@ -14543,6 +14543,10 @@ components:
             type:
               - "object"
             properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
               text:
                 type:
                   - "string"
@@ -14578,10 +14582,16 @@ components:
                       type:
                         - "string"
                       format: "uuid"
+                    id:
+                      type:
+                        - "string"
+                      format: "uuid"
                   required:
                     - "text"
                     - "tagId"
+                    - "id"
             required:
+              - "id"
               - "text"
               - "tagGroupId"
               - "options"

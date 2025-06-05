@@ -20,6 +20,7 @@ import {
   ConflictException,
   Controller,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -33,7 +34,13 @@ import {
   ApiOkResponse,
 } from '@nestjs/swagger';
 import z from 'zod';
-import { DynamicForm, DynamicOption, Role } from '~/types/prisma-schema';
+import {
+  DynamicForm,
+  DynamicOption,
+  DynamicQuestion,
+  Role,
+  TagType,
+} from '~/types/prisma-schema';
 import {
   CreateDynamicFormDto,
   CreateDynamicFormResponseDto,
@@ -111,19 +118,29 @@ export class DynamicFormController {
     );
 
     // Opciones agregadas a preguntas existentes
-    const newOptionsFromOldQuestions: Pick<
-      DynamicOption,
-      'text' | 'questionId'
-    >[] = [];
+    const newOptionsFromOldQuestions: (Pick<DynamicOption, 'text'> & {
+      question: {
+        tagGroupId: string;
+        id: string;
+      };
+    })[] = [];
     // Opciones eliminadas de preguntas existentes
     const deletedOptionsFromOldQuestions: Pick<
       DynamicOption,
       'id' | 'text' | 'tagId'
     >[] = [];
+
+    // Preguntas cambiadas
+    const changedQuestions: Pick<
+      DynamicQuestion,
+      'id' | 'text' | 'disabled' | 'required' | 'multipleChoice' | 'tagGroupId'
+    >[] = [];
     for (const oldQuestion of oldQuestions) {
       const dtoQuestion = updateDynamicFormDto.questions.find(
         (q) => q.id === oldQuestion.id,
       )!;
+
+      // Opciones agregadas a preguntas existentes
       for (const dtoOption of dtoQuestion.options) {
         const oldOption = oldQuestion.options.find(
           (o) => o.text === dtoOption.text,
@@ -131,11 +148,15 @@ export class DynamicFormController {
         if (!oldOption) {
           newOptionsFromOldQuestions.push({
             text: dtoOption.text,
-            questionId: oldQuestion.id,
+            question: {
+              id: oldQuestion.id,
+              tagGroupId: oldQuestion.tagGroupId,
+            },
           });
         }
       }
 
+      // Opciones eliminadas de preguntas existentes
       for (const oldOption of oldQuestion.options) {
         const dtoOption = dtoQuestion.options.find(
           (o) => o.text === oldOption.text,
@@ -148,12 +169,74 @@ export class DynamicFormController {
           });
         }
       }
+
+      const hasQuestionChanged =
+        dtoQuestion.text !== oldQuestion.text ||
+        dtoQuestion.disabled !== oldQuestion.disabled ||
+        dtoQuestion.required !== oldQuestion.required ||
+        dtoQuestion.multipleChoice !== oldQuestion.multipleChoice;
+
+      if (hasQuestionChanged) {
+        changedQuestions.push({
+          id: oldQuestion.id,
+          text: dtoQuestion.text,
+          disabled: dtoQuestion.disabled,
+          required: dtoQuestion.required,
+          multipleChoice: dtoQuestion.multipleChoice,
+          tagGroupId: oldQuestion.tagGroupId,
+        });
+      }
     }
 
     await this.checkIfDeletedOptionsAreUsed(deletedOptionsFromOldQuestions);
 
-    return { success: true };
-    // return await this.dynamicFormService.update(id, updateDynamicFormDto);
+    if (form.name !== updateDynamicFormDto.name) {
+      await this.dynamicFormService.updateName(id, updateDynamicFormDto.name);
+    }
+
+    // Preguntas cambiadas
+    for (const question of changedQuestions) {
+      await this.tagGroupService.update(question.tagGroupId, {
+        name: question.text,
+      });
+      await this.dynamicFormService.updateQuestion(question.id, {
+        text: question.text,
+        disabled: question.disabled,
+        required: question.required,
+        multipleChoice: question.multipleChoice,
+      });
+    }
+
+    // Opciones agregadas a preguntas existentes
+    for (const newOption of newOptionsFromOldQuestions) {
+      const tag = await this.tagService.create({
+        name: newOption.text,
+        groupId: newOption.question.tagGroupId,
+        type: TagType.FORM_OPTION,
+      });
+      await this.dynamicFormService.createOption({
+        text: newOption.text,
+        questionId: newOption.question.id,
+        tagId: tag.id,
+      });
+    }
+
+    // Opciones eliminadas de preguntas existentes
+    for (const deletedOption of deletedOptionsFromOldQuestions) {
+      await this.dynamicFormService.deleteOption(deletedOption.id);
+    }
+
+    await this.dynamicFormService.createManyQuestions(form.id, newQuestions);
+
+    const updatedForm = await this.dynamicFormService.findById(id);
+
+    if (!updatedForm) {
+      throw new NotFoundException(
+        translate('route.dynamic-form.update.not-found'),
+      );
+    }
+
+    return updatedForm;
   }
 
   @ApiOkResponse({

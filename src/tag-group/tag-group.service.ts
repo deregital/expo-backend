@@ -11,6 +11,7 @@ import { findOneTagGroupResponseSchema } from '@/tag-group/dto/find-one-tag-grou
 import { updateTagGroupResponseSchema } from '@/tag-group/dto/update-tag-group.dto';
 import { Inject, Injectable } from '@nestjs/common';
 import z from 'zod';
+import { Tag, TagGroup } from '~/types/prisma-schema';
 
 @Injectable()
 export class TagGroupService {
@@ -118,5 +119,16 @@ export class TagGroupService {
     return {
       groups,
     };
+  }
+
+  async findByIds(ids: string[]): Promise<(TagGroup & { tags: Tag[] })[]> {
+    return await this.prisma.tagGroup.findMany({
+      where: {
+        id: { in: ids },
+      },
+      include: {
+        tags: true,
+      },
+    });
   }
 }

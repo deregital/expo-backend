@@ -38,8 +38,12 @@ export class UpdateDynamicFormDto extends createZodDtoWithoutDate(
   updateDynamicFormSchema,
 ) {}
 
-export const updateDynamicFormResponseSchema = z.object({
-  success: z.boolean(),
+export const updateDynamicFormResponseSchema = dynamicFormSchema.extend({
+  questions: dynamicQuestionSchema
+    .extend({
+      options: dynamicOptionSchema.array(),
+    })
+    .array(),
 });
 
 export class UpdateDynamicFormResponseDto extends createZodDtoWithoutDate(

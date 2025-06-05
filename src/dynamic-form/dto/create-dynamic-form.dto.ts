@@ -46,6 +46,7 @@ export const createDynamicFormResponseSchema = dynamicFormSchema
     questions: z.array(
       dynamicQuestionSchema
         .pick({
+          id: true,
           text: true,
           disabled: true,
           required: true,
@@ -57,6 +58,7 @@ export const createDynamicFormResponseSchema = dynamicFormSchema
             dynamicOptionSchema.pick({
               text: true,
               tagId: true,
+              id: true,
             }),
           ),
         }),

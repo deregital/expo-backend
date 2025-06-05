@@ -2,12 +2,15 @@ import { findAllDynamicFormsResponseSchema } from '@/dynamic-form/dto/find-all-d
 import { translate } from '@/i18n/translate';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
+import { TagGroupService } from '@/tag-group/tag-group.service';
+import { TagService } from '@/tag/tag.service';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import z from 'zod';
 import {
   DynamicForm,
   DynamicOption,
   DynamicQuestion,
+  Prisma,
   Tag,
   TagGroup,
   TagType,
@@ -19,7 +22,11 @@ import {
 
 @Injectable()
 export class DynamicFormService {
-  constructor(@Inject(PRISMA_SERVICE) private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(PRISMA_SERVICE) private readonly prisma: PrismaService,
+    private readonly tagService: TagService,
+    private readonly tagGroupService: TagGroupService,
+  ) {}
 
   async create(
     dto: CreateDynamicFormDto,
@@ -63,47 +70,23 @@ export class DynamicFormService {
       },
     });
 
-    const groups = await Promise.all(
-      form.questions.map((q) =>
-        this.prisma.tagGroup.findUnique({
-          where: { id: q.tagGroupId },
-          include: {
-            tags: true,
-          },
-        }),
-      ),
-    );
+    const options = await this.createOptions(form.questions, dto.questions);
 
-    const tagGroups = groups.filter((g) => g !== null);
-
-    await Promise.all(
-      form.questions.map((q) => {
-        const tagGroup = tagGroups.find((tg) => tg.name === q.text);
-        const inputQuestion = dto.questions.find(
-          (qdto) => qdto.text === q.text,
-        );
-        if (!tagGroup || !inputQuestion) {
-          return;
-        }
-
-        inputQuestion.options.map(async (o) => {
-          const tag = tagGroup.tags.find((t) => t.name === o.text);
-          if (!tag) {
-            return;
-          }
-
-          return await this.prisma.dynamicOption.create({
-            data: {
+    return {
+      id: form.id,
+      name: form.name,
+      questions: form.questions.map((q) => ({
+        ...q,
+        options:
+          options
+            .filter((o) => o.questionId === q.id)
+            .map((o) => ({
+              id: o.id,
               text: o.text,
-              questionId: q.id,
-              tagId: tag.id,
-            },
-          });
-        });
-      }),
-    );
-
-    return form;
+              tagId: o.tagId,
+            })) ?? [],
+      })),
+    };
   }
 
   async findByName(name: DynamicForm['name']): Promise<DynamicForm | null> {
@@ -157,6 +140,66 @@ export class DynamicFormService {
     });
   }
 
+  async updateQuestion(
+    id: DynamicQuestion['id'],
+    dto: Pick<
+      DynamicQuestion,
+      'text' | 'disabled' | 'required' | 'multipleChoice'
+    >,
+  ): Promise<DynamicQuestion> {
+    return this.prisma.dynamicQuestion.update({
+      where: { id },
+      data: dto,
+    });
+  }
+
+  async createOption(dto: {
+    text: string;
+    questionId: string;
+    tagId: string;
+  }): Promise<DynamicOption> {
+    return this.prisma.dynamicOption.create({ data: dto });
+  }
+
+  async deleteOption(id: DynamicOption['id']): Promise<DynamicOption> {
+    const deleted = await this.prisma.dynamicOption.delete({ where: { id } });
+    await this.tagService.delete(deleted.tagId);
+    return deleted;
+  }
+
+  async createManyQuestions(
+    formId: DynamicForm['id'],
+    questions: (Pick<
+      DynamicQuestion,
+      'text' | 'disabled' | 'required' | 'multipleChoice'
+    > & {
+      options: {
+        text: string;
+      }[];
+    })[],
+  ): Promise<DynamicForm> {
+    const form = await this.prisma.dynamicForm.update({
+      where: { id: formId },
+      data: {
+        questions: {
+          create: this.questionsToCreate(questions),
+        },
+      },
+      include: {
+        questions: {
+          include: {
+            tagGroup: true,
+            options: true,
+          },
+        },
+      },
+    });
+
+    await this.createOptions(form.questions, questions);
+
+    return form;
+  }
+
   checkEmptyQuestionsOrOptions(dto: {
     questions: {
       options: {
@@ -180,5 +223,95 @@ export class DynamicFormService {
         translate('model.dynamicQuestion.options.min'),
       );
     }
+  }
+
+  private questionsToCreate(
+    questions: (Pick<
+      DynamicQuestion,
+      'text' | 'disabled' | 'required' | 'multipleChoice'
+    > & {
+      options: {
+        text: string;
+      }[];
+    })[],
+  ): Prisma.DynamicQuestionCreateWithoutFormInput[] {
+    return questions.map((q) => ({
+      text: q.text,
+      disabled: q.disabled,
+      required: q.required,
+      multipleChoice: q.multipleChoice,
+      tagGroup: {
+        create: {
+          name: q.text,
+          color: '#333',
+          isExclusive: !q.multipleChoice,
+          tags: {
+            create: q.options.map((o) => ({
+              name: o.text,
+              type: TagType.FORM_OPTION,
+            })),
+          },
+        },
+      },
+    }));
+  }
+
+  async createOptions(
+    formQuestions: DynamicQuestion[],
+    inputQuestions: {
+      text: string;
+      options: {
+        text: string;
+      }[];
+    }[],
+  ): Promise<Pick<DynamicOption, 'id' | 'text' | 'tagId' | 'questionId'>[]> {
+    const tagGroups = await this.tagGroupService.findByIds(
+      formQuestions.map((q) => q.tagGroupId),
+    );
+
+    const optionsToCreate: Prisma.DynamicOptionCreateManyInput[] = [];
+    for (const question of formQuestions) {
+      const tagGroup = tagGroups.find((tg) => tg.name === question.text);
+      const inputQuestion = inputQuestions.find(
+        (qdto) => qdto.text === question.text,
+      );
+
+      if (!tagGroup || !inputQuestion) {
+        continue;
+      }
+
+      const optionsToCreateImpl = inputQuestion.options.map((o) => {
+        const tag = tagGroup.tags.find((t) => t.name === o.text)!;
+        return {
+          text: o.text,
+          questionId: question.id,
+          tagId: tag.id,
+        };
+      });
+
+      optionsToCreate.push(...optionsToCreateImpl);
+    }
+
+    const options = await this.prisma.dynamicOption.createManyAndReturn({
+      data: optionsToCreate,
+      select: {
+        id: true,
+        text: true,
+        tagId: true,
+        questionId: true,
+      },
+    });
+
+    return options;
+  }
+
+  async updateName(
+    id: DynamicForm['id'],
+    name: DynamicForm['name'],
+  ): Promise<DynamicForm> {
+    return this.prisma.dynamicForm.update({
+      where: { id },
+      data: { name },
+    });
   }
 }
