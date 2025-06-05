@@ -766,6 +766,10 @@ export default {
       all: {
         success: 'Formularios dinámicos obtenidos con éxito',
       },
+      delete: {
+        success: 'Formulario dinámico eliminado con éxito',
+        'not-found': 'Formulario dinámico no encontrado',
+      },
     },
   },
 } as const;

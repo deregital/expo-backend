@@ -314,4 +314,8 @@ export class DynamicFormService {
       data: { name },
     });
   }
+
+  async delete(id: DynamicForm['id']): Promise<DynamicForm> {
+    return this.prisma.dynamicForm.delete({ where: { id } });
+  }
 }

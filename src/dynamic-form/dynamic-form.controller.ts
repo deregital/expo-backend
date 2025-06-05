@@ -7,6 +7,7 @@ import {
 } from '@/dynamic-form/dto/find-all-dynamic-form.dto';
 import {
   UpdateDynamicFormDto,
+  UpdateDynamicFormResponseDto,
   updateDynamicFormResponseSchema,
 } from '@/dynamic-form/dto/update-dynamic-form.dto';
 import { translate } from '@/i18n/translate';
@@ -19,6 +20,7 @@ import {
   Body,
   ConflictException,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
@@ -46,6 +48,10 @@ import {
   CreateDynamicFormResponseDto,
   createDynamicFormResponseSchema,
 } from './dto/create-dynamic-form.dto';
+import {
+  DeleteDynamicFormDto,
+  deleteDynamicFormSchema,
+} from './dto/delete-dynamic-form.dto';
 import { DynamicFormService } from './dynamic-form.service';
 
 @Roles(Role.ADMIN)
@@ -93,6 +99,10 @@ export class DynamicFormController {
   @ApiNotFoundResponse({
     description: translate('route.dynamic-form.update.not-found'),
     type: ErrorDto,
+  })
+  @ApiOkResponse({
+    description: translate('route.dynamic-form.update.success'),
+    type: UpdateDynamicFormResponseDto,
   })
   @Patch('/update/:id')
   async update(
@@ -246,6 +256,32 @@ export class DynamicFormController {
   @Get('/all')
   async getAll(): Promise<z.infer<typeof findAllDynamicFormsResponseSchema>> {
     return await this.dynamicFormService.findAll();
+  }
+
+  @ApiNotFoundResponse({
+    description: translate('route.dynamic-form.delete.not-found'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    description: translate('route.dynamic-form.delete.success'),
+    type: DeleteDynamicFormDto,
+  })
+  @Delete('/delete/:id')
+  async delete(
+    @Param('id', new ExistingRecord('dynamicForm')) id: string,
+  ): Promise<z.infer<typeof deleteDynamicFormSchema>> {
+    const form = await this.dynamicFormService.findById(id);
+    await this.checkIfDeletedOptionsAreUsed(
+      form?.questions.flatMap((q) => q.options) ?? [],
+    );
+
+    await this.tagGroupService.deleteMany(
+      form?.questions.map((q) => q.tagGroupId) ?? [],
+    );
+    await this.dynamicFormService.delete(id);
+    return {
+      id,
+    };
   }
 
   private async checkIfDeletedOptionsAreUsed(

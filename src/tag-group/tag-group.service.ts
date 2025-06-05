@@ -79,6 +79,14 @@ export class TagGroupService {
     });
   }
 
+  async deleteMany(ids: string[]): Promise<void> {
+    await this.prisma.tagGroup.deleteMany({
+      where: {
+        id: { in: ids },
+      },
+    });
+  }
+
   async findAllWithTags(): Promise<
     z.infer<typeof findAllWithTagsResponseSchema>
   > {
