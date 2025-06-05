@@ -758,6 +758,14 @@ export default {
         success: 'Formulario dinámico creado con éxito',
         conflict: 'Error en la creación del formulario dinámico',
       },
+      update: {
+        success: 'Formulario dinámico actualizado con éxito',
+        'not-found': 'Formulario dinámico no encontrado',
+        'conflict-tag-in-use': `No se puede eliminar la opción \{\{tag\}\} porque está en uso en \{\{profiles\}\} perfiles`,
+      },
+      all: {
+        success: 'Formularios dinámicos obtenidos con éxito',
+      },
     },
   },
 } as const;

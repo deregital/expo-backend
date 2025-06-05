@@ -1,8 +1,17 @@
+import { findAllDynamicFormsResponseSchema } from '@/dynamic-form/dto/find-all-dynamic-form.dto';
+import { translate } from '@/i18n/translate';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import z from 'zod';
-import { DynamicForm, TagType } from '~/types';
+import {
+  DynamicForm,
+  DynamicOption,
+  DynamicQuestion,
+  Tag,
+  TagGroup,
+  TagType,
+} from '~/types/prisma-schema';
 import {
   CreateDynamicFormDto,
   createDynamicFormResponseSchema,
@@ -101,5 +110,75 @@ export class DynamicFormService {
     return this.prisma.dynamicForm.findUnique({
       where: { name },
     });
+  }
+
+  async findById(id: DynamicForm['id']): Promise<
+    | (DynamicForm & {
+        questions: (DynamicQuestion & {
+          tagGroup: TagGroup & {
+            tags: Tag[];
+          };
+          options: DynamicOption[];
+        })[];
+      })
+    | null
+  > {
+    return this.prisma.dynamicForm.findUnique({
+      where: { id },
+      include: {
+        questions: {
+          include: {
+            tagGroup: {
+              include: {
+                tags: true,
+              },
+            },
+            options: true,
+          },
+        },
+      },
+    });
+  }
+
+  async findAll(): Promise<z.infer<typeof findAllDynamicFormsResponseSchema>> {
+    return this.prisma.dynamicForm.findMany({
+      include: {
+        questions: {
+          include: {
+            tagGroup: true,
+            options: {
+              include: {
+                tag: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
+  checkEmptyQuestionsOrOptions(dto: {
+    questions: {
+      options: {
+        text: string;
+      }[];
+    }[];
+  }): void {
+    const emptyQuestions = dto.questions.length === 0;
+    const emptyOptions = dto.questions.some(
+      (question) => question.options.length === 0,
+    );
+
+    if (emptyQuestions) {
+      throw new BadRequestException(
+        translate('model.dynamicForm.questions.min'),
+      );
+    }
+
+    if (emptyOptions) {
+      throw new BadRequestException(
+        translate('model.dynamicQuestion.options.min'),
+      );
+    }
   }
 }
