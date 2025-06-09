@@ -119,6 +119,13 @@ export class DynamicFormController {
       thingsToUpdate.name = updateDynamicFormDto.name;
     }
 
+    const deletedQuestions = form.questions.filter(
+      (q) =>
+        !updateDynamicFormDto.questions.some(
+          (q2) => q2.id !== null && q2.id === q.id,
+        ),
+    );
+
     const newQuestions = updateDynamicFormDto.questions.filter(
       (q) => q.id === null,
     );
@@ -149,6 +156,10 @@ export class DynamicFormController {
       const dtoQuestion = updateDynamicFormDto.questions.find(
         (q) => q.id === oldQuestion.id,
       )!;
+
+      if (!dtoQuestion) {
+        continue;
+      }
 
       // Opciones agregadas a preguntas existentes
       for (const dtoOption of dtoQuestion.options) {
@@ -198,7 +209,10 @@ export class DynamicFormController {
       }
     }
 
-    await this.checkIfDeletedOptionsAreUsed(deletedOptionsFromOldQuestions);
+    await this.checkIfDeletedOptionsAreUsed([
+      ...deletedOptionsFromOldQuestions,
+      ...deletedQuestions.flatMap((q) => q.options),
+    ]);
 
     if (form.name !== updateDynamicFormDto.name) {
       await this.dynamicFormService.updateName(id, updateDynamicFormDto.name);
