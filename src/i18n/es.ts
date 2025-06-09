@@ -208,6 +208,33 @@ export default {
         uuid: 'El ID debe ser un UUID',
       },
     },
+    dynamicOption: {
+      id: { uuid: 'El ID debe ser un UUID' },
+      text: {
+        required: 'La opción es requerida',
+        min: 'La opción debe tener al menos 1 caracter',
+      },
+    },
+    dynamicQuestion: {
+      id: { uuid: 'El ID debe ser un UUID' },
+      text: {
+        required: 'La pregunta es requerida',
+        min: 'La pregunta debe tener al menos 1 caracter',
+      },
+      options: {
+        min: 'La pregunta debe tener al menos 1 opción',
+      },
+    },
+    dynamicForm: {
+      id: { uuid: 'El ID debe ser un UUID' },
+      name: {
+        required: 'El nombre es requerido',
+        min: 'El nombre del formulario debe tener al menos 1 caracter',
+      },
+      questions: {
+        min: 'El formulario debe tener al menos 1 pregunta',
+      },
+    },
   },
   route: {
     auth: {
@@ -724,6 +751,24 @@ export default {
       'find-by-production': {
         success: 'Solicitud de afiliación a producción obtenida con éxito',
         'not-found': 'Producción no encontrada',
+      },
+    },
+    'dynamic-form': {
+      create: {
+        success: 'Formulario dinámico creado con éxito',
+        conflict: 'Error en la creación del formulario dinámico',
+      },
+      update: {
+        success: 'Formulario dinámico actualizado con éxito',
+        'not-found': 'Formulario dinámico no encontrado',
+        'conflict-tag-in-use': `No se puede eliminar la opción \{\{tag\}\} porque está en uso en \{\{profiles\}\} perfiles`,
+      },
+      all: {
+        success: 'Formularios dinámicos obtenidos con éxito',
+      },
+      delete: {
+        success: 'Formulario dinámico eliminado con éxito',
+        'not-found': 'Formulario dinámico no encontrado',
       },
     },
   },

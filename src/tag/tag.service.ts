@@ -190,4 +190,8 @@ export class TagService {
       },
     });
   }
+
+  async delete(id: Tag['id']): Promise<Tag> {
+    return await this.prisma.tag.delete({ where: { id } });
+  }
 }
