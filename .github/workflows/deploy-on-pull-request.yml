@@ -43,7 +43,23 @@ jobs:
 
           # Modificar solo el tag de la imagen del primer servicio y mantener el spec limpio
           jq --arg img "$IMAGE" '
-            { spec: (.app.spec | .services[0].image = { registry_type: "DOCKER", registry: "ghcr.io", repository: ($img | split(":")[0] | split("/") | .[2:] | join("/")), tag: ($img | split(":")[1]) }) }
+          {
+            spec:
+              (.app.spec
+              | .services[0]
+                |= (
+                  . + {
+                    image: {
+                      registry_type: "DOCKER_HUB",
+                      registry: "ghcr.io",
+                      repository: ($img | split(":")[0] | split("/") | .[2:] | join("/")),
+                      tag: ($img | split(":")[1])
+                    }
+                  }
+                )
+              | .services[0] |= (del(.github))
+              )
+          }
           ' app.json > new_spec.json
 
           # Hacer el PUT con el JSON correcto
