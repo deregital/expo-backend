@@ -2,9 +2,10 @@ FROM node:20-bullseye as builder
 ENV NODE_ENV build
 USER node
 WORKDIR /home/node
-COPY package*.json ./
-RUN npm ci
+COPY --chown=node:node package*.json ./
+RUN npm install --legacy-peer-deps
 COPY --chown=node:node . .
+RUN npx patch-package
 RUN npx prisma generate \
     && npm run build \
     && npm prune --omit=dev
