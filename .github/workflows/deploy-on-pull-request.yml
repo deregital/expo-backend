@@ -1,4 +1,4 @@
-name: App Platform Preview
+name: Deploy PR to DigitalOcean
 
 on:
   pull_request:
@@ -6,54 +6,50 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
+  packages: write
 
 jobs:
-  test:
-    name: preview
+  build-push-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
-      - name: Deploy the app
-        id: deploy
-        uses: digitalocean/app_action/deploy@v2
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
         with:
-          deploy_pr_preview: 'true'
-          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
-      - uses: actions/github-script@v7
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository }}:pr-${{ github.event.pull_request.number }}
+
+      - name: Trigger deploy to DigitalOcean
         env:
-          BUILD_LOGS: ${{ steps.deploy.outputs.build_logs }}
-          DEPLOY_LOGS: ${{ steps.deploy.outputs.deploy_logs }}
-        with:
-          script: |
-            const { BUILD_LOGS, DEPLOY_LOGS } = process.env
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `🚀🚀🚀 The app was successfully deployed at ${{ fromJson(steps.deploy.outputs.app).live_url }}. [1]`
-            })
-      - uses: actions/github-script@v7
-        if: failure()
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `The app failed to be deployed. Logs can be found [here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}).
-              ## Logs
-              <details>
-              <summary>Build logs</summary> [2]
-              \`\\
-              ${BUILD_LOGS}
-              \`\\
-              </details>
-              <details>
-              <summary>Deploy logs</summary> [3]
-              \`\\
-              ${DEPLOY_LOGS}
-              \`\\
-              </details>`
-            })
+          DO_API_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+          APP_ID: ${{ secrets.DIGITALOCEAN_DEV_APP_ID }}
+          IMAGE: ghcr.io/${{ github.repository }}:pr-${{ github.event.pull_request.number }}
+        run: |
+          # Get current spec
+          curl -s -X GET \
+            -H "Authorization: Bearer $DO_API_TOKEN" \
+            "https://api.digitalocean.com/v2/apps/$APP_ID" \
+            > app.json
+
+          # Replace the image tag (adjust path if needed)
+          jq --arg img "$IMAGE" '
+            .spec.services[0].image.tag = ($img | split(":")[1])
+          ' app.json > new_spec.json
+
+          # Trigger deployment
+          curl -X PUT \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $DO_API_TOKEN" \
+            -d @new_spec.json \
+            "https://api.digitalocean.com/v2/apps/$APP_ID"
