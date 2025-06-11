@@ -3,7 +3,7 @@ ENV NODE_ENV build
 USER node
 WORKDIR /home/node
 COPY package*.json ./
-RUN npm ci
+RUN npm install --legacy-peer-deps
 COPY --chown=node:node . .
 RUN npx prisma generate \
     && npm run build \
