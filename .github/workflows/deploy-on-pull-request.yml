@@ -36,18 +36,17 @@ jobs:
           APP_ID: ${{ secrets.DIGITALOCEAN_DEV_APP_ID }}
           IMAGE: ghcr.io/${{ github.repository }}:pr-${{ github.event.pull_request.number }}
         run: |
-          # Get current spec
+          # Obtener la app completa
           curl -s -X GET \
             -H "Authorization: Bearer $DO_API_TOKEN" \
-            "https://api.digitalocean.com/v2/apps/$APP_ID" \
-            > app.json
+            "https://api.digitalocean.com/v2/apps/$APP_ID" > app.json
 
-          # Replace the image tag (adjust path if needed)
+          # Modificar solo el tag de la imagen del primer servicio y mantener el spec limpio
           jq --arg img "$IMAGE" '
-            .spec.services[0].image.tag = ($img | split(":")[1])
+            { spec: (.app.spec | .services[0].image = { registry_type: "DOCKER", registry: "ghcr.io", repository: ($img | split(":")[0] | split("/") | .[2:] | join("/")), tag: ($img | split(":")[1]) }) }
           ' app.json > new_spec.json
 
-          # Trigger deployment
+          # Hacer el PUT con el JSON correcto
           curl -X PUT \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer $DO_API_TOKEN" \
