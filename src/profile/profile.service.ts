@@ -23,6 +23,7 @@ import {
   Tag,
   TagGroup,
 } from '~/types/prisma-schema';
+import { findByPhoneNumberResponseSchema } from './dto/find-by-phone-number.dto';
 
 @Injectable()
 export class ProfileService {
@@ -387,7 +388,7 @@ export class ProfileService {
   async findByPhoneNumber(
     phoneNumber: Profile['phoneNumber'],
     visibleTags: VisibleTagsType | undefined = undefined,
-  ): Promise<Profile | null> {
+  ): Promise<z.infer<typeof findByPhoneNumberResponseSchema> | null> {
     const profile = await this.prisma.profile.findUnique({
       where: {
         phoneNumber: phoneNumber,
@@ -399,6 +400,10 @@ export class ProfileService {
               },
             }
           : undefined,
+      },
+      include: {
+        birthLocation: true,
+        residenceLocation: true,
       },
     });
 
