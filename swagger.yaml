@@ -8927,6 +8927,9 @@ components:
             city:
               type:
                 - "string"
+            state:
+              type:
+                - "string"
             country:
               type:
                 - "string"
@@ -8942,6 +8945,7 @@ components:
               maximum: 180
           required:
             - "city"
+            - "state"
             - "country"
             - "latitude"
             - "longitude"
@@ -8953,6 +8957,9 @@ components:
             city:
               type:
                 - "string"
+            state:
+              type:
+                - "string"
             country:
               type:
                 - "string"
@@ -8968,6 +8975,7 @@ components:
               maximum: 180
           required:
             - "city"
+            - "state"
             - "country"
             - "latitude"
             - "longitude"

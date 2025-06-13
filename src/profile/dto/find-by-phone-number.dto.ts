@@ -6,6 +6,7 @@ export const findByPhoneNumberResponseSchema = profileSchema.extend({
   residenceLocation: locationSchema
     .pick({
       city: true,
+      state: true,
       country: true,
       latitude: true,
       longitude: true,
@@ -14,6 +15,7 @@ export const findByPhoneNumberResponseSchema = profileSchema.extend({
   birthLocation: locationSchema
     .pick({
       city: true,
+      state: true,
       country: true,
       latitude: true,
       longitude: true,
