@@ -2628,6 +2628,7 @@ export namespace Prisma {
     productionsAdministrated: number;
     productionsParticipated: number;
     productionRequestsSent: number;
+    referralCodeUsed: number;
   };
 
   export type ProfileCountOutputTypeSelect<
@@ -2647,6 +2648,9 @@ export namespace Prisma {
     productionRequestsSent?:
       | boolean
       | ProfileCountOutputTypeCountProductionRequestsSentArgs;
+    referralCodeUsed?:
+      | boolean
+      | ProfileCountOutputTypeCountReferralCodeUsedArgs;
   };
 
   // Custom InputTypes
@@ -2732,6 +2736,15 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: ProductionAffiliationRequestWhereInput;
+  };
+
+  /**
+   * ProfileCountOutputType without action
+   */
+  export type ProfileCountOutputTypeCountReferralCodeUsedArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: TicketGroupWhereInput;
   };
 
   /**
@@ -4658,6 +4671,7 @@ export namespace Prisma {
     residenceLocationId: string | null;
     isInTrash: boolean | null;
     movedToTrashDate: Date | null;
+    referralCode: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -4684,6 +4698,7 @@ export namespace Prisma {
     residenceLocationId: string | null;
     isInTrash: boolean | null;
     movedToTrashDate: Date | null;
+    referralCode: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -4711,6 +4726,7 @@ export namespace Prisma {
     residenceLocationId: number;
     isInTrash: number;
     movedToTrashDate: number;
+    referralCode: number;
     created_at: number;
     updated_at: number;
     _all: number;
@@ -4746,6 +4762,7 @@ export namespace Prisma {
     residenceLocationId?: true;
     isInTrash?: true;
     movedToTrashDate?: true;
+    referralCode?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -4772,6 +4789,7 @@ export namespace Prisma {
     residenceLocationId?: true;
     isInTrash?: true;
     movedToTrashDate?: true;
+    referralCode?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -4799,6 +4817,7 @@ export namespace Prisma {
     residenceLocationId?: true;
     isInTrash?: true;
     movedToTrashDate?: true;
+    referralCode?: true;
     created_at?: true;
     updated_at?: true;
     _all?: true;
@@ -4918,6 +4937,7 @@ export namespace Prisma {
     residenceLocationId: string | null;
     isInTrash: boolean;
     movedToTrashDate: Date | null;
+    referralCode: string;
     created_at: Date;
     updated_at: Date;
     _count: ProfileCountAggregateOutputType | null;
@@ -4966,6 +4986,7 @@ export namespace Prisma {
       residenceLocationId?: boolean;
       isInTrash?: boolean;
       movedToTrashDate?: boolean;
+      referralCode?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       otp?: boolean | Profile$otpArgs<ExtArgs>;
@@ -4984,6 +5005,7 @@ export namespace Prisma {
       productionRequestsSent?:
         | boolean
         | Profile$productionRequestsSentArgs<ExtArgs>;
+      referralCodeUsed?: boolean | Profile$referralCodeUsedArgs<ExtArgs>;
       _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['profile']
@@ -5015,6 +5037,7 @@ export namespace Prisma {
       residenceLocationId?: boolean;
       isInTrash?: boolean;
       movedToTrashDate?: boolean;
+      referralCode?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       birthLocation?: boolean | Profile$birthLocationArgs<ExtArgs>;
@@ -5049,6 +5072,7 @@ export namespace Prisma {
       residenceLocationId?: boolean;
       isInTrash?: boolean;
       movedToTrashDate?: boolean;
+      referralCode?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       birthLocation?: boolean | Profile$birthLocationArgs<ExtArgs>;
@@ -5080,6 +5104,7 @@ export namespace Prisma {
     residenceLocationId?: boolean;
     isInTrash?: boolean;
     movedToTrashDate?: boolean;
+    referralCode?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
   };
@@ -5109,6 +5134,7 @@ export namespace Prisma {
     | 'residenceLocationId'
     | 'isInTrash'
     | 'movedToTrashDate'
+    | 'referralCode'
     | 'created_at'
     | 'updated_at',
     ExtArgs['result']['profile']
@@ -5132,6 +5158,7 @@ export namespace Prisma {
     productionRequestsSent?:
       | boolean
       | Profile$productionRequestsSentArgs<ExtArgs>;
+    referralCodeUsed?: boolean | Profile$referralCodeUsedArgs<ExtArgs>;
     _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type ProfileIncludeCreateManyAndReturn<
@@ -5162,6 +5189,7 @@ export namespace Prisma {
       productionsAdministrated: Prisma.$ProductionPayload<ExtArgs>[];
       productionsParticipated: Prisma.$ProductionPayload<ExtArgs>[];
       productionRequestsSent: Prisma.$ProductionAffiliationRequestPayload<ExtArgs>[];
+      referralCodeUsed: Prisma.$TicketGroupPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -5187,6 +5215,7 @@ export namespace Prisma {
         residenceLocationId: string | null;
         isInTrash: boolean;
         movedToTrashDate: Date | null;
+        referralCode: string;
         created_at: Date;
         updated_at: Date;
       },
@@ -5855,6 +5884,17 @@ export namespace Prisma {
         >
       | Null
     >;
+    referralCodeUsed<T extends Profile$referralCodeUsedArgs<ExtArgs> = {}>(
+      args?: Subset<T, Profile$referralCodeUsedArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$TicketGroupPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5917,6 +5957,7 @@ export namespace Prisma {
     readonly residenceLocationId: FieldRef<'Profile', 'String'>;
     readonly isInTrash: FieldRef<'Profile', 'Boolean'>;
     readonly movedToTrashDate: FieldRef<'Profile', 'DateTime'>;
+    readonly referralCode: FieldRef<'Profile', 'String'>;
     readonly created_at: FieldRef<'Profile', 'DateTime'>;
     readonly updated_at: FieldRef<'Profile', 'DateTime'>;
   }
@@ -6607,6 +6648,34 @@ export namespace Prisma {
     distinct?:
       | ProductionAffiliationRequestScalarFieldEnum
       | ProductionAffiliationRequestScalarFieldEnum[];
+  };
+
+  /**
+   * Profile.referralCodeUsed
+   */
+  export type Profile$referralCodeUsedArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the TicketGroup
+     */
+    select?: TicketGroupSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the TicketGroup
+     */
+    omit?: TicketGroupOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketGroupInclude<ExtArgs> | null;
+    where?: TicketGroupWhereInput;
+    orderBy?:
+      | TicketGroupOrderByWithRelationInput
+      | TicketGroupOrderByWithRelationInput[];
+    cursor?: TicketGroupWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: TicketGroupScalarFieldEnum | TicketGroupScalarFieldEnum[];
   };
 
   /**
@@ -21003,6 +21072,7 @@ export namespace Prisma {
     status: $Enums.TicketGroupStatus | null;
     amountTickets: number | null;
     eventId: string | null;
+    referralCode: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -21012,6 +21082,7 @@ export namespace Prisma {
     status: $Enums.TicketGroupStatus | null;
     amountTickets: number | null;
     eventId: string | null;
+    referralCode: string | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -21021,6 +21092,7 @@ export namespace Prisma {
     status: number;
     amountTickets: number;
     eventId: number;
+    referralCode: number;
     created_at: number;
     updated_at: number;
     _all: number;
@@ -21039,6 +21111,7 @@ export namespace Prisma {
     status?: true;
     amountTickets?: true;
     eventId?: true;
+    referralCode?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -21048,6 +21121,7 @@ export namespace Prisma {
     status?: true;
     amountTickets?: true;
     eventId?: true;
+    referralCode?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -21057,6 +21131,7 @@ export namespace Prisma {
     status?: true;
     amountTickets?: true;
     eventId?: true;
+    referralCode?: true;
     created_at?: true;
     updated_at?: true;
     _all?: true;
@@ -21159,6 +21234,7 @@ export namespace Prisma {
     status: $Enums.TicketGroupStatus;
     amountTickets: number;
     eventId: string;
+    referralCode: string | null;
     created_at: Date;
     updated_at: Date;
     _count: TicketGroupCountAggregateOutputType | null;
@@ -21190,10 +21266,14 @@ export namespace Prisma {
       status?: boolean;
       amountTickets?: boolean;
       eventId?: boolean;
+      referralCode?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
       tickets?: boolean | TicketGroup$ticketsArgs<ExtArgs>;
+      referralCodeProfile?:
+        | boolean
+        | TicketGroup$referralCodeProfileArgs<ExtArgs>;
       _count?: boolean | TicketGroupCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['ticketGroup']
@@ -21207,9 +21287,13 @@ export namespace Prisma {
       status?: boolean;
       amountTickets?: boolean;
       eventId?: boolean;
+      referralCode?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
+      referralCodeProfile?:
+        | boolean
+        | TicketGroup$referralCodeProfileArgs<ExtArgs>;
     },
     ExtArgs['result']['ticketGroup']
   >;
@@ -21222,9 +21306,13 @@ export namespace Prisma {
       status?: boolean;
       amountTickets?: boolean;
       eventId?: boolean;
+      referralCode?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       event?: boolean | EventDefaultArgs<ExtArgs>;
+      referralCodeProfile?:
+        | boolean
+        | TicketGroup$referralCodeProfileArgs<ExtArgs>;
     },
     ExtArgs['result']['ticketGroup']
   >;
@@ -21234,6 +21322,7 @@ export namespace Prisma {
     status?: boolean;
     amountTickets?: boolean;
     eventId?: boolean;
+    referralCode?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
   };
@@ -21241,7 +21330,13 @@ export namespace Prisma {
   export type TicketGroupOmit<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = $Extensions.GetOmit<
-    'id' | 'status' | 'amountTickets' | 'eventId' | 'created_at' | 'updated_at',
+    | 'id'
+    | 'status'
+    | 'amountTickets'
+    | 'eventId'
+    | 'referralCode'
+    | 'created_at'
+    | 'updated_at',
     ExtArgs['result']['ticketGroup']
   >;
   export type TicketGroupInclude<
@@ -21249,17 +21344,26 @@ export namespace Prisma {
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
     tickets?: boolean | TicketGroup$ticketsArgs<ExtArgs>;
+    referralCodeProfile?:
+      | boolean
+      | TicketGroup$referralCodeProfileArgs<ExtArgs>;
     _count?: boolean | TicketGroupCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type TicketGroupIncludeCreateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
+    referralCodeProfile?:
+      | boolean
+      | TicketGroup$referralCodeProfileArgs<ExtArgs>;
   };
   export type TicketGroupIncludeUpdateManyAndReturn<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     event?: boolean | EventDefaultArgs<ExtArgs>;
+    referralCodeProfile?:
+      | boolean
+      | TicketGroup$referralCodeProfileArgs<ExtArgs>;
   };
 
   export type $TicketGroupPayload<
@@ -21269,6 +21373,7 @@ export namespace Prisma {
     objects: {
       event: Prisma.$EventPayload<ExtArgs>;
       tickets: Prisma.$TicketPayload<ExtArgs>[];
+      referralCodeProfile: Prisma.$ProfilePayload<ExtArgs> | null;
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -21276,6 +21381,7 @@ export namespace Prisma {
         status: $Enums.TicketGroupStatus;
         amountTickets: number;
         eventId: string;
+        referralCode: string | null;
         created_at: Date;
         updated_at: Date;
       },
@@ -21853,6 +21959,21 @@ export namespace Prisma {
         >
       | Null
     >;
+    referralCodeProfile<
+      T extends TicketGroup$referralCodeProfileArgs<ExtArgs> = {},
+    >(
+      args?: Subset<T, TicketGroup$referralCodeProfileArgs<ExtArgs>>,
+    ): Prisma__ProfileClient<
+      $Result.GetResult<
+        Prisma.$ProfilePayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -21897,6 +22018,7 @@ export namespace Prisma {
     readonly status: FieldRef<'TicketGroup', 'TicketGroupStatus'>;
     readonly amountTickets: FieldRef<'TicketGroup', 'Int'>;
     readonly eventId: FieldRef<'TicketGroup', 'String'>;
+    readonly referralCode: FieldRef<'TicketGroup', 'String'>;
     readonly created_at: FieldRef<'TicketGroup', 'DateTime'>;
     readonly updated_at: FieldRef<'TicketGroup', 'DateTime'>;
   }
@@ -22357,6 +22479,27 @@ export namespace Prisma {
     take?: number;
     skip?: number;
     distinct?: TicketScalarFieldEnum | TicketScalarFieldEnum[];
+  };
+
+  /**
+   * TicketGroup.referralCodeProfile
+   */
+  export type TicketGroup$referralCodeProfileArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null;
+    where?: ProfileWhereInput;
   };
 
   /**
@@ -27906,6 +28049,7 @@ export namespace Prisma {
     residenceLocationId: 'residenceLocationId';
     isInTrash: 'isInTrash';
     movedToTrashDate: 'movedToTrashDate';
+    referralCode: 'referralCode';
     created_at: 'created_at';
     updated_at: 'updated_at';
   };
@@ -28060,6 +28204,7 @@ export namespace Prisma {
     status: 'status';
     amountTickets: 'amountTickets';
     eventId: 'eventId';
+    referralCode: 'referralCode';
     created_at: 'created_at';
     updated_at: 'updated_at';
   };
@@ -28470,6 +28615,7 @@ export namespace Prisma {
     residenceLocationId?: StringNullableFilter<'Profile'> | string | null;
     isInTrash?: BoolFilter<'Profile'> | boolean;
     movedToTrashDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
+    referralCode?: StringFilter<'Profile'> | string;
     created_at?: DateTimeFilter<'Profile'> | Date | string;
     updated_at?: DateTimeFilter<'Profile'> | Date | string;
     otp?: OtpListRelationFilter;
@@ -28488,6 +28634,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionListRelationFilter;
     productionsParticipated?: ProductionListRelationFilter;
     productionRequestsSent?: ProductionAffiliationRequestListRelationFilter;
+    referralCodeUsed?: TicketGroupListRelationFilter;
   };
 
   export type ProfileOrderByWithRelationInput = {
@@ -28513,6 +28660,7 @@ export namespace Prisma {
     residenceLocationId?: SortOrderInput | SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrderInput | SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     otp?: OtpOrderByRelationAggregateInput;
@@ -28525,6 +28673,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionOrderByRelationAggregateInput;
     productionsParticipated?: ProductionOrderByRelationAggregateInput;
     productionRequestsSent?: ProductionAffiliationRequestOrderByRelationAggregateInput;
+    referralCodeUsed?: TicketGroupOrderByRelationAggregateInput;
   };
 
   export type ProfileWhereUniqueInput = Prisma.AtLeast<
@@ -28533,6 +28682,7 @@ export namespace Prisma {
       username?: string;
       phoneNumber?: string;
       secondaryPhoneNumber?: string;
+      referralCode?: string;
       AND?: ProfileWhereInput | ProfileWhereInput[];
       OR?: ProfileWhereInput[];
       NOT?: ProfileWhereInput | ProfileWhereInput[];
@@ -28576,8 +28726,9 @@ export namespace Prisma {
       productionsAdministrated?: ProductionListRelationFilter;
       productionsParticipated?: ProductionListRelationFilter;
       productionRequestsSent?: ProductionAffiliationRequestListRelationFilter;
+      referralCodeUsed?: TicketGroupListRelationFilter;
     },
-    'id' | 'username' | 'phoneNumber' | 'secondaryPhoneNumber'
+    'id' | 'username' | 'phoneNumber' | 'secondaryPhoneNumber' | 'referralCode'
   >;
 
   export type ProfileOrderByWithAggregationInput = {
@@ -28603,6 +28754,7 @@ export namespace Prisma {
     residenceLocationId?: SortOrderInput | SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrderInput | SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     _count?: ProfileCountOrderByAggregateInput;
@@ -28662,6 +28814,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringWithAggregatesFilter<'Profile'> | string;
     created_at?: DateTimeWithAggregatesFilter<'Profile'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'Profile'> | Date | string;
   };
@@ -29579,10 +29732,15 @@ export namespace Prisma {
       | $Enums.TicketGroupStatus;
     amountTickets?: IntFilter<'TicketGroup'> | number;
     eventId?: StringFilter<'TicketGroup'> | string;
+    referralCode?: StringNullableFilter<'TicketGroup'> | string | null;
     created_at?: DateTimeFilter<'TicketGroup'> | Date | string;
     updated_at?: DateTimeFilter<'TicketGroup'> | Date | string;
     event?: XOR<EventScalarRelationFilter, EventWhereInput>;
     tickets?: TicketListRelationFilter;
+    referralCodeProfile?: XOR<
+      ProfileNullableScalarRelationFilter,
+      ProfileWhereInput
+    > | null;
   };
 
   export type TicketGroupOrderByWithRelationInput = {
@@ -29590,10 +29748,12 @@ export namespace Prisma {
     status?: SortOrder;
     amountTickets?: SortOrder;
     eventId?: SortOrder;
+    referralCode?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     event?: EventOrderByWithRelationInput;
     tickets?: TicketOrderByRelationAggregateInput;
+    referralCodeProfile?: ProfileOrderByWithRelationInput;
   };
 
   export type TicketGroupWhereUniqueInput = Prisma.AtLeast<
@@ -29607,10 +29767,15 @@ export namespace Prisma {
         | $Enums.TicketGroupStatus;
       amountTickets?: IntFilter<'TicketGroup'> | number;
       eventId?: StringFilter<'TicketGroup'> | string;
+      referralCode?: StringNullableFilter<'TicketGroup'> | string | null;
       created_at?: DateTimeFilter<'TicketGroup'> | Date | string;
       updated_at?: DateTimeFilter<'TicketGroup'> | Date | string;
       event?: XOR<EventScalarRelationFilter, EventWhereInput>;
       tickets?: TicketListRelationFilter;
+      referralCodeProfile?: XOR<
+        ProfileNullableScalarRelationFilter,
+        ProfileWhereInput
+      > | null;
     },
     'id'
   >;
@@ -29620,6 +29785,7 @@ export namespace Prisma {
     status?: SortOrder;
     amountTickets?: SortOrder;
     eventId?: SortOrder;
+    referralCode?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     _count?: TicketGroupCountOrderByAggregateInput;
@@ -29643,6 +29809,10 @@ export namespace Prisma {
       | $Enums.TicketGroupStatus;
     amountTickets?: IntWithAggregatesFilter<'TicketGroup'> | number;
     eventId?: StringWithAggregatesFilter<'TicketGroup'> | string;
+    referralCode?:
+      | StringNullableWithAggregatesFilter<'TicketGroup'>
+      | string
+      | null;
     created_at?: DateTimeWithAggregatesFilter<'TicketGroup'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'TicketGroup'> | Date | string;
   };
@@ -30093,6 +30263,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -30105,6 +30276,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateInput = {
@@ -30130,6 +30302,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -30140,6 +30313,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUpdateInput = {
@@ -30177,6 +30351,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -30189,6 +30364,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateInput = {
@@ -30231,6 +30407,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -30241,6 +30418,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileCreateManyInput = {
@@ -30266,6 +30444,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -30305,6 +30484,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -30349,6 +30529,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -31236,6 +31417,7 @@ export namespace Prisma {
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketGroupsInput;
     tickets?: TicketCreateNestedManyWithoutTicketGroupInput;
+    referralCodeProfile?: ProfileCreateNestedOneWithoutReferralCodeUsedInput;
   };
 
   export type TicketGroupUncheckedCreateInput = {
@@ -31243,6 +31425,7 @@ export namespace Prisma {
     status: $Enums.TicketGroupStatus;
     amountTickets?: number;
     eventId: string;
+    referralCode?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutTicketGroupInput;
@@ -31258,6 +31441,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketGroupsNestedInput;
     tickets?: TicketUpdateManyWithoutTicketGroupNestedInput;
+    referralCodeProfile?: ProfileUpdateOneWithoutReferralCodeUsedNestedInput;
   };
 
   export type TicketGroupUncheckedUpdateInput = {
@@ -31267,6 +31451,7 @@ export namespace Prisma {
       | $Enums.TicketGroupStatus;
     amountTickets?: IntFieldUpdateOperationsInput | number;
     eventId?: StringFieldUpdateOperationsInput | string;
+    referralCode?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutTicketGroupNestedInput;
@@ -31277,6 +31462,7 @@ export namespace Prisma {
     status: $Enums.TicketGroupStatus;
     amountTickets?: number;
     eventId: string;
+    referralCode?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -31298,6 +31484,7 @@ export namespace Prisma {
       | $Enums.TicketGroupStatus;
     amountTickets?: IntFieldUpdateOperationsInput | number;
     eventId?: StringFieldUpdateOperationsInput | string;
+    referralCode?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -31807,6 +31994,12 @@ export namespace Prisma {
     none?: ProductionAffiliationRequestWhereInput;
   };
 
+  export type TicketGroupListRelationFilter = {
+    every?: TicketGroupWhereInput;
+    some?: TicketGroupWhereInput;
+    none?: TicketGroupWhereInput;
+  };
+
   export type SortOrderInput = {
     sort: SortOrder;
     nulls?: NullsOrder;
@@ -31829,6 +32022,10 @@ export namespace Prisma {
   };
 
   export type ProductionAffiliationRequestOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type TicketGroupOrderByRelationAggregateInput = {
     _count?: SortOrder;
   };
 
@@ -31855,6 +32052,7 @@ export namespace Prisma {
     residenceLocationId?: SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -31885,6 +32083,7 @@ export namespace Prisma {
     residenceLocationId?: SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -31911,6 +32110,7 @@ export namespace Prisma {
     residenceLocationId?: SortOrder;
     isInTrash?: SortOrder;
     movedToTrashDate?: SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -32251,20 +32451,10 @@ export namespace Prisma {
     isNot?: TagWhereInput;
   };
 
-  export type TicketGroupListRelationFilter = {
-    every?: TicketGroupWhereInput;
-    some?: TicketGroupWhereInput;
-    none?: TicketGroupWhereInput;
-  };
-
   export type EventTicketListRelationFilter = {
     every?: EventTicketWhereInput;
     some?: EventTicketWhereInput;
     none?: EventTicketWhereInput;
-  };
-
-  export type TicketGroupOrderByRelationAggregateInput = {
-    _count?: SortOrder;
   };
 
   export type EventTicketOrderByRelationAggregateInput = {
@@ -32640,6 +32830,7 @@ export namespace Prisma {
     status?: SortOrder;
     amountTickets?: SortOrder;
     eventId?: SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -32653,6 +32844,7 @@ export namespace Prisma {
     status?: SortOrder;
     amountTickets?: SortOrder;
     eventId?: SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -32662,6 +32854,7 @@ export namespace Prisma {
     status?: SortOrder;
     amountTickets?: SortOrder;
     eventId?: SortOrder;
+    referralCode?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -33432,6 +33625,21 @@ export namespace Prisma {
         | ProductionAffiliationRequestWhereUniqueInput[];
     };
 
+  export type TicketGroupCreateNestedManyWithoutReferralCodeProfileInput = {
+    create?:
+      | XOR<
+          TicketGroupCreateWithoutReferralCodeProfileInput,
+          TicketGroupUncheckedCreateWithoutReferralCodeProfileInput
+        >
+      | TicketGroupCreateWithoutReferralCodeProfileInput[]
+      | TicketGroupUncheckedCreateWithoutReferralCodeProfileInput[];
+    connectOrCreate?:
+      | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput
+      | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput[];
+    createMany?: TicketGroupCreateManyReferralCodeProfileInputEnvelope;
+    connect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+  };
+
   export type OtpUncheckedCreateNestedManyWithoutOwnerInput = {
     create?:
       | XOR<OtpCreateWithoutOwnerInput, OtpUncheckedCreateWithoutOwnerInput>
@@ -33548,6 +33756,22 @@ export namespace Prisma {
       connect?:
         | ProductionAffiliationRequestWhereUniqueInput
         | ProductionAffiliationRequestWhereUniqueInput[];
+    };
+
+  export type TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput =
+    {
+      create?:
+        | XOR<
+            TicketGroupCreateWithoutReferralCodeProfileInput,
+            TicketGroupUncheckedCreateWithoutReferralCodeProfileInput
+          >
+        | TicketGroupCreateWithoutReferralCodeProfileInput[]
+        | TicketGroupUncheckedCreateWithoutReferralCodeProfileInput[];
+      connectOrCreate?:
+        | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput
+        | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput[];
+      createMany?: TicketGroupCreateManyReferralCodeProfileInputEnvelope;
+      connect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
     };
 
   export type IntFieldUpdateOperationsInput = {
@@ -33839,6 +34063,34 @@ export namespace Prisma {
         | ProductionAffiliationRequestScalarWhereInput[];
     };
 
+  export type TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput = {
+    create?:
+      | XOR<
+          TicketGroupCreateWithoutReferralCodeProfileInput,
+          TicketGroupUncheckedCreateWithoutReferralCodeProfileInput
+        >
+      | TicketGroupCreateWithoutReferralCodeProfileInput[]
+      | TicketGroupUncheckedCreateWithoutReferralCodeProfileInput[];
+    connectOrCreate?:
+      | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput
+      | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput[];
+    upsert?:
+      | TicketGroupUpsertWithWhereUniqueWithoutReferralCodeProfileInput
+      | TicketGroupUpsertWithWhereUniqueWithoutReferralCodeProfileInput[];
+    createMany?: TicketGroupCreateManyReferralCodeProfileInputEnvelope;
+    set?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    disconnect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    delete?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    connect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+    update?:
+      | TicketGroupUpdateWithWhereUniqueWithoutReferralCodeProfileInput
+      | TicketGroupUpdateWithWhereUniqueWithoutReferralCodeProfileInput[];
+    updateMany?:
+      | TicketGroupUpdateManyWithWhereWithoutReferralCodeProfileInput
+      | TicketGroupUpdateManyWithWhereWithoutReferralCodeProfileInput[];
+    deleteMany?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
+  };
+
   export type OtpUncheckedUpdateManyWithoutOwnerNestedInput = {
     create?:
       | XOR<OtpCreateWithoutOwnerInput, OtpUncheckedCreateWithoutOwnerInput>
@@ -34067,6 +34319,35 @@ export namespace Prisma {
       deleteMany?:
         | ProductionAffiliationRequestScalarWhereInput
         | ProductionAffiliationRequestScalarWhereInput[];
+    };
+
+  export type TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput =
+    {
+      create?:
+        | XOR<
+            TicketGroupCreateWithoutReferralCodeProfileInput,
+            TicketGroupUncheckedCreateWithoutReferralCodeProfileInput
+          >
+        | TicketGroupCreateWithoutReferralCodeProfileInput[]
+        | TicketGroupUncheckedCreateWithoutReferralCodeProfileInput[];
+      connectOrCreate?:
+        | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput
+        | TicketGroupCreateOrConnectWithoutReferralCodeProfileInput[];
+      upsert?:
+        | TicketGroupUpsertWithWhereUniqueWithoutReferralCodeProfileInput
+        | TicketGroupUpsertWithWhereUniqueWithoutReferralCodeProfileInput[];
+      createMany?: TicketGroupCreateManyReferralCodeProfileInputEnvelope;
+      set?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+      disconnect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+      delete?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+      connect?: TicketGroupWhereUniqueInput | TicketGroupWhereUniqueInput[];
+      update?:
+        | TicketGroupUpdateWithWhereUniqueWithoutReferralCodeProfileInput
+        | TicketGroupUpdateWithWhereUniqueWithoutReferralCodeProfileInput[];
+      updateMany?:
+        | TicketGroupUpdateManyWithWhereWithoutReferralCodeProfileInput
+        | TicketGroupUpdateManyWithWhereWithoutReferralCodeProfileInput[];
+      deleteMany?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
     };
 
   export type ProfileCreateNestedOneWithoutOtpInput = {
@@ -35913,6 +36194,15 @@ export namespace Prisma {
     connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[];
   };
 
+  export type ProfileCreateNestedOneWithoutReferralCodeUsedInput = {
+    create?: XOR<
+      ProfileCreateWithoutReferralCodeUsedInput,
+      ProfileUncheckedCreateWithoutReferralCodeUsedInput
+    >;
+    connectOrCreate?: ProfileCreateOrConnectWithoutReferralCodeUsedInput;
+    connect?: ProfileWhereUniqueInput;
+  };
+
   export type TicketUncheckedCreateNestedManyWithoutTicketGroupInput = {
     create?:
       | XOR<
@@ -35975,6 +36265,25 @@ export namespace Prisma {
       | TicketUpdateManyWithWhereWithoutTicketGroupInput
       | TicketUpdateManyWithWhereWithoutTicketGroupInput[];
     deleteMany?: TicketScalarWhereInput | TicketScalarWhereInput[];
+  };
+
+  export type ProfileUpdateOneWithoutReferralCodeUsedNestedInput = {
+    create?: XOR<
+      ProfileCreateWithoutReferralCodeUsedInput,
+      ProfileUncheckedCreateWithoutReferralCodeUsedInput
+    >;
+    connectOrCreate?: ProfileCreateOrConnectWithoutReferralCodeUsedInput;
+    upsert?: ProfileUpsertWithoutReferralCodeUsedInput;
+    disconnect?: ProfileWhereInput | boolean;
+    delete?: ProfileWhereInput | boolean;
+    connect?: ProfileWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        ProfileUpdateToOneWithWhereWithoutReferralCodeUsedInput,
+        ProfileUpdateWithoutReferralCodeUsedInput
+      >,
+      ProfileUncheckedUpdateWithoutReferralCodeUsedInput
+    >;
   };
 
   export type TicketUncheckedUpdateManyWithoutTicketGroupNestedInput = {
@@ -37539,6 +37848,41 @@ export namespace Prisma {
     skipDuplicates?: boolean;
   };
 
+  export type TicketGroupCreateWithoutReferralCodeProfileInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    event: EventCreateNestedOneWithoutTicketGroupsInput;
+    tickets?: TicketCreateNestedManyWithoutTicketGroupInput;
+  };
+
+  export type TicketGroupUncheckedCreateWithoutReferralCodeProfileInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
+    eventId: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tickets?: TicketUncheckedCreateNestedManyWithoutTicketGroupInput;
+  };
+
+  export type TicketGroupCreateOrConnectWithoutReferralCodeProfileInput = {
+    where: TicketGroupWhereUniqueInput;
+    create: XOR<
+      TicketGroupCreateWithoutReferralCodeProfileInput,
+      TicketGroupUncheckedCreateWithoutReferralCodeProfileInput
+    >;
+  };
+
+  export type TicketGroupCreateManyReferralCodeProfileInputEnvelope = {
+    data:
+      | TicketGroupCreateManyReferralCodeProfileInput
+      | TicketGroupCreateManyReferralCodeProfileInput[];
+    skipDuplicates?: boolean;
+  };
+
   export type OtpUpsertWithWhereUniqueWithoutOwnerInput = {
     where: OtpWhereUniqueInput;
     update: XOR<
@@ -37929,6 +38273,51 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<'ProductionAffiliationRequest'> | Date | string;
   };
 
+  export type TicketGroupUpsertWithWhereUniqueWithoutReferralCodeProfileInput =
+    {
+      where: TicketGroupWhereUniqueInput;
+      update: XOR<
+        TicketGroupUpdateWithoutReferralCodeProfileInput,
+        TicketGroupUncheckedUpdateWithoutReferralCodeProfileInput
+      >;
+      create: XOR<
+        TicketGroupCreateWithoutReferralCodeProfileInput,
+        TicketGroupUncheckedCreateWithoutReferralCodeProfileInput
+      >;
+    };
+
+  export type TicketGroupUpdateWithWhereUniqueWithoutReferralCodeProfileInput =
+    {
+      where: TicketGroupWhereUniqueInput;
+      data: XOR<
+        TicketGroupUpdateWithoutReferralCodeProfileInput,
+        TicketGroupUncheckedUpdateWithoutReferralCodeProfileInput
+      >;
+    };
+
+  export type TicketGroupUpdateManyWithWhereWithoutReferralCodeProfileInput = {
+    where: TicketGroupScalarWhereInput;
+    data: XOR<
+      TicketGroupUpdateManyMutationInput,
+      TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileInput
+    >;
+  };
+
+  export type TicketGroupScalarWhereInput = {
+    AND?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
+    OR?: TicketGroupScalarWhereInput[];
+    NOT?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
+    id?: StringFilter<'TicketGroup'> | string;
+    status?:
+      | EnumTicketGroupStatusFilter<'TicketGroup'>
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFilter<'TicketGroup'> | number;
+    eventId?: StringFilter<'TicketGroup'> | string;
+    referralCode?: StringNullableFilter<'TicketGroup'> | string | null;
+    created_at?: DateTimeFilter<'TicketGroup'> | Date | string;
+    updated_at?: DateTimeFilter<'TicketGroup'> | Date | string;
+  };
+
   export type ProfileCreateWithoutOtpInput = {
     id?: string;
     shortId: number;
@@ -37950,6 +38339,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     comments?: CommentCreateNestedManyWithoutProfileInput;
@@ -37961,6 +38351,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutOtpInput = {
@@ -37986,6 +38377,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
@@ -37995,6 +38387,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutOtpInput = {
@@ -38060,6 +38453,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     comments?: CommentUpdateManyWithoutProfileNestedInput;
@@ -38071,6 +38465,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutOtpInput = {
@@ -38113,6 +38508,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
@@ -38122,6 +38518,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileCreateWithoutBirthLocationInput = {
@@ -38145,6 +38542,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -38156,6 +38554,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutBirthLocationInput = {
@@ -38180,6 +38579,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -38190,6 +38590,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutBirthLocationInput = {
@@ -38228,6 +38629,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -38239,6 +38641,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutResidenceLocationInput = {
@@ -38263,6 +38666,7 @@ export namespace Prisma {
     birthLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -38273,6 +38677,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutResidenceLocationInput = {
@@ -38344,6 +38749,7 @@ export namespace Prisma {
     residenceLocationId?: StringNullableFilter<'Profile'> | string | null;
     isInTrash?: BoolFilter<'Profile'> | boolean;
     movedToTrashDate?: DateTimeNullableFilter<'Profile'> | Date | string | null;
+    referralCode?: StringFilter<'Profile'> | string;
     created_at?: DateTimeFilter<'Profile'> | Date | string;
     updated_at?: DateTimeFilter<'Profile'> | Date | string;
   };
@@ -38433,6 +38839,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -38444,6 +38851,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutCommentsInput = {
@@ -38469,6 +38877,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -38478,6 +38887,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutCommentsInput = {
@@ -38627,6 +39037,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -38638,6 +39049,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutCommentsInput = {
@@ -38680,6 +39092,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -38689,6 +39102,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type AccountUpsertWithoutSolvableCommentsInput = {
@@ -38938,6 +39352,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -38949,6 +39364,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutTagsInput = {
@@ -38974,6 +39390,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -38983,6 +39400,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutTagsInput = {
@@ -39775,12 +40193,14 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketCreateNestedManyWithoutTicketGroupInput;
+    referralCodeProfile?: ProfileCreateNestedOneWithoutReferralCodeUsedInput;
   };
 
   export type TicketGroupUncheckedCreateWithoutEventInput = {
     id?: string;
     status: $Enums.TicketGroupStatus;
     amountTickets?: number;
+    referralCode?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
     tickets?: TicketUncheckedCreateNestedManyWithoutTicketGroupInput;
@@ -40259,20 +40679,6 @@ export namespace Prisma {
     >;
   };
 
-  export type TicketGroupScalarWhereInput = {
-    AND?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
-    OR?: TicketGroupScalarWhereInput[];
-    NOT?: TicketGroupScalarWhereInput | TicketGroupScalarWhereInput[];
-    id?: StringFilter<'TicketGroup'> | string;
-    status?:
-      | EnumTicketGroupStatusFilter<'TicketGroup'>
-      | $Enums.TicketGroupStatus;
-    amountTickets?: IntFilter<'TicketGroup'> | number;
-    eventId?: StringFilter<'TicketGroup'> | string;
-    created_at?: DateTimeFilter<'TicketGroup'> | Date | string;
-    updated_at?: DateTimeFilter<'TicketGroup'> | Date | string;
-  };
-
   export type EventUpsertWithWhereUniqueWithoutSupraEventInput = {
     where: EventWhereUniqueInput;
     update: XOR<
@@ -40538,6 +40944,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -40549,6 +40956,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutMessagesInput = {
@@ -40574,6 +40982,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -40583,6 +40992,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutMessagesInput = {
@@ -40648,6 +41058,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -40659,6 +41070,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutMessagesInput = {
@@ -40701,6 +41113,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -40710,6 +41123,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type EventCreateWithoutTicketsInput = {
@@ -40791,6 +41205,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -40802,6 +41217,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutTicketsInput = {
@@ -40827,6 +41243,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -40836,6 +41253,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutTicketsInput = {
@@ -40853,6 +41271,7 @@ export namespace Prisma {
     created_at?: Date | string;
     updated_at?: Date | string;
     event: EventCreateNestedOneWithoutTicketGroupsInput;
+    referralCodeProfile?: ProfileCreateNestedOneWithoutReferralCodeUsedInput;
   };
 
   export type TicketGroupUncheckedCreateWithoutTicketsInput = {
@@ -40860,6 +41279,7 @@ export namespace Prisma {
     status: $Enums.TicketGroupStatus;
     amountTickets?: number;
     eventId: string;
+    referralCode?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -40997,6 +41417,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -41008,6 +41429,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutTicketsInput = {
@@ -41050,6 +41472,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -41059,6 +41482,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type TicketGroupUpsertWithoutTicketsInput = {
@@ -41090,6 +41514,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     event?: EventUpdateOneRequiredWithoutTicketGroupsNestedInput;
+    referralCodeProfile?: ProfileUpdateOneWithoutReferralCodeUsedNestedInput;
   };
 
   export type TicketGroupUncheckedUpdateWithoutTicketsInput = {
@@ -41099,6 +41524,7 @@ export namespace Prisma {
       | $Enums.TicketGroupStatus;
     amountTickets?: IntFieldUpdateOperationsInput | number;
     eventId?: StringFieldUpdateOperationsInput | string;
+    referralCode?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -41204,6 +41630,86 @@ export namespace Prisma {
     skipDuplicates?: boolean;
   };
 
+  export type ProfileCreateWithoutReferralCodeUsedInput = {
+    id?: string;
+    shortId: number;
+    role?: $Enums.Role;
+    firstTimeMiExpo?: boolean;
+    username?: string | null;
+    password?: string | null;
+    phoneNumber: string;
+    isPhoneVerified?: boolean;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    firstName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    referralCode?: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    otp?: OtpCreateNestedManyWithoutOwnerInput;
+    comments?: CommentCreateNestedManyWithoutProfileInput;
+    messages?: MessageCreateNestedManyWithoutProfileInput;
+    tags?: TagCreateNestedManyWithoutProfilesInput;
+    birthLocation?: LocationCreateNestedOneWithoutBirthProfilesInput;
+    residenceLocation?: LocationCreateNestedOneWithoutResidenceProfilesInput;
+    tickets?: TicketCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
+    productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
+    productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+  };
+
+  export type ProfileUncheckedCreateWithoutReferralCodeUsedInput = {
+    id?: string;
+    shortId: number;
+    role?: $Enums.Role;
+    firstTimeMiExpo?: boolean;
+    username?: string | null;
+    password?: string | null;
+    phoneNumber: string;
+    isPhoneVerified?: boolean;
+    secondaryPhoneNumber?: string | null;
+    fullName: string;
+    firstName?: string | null;
+    gender?: string | null;
+    birthDate?: Date | string | null;
+    profilePictureUrl?: string | null;
+    instagram?: string | null;
+    mail?: string | null;
+    dni?: string | null;
+    alternativeNames?: ProfileCreatealternativeNamesInput | string[];
+    birthLocationId?: string | null;
+    residenceLocationId?: string | null;
+    isInTrash?: boolean;
+    movedToTrashDate?: Date | string | null;
+    referralCode?: string;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
+    comments?: CommentUncheckedCreateNestedManyWithoutProfileInput;
+    messages?: MessageUncheckedCreateNestedManyWithoutProfileInput;
+    tags?: TagUncheckedCreateNestedManyWithoutProfilesInput;
+    tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
+    productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
+    productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+  };
+
+  export type ProfileCreateOrConnectWithoutReferralCodeUsedInput = {
+    where: ProfileWhereUniqueInput;
+    create: XOR<
+      ProfileCreateWithoutReferralCodeUsedInput,
+      ProfileUncheckedCreateWithoutReferralCodeUsedInput
+    >;
+  };
+
   export type EventUpsertWithoutTicketGroupsInput = {
     update: XOR<
       EventUpdateWithoutTicketGroupsInput,
@@ -41300,6 +41806,129 @@ export namespace Prisma {
       TicketUpdateManyMutationInput,
       TicketUncheckedUpdateManyWithoutTicketGroupInput
     >;
+  };
+
+  export type ProfileUpsertWithoutReferralCodeUsedInput = {
+    update: XOR<
+      ProfileUpdateWithoutReferralCodeUsedInput,
+      ProfileUncheckedUpdateWithoutReferralCodeUsedInput
+    >;
+    create: XOR<
+      ProfileCreateWithoutReferralCodeUsedInput,
+      ProfileUncheckedCreateWithoutReferralCodeUsedInput
+    >;
+    where?: ProfileWhereInput;
+  };
+
+  export type ProfileUpdateToOneWithWhereWithoutReferralCodeUsedInput = {
+    where?: ProfileWhereInput;
+    data: XOR<
+      ProfileUpdateWithoutReferralCodeUsedInput,
+      ProfileUncheckedUpdateWithoutReferralCodeUsedInput
+    >;
+  };
+
+  export type ProfileUpdateWithoutReferralCodeUsedInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
+    username?: NullableStringFieldUpdateOperationsInput | string | null;
+    password?: NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUpdateManyWithoutOwnerNestedInput;
+    comments?: CommentUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUpdateManyWithoutProfileNestedInput;
+    tags?: TagUpdateManyWithoutProfilesNestedInput;
+    birthLocation?: LocationUpdateOneWithoutBirthProfilesNestedInput;
+    residenceLocation?: LocationUpdateOneWithoutResidenceProfilesNestedInput;
+    tickets?: TicketUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
+    productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+  };
+
+  export type ProfileUncheckedUpdateWithoutReferralCodeUsedInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    shortId?: IntFieldUpdateOperationsInput | number;
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    firstTimeMiExpo?: BoolFieldUpdateOperationsInput | boolean;
+    username?: NullableStringFieldUpdateOperationsInput | string | null;
+    password?: NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean;
+    secondaryPhoneNumber?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    fullName?: StringFieldUpdateOperationsInput | string;
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null;
+    gender?: NullableStringFieldUpdateOperationsInput | string | null;
+    birthDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    profilePictureUrl?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null;
+    mail?: NullableStringFieldUpdateOperationsInput | string | null;
+    dni?: NullableStringFieldUpdateOperationsInput | string | null;
+    alternativeNames?: ProfileUpdatealternativeNamesInput | string[];
+    birthLocationId?: NullableStringFieldUpdateOperationsInput | string | null;
+    residenceLocationId?:
+      | NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    isInTrash?: BoolFieldUpdateOperationsInput | boolean;
+    movedToTrashDate?:
+      | NullableDateTimeFieldUpdateOperationsInput
+      | Date
+      | string
+      | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
+    comments?: CommentUncheckedUpdateManyWithoutProfileNestedInput;
+    messages?: MessageUncheckedUpdateManyWithoutProfileNestedInput;
+    tags?: TagUncheckedUpdateManyWithoutProfilesNestedInput;
+    tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
+    productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
+    productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
+    productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
   };
 
   export type EventCreateWithoutEventTicketsInput = {
@@ -41451,6 +42080,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -41462,6 +42092,7 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutProfileInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutProductionsAdministratedInput = {
@@ -41487,6 +42118,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -41496,6 +42128,7 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutProductionsAdministratedInput = {
@@ -41527,6 +42160,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -41538,6 +42172,7 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutProfileInput;
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionRequestsSent?: ProductionAffiliationRequestCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutProductionsParticipatedInput = {
@@ -41563,6 +42198,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -41572,6 +42208,7 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedCreateNestedManyWithoutProfileInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutProductionsParticipatedInput = {
@@ -41731,6 +42368,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -41742,6 +42380,7 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutProfileNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutProductionsAdministratedInput = {
@@ -41784,6 +42423,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -41793,6 +42433,7 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUpsertWithWhereUniqueWithoutProductionsParticipatedInput =
@@ -41933,6 +42574,7 @@ export namespace Prisma {
     alternativeNames?: ProfileCreatealternativeNamesInput | string[];
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpCreateNestedManyWithoutOwnerInput;
@@ -41944,6 +42586,7 @@ export namespace Prisma {
     tickets?: TicketCreateNestedManyWithoutProfileInput;
     productionsAdministrated?: ProductionCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionCreateNestedManyWithoutParticipantsInput;
+    referralCodeUsed?: TicketGroupCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileUncheckedCreateWithoutProductionRequestsSentInput = {
@@ -41969,6 +42612,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     otp?: OtpUncheckedCreateNestedManyWithoutOwnerInput;
@@ -41978,6 +42622,7 @@ export namespace Prisma {
     tickets?: TicketUncheckedCreateNestedManyWithoutProfileInput;
     productionsAdministrated?: ProductionUncheckedCreateNestedManyWithoutAdministratorInput;
     productionsParticipated?: ProductionUncheckedCreateNestedManyWithoutParticipantsInput;
+    referralCodeUsed?: TicketGroupUncheckedCreateNestedManyWithoutReferralCodeProfileInput;
   };
 
   export type ProfileCreateOrConnectWithoutProductionRequestsSentInput = {
@@ -42083,6 +42728,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -42094,6 +42740,7 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutProfileNestedInput;
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutProductionRequestsSentInput = {
@@ -42136,6 +42783,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -42145,6 +42793,7 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type CommentCreateManyAccountInput = {
@@ -42401,6 +43050,15 @@ export namespace Prisma {
     productionId: string;
     status?: $Enums.AffiliationStatus;
     reviewedAt?: Date | string | null;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type TicketGroupCreateManyReferralCodeProfileInput = {
+    id?: string;
+    status: $Enums.TicketGroupStatus;
+    amountTickets?: number;
+    eventId: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -42701,6 +43359,41 @@ export namespace Prisma {
       updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     };
 
+  export type TicketGroupUpdateWithoutReferralCodeProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    event?: EventUpdateOneRequiredWithoutTicketGroupsNestedInput;
+    tickets?: TicketUpdateManyWithoutTicketGroupNestedInput;
+  };
+
+  export type TicketGroupUncheckedUpdateWithoutReferralCodeProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    eventId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tickets?: TicketUncheckedUpdateManyWithoutTicketGroupNestedInput;
+  };
+
+  export type TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    status?:
+      | EnumTicketGroupStatusFieldUpdateOperationsInput
+      | $Enums.TicketGroupStatus;
+    amountTickets?: IntFieldUpdateOperationsInput | number;
+    eventId?: StringFieldUpdateOperationsInput | string;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
   export type ProfileCreateManyBirthLocationInput = {
     id?: string;
     shortId: number;
@@ -42723,6 +43416,7 @@ export namespace Prisma {
     residenceLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -42749,6 +43443,7 @@ export namespace Prisma {
     birthLocationId?: string | null;
     isInTrash?: boolean;
     movedToTrashDate?: Date | string | null;
+    referralCode?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -42788,6 +43483,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -42799,6 +43495,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutBirthLocationInput = {
@@ -42840,6 +43537,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -42850,6 +43548,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateManyWithoutBirthLocationInput = {
@@ -42891,6 +43590,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -42930,6 +43630,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -42941,6 +43642,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutResidenceLocationInput = {
@@ -42979,6 +43681,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -42989,6 +43692,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateManyWithoutResidenceLocationInput = {
@@ -43027,6 +43731,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -43105,6 +43810,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -43116,6 +43822,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutTagsInput = {
@@ -43158,6 +43865,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -43167,6 +43875,7 @@ export namespace Prisma {
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionsParticipated?: ProductionUncheckedUpdateManyWithoutParticipantsNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateManyWithoutTagsInput = {
@@ -43209,6 +43918,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -43455,6 +44165,7 @@ export namespace Prisma {
     id?: string;
     status: $Enums.TicketGroupStatus;
     amountTickets?: number;
+    referralCode?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -43552,6 +44263,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUpdateManyWithoutTicketGroupNestedInput;
+    referralCodeProfile?: ProfileUpdateOneWithoutReferralCodeUsedNestedInput;
   };
 
   export type TicketGroupUncheckedUpdateWithoutEventInput = {
@@ -43560,6 +44272,7 @@ export namespace Prisma {
       | EnumTicketGroupStatusFieldUpdateOperationsInput
       | $Enums.TicketGroupStatus;
     amountTickets?: IntFieldUpdateOperationsInput | number;
+    referralCode?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     tickets?: TicketUncheckedUpdateManyWithoutTicketGroupNestedInput;
@@ -43571,6 +44284,7 @@ export namespace Prisma {
       | EnumTicketGroupStatusFieldUpdateOperationsInput
       | $Enums.TicketGroupStatus;
     amountTickets?: IntFieldUpdateOperationsInput | number;
+    referralCode?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -43978,6 +44692,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUpdateManyWithoutOwnerNestedInput;
@@ -43989,6 +44704,7 @@ export namespace Prisma {
     tickets?: TicketUpdateManyWithoutProfileNestedInput;
     productionsAdministrated?: ProductionUpdateManyWithoutAdministratorNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateWithoutProductionsParticipatedInput = {
@@ -44031,6 +44747,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     otp?: OtpUncheckedUpdateManyWithoutOwnerNestedInput;
@@ -44040,6 +44757,7 @@ export namespace Prisma {
     tickets?: TicketUncheckedUpdateManyWithoutProfileNestedInput;
     productionsAdministrated?: ProductionUncheckedUpdateManyWithoutAdministratorNestedInput;
     productionRequestsSent?: ProductionAffiliationRequestUncheckedUpdateManyWithoutProfileNestedInput;
+    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type ProfileUncheckedUpdateManyWithoutProductionsParticipatedInput = {
@@ -44082,6 +44800,7 @@ export namespace Prisma {
       | Date
       | string
       | null;
+    referralCode?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };

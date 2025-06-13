@@ -4,6 +4,7 @@ import { CreateProfileDto } from '@/profile/dto/create-profile.dto';
 import { findAllProfileResponseSchema } from '@/profile/dto/find-all-profile.dto';
 import { findByDateRangeSchema } from '@/profile/dto/find-by-date-range-profile.dto';
 import { findByIdProfileResponseSchema } from '@/profile/dto/find-by-id-profile.dto';
+import { findByPhoneNumberResponseSchema } from '@/profile/dto/find-by-phone-number.dto';
 import { findByTagGroupsProfileResponseSchema } from '@/profile/dto/find-by-tag-groups-profile.dto';
 import { findByTagsProfileResponseSchema } from '@/profile/dto/find-by-tags-profile.dto';
 import { findTrashResponseSchema } from '@/profile/dto/find-trash.dto';
@@ -23,7 +24,6 @@ import {
   Tag,
   TagGroup,
 } from '~/types/prisma-schema';
-import { findByPhoneNumberResponseSchema } from './dto/find-by-phone-number.dto';
 
 @Injectable()
 export class ProfileService {
