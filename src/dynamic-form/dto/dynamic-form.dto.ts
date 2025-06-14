@@ -46,7 +46,13 @@ export const dynamicOptionSchema = z.object({
   id: z.string().uuid({
     message: translate('model.dynamicOption.id.uuid'),
   }),
-  text: tagSchema.shape.name,
+  text: z
+    .string({
+      required_error: translate('model.dynamicOption.text.required'),
+    })
+    .min(1, {
+      message: translate('model.dynamicOption.text.min'),
+    }),
   tagId: tagSchema.shape.id,
 
   questionId: dynamicQuestionSchema.shape.id,
