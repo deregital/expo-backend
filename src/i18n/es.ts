@@ -228,7 +228,7 @@ export default {
     dynamicForm: {
       id: { uuid: 'El ID debe ser un UUID' },
       name: {
-        required: 'El nombre es requerido',
+        required: 'El nombre del formulario es requerido',
         min: 'El nombre del formulario debe tener al menos 1 caracter',
       },
       questions: {
