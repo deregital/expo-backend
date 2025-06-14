@@ -761,7 +761,8 @@ export default {
       update: {
         success: 'Formulario dinámico actualizado con éxito',
         'not-found': 'Formulario dinámico no encontrado',
-        'conflict-tag-in-use': `No se puede eliminar la opción \{\{tag\}\} porque está en uso en \{\{profiles\}\} perfiles`,
+        'conflict-tag-in-use': `No se puede editar o eliminar la opción \{\{tag\}\} porque está en uso en \{\{profiles\}\} perfiles`,
+        'conflict-cannot-change-question': `No se puede cambiar la pregunta \{\{question\}\} porque está la opción \{\{option\}\} en uso en \{\{profiles\}\} perfiles`,
       },
       all: {
         success: 'Formularios dinámicos obtenidos con éxito',
@@ -769,6 +770,7 @@ export default {
       delete: {
         success: 'Formulario dinámico eliminado con éxito',
         'not-found': 'Formulario dinámico no encontrado',
+        'conflict-tag-in-use': `No se puede eliminar el formulario porque la opción \{\{option\}\} está en uso en \{\{profiles\}\} perfiles`,
       },
     },
   },

@@ -198,6 +198,22 @@ export class DynamicFormController {
         dtoQuestion.multipleChoice !== oldQuestion.multipleChoice;
 
       if (hasQuestionChanged) {
+        const res = await this.checkIfDeletedOptionsAreUsed([
+          ...oldQuestion.options,
+        ]);
+        if (res) {
+          throw new ConflictException([
+            translate(
+              'route.dynamic-form.update.conflict-cannot-change-question',
+              {
+                question: oldQuestion.text,
+                option: res.tagName,
+                profiles: res.profileAmount.toString(),
+              },
+            ),
+          ]);
+        }
+
         changedQuestions.push({
           id: oldQuestion.id,
           text: dtoQuestion.text,
@@ -209,10 +225,19 @@ export class DynamicFormController {
       }
     }
 
-    await this.checkIfDeletedOptionsAreUsed([
+    const areDeletedOptionsUsed = await this.checkIfDeletedOptionsAreUsed([
       ...deletedOptionsFromOldQuestions,
       ...deletedQuestions.flatMap((q) => q.options),
     ]);
+
+    if (areDeletedOptionsUsed) {
+      throw new ConflictException([
+        translate('route.dynamic-form.update.conflict-tag-in-use', {
+          tag: areDeletedOptionsUsed.tagName,
+          profiles: areDeletedOptionsUsed.profileAmount.toString(),
+        }),
+      ]);
+    }
 
     if (form.name !== updateDynamicFormDto.name) {
       await this.dynamicFormService.updateName(id, updateDynamicFormDto.name);
@@ -285,9 +310,18 @@ export class DynamicFormController {
     @Param('id', new ExistingRecord('dynamicForm')) id: string,
   ): Promise<z.infer<typeof deleteDynamicFormSchema>> {
     const form = await this.dynamicFormService.findById(id);
-    await this.checkIfDeletedOptionsAreUsed(
+    const res = await this.checkIfDeletedOptionsAreUsed(
       form?.questions.flatMap((q) => q.options) ?? [],
     );
+
+    if (res) {
+      throw new ConflictException([
+        translate('route.dynamic-form.delete.conflict-tag-in-use', {
+          option: res.tagName,
+          profiles: res.profileAmount.toString(),
+        }),
+      ]);
+    }
 
     await this.tagGroupService.deleteMany(
       form?.questions.map((q) => q.tagGroupId) ?? [],
@@ -303,7 +337,13 @@ export class DynamicFormController {
       DynamicOption,
       'id' | 'text' | 'tagId'
     >[],
-  ): Promise<void> {
+  ): Promise<
+    | {
+        tagName: string;
+        profileAmount: number;
+      }
+    | undefined
+  > {
     const { profiles } = await this.profileService.findByTags(
       deletedOptionsFromOldQuestions.map((o) => o.tagId),
     );
@@ -336,12 +376,11 @@ export class DynamicFormController {
 
       const firstTagUsed = Object.keys(tagsUsedCount)[0];
 
-      throw new ConflictException([
-        translate('route.dynamic-form.update.conflict-tag-in-use', {
-          tag: tagsUsedCount[firstTagUsed!]?.name ?? '',
-          profiles: tagsUsedCount[firstTagUsed!]?.amount.toString() ?? '',
-        }),
-      ]);
+      return {
+        tagName: tagsUsedCount[firstTagUsed!]?.name ?? '',
+        profileAmount: tagsUsedCount[firstTagUsed!]?.amount ?? 0,
+      };
     }
+    return undefined;
   }
 }
