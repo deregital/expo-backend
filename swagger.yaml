@@ -2445,6 +2445,25 @@ paths:
                 $ref: "#/components/schemas/GetMiExpoMeResponseDto"
       tags:
         - "MiExpo"
+  /mi-expo/me-first-time:
+    patch:
+      operationId: "MiExpoController_updateMeWithoutLogin"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMiExpoMeFirstTimeDto"
+      responses:
+        200:
+          description: "Me"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetMiExpoMeResponseDto"
+      tags:
+        - "MiExpo"
   /mi-expo/invitations:
     get:
       operationId: "MiExpoController_invitations"
@@ -13402,6 +13421,127 @@ components:
         - "username"
         - "birth"
         - "residence"
+    UpdateMiExpoMeFirstTimeDto:
+      type:
+        - "object"
+      properties:
+        birthDate:
+          type:
+            - "string"
+            - "null"
+        dni:
+          type:
+            - "string"
+            - "null"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        gender:
+          type:
+            - "string"
+            - "null"
+        instagram:
+          type:
+            - "string"
+            - "null"
+        mail:
+          type:
+            - "string"
+            - "null"
+          format: "email"
+        password:
+          type:
+            - "string"
+            - "null"
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        secondaryPhoneNumber:
+          type:
+            - "string"
+            - "null"
+        username:
+          type:
+            - "string"
+            - "null"
+        birth:
+          type:
+            - "object"
+          properties:
+            city:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+            state:
+              type:
+                - "string"
+          required:
+            - "city"
+            - "country"
+            - "latitude"
+            - "longitude"
+            - "state"
+        residence:
+          type:
+            - "object"
+          properties:
+            city:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+            state:
+              type:
+                - "string"
+          required:
+            - "city"
+            - "country"
+            - "latitude"
+            - "longitude"
+            - "state"
+        id:
+          type:
+            - "string"
+          format: "uuid"
+      required:
+        - "birthDate"
+        - "dni"
+        - "fullName"
+        - "gender"
+        - "instagram"
+        - "mail"
+        - "password"
+        - "phoneNumber"
+        - "secondaryPhoneNumber"
+        - "username"
+        - "birth"
+        - "residence"
+        - "id"
     GetInvitationsResponseDto:
       type:
         - "object"
