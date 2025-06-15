@@ -55,7 +55,7 @@ import { Role, TagType, TicketType } from '~/types/prisma-schema';
 import {
   UpdateMiExpoMeFirstTimeDto,
   UpdateMiExpoMeFirstTimeResponseDto,
-} from './dto/update-me-first-time';
+} from './dto/update-me-first-time.dto';
 
 @Controller('mi-expo')
 export class MiExpoController {
