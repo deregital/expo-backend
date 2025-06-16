@@ -25101,6 +25101,7 @@ export namespace Prisma {
   export type ProductionMinAggregateOutputType = {
     id: string | null;
     name: string | null;
+    description: string | null;
     administratorId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
@@ -25109,6 +25110,7 @@ export namespace Prisma {
   export type ProductionMaxAggregateOutputType = {
     id: string | null;
     name: string | null;
+    description: string | null;
     administratorId: string | null;
     created_at: Date | null;
     updated_at: Date | null;
@@ -25117,6 +25119,7 @@ export namespace Prisma {
   export type ProductionCountAggregateOutputType = {
     id: number;
     name: number;
+    description: number;
     administratorId: number;
     created_at: number;
     updated_at: number;
@@ -25126,6 +25129,7 @@ export namespace Prisma {
   export type ProductionMinAggregateInputType = {
     id?: true;
     name?: true;
+    description?: true;
     administratorId?: true;
     created_at?: true;
     updated_at?: true;
@@ -25134,6 +25138,7 @@ export namespace Prisma {
   export type ProductionMaxAggregateInputType = {
     id?: true;
     name?: true;
+    description?: true;
     administratorId?: true;
     created_at?: true;
     updated_at?: true;
@@ -25142,6 +25147,7 @@ export namespace Prisma {
   export type ProductionCountAggregateInputType = {
     id?: true;
     name?: true;
+    description?: true;
     administratorId?: true;
     created_at?: true;
     updated_at?: true;
@@ -25228,6 +25234,7 @@ export namespace Prisma {
   export type ProductionGroupByOutputType = {
     id: string;
     name: string;
+    description: string;
     administratorId: string | null;
     created_at: Date;
     updated_at: Date;
@@ -25255,6 +25262,7 @@ export namespace Prisma {
     {
       id?: boolean;
       name?: boolean;
+      description?: boolean;
       administratorId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
@@ -25275,6 +25283,7 @@ export namespace Prisma {
     {
       id?: boolean;
       name?: boolean;
+      description?: boolean;
       administratorId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
@@ -25289,6 +25298,7 @@ export namespace Prisma {
     {
       id?: boolean;
       name?: boolean;
+      description?: boolean;
       administratorId?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
@@ -25300,6 +25310,7 @@ export namespace Prisma {
   export type ProductionSelectScalar = {
     id?: boolean;
     name?: boolean;
+    description?: boolean;
     administratorId?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
@@ -25308,7 +25319,12 @@ export namespace Prisma {
   export type ProductionOmit<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = $Extensions.GetOmit<
-    'id' | 'name' | 'administratorId' | 'created_at' | 'updated_at',
+    | 'id'
+    | 'name'
+    | 'description'
+    | 'administratorId'
+    | 'created_at'
+    | 'updated_at',
     ExtArgs['result']['production']
   >;
   export type ProductionInclude<
@@ -25345,6 +25361,7 @@ export namespace Prisma {
       {
         id: string;
         name: string;
+        description: string;
         administratorId: string | null;
         created_at: Date;
         updated_at: Date;
@@ -25988,6 +26005,7 @@ export namespace Prisma {
   interface ProductionFieldRefs {
     readonly id: FieldRef<'Production', 'String'>;
     readonly name: FieldRef<'Production', 'String'>;
+    readonly description: FieldRef<'Production', 'String'>;
     readonly administratorId: FieldRef<'Production', 'String'>;
     readonly created_at: FieldRef<'Production', 'DateTime'>;
     readonly updated_at: FieldRef<'Production', 'DateTime'>;
@@ -28237,6 +28255,7 @@ export namespace Prisma {
   export const ProductionScalarFieldEnum: {
     id: 'id';
     name: 'name';
+    description: 'description';
     administratorId: 'administratorId';
     created_at: 'created_at';
     updated_at: 'updated_at';
@@ -29958,6 +29977,7 @@ export namespace Prisma {
     NOT?: ProductionWhereInput | ProductionWhereInput[];
     id?: StringFilter<'Production'> | string;
     name?: StringFilter<'Production'> | string;
+    description?: StringFilter<'Production'> | string;
     administratorId?: StringNullableFilter<'Production'> | string | null;
     created_at?: DateTimeFilter<'Production'> | Date | string;
     updated_at?: DateTimeFilter<'Production'> | Date | string;
@@ -29973,6 +29993,7 @@ export namespace Prisma {
   export type ProductionOrderByWithRelationInput = {
     id?: SortOrder;
     name?: SortOrder;
+    description?: SortOrder;
     administratorId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -29989,6 +30010,7 @@ export namespace Prisma {
       AND?: ProductionWhereInput | ProductionWhereInput[];
       OR?: ProductionWhereInput[];
       NOT?: ProductionWhereInput | ProductionWhereInput[];
+      description?: StringFilter<'Production'> | string;
       administratorId?: StringNullableFilter<'Production'> | string | null;
       created_at?: DateTimeFilter<'Production'> | Date | string;
       updated_at?: DateTimeFilter<'Production'> | Date | string;
@@ -30006,6 +30028,7 @@ export namespace Prisma {
   export type ProductionOrderByWithAggregationInput = {
     id?: SortOrder;
     name?: SortOrder;
+    description?: SortOrder;
     administratorId?: SortOrderInput | SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -30024,6 +30047,7 @@ export namespace Prisma {
       | ProductionScalarWhereWithAggregatesInput[];
     id?: StringWithAggregatesFilter<'Production'> | string;
     name?: StringWithAggregatesFilter<'Production'> | string;
+    description?: StringWithAggregatesFilter<'Production'> | string;
     administratorId?:
       | StringNullableWithAggregatesFilter<'Production'>
       | string
@@ -31619,6 +31643,7 @@ export namespace Prisma {
   export type ProductionCreateInput = {
     id?: string;
     name: string;
+    description?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     administrator?: ProfileCreateNestedOneWithoutProductionsAdministratedInput;
@@ -31630,6 +31655,7 @@ export namespace Prisma {
   export type ProductionUncheckedCreateInput = {
     id?: string;
     name: string;
+    description?: string;
     administratorId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -31641,6 +31667,7 @@ export namespace Prisma {
   export type ProductionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     administrator?: ProfileUpdateOneWithoutProductionsAdministratedNestedInput;
@@ -31652,6 +31679,7 @@ export namespace Prisma {
   export type ProductionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     administratorId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -31663,6 +31691,7 @@ export namespace Prisma {
   export type ProductionCreateManyInput = {
     id?: string;
     name: string;
+    description?: string;
     administratorId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -31671,6 +31700,7 @@ export namespace Prisma {
   export type ProductionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -31678,6 +31708,7 @@ export namespace Prisma {
   export type ProductionUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     administratorId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -33034,6 +33065,7 @@ export namespace Prisma {
   export type ProductionCountOrderByAggregateInput = {
     id?: SortOrder;
     name?: SortOrder;
+    description?: SortOrder;
     administratorId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -33042,6 +33074,7 @@ export namespace Prisma {
   export type ProductionMaxOrderByAggregateInput = {
     id?: SortOrder;
     name?: SortOrder;
+    description?: SortOrder;
     administratorId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -33050,6 +33083,7 @@ export namespace Prisma {
   export type ProductionMinOrderByAggregateInput = {
     id?: SortOrder;
     name?: SortOrder;
+    description?: SortOrder;
     administratorId?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
@@ -37755,6 +37789,7 @@ export namespace Prisma {
   export type ProductionCreateWithoutAdministratorInput = {
     id?: string;
     name: string;
+    description?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     participants?: ProfileCreateNestedManyWithoutProductionsParticipatedInput;
@@ -37765,6 +37800,7 @@ export namespace Prisma {
   export type ProductionUncheckedCreateWithoutAdministratorInput = {
     id?: string;
     name: string;
+    description?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     participants?: ProfileUncheckedCreateNestedManyWithoutProductionsParticipatedInput;
@@ -37790,6 +37826,7 @@ export namespace Prisma {
   export type ProductionCreateWithoutParticipantsInput = {
     id?: string;
     name: string;
+    description?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     administrator?: ProfileCreateNestedOneWithoutProductionsAdministratedInput;
@@ -37800,6 +37837,7 @@ export namespace Prisma {
   export type ProductionUncheckedCreateWithoutParticipantsInput = {
     id?: string;
     name: string;
+    description?: string;
     administratorId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -38186,6 +38224,7 @@ export namespace Prisma {
     NOT?: ProductionScalarWhereInput | ProductionScalarWhereInput[];
     id?: StringFilter<'Production'> | string;
     name?: StringFilter<'Production'> | string;
+    description?: StringFilter<'Production'> | string;
     administratorId?: StringNullableFilter<'Production'> | string | null;
     created_at?: DateTimeFilter<'Production'> | Date | string;
     updated_at?: DateTimeFilter<'Production'> | Date | string;
@@ -40354,6 +40393,7 @@ export namespace Prisma {
   export type ProductionCreateWithoutEventsInput = {
     id?: string;
     name: string;
+    description?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     administrator?: ProfileCreateNestedOneWithoutProductionsAdministratedInput;
@@ -40364,6 +40404,7 @@ export namespace Prisma {
   export type ProductionUncheckedCreateWithoutEventsInput = {
     id?: string;
     name: string;
+    description?: string;
     administratorId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -42528,6 +42569,7 @@ export namespace Prisma {
   export type ProductionCreateWithoutAffiliationRequestsInput = {
     id?: string;
     name: string;
+    description?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
     administrator?: ProfileCreateNestedOneWithoutProductionsAdministratedInput;
@@ -42538,6 +42580,7 @@ export namespace Prisma {
   export type ProductionUncheckedCreateWithoutAffiliationRequestsInput = {
     id?: string;
     name: string;
+    description?: string;
     administratorId?: string | null;
     created_at?: Date | string;
     updated_at?: Date | string;
@@ -42656,6 +42699,7 @@ export namespace Prisma {
   export type ProductionUpdateWithoutAffiliationRequestsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     administrator?: ProfileUpdateOneWithoutProductionsAdministratedNestedInput;
@@ -42666,6 +42710,7 @@ export namespace Prisma {
   export type ProductionUncheckedUpdateWithoutAffiliationRequestsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     administratorId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -43041,6 +43086,7 @@ export namespace Prisma {
   export type ProductionCreateManyAdministratorInput = {
     id?: string;
     name: string;
+    description?: string;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -43261,6 +43307,7 @@ export namespace Prisma {
   export type ProductionUpdateWithoutAdministratorInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     participants?: ProfileUpdateManyWithoutProductionsParticipatedNestedInput;
@@ -43271,6 +43318,7 @@ export namespace Prisma {
   export type ProductionUncheckedUpdateWithoutAdministratorInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     participants?: ProfileUncheckedUpdateManyWithoutProductionsParticipatedNestedInput;
@@ -43281,6 +43329,7 @@ export namespace Prisma {
   export type ProductionUncheckedUpdateManyWithoutAdministratorInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -43288,6 +43337,7 @@ export namespace Prisma {
   export type ProductionUpdateWithoutParticipantsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     administrator?: ProfileUpdateOneWithoutProductionsAdministratedNestedInput;
@@ -43298,6 +43348,7 @@ export namespace Prisma {
   export type ProductionUncheckedUpdateWithoutParticipantsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     administratorId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -43308,6 +43359,7 @@ export namespace Prisma {
   export type ProductionUncheckedUpdateManyWithoutParticipantsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     administratorId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -44426,6 +44478,7 @@ export namespace Prisma {
   export type ProductionUpdateWithoutEventsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     administrator?: ProfileUpdateOneWithoutProductionsAdministratedNestedInput;
@@ -44436,6 +44489,7 @@ export namespace Prisma {
   export type ProductionUncheckedUpdateWithoutEventsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     administratorId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
@@ -44446,6 +44500,7 @@ export namespace Prisma {
   export type ProductionUncheckedUpdateManyWithoutEventsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    description?: StringFieldUpdateOperationsInput | string;
     administratorId?: NullableStringFieldUpdateOperationsInput | string | null;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;

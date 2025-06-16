@@ -133,14 +133,13 @@ export class MiExpoController {
     @Profile() profile: ProfileWithoutPassword,
     @Body() body: UpdateMiExpoMeDto,
   ): Promise<z.infer<typeof updateMiExpoMeResponseSchema>> {
-    console.log('entro udpate');
     return await this.profileService.update(profile.id, {
       ...body,
       firstTimeMiExpo: false,
     });
   }
 
-  @Roles(Role.MI_EXPO)
+  @Roles(Role.MI_EXPO, Role.ADMIN)
   @UseGuards(JwtGuard, RoleGuard)
   @ApiOkResponse({
     description: 'Me',
@@ -154,7 +153,6 @@ export class MiExpoController {
   async updateMeWithoutLogin(
     @Body() body: UpdateMiExpoMeFirstTimeDto,
   ): Promise<z.infer<typeof updateMiExpoMeResponseSchema>> {
-    console.log('entro udpate');
     return await this.profileService.update(body.id, {
       ...body,
       firstTimeMiExpo: false,
