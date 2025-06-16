@@ -2,7 +2,7 @@ FROM node:20-bullseye as builder
 ENV NODE_ENV build
 USER node
 WORKDIR /home/node
-COPY package*.json ./
+COPY --chown=node:node package*.json ./
 COPY --chown=node:node .env .env
 RUN npm ci
 COPY --chown=node:node . .
