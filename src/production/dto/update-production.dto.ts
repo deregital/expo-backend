@@ -4,6 +4,7 @@ import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dt
 export const updateProductionSchema = productionSchema
   .pick({
     name: true,
+    description: true,
     administratorId: true,
   })
   .partial();

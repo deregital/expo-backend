@@ -202,6 +202,9 @@ export default {
       name: {
         min: 'El nombre de la producción debe tener al menos 1 caracter',
       },
+      description: {
+        min: 'La descripción de la producción debe tener al menos 1 caracter',
+      },
     },
     productionAffiliationRequest: {
       id: {
@@ -766,6 +769,9 @@ export default {
       },
       all: {
         success: 'Formularios dinámicos obtenidos con éxito',
+      },
+      'find-by-name': {
+        'not-found': 'Formulario dinámico no encontrado',
       },
       delete: {
         success: 'Formulario dinámico eliminado con éxito',

@@ -2887,6 +2887,20 @@ paths:
                 $ref: "#/components/schemas/FindAllDynamicFormsResponseDto"
       tags:
         - "DynamicForm"
+  /dynamic-form/{name}:
+    get:
+      operationId: "DynamicFormController_getByName"
+      parameters:
+        - name: "name"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: ""
+      tags:
+        - "DynamicForm"
   /dynamic-form/delete/{id}:
     delete:
       operationId: "DynamicFormController_delete"
@@ -13306,37 +13320,7 @@ components:
                 type:
                   - "string"
                 minLength: 1
-              administratorId:
-                type:
-                  - "string"
-                  - "null"
-                format: "uuid"
-              created_at:
-                type:
-                  - "string"
-                format: "date-time"
-              updated_at:
-                type:
-                  - "string"
-                format: "date-time"
-            required:
-              - "id"
-              - "name"
-              - "administratorId"
-              - "created_at"
-              - "updated_at"
-        productionsParticipated:
-          type:
-            - "array"
-          items:
-            type:
-              - "object"
-            properties:
-              id:
-                type:
-                  - "string"
-                format: "uuid"
-              name:
+              description:
                 type:
                   - "string"
                 minLength: 1
@@ -13356,6 +13340,46 @@ components:
             required:
               - "id"
               - "name"
+              - "description"
+              - "administratorId"
+              - "created_at"
+              - "updated_at"
+        productionsParticipated:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              name:
+                type:
+                  - "string"
+                minLength: 1
+              description:
+                type:
+                  - "string"
+                minLength: 1
+              administratorId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "name"
+              - "description"
               - "administratorId"
               - "created_at"
               - "updated_at"
@@ -14007,6 +14031,10 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              description:
+                type:
+                  - "string"
+                minLength: 1
               administratorId:
                 type:
                   - "string"
@@ -14162,6 +14190,7 @@ components:
             required:
               - "id"
               - "name"
+              - "description"
               - "administratorId"
               - "created_at"
               - "updated_at"
@@ -14176,6 +14205,10 @@ components:
           type:
             - "string"
           minLength: 1
+        description:
+          type:
+            - "string"
+          minLength: 1
         administratorId:
           type:
             - "string"
@@ -14183,6 +14216,7 @@ components:
           format: "uuid"
       required:
         - "name"
+        - "description"
         - "administratorId"
     CreateProductionRoleDto:
       type:
@@ -14199,6 +14233,10 @@ components:
         - "object"
       properties:
         name:
+          type:
+            - "string"
+          minLength: 1
+        description:
           type:
             - "string"
           minLength: 1
@@ -14219,34 +14257,7 @@ components:
           type:
             - "string"
           minLength: 1
-        administratorId:
-          type:
-            - "string"
-            - "null"
-          format: "uuid"
-        created_at:
-          type:
-            - "string"
-          format: "date-time"
-        updated_at:
-          type:
-            - "string"
-          format: "date-time"
-      required:
-        - "id"
-        - "name"
-        - "administratorId"
-        - "created_at"
-        - "updated_at"
-    DeleteProductionResponseDto:
-      type:
-        - "object"
-      properties:
-        id:
-          type:
-            - "string"
-          format: "uuid"
-        name:
+        description:
           type:
             - "string"
           minLength: 1
@@ -14266,6 +14277,43 @@ components:
       required:
         - "id"
         - "name"
+        - "description"
+        - "administratorId"
+        - "created_at"
+        - "updated_at"
+    DeleteProductionResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        description:
+          type:
+            - "string"
+          minLength: 1
+        administratorId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "description"
         - "administratorId"
         - "created_at"
         - "updated_at"
@@ -14322,6 +14370,10 @@ components:
               type:
                 - "string"
               minLength: 1
+            description:
+              type:
+                - "string"
+              minLength: 1
             administratorId:
               type:
                 - "string"
@@ -14338,6 +14390,7 @@ components:
           required:
             - "id"
             - "name"
+            - "description"
             - "administratorId"
             - "created_at"
             - "updated_at"
@@ -14538,6 +14591,10 @@ components:
                     type:
                       - "string"
                     minLength: 1
+                  description:
+                    type:
+                      - "string"
+                    minLength: 1
                   administratorId:
                     type:
                       - "string"
@@ -14554,6 +14611,7 @@ components:
                 required:
                   - "id"
                   - "name"
+                  - "description"
                   - "administratorId"
                   - "created_at"
                   - "updated_at"
