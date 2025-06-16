@@ -104,7 +104,7 @@ export class ProfileService {
 
   async findByTags(
     tagsId: Tag['id'][],
-    visibleTags: VisibleTagsType,
+    visibleTags: VisibleTagsType | undefined = undefined,
   ): Promise<z.infer<typeof findByTagsProfileResponseSchema>> {
     const profiles = await this.prisma.profile.findMany({
       where: {
