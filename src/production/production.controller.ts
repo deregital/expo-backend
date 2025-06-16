@@ -69,6 +69,7 @@ export class ProductionController {
     return { productions };
   }
 
+  @Roles(Role.MI_EXPO)
   @ApiOkResponse({
     description: translate('route.production.create.success'),
     type: CreateProductionDto,

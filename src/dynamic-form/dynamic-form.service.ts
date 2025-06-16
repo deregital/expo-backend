@@ -89,9 +89,31 @@ export class DynamicFormService {
     };
   }
 
-  async findByName(name: DynamicForm['name']): Promise<DynamicForm | null> {
+  async findByName(name: DynamicForm['name']): Promise<
+    | (DynamicForm & {
+        questions: (DynamicQuestion & {
+          tagGroup: TagGroup & {
+            tags: Tag[];
+          };
+          options: DynamicOption[];
+        })[];
+      })
+    | null
+  > {
     return this.prisma.dynamicForm.findUnique({
       where: { name },
+      include: {
+        questions: {
+          include: {
+            tagGroup: {
+              include: {
+                tags: true,
+              },
+            },
+            options: true,
+          },
+        },
+      },
     });
   }
 

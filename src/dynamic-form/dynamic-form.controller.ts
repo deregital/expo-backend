@@ -298,6 +298,7 @@ export class DynamicFormController {
     return await this.dynamicFormService.findAll();
   }
 
+  @Roles(Role.MI_EXPO)
   @ApiNotFoundResponse({
     description: translate('route.dynamic-form.find-by-name.not-found'),
     type: ErrorDto,
