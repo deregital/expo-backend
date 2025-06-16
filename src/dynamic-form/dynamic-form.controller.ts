@@ -52,6 +52,7 @@ import {
   DeleteDynamicFormDto,
   deleteDynamicFormSchema,
 } from './dto/delete-dynamic-form.dto';
+import { FindByNameDynamicFormsResponseDto } from './dto/find-by-name-dynamic-form.dto';
 import { DynamicFormService } from './dynamic-form.service';
 
 @Roles(Role.ADMIN)
@@ -295,6 +296,27 @@ export class DynamicFormController {
   @Get('/all')
   async getAll(): Promise<z.infer<typeof findAllDynamicFormsResponseSchema>> {
     return await this.dynamicFormService.findAll();
+  }
+
+  @ApiNotFoundResponse({
+    description: translate('route.dynamic-form.find-by-name.not-found'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    description: translate('route.dynamic-form.find-by-name.success'),
+    type: FindByNameDynamicFormsResponseDto,
+  })
+  @Get('/:name')
+  async getByName(@Param('name') name: string): Promise<DynamicForm> {
+    const dynamicForm = await this.dynamicFormService.findByName(name);
+
+    if (!dynamicForm) {
+      throw new NotFoundException(
+        translate('route.dynamic-form.find-by-name.not-found'),
+      );
+    }
+
+    return dynamicForm;
   }
 
   @ApiNotFoundResponse({

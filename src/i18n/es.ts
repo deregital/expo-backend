@@ -771,6 +771,7 @@ export default {
         success: 'Formularios dinámicos obtenidos con éxito',
       },
       'find-by-name': {
+        success: 'Formulario dinámico obtenido con éxito',
         'not-found': 'Formulario dinámico no encontrado',
       },
       delete: {

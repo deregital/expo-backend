@@ -49058,7 +49058,6 @@ export namespace Prisma {
     multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
-    referralCodeUsed?: TicketGroupUncheckedUpdateManyWithoutReferralCodeProfileNestedInput;
   };
 
   export type CommentCreateManyAccountInput = {

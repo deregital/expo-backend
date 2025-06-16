@@ -2898,7 +2898,17 @@ paths:
             type: "string"
       responses:
         200:
-          description: ""
+          description: "Formulario dinámico obtenido con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByNameDynamicFormsResponseDto"
+        404:
+          description: "Formulario dinámico no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
       tags:
         - "DynamicForm"
   /dynamic-form/delete/{id}:
@@ -15262,6 +15272,199 @@ components:
           - "created_at"
           - "updated_at"
           - "questions"
+    FindByNameDynamicFormsResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+        questions:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              formId:
+                type:
+                  - "string"
+                format: "uuid"
+              text:
+                type:
+                  - "string"
+                minLength: 1
+              disabled:
+                default: false
+                type:
+                  - "boolean"
+              required:
+                default: true
+                type:
+                  - "boolean"
+              multipleChoice:
+                default: false
+                type:
+                  - "boolean"
+              tagGroupId:
+                type:
+                  - "string"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              tagGroup:
+                type:
+                  - "object"
+                properties:
+                  id:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  name:
+                    type:
+                      - "string"
+                    minLength: 1
+                  color:
+                    type:
+                      - "string"
+                    minLength: 7
+                    maxLength: 7
+                  isExclusive:
+                    type:
+                      - "boolean"
+                  created_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  updated_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "name"
+                  - "color"
+                  - "isExclusive"
+                  - "created_at"
+                  - "updated_at"
+              options:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "object"
+                  properties:
+                    id:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    text:
+                      type:
+                        - "string"
+                      minLength: 1
+                    tagId:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    questionId:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    created_at:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    updated_at:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    tag:
+                      type:
+                        - "object"
+                      properties:
+                        id:
+                          type:
+                            - "string"
+                          format: "uuid"
+                        name:
+                          type:
+                            - "string"
+                          minLength: 1
+                        groupId:
+                          type:
+                            - "string"
+                          format: "uuid"
+                        type:
+                          type:
+                            - "string"
+                          enum:
+                            - "PROFILE"
+                            - "EVENT"
+                            - "PARTICIPANT"
+                            - "NOT_IN_SYSTEM"
+                            - "PRODUCTION_ROLE"
+                            - "FORM_OPTION"
+                        created_at:
+                          type:
+                            - "string"
+                          format: "date-time"
+                        updated_at:
+                          type:
+                            - "string"
+                          format: "date-time"
+                      required:
+                        - "id"
+                        - "name"
+                        - "groupId"
+                        - "type"
+                        - "created_at"
+                        - "updated_at"
+                  required:
+                    - "id"
+                    - "text"
+                    - "tagId"
+                    - "questionId"
+                    - "created_at"
+                    - "updated_at"
+                    - "tag"
+            required:
+              - "id"
+              - "formId"
+              - "text"
+              - "tagGroupId"
+              - "created_at"
+              - "updated_at"
+              - "tagGroup"
+              - "options"
+      required:
+        - "id"
+        - "name"
+        - "created_at"
+        - "updated_at"
+        - "questions"
     DeleteDynamicFormDto:
       type:
         - "object"
