@@ -3,6 +3,10 @@ import { massiveAllocationResponseSchema } from '@/tag/dto/massive-allocation.dt
 import { dynamicOptionSchema, dynamicQuestionSchema } from './dynamic-form.dto';
 
 export const submitDynamicFormsSchema = dynamicQuestionSchema
+  .omit({
+    created_at: true,
+    updated_at: true,
+  })
   .extend({
     answers: dynamicOptionSchema
       .omit({
@@ -10,10 +14,6 @@ export const submitDynamicFormsSchema = dynamicQuestionSchema
         updated_at: true,
       })
       .array(),
-  })
-  .omit({
-    created_at: true,
-    updated_at: true,
   })
   .array();
 
