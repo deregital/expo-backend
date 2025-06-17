@@ -11,12 +11,18 @@ import {
   updateDynamicFormResponseSchema,
 } from '@/dynamic-form/dto/update-dynamic-form.dto';
 import { translate } from '@/i18n/translate';
+import {
+  Profile,
+  ProfileWithoutPassword,
+} from '@/mi-expo/decorators/profile.decorator';
 import { ProfileService } from '@/profile/profile.service';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagGroupService } from '@/tag-group/tag-group.service';
+
 import { TagService } from '@/tag/tag.service';
 import {
+  BadRequestException,
   Body,
   ConflictException,
   Controller,
@@ -53,6 +59,11 @@ import {
   deleteDynamicFormSchema,
 } from './dto/delete-dynamic-form.dto';
 import { FindByNameDynamicFormsResponseDto } from './dto/find-by-name-dynamic-form.dto';
+import {
+  SubmitDynamicFormsDto,
+  SubmitDynamicFormsResponseDto,
+  submitDynamicFormsResponseSchema,
+} from './dto/submit-dynamic-form.dto';
 import { DynamicFormService } from './dynamic-form.service';
 
 @Roles(Role.ADMIN)
@@ -95,6 +106,48 @@ export class DynamicFormController {
     this.dynamicFormService.checkEmptyQuestionsOrOptions(createDynamicFormDto);
 
     return await this.dynamicFormService.create(createDynamicFormDto);
+  }
+
+  @ApiBadRequestResponse({
+    description: translate('route.dynamic-form.submit.is-required'),
+    type: TypeError,
+  })
+  @ApiConflictResponse({
+    description: translate('route.dynamic-form.submit.too-many-answers'),
+    type: TypeError,
+  })
+  @ApiOkResponse({
+    description: translate('route.dynamic-form.submit.success'),
+    type: SubmitDynamicFormsResponseDto,
+  })
+  @Post('/submit/:formId')
+  async submit(
+    @Param('id', new ExistingRecord('dynamicForm')) id: string,
+    @Profile() profile: ProfileWithoutPassword,
+    @Body() questions: SubmitDynamicFormsDto,
+  ): Promise<z.infer<typeof submitDynamicFormsResponseSchema>> {
+    const tagIds = questions.flatMap((question) => {
+      if (question.required && question.answers.length === 0) {
+        throw new BadRequestException(
+          translate('route.dynamic-form.submit.is-required'),
+        );
+      }
+
+      if (!question.multipleChoice && question.answers.length > 1) {
+        throw new ConflictException(
+          translate('route.dynamic-form.submit.too-many-answers'),
+        );
+      }
+
+      return question.answers.map((answer) => answer.tagId);
+    });
+
+    const profiles = await this.tagService.massiveAllocation({
+      profileIds: [profile.id],
+      tagIds,
+    });
+
+    return profiles;
   }
 
   @ApiNotFoundResponse({

@@ -767,6 +767,12 @@ export default {
         'conflict-tag-in-use': `No se puede editar o eliminar la opción \{\{tag\}\} porque está en uso en \{\{profiles\}\} perfiles`,
         'conflict-cannot-change-question': `No se puede cambiar la pregunta \{\{question\}\} porque está la opción \{\{option\}\} en uso en \{\{profiles\}\} perfiles`,
       },
+      submit: {
+        'is-required': 'La respuesta a una o más de las preguntas es requerida',
+        'too-many-answers':
+          'La pregunta no puede tener mas de una respuesta si no es de respuesta multiple',
+        success: 'El formulario se ha enviado con éxito',
+      },
       all: {
         success: 'Formularios dinámicos obtenidos con éxito',
       },

@@ -2844,6 +2844,42 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "DynamicForm"
+  /dynamic-form/submit/{formId}:
+    post:
+      operationId: "DynamicFormController_submit"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitDynamicFormsDto"
+      responses:
+        200:
+          description: "El formulario se ha enviado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmitDynamicFormsResponseDto"
+        400:
+          description: "La respuesta a una o más de las preguntas es requerida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TypeError"
+        409:
+          description: "La pregunta no puede tener mas de una respuesta si no es de respuesta multiple"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TypeError"
+      tags:
+        - "DynamicForm"
   /dynamic-form/update/{id}:
     patch:
       operationId: "DynamicFormController_update"
@@ -14899,6 +14935,245 @@ components:
         - "id"
         - "name"
         - "questions"
+    SubmitDynamicFormsDto:
+      type:
+        - "array"
+      items:
+        type:
+          - "object"
+        properties:
+          id:
+            type:
+              - "string"
+            format: "uuid"
+          formId:
+            type:
+              - "string"
+            format: "uuid"
+          text:
+            type:
+              - "string"
+            minLength: 1
+          disabled:
+            default: false
+            type:
+              - "boolean"
+          required:
+            default: true
+            type:
+              - "boolean"
+          multipleChoice:
+            default: false
+            type:
+              - "boolean"
+          tagGroupId:
+            type:
+              - "string"
+            format: "uuid"
+          created_at:
+            type:
+              - "string"
+            format: "date-time"
+          updated_at:
+            type:
+              - "string"
+            format: "date-time"
+          answers:
+            type:
+              - "array"
+            items:
+              type:
+                - "object"
+              properties:
+                id:
+                  type:
+                    - "string"
+                  format: "uuid"
+                text:
+                  type:
+                    - "string"
+                  minLength: 1
+                tagId:
+                  type:
+                    - "string"
+                  format: "uuid"
+                questionId:
+                  type:
+                    - "string"
+                  format: "uuid"
+                created_at:
+                  type:
+                    - "string"
+                  format: "date-time"
+                updated_at:
+                  type:
+                    - "string"
+                  format: "date-time"
+              required:
+                - "id"
+                - "text"
+                - "tagId"
+                - "questionId"
+                - "created_at"
+                - "updated_at"
+        required:
+          - "id"
+          - "formId"
+          - "text"
+          - "tagGroupId"
+          - "created_at"
+          - "updated_at"
+          - "answers"
+    SubmitDynamicFormsResponseDto:
+      type:
+        - "object"
+      properties:
+        profiles:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              shortId:
+                type:
+                  - "number"
+              role:
+                default: "MI_EXPO"
+                type:
+                  - "string"
+                enum:
+                  - "USER"
+                  - "ADMIN"
+                  - "FORM"
+                  - "TICKETS"
+                  - "MI_EXPO"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              isPhoneVerified:
+                type:
+                  - "boolean"
+              secondaryPhoneNumber:
+                type:
+                  - "string"
+                  - "null"
+              fullName:
+                type:
+                  - "string"
+                minLength: 1
+              firstName:
+                type:
+                  - "string"
+                  - "null"
+                minLength: 1
+              gender:
+                type:
+                  - "string"
+                  - "null"
+              birthDate:
+                type:
+                  - "string"
+                  - "null"
+              profilePictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              instagram:
+                type:
+                  - "string"
+                  - "null"
+              mail:
+                type:
+                  - "string"
+                  - "null"
+                format: "email"
+              dni:
+                type:
+                  - "string"
+                  - "null"
+              alternativeNames:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              birthLocationId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              residenceLocationId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              isInTrash:
+                type:
+                  - "boolean"
+              movedToTrashDate:
+                type:
+                  - "string"
+                  - "null"
+                format: "date-time"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              referralCode:
+                type:
+                  - "string"
+            required:
+              - "id"
+              - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
+              - "phoneNumber"
+              - "isPhoneVerified"
+              - "secondaryPhoneNumber"
+              - "fullName"
+              - "firstName"
+              - "gender"
+              - "birthDate"
+              - "profilePictureUrl"
+              - "instagram"
+              - "mail"
+              - "dni"
+              - "alternativeNames"
+              - "birthLocationId"
+              - "residenceLocationId"
+              - "isInTrash"
+              - "movedToTrashDate"
+              - "created_at"
+              - "updated_at"
+              - "referralCode"
+      required:
+        - "profiles"
+    TypeError:
+      type: "object"
+      properties: {}
     UpdateDynamicFormDto:
       type:
         - "object"
