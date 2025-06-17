@@ -4,7 +4,16 @@ import { dynamicOptionSchema, dynamicQuestionSchema } from './dynamic-form.dto';
 
 export const submitDynamicFormsSchema = dynamicQuestionSchema
   .extend({
-    answers: dynamicOptionSchema.array(),
+    answers: dynamicOptionSchema
+      .omit({
+        created_at: true,
+        updated_at: true,
+      })
+      .array(),
+  })
+  .omit({
+    created_at: true,
+    updated_at: true,
   })
   .array();
 
