@@ -110,11 +110,11 @@ export class DynamicFormController {
 
   @ApiBadRequestResponse({
     description: translate('route.dynamic-form.submit.is-required'),
-    type: TypeError,
+    type: ErrorDto,
   })
   @ApiConflictResponse({
     description: translate('route.dynamic-form.submit.too-many-answers'),
-    type: TypeError,
+    type: ErrorDto,
   })
   @ApiOkResponse({
     description: translate('route.dynamic-form.submit.success'),

@@ -2871,13 +2871,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TypeError"
+                $ref: "#/components/schemas/ErrorDto"
         409:
           description: "La pregunta no puede tener mas de una respuesta si no es de respuesta multiple"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TypeError"
+                $ref: "#/components/schemas/ErrorDto"
       tags:
         - "DynamicForm"
   /dynamic-form/update/{id}:
@@ -15151,9 +15151,6 @@ components:
               - "referralCode"
       required:
         - "profiles"
-    TypeError:
-      type: "object"
-      properties: {}
     UpdateDynamicFormDto:
       type:
         - "object"
