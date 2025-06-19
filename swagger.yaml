@@ -2844,7 +2844,7 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "DynamicForm"
-  /dynamic-form/submit/{formId}:
+  /dynamic-form/submit/{id}:
     post:
       operationId: "DynamicFormController_submit"
       parameters:

@@ -108,6 +108,7 @@ export class DynamicFormController {
     return await this.dynamicFormService.create(createDynamicFormDto);
   }
 
+  @Roles(Role.MI_EXPO)
   @ApiBadRequestResponse({
     description: translate('route.dynamic-form.submit.is-required'),
     type: ErrorDto,
@@ -120,12 +121,13 @@ export class DynamicFormController {
     description: translate('route.dynamic-form.submit.success'),
     type: SubmitDynamicFormsResponseDto,
   })
-  @Post('/submit/:formId')
+  @Post('/submit/:id')
   async submit(
     @Param('id', new ExistingRecord('dynamicForm')) id: string,
     @Profile() profile: ProfileWithoutPassword,
     @Body() questions: SubmitDynamicFormsDto,
   ): Promise<z.infer<typeof submitDynamicFormsResponseSchema>> {
+    console.log(profile.id, questions, id);
     const tagIds = questions.flatMap((question) => {
       if (question.required && question.answers.length === 0) {
         throw new BadRequestException(
