@@ -9,11 +9,7 @@ export const submitDynamicFormsSchema = dynamicQuestionSchema
     text: true,
   })
   .extend({
-    answers: dynamicOptionSchema
-      .pick({
-        tagId: true,
-      })
-      .array(),
+    answers: dynamicOptionSchema.shape.id.array(),
   })
   .array();
 

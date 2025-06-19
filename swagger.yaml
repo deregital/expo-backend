@@ -14971,14 +14971,8 @@ components:
               - "array"
             items:
               type:
-                - "object"
-              properties:
-                tagId:
-                  type:
-                    - "string"
-                  format: "uuid"
-              required:
-                - "tagId"
+                - "string"
+              format: "uuid"
         required:
           - "id"
           - "formId"

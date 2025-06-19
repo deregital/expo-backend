@@ -139,7 +139,7 @@ export class DynamicFormController {
         );
       }
 
-      return question.answers.map((answer) => answer.tagId);
+      return question.answers.map((answer) => answer);
     });
 
     const profiles = await this.tagService.massiveAllocation({
