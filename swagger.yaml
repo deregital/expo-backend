@@ -14950,10 +14950,6 @@ components:
             type:
               - "string"
             format: "uuid"
-          text:
-            type:
-              - "string"
-            minLength: 1
           disabled:
             default: false
             type:
@@ -14977,31 +14973,15 @@ components:
               type:
                 - "object"
               properties:
-                id:
-                  type:
-                    - "string"
-                  format: "uuid"
-                text:
-                  type:
-                    - "string"
-                  minLength: 1
                 tagId:
                   type:
                     - "string"
                   format: "uuid"
-                questionId:
-                  type:
-                    - "string"
-                  format: "uuid"
               required:
-                - "id"
-                - "text"
                 - "tagId"
-                - "questionId"
         required:
           - "id"
           - "formId"
-          - "text"
           - "tagGroupId"
           - "answers"
     SubmitDynamicFormsResponseDto:
