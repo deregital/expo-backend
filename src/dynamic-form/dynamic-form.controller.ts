@@ -28,6 +28,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotAcceptableException,
   NotFoundException,
   Param,
   Patch,
@@ -38,6 +39,7 @@ import {
   ApiBadRequestResponse,
   ApiConflictResponse,
   ApiCreatedResponse,
+  ApiNotAcceptableResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
@@ -117,6 +119,14 @@ export class DynamicFormController {
     description: translate('route.dynamic-form.submit.too-many-answers'),
     type: ErrorDto,
   })
+  @ApiNotAcceptableResponse({
+    description: translate('route.dynamic-form.submit.not-acceptable'),
+    type: ErrorDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.dynamic-form.submit.not-acceptable'),
+    type: ErrorDto,
+  })
   @ApiOkResponse({
     description: translate('route.dynamic-form.submit.success'),
     type: SubmitDynamicFormsResponseDto,
@@ -127,26 +137,73 @@ export class DynamicFormController {
     @Profile() profile: ProfileWithoutPassword,
     @Body() questions: SubmitDynamicFormsDto,
   ): Promise<z.infer<typeof submitDynamicFormsResponseSchema>> {
-    console.log(profile.id, questions, id);
-    const tagIds = questions.flatMap((question) => {
-      if (question.required && question.answers.length === 0) {
-        throw new BadRequestException(
-          translate('route.dynamic-form.submit.is-required'),
-        );
-      }
+    const form = await this.dynamicFormService.findById(id);
 
-      if (!question.multipleChoice && question.answers.length > 1) {
-        throw new ConflictException(
-          translate('route.dynamic-form.submit.too-many-answers'),
-        );
-      }
+    const tagIds = await Promise.all(
+      questions.map(async (question) => {
+        if (!form?.questions.some((q) => q.id === question.id)) {
+          throw new NotAcceptableException(
+            translate('route.dynamic-form.submit.not-acceptable'),
+          );
+        }
 
-      return question.answers.map((answer) => answer);
-    });
+        if (question.required && question.answers.length === 0) {
+          throw new BadRequestException(
+            translate('route.dynamic-form.submit.is-required'),
+          );
+        }
+
+        if (!question.multipleChoice && question.answers.length > 1) {
+          throw new ConflictException(
+            translate('route.dynamic-form.submit.too-many-answers'),
+          );
+        }
+
+        const questionForm = await this.dynamicFormService.findQuestionById(
+          question.id,
+        );
+        if (!questionForm) {
+          throw new NotAcceptableException(
+            translate('route.dynamic-form.submit.not-acceptable'),
+          );
+        }
+
+        const answersValid = questionForm.options.some((option) =>
+          question.answers.includes(option.id),
+        );
+        if (!answersValid) {
+          throw new NotAcceptableException(
+            translate('route.dynamic-form.submit.not-acceptable'),
+          );
+        }
+
+        const tagIdsFromId = (
+          await Promise.all(
+            question.answers.map(async (id) => {
+              const possibleTagId =
+                await this.dynamicFormService.findTagIdById(id);
+              if (possibleTagId) {
+                return possibleTagId.tagId;
+              }
+            }),
+          )
+        ).filter((id): id is string => Boolean(id));
+
+        if (tagIdsFromId.length !== question.answers.length) {
+          throw new NotFoundException(
+            translate('route.dynamic-form.submit.option-not-found'),
+          );
+        }
+
+        return tagIdsFromId;
+      }),
+    );
+
+    const flatTagIds = tagIds.flatMap((array) => array);
 
     const profiles = await this.tagService.massiveAllocation({
       profileIds: [profile.id],
-      tagIds,
+      tagIds: flatTagIds,
     });
 
     return profiles;

@@ -145,6 +145,35 @@ export class DynamicFormService {
     });
   }
 
+  async findQuestionById(id: DynamicQuestion['id']): Promise<
+    | (DynamicQuestion & {
+        options: DynamicOption[];
+      })
+    | null
+  > {
+    return this.prisma.dynamicQuestion.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        options: true,
+      },
+    });
+  }
+
+  async findTagIdById(
+    id: DynamicOption['id'],
+  ): Promise<{ tagId: string } | null> {
+    return await this.prisma.dynamicOption.findFirst({
+      where: {
+        id: id,
+      },
+      select: {
+        tagId: true,
+      },
+    });
+  }
+
   async findAll(): Promise<z.infer<typeof findAllDynamicFormsResponseSchema>> {
     return this.prisma.dynamicForm.findMany({
       include: {

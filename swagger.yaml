@@ -2872,6 +2872,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+        404:
+          description: "Las preguntas y/o opciones no coinciden con el formulario"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        406:
+          description: "Las preguntas y/o opciones no coinciden con el formulario"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
         409:
           description: "La pregunta no puede tener mas de una respuesta si no es de respuesta multiple"
           content:

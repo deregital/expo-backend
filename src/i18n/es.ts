@@ -772,6 +772,9 @@ export default {
         'too-many-answers':
           'La pregunta no puede tener mas de una respuesta si no es de respuesta multiple',
         success: 'El formulario se ha enviado con éxito',
+        'not-acceptable':
+          'Las preguntas y/o opciones no coinciden con el formulario',
+        'option-not-found': 'La opcion a la pregunta no fue encontrada',
       },
       all: {
         success: 'Formularios dinámicos obtenidos con éxito',
