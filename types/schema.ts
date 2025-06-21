@@ -532,6 +532,70 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/event/update-banner/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['EventController_updateBanner'];
+    trace?: never;
+  };
+  '/event/delete-banner/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete: operations['EventController_deleteBanner'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/event/update-main-picture/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['EventController_updateMainPicture'];
+    trace?: never;
+  };
+  '/event/delete-main-picture/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete: operations['EventController_deleteMainPicture'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/event/all': {
     parameters: {
       query?: never;
@@ -740,6 +804,38 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/profile/referral-code-usage/{code}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProfileController_findReferralCodeUsage'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/profile/referral-code-exists/{code}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProfileController_findReferralCodeExists'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/profile/create': {
     parameters: {
       query?: never;
@@ -751,6 +847,38 @@ export interface paths {
     put?: never;
     post: operations['ProfileController_create'];
     delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/profile/update-image/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['ProfileController_updateImage'];
+    trace?: never;
+  };
+  '/profile/delete-image/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete: operations['ProfileController_deleteImage'];
     options?: never;
     head?: never;
     patch?: never;
@@ -770,38 +898,6 @@ export interface paths {
     options?: never;
     head?: never;
     patch: operations['ProfileController_update'];
-    trace?: never;
-  };
-  '/image/update/{id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch: operations['ImageController_updateImage'];
-    trace?: never;
-  };
-  '/image/delete/{id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    post?: never;
-    delete: operations['ImageController_deleteImage'];
-    options?: never;
-    head?: never;
-    patch?: never;
     trace?: never;
   };
   '/csv/download-profiles': {
@@ -1460,6 +1556,214 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/production/all': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProductionController_getAll'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/production/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['ProductionController_create'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/production/create-role': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['ProductionController_createRole'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/production/update/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['ProductionController_update'];
+    trace?: never;
+  };
+  '/production/delete/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete: operations['ProductionController_deleteProduction'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/production-affiliation-request/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['ProductionAffiliationRequestController_create'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/production-affiliation-request/accept/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['ProductionAffiliationRequestController_accept'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/production-affiliation-request/reject/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['ProductionAffiliationRequestController_reject'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/production-affiliation-request/get-by-production/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ProductionAffiliationRequestController_findByProduction'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/dynamic-form/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['DynamicFormController_create'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/dynamic-form/update/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['DynamicFormController_update'];
+    trace?: never;
+  };
+  '/dynamic-form/all': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['DynamicFormController_getAll'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/dynamic-form/delete/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete: operations['DynamicFormController_delete'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1504,6 +1808,14 @@ export interface components {
       name: string;
       /** Format: uuid */
       groupId: string;
+      /** @enum {string} */
+      type?:
+        | 'PROFILE'
+        | 'EVENT'
+        | 'PARTICIPANT'
+        | 'NOT_IN_SYSTEM'
+        | 'PRODUCTION_ROLE'
+        | 'FORM_OPTION';
     };
     CreateTagResponseDto: {
       /** Format: uuid */
@@ -1517,7 +1829,12 @@ export interface components {
         | 'EVENT'
         | 'PARTICIPANT'
         | 'NOT_IN_SYSTEM'
-        | 'PRODUCTION_ROLE';
+        | 'PRODUCTION_ROLE'
+        | 'FORM_OPTION';
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
     };
     FindAllTagResponseDto: {
       tags: {
@@ -1532,7 +1849,8 @@ export interface components {
           | 'EVENT'
           | 'PARTICIPANT'
           | 'NOT_IN_SYSTEM'
-          | 'PRODUCTION_ROLE';
+          | 'PRODUCTION_ROLE'
+          | 'FORM_OPTION';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1563,7 +1881,8 @@ export interface components {
           | 'EVENT'
           | 'PARTICIPANT'
           | 'NOT_IN_SYSTEM'
-          | 'PRODUCTION_ROLE';
+          | 'PRODUCTION_ROLE'
+          | 'FORM_OPTION';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1593,7 +1912,8 @@ export interface components {
         | 'EVENT'
         | 'PARTICIPANT'
         | 'NOT_IN_SYSTEM'
-        | 'PRODUCTION_ROLE';
+        | 'PRODUCTION_ROLE'
+        | 'FORM_OPTION';
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1627,7 +1947,8 @@ export interface components {
         | 'EVENT'
         | 'PARTICIPANT'
         | 'NOT_IN_SYSTEM'
-        | 'PRODUCTION_ROLE';
+        | 'PRODUCTION_ROLE'
+        | 'FORM_OPTION';
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1645,7 +1966,8 @@ export interface components {
         | 'EVENT'
         | 'PARTICIPANT'
         | 'NOT_IN_SYSTEM'
-        | 'PRODUCTION_ROLE';
+        | 'PRODUCTION_ROLE'
+        | 'FORM_OPTION';
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1693,6 +2015,7 @@ export interface components {
         created_at: string;
         /** Format: date-time */
         updated_at: string;
+        referralCode: string;
       }[];
     };
     MassiveDeallocationDto: {
@@ -1737,6 +2060,7 @@ export interface components {
         created_at: string;
         /** Format: date-time */
         updated_at: string;
+        referralCode: string;
       }[];
     };
     CreateAccountDto: {
@@ -1788,7 +2112,8 @@ export interface components {
           | 'EVENT'
           | 'PARTICIPANT'
           | 'NOT_IN_SYSTEM'
-          | 'PRODUCTION_ROLE';
+          | 'PRODUCTION_ROLE'
+          | 'FORM_OPTION';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1808,7 +2133,8 @@ export interface components {
           | 'EVENT'
           | 'PARTICIPANT'
           | 'NOT_IN_SYSTEM'
-          | 'PRODUCTION_ROLE';
+          | 'PRODUCTION_ROLE'
+          | 'FORM_OPTION';
         group: {
           /** Format: uuid */
           id: string;
@@ -1841,7 +2167,8 @@ export interface components {
           | 'EVENT'
           | 'PARTICIPANT'
           | 'NOT_IN_SYSTEM'
-          | 'PRODUCTION_ROLE';
+          | 'PRODUCTION_ROLE'
+          | 'FORM_OPTION';
         group: {
           /** Format: uuid */
           id: string;
@@ -1861,7 +2188,8 @@ export interface components {
           | 'EVENT'
           | 'PARTICIPANT'
           | 'NOT_IN_SYSTEM'
-          | 'PRODUCTION_ROLE';
+          | 'PRODUCTION_ROLE'
+          | 'FORM_OPTION';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -1907,7 +2235,8 @@ export interface components {
             | 'EVENT'
             | 'PARTICIPANT'
             | 'NOT_IN_SYSTEM'
-            | 'PRODUCTION_ROLE';
+            | 'PRODUCTION_ROLE'
+            | 'FORM_OPTION';
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -1934,7 +2263,8 @@ export interface components {
             | 'EVENT'
             | 'PARTICIPANT'
             | 'NOT_IN_SYSTEM'
-            | 'PRODUCTION_ROLE';
+            | 'PRODUCTION_ROLE'
+            | 'FORM_OPTION';
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -1970,7 +2300,8 @@ export interface components {
           | 'EVENT'
           | 'PARTICIPANT'
           | 'NOT_IN_SYSTEM'
-          | 'PRODUCTION_ROLE';
+          | 'PRODUCTION_ROLE'
+          | 'FORM_OPTION';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -2213,6 +2544,11 @@ export interface components {
           /** Format: date-time */
           endingDate: string;
           location: string;
+          /** Format: uri */
+          mainPictureUrl: string | null;
+          /** Format: uri */
+          bannerUrl: string | null;
+          description: string | null;
           /** Format: uuid */
           folderId: string | null;
           /** Format: uuid */
@@ -2249,6 +2585,11 @@ export interface components {
         /** Format: date-time */
         endingDate: string;
         location: string;
+        /** Format: uri */
+        mainPictureUrl: string | null;
+        /** Format: uri */
+        bannerUrl: string | null;
+        description: string | null;
         /** Format: uuid */
         folderId: string | null;
         /** Format: uuid */
@@ -2299,6 +2640,11 @@ export interface components {
       location: string;
       /** Format: uuid */
       folderId: string | null;
+      /** Format: uri */
+      mainPictureUrl: string | null;
+      /** Format: uri */
+      bannerUrl: string | null;
+      description: string | null;
       subEvents?: {
         name: string;
         /** Format: date-time */
@@ -2308,6 +2654,11 @@ export interface components {
         /** Format: date-time */
         endingDate: string;
         location: string;
+        /** Format: uri */
+        mainPictureUrl: string | null;
+        /** Format: uri */
+        bannerUrl: string | null;
+        description: string | null;
       }[];
       tagsId: string[];
       eventTickets: {
@@ -2328,6 +2679,11 @@ export interface components {
       /** Format: date-time */
       endingDate: string;
       location: string;
+      /** Format: uri */
+      mainPictureUrl: string | null;
+      /** Format: uri */
+      bannerUrl: string | null;
+      description: string | null;
       /** Format: uuid */
       folderId: string | null;
       /** Format: uuid */
@@ -2341,6 +2697,20 @@ export interface components {
       created_at: string;
       /** Format: date-time */
       updated_at: string;
+    };
+    UpdateBannerEventDto: {
+      /** Format: binary */
+      image?: Record<string, never>;
+    };
+    UpdateBannerEventResponseDto: {
+      message: string;
+    };
+    UpdateMainPictureEventResponseDto: {
+      message: string;
+    };
+    UpdateMainPictureEventDto: {
+      /** Format: binary */
+      image?: Record<string, never>;
     };
     GetAllEventsResponseDto: {
       folders: {
@@ -2363,6 +2733,11 @@ export interface components {
           /** Format: date-time */
           endingDate: string;
           location: string;
+          /** Format: uri */
+          mainPictureUrl: string | null;
+          /** Format: uri */
+          bannerUrl: string | null;
+          description: string | null;
           /** Format: uuid */
           folderId: string | null;
           /** Format: uuid */
@@ -2387,6 +2762,11 @@ export interface components {
             /** Format: date-time */
             endingDate: string;
             location: string;
+            /** Format: uri */
+            mainPictureUrl: string | null;
+            /** Format: uri */
+            bannerUrl: string | null;
+            description: string | null;
             /** Format: uuid */
             folderId: string | null;
             /** Format: uuid */
@@ -2412,6 +2792,11 @@ export interface components {
             /** Format: date-time */
             endingDate: string;
             location: string;
+            /** Format: uri */
+            mainPictureUrl: string | null;
+            /** Format: uri */
+            bannerUrl: string | null;
+            description: string | null;
             /** Format: uuid */
             folderId: string | null;
             /** Format: uuid */
@@ -2436,7 +2821,8 @@ export interface components {
               | 'EVENT'
               | 'PARTICIPANT'
               | 'NOT_IN_SYSTEM'
-              | 'PRODUCTION_ROLE';
+              | 'PRODUCTION_ROLE'
+              | 'FORM_OPTION';
             group: {
               /** Format: uuid */
               id: string;
@@ -2466,6 +2852,11 @@ export interface components {
         /** Format: date-time */
         endingDate: string;
         location: string;
+        /** Format: uri */
+        mainPictureUrl: string | null;
+        /** Format: uri */
+        bannerUrl: string | null;
+        description: string | null;
         /** Format: uuid */
         folderId: string | null;
         /** Format: uuid */
@@ -2490,6 +2881,11 @@ export interface components {
           /** Format: date-time */
           endingDate: string;
           location: string;
+          /** Format: uri */
+          mainPictureUrl: string | null;
+          /** Format: uri */
+          bannerUrl: string | null;
+          description: string | null;
           /** Format: uuid */
           folderId: string | null;
           /** Format: uuid */
@@ -2515,6 +2911,11 @@ export interface components {
           /** Format: date-time */
           endingDate: string;
           location: string;
+          /** Format: uri */
+          mainPictureUrl: string | null;
+          /** Format: uri */
+          bannerUrl: string | null;
+          description: string | null;
           /** Format: uuid */
           folderId: string | null;
           /** Format: uuid */
@@ -2539,7 +2940,8 @@ export interface components {
             | 'EVENT'
             | 'PARTICIPANT'
             | 'NOT_IN_SYSTEM'
-            | 'PRODUCTION_ROLE';
+            | 'PRODUCTION_ROLE'
+            | 'FORM_OPTION';
           group: {
             /** Format: uuid */
             id: string;
@@ -2570,6 +2972,11 @@ export interface components {
         /** Format: date-time */
         endingDate: string;
         location: string;
+        /** Format: uri */
+        mainPictureUrl: string | null;
+        /** Format: uri */
+        bannerUrl: string | null;
+        description: string | null;
         /** Format: uuid */
         folderId: string | null;
         /** Format: uuid */
@@ -2628,6 +3035,11 @@ export interface components {
       /** Format: date-time */
       endingDate: string;
       location: string;
+      /** Format: uri */
+      mainPictureUrl: string | null;
+      /** Format: uri */
+      bannerUrl: string | null;
+      description: string | null;
       /** Format: uuid */
       folderId: string | null;
       /** Format: uuid */
@@ -2652,6 +3064,11 @@ export interface components {
         /** Format: date-time */
         endingDate: string;
         location: string;
+        /** Format: uri */
+        mainPictureUrl: string | null;
+        /** Format: uri */
+        bannerUrl: string | null;
+        description: string | null;
         /** Format: uuid */
         folderId: string | null;
         /** Format: uuid */
@@ -2677,6 +3094,11 @@ export interface components {
         /** Format: date-time */
         endingDate: string;
         location: string;
+        /** Format: uri */
+        mainPictureUrl: string | null;
+        /** Format: uri */
+        bannerUrl: string | null;
+        description: string | null;
         /** Format: uuid */
         folderId: string | null;
         /** Format: uuid */
@@ -2711,7 +3133,8 @@ export interface components {
           | 'EVENT'
           | 'PARTICIPANT'
           | 'NOT_IN_SYSTEM'
-          | 'PRODUCTION_ROLE';
+          | 'PRODUCTION_ROLE'
+          | 'FORM_OPTION';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -2762,7 +3185,8 @@ export interface components {
           | 'EVENT'
           | 'PARTICIPANT'
           | 'NOT_IN_SYSTEM'
-          | 'PRODUCTION_ROLE';
+          | 'PRODUCTION_ROLE'
+          | 'FORM_OPTION';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -2791,7 +3215,8 @@ export interface components {
           | 'EVENT'
           | 'PARTICIPANT'
           | 'NOT_IN_SYSTEM'
-          | 'PRODUCTION_ROLE';
+          | 'PRODUCTION_ROLE'
+          | 'FORM_OPTION';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -2832,29 +3257,39 @@ export interface components {
       }[];
     };
     UpdateEventDto: {
-      name: string;
+      name?: string;
       /** Format: uuid */
-      folderId: string | null;
+      folderId?: string | null;
       /** Format: date-time */
-      date: string;
-      location: string;
+      date?: string;
+      location?: string;
       /** Format: date-time */
-      startingDate: string;
+      startingDate?: string;
       /** Format: date-time */
-      endingDate: string;
-      tagsId: string[];
-      subEvents: {
-        name: string;
-        location: string;
+      endingDate?: string;
+      /** Format: uri */
+      bannerUrl?: string | null;
+      /** Format: uri */
+      mainPictureUrl?: string | null;
+      description?: string | null;
+      tagsId?: string[];
+      subEvents?: {
+        name?: string;
+        location?: string;
         /** Format: date-time */
-        date: string;
+        date?: string;
         /** Format: date-time */
-        startingDate: string;
+        startingDate?: string;
         /** Format: date-time */
-        endingDate: string;
+        endingDate?: string;
+        /** Format: uri */
+        bannerUrl?: string | null;
+        /** Format: uri */
+        mainPictureUrl?: string | null;
+        description?: string | null;
         id: string | '';
       }[];
-      eventTickets: {
+      eventTickets?: {
         amount: number | null;
         /** @enum {string} */
         type: 'PARTICIPANT' | 'STAFF' | 'SPECTATOR';
@@ -2872,6 +3307,11 @@ export interface components {
       /** Format: date-time */
       endingDate: string;
       location: string;
+      /** Format: uri */
+      mainPictureUrl: string | null;
+      /** Format: uri */
+      bannerUrl: string | null;
+      description: string | null;
       /** Format: uuid */
       folderId: string | null;
       /** Format: uuid */
@@ -2897,7 +3337,8 @@ export interface components {
           | 'EVENT'
           | 'PARTICIPANT'
           | 'NOT_IN_SYSTEM'
-          | 'PRODUCTION_ROLE';
+          | 'PRODUCTION_ROLE'
+          | 'FORM_OPTION';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -2934,6 +3375,11 @@ export interface components {
       /** Format: date-time */
       endingDate: string;
       location: string;
+      /** Format: uri */
+      mainPictureUrl: string | null;
+      /** Format: uri */
+      bannerUrl: string | null;
+      description: string | null;
       /** Format: uuid */
       folderId: string | null;
       /** Format: uuid */
@@ -2986,6 +3432,7 @@ export interface components {
         created_at: string;
         /** Format: date-time */
         updated_at: string;
+        referralCode: string;
         tags: {
           /** Format: uuid */
           id: string;
@@ -2998,7 +3445,8 @@ export interface components {
             | 'EVENT'
             | 'PARTICIPANT'
             | 'NOT_IN_SYSTEM'
-            | 'PRODUCTION_ROLE';
+            | 'PRODUCTION_ROLE'
+            | 'FORM_OPTION';
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -3048,6 +3496,7 @@ export interface components {
         created_at: string;
         /** Format: date-time */
         updated_at: string;
+        referralCode: string;
         tags: {
           /** Format: uuid */
           id: string;
@@ -3060,7 +3509,8 @@ export interface components {
             | 'EVENT'
             | 'PARTICIPANT'
             | 'NOT_IN_SYSTEM'
-            | 'PRODUCTION_ROLE';
+            | 'PRODUCTION_ROLE'
+            | 'FORM_OPTION';
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -3134,6 +3584,7 @@ export interface components {
         created_at: string;
         /** Format: date-time */
         updated_at: string;
+        referralCode: string;
         tags: {
           /** Format: uuid */
           id: string;
@@ -3146,7 +3597,8 @@ export interface components {
             | 'EVENT'
             | 'PARTICIPANT'
             | 'NOT_IN_SYSTEM'
-            | 'PRODUCTION_ROLE';
+            | 'PRODUCTION_ROLE'
+            | 'FORM_OPTION';
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -3197,6 +3649,7 @@ export interface components {
         created_at: string;
         /** Format: date-time */
         updated_at: string;
+        referralCode: string;
         tags: {
           /** Format: uuid */
           id: string;
@@ -3209,7 +3662,8 @@ export interface components {
             | 'EVENT'
             | 'PARTICIPANT'
             | 'NOT_IN_SYSTEM'
-            | 'PRODUCTION_ROLE';
+            | 'PRODUCTION_ROLE'
+            | 'FORM_OPTION';
           /** Format: date-time */
           created_at: string;
           /** Format: date-time */
@@ -3256,6 +3710,7 @@ export interface components {
             created_at: string;
             /** Format: date-time */
             updated_at: string;
+            referralCode: string;
             tags: {
               /** Format: uuid */
               id: string;
@@ -3268,7 +3723,8 @@ export interface components {
                 | 'EVENT'
                 | 'PARTICIPANT'
                 | 'NOT_IN_SYSTEM'
-                | 'PRODUCTION_ROLE';
+                | 'PRODUCTION_ROLE'
+                | 'FORM_OPTION';
               /** Format: date-time */
               created_at: string;
               /** Format: date-time */
@@ -3318,6 +3774,7 @@ export interface components {
       created_at: string;
       /** Format: date-time */
       updated_at: string;
+      referralCode: string;
     };
     FindTrashResponseDto: {
       profiles: {
@@ -3333,6 +3790,12 @@ export interface components {
         /** Format: date-time */
         movedToTrashDate: string | null;
       }[];
+    };
+    FindReferralCodeUsageResponseDto: {
+      amount: number;
+    };
+    FindReferralCodeExistsResponseDto: {
+      exists: boolean;
     };
     CreateProfileDto: {
       profile: {
@@ -3396,6 +3859,16 @@ export interface components {
             type: 'created';
           };
     };
+    UpdateImageProfileDto: {
+      /** Format: binary */
+      image?: Record<string, never>;
+    };
+    UpdateImageProfileResponseDto: {
+      message: string;
+    };
+    DeleteImageProfileResponseDto: {
+      message: string;
+    };
     FindByIdProfileResponseDto: {
       /** Format: uuid */
       id: string;
@@ -3432,6 +3905,7 @@ export interface components {
       created_at: string;
       /** Format: date-time */
       updated_at: string;
+      referralCode: string;
       residenceLocation: {
         /** Format: uuid */
         id: string;
@@ -3470,7 +3944,8 @@ export interface components {
           | 'EVENT'
           | 'PARTICIPANT'
           | 'NOT_IN_SYSTEM'
-          | 'PRODUCTION_ROLE';
+          | 'PRODUCTION_ROLE'
+          | 'FORM_OPTION';
         /** Format: date-time */
         created_at: string;
         /** Format: date-time */
@@ -3520,6 +3995,7 @@ export interface components {
       created_at: string;
       /** Format: date-time */
       updated_at: string;
+      referralCode: string;
     };
     UpdateProfileDto: {
       alternativeNames?: string[];
@@ -3555,16 +4031,6 @@ export interface components {
         state: string;
       };
       tags?: string[];
-    };
-    UpdateImageDto: {
-      /** Format: binary */
-      image?: Record<string, never>;
-    };
-    UpdateImageResponseDto: {
-      message: string;
-    };
-    DeleteImageResponseDto: {
-      message: string;
     };
     DownloadProfilesDto: {
       password: string;
@@ -3728,6 +4194,11 @@ export interface components {
         /** Format: date-time */
         endingDate: string;
         location: string;
+        /** Format: uri */
+        mainPictureUrl: string | null;
+        /** Format: uri */
+        bannerUrl: string | null;
+        description: string | null;
         /** Format: uuid */
         folderId: string | null;
         /** Format: uuid */
@@ -3758,6 +4229,7 @@ export interface components {
         /** Format: uuid */
         profileId?: string;
       }[];
+      referralCode?: string | null;
     };
     CreateManyTicketResponseDto: {
       /** Format: uuid */
@@ -3791,6 +4263,11 @@ export interface components {
         /** Format: date-time */
         endingDate: string;
         location: string;
+        /** Format: uri */
+        mainPictureUrl: string | null;
+        /** Format: uri */
+        bannerUrl: string | null;
+        description: string | null;
         /** Format: uuid */
         folderId: string | null;
         /** Format: uuid */
@@ -3875,6 +4352,11 @@ export interface components {
           /** Format: date-time */
           endingDate: string;
           location: string;
+          /** Format: uri */
+          mainPictureUrl: string | null;
+          /** Format: uri */
+          bannerUrl: string | null;
+          description: string | null;
           /** Format: uuid */
           folderId: string | null;
           /** Format: uuid */
@@ -3926,6 +4408,7 @@ export interface components {
           created_at: string;
           /** Format: date-time */
           updated_at: string;
+          referralCode: string;
         } | null;
         /** Format: uuid */
         profileId: string | null;
@@ -3996,6 +4479,7 @@ export interface components {
           created_at: string;
           /** Format: date-time */
           updated_at: string;
+          referralCode: string;
         } | null;
       }[];
     };
@@ -4064,6 +4548,7 @@ export interface components {
           created_at: string;
           /** Format: date-time */
           updated_at: string;
+          referralCode: string;
         } | null;
       }[];
     };
@@ -4100,6 +4585,11 @@ export interface components {
           /** Format: date-time */
           endingDate: string;
           location: string;
+          /** Format: uri */
+          mainPictureUrl: string | null;
+          /** Format: uri */
+          bannerUrl: string | null;
+          description: string | null;
           /** Format: uuid */
           folderId: string | null;
           /** Format: uuid */
@@ -4235,6 +4725,7 @@ export interface components {
       status: 'BOOKED' | 'PAID' | 'FREE';
       /** Format: uuid */
       eventId: string;
+      referralCode: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -4272,6 +4763,11 @@ export interface components {
         /** Format: date-time */
         endingDate: string;
         location: string;
+        /** Format: uri */
+        mainPictureUrl: string | null;
+        /** Format: uri */
+        bannerUrl: string | null;
+        description: string | null;
         /** Format: uuid */
         folderId: string | null;
         /** Format: uuid */
@@ -4298,6 +4794,7 @@ export interface components {
       status: 'BOOKED' | 'PAID' | 'FREE';
       /** Format: uuid */
       eventId: string;
+      referralCode: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -4306,6 +4803,7 @@ export interface components {
     UpdateTicketGroupDto: {
       /** @enum {string} */
       status?: 'BOOKED' | 'PAID' | 'FREE';
+      referralCode?: string | null;
     };
     UpdateTicketGroupResponseDto: {
       /** Format: uuid */
@@ -4315,6 +4813,7 @@ export interface components {
       status: 'BOOKED' | 'PAID' | 'FREE';
       /** Format: uuid */
       eventId: string;
+      referralCode: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -4328,6 +4827,7 @@ export interface components {
       status: 'BOOKED' | 'PAID' | 'FREE';
       /** Format: uuid */
       eventId: string;
+      referralCode: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -4395,6 +4895,7 @@ export interface components {
         created_at: string;
         /** Format: date-time */
         updated_at: string;
+        referralCode: string;
         residenceLocation: {
           city: string;
           country: string;
@@ -4454,6 +4955,7 @@ export interface components {
         created_at: string;
         /** Format: date-time */
         updated_at: string;
+        referralCode: string;
       };
     };
     GetMiExpoMeResponseDto: {
@@ -4492,6 +4994,7 @@ export interface components {
       created_at: string;
       /** Format: date-time */
       updated_at: string;
+      referralCode: string;
       residenceLocation: {
         /** Format: uuid */
         id: string;
@@ -4518,6 +5021,42 @@ export interface components {
         /** Format: date-time */
         updated_at: string;
       } | null;
+      productionsAdministrated: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        administratorId: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
+      productionsParticipated: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        administratorId: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
+      productionRequestsSent: {
+        /** Format: uuid */
+        id: string;
+        /** Format: uuid */
+        productionId: string;
+        /** Format: uuid */
+        profileId: string;
+        /** @enum {string} */
+        status: 'APPROVED' | 'PENDING' | 'REJECTED';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      }[];
     };
     UpdateMiExpoMeDto: {
       birthDate: string | null;
@@ -4602,6 +5141,7 @@ export interface components {
         created_at: string;
         /** Format: date-time */
         updated_at: string;
+        referralCode: string;
       };
       backendTokens: {
         accessToken: string;
@@ -4640,6 +5180,401 @@ export interface components {
       user_id: number;
     };
     Response: Record<string, never>;
+    GetAllProductionResponseDto: {
+      productions: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        administratorId: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        administrator: {
+          /** Format: uuid */
+          id: string;
+          shortId: number;
+          /**
+           * @default MI_EXPO
+           * @enum {string}
+           */
+          role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
+          firstTimeMiExpo: boolean;
+          username: string | null;
+          password: string | null;
+          phoneNumber: string;
+          isPhoneVerified: boolean;
+          secondaryPhoneNumber: string | null;
+          fullName: string;
+          firstName: string | null;
+          gender: string | null;
+          birthDate: string | null;
+          /** Format: uri */
+          profilePictureUrl: string | null;
+          instagram: string | null;
+          /** Format: email */
+          mail: string | null;
+          dni: string | null;
+          alternativeNames: string[];
+          /** Format: uuid */
+          birthLocationId: string | null;
+          /** Format: uuid */
+          residenceLocationId: string | null;
+          isInTrash: boolean;
+          /** Format: date-time */
+          movedToTrashDate: string | null;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+          referralCode: string;
+        } | null;
+      }[];
+    };
+    CreateProductionDto: {
+      name: string;
+      /** Format: uuid */
+      administratorId: string | null;
+    };
+    CreateProductionRoleDto: {
+      name: string;
+    };
+    UpdateProductionDto: {
+      name?: string;
+      /** Format: uuid */
+      administratorId?: string | null;
+    };
+    UpdateProductionResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** Format: uuid */
+      administratorId: string | null;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    DeleteProductionResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** Format: uuid */
+      administratorId: string | null;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+    };
+    CreateProductionAffiliationRequestDto: {
+      /** Format: uuid */
+      productionId: string;
+    };
+    UpdateProductionAffiliationRequestResponseDto: {
+      /** Format: uuid */
+      id: string;
+      /** Format: uuid */
+      productionId: string;
+      /** Format: uuid */
+      profileId: string;
+      /** @enum {string} */
+      status: 'APPROVED' | 'PENDING' | 'REJECTED';
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      production: {
+        /** Format: uuid */
+        id: string;
+        name: string;
+        /** Format: uuid */
+        administratorId: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+      };
+      profile: {
+        /** Format: uuid */
+        id: string;
+        shortId: number;
+        /**
+         * @default MI_EXPO
+         * @enum {string}
+         */
+        role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
+        firstTimeMiExpo: boolean;
+        username: string | null;
+        password: string | null;
+        phoneNumber: string;
+        isPhoneVerified: boolean;
+        secondaryPhoneNumber: string | null;
+        fullName: string;
+        firstName: string | null;
+        gender: string | null;
+        birthDate: string | null;
+        /** Format: uri */
+        profilePictureUrl: string | null;
+        instagram: string | null;
+        /** Format: email */
+        mail: string | null;
+        dni: string | null;
+        alternativeNames: string[];
+        /** Format: uuid */
+        birthLocationId: string | null;
+        /** Format: uuid */
+        residenceLocationId: string | null;
+        isInTrash: boolean;
+        /** Format: date-time */
+        movedToTrashDate: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        referralCode: string;
+      };
+    };
+    FindByProductionAffiliationRequestResponseDto: {
+      productions: {
+        /** Format: uuid */
+        id: string;
+        /** Format: uuid */
+        productionId: string;
+        /** Format: uuid */
+        profileId: string;
+        /** @enum {string} */
+        status: 'APPROVED' | 'PENDING' | 'REJECTED';
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        production: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          /** Format: uuid */
+          administratorId: string | null;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        };
+        profile: {
+          /** Format: uuid */
+          id: string;
+          shortId: number;
+          /**
+           * @default MI_EXPO
+           * @enum {string}
+           */
+          role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
+          firstTimeMiExpo: boolean;
+          username: string | null;
+          password: string | null;
+          phoneNumber: string;
+          isPhoneVerified: boolean;
+          secondaryPhoneNumber: string | null;
+          fullName: string;
+          firstName: string | null;
+          gender: string | null;
+          birthDate: string | null;
+          /** Format: uri */
+          profilePictureUrl: string | null;
+          instagram: string | null;
+          /** Format: email */
+          mail: string | null;
+          dni: string | null;
+          alternativeNames: string[];
+          /** Format: uuid */
+          birthLocationId: string | null;
+          /** Format: uuid */
+          residenceLocationId: string | null;
+          isInTrash: boolean;
+          /** Format: date-time */
+          movedToTrashDate: string | null;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+          referralCode: string;
+        };
+      }[];
+    };
+    CreateDynamicFormDto: {
+      name: string;
+      questions: {
+        text: string;
+        /** @default false */
+        disabled: boolean;
+        /** @default true */
+        required: boolean;
+        /** @default false */
+        multipleChoice: boolean;
+        options: {
+          text: string;
+        }[];
+      }[];
+    };
+    CreateDynamicFormResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      questions: {
+        /** Format: uuid */
+        id: string;
+        text: string;
+        /** @default false */
+        disabled: boolean;
+        /** @default true */
+        required: boolean;
+        /** @default false */
+        multipleChoice: boolean;
+        /** Format: uuid */
+        tagGroupId: string;
+        options: {
+          text: string;
+          /** Format: uuid */
+          tagId: string;
+          /** Format: uuid */
+          id: string;
+        }[];
+      }[];
+    };
+    UpdateDynamicFormDto: {
+      name: string;
+      questions: {
+        text: string;
+        /** @default false */
+        disabled: boolean;
+        /** @default true */
+        required: boolean;
+        /** @default false */
+        multipleChoice: boolean;
+        /** Format: uuid */
+        id: string | null;
+        options: {
+          text: string;
+          /** Format: uuid */
+          id: string | null;
+        }[];
+      }[];
+    };
+    UpdateDynamicFormResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      questions: {
+        /** Format: uuid */
+        id: string;
+        /** Format: uuid */
+        formId: string;
+        text: string;
+        /** @default false */
+        disabled: boolean;
+        /** @default true */
+        required: boolean;
+        /** @default false */
+        multipleChoice: boolean;
+        /** Format: uuid */
+        tagGroupId: string;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        options: {
+          /** Format: uuid */
+          id: string;
+          text: string;
+          /** Format: uuid */
+          tagId: string;
+          /** Format: uuid */
+          questionId: string;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        }[];
+      }[];
+    };
+    FindAllDynamicFormsResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      questions: {
+        /** Format: uuid */
+        id: string;
+        /** Format: uuid */
+        formId: string;
+        text: string;
+        /** @default false */
+        disabled: boolean;
+        /** @default true */
+        required: boolean;
+        /** @default false */
+        multipleChoice: boolean;
+        /** Format: uuid */
+        tagGroupId: string;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        tagGroup: {
+          /** Format: uuid */
+          id: string;
+          name: string;
+          color: string;
+          isExclusive: boolean;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        };
+        options: {
+          /** Format: uuid */
+          id: string;
+          text: string;
+          /** Format: uuid */
+          tagId: string;
+          /** Format: uuid */
+          questionId: string;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+          tag: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            /** Format: uuid */
+            groupId: string;
+            /** @enum {string} */
+            type:
+              | 'PROFILE'
+              | 'EVENT'
+              | 'PARTICIPANT'
+              | 'NOT_IN_SYSTEM'
+              | 'PRODUCTION_ROLE'
+              | 'FORM_OPTION';
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+          };
+        }[];
+      }[];
+    }[];
+    DeleteDynamicFormDto: {
+      id: string;
+    };
   };
   responses: never;
   parameters: never;
@@ -5699,6 +6634,192 @@ export interface operations {
       };
     };
   };
+  EventController_updateBanner: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'multipart/form-data': components['schemas']['UpdateBannerEventDto'];
+      };
+    };
+    responses: {
+      /** @description Imagen actualizada exitosamente */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateBannerEventResponseDto'];
+        };
+      };
+      /** @description Conflicto al actualizar la imagen */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description La imagen no es válida, debe ser un archivo de imagen */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error al subir la imagen al CDN */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  EventController_deleteBanner: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Imagen eliminada exitosamente */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateMainPictureEventResponseDto'];
+        };
+      };
+      /** @description Perfil o foto no encontrados */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error al eliminar la imagen del CDN */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  EventController_updateMainPicture: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'multipart/form-data': components['schemas']['UpdateMainPictureEventDto'];
+      };
+    };
+    responses: {
+      /** @description Imagen actualizada exitosamente */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateMainPictureEventResponseDto'];
+        };
+      };
+      /** @description Conflicto al actualizar la imagen */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description La imagen no es válida, debe ser un archivo de imagen */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error al subir la imagen al CDN */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  EventController_deleteMainPicture: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Imagen eliminada exitosamente */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateMainPictureEventResponseDto'];
+        };
+      };
+      /** @description Perfil o foto no encontrados */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error al eliminar la imagen del CDN */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
   EventController_findAll: {
     parameters: {
       query?: never;
@@ -6133,6 +7254,50 @@ export interface operations {
       };
     };
   };
+  ProfileController_findReferralCodeUsage: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        code: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Se ha encontrado la cantidad de veces usadas el codigo de referido */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindReferralCodeUsageResponseDto'];
+        };
+      };
+    };
+  };
+  ProfileController_findReferralCodeExists: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        code: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Se ha encontrado la existencia del codigo de referido */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindReferralCodeExistsResponseDto'];
+        };
+      };
+    };
+  };
   ProfileController_create: {
     parameters: {
       query?: never;
@@ -6166,6 +7331,99 @@ export interface operations {
       };
       /** @description Error en la creación del perfil */
       409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProfileController_updateImage: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'multipart/form-data': components['schemas']['UpdateImageProfileDto'];
+      };
+    };
+    responses: {
+      /** @description Imagen actualizada exitosamente */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateImageProfileResponseDto'];
+        };
+      };
+      /** @description Conflicto al actualizar la imagen */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description La imagen no es válida, debe ser un archivo de imagen */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error al subir la imagen al CDN */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProfileController_deleteImage: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Imagen eliminada exitosamente */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DeleteImageProfileResponseDto'];
+        };
+      };
+      /** @description Perfil o foto no encontrados */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error al eliminar la imagen del CDN */
+      500: {
         headers: {
           [name: string]: unknown;
         };
@@ -6272,99 +7530,6 @@ export interface operations {
       };
       /** @description Error en la actualización del perfil */
       409: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['ErrorDto'];
-        };
-      };
-    };
-  };
-  ImageController_updateImage: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        id: string;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'multipart/form-data': components['schemas']['UpdateImageDto'];
-      };
-    };
-    responses: {
-      /** @description Imagen actualizada exitosamente */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['UpdateImageResponseDto'];
-        };
-      };
-      /** @description Conflicto al actualizar la imagen */
-      409: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['ErrorDto'];
-        };
-      };
-      /** @description La imagen no es válida, debe ser un archivo de imagen */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['ErrorDto'];
-        };
-      };
-      /** @description Error al subir la imagen al CDN */
-      500: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['ErrorDto'];
-        };
-      };
-    };
-  };
-  ImageController_deleteImage: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Imagen eliminada exitosamente */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['DeleteImageResponseDto'];
-        };
-      };
-      /** @description Perfil o foto no encontrados */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['ErrorDto'];
-        };
-      };
-      /** @description Error al eliminar la imagen del CDN */
-      500: {
         headers: {
           [name: string]: unknown;
         };
@@ -7768,6 +8933,439 @@ export interface operations {
       };
       /** @description Error al procesar el webhook */
       409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProductionController_getAll: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Producciones obtenidas con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetAllProductionResponseDto'];
+        };
+      };
+    };
+  };
+  ProductionController_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateProductionDto'];
+      };
+    };
+    responses: {
+      /** @description Producción creada con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateProductionDto'];
+        };
+      };
+      /** @description Producción ya existente */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProductionController_createRole: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateProductionRoleDto'];
+      };
+    };
+    responses: {
+      /** @description Rol de producción creado con éxito */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateProductionDto'];
+        };
+      };
+    };
+  };
+  ProductionController_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateProductionDto'];
+      };
+    };
+    responses: {
+      /** @description Producción actualizada con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateProductionResponseDto'];
+        };
+      };
+      /** @description Producción no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Producción ya existente */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProductionController_deleteProduction: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Producción eliminada con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DeleteProductionResponseDto'];
+        };
+      };
+      /** @description Producción no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description No se puede eliminar la producción  porque tiene eventos activos */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProductionAffiliationRequestController_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateProductionAffiliationRequestDto'];
+      };
+    };
+    responses: {
+      /** @description Solicitud de afiliación a producción creada con éxito */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateProductionAffiliationRequestDto'];
+        };
+      };
+      /** @description Ya eres administrador de una producción */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProductionAffiliationRequestController_accept: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Solicitud de afiliación a producción actualizada con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateProductionAffiliationRequestResponseDto'];
+        };
+      };
+      /** @description No tienes autorización para actualizar la solicitud */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Solicitud de afiliación no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProductionAffiliationRequestController_reject: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Solicitud de afiliación a producción actualizada con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateProductionAffiliationRequestResponseDto'];
+        };
+      };
+      /** @description No tienes autorización para actualizar la solicitud */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Solicitud de afiliación no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  ProductionAffiliationRequestController_findByProduction: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Solicitud de afiliación a producción actualizada con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindByProductionAffiliationRequestResponseDto'];
+        };
+      };
+      /** @description Producción no encontrada */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  DynamicFormController_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateDynamicFormDto'];
+      };
+    };
+    responses: {
+      /** @description Formulario dinámico creado con éxito */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['CreateDynamicFormResponseDto'];
+        };
+      };
+      /** @description Error en la creación del formulario dinámico */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Error en la creación del formulario dinámico */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  DynamicFormController_update: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateDynamicFormDto'];
+      };
+    };
+    responses: {
+      /** @description Formulario dinámico actualizado con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['UpdateDynamicFormResponseDto'];
+        };
+      };
+      /** @description Formulario dinámico no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
+  DynamicFormController_getAll: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Formularios dinámicos obtenidos con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindAllDynamicFormsResponseDto'];
+        };
+      };
+    };
+  };
+  DynamicFormController_delete: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Formulario dinámico eliminado con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DeleteDynamicFormDto'];
+        };
+      };
+      /** @description Formulario dinámico no encontrado */
+      404: {
         headers: {
           [name: string]: unknown;
         };

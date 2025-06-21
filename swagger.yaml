@@ -2445,6 +2445,25 @@ paths:
                 $ref: "#/components/schemas/GetMiExpoMeResponseDto"
       tags:
         - "MiExpo"
+  /mi-expo/me-first-time:
+    patch:
+      operationId: "MiExpoController_updateMeWithoutLogin"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMiExpoMeFirstTimeDto"
+      responses:
+        200:
+          description: "Me"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetMiExpoMeResponseDto"
+      tags:
+        - "MiExpo"
   /mi-expo/invitations:
     get:
       operationId: "MiExpoController_invitations"
@@ -2794,6 +2813,176 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "ProductionAffiliationRequest"
+  /dynamic-form/create:
+    post:
+      operationId: "DynamicFormController_create"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDynamicFormDto"
+      responses:
+        201:
+          description: "Formulario dinámico creado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateDynamicFormResponseDto"
+        400:
+          description: "Error en la creación del formulario dinámico"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "Error en la creación del formulario dinámico"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "DynamicForm"
+  /dynamic-form/submit/{id}:
+    post:
+      operationId: "DynamicFormController_submit"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitDynamicFormsDto"
+      responses:
+        200:
+          description: "El formulario se ha enviado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmitDynamicFormsResponseDto"
+        400:
+          description: "La respuesta a una o más de las preguntas es requerida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        404:
+          description: "Las preguntas y/o opciones no coinciden con el formulario"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        406:
+          description: "Las preguntas y/o opciones no coinciden con el formulario"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "La pregunta no puede tener mas de una respuesta si no es de respuesta multiple"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "DynamicForm"
+  /dynamic-form/update/{id}:
+    patch:
+      operationId: "DynamicFormController_update"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDynamicFormDto"
+      responses:
+        200:
+          description: "Formulario dinámico actualizado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateDynamicFormResponseDto"
+        404:
+          description: "Formulario dinámico no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "DynamicForm"
+  /dynamic-form/all:
+    get:
+      operationId: "DynamicFormController_getAll"
+      parameters: []
+      responses:
+        200:
+          description: "Formularios dinámicos obtenidos con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindAllDynamicFormsResponseDto"
+      tags:
+        - "DynamicForm"
+  /dynamic-form/{name}:
+    get:
+      operationId: "DynamicFormController_getByName"
+      parameters:
+        - name: "name"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Formulario dinámico obtenido con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByNameDynamicFormsResponseDto"
+        404:
+          description: "Formulario dinámico no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "DynamicForm"
+  /dynamic-form/delete/{id}:
+    delete:
+      operationId: "DynamicFormController_delete"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Formulario dinámico eliminado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteDynamicFormDto"
+        404:
+          description: "Formulario dinámico no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "DynamicForm"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -2946,6 +3135,7 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
       required:
         - "name"
         - "groupId"
@@ -2974,6 +3164,7 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
         created_at:
           type:
             - "string"
@@ -3021,6 +3212,7 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
               created_at:
                 type:
                   - "string"
@@ -3106,6 +3298,7 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
               created_at:
                 type:
                   - "string"
@@ -3184,6 +3377,7 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
         created_at:
           type:
             - "string"
@@ -3275,6 +3469,7 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
         created_at:
           type:
             - "string"
@@ -3315,6 +3510,7 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
         created_at:
           type:
             - "string"
@@ -3813,6 +4009,7 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
               created_at:
                 type:
                   - "string"
@@ -3868,6 +4065,7 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
               group:
                 type:
                   - "object"
@@ -3958,6 +4156,7 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
               group:
                 type:
                   - "object"
@@ -4011,6 +4210,7 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
               created_at:
                 type:
                   - "string"
@@ -4152,6 +4352,7 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
                     created_at:
                       type:
                         - "string"
@@ -4232,6 +4433,7 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
                     created_at:
                       type:
                         - "string"
@@ -4331,6 +4533,7 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
               created_at:
                 type:
                   - "string"
@@ -5940,6 +6143,7 @@ components:
                               - "PARTICIPANT"
                               - "NOT_IN_SYSTEM"
                               - "PRODUCTION_ROLE"
+                              - "FORM_OPTION"
                           group:
                             type:
                               - "object"
@@ -6308,6 +6512,7 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
                     group:
                       type:
                         - "object"
@@ -6916,6 +7121,7 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
               created_at:
                 type:
                   - "string"
@@ -7065,6 +7271,7 @@ components:
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
                 - "PRODUCTION_ROLE"
+                - "FORM_OPTION"
             created_at:
               type:
                 - "string"
@@ -7141,6 +7348,7 @@ components:
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
                 - "PRODUCTION_ROLE"
+                - "FORM_OPTION"
             created_at:
               type:
                 - "string"
@@ -7523,6 +7731,7 @@ components:
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
                 - "PRODUCTION_ROLE"
+                - "FORM_OPTION"
             created_at:
               type:
                 - "string"
@@ -7861,6 +8070,7 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
                     created_at:
                       type:
                         - "string"
@@ -8068,6 +8278,7 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
                     created_at:
                       type:
                         - "string"
@@ -8352,6 +8563,7 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
                     created_at:
                       type:
                         - "string"
@@ -8564,6 +8776,7 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
                     created_at:
                       type:
                         - "string"
@@ -8754,6 +8967,7 @@ components:
                       - "PARTICIPANT"
                       - "NOT_IN_SYSTEM"
                       - "PRODUCTION_ROLE"
+                      - "FORM_OPTION"
                   created_at:
                     type:
                       - "string"
@@ -8919,6 +9133,66 @@ components:
         referralCode:
           type:
             - "string"
+        residenceLocation:
+          type:
+            - "object"
+            - "null"
+          properties:
+            city:
+              type:
+                - "string"
+            state:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+          required:
+            - "city"
+            - "state"
+            - "country"
+            - "latitude"
+            - "longitude"
+        birthLocation:
+          type:
+            - "object"
+            - "null"
+          properties:
+            city:
+              type:
+                - "string"
+            state:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+          required:
+            - "city"
+            - "state"
+            - "country"
+            - "latitude"
+            - "longitude"
       required:
         - "id"
         - "shortId"
@@ -8944,6 +9218,8 @@ components:
         - "created_at"
         - "updated_at"
         - "referralCode"
+        - "residenceLocation"
+        - "birthLocation"
     FindTrashResponseDto:
       type:
         - "object"
@@ -9497,6 +9773,7 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
               created_at:
                 type:
                   - "string"
@@ -13101,37 +13378,7 @@ components:
                 type:
                   - "string"
                 minLength: 1
-              administratorId:
-                type:
-                  - "string"
-                  - "null"
-                format: "uuid"
-              created_at:
-                type:
-                  - "string"
-                format: "date-time"
-              updated_at:
-                type:
-                  - "string"
-                format: "date-time"
-            required:
-              - "id"
-              - "name"
-              - "administratorId"
-              - "created_at"
-              - "updated_at"
-        productionsParticipated:
-          type:
-            - "array"
-          items:
-            type:
-              - "object"
-            properties:
-              id:
-                type:
-                  - "string"
-                format: "uuid"
-              name:
+              description:
                 type:
                   - "string"
                 minLength: 1
@@ -13151,6 +13398,46 @@ components:
             required:
               - "id"
               - "name"
+              - "description"
+              - "administratorId"
+              - "created_at"
+              - "updated_at"
+        productionsParticipated:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              name:
+                type:
+                  - "string"
+                minLength: 1
+              description:
+                type:
+                  - "string"
+                minLength: 1
+              administratorId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "name"
+              - "description"
               - "administratorId"
               - "created_at"
               - "updated_at"
@@ -13340,6 +13627,127 @@ components:
         - "username"
         - "birth"
         - "residence"
+    UpdateMiExpoMeFirstTimeDto:
+      type:
+        - "object"
+      properties:
+        birthDate:
+          type:
+            - "string"
+            - "null"
+        dni:
+          type:
+            - "string"
+            - "null"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        gender:
+          type:
+            - "string"
+            - "null"
+        instagram:
+          type:
+            - "string"
+            - "null"
+        mail:
+          type:
+            - "string"
+            - "null"
+          format: "email"
+        password:
+          type:
+            - "string"
+            - "null"
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        secondaryPhoneNumber:
+          type:
+            - "string"
+            - "null"
+        username:
+          type:
+            - "string"
+            - "null"
+        birth:
+          type:
+            - "object"
+          properties:
+            city:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+            state:
+              type:
+                - "string"
+          required:
+            - "city"
+            - "country"
+            - "latitude"
+            - "longitude"
+            - "state"
+        residence:
+          type:
+            - "object"
+          properties:
+            city:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+            state:
+              type:
+                - "string"
+          required:
+            - "city"
+            - "country"
+            - "latitude"
+            - "longitude"
+            - "state"
+        id:
+          type:
+            - "string"
+          format: "uuid"
+      required:
+        - "birthDate"
+        - "dni"
+        - "fullName"
+        - "gender"
+        - "instagram"
+        - "mail"
+        - "password"
+        - "phoneNumber"
+        - "secondaryPhoneNumber"
+        - "username"
+        - "birth"
+        - "residence"
+        - "id"
     GetInvitationsResponseDto:
       type:
         - "object"
@@ -13681,6 +14089,10 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              description:
+                type:
+                  - "string"
+                minLength: 1
               administratorId:
                 type:
                   - "string"
@@ -13836,6 +14248,7 @@ components:
             required:
               - "id"
               - "name"
+              - "description"
               - "administratorId"
               - "created_at"
               - "updated_at"
@@ -13850,6 +14263,10 @@ components:
           type:
             - "string"
           minLength: 1
+        description:
+          type:
+            - "string"
+          minLength: 1
         administratorId:
           type:
             - "string"
@@ -13857,6 +14274,7 @@ components:
           format: "uuid"
       required:
         - "name"
+        - "description"
         - "administratorId"
     CreateProductionRoleDto:
       type:
@@ -13873,6 +14291,10 @@ components:
         - "object"
       properties:
         name:
+          type:
+            - "string"
+          minLength: 1
+        description:
           type:
             - "string"
           minLength: 1
@@ -13893,34 +14315,7 @@ components:
           type:
             - "string"
           minLength: 1
-        administratorId:
-          type:
-            - "string"
-            - "null"
-          format: "uuid"
-        created_at:
-          type:
-            - "string"
-          format: "date-time"
-        updated_at:
-          type:
-            - "string"
-          format: "date-time"
-      required:
-        - "id"
-        - "name"
-        - "administratorId"
-        - "created_at"
-        - "updated_at"
-    DeleteProductionResponseDto:
-      type:
-        - "object"
-      properties:
-        id:
-          type:
-            - "string"
-          format: "uuid"
-        name:
+        description:
           type:
             - "string"
           minLength: 1
@@ -13940,6 +14335,43 @@ components:
       required:
         - "id"
         - "name"
+        - "description"
+        - "administratorId"
+        - "created_at"
+        - "updated_at"
+    DeleteProductionResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        description:
+          type:
+            - "string"
+          minLength: 1
+        administratorId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "description"
         - "administratorId"
         - "created_at"
         - "updated_at"
@@ -13996,6 +14428,10 @@ components:
               type:
                 - "string"
               minLength: 1
+            description:
+              type:
+                - "string"
+              minLength: 1
             administratorId:
               type:
                 - "string"
@@ -14012,6 +14448,7 @@ components:
           required:
             - "id"
             - "name"
+            - "description"
             - "administratorId"
             - "created_at"
             - "updated_at"
@@ -14212,6 +14649,10 @@ components:
                     type:
                       - "string"
                     minLength: 1
+                  description:
+                    type:
+                      - "string"
+                    minLength: 1
                   administratorId:
                     type:
                       - "string"
@@ -14228,6 +14669,7 @@ components:
                 required:
                   - "id"
                   - "name"
+                  - "description"
                   - "administratorId"
                   - "created_at"
                   - "updated_at"
@@ -14380,3 +14822,893 @@ components:
               - "profile"
       required:
         - "productions"
+    CreateDynamicFormDto:
+      type:
+        - "object"
+      properties:
+        name:
+          type:
+            - "string"
+          minLength: 1
+        questions:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              text:
+                type:
+                  - "string"
+                minLength: 1
+              disabled:
+                default: false
+                type:
+                  - "boolean"
+              required:
+                default: true
+                type:
+                  - "boolean"
+              multipleChoice:
+                default: false
+                type:
+                  - "boolean"
+              options:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "object"
+                  properties:
+                    text:
+                      type:
+                        - "string"
+                      minLength: 1
+                  required:
+                    - "text"
+            required:
+              - "text"
+              - "options"
+      required:
+        - "name"
+        - "questions"
+    CreateDynamicFormResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        questions:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              text:
+                type:
+                  - "string"
+                minLength: 1
+              disabled:
+                default: false
+                type:
+                  - "boolean"
+              required:
+                default: true
+                type:
+                  - "boolean"
+              multipleChoice:
+                default: false
+                type:
+                  - "boolean"
+              tagGroupId:
+                type:
+                  - "string"
+                format: "uuid"
+              options:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "object"
+                  properties:
+                    text:
+                      type:
+                        - "string"
+                      minLength: 1
+                    tagId:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    id:
+                      type:
+                        - "string"
+                      format: "uuid"
+                  required:
+                    - "text"
+                    - "tagId"
+                    - "id"
+            required:
+              - "id"
+              - "text"
+              - "tagGroupId"
+              - "options"
+      required:
+        - "id"
+        - "name"
+        - "questions"
+    SubmitDynamicFormsDto:
+      type:
+        - "array"
+      items:
+        type:
+          - "object"
+        properties:
+          id:
+            type:
+              - "string"
+            format: "uuid"
+          formId:
+            type:
+              - "string"
+            format: "uuid"
+          disabled:
+            default: false
+            type:
+              - "boolean"
+          required:
+            default: true
+            type:
+              - "boolean"
+          multipleChoice:
+            default: false
+            type:
+              - "boolean"
+          tagGroupId:
+            type:
+              - "string"
+            format: "uuid"
+          answers:
+            type:
+              - "array"
+            items:
+              type:
+                - "string"
+              format: "uuid"
+        required:
+          - "id"
+          - "formId"
+          - "tagGroupId"
+          - "answers"
+    SubmitDynamicFormsResponseDto:
+      type:
+        - "object"
+      properties:
+        profiles:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              shortId:
+                type:
+                  - "number"
+              role:
+                default: "MI_EXPO"
+                type:
+                  - "string"
+                enum:
+                  - "USER"
+                  - "ADMIN"
+                  - "FORM"
+                  - "TICKETS"
+                  - "MI_EXPO"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+              password:
+                type:
+                  - "string"
+                  - "null"
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              isPhoneVerified:
+                type:
+                  - "boolean"
+              secondaryPhoneNumber:
+                type:
+                  - "string"
+                  - "null"
+              fullName:
+                type:
+                  - "string"
+                minLength: 1
+              firstName:
+                type:
+                  - "string"
+                  - "null"
+                minLength: 1
+              gender:
+                type:
+                  - "string"
+                  - "null"
+              birthDate:
+                type:
+                  - "string"
+                  - "null"
+              profilePictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              instagram:
+                type:
+                  - "string"
+                  - "null"
+              mail:
+                type:
+                  - "string"
+                  - "null"
+                format: "email"
+              dni:
+                type:
+                  - "string"
+                  - "null"
+              alternativeNames:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              birthLocationId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              residenceLocationId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              isInTrash:
+                type:
+                  - "boolean"
+              movedToTrashDate:
+                type:
+                  - "string"
+                  - "null"
+                format: "date-time"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              referralCode:
+                type:
+                  - "string"
+            required:
+              - "id"
+              - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
+              - "phoneNumber"
+              - "isPhoneVerified"
+              - "secondaryPhoneNumber"
+              - "fullName"
+              - "firstName"
+              - "gender"
+              - "birthDate"
+              - "profilePictureUrl"
+              - "instagram"
+              - "mail"
+              - "dni"
+              - "alternativeNames"
+              - "birthLocationId"
+              - "residenceLocationId"
+              - "isInTrash"
+              - "movedToTrashDate"
+              - "created_at"
+              - "updated_at"
+              - "referralCode"
+      required:
+        - "profiles"
+    UpdateDynamicFormDto:
+      type:
+        - "object"
+      properties:
+        name:
+          type:
+            - "string"
+          minLength: 1
+        questions:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              text:
+                type:
+                  - "string"
+                minLength: 1
+              disabled:
+                default: false
+                type:
+                  - "boolean"
+              required:
+                default: true
+                type:
+                  - "boolean"
+              multipleChoice:
+                default: false
+                type:
+                  - "boolean"
+              id:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              options:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "object"
+                  properties:
+                    text:
+                      type:
+                        - "string"
+                      minLength: 1
+                    id:
+                      type:
+                        - "string"
+                        - "null"
+                      format: "uuid"
+                  required:
+                    - "text"
+                    - "id"
+            required:
+              - "text"
+              - "id"
+              - "options"
+      required:
+        - "name"
+        - "questions"
+    UpdateDynamicFormResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+        questions:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              formId:
+                type:
+                  - "string"
+                format: "uuid"
+              text:
+                type:
+                  - "string"
+                minLength: 1
+              disabled:
+                default: false
+                type:
+                  - "boolean"
+              required:
+                default: true
+                type:
+                  - "boolean"
+              multipleChoice:
+                default: false
+                type:
+                  - "boolean"
+              tagGroupId:
+                type:
+                  - "string"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              options:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "object"
+                  properties:
+                    id:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    text:
+                      type:
+                        - "string"
+                      minLength: 1
+                    tagId:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    questionId:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    created_at:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    updated_at:
+                      type:
+                        - "string"
+                      format: "date-time"
+                  required:
+                    - "id"
+                    - "text"
+                    - "tagId"
+                    - "questionId"
+                    - "created_at"
+                    - "updated_at"
+            required:
+              - "id"
+              - "formId"
+              - "text"
+              - "tagGroupId"
+              - "created_at"
+              - "updated_at"
+              - "options"
+      required:
+        - "id"
+        - "name"
+        - "created_at"
+        - "updated_at"
+        - "questions"
+    FindAllDynamicFormsResponseDto:
+      type:
+        - "array"
+      items:
+        type:
+          - "object"
+        properties:
+          id:
+            type:
+              - "string"
+            format: "uuid"
+          name:
+            type:
+              - "string"
+            minLength: 1
+          created_at:
+            type:
+              - "string"
+            format: "date-time"
+          updated_at:
+            type:
+              - "string"
+            format: "date-time"
+          questions:
+            type:
+              - "array"
+            items:
+              type:
+                - "object"
+              properties:
+                id:
+                  type:
+                    - "string"
+                  format: "uuid"
+                formId:
+                  type:
+                    - "string"
+                  format: "uuid"
+                text:
+                  type:
+                    - "string"
+                  minLength: 1
+                disabled:
+                  default: false
+                  type:
+                    - "boolean"
+                required:
+                  default: true
+                  type:
+                    - "boolean"
+                multipleChoice:
+                  default: false
+                  type:
+                    - "boolean"
+                tagGroupId:
+                  type:
+                    - "string"
+                  format: "uuid"
+                created_at:
+                  type:
+                    - "string"
+                  format: "date-time"
+                updated_at:
+                  type:
+                    - "string"
+                  format: "date-time"
+                tagGroup:
+                  type:
+                    - "object"
+                  properties:
+                    id:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    name:
+                      type:
+                        - "string"
+                      minLength: 1
+                    color:
+                      type:
+                        - "string"
+                      minLength: 7
+                      maxLength: 7
+                    isExclusive:
+                      type:
+                        - "boolean"
+                    created_at:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    updated_at:
+                      type:
+                        - "string"
+                      format: "date-time"
+                  required:
+                    - "id"
+                    - "name"
+                    - "color"
+                    - "isExclusive"
+                    - "created_at"
+                    - "updated_at"
+                options:
+                  type:
+                    - "array"
+                  items:
+                    type:
+                      - "object"
+                    properties:
+                      id:
+                        type:
+                          - "string"
+                        format: "uuid"
+                      text:
+                        type:
+                          - "string"
+                        minLength: 1
+                      tagId:
+                        type:
+                          - "string"
+                        format: "uuid"
+                      questionId:
+                        type:
+                          - "string"
+                        format: "uuid"
+                      created_at:
+                        type:
+                          - "string"
+                        format: "date-time"
+                      updated_at:
+                        type:
+                          - "string"
+                        format: "date-time"
+                      tag:
+                        type:
+                          - "object"
+                        properties:
+                          id:
+                            type:
+                              - "string"
+                            format: "uuid"
+                          name:
+                            type:
+                              - "string"
+                            minLength: 1
+                          groupId:
+                            type:
+                              - "string"
+                            format: "uuid"
+                          type:
+                            type:
+                              - "string"
+                            enum:
+                              - "PROFILE"
+                              - "EVENT"
+                              - "PARTICIPANT"
+                              - "NOT_IN_SYSTEM"
+                              - "PRODUCTION_ROLE"
+                              - "FORM_OPTION"
+                          created_at:
+                            type:
+                              - "string"
+                            format: "date-time"
+                          updated_at:
+                            type:
+                              - "string"
+                            format: "date-time"
+                        required:
+                          - "id"
+                          - "name"
+                          - "groupId"
+                          - "type"
+                          - "created_at"
+                          - "updated_at"
+                    required:
+                      - "id"
+                      - "text"
+                      - "tagId"
+                      - "questionId"
+                      - "created_at"
+                      - "updated_at"
+                      - "tag"
+              required:
+                - "id"
+                - "formId"
+                - "text"
+                - "tagGroupId"
+                - "created_at"
+                - "updated_at"
+                - "tagGroup"
+                - "options"
+        required:
+          - "id"
+          - "name"
+          - "created_at"
+          - "updated_at"
+          - "questions"
+    FindByNameDynamicFormsResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+        questions:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              formId:
+                type:
+                  - "string"
+                format: "uuid"
+              text:
+                type:
+                  - "string"
+                minLength: 1
+              disabled:
+                default: false
+                type:
+                  - "boolean"
+              required:
+                default: true
+                type:
+                  - "boolean"
+              multipleChoice:
+                default: false
+                type:
+                  - "boolean"
+              tagGroupId:
+                type:
+                  - "string"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              tagGroup:
+                type:
+                  - "object"
+                properties:
+                  id:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  name:
+                    type:
+                      - "string"
+                    minLength: 1
+                  color:
+                    type:
+                      - "string"
+                    minLength: 7
+                    maxLength: 7
+                  isExclusive:
+                    type:
+                      - "boolean"
+                  created_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                  updated_at:
+                    type:
+                      - "string"
+                    format: "date-time"
+                required:
+                  - "id"
+                  - "name"
+                  - "color"
+                  - "isExclusive"
+                  - "created_at"
+                  - "updated_at"
+              options:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "object"
+                  properties:
+                    id:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    text:
+                      type:
+                        - "string"
+                      minLength: 1
+                    tagId:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    questionId:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    created_at:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    updated_at:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    tag:
+                      type:
+                        - "object"
+                      properties:
+                        id:
+                          type:
+                            - "string"
+                          format: "uuid"
+                        name:
+                          type:
+                            - "string"
+                          minLength: 1
+                        groupId:
+                          type:
+                            - "string"
+                          format: "uuid"
+                        type:
+                          type:
+                            - "string"
+                          enum:
+                            - "PROFILE"
+                            - "EVENT"
+                            - "PARTICIPANT"
+                            - "NOT_IN_SYSTEM"
+                            - "PRODUCTION_ROLE"
+                            - "FORM_OPTION"
+                        created_at:
+                          type:
+                            - "string"
+                          format: "date-time"
+                        updated_at:
+                          type:
+                            - "string"
+                          format: "date-time"
+                      required:
+                        - "id"
+                        - "name"
+                        - "groupId"
+                        - "type"
+                        - "created_at"
+                        - "updated_at"
+                  required:
+                    - "id"
+                    - "text"
+                    - "tagId"
+                    - "questionId"
+                    - "created_at"
+                    - "updated_at"
+                    - "tag"
+            required:
+              - "id"
+              - "formId"
+              - "text"
+              - "tagGroupId"
+              - "created_at"
+              - "updated_at"
+              - "tagGroup"
+              - "options"
+      required:
+        - "id"
+        - "name"
+        - "created_at"
+        - "updated_at"
+        - "questions"
+    DeleteDynamicFormDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+      required:
+        - "id"

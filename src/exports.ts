@@ -3,6 +3,7 @@ export * from './auth/exports';
 export * from './canned-response/exports';
 export * from './comment/exports';
 export * from './csv/exports';
+export * from './dynamic-form/exports';
 export * from './event-folder/exports';
 export * from './event/exports';
 export * from './location/exports';

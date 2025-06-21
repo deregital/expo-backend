@@ -17,6 +17,9 @@ export default {
       ticketGroup: 'Grupo de tickets',
       production: 'Producción',
       productionAffiliationRequest: 'Solicitud de afiliación a producción',
+      dynamicForm: 'Formulario dinámico',
+      dynamicQuestion: 'Pregunta dinámica',
+      dynamicOption: 'Opción dinámica',
     },
     tag: { assisted: 'Asistió', confirmed: 'Confirmó asistencia' },
     ticketType: {
@@ -199,10 +202,40 @@ export default {
       name: {
         min: 'El nombre de la producción debe tener al menos 1 caracter',
       },
+      description: {
+        min: 'La descripción de la producción debe tener al menos 1 caracter',
+      },
     },
     productionAffiliationRequest: {
       id: {
         uuid: 'El ID debe ser un UUID',
+      },
+    },
+    dynamicOption: {
+      id: { uuid: 'El ID debe ser un UUID' },
+      text: {
+        required: 'La opción es requerida',
+        min: 'La opción debe tener al menos 1 caracter',
+      },
+    },
+    dynamicQuestion: {
+      id: { uuid: 'El ID debe ser un UUID' },
+      text: {
+        required: 'La pregunta es requerida',
+        min: 'La pregunta debe tener al menos 1 caracter',
+      },
+      options: {
+        min: 'La pregunta debe tener al menos 1 opción',
+      },
+    },
+    dynamicForm: {
+      id: { uuid: 'El ID debe ser un UUID' },
+      name: {
+        required: 'El nombre del formulario es requerido',
+        min: 'El nombre del formulario debe tener al menos 1 caracter',
+      },
+      questions: {
+        min: 'El formulario debe tener al menos 1 pregunta',
       },
     },
   },
@@ -721,6 +754,39 @@ export default {
       'find-by-production': {
         success: 'Solicitud de afiliación a producción obtenida con éxito',
         'not-found': 'Producción no encontrada',
+      },
+    },
+    'dynamic-form': {
+      create: {
+        success: 'Formulario dinámico creado con éxito',
+        conflict: 'Error en la creación del formulario dinámico',
+      },
+      update: {
+        success: 'Formulario dinámico actualizado con éxito',
+        'not-found': 'Formulario dinámico no encontrado',
+        'conflict-tag-in-use': `No se puede editar o eliminar la opción \{\{tag\}\} porque está en uso en \{\{profiles\}\} perfiles`,
+        'conflict-cannot-change-question': `No se puede cambiar la pregunta \{\{question\}\} porque está la opción \{\{option\}\} en uso en \{\{profiles\}\} perfiles`,
+      },
+      submit: {
+        'is-required': 'La respuesta a una o más de las preguntas es requerida',
+        'too-many-answers':
+          'La pregunta no puede tener mas de una respuesta si no es de respuesta multiple',
+        success: 'El formulario se ha enviado con éxito',
+        'not-acceptable':
+          'Las preguntas y/o opciones no coinciden con el formulario',
+        'option-not-found': 'La opcion a la pregunta no fue encontrada',
+      },
+      all: {
+        success: 'Formularios dinámicos obtenidos con éxito',
+      },
+      'find-by-name': {
+        success: 'Formulario dinámico obtenido con éxito',
+        'not-found': 'Formulario dinámico no encontrado',
+      },
+      delete: {
+        success: 'Formulario dinámico eliminado con éxito',
+        'not-found': 'Formulario dinámico no encontrado',
+        'conflict-tag-in-use': `No se puede eliminar el formulario porque la opción \{\{option\}\} está en uso en \{\{profiles\}\} perfiles`,
       },
     },
   },

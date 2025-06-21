@@ -52,6 +52,10 @@ import {
 import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import z from 'zod';
 import { Role, TagType, TicketType } from '~/types/prisma-schema';
+import {
+  UpdateMiExpoMeFirstTimeDto,
+  UpdateMiExpoMeFirstTimeResponseDto,
+} from './dto/update-me-first-time.dto';
 
 @Controller('mi-expo')
 export class MiExpoController {
@@ -130,6 +134,26 @@ export class MiExpoController {
     @Body() body: UpdateMiExpoMeDto,
   ): Promise<z.infer<typeof updateMiExpoMeResponseSchema>> {
     return await this.profileService.update(profile.id, {
+      ...body,
+      firstTimeMiExpo: false,
+    });
+  }
+
+  @Roles(Role.MI_EXPO, Role.ADMIN)
+  @UseGuards(JwtGuard, RoleGuard)
+  @ApiOkResponse({
+    description: 'Me',
+    type: GetMiExpoMeResponseDto,
+  })
+  @ApiOkResponse({
+    description: translate('route.profile.update.success'),
+    type: UpdateMiExpoMeFirstTimeResponseDto,
+  })
+  @Patch('/me-first-time')
+  async updateMeWithoutLogin(
+    @Body() body: UpdateMiExpoMeFirstTimeDto,
+  ): Promise<z.infer<typeof updateMiExpoMeResponseSchema>> {
+    return await this.profileService.update(body.id, {
       ...body,
       firstTimeMiExpo: false,
     });
