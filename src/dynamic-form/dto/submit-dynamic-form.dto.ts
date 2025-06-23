@@ -6,7 +6,6 @@ export const submitDynamicFormsSchema = dynamicQuestionSchema
   .omit({
     created_at: true,
     updated_at: true,
-    text: true,
   })
   .extend({
     answers: dynamicOptionSchema.shape.id.array(),

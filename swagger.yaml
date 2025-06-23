@@ -2867,7 +2867,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/SubmitDynamicFormsResponseDto"
         400:
-          description: "La respuesta a una o más de las preguntas es requerida"
+          description: "Las pregunta [missing \"{{text}}\" value] es requerida"
           content:
             application/json:
               schema:
@@ -14962,6 +14962,10 @@ components:
             type:
               - "string"
             format: "uuid"
+          text:
+            type:
+              - "string"
+            minLength: 1
           disabled:
             default: false
             type:
@@ -14988,6 +14992,7 @@ components:
         required:
           - "id"
           - "formId"
+          - "text"
           - "tagGroupId"
           - "answers"
     SubmitDynamicFormsResponseDto:

@@ -149,7 +149,9 @@ export class DynamicFormController {
 
         if (question.required && question.answers.length === 0) {
           throw new BadRequestException(
-            translate('route.dynamic-form.submit.is-required'),
+            translate('route.dynamic-form.submit.is-required', {
+              text: question.text,
+            }),
           );
         }
 
