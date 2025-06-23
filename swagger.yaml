@@ -2867,7 +2867,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/SubmitDynamicFormsResponseDto"
         400:
-          description: "Las pregunta [missing \"{{text}}\" value] es requerida"
+          description: "Las pregunta \"[missing \"{{text}}\" value]\" es requerida"
           content:
             application/json:
               schema:
