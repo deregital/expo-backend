@@ -462,6 +462,8 @@ export default {
         'phone-number-already-exists': 'Ya existe un perfil con ese teléfono',
         'secondary-phone-number-already-exists':
           'Ya existe un perfil con ese teléfono secundario',
+        'username-already-exists':
+          'Ya existe un perfil con ese nombre de usuario',
         conflict: 'Error en la creación del perfil',
       },
       delete: {
