@@ -768,7 +768,7 @@ export default {
         'conflict-cannot-change-question': `No se puede cambiar la pregunta \{\{question\}\} porque está la opción \{\{option\}\} en uso en \{\{profiles\}\} perfiles`,
       },
       submit: {
-        'is-required': 'La respuesta a una o más de las preguntas es requerida',
+        'is-required': `Las pregunta "\{\{text\}\}" es requerida`,
         'too-many-answers':
           'La pregunta no puede tener mas de una respuesta si no es de respuesta multiple',
         success: 'El formulario se ha enviado con éxito',
