@@ -2445,6 +2445,25 @@ paths:
                 $ref: "#/components/schemas/GetMiExpoMeResponseDto"
       tags:
         - "MiExpo"
+  /mi-expo/me-first-time:
+    patch:
+      operationId: "MiExpoController_updateMeWithoutLogin"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMiExpoMeFirstTimeDto"
+      responses:
+        200:
+          description: "Me"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetMiExpoMeResponseDto"
+      tags:
+        - "MiExpo"
   /mi-expo/invitations:
     get:
       operationId: "MiExpoController_invitations"
@@ -2825,6 +2844,54 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "DynamicForm"
+  /dynamic-form/submit/{id}:
+    post:
+      operationId: "DynamicFormController_submit"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitDynamicFormsDto"
+      responses:
+        200:
+          description: "El formulario se ha enviado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmitDynamicFormsResponseDto"
+        400:
+          description: "Las pregunta \"[missing \"{{text}}\" value]\" es requerida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        404:
+          description: "Las preguntas y/o opciones no coinciden con el formulario"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        406:
+          description: "Las preguntas y/o opciones no coinciden con el formulario"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "La pregunta no puede tener mas de una respuesta si no es de respuesta multiple"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "DynamicForm"
   /dynamic-form/update/{id}:
     patch:
       operationId: "DynamicFormController_update"
@@ -2866,6 +2933,34 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindAllDynamicFormsResponseDto"
+      tags:
+        - "DynamicForm"
+  /dynamic-form/by-type/{type}:
+    get:
+      operationId: "DynamicFormController_getByType"
+      parameters:
+        - name: "type"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+            enum:
+              - "PERSONAL_INFO"
+              - "PRODUCTION"
+              - "PARTICIPANT"
+      responses:
+        200:
+          description: "Formulario dinámico obtenido con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByTypeDynamicFormsResponseDto"
+        404:
+          description: "Formulario dinámico no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
       tags:
         - "DynamicForm"
   /dynamic-form/delete/{id}:
@@ -3491,10 +3586,12 @@ components:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               password:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               phoneNumber:
                 type:
                   - "string"
@@ -3659,10 +3756,12 @@ components:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               password:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               phoneNumber:
                 type:
                   - "string"
@@ -7866,10 +7965,12 @@ components:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               password:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               phoneNumber:
                 type:
                   - "string"
@@ -8074,10 +8175,12 @@ components:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               password:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               phoneNumber:
                 type:
                   - "string"
@@ -8359,10 +8462,12 @@ components:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               password:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               phoneNumber:
                 type:
                   - "string"
@@ -8572,10 +8677,12 @@ components:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               password:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               phoneNumber:
                 type:
                   - "string"
@@ -8763,10 +8870,12 @@ components:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             password:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             phoneNumber:
               type:
                 - "string"
@@ -8957,10 +9066,12 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         password:
           type:
             - "string"
             - "null"
+          minLength: 1
         phoneNumber:
           type:
             - "string"
@@ -9042,6 +9153,66 @@ components:
         referralCode:
           type:
             - "string"
+        residenceLocation:
+          type:
+            - "object"
+            - "null"
+          properties:
+            city:
+              type:
+                - "string"
+            state:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+          required:
+            - "city"
+            - "state"
+            - "country"
+            - "latitude"
+            - "longitude"
+        birthLocation:
+          type:
+            - "object"
+            - "null"
+          properties:
+            city:
+              type:
+                - "string"
+            state:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+          required:
+            - "city"
+            - "state"
+            - "country"
+            - "latitude"
+            - "longitude"
       required:
         - "id"
         - "shortId"
@@ -9067,6 +9238,8 @@ components:
         - "created_at"
         - "updated_at"
         - "referralCode"
+        - "residenceLocation"
+        - "birthLocation"
     FindTrashResponseDto:
       type:
         - "object"
@@ -9191,10 +9364,12 @@ components:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             password:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             comments:
               type:
                 - "array"
@@ -9421,6 +9596,7 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         phoneNumber:
           type:
             - "string"
@@ -9712,10 +9888,12 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         password:
           type:
             - "string"
             - "null"
+          minLength: 1
         phoneNumber:
           type:
             - "string"
@@ -9882,10 +10060,12 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         password:
           type:
             - "string"
             - "null"
+          minLength: 1
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -11078,10 +11258,12 @@ components:
                   type:
                     - "string"
                     - "null"
+                  minLength: 1
                 password:
                   type:
                     - "string"
                     - "null"
+                  minLength: 1
                 phoneNumber:
                   type:
                     - "string"
@@ -11324,10 +11506,12 @@ components:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   password:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   phoneNumber:
                     type:
                       - "string"
@@ -11564,10 +11748,12 @@ components:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   password:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   phoneNumber:
                     type:
                       - "string"
@@ -12677,10 +12863,12 @@ components:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             password:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             phoneNumber:
               type:
                 - "string"
@@ -12903,6 +13091,7 @@ components:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             phoneNumber:
               type:
                 - "string"
@@ -13039,6 +13228,7 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         phoneNumber:
           type:
             - "string"
@@ -13225,37 +13415,7 @@ components:
                 type:
                   - "string"
                 minLength: 1
-              administratorId:
-                type:
-                  - "string"
-                  - "null"
-                format: "uuid"
-              created_at:
-                type:
-                  - "string"
-                format: "date-time"
-              updated_at:
-                type:
-                  - "string"
-                format: "date-time"
-            required:
-              - "id"
-              - "name"
-              - "administratorId"
-              - "created_at"
-              - "updated_at"
-        productionsParticipated:
-          type:
-            - "array"
-          items:
-            type:
-              - "object"
-            properties:
-              id:
-                type:
-                  - "string"
-                format: "uuid"
-              name:
+              description:
                 type:
                   - "string"
                 minLength: 1
@@ -13275,6 +13435,46 @@ components:
             required:
               - "id"
               - "name"
+              - "description"
+              - "administratorId"
+              - "created_at"
+              - "updated_at"
+        productionsParticipated:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              name:
+                type:
+                  - "string"
+                minLength: 1
+              description:
+                type:
+                  - "string"
+                minLength: 1
+              administratorId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+            required:
+              - "id"
+              - "name"
+              - "description"
               - "administratorId"
               - "created_at"
               - "updated_at"
@@ -13381,6 +13581,7 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         phoneNumber:
           type:
             - "string"
@@ -13393,6 +13594,7 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         birth:
           type:
             - "object"
@@ -13464,6 +13666,129 @@ components:
         - "username"
         - "birth"
         - "residence"
+    UpdateMiExpoMeFirstTimeDto:
+      type:
+        - "object"
+      properties:
+        birthDate:
+          type:
+            - "string"
+            - "null"
+        dni:
+          type:
+            - "string"
+            - "null"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        gender:
+          type:
+            - "string"
+            - "null"
+        instagram:
+          type:
+            - "string"
+            - "null"
+        mail:
+          type:
+            - "string"
+            - "null"
+          format: "email"
+        password:
+          type:
+            - "string"
+            - "null"
+          minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        secondaryPhoneNumber:
+          type:
+            - "string"
+            - "null"
+        username:
+          type:
+            - "string"
+            - "null"
+          minLength: 1
+        birth:
+          type:
+            - "object"
+          properties:
+            city:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+            state:
+              type:
+                - "string"
+          required:
+            - "city"
+            - "country"
+            - "latitude"
+            - "longitude"
+            - "state"
+        residence:
+          type:
+            - "object"
+          properties:
+            city:
+              type:
+                - "string"
+            country:
+              type:
+                - "string"
+            latitude:
+              type:
+                - "number"
+              minimum: -90
+              maximum: 90
+            longitude:
+              type:
+                - "number"
+              minimum: -180
+              maximum: 180
+            state:
+              type:
+                - "string"
+          required:
+            - "city"
+            - "country"
+            - "latitude"
+            - "longitude"
+            - "state"
+        id:
+          type:
+            - "string"
+          format: "uuid"
+      required:
+        - "birthDate"
+        - "dni"
+        - "fullName"
+        - "gender"
+        - "instagram"
+        - "mail"
+        - "password"
+        - "phoneNumber"
+        - "secondaryPhoneNumber"
+        - "username"
+        - "birth"
+        - "residence"
+        - "id"
     GetInvitationsResponseDto:
       type:
         - "object"
@@ -13558,6 +13883,7 @@ components:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             phoneNumber:
               type:
                 - "string"
@@ -13805,6 +14131,10 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              description:
+                type:
+                  - "string"
+                minLength: 1
               administratorId:
                 type:
                   - "string"
@@ -13847,10 +14177,12 @@ components:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   password:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   phoneNumber:
                     type:
                       - "string"
@@ -13960,6 +14292,7 @@ components:
             required:
               - "id"
               - "name"
+              - "description"
               - "administratorId"
               - "created_at"
               - "updated_at"
@@ -13974,6 +14307,10 @@ components:
           type:
             - "string"
           minLength: 1
+        description:
+          type:
+            - "string"
+          minLength: 1
         administratorId:
           type:
             - "string"
@@ -13981,6 +14318,7 @@ components:
           format: "uuid"
       required:
         - "name"
+        - "description"
         - "administratorId"
     CreateProductionRoleDto:
       type:
@@ -13997,6 +14335,10 @@ components:
         - "object"
       properties:
         name:
+          type:
+            - "string"
+          minLength: 1
+        description:
           type:
             - "string"
           minLength: 1
@@ -14017,34 +14359,7 @@ components:
           type:
             - "string"
           minLength: 1
-        administratorId:
-          type:
-            - "string"
-            - "null"
-          format: "uuid"
-        created_at:
-          type:
-            - "string"
-          format: "date-time"
-        updated_at:
-          type:
-            - "string"
-          format: "date-time"
-      required:
-        - "id"
-        - "name"
-        - "administratorId"
-        - "created_at"
-        - "updated_at"
-    DeleteProductionResponseDto:
-      type:
-        - "object"
-      properties:
-        id:
-          type:
-            - "string"
-          format: "uuid"
-        name:
+        description:
           type:
             - "string"
           minLength: 1
@@ -14064,6 +14379,43 @@ components:
       required:
         - "id"
         - "name"
+        - "description"
+        - "administratorId"
+        - "created_at"
+        - "updated_at"
+    DeleteProductionResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        description:
+          type:
+            - "string"
+          minLength: 1
+        administratorId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "description"
         - "administratorId"
         - "created_at"
         - "updated_at"
@@ -14120,6 +14472,10 @@ components:
               type:
                 - "string"
               minLength: 1
+            description:
+              type:
+                - "string"
+              minLength: 1
             administratorId:
               type:
                 - "string"
@@ -14136,6 +14492,7 @@ components:
           required:
             - "id"
             - "name"
+            - "description"
             - "administratorId"
             - "created_at"
             - "updated_at"
@@ -14167,10 +14524,12 @@ components:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             password:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             phoneNumber:
               type:
                 - "string"
@@ -14336,6 +14695,10 @@ components:
                     type:
                       - "string"
                     minLength: 1
+                  description:
+                    type:
+                      - "string"
+                    minLength: 1
                   administratorId:
                     type:
                       - "string"
@@ -14352,6 +14715,7 @@ components:
                 required:
                   - "id"
                   - "name"
+                  - "description"
                   - "administratorId"
                   - "created_at"
                   - "updated_at"
@@ -14383,10 +14747,12 @@ components:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   password:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   phoneNumber:
                     type:
                       - "string"
@@ -14629,6 +14995,203 @@ components:
         - "id"
         - "name"
         - "questions"
+    SubmitDynamicFormsDto:
+      type:
+        - "array"
+      items:
+        type:
+          - "object"
+        properties:
+          id:
+            type:
+              - "string"
+            format: "uuid"
+          formId:
+            type:
+              - "string"
+            format: "uuid"
+          text:
+            type:
+              - "string"
+            minLength: 1
+          disabled:
+            default: false
+            type:
+              - "boolean"
+          required:
+            default: true
+            type:
+              - "boolean"
+          multipleChoice:
+            default: false
+            type:
+              - "boolean"
+          tagGroupId:
+            type:
+              - "string"
+            format: "uuid"
+          answers:
+            type:
+              - "array"
+            items:
+              type:
+                - "string"
+              format: "uuid"
+        required:
+          - "id"
+          - "formId"
+          - "text"
+          - "tagGroupId"
+          - "answers"
+    SubmitDynamicFormsResponseDto:
+      type:
+        - "object"
+      properties:
+        profiles:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              shortId:
+                type:
+                  - "number"
+              role:
+                default: "MI_EXPO"
+                type:
+                  - "string"
+                enum:
+                  - "USER"
+                  - "ADMIN"
+                  - "FORM"
+                  - "TICKETS"
+                  - "MI_EXPO"
+              firstTimeMiExpo:
+                type:
+                  - "boolean"
+              username:
+                type:
+                  - "string"
+                  - "null"
+                minLength: 1
+              password:
+                type:
+                  - "string"
+                  - "null"
+                minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              isPhoneVerified:
+                type:
+                  - "boolean"
+              secondaryPhoneNumber:
+                type:
+                  - "string"
+                  - "null"
+              fullName:
+                type:
+                  - "string"
+                minLength: 1
+              firstName:
+                type:
+                  - "string"
+                  - "null"
+                minLength: 1
+              gender:
+                type:
+                  - "string"
+                  - "null"
+              birthDate:
+                type:
+                  - "string"
+                  - "null"
+              profilePictureUrl:
+                type:
+                  - "string"
+                  - "null"
+                format: "uri"
+              instagram:
+                type:
+                  - "string"
+                  - "null"
+              mail:
+                type:
+                  - "string"
+                  - "null"
+                format: "email"
+              dni:
+                type:
+                  - "string"
+                  - "null"
+              alternativeNames:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              birthLocationId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              residenceLocationId:
+                type:
+                  - "string"
+                  - "null"
+                format: "uuid"
+              isInTrash:
+                type:
+                  - "boolean"
+              movedToTrashDate:
+                type:
+                  - "string"
+                  - "null"
+                format: "date-time"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              referralCode:
+                type:
+                  - "string"
+            required:
+              - "id"
+              - "shortId"
+              - "firstTimeMiExpo"
+              - "username"
+              - "password"
+              - "phoneNumber"
+              - "isPhoneVerified"
+              - "secondaryPhoneNumber"
+              - "fullName"
+              - "firstName"
+              - "gender"
+              - "birthDate"
+              - "profilePictureUrl"
+              - "instagram"
+              - "mail"
+              - "dni"
+              - "alternativeNames"
+              - "birthLocationId"
+              - "residenceLocationId"
+              - "isInTrash"
+              - "movedToTrashDate"
+              - "created_at"
+              - "updated_at"
+              - "referralCode"
+      required:
+        - "profiles"
     UpdateDynamicFormDto:
       type:
         - "object"
@@ -14703,6 +15266,13 @@ components:
           type:
             - "string"
           minLength: 1
+        type:
+          type:
+            - "string"
+          enum:
+            - "PERSONAL_INFO"
+            - "PRODUCTION"
+            - "PARTICIPANT"
         created_at:
           type:
             - "string"
@@ -14803,6 +15373,7 @@ components:
       required:
         - "id"
         - "name"
+        - "type"
         - "created_at"
         - "updated_at"
         - "questions"
@@ -14821,6 +15392,13 @@ components:
             type:
               - "string"
             minLength: 1
+          type:
+            type:
+              - "string"
+            enum:
+              - "PERSONAL_INFO"
+              - "PRODUCTION"
+              - "PARTICIPANT"
           created_at:
             type:
               - "string"
@@ -14999,9 +15577,133 @@ components:
         required:
           - "id"
           - "name"
+          - "type"
           - "created_at"
           - "updated_at"
           - "questions"
+    FindByTypeDynamicFormsResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        type:
+          type:
+            - "string"
+          enum:
+            - "PERSONAL_INFO"
+            - "PRODUCTION"
+            - "PARTICIPANT"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+        questions:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+              formId:
+                type:
+                  - "string"
+                format: "uuid"
+              text:
+                type:
+                  - "string"
+                minLength: 1
+              disabled:
+                default: false
+                type:
+                  - "boolean"
+              required:
+                default: true
+                type:
+                  - "boolean"
+              multipleChoice:
+                default: false
+                type:
+                  - "boolean"
+              tagGroupId:
+                type:
+                  - "string"
+                format: "uuid"
+              created_at:
+                type:
+                  - "string"
+                format: "date-time"
+              updated_at:
+                type:
+                  - "string"
+                format: "date-time"
+              options:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "object"
+                  properties:
+                    id:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    text:
+                      type:
+                        - "string"
+                      minLength: 1
+                    tagId:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    questionId:
+                      type:
+                        - "string"
+                      format: "uuid"
+                    created_at:
+                      type:
+                        - "string"
+                      format: "date-time"
+                    updated_at:
+                      type:
+                        - "string"
+                      format: "date-time"
+                  required:
+                    - "id"
+                    - "text"
+                    - "tagId"
+                    - "questionId"
+                    - "created_at"
+                    - "updated_at"
+            required:
+              - "id"
+              - "formId"
+              - "text"
+              - "tagGroupId"
+              - "created_at"
+              - "updated_at"
+              - "options"
+      required:
+        - "id"
+        - "name"
+        - "type"
+        - "created_at"
+        - "updated_at"
+        - "questions"
     DeleteDynamicFormDto:
       type:
         - "object"

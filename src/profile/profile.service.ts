@@ -4,6 +4,7 @@ import { CreateProfileDto } from '@/profile/dto/create-profile.dto';
 import { findAllProfileResponseSchema } from '@/profile/dto/find-all-profile.dto';
 import { findByDateRangeSchema } from '@/profile/dto/find-by-date-range-profile.dto';
 import { findByIdProfileResponseSchema } from '@/profile/dto/find-by-id-profile.dto';
+import { findByPhoneNumberResponseSchema } from '@/profile/dto/find-by-phone-number.dto';
 import { findByTagGroupsProfileResponseSchema } from '@/profile/dto/find-by-tag-groups-profile.dto';
 import { findByTagsProfileResponseSchema } from '@/profile/dto/find-by-tags-profile.dto';
 import { findTrashResponseSchema } from '@/profile/dto/find-trash.dto';
@@ -199,7 +200,7 @@ export class ProfileService {
     const highestShortId = await this.getHighestShortId();
 
     let referralCode = generateReferralCode();
-    while (this.findReferralCode(referralCode)) {
+    while (await this.findReferralCode(referralCode)) {
       referralCode = generateReferralCode();
     }
 
@@ -387,7 +388,7 @@ export class ProfileService {
   async findByPhoneNumber(
     phoneNumber: Profile['phoneNumber'],
     visibleTags: VisibleTagsType | undefined = undefined,
-  ): Promise<Profile | null> {
+  ): Promise<z.infer<typeof findByPhoneNumberResponseSchema> | null> {
     const profile = await this.prisma.profile.findUnique({
       where: {
         phoneNumber: phoneNumber,
@@ -399,6 +400,10 @@ export class ProfileService {
               },
             }
           : undefined,
+      },
+      include: {
+        birthLocation: true,
+        residenceLocation: true,
       },
     });
 

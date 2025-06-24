@@ -9,6 +9,9 @@ export const productionSchema = z.object({
   name: z.string().min(1, {
     message: translate('model.production.name.min'),
   }),
+  description: z.string().min(1, {
+    message: translate('model.production.description.min'),
+  }),
   administratorId: profileSchema.shape.id.nullable(),
 
   created_at: z.date(),

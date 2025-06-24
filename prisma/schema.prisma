@@ -342,7 +342,8 @@ model EventTicket {
 model Production {
   id String @id @default(uuid())
 
-  name String @unique
+  name        String @unique
+  description String @default("")
 
   administratorId String?  @map("adminstrator_id")
   administrator   Profile? @relation("PRODUCTION_X_ADMINISTRATOR", fields: [administratorId], references: [id])
@@ -376,8 +377,9 @@ model ProductionAffiliationRequest {
 }
 
 model DynamicForm {
-  id   String @id @default(uuid())
-  name String @unique
+  id   String          @id @default(uuid())
+  name String          @unique
+  type DynamicFormType @default(PERSONAL_INFO)
 
   questions DynamicQuestion[] @relation("DYNAMIC_FORM_X_QUESTION")
 
@@ -467,4 +469,10 @@ enum TicketGroupStatus {
   BOOKED
   PAID
   FREE
+}
+
+enum DynamicFormType {
+  PERSONAL_INFO
+  PRODUCTION
+  PARTICIPANT
 }

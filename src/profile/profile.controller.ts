@@ -689,6 +689,10 @@ export class ProfileController {
         throw new ConflictException([
           translate('route.profile.create.dni-already-exists'),
         ]);
+      } else if (profile.username === existingProfile.username) {
+        throw new ConflictException([
+          translate('route.profile.create.username-already-exists'),
+        ]);
       }
     }
   }

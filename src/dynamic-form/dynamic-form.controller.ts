@@ -11,17 +11,25 @@ import {
   updateDynamicFormResponseSchema,
 } from '@/dynamic-form/dto/update-dynamic-form.dto';
 import { translate } from '@/i18n/translate';
+import {
+  Profile,
+  ProfileWithoutPassword,
+} from '@/mi-expo/decorators/profile.decorator';
 import { ProfileService } from '@/profile/profile.service';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagGroupService } from '@/tag-group/tag-group.service';
+
+import { DynamicFormTypeDto } from '@/dynamic-form/dto/dynamic-form.dto';
 import { TagService } from '@/tag/tag.service';
 import {
+  BadRequestException,
   Body,
   ConflictException,
   Controller,
   Delete,
   Get,
+  NotAcceptableException,
   NotFoundException,
   Param,
   Patch,
@@ -32,6 +40,7 @@ import {
   ApiBadRequestResponse,
   ApiConflictResponse,
   ApiCreatedResponse,
+  ApiNotAcceptableResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
@@ -52,6 +61,15 @@ import {
   DeleteDynamicFormDto,
   deleteDynamicFormSchema,
 } from './dto/delete-dynamic-form.dto';
+import {
+  FindByTypeDynamicFormsResponseDto,
+  findByTypeDynamicFormsResponseSchema,
+} from './dto/find-by-type-dynamic-form.dto';
+import {
+  SubmitDynamicFormsDto,
+  SubmitDynamicFormsResponseDto,
+  submitDynamicFormsResponseSchema,
+} from './dto/submit-dynamic-form.dto';
 import { DynamicFormService } from './dynamic-form.service';
 
 @Roles(Role.ADMIN)
@@ -94,6 +112,110 @@ export class DynamicFormController {
     this.dynamicFormService.checkEmptyQuestionsOrOptions(createDynamicFormDto);
 
     return await this.dynamicFormService.create(createDynamicFormDto);
+  }
+
+  @Roles(Role.MI_EXPO)
+  @ApiBadRequestResponse({
+    description: translate('route.dynamic-form.submit.is-required'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.dynamic-form.submit.too-many-answers'),
+    type: ErrorDto,
+  })
+  @ApiNotAcceptableResponse({
+    description: translate('route.dynamic-form.submit.not-acceptable'),
+    type: ErrorDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.dynamic-form.submit.not-acceptable'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    description: translate('route.dynamic-form.submit.success'),
+    type: SubmitDynamicFormsResponseDto,
+  })
+  @Post('/submit/:id')
+  async submit(
+    @Param('id', new ExistingRecord('dynamicForm')) id: string,
+    @Profile() profile: ProfileWithoutPassword,
+    @Body() questions: SubmitDynamicFormsDto,
+  ): Promise<z.infer<typeof submitDynamicFormsResponseSchema>> {
+    const form = await this.dynamicFormService.findById(id);
+
+    const tagIds = await Promise.all(
+      questions.map(async (question) => {
+        if (!form?.questions.some((q) => q.id === question.id)) {
+          throw new NotAcceptableException(
+            translate('route.dynamic-form.submit.not-acceptable'),
+          );
+        }
+
+        if (question.required && question.answers.length === 0) {
+          throw new BadRequestException(
+            translate('route.dynamic-form.submit.is-required', {
+              text: question.text,
+            }),
+          );
+        }
+
+        if (!question.multipleChoice && question.answers.length > 1) {
+          throw new ConflictException(
+            translate('route.dynamic-form.submit.too-many-answers'),
+          );
+        }
+
+        const questionForm = await this.dynamicFormService.findQuestionById(
+          question.id,
+        );
+
+        if (!questionForm) {
+          throw new NotAcceptableException(
+            translate('route.dynamic-form.submit.not-acceptable'),
+          );
+        }
+
+        if (question.answers.length !== 0) {
+          const answersValid = questionForm.options.some((option) =>
+            question.answers.includes(option.id),
+          );
+          if (!answersValid) {
+            throw new NotAcceptableException(
+              translate('route.dynamic-form.submit.not-acceptable'),
+            );
+          }
+        }
+
+        const tagIdsFromId = (
+          await Promise.all(
+            question.answers.map(async (id) => {
+              const possibleTagId =
+                await this.dynamicFormService.findTagIdById(id);
+              if (possibleTagId) {
+                return possibleTagId.tagId;
+              }
+            }),
+          )
+        ).filter((id): id is string => Boolean(id));
+
+        if (tagIdsFromId.length !== question.answers.length) {
+          throw new NotFoundException(
+            translate('route.dynamic-form.submit.option-not-found'),
+          );
+        }
+
+        return tagIdsFromId;
+      }),
+    );
+
+    const flatTagIds = tagIds.flatMap((array) => array);
+
+    const profiles = await this.tagService.massiveAllocation({
+      profileIds: [profile.id],
+      tagIds: flatTagIds,
+    });
+
+    return profiles;
   }
 
   @ApiNotFoundResponse({
@@ -295,6 +417,30 @@ export class DynamicFormController {
   @Get('/all')
   async getAll(): Promise<z.infer<typeof findAllDynamicFormsResponseSchema>> {
     return await this.dynamicFormService.findAll();
+  }
+
+  @Roles(Role.MI_EXPO)
+  @ApiNotFoundResponse({
+    description: translate('route.dynamic-form.find-by-name.not-found'),
+    type: ErrorDto,
+  })
+  @ApiOkResponse({
+    description: translate('route.dynamic-form.find-by-name.success'),
+    type: FindByTypeDynamicFormsResponseDto,
+  })
+  @Get('by-type/:type')
+  async getByType(
+    @Param() params: DynamicFormTypeDto,
+  ): Promise<z.infer<typeof findByTypeDynamicFormsResponseSchema>> {
+    const dynamicForm = await this.dynamicFormService.findByType(params.type);
+
+    if (!dynamicForm) {
+      throw new NotFoundException(
+        translate('route.dynamic-form.find-by-name.not-found'),
+      );
+    }
+
+    return dynamicForm;
   }
 
   @ApiNotFoundResponse({

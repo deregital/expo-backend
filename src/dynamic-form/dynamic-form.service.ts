@@ -89,9 +89,59 @@ export class DynamicFormService {
     };
   }
 
-  async findByName(name: DynamicForm['name']): Promise<DynamicForm | null> {
+  async findByName(name: DynamicForm['name']): Promise<
+    | (DynamicForm & {
+        questions: (DynamicQuestion & {
+          tagGroup: TagGroup & {
+            tags: Tag[];
+          };
+          options: DynamicOption[];
+        })[];
+      })
+    | null
+  > {
     return this.prisma.dynamicForm.findUnique({
       where: { name },
+      include: {
+        questions: {
+          include: {
+            tagGroup: {
+              include: {
+                tags: true,
+              },
+            },
+            options: true,
+          },
+        },
+      },
+    });
+  }
+
+  async findByType(type: DynamicForm['type']): Promise<
+    | (DynamicForm & {
+        questions: (DynamicQuestion & {
+          tagGroup: TagGroup & {
+            tags: Tag[];
+          };
+          options: DynamicOption[];
+        })[];
+      })
+    | null
+  > {
+    return this.prisma.dynamicForm.findFirst({
+      where: { type },
+      include: {
+        questions: {
+          include: {
+            tagGroup: {
+              include: {
+                tags: true,
+              },
+            },
+            options: true,
+          },
+        },
+      },
     });
   }
 
@@ -119,6 +169,35 @@ export class DynamicFormService {
             options: true,
           },
         },
+      },
+    });
+  }
+
+  async findQuestionById(id: DynamicQuestion['id']): Promise<
+    | (DynamicQuestion & {
+        options: DynamicOption[];
+      })
+    | null
+  > {
+    return this.prisma.dynamicQuestion.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        options: true,
+      },
+    });
+  }
+
+  async findTagIdById(
+    id: DynamicOption['id'],
+  ): Promise<{ tagId: string } | null> {
+    return await this.prisma.dynamicOption.findFirst({
+      where: {
+        id: id,
+      },
+      select: {
+        tagId: true,
       },
     });
   }

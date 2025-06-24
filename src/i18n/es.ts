@@ -97,6 +97,12 @@ export default {
     },
     profile: {
       id: { uuid: 'El ID debe ser un UUID' },
+      username: {
+        required: 'El nombre de usuario es requerido',
+      },
+      password: {
+        required: 'La contraseña es requerida',
+      },
       phoneNumber: {
         required: 'El teléfono es un campo obligatorio',
         invalid: 'El teléfono no es válido',
@@ -201,6 +207,9 @@ export default {
       },
       name: {
         min: 'El nombre de la producción debe tener al menos 1 caracter',
+      },
+      description: {
+        min: 'La descripción de la producción debe tener al menos 1 caracter',
       },
     },
     productionAffiliationRequest: {
@@ -453,6 +462,8 @@ export default {
         'phone-number-already-exists': 'Ya existe un perfil con ese teléfono',
         'secondary-phone-number-already-exists':
           'Ya existe un perfil con ese teléfono secundario',
+        'username-already-exists':
+          'Ya existe un perfil con ese nombre de usuario',
         conflict: 'Error en la creación del perfil',
       },
       delete: {
@@ -764,8 +775,21 @@ export default {
         'conflict-tag-in-use': `No se puede editar o eliminar la opción \{\{tag\}\} porque está en uso en \{\{profiles\}\} perfiles`,
         'conflict-cannot-change-question': `No se puede cambiar la pregunta \{\{question\}\} porque está la opción \{\{option\}\} en uso en \{\{profiles\}\} perfiles`,
       },
+      submit: {
+        'is-required': `Las pregunta "\{\{text\}\}" es requerida`,
+        'too-many-answers':
+          'La pregunta no puede tener mas de una respuesta si no es de respuesta multiple',
+        success: 'El formulario se ha enviado con éxito',
+        'not-acceptable':
+          'Las preguntas y/o opciones no coinciden con el formulario',
+        'option-not-found': 'La opcion a la pregunta no fue encontrada',
+      },
       all: {
         success: 'Formularios dinámicos obtenidos con éxito',
+      },
+      'find-by-name': {
+        success: 'Formulario dinámico obtenido con éxito',
+        'not-found': 'Formulario dinámico no encontrado',
       },
       delete: {
         success: 'Formulario dinámico eliminado con éxito',

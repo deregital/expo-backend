@@ -3,6 +3,7 @@ import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dt
 import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 import { tagSchema } from '@/tag/dto/tag.dto';
 import z from 'zod';
+import { DynamicFormType } from '~/types/prisma-schema';
 
 export const dynamicFormSchema = z.object({
   id: z.string().uuid({
@@ -15,6 +16,7 @@ export const dynamicFormSchema = z.object({
     .min(1, {
       message: translate('model.dynamicForm.name.min'),
     }),
+  type: z.nativeEnum(DynamicFormType),
 
   created_at: z.date(),
   updated_at: z.date(),
@@ -63,6 +65,12 @@ export const dynamicOptionSchema = z.object({
 
 export class DynamicFormDto extends createZodDtoWithoutDate(
   dynamicFormSchema,
+) {}
+
+export class DynamicFormTypeDto extends createZodDtoWithoutDate(
+  z.object({
+    type: dynamicFormSchema.shape.type,
+  }),
 ) {}
 
 export class DynamicQuestionDto extends createZodDtoWithoutDate(
