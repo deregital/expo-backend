@@ -117,7 +117,11 @@ export class LocationService {
       latitude: Number(country.latitude),
       longitude: Number(country.longitude),
     }));
-    return { countries };
+    return {
+      countries: countries.filter(
+        (country) => country.isoCode !== 'PS',
+      ) /*Palestina me come los huevos*/,
+    };
   }
 
   findStatesByCountry(
