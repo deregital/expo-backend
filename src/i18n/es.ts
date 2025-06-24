@@ -97,6 +97,12 @@ export default {
     },
     profile: {
       id: { uuid: 'El ID debe ser un UUID' },
+      username: {
+        required: 'El nombre de usuario es requerido',
+      },
+      password: {
+        required: 'La contraseña es requerida',
+      },
       phoneNumber: {
         required: 'El teléfono es un campo obligatorio',
         invalid: 'El teléfono no es válido',

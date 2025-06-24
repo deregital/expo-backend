@@ -3582,10 +3582,12 @@ components:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               password:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               phoneNumber:
                 type:
                   - "string"
@@ -3750,10 +3752,12 @@ components:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               password:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               phoneNumber:
                 type:
                   - "string"
@@ -7957,10 +7961,12 @@ components:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               password:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               phoneNumber:
                 type:
                   - "string"
@@ -8165,10 +8171,12 @@ components:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               password:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               phoneNumber:
                 type:
                   - "string"
@@ -8450,10 +8458,12 @@ components:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               password:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               phoneNumber:
                 type:
                   - "string"
@@ -8663,10 +8673,12 @@ components:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               password:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               phoneNumber:
                 type:
                   - "string"
@@ -8854,10 +8866,12 @@ components:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             password:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             phoneNumber:
               type:
                 - "string"
@@ -9048,10 +9062,12 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         password:
           type:
             - "string"
             - "null"
+          minLength: 1
         phoneNumber:
           type:
             - "string"
@@ -9344,10 +9360,12 @@ components:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             password:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             comments:
               type:
                 - "array"
@@ -9574,6 +9592,7 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         phoneNumber:
           type:
             - "string"
@@ -9865,10 +9884,12 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         password:
           type:
             - "string"
             - "null"
+          minLength: 1
         phoneNumber:
           type:
             - "string"
@@ -10035,10 +10056,12 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         password:
           type:
             - "string"
             - "null"
+          minLength: 1
         firstTimeMiExpo:
           type:
             - "boolean"
@@ -11231,10 +11254,12 @@ components:
                   type:
                     - "string"
                     - "null"
+                  minLength: 1
                 password:
                   type:
                     - "string"
                     - "null"
+                  minLength: 1
                 phoneNumber:
                   type:
                     - "string"
@@ -11477,10 +11502,12 @@ components:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   password:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   phoneNumber:
                     type:
                       - "string"
@@ -11717,10 +11744,12 @@ components:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   password:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   phoneNumber:
                     type:
                       - "string"
@@ -12830,10 +12859,12 @@ components:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             password:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             phoneNumber:
               type:
                 - "string"
@@ -13056,6 +13087,7 @@ components:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             phoneNumber:
               type:
                 - "string"
@@ -13192,6 +13224,7 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         phoneNumber:
           type:
             - "string"
@@ -13544,6 +13577,7 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         phoneNumber:
           type:
             - "string"
@@ -13556,6 +13590,7 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         birth:
           type:
             - "object"
@@ -13660,6 +13695,7 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         phoneNumber:
           type:
             - "string"
@@ -13672,6 +13708,7 @@ components:
           type:
             - "string"
             - "null"
+          minLength: 1
         birth:
           type:
             - "object"
@@ -13842,6 +13879,7 @@ components:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             phoneNumber:
               type:
                 - "string"
@@ -14135,10 +14173,12 @@ components:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   password:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   phoneNumber:
                     type:
                       - "string"
@@ -14480,10 +14520,12 @@ components:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             password:
               type:
                 - "string"
                 - "null"
+              minLength: 1
             phoneNumber:
               type:
                 - "string"
@@ -14701,10 +14743,12 @@ components:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   password:
                     type:
                       - "string"
                       - "null"
+                    minLength: 1
                   phoneNumber:
                     type:
                       - "string"
@@ -15030,10 +15074,12 @@ components:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               password:
                 type:
                   - "string"
                   - "null"
+                minLength: 1
               phoneNumber:
                 type:
                   - "string"

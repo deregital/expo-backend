@@ -28,8 +28,22 @@ export const profileSchema = z.object({
   role: z.nativeEnum(Role).default(Role.MI_EXPO),
   firstTimeMiExpo: z.boolean(),
 
-  username: z.string().nullable(),
-  password: z.string().nullable(), // ver constrains
+  username: z
+    .string({
+      required_error: translate('model.profile.username.required'),
+    })
+    .min(1, {
+      message: translate('model.profile.username.required'),
+    })
+    .nullable(),
+  password: z
+    .string({
+      required_error: translate('model.profile.password.required'),
+    })
+    .min(1, {
+      message: translate('model.profile.password.required'),
+    })
+    .nullable(), // ver constrains
 
   phoneNumber: z
     .string()
