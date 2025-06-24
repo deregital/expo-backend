@@ -60,7 +60,10 @@ import {
   DeleteDynamicFormDto,
   deleteDynamicFormSchema,
 } from './dto/delete-dynamic-form.dto';
-import { FindByNameDynamicFormsResponseDto } from './dto/find-by-name-dynamic-form.dto';
+import {
+  FindByTypeDynamicFormsResponseDto,
+  findByTypeDynamicFormsResponseSchema,
+} from './dto/find-by-type-dynamic-form.dto';
 import {
   SubmitDynamicFormsDto,
   SubmitDynamicFormsResponseDto,
@@ -422,11 +425,13 @@ export class DynamicFormController {
   })
   @ApiOkResponse({
     description: translate('route.dynamic-form.find-by-name.success'),
-    type: FindByNameDynamicFormsResponseDto,
+    type: FindByTypeDynamicFormsResponseDto,
   })
-  @Get('/:name')
-  async getByName(@Param('name') name: string): Promise<DynamicForm> {
-    const dynamicForm = await this.dynamicFormService.findByName(name);
+  @Get('by-type/:type')
+  async getByType(
+    @Param('type') type: DynamicForm['type'],
+  ): Promise<z.infer<typeof findByTypeDynamicFormsResponseSchema>> {
+    const dynamicForm = await this.dynamicFormService.findByType(type);
 
     if (!dynamicForm) {
       throw new NotFoundException(

@@ -192,6 +192,15 @@ export namespace $Enums {
 
   export type TicketGroupStatus =
     (typeof TicketGroupStatus)[keyof typeof TicketGroupStatus];
+
+  export const DynamicFormType: {
+    PERSONAL_INFO: 'PERSONAL_INFO';
+    PRODUCTION: 'PRODUCTION';
+    PARTICIPANT: 'PARTICIPANT';
+  };
+
+  export type DynamicFormType =
+    (typeof DynamicFormType)[keyof typeof DynamicFormType];
 }
 
 export type Role = $Enums.Role;
@@ -225,6 +234,10 @@ export const TicketType: typeof $Enums.TicketType;
 export type TicketGroupStatus = $Enums.TicketGroupStatus;
 
 export const TicketGroupStatus: typeof $Enums.TicketGroupStatus;
+
+export type DynamicFormType = $Enums.DynamicFormType;
+
+export const DynamicFormType: typeof $Enums.DynamicFormType;
 
 /**
  * ##  Prisma Client ʲˢ
@@ -28476,6 +28489,7 @@ export namespace Prisma {
   export type DynamicFormMinAggregateOutputType = {
     id: string | null;
     name: string | null;
+    type: $Enums.DynamicFormType | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -28483,6 +28497,7 @@ export namespace Prisma {
   export type DynamicFormMaxAggregateOutputType = {
     id: string | null;
     name: string | null;
+    type: $Enums.DynamicFormType | null;
     created_at: Date | null;
     updated_at: Date | null;
   };
@@ -28490,6 +28505,7 @@ export namespace Prisma {
   export type DynamicFormCountAggregateOutputType = {
     id: number;
     name: number;
+    type: number;
     created_at: number;
     updated_at: number;
     _all: number;
@@ -28498,6 +28514,7 @@ export namespace Prisma {
   export type DynamicFormMinAggregateInputType = {
     id?: true;
     name?: true;
+    type?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -28505,6 +28522,7 @@ export namespace Prisma {
   export type DynamicFormMaxAggregateInputType = {
     id?: true;
     name?: true;
+    type?: true;
     created_at?: true;
     updated_at?: true;
   };
@@ -28512,6 +28530,7 @@ export namespace Prisma {
   export type DynamicFormCountAggregateInputType = {
     id?: true;
     name?: true;
+    type?: true;
     created_at?: true;
     updated_at?: true;
     _all?: true;
@@ -28598,6 +28617,7 @@ export namespace Prisma {
   export type DynamicFormGroupByOutputType = {
     id: string;
     name: string;
+    type: $Enums.DynamicFormType;
     created_at: Date;
     updated_at: Date;
     _count: DynamicFormCountAggregateOutputType | null;
@@ -28625,6 +28645,7 @@ export namespace Prisma {
     {
       id?: boolean;
       name?: boolean;
+      type?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
       questions?: boolean | DynamicForm$questionsArgs<ExtArgs>;
@@ -28639,6 +28660,7 @@ export namespace Prisma {
     {
       id?: boolean;
       name?: boolean;
+      type?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
     },
@@ -28651,6 +28673,7 @@ export namespace Prisma {
     {
       id?: boolean;
       name?: boolean;
+      type?: boolean;
       created_at?: boolean;
       updated_at?: boolean;
     },
@@ -28660,6 +28683,7 @@ export namespace Prisma {
   export type DynamicFormSelectScalar = {
     id?: boolean;
     name?: boolean;
+    type?: boolean;
     created_at?: boolean;
     updated_at?: boolean;
   };
@@ -28667,7 +28691,7 @@ export namespace Prisma {
   export type DynamicFormOmit<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = $Extensions.GetOmit<
-    'id' | 'name' | 'created_at' | 'updated_at',
+    'id' | 'name' | 'type' | 'created_at' | 'updated_at',
     ExtArgs['result']['dynamicForm']
   >;
   export type DynamicFormInclude<
@@ -28694,6 +28718,7 @@ export namespace Prisma {
       {
         id: string;
         name: string;
+        type: $Enums.DynamicFormType;
         created_at: Date;
         updated_at: Date;
       },
@@ -29299,6 +29324,7 @@ export namespace Prisma {
   interface DynamicFormFieldRefs {
     readonly id: FieldRef<'DynamicForm', 'String'>;
     readonly name: FieldRef<'DynamicForm', 'String'>;
+    readonly type: FieldRef<'DynamicForm', 'DynamicFormType'>;
     readonly created_at: FieldRef<'DynamicForm', 'DateTime'>;
     readonly updated_at: FieldRef<'DynamicForm', 'DateTime'>;
   }
@@ -32840,6 +32866,7 @@ export namespace Prisma {
   export const DynamicFormScalarFieldEnum: {
     id: 'id';
     name: 'name';
+    type: 'type';
     created_at: 'created_at';
     updated_at: 'updated_at';
   };
@@ -33114,6 +33141,18 @@ export namespace Prisma {
    */
   export type ListEnumAffiliationStatusFieldRefInput<$PrismaModel> =
     FieldRefInputType<$PrismaModel, 'AffiliationStatus[]'>;
+
+  /**
+   * Reference to a field of type 'DynamicFormType'
+   */
+  export type EnumDynamicFormTypeFieldRefInput<$PrismaModel> =
+    FieldRefInputType<$PrismaModel, 'DynamicFormType'>;
+
+  /**
+   * Reference to a field of type 'DynamicFormType[]'
+   */
+  export type ListEnumDynamicFormTypeFieldRefInput<$PrismaModel> =
+    FieldRefInputType<$PrismaModel, 'DynamicFormType[]'>;
 
   /**
    * Deep Input Types
@@ -34788,6 +34827,7 @@ export namespace Prisma {
     NOT?: DynamicFormWhereInput | DynamicFormWhereInput[];
     id?: StringFilter<'DynamicForm'> | string;
     name?: StringFilter<'DynamicForm'> | string;
+    type?: EnumDynamicFormTypeFilter<'DynamicForm'> | $Enums.DynamicFormType;
     created_at?: DateTimeFilter<'DynamicForm'> | Date | string;
     updated_at?: DateTimeFilter<'DynamicForm'> | Date | string;
     questions?: DynamicQuestionListRelationFilter;
@@ -34796,6 +34836,7 @@ export namespace Prisma {
   export type DynamicFormOrderByWithRelationInput = {
     id?: SortOrder;
     name?: SortOrder;
+    type?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     questions?: DynamicQuestionOrderByRelationAggregateInput;
@@ -34808,6 +34849,7 @@ export namespace Prisma {
       AND?: DynamicFormWhereInput | DynamicFormWhereInput[];
       OR?: DynamicFormWhereInput[];
       NOT?: DynamicFormWhereInput | DynamicFormWhereInput[];
+      type?: EnumDynamicFormTypeFilter<'DynamicForm'> | $Enums.DynamicFormType;
       created_at?: DateTimeFilter<'DynamicForm'> | Date | string;
       updated_at?: DateTimeFilter<'DynamicForm'> | Date | string;
       questions?: DynamicQuestionListRelationFilter;
@@ -34818,6 +34860,7 @@ export namespace Prisma {
   export type DynamicFormOrderByWithAggregationInput = {
     id?: SortOrder;
     name?: SortOrder;
+    type?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
     _count?: DynamicFormCountOrderByAggregateInput;
@@ -34835,6 +34878,9 @@ export namespace Prisma {
       | DynamicFormScalarWhereWithAggregatesInput[];
     id?: StringWithAggregatesFilter<'DynamicForm'> | string;
     name?: StringWithAggregatesFilter<'DynamicForm'> | string;
+    type?:
+      | EnumDynamicFormTypeWithAggregatesFilter<'DynamicForm'>
+      | $Enums.DynamicFormType;
     created_at?: DateTimeWithAggregatesFilter<'DynamicForm'> | Date | string;
     updated_at?: DateTimeWithAggregatesFilter<'DynamicForm'> | Date | string;
   };
@@ -36653,6 +36699,7 @@ export namespace Prisma {
   export type DynamicFormCreateInput = {
     id?: string;
     name: string;
+    type?: $Enums.DynamicFormType;
     created_at?: Date | string;
     updated_at?: Date | string;
     questions?: DynamicQuestionCreateNestedManyWithoutFormInput;
@@ -36661,6 +36708,7 @@ export namespace Prisma {
   export type DynamicFormUncheckedCreateInput = {
     id?: string;
     name: string;
+    type?: $Enums.DynamicFormType;
     created_at?: Date | string;
     updated_at?: Date | string;
     questions?: DynamicQuestionUncheckedCreateNestedManyWithoutFormInput;
@@ -36669,6 +36717,9 @@ export namespace Prisma {
   export type DynamicFormUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    type?:
+      | EnumDynamicFormTypeFieldUpdateOperationsInput
+      | $Enums.DynamicFormType;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     questions?: DynamicQuestionUpdateManyWithoutFormNestedInput;
@@ -36677,6 +36728,9 @@ export namespace Prisma {
   export type DynamicFormUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    type?:
+      | EnumDynamicFormTypeFieldUpdateOperationsInput
+      | $Enums.DynamicFormType;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     questions?: DynamicQuestionUncheckedUpdateManyWithoutFormNestedInput;
@@ -36685,6 +36739,7 @@ export namespace Prisma {
   export type DynamicFormCreateManyInput = {
     id?: string;
     name: string;
+    type?: $Enums.DynamicFormType;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -36692,6 +36747,9 @@ export namespace Prisma {
   export type DynamicFormUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    type?:
+      | EnumDynamicFormTypeFieldUpdateOperationsInput
+      | $Enums.DynamicFormType;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -36699,6 +36757,9 @@ export namespace Prisma {
   export type DynamicFormUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    type?:
+      | EnumDynamicFormTypeFieldUpdateOperationsInput
+      | $Enums.DynamicFormType;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -38217,6 +38278,21 @@ export namespace Prisma {
       _max?: NestedEnumAffiliationStatusFilter<$PrismaModel>;
     };
 
+  export type EnumDynamicFormTypeFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.DynamicFormType
+      | EnumDynamicFormTypeFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.DynamicFormType[]
+      | ListEnumDynamicFormTypeFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.DynamicFormType[]
+      | ListEnumDynamicFormTypeFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumDynamicFormTypeFilter<$PrismaModel>
+      | $Enums.DynamicFormType;
+  };
+
   export type DynamicQuestionListRelationFilter = {
     every?: DynamicQuestionWhereInput;
     some?: DynamicQuestionWhereInput;
@@ -38230,6 +38306,7 @@ export namespace Prisma {
   export type DynamicFormCountOrderByAggregateInput = {
     id?: SortOrder;
     name?: SortOrder;
+    type?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -38237,6 +38314,7 @@ export namespace Prisma {
   export type DynamicFormMaxOrderByAggregateInput = {
     id?: SortOrder;
     name?: SortOrder;
+    type?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -38244,8 +38322,27 @@ export namespace Prisma {
   export type DynamicFormMinOrderByAggregateInput = {
     id?: SortOrder;
     name?: SortOrder;
+    type?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
+  };
+
+  export type EnumDynamicFormTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.DynamicFormType
+      | EnumDynamicFormTypeFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.DynamicFormType[]
+      | ListEnumDynamicFormTypeFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.DynamicFormType[]
+      | ListEnumDynamicFormTypeFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumDynamicFormTypeWithAggregatesFilter<$PrismaModel>
+      | $Enums.DynamicFormType;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedEnumDynamicFormTypeFilter<$PrismaModel>;
+    _max?: NestedEnumDynamicFormTypeFilter<$PrismaModel>;
   };
 
   export type DynamicFormScalarRelationFilter = {
@@ -42103,6 +42200,10 @@ export namespace Prisma {
       | DynamicQuestionWhereUniqueInput[];
   };
 
+  export type EnumDynamicFormTypeFieldUpdateOperationsInput = {
+    set?: $Enums.DynamicFormType;
+  };
+
   export type DynamicQuestionUpdateManyWithoutFormNestedInput = {
     create?:
       | XOR<
@@ -42869,6 +42970,41 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>;
     _min?: NestedEnumAffiliationStatusFilter<$PrismaModel>;
     _max?: NestedEnumAffiliationStatusFilter<$PrismaModel>;
+  };
+
+  export type NestedEnumDynamicFormTypeFilter<$PrismaModel = never> = {
+    equals?:
+      | $Enums.DynamicFormType
+      | EnumDynamicFormTypeFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.DynamicFormType[]
+      | ListEnumDynamicFormTypeFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.DynamicFormType[]
+      | ListEnumDynamicFormTypeFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumDynamicFormTypeFilter<$PrismaModel>
+      | $Enums.DynamicFormType;
+  };
+
+  export type NestedEnumDynamicFormTypeWithAggregatesFilter<
+    $PrismaModel = never,
+  > = {
+    equals?:
+      | $Enums.DynamicFormType
+      | EnumDynamicFormTypeFieldRefInput<$PrismaModel>;
+    in?:
+      | $Enums.DynamicFormType[]
+      | ListEnumDynamicFormTypeFieldRefInput<$PrismaModel>;
+    notIn?:
+      | $Enums.DynamicFormType[]
+      | ListEnumDynamicFormTypeFieldRefInput<$PrismaModel>;
+    not?:
+      | NestedEnumDynamicFormTypeWithAggregatesFilter<$PrismaModel>
+      | $Enums.DynamicFormType;
+    _count?: NestedIntFilter<$PrismaModel>;
+    _min?: NestedEnumDynamicFormTypeFilter<$PrismaModel>;
+    _max?: NestedEnumDynamicFormTypeFilter<$PrismaModel>;
   };
 
   export type CommentCreateWithoutAccountInput = {
@@ -48712,6 +48848,7 @@ export namespace Prisma {
   export type DynamicFormCreateWithoutQuestionsInput = {
     id?: string;
     name: string;
+    type?: $Enums.DynamicFormType;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -48719,6 +48856,7 @@ export namespace Prisma {
   export type DynamicFormUncheckedCreateWithoutQuestionsInput = {
     id?: string;
     name: string;
+    type?: $Enums.DynamicFormType;
     created_at?: Date | string;
     updated_at?: Date | string;
   };
@@ -48813,6 +48951,9 @@ export namespace Prisma {
   export type DynamicFormUpdateWithoutQuestionsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    type?:
+      | EnumDynamicFormTypeFieldUpdateOperationsInput
+      | $Enums.DynamicFormType;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -48820,6 +48961,9 @@ export namespace Prisma {
   export type DynamicFormUncheckedUpdateWithoutQuestionsInput = {
     id?: StringFieldUpdateOperationsInput | string;
     name?: StringFieldUpdateOperationsInput | string;
+    type?:
+      | EnumDynamicFormTypeFieldUpdateOperationsInput
+      | $Enums.DynamicFormType;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };

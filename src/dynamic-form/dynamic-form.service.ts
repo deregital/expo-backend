@@ -117,6 +117,34 @@ export class DynamicFormService {
     });
   }
 
+  async findByType(type: DynamicForm['type']): Promise<
+    | (DynamicForm & {
+        questions: (DynamicQuestion & {
+          tagGroup: TagGroup & {
+            tags: Tag[];
+          };
+          options: DynamicOption[];
+        })[];
+      })
+    | null
+  > {
+    return this.prisma.dynamicForm.findFirst({
+      where: { type },
+      include: {
+        questions: {
+          include: {
+            tagGroup: {
+              include: {
+                tags: true,
+              },
+            },
+            options: true,
+          },
+        },
+      },
+    });
+  }
+
   async findById(id: DynamicForm['id']): Promise<
     | (DynamicForm & {
         questions: (DynamicQuestion & {

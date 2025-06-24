@@ -377,8 +377,9 @@ model ProductionAffiliationRequest {
 }
 
 model DynamicForm {
-  id   String @id @default(uuid())
-  name String @unique
+  id   String          @id @default(uuid())
+  name String          @unique
+  type DynamicFormType @default(PERSONAL_INFO)
 
   questions DynamicQuestion[] @relation("DYNAMIC_FORM_X_QUESTION")
 
@@ -468,4 +469,10 @@ enum TicketGroupStatus {
   BOOKED
   PAID
   FREE
+}
+
+enum DynamicFormType {
+  PERSONAL_INFO
+  PRODUCTION
+  PARTICIPANT
 }
