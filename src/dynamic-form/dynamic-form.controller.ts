@@ -164,19 +164,22 @@ export class DynamicFormController {
         const questionForm = await this.dynamicFormService.findQuestionById(
           question.id,
         );
+
         if (!questionForm) {
           throw new NotAcceptableException(
             translate('route.dynamic-form.submit.not-acceptable'),
           );
         }
 
-        const answersValid = questionForm.options.some((option) =>
-          question.answers.includes(option.id),
-        );
-        if (!answersValid) {
-          throw new NotAcceptableException(
-            translate('route.dynamic-form.submit.not-acceptable'),
+        if (question.answers.length !== 0) {
+          const answersValid = questionForm.options.some((option) =>
+            question.answers.includes(option.id),
           );
+          if (!answersValid) {
+            throw new NotAcceptableException(
+              translate('route.dynamic-form.submit.not-acceptable'),
+            );
+          }
         }
 
         const tagIdsFromId = (
