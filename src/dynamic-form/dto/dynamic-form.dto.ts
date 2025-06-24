@@ -67,6 +67,12 @@ export class DynamicFormDto extends createZodDtoWithoutDate(
   dynamicFormSchema,
 ) {}
 
+export class DynamicFormTypeDto extends createZodDtoWithoutDate(
+  z.object({
+    type: dynamicFormSchema.shape.type,
+  }),
+) {}
+
 export class DynamicQuestionDto extends createZodDtoWithoutDate(
   dynamicQuestionSchema,
 ) {}

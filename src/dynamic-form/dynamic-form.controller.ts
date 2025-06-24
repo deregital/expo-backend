@@ -20,6 +20,7 @@ import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 
+import { DynamicFormTypeDto } from '@/dynamic-form/dto/dynamic-form.dto';
 import { TagService } from '@/tag/tag.service';
 import {
   BadRequestException,
@@ -429,9 +430,9 @@ export class DynamicFormController {
   })
   @Get('by-type/:type')
   async getByType(
-    @Param('type') type: DynamicForm['type'],
+    @Param() params: DynamicFormTypeDto,
   ): Promise<z.infer<typeof findByTypeDynamicFormsResponseSchema>> {
-    const dynamicForm = await this.dynamicFormService.findByType(type);
+    const dynamicForm = await this.dynamicFormService.findByType(params.type);
 
     if (!dynamicForm) {
       throw new NotFoundException(

@@ -1476,6 +1476,22 @@ export interface paths {
     patch: operations['MiExpoController_updateMe'];
     trace?: never;
   };
+  '/mi-expo/me-first-time': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['MiExpoController_updateMeWithoutLogin'];
+    trace?: never;
+  };
   '/mi-expo/invitations': {
     parameters: {
       query?: never;
@@ -1716,6 +1732,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/dynamic-form/submit/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['DynamicFormController_submit'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/dynamic-form/update/{id}': {
     parameters: {
       query?: never;
@@ -1740,6 +1772,22 @@ export interface paths {
       cookie?: never;
     };
     get: operations['DynamicFormController_getAll'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/dynamic-form/by-type/{type}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['DynamicFormController_getByType'];
     put?: never;
     post?: never;
     delete?: never;
@@ -3775,6 +3823,20 @@ export interface components {
       /** Format: date-time */
       updated_at: string;
       referralCode: string;
+      residenceLocation: {
+        city: string;
+        state: string;
+        country: string;
+        latitude: number;
+        longitude: number;
+      } | null;
+      birthLocation: {
+        city: string;
+        state: string;
+        country: string;
+        latitude: number;
+        longitude: number;
+      } | null;
     };
     FindTrashResponseDto: {
       profiles: {
@@ -5025,6 +5087,7 @@ export interface components {
         /** Format: uuid */
         id: string;
         name: string;
+        description: string;
         /** Format: uuid */
         administratorId: string | null;
         /** Format: date-time */
@@ -5036,6 +5099,7 @@ export interface components {
         /** Format: uuid */
         id: string;
         name: string;
+        description: string;
         /** Format: uuid */
         administratorId: string | null;
         /** Format: date-time */
@@ -5084,6 +5148,35 @@ export interface components {
         longitude: number;
         state: string;
       };
+    };
+    UpdateMiExpoMeFirstTimeDto: {
+      birthDate: string | null;
+      dni: string | null;
+      fullName: string;
+      gender: string | null;
+      instagram: string | null;
+      /** Format: email */
+      mail: string | null;
+      password: string | null;
+      phoneNumber: string;
+      secondaryPhoneNumber: string | null;
+      username: string | null;
+      birth: {
+        city: string;
+        country: string;
+        latitude: number;
+        longitude: number;
+        state: string;
+      };
+      residence: {
+        city: string;
+        country: string;
+        latitude: number;
+        longitude: number;
+        state: string;
+      };
+      /** Format: uuid */
+      id: string;
     };
     GetInvitationsResponseDto: {
       events: {
@@ -5185,6 +5278,7 @@ export interface components {
         /** Format: uuid */
         id: string;
         name: string;
+        description: string;
         /** Format: uuid */
         administratorId: string | null;
         /** Format: date-time */
@@ -5234,6 +5328,7 @@ export interface components {
     };
     CreateProductionDto: {
       name: string;
+      description: string;
       /** Format: uuid */
       administratorId: string | null;
     };
@@ -5242,6 +5337,7 @@ export interface components {
     };
     UpdateProductionDto: {
       name?: string;
+      description?: string;
       /** Format: uuid */
       administratorId?: string | null;
     };
@@ -5249,6 +5345,7 @@ export interface components {
       /** Format: uuid */
       id: string;
       name: string;
+      description: string;
       /** Format: uuid */
       administratorId: string | null;
       /** Format: date-time */
@@ -5260,6 +5357,7 @@ export interface components {
       /** Format: uuid */
       id: string;
       name: string;
+      description: string;
       /** Format: uuid */
       administratorId: string | null;
       /** Format: date-time */
@@ -5288,6 +5386,7 @@ export interface components {
         /** Format: uuid */
         id: string;
         name: string;
+        description: string;
         /** Format: uuid */
         administratorId: string | null;
         /** Format: date-time */
@@ -5353,6 +5452,7 @@ export interface components {
           /** Format: uuid */
           id: string;
           name: string;
+          description: string;
           /** Format: uuid */
           administratorId: string | null;
           /** Format: date-time */
@@ -5441,6 +5541,63 @@ export interface components {
         }[];
       }[];
     };
+    SubmitDynamicFormsDto: {
+      /** Format: uuid */
+      id: string;
+      /** Format: uuid */
+      formId: string;
+      text: string;
+      /** @default false */
+      disabled: boolean;
+      /** @default true */
+      required: boolean;
+      /** @default false */
+      multipleChoice: boolean;
+      /** Format: uuid */
+      tagGroupId: string;
+      answers: string[];
+    }[];
+    SubmitDynamicFormsResponseDto: {
+      profiles: {
+        /** Format: uuid */
+        id: string;
+        shortId: number;
+        /**
+         * @default MI_EXPO
+         * @enum {string}
+         */
+        role: 'USER' | 'ADMIN' | 'FORM' | 'TICKETS' | 'MI_EXPO';
+        firstTimeMiExpo: boolean;
+        username: string | null;
+        password: string | null;
+        phoneNumber: string;
+        isPhoneVerified: boolean;
+        secondaryPhoneNumber: string | null;
+        fullName: string;
+        firstName: string | null;
+        gender: string | null;
+        birthDate: string | null;
+        /** Format: uri */
+        profilePictureUrl: string | null;
+        instagram: string | null;
+        /** Format: email */
+        mail: string | null;
+        dni: string | null;
+        alternativeNames: string[];
+        /** Format: uuid */
+        birthLocationId: string | null;
+        /** Format: uuid */
+        residenceLocationId: string | null;
+        isInTrash: boolean;
+        /** Format: date-time */
+        movedToTrashDate: string | null;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        referralCode: string;
+      }[];
+    };
     UpdateDynamicFormDto: {
       name: string;
       questions: {
@@ -5464,6 +5621,8 @@ export interface components {
       /** Format: uuid */
       id: string;
       name: string;
+      /** @enum {string} */
+      type: 'PERSONAL_INFO' | 'PRODUCTION' | 'PARTICIPANT';
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -5505,6 +5664,8 @@ export interface components {
       /** Format: uuid */
       id: string;
       name: string;
+      /** @enum {string} */
+      type: 'PERSONAL_INFO' | 'PRODUCTION' | 'PARTICIPANT';
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -5572,6 +5733,49 @@ export interface components {
         }[];
       }[];
     }[];
+    FindByTypeDynamicFormsResponseDto: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      /** @enum {string} */
+      type: 'PERSONAL_INFO' | 'PRODUCTION' | 'PARTICIPANT';
+      /** Format: date-time */
+      created_at: string;
+      /** Format: date-time */
+      updated_at: string;
+      questions: {
+        /** Format: uuid */
+        id: string;
+        /** Format: uuid */
+        formId: string;
+        text: string;
+        /** @default false */
+        disabled: boolean;
+        /** @default true */
+        required: boolean;
+        /** @default false */
+        multipleChoice: boolean;
+        /** Format: uuid */
+        tagGroupId: string;
+        /** Format: date-time */
+        created_at: string;
+        /** Format: date-time */
+        updated_at: string;
+        options: {
+          /** Format: uuid */
+          id: string;
+          text: string;
+          /** Format: uuid */
+          tagId: string;
+          /** Format: uuid */
+          questionId: string;
+          /** Format: date-time */
+          created_at: string;
+          /** Format: date-time */
+          updated_at: string;
+        }[];
+      }[];
+    };
     DeleteDynamicFormDto: {
       id: string;
     };
@@ -8791,6 +8995,30 @@ export interface operations {
       };
     };
   };
+  MiExpoController_updateMeWithoutLogin: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateMiExpoMeFirstTimeDto'];
+      };
+    };
+    responses: {
+      /** @description Me */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['GetMiExpoMeResponseDto'];
+        };
+      };
+    };
+  };
   MiExpoController_invitations: {
     parameters: {
       query?: never;
@@ -9289,6 +9517,68 @@ export interface operations {
       };
     };
   };
+  DynamicFormController_submit: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['SubmitDynamicFormsDto'];
+      };
+    };
+    responses: {
+      /** @description El formulario se ha enviado con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['SubmitDynamicFormsResponseDto'];
+        };
+      };
+      /** @description Las pregunta "[missing "{{text}}" value]" es requerida */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Las preguntas y/o opciones no coinciden con el formulario */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description Las preguntas y/o opciones no coinciden con el formulario */
+      406: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+      /** @description La pregunta no puede tener mas de una respuesta si no es de respuesta multiple */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
+        };
+      };
+    };
+  };
   DynamicFormController_update: {
     parameters: {
       query?: never;
@@ -9340,6 +9630,37 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['FindAllDynamicFormsResponseDto'];
+        };
+      };
+    };
+  };
+  DynamicFormController_getByType: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        type: 'PERSONAL_INFO' | 'PRODUCTION' | 'PARTICIPANT';
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Formulario dinámico obtenido con éxito */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['FindByTypeDynamicFormsResponseDto'];
+        };
+      };
+      /** @description Formulario dinámico no encontrado */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorDto'];
         };
       };
     };
