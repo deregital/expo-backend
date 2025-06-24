@@ -200,7 +200,7 @@ export class ProfileService {
     const highestShortId = await this.getHighestShortId();
 
     let referralCode = generateReferralCode();
-    while (this.findReferralCode(referralCode)) {
+    while (await this.findReferralCode(referralCode)) {
       referralCode = generateReferralCode();
     }
 
