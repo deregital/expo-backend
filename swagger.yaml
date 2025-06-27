@@ -2993,7 +2993,11 @@ paths:
       parameters: []
       responses:
         200:
-          description: ""
+          description: "Roles obtenidos con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindAllRoleResponseDto"
       tags:
         - "Role"
   /role:
@@ -15774,6 +15778,51 @@ components:
             - "string"
       required:
         - "id"
+    FindAllRoleResponseDto:
+      type:
+        - "array"
+      items:
+        type:
+          - "object"
+        properties:
+          id:
+            type:
+              - "string"
+            format: "uuid"
+          name:
+            type:
+              - "string"
+            minLength: 1
+          groupId:
+            type:
+              - "string"
+            format: "uuid"
+          type:
+            type:
+              - "string"
+            enum:
+              - "PROFILE"
+              - "EVENT"
+              - "PARTICIPANT"
+              - "NOT_IN_SYSTEM"
+              - "PRODUCTION_ROLE"
+              - "FORM_OPTION"
+              - "PARTICIPANT_ROLE"
+          created_at:
+            type:
+              - "string"
+            format: "date-time"
+          updated_at:
+            type:
+              - "string"
+            format: "date-time"
+        required:
+          - "id"
+          - "name"
+          - "groupId"
+          - "type"
+          - "created_at"
+          - "updated_at"
     CreateRoleDto:
       type:
         - "object"

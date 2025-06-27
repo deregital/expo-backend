@@ -1,13 +1,15 @@
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Inject, Injectable } from '@nestjs/common';
-import { Tag, TagType } from '~/types';
+import z from 'zod';
+import { TagType } from '~/types';
+import { findAllRoleResponseSchema } from './dto/find-all.dto';
 
 @Injectable()
 export class RoleService {
   constructor(@Inject(PRISMA_SERVICE) private prisma: PrismaService) {}
 
-  async findAll(): Promise<Tag[] | null> {
+  async findAll(): Promise<z.infer<typeof findAllRoleResponseSchema>> {
     return await this.prisma.tag.findMany({
       where: {
         type: {

@@ -10,14 +10,22 @@ import {
   GoneException,
   Post,
 } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 import z from 'zod';
-import { Tag, TagType } from '~/types';
+import { TagType } from '~/types';
 import {
   CreateRoleDto,
   CreateRoleResponseDto,
   createRoleResponseSchema,
 } from './dto/create-role.dto';
+import {
+  FindAllRoleResponseDto,
+  findAllRoleResponseSchema,
+} from './dto/find-all.dto';
 import { RoleService } from './role.service';
 
 @Controller('role')
@@ -28,11 +36,15 @@ export class RoleController {
     private readonly roleService: RoleService,
   ) {}
 
+  @ApiOkResponse({
+    description: translate('route.role.all.success'),
+    type: FindAllRoleResponseDto,
+  })
   @Get('/all')
-  async findAll(): Promise<Tag[] | null> {
+  async findAll(): Promise<z.infer<typeof findAllRoleResponseSchema>> {
     return this.roleService.findAll();
   }
-  // Promise<z.infer<typeof createTagResponseSchema>>
+
   @ApiCreatedResponse({
     description: translate('route.role.create.success'),
     type: CreateRoleResponseDto,

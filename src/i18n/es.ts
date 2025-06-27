@@ -801,6 +801,9 @@ export default {
       },
     },
     role: {
+      all: {
+        success: 'Roles obtenidos con éxito',
+      },
       create: {
         success: 'Rol creado con éxito',
         'already-exists': 'El rol "{{roleName}}" ya existe',
