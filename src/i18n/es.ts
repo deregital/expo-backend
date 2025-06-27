@@ -800,5 +800,11 @@ export default {
         'conflict-tag-in-use': `No se puede eliminar el formulario porque la opción \{\{option\}\} está en uso en \{\{profiles\}\} perfiles`,
       },
     },
+    role: {
+      create: {
+        success: 'Rol creado con éxito',
+        'already-exists': 'El rol "{{roleName}}" ya existe',
+      },
+    },
   },
 } as const;

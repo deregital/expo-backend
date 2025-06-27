@@ -3008,7 +3008,17 @@ paths:
               $ref: "#/components/schemas/CreateRoleDto"
       responses:
         201:
-          description: ""
+          description: "Rol creado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateRoleResponseDto"
+        400:
+          description: "El rol \"[missing \"{{roleName}}\" value]\" ya existe"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Role"
 info:
@@ -15774,3 +15784,45 @@ components:
           minLength: 1
       required:
         - "name"
+    CreateRoleResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        groupId:
+          type:
+            - "string"
+          format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PROFILE"
+            - "EVENT"
+            - "PARTICIPANT"
+            - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "groupId"
+        - "type"
+        - "created_at"
+        - "updated_at"

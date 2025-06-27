@@ -34,4 +34,13 @@ export class RoleService {
 
     return roleTag?.groupId || null;
   }
+
+  async existsRole(name: string): Promise<boolean> {
+    return !!(await this.prisma.tag.findFirst({
+      where: {
+        name,
+        type: TagType.PARTICIPANT_ROLE,
+      },
+    }));
+  }
 }

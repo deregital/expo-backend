@@ -1,10 +1,23 @@
 import { translate } from '@/i18n/translate';
+import { ErrorDto } from '@/shared/errors/errorType';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
-import { Body, Controller, Get, GoneException, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  GoneException,
+  Post,
+} from '@nestjs/common';
+import { ApiBadRequestResponse, ApiCreatedResponse } from '@nestjs/swagger';
 import z from 'zod';
 import { Tag, TagType } from '~/types';
-import { CreateRoleDto, createRoleResponseSchema } from './dto/create-role.dto';
+import {
+  CreateRoleDto,
+  CreateRoleResponseDto,
+  createRoleResponseSchema,
+} from './dto/create-role.dto';
 import { RoleService } from './role.service';
 
 @Controller('role')
@@ -20,6 +33,14 @@ export class RoleController {
     return this.roleService.findAll();
   }
   // Promise<z.infer<typeof createTagResponseSchema>>
+  @ApiCreatedResponse({
+    description: translate('route.role.create.success'),
+    type: CreateRoleResponseDto,
+  })
+  @ApiBadRequestResponse({
+    description: translate('route.role.create.already-exists'),
+    type: ErrorDto,
+  })
   @Post('/')
   async create(
     @Body() createRoleDto: CreateRoleDto,
@@ -27,6 +48,14 @@ export class RoleController {
     const existsGroup = await this.roleService.existsRoleGroup();
 
     //Validate, name cannotreapeat
+    const existsRole = await this.roleService.existsRole(createRoleDto.name);
+
+    if (existsRole) {
+      throw new BadRequestException(
+        translate('route.role.create.already-exists'),
+      );
+    }
+
     if (!existsGroup) {
       const newRoleGroup = await this.tagGroupService.create({
         name: 'Roles',
