@@ -28,6 +28,9 @@ export default {
       PARTICIPANT: 'Participante',
     },
     'production-role': 'Roles de producción',
+    role: {
+      production: 'Productor/a',
+    },
     conflict: `Ya existe un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
     'not-found': `No se encontró un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
   },
