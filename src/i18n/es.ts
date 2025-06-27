@@ -428,7 +428,7 @@ export default {
         'not-found': 'Ticket no encontrado',
         pdf: {
           footer:
-            'Para cualquier duda, reclamo o consulta llamar al 11-6056-7270 o comunicarse vía mail a ariellask@gmail.com.\nMás información en expodesfiles.com',
+            'Para cualquier duda, reclamo o consulta comunicarse vía mail a expodesfiles@gmail.com.\nMás información en expodesfiles.com',
         },
       },
       'find-ticket': {
