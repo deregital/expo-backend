@@ -4,7 +4,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import z from 'zod';
 import { Tag, TagType } from '~/types';
 import { deleteRoleResponseSchema } from './dto/delete-role.dto';
-import { findAllRoleResponseSchema } from './dto/find-all.dto';
+import { findAllRoleResponseSchema } from './dto/find-all-role.dto';
 import { UpdateRoleDto, updateRoleResponseSchema } from './dto/update-role.dto';
 
 @Injectable()

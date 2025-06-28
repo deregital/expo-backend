@@ -33,7 +33,7 @@ import {
 import {
   FindAllRoleResponseDto,
   findAllRoleResponseSchema,
-} from './dto/find-all.dto';
+} from './dto/find-all-role.dto';
 import {
   UpdateRoleDto,
   UpdateRoleResponseDto,
