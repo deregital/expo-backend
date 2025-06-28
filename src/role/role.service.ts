@@ -2,8 +2,10 @@ import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Inject, Injectable } from '@nestjs/common';
 import z from 'zod';
-import { TagType } from '~/types';
+import { Tag, TagType } from '~/types';
+import { deleteRoleResponseSchema } from './dto/delete-role.dto';
 import { findAllRoleResponseSchema } from './dto/find-all.dto';
+import { UpdateRoleDto, updateRoleResponseSchema } from './dto/update-role.dto';
 
 @Injectable()
 export class RoleService {
@@ -13,7 +15,7 @@ export class RoleService {
     return await this.prisma.tag.findMany({
       where: {
         type: {
-          equals: TagType.PROFILE,
+          equals: TagType.PARTICIPANT_ROLE,
         },
       },
     });
@@ -22,7 +24,7 @@ export class RoleService {
   async existsRoleGroup(): Promise<boolean> {
     return !!(await this.prisma.tag.findFirst({
       where: {
-        type: TagType.PARTICIPANT_ROLE,
+        type: TagType.PRODUCTION_ROLE,
       },
     }));
   }
@@ -44,5 +46,27 @@ export class RoleService {
         type: TagType.PARTICIPANT_ROLE,
       },
     }));
+  }
+
+  async update(
+    id: Tag['id'],
+    updateRoleDto: UpdateRoleDto,
+  ): Promise<z.infer<typeof updateRoleResponseSchema>> {
+    return this.prisma.tag.update({
+      data: {
+        name: updateRoleDto.name,
+      },
+      where: {
+        id,
+      },
+    });
+  }
+
+  async delete(id: string): Promise<z.infer<typeof deleteRoleResponseSchema>> {
+    return await this.prisma.tag.delete({
+      where: {
+        id,
+      },
+    });
   }
 }

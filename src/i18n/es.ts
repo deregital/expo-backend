@@ -808,6 +808,12 @@ export default {
         success: 'Rol creado con éxito',
         'already-exists': 'El rol "{{roleName}}" ya existe',
       },
+      update: {
+        success: 'Rol modificado con éxito',
+      },
+      delete: {
+        success: 'Rol eliminado con éxito',
+      },
     },
   },
 } as const;

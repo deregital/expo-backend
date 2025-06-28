@@ -1,13 +1,17 @@
 import { translate } from '@/i18n/translate';
 import { ErrorDto } from '@/shared/errors/errorType';
+import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
 import { TagGroupService } from '@/tag-group/tag-group.service';
 import { TagService } from '@/tag/tag.service';
 import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   GoneException,
+  Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import {
@@ -23,9 +27,18 @@ import {
   createRoleResponseSchema,
 } from './dto/create-role.dto';
 import {
+  DeleteRoleResponseDto,
+  deleteRoleResponseSchema,
+} from './dto/delete-role.dto';
+import {
   FindAllRoleResponseDto,
   findAllRoleResponseSchema,
 } from './dto/find-all.dto';
+import {
+  UpdateRoleDto,
+  UpdateRoleResponseDto,
+  updateRoleResponseSchema,
+} from './dto/update-role.dto';
 import { RoleService } from './role.service';
 
 @Controller('role')
@@ -64,7 +77,9 @@ export class RoleController {
 
     if (existsRole) {
       throw new BadRequestException(
-        translate('route.role.create.already-exists'),
+        translate('route.role.create.already-exists', {
+          roleName: createRoleDto.name,
+        }),
       );
     }
 
@@ -96,5 +111,28 @@ export class RoleController {
     });
 
     return newTag;
+  }
+
+  @ApiOkResponse({
+    description: translate('route.role.update.success'),
+    type: UpdateRoleResponseDto,
+  })
+  @Patch('/:id')
+  async update(
+    @Param('id', new ExistingRecord('tag')) id: string,
+    @Body() updateRoleDto: UpdateRoleDto,
+  ): Promise<z.infer<typeof updateRoleResponseSchema>> {
+    return await this.roleService.update(id, updateRoleDto);
+  }
+
+  @ApiOkResponse({
+    description: translate('route.role.delete.success'),
+    type: DeleteRoleResponseDto,
+  })
+  @Delete('/:id')
+  async delete(
+    @Param('id', new ExistingRecord('tag')) id: string,
+  ): Promise<z.infer<typeof deleteRoleResponseSchema>> {
+    return this.roleService.delete(id);
   }
 }

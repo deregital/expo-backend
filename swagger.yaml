@@ -3025,6 +3025,47 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Role"
+  /role/{id}:
+    patch:
+      operationId: "RoleController_update"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRoleDto"
+      responses:
+        200:
+          description: "Rol modificado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateRoleResponseDto"
+      tags:
+        - "Role"
+    delete:
+      operationId: "RoleController_delete"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Rol eliminado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteRoleResponseDto"
+      tags:
+        - "Role"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -15834,6 +15875,100 @@ components:
       required:
         - "name"
     CreateRoleResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        groupId:
+          type:
+            - "string"
+          format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PROFILE"
+            - "EVENT"
+            - "PARTICIPANT"
+            - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "groupId"
+        - "type"
+        - "created_at"
+        - "updated_at"
+    UpdateRoleDto:
+      type:
+        - "object"
+      properties:
+        name:
+          type:
+            - "string"
+          minLength: 1
+      required:
+        - "name"
+    UpdateRoleResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        groupId:
+          type:
+            - "string"
+          format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PROFILE"
+            - "EVENT"
+            - "PARTICIPANT"
+            - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "groupId"
+        - "type"
+        - "created_at"
+        - "updated_at"
+    DeleteRoleResponseDto:
       type:
         - "object"
       properties:
