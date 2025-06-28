@@ -13,6 +13,7 @@ export * from './mi-expo/exports';
 export * from './otp/exports';
 export * from './production/exports';
 export * from './profile/exports';
+export * from './role/exports';
 export * from './schema/exports';
 export * from './shared/dto-modification/zod-without-dates';
 export * from './tag-group/exports';
