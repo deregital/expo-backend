@@ -810,6 +810,7 @@ export default {
       },
       update: {
         success: 'Rol modificado con éxito',
+        'already-exists': 'El rol "{{roleName}}" ya existe',
       },
       delete: {
         success: 'Rol eliminado con éxito',

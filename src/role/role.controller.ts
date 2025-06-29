@@ -72,7 +72,6 @@ export class RoleController {
   ): Promise<z.infer<typeof createRoleResponseSchema>> {
     const existsGroup = await this.roleService.existsRoleGroup();
 
-    //Validate, name cannotreapeat
     const existsRole = await this.roleService.existsRole(createRoleDto.name);
 
     if (existsRole) {
@@ -117,11 +116,25 @@ export class RoleController {
     description: translate('route.role.update.success'),
     type: UpdateRoleResponseDto,
   })
+  @ApiBadRequestResponse({
+    description: translate('route.role.update.already-exists'),
+    type: TypeError,
+  })
   @Patch('/:id')
   async update(
     @Param('id', new ExistingRecord('tag')) id: string,
     @Body() updateRoleDto: UpdateRoleDto,
   ): Promise<z.infer<typeof updateRoleResponseSchema>> {
+    const existsRole = await this.roleService.existsRole(updateRoleDto.name);
+
+    if (existsRole) {
+      throw new BadRequestException(
+        translate('route.role.create.already-exists', {
+          roleName: updateRoleDto.name,
+        }),
+      );
+    }
+
     return await this.roleService.update(id, updateRoleDto);
   }
 
