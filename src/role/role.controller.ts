@@ -26,6 +26,7 @@ import {
 } from '@nestjs/swagger';
 import z from 'zod';
 import { Role, TagType } from '~/types';
+import { ProfileService } from '../profile/profile.service';
 import {
   AllocateParticipantRoleDto,
   AllocateParticipantRoleResponseDto,
@@ -66,6 +67,7 @@ export class RoleController {
     private readonly tagService: TagService,
     private readonly tagGroupService: TagGroupService,
     private readonly roleService: RoleService,
+    private readonly profileService: ProfileService,
   ) {}
 
   @ApiOkResponse({
@@ -270,9 +272,9 @@ export class RoleController {
     @Param('id', new ExistingRecord('tag')) id: string,
     @Body() updateRoleDto: UpdateRoleDto,
   ): Promise<z.infer<typeof updateRoleResponseSchema>> {
-    const isUsed = await this.roleService.isRoleInUse(id);
+    const { profiles } = await this.profileService.findByTags([id]);
 
-    if (isUsed) {
+    if (profiles.length > 0) {
       throw new ConflictException(
         translate('route.role.update.conflict-in-use'),
       );
@@ -303,9 +305,9 @@ export class RoleController {
   async delete(
     @Param('id', new ExistingRecord('tag')) id: string,
   ): Promise<z.infer<typeof deleteRoleResponseSchema>> {
-    const isUsed = await this.roleService.isRoleInUse(id);
+    const { profiles } = await this.profileService.findByTags([id]);
 
-    if (isUsed) {
+    if (profiles.length > 0) {
       throw new ConflictException(
         translate('route.role.delete.conflict-in-use'),
       );
