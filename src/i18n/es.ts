@@ -28,6 +28,9 @@ export default {
       PARTICIPANT: 'Participante',
     },
     'production-role': 'Roles de producción',
+    role: {
+      production: 'Productor/a',
+    },
     conflict: `Ya existe un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
     'not-found': `No se encontró un registro con el campo \{\{field\}\} '\{\{value\}\}' en la tabla de \{\{model\}\}`,
   },
@@ -795,6 +798,35 @@ export default {
         success: 'Formulario dinámico eliminado con éxito',
         'not-found': 'Formulario dinámico no encontrado',
         'conflict-tag-in-use': `No se puede eliminar el formulario porque la opción \{\{option\}\} está en uso en \{\{profiles\}\} perfiles`,
+      },
+    },
+    role: {
+      all: {
+        success: 'Roles obtenidos con éxito',
+      },
+      create: {
+        success: 'Rol creado con éxito',
+        'already-exists': 'El rol "{{roleName}}" ya existe',
+      },
+      update: {
+        success: 'Rol modificado con éxito',
+        'already-exists': 'El rol "{{roleName}}" ya existe',
+      },
+      delete: {
+        success: 'Rol eliminado con éxito',
+      },
+      'allocate-participant': {
+        success: 'Rol/es agregados al perfil correctamente',
+        'not-accepted': 'El/los id/s no corresponden a un rol',
+      },
+      'allocate-production': {
+        success: 'Rol productor agregado al perfil correctamente',
+        'not-found': 'Rol productor no encontrado',
+      },
+      'deallocate-all': {
+        success: 'Roles removidos correctamente del perfil',
+        'no-roles': 'El perfil no tiene roles asociados',
+        'not-accepted': 'El/los id/s no corresponden a un rol',
       },
     },
   },

@@ -2987,6 +2987,170 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "DynamicForm"
+  /role/all:
+    get:
+      operationId: "RoleController_findAll"
+      parameters: []
+      responses:
+        200:
+          description: "Roles obtenidos con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindAllRoleResponseDto"
+      tags:
+        - "Role"
+  /role/create:
+    post:
+      operationId: "RoleController_create"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRoleDto"
+      responses:
+        201:
+          description: "Rol creado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateRoleResponseDto"
+        400:
+          description: "El rol \"[missing \"{{roleName}}\" value]\" ya existe"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Role"
+  /role/allocate-participant:
+    post:
+      operationId: "RoleController_allocateParticipant"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AllocateParticipantRoleDto"
+      responses:
+        200:
+          description: "Rol/es agregados al perfil correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllocateParticipantRoleResponseDto"
+        409:
+          description: "El/los id/s no corresponden a un rol"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Role"
+  /role/allocate-production/{id}:
+    post:
+      operationId: "RoleController_allocateProduction"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Rol productor agregado al perfil correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllocateProductionRoleResponseDto"
+        404:
+          description: "Rol productor no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Role"
+  /role/deallocate-all/{id}:
+    post:
+      operationId: "RoleController_deallocateAll"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Roles removidos correctamente del perfil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeallocateAllRoleResponseDto"
+        400:
+          description: "El perfil no tiene roles asociados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "El perfil no tiene roles asociados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Role"
+  /role/{id}:
+    patch:
+      operationId: "RoleController_update"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRoleDto"
+      responses:
+        200:
+          description: "Rol modificado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateRoleResponseDto"
+        400:
+          description: "El rol \"[missing \"{{roleName}}\" value]\" ya existe"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Role"
+    delete:
+      operationId: "RoleController_delete"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Rol eliminado con éxito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteRoleResponseDto"
+      tags:
+        - "Role"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -3140,6 +3304,7 @@ components:
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
             - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
       required:
         - "name"
         - "groupId"
@@ -3169,6 +3334,7 @@ components:
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
             - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
         created_at:
           type:
             - "string"
@@ -3217,6 +3383,7 @@ components:
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
                   - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -3303,6 +3470,7 @@ components:
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
                   - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -3382,6 +3550,7 @@ components:
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
             - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
         created_at:
           type:
             - "string"
@@ -3474,6 +3643,7 @@ components:
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
             - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
         created_at:
           type:
             - "string"
@@ -3515,6 +3685,7 @@ components:
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
             - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
         created_at:
           type:
             - "string"
@@ -4018,6 +4189,7 @@ components:
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
                   - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -4074,6 +4246,7 @@ components:
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
                   - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               group:
                 type:
                   - "object"
@@ -4165,6 +4338,7 @@ components:
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
                   - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               group:
                 type:
                   - "object"
@@ -4219,6 +4393,7 @@ components:
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
                   - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -4361,6 +4536,7 @@ components:
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
                         - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -4442,6 +4618,7 @@ components:
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
                         - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -4542,6 +4719,7 @@ components:
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
                   - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -6152,6 +6330,7 @@ components:
                               - "NOT_IN_SYSTEM"
                               - "PRODUCTION_ROLE"
                               - "FORM_OPTION"
+                              - "PARTICIPANT_ROLE"
                           group:
                             type:
                               - "object"
@@ -6521,6 +6700,7 @@ components:
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
                         - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     group:
                       type:
                         - "object"
@@ -7130,6 +7310,7 @@ components:
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
                   - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -7280,6 +7461,7 @@ components:
                 - "NOT_IN_SYSTEM"
                 - "PRODUCTION_ROLE"
                 - "FORM_OPTION"
+                - "PARTICIPANT_ROLE"
             created_at:
               type:
                 - "string"
@@ -7357,6 +7539,7 @@ components:
                 - "NOT_IN_SYSTEM"
                 - "PRODUCTION_ROLE"
                 - "FORM_OPTION"
+                - "PARTICIPANT_ROLE"
             created_at:
               type:
                 - "string"
@@ -7740,6 +7923,7 @@ components:
                 - "NOT_IN_SYSTEM"
                 - "PRODUCTION_ROLE"
                 - "FORM_OPTION"
+                - "PARTICIPANT_ROLE"
             created_at:
               type:
                 - "string"
@@ -8081,6 +8265,7 @@ components:
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
                         - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -8291,6 +8476,7 @@ components:
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
                         - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -8578,6 +8764,7 @@ components:
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
                         - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -8793,6 +8980,7 @@ components:
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
                         - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -8986,6 +9174,7 @@ components:
                       - "NOT_IN_SYSTEM"
                       - "PRODUCTION_ROLE"
                       - "FORM_OPTION"
+                      - "PARTICIPANT_ROLE"
                   created_at:
                     type:
                       - "string"
@@ -9797,6 +9986,7 @@ components:
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
                   - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -15542,6 +15732,7 @@ components:
                               - "NOT_IN_SYSTEM"
                               - "PRODUCTION_ROLE"
                               - "FORM_OPTION"
+                              - "PARTICIPANT_ROLE"
                           created_at:
                             type:
                               - "string"
@@ -15713,3 +15904,614 @@ components:
             - "string"
       required:
         - "id"
+    FindAllRoleResponseDto:
+      type:
+        - "array"
+      items:
+        type:
+          - "object"
+        properties:
+          id:
+            type:
+              - "string"
+            format: "uuid"
+          name:
+            type:
+              - "string"
+            minLength: 1
+          groupId:
+            type:
+              - "string"
+            format: "uuid"
+          type:
+            type:
+              - "string"
+            enum:
+              - "PROFILE"
+              - "EVENT"
+              - "PARTICIPANT"
+              - "NOT_IN_SYSTEM"
+              - "PRODUCTION_ROLE"
+              - "FORM_OPTION"
+              - "PARTICIPANT_ROLE"
+          created_at:
+            type:
+              - "string"
+            format: "date-time"
+          updated_at:
+            type:
+              - "string"
+            format: "date-time"
+        required:
+          - "id"
+          - "name"
+          - "groupId"
+          - "type"
+          - "created_at"
+          - "updated_at"
+    CreateRoleDto:
+      type:
+        - "object"
+      properties:
+        name:
+          type:
+            - "string"
+          minLength: 1
+      required:
+        - "name"
+    CreateRoleResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        groupId:
+          type:
+            - "string"
+          format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PROFILE"
+            - "EVENT"
+            - "PARTICIPANT"
+            - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "groupId"
+        - "type"
+        - "created_at"
+        - "updated_at"
+    AllocateParticipantRoleDto:
+      type:
+        - "object"
+      properties:
+        roleIds:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+            format: "uuid"
+        profileId:
+          type:
+            - "string"
+          format: "uuid"
+      required:
+        - "roleIds"
+        - "profileId"
+    AllocateParticipantRoleResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        shortId:
+          type:
+            - "number"
+        role:
+          default: "MI_EXPO"
+          type:
+            - "string"
+          enum:
+            - "USER"
+            - "ADMIN"
+            - "FORM"
+            - "TICKETS"
+            - "MI_EXPO"
+        firstTimeMiExpo:
+          type:
+            - "boolean"
+        username:
+          type:
+            - "string"
+            - "null"
+          minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        isPhoneVerified:
+          type:
+            - "boolean"
+        secondaryPhoneNumber:
+          type:
+            - "string"
+            - "null"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        firstName:
+          type:
+            - "string"
+            - "null"
+          minLength: 1
+        gender:
+          type:
+            - "string"
+            - "null"
+        birthDate:
+          type:
+            - "string"
+            - "null"
+        profilePictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        instagram:
+          type:
+            - "string"
+            - "null"
+        mail:
+          type:
+            - "string"
+            - "null"
+          format: "email"
+        dni:
+          type:
+            - "string"
+            - "null"
+        alternativeNames:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        birthLocationId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        residenceLocationId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        isInTrash:
+          type:
+            - "boolean"
+        movedToTrashDate:
+          type:
+            - "string"
+            - "null"
+          format: "date-time"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+        referralCode:
+          type:
+            - "string"
+      required:
+        - "id"
+        - "shortId"
+        - "firstTimeMiExpo"
+        - "username"
+        - "phoneNumber"
+        - "isPhoneVerified"
+        - "secondaryPhoneNumber"
+        - "fullName"
+        - "firstName"
+        - "gender"
+        - "birthDate"
+        - "profilePictureUrl"
+        - "instagram"
+        - "mail"
+        - "dni"
+        - "alternativeNames"
+        - "birthLocationId"
+        - "residenceLocationId"
+        - "isInTrash"
+        - "movedToTrashDate"
+        - "created_at"
+        - "updated_at"
+        - "referralCode"
+    AllocateProductionRoleResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        shortId:
+          type:
+            - "number"
+        role:
+          default: "MI_EXPO"
+          type:
+            - "string"
+          enum:
+            - "USER"
+            - "ADMIN"
+            - "FORM"
+            - "TICKETS"
+            - "MI_EXPO"
+        firstTimeMiExpo:
+          type:
+            - "boolean"
+        username:
+          type:
+            - "string"
+            - "null"
+          minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        isPhoneVerified:
+          type:
+            - "boolean"
+        secondaryPhoneNumber:
+          type:
+            - "string"
+            - "null"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        firstName:
+          type:
+            - "string"
+            - "null"
+          minLength: 1
+        gender:
+          type:
+            - "string"
+            - "null"
+        birthDate:
+          type:
+            - "string"
+            - "null"
+        profilePictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        instagram:
+          type:
+            - "string"
+            - "null"
+        mail:
+          type:
+            - "string"
+            - "null"
+          format: "email"
+        dni:
+          type:
+            - "string"
+            - "null"
+        alternativeNames:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        birthLocationId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        residenceLocationId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        isInTrash:
+          type:
+            - "boolean"
+        movedToTrashDate:
+          type:
+            - "string"
+            - "null"
+          format: "date-time"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+        referralCode:
+          type:
+            - "string"
+      required:
+        - "id"
+        - "shortId"
+        - "firstTimeMiExpo"
+        - "username"
+        - "phoneNumber"
+        - "isPhoneVerified"
+        - "secondaryPhoneNumber"
+        - "fullName"
+        - "firstName"
+        - "gender"
+        - "birthDate"
+        - "profilePictureUrl"
+        - "instagram"
+        - "mail"
+        - "dni"
+        - "alternativeNames"
+        - "birthLocationId"
+        - "residenceLocationId"
+        - "isInTrash"
+        - "movedToTrashDate"
+        - "created_at"
+        - "updated_at"
+        - "referralCode"
+    DeallocateAllRoleResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        shortId:
+          type:
+            - "number"
+        role:
+          default: "MI_EXPO"
+          type:
+            - "string"
+          enum:
+            - "USER"
+            - "ADMIN"
+            - "FORM"
+            - "TICKETS"
+            - "MI_EXPO"
+        firstTimeMiExpo:
+          type:
+            - "boolean"
+        username:
+          type:
+            - "string"
+            - "null"
+          minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        isPhoneVerified:
+          type:
+            - "boolean"
+        secondaryPhoneNumber:
+          type:
+            - "string"
+            - "null"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        firstName:
+          type:
+            - "string"
+            - "null"
+          minLength: 1
+        gender:
+          type:
+            - "string"
+            - "null"
+        birthDate:
+          type:
+            - "string"
+            - "null"
+        profilePictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        instagram:
+          type:
+            - "string"
+            - "null"
+        mail:
+          type:
+            - "string"
+            - "null"
+          format: "email"
+        dni:
+          type:
+            - "string"
+            - "null"
+        alternativeNames:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        birthLocationId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        residenceLocationId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        isInTrash:
+          type:
+            - "boolean"
+        movedToTrashDate:
+          type:
+            - "string"
+            - "null"
+          format: "date-time"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+        referralCode:
+          type:
+            - "string"
+      required:
+        - "id"
+        - "shortId"
+        - "firstTimeMiExpo"
+        - "username"
+        - "phoneNumber"
+        - "isPhoneVerified"
+        - "secondaryPhoneNumber"
+        - "fullName"
+        - "firstName"
+        - "gender"
+        - "birthDate"
+        - "profilePictureUrl"
+        - "instagram"
+        - "mail"
+        - "dni"
+        - "alternativeNames"
+        - "birthLocationId"
+        - "residenceLocationId"
+        - "isInTrash"
+        - "movedToTrashDate"
+        - "created_at"
+        - "updated_at"
+        - "referralCode"
+    UpdateRoleDto:
+      type:
+        - "object"
+      properties:
+        name:
+          type:
+            - "string"
+          minLength: 1
+      required:
+        - "name"
+    UpdateRoleResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        groupId:
+          type:
+            - "string"
+          format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PROFILE"
+            - "EVENT"
+            - "PARTICIPANT"
+            - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "groupId"
+        - "type"
+        - "created_at"
+        - "updated_at"
+    DeleteRoleResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        name:
+          type:
+            - "string"
+          minLength: 1
+        groupId:
+          type:
+            - "string"
+          format: "uuid"
+        type:
+          type:
+            - "string"
+          enum:
+            - "PROFILE"
+            - "EVENT"
+            - "PARTICIPANT"
+            - "NOT_IN_SYSTEM"
+            - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+      required:
+        - "id"
+        - "name"
+        - "groupId"
+        - "type"
+        - "created_at"
+        - "updated_at"

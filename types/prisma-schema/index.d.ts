@@ -164,6 +164,7 @@ export namespace $Enums {
     NOT_IN_SYSTEM: 'NOT_IN_SYSTEM';
     PRODUCTION_ROLE: 'PRODUCTION_ROLE';
     FORM_OPTION: 'FORM_OPTION';
+    PARTICIPANT_ROLE: 'PARTICIPANT_ROLE';
   };
 
   export type TagType = (typeof TagType)[keyof typeof TagType];
