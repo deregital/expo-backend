@@ -3029,6 +3029,12 @@ paths:
     post:
       operationId: "RoleController_allocateParticipant"
       parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AllocateParticipantRoleDto"
       responses:
         200:
           description: "Rol/es agregados al perfil correctamente"
@@ -15965,6 +15971,30 @@ components:
         - "type"
         - "created_at"
         - "updated_at"
+    AllocateParticipantRoleDto:
+      type:
+        - "object"
+      properties:
+        roleIds:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              id:
+                type:
+                  - "string"
+                format: "uuid"
+            required:
+              - "id"
+        profileId:
+          type:
+            - "string"
+          format: "uuid"
+      required:
+        - "roleIds"
+        - "profileId"
     AllocateParticipantRoleResponseDto:
       type:
         - "object"

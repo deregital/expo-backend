@@ -138,7 +138,7 @@ export class RoleController {
   @Roles(Role.MI_EXPO)
   @Post('/allocate-participant')
   async allocateParticipant(
-    allocateParticipantRole: AllocateParticipantRoleDto,
+    @Body() allocateParticipantRole: AllocateParticipantRoleDto,
   ): Promise<z.infer<typeof allocateParticipantRoleResponseSchema>> {
     const tagIds = await Promise.all(
       allocateParticipantRole.roleIds.map(async ({ id }) => {
