@@ -3132,6 +3132,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "No se puede editar el rol porque está en uso"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Role"
     delete:
@@ -3150,7 +3156,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/DeleteRoleResponseDto"
         409:
-          description: "No se puede eliminar el rol porque esta en uso"
+          description: "No se puede eliminar el rol porque está en uso"
           content:
             application/json:
               schema:

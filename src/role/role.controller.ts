@@ -261,11 +261,23 @@ export class RoleController {
     description: translate('route.role.update.already-exists'),
     type: ErrorDto,
   })
+  @ApiConflictResponse({
+    description: translate('route.role.update.conflict-in-use'),
+    type: ErrorDto,
+  })
   @Patch('/:id')
   async update(
     @Param('id', new ExistingRecord('tag')) id: string,
     @Body() updateRoleDto: UpdateRoleDto,
   ): Promise<z.infer<typeof updateRoleResponseSchema>> {
+    const isUsed = await this.roleService.isRoleInUse(id);
+
+    if (isUsed) {
+      throw new ConflictException(
+        translate('route.role.delete.conflict-in-use'),
+      );
+    }
+
     const existsRole = await this.roleService.existsRole(updateRoleDto.name);
 
     if (existsRole) {

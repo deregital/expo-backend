@@ -811,10 +811,11 @@ export default {
       update: {
         success: 'Rol modificado con éxito',
         'already-exists': 'El rol "{{roleName}}" ya existe',
+        'conflict-in-use': 'No se puede editar el rol porque está en uso',
       },
       delete: {
         success: 'Rol eliminado con éxito',
-        'conflict-in-use': 'No se puede eliminar el rol porque esta en uso',
+        'conflict-in-use': 'No se puede eliminar el rol porque está en uso',
       },
       'allocate-participant': {
         success: 'Rol/es agregados al perfil correctamente',
