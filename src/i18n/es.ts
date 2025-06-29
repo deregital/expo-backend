@@ -815,6 +815,14 @@ export default {
       delete: {
         success: 'Rol eliminado con éxito',
       },
+      'allocate-participant': {
+        success: 'Rol/es agregados al perfil correctamente',
+        'not-accepted': 'El/los id/s no corresponden a un tag',
+      },
+      'allocate-production': {
+        success: 'Rol productor agregado al perfil correctamente',
+        'not-found': 'Rol productor no encontrado',
+      },
     },
   },
 } as const;

@@ -1,3 +1,4 @@
+import { Roles } from '@/auth/decorators/rol.decorator';
 import { translate } from '@/i18n/translate';
 import { ErrorDto } from '@/shared/errors/errorType';
 import { ExistingRecord } from '@/shared/validation/checkExistingRecord';
@@ -6,21 +7,34 @@ import { TagService } from '@/tag/tag.service';
 import {
   BadRequestException,
   Body,
+  ConflictException,
   Controller,
   Delete,
   Get,
   GoneException,
+  NotFoundException,
   Param,
   Patch,
   Post,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiConflictResponse,
   ApiCreatedResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
 } from '@nestjs/swagger';
 import z from 'zod';
-import { TagType } from '~/types';
+import { Role, TagType } from '~/types';
+import {
+  AllocateParticipantRoleDto,
+  AllocateParticipantRoleResponseDto,
+  allocateParticipantRoleResponseSchema,
+} from './dto/allocate-participant-role.dto';
+import {
+  AllocateProductionRoleResponseDto,
+  allocateProductionRoleResponseSchema,
+} from './dto/allocate-production-role.dto';
 import {
   CreateRoleDto,
   CreateRoleResponseDto,
@@ -41,6 +55,7 @@ import {
 } from './dto/update-role.dto';
 import { RoleService } from './role.service';
 
+@Roles(Role.ADMIN)
 @Controller('role')
 export class RoleController {
   constructor(
@@ -113,12 +128,91 @@ export class RoleController {
   }
 
   @ApiOkResponse({
+    description: translate('route.role.allocate-participant.success'),
+    type: AllocateParticipantRoleResponseDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.role.allocate-participant.not-accepted'),
+    type: ErrorDto,
+  })
+  @Roles(Role.MI_EXPO)
+  @Post('/allocate-participant')
+  async allocateParticipant(
+    allocateParticipantRole: AllocateParticipantRoleDto,
+  ): Promise<z.infer<typeof allocateParticipantRoleResponseSchema>> {
+    const tagIds = await Promise.all(
+      allocateParticipantRole.roleIds.map(async ({ id }) => {
+        const isRole = await this.roleService.existsRoleById(id);
+        if (!isRole) {
+          throw new ConflictException(
+            translate('route.role.allocate-participant.not-accepted'),
+          );
+        }
+        return id;
+      }),
+    );
+
+    const profiles = await this.tagService.massiveAllocation({
+      tagIds,
+      profileIds: [allocateParticipantRole.profileId],
+    });
+
+    if (!profiles.profiles[0]) {
+      throw new ConflictException(
+        translate('route.role.allocate-participant.not-accepted'),
+      );
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...profile } = { ...profiles.profiles[0] };
+
+    return profile;
+  }
+
+  @ApiOkResponse({
+    description: translate('route.role.allocate-production.success'),
+    type: AllocateProductionRoleResponseDto,
+  })
+  @ApiNotFoundResponse({
+    description: translate('route.role.allocate-production.not-found'),
+    type: ErrorDto,
+  })
+  @Roles(Role.MI_EXPO)
+  @Post('/allocate-production/:id')
+  async allocateProduction(
+    @Param('id', new ExistingRecord('profile')) profileId: string,
+  ): Promise<z.infer<typeof allocateProductionRoleResponseSchema>> {
+    const production = await this.roleService.findProductionRole();
+
+    if (!production) {
+      throw new NotFoundException(
+        translate('route.role.allocate-production.not-found'),
+      );
+    }
+    const profiles = await this.tagService.massiveAllocation({
+      tagIds: [production.id],
+      profileIds: [profileId],
+    });
+
+    if (!profiles.profiles[0]) {
+      throw new ConflictException(
+        translate('route.role.allocate-production.not-found'),
+      );
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...profile } = { ...profiles.profiles[0] };
+
+    return profile;
+  }
+
+  @ApiOkResponse({
     description: translate('route.role.update.success'),
     type: UpdateRoleResponseDto,
   })
   @ApiBadRequestResponse({
     description: translate('route.role.update.already-exists'),
-    type: TypeError,
+    type: ErrorDto,
   })
   @Patch('/:id')
   async update(

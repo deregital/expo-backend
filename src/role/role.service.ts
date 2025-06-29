@@ -39,10 +39,27 @@ export class RoleService {
     return roleTag?.groupId || null;
   }
 
+  async findProductionRole(): Promise<Tag | null> {
+    return await this.prisma.tag.findFirst({
+      where: {
+        type: TagType.PRODUCTION_ROLE,
+      },
+    });
+  }
+
   async existsRole(name: string): Promise<boolean> {
     return !!(await this.prisma.tag.findFirst({
       where: {
         name,
+        type: TagType.PARTICIPANT_ROLE,
+      },
+    }));
+  }
+
+  async existsRoleById(id: string): Promise<boolean> {
+    return !!(await this.prisma.tag.findUnique({
+      where: {
+        id,
         type: TagType.PARTICIPANT_ROLE,
       },
     }));
