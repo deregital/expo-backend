@@ -15980,14 +15980,8 @@ components:
             - "array"
           items:
             type:
-              - "object"
-            properties:
-              id:
-                type:
-                  - "string"
-                format: "uuid"
-            required:
-              - "id"
+              - "string"
+            format: "uuid"
         profileId:
           type:
             - "string"

@@ -4,11 +4,7 @@ import { tagSchema } from '@/tag/dto/tag.dto';
 import z from 'zod';
 
 export const allocateParticipantRoleSchema = z.object({
-  roleIds: tagSchema
-    .pick({
-      id: true,
-    })
-    .array(),
+  roleIds: tagSchema.shape.id.array(),
   profileId: profileSchema.shape.id,
 });
 

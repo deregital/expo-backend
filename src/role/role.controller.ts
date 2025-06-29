@@ -141,14 +141,14 @@ export class RoleController {
     @Body() allocateParticipantRole: AllocateParticipantRoleDto,
   ): Promise<z.infer<typeof allocateParticipantRoleResponseSchema>> {
     const tagIds = await Promise.all(
-      allocateParticipantRole.roleIds.map(async ({ id }) => {
-        const isRole = await this.roleService.existsRoleById(id);
+      allocateParticipantRole.roleIds.map(async (roleId) => {
+        const isRole = await this.roleService.existsRoleById(roleId);
         if (!isRole) {
           throw new ConflictException(
             translate('route.role.allocate-participant.not-accepted'),
           );
         }
-        return id;
+        return roleId;
       }),
     );
 
