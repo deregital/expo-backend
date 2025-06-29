@@ -66,7 +66,7 @@ export class RoleController {
     description: translate('route.role.create.already-exists'),
     type: ErrorDto,
   })
-  @Post('/')
+  @Post('/create')
   async create(
     @Body() createRoleDto: CreateRoleDto,
   ): Promise<z.infer<typeof createRoleResponseSchema>> {

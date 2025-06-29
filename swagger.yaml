@@ -3000,7 +3000,7 @@ paths:
                 $ref: "#/components/schemas/FindAllRoleResponseDto"
       tags:
         - "Role"
-  /role:
+  /role/create:
     post:
       operationId: "RoleController_create"
       parameters: []
