@@ -274,7 +274,7 @@ export class RoleController {
 
     if (isUsed) {
       throw new ConflictException(
-        translate('route.role.delete.conflict-in-use'),
+        translate('route.role.update.conflict-in-use'),
       );
     }
 
