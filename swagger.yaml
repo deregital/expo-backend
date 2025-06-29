@@ -3151,6 +3151,10 @@ paths:
                 $ref: "#/components/schemas/DeleteRoleResponseDto"
         409:
           description: "No se puede eliminar el rol porque esta en uso"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
       tags:
         - "Role"
 info:

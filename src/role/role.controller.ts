@@ -285,6 +285,7 @@ export class RoleController {
   })
   @ApiConflictResponse({
     description: translate('route.role.delete.conflict-in-use'),
+    type: ErrorDto,
   })
   @Delete('/:id')
   async delete(
