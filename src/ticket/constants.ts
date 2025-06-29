@@ -299,8 +299,7 @@ export function generateTicketTemplate(ticketType: TicketType): Template {
         {
           name: 'footer',
           type: 'text',
-          content:
-            'Para cualquier duda, reclamo o consulta llamar al 11-6056-7270 o comunicarse vía mail a ariellask@gmail.com Más información en expodesfiles.com',
+          content: translate('route.pdf.generate-pdf.pdf.footer'),
           position: { x: 33, y: 559.74 },
           width: 243.95,
           height: 40.75,
