@@ -13,7 +13,7 @@ export class RoleGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const roles = this.reflector.getAllAndOverride<string[]>('roles', [
+    const roles = this.reflector.getAllAndMerge<string[]>('roles', [
       context.getHandler(),
       context.getClass(),
     ]);
@@ -22,7 +22,6 @@ export class RoleGuard implements CanActivate {
     }
     const request = context.switchToHttp().getRequest();
     const user = request.user;
-
     return this.matchRoles(roles, user.role);
   }
 }
