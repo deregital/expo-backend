@@ -47,6 +47,21 @@ export class RoleService {
     });
   }
 
+  async findAllRolesByProfileId(profileId: string): Promise<Tag[] | null> {
+    return await this.prisma.tag.findMany({
+      where: {
+        type: {
+          in: [TagType.PARTICIPANT_ROLE, TagType.PRODUCTION_ROLE],
+        },
+        profiles: {
+          some: {
+            id: profileId,
+          },
+        },
+      },
+    });
+  }
+
   async existsRole(name: string): Promise<boolean> {
     return !!(await this.prisma.tag.findFirst({
       where: {

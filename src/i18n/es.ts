@@ -817,11 +817,16 @@ export default {
       },
       'allocate-participant': {
         success: 'Rol/es agregados al perfil correctamente',
-        'not-accepted': 'El/los id/s no corresponden a un tag',
+        'not-accepted': 'El/los id/s no corresponden a un rol',
       },
       'allocate-production': {
         success: 'Rol productor agregado al perfil correctamente',
         'not-found': 'Rol productor no encontrado',
+      },
+      'deallocate-all': {
+        success: 'Roles removidos correctamente del perfil',
+        'no-roles': 'El perfil no tiene roles asociados',
+        'not-accepted': 'El/los id/s no corresponden a un rol',
       },
     },
   },

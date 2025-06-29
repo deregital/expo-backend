@@ -3043,7 +3043,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AllocateParticipantRoleResponseDto"
         409:
-          description: "El/los id/s no corresponden a un tag"
+          description: "El/los id/s no corresponden a un rol"
           content:
             application/json:
               schema:
@@ -3068,6 +3068,36 @@ paths:
                 $ref: "#/components/schemas/AllocateProductionRoleResponseDto"
         404:
           description: "Rol productor no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "Role"
+  /role/deallocate-all/{id}:
+    post:
+      operationId: "RoleController_deallocateAll"
+      parameters:
+        - name: "id"
+          required: true
+          in: "path"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Roles removidos correctamente del perfil"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeallocateAllRoleResponseDto"
+        400:
+          description: "El perfil no tiene roles asociados"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        409:
+          description: "El perfil no tiene roles asociados"
           content:
             application/json:
               schema:
@@ -16124,6 +16154,140 @@ components:
         - "updated_at"
         - "referralCode"
     AllocateProductionRoleResponseDto:
+      type:
+        - "object"
+      properties:
+        id:
+          type:
+            - "string"
+          format: "uuid"
+        shortId:
+          type:
+            - "number"
+        role:
+          default: "MI_EXPO"
+          type:
+            - "string"
+          enum:
+            - "USER"
+            - "ADMIN"
+            - "FORM"
+            - "TICKETS"
+            - "MI_EXPO"
+        firstTimeMiExpo:
+          type:
+            - "boolean"
+        username:
+          type:
+            - "string"
+            - "null"
+          minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        isPhoneVerified:
+          type:
+            - "boolean"
+        secondaryPhoneNumber:
+          type:
+            - "string"
+            - "null"
+        fullName:
+          type:
+            - "string"
+          minLength: 1
+        firstName:
+          type:
+            - "string"
+            - "null"
+          minLength: 1
+        gender:
+          type:
+            - "string"
+            - "null"
+        birthDate:
+          type:
+            - "string"
+            - "null"
+        profilePictureUrl:
+          type:
+            - "string"
+            - "null"
+          format: "uri"
+        instagram:
+          type:
+            - "string"
+            - "null"
+        mail:
+          type:
+            - "string"
+            - "null"
+          format: "email"
+        dni:
+          type:
+            - "string"
+            - "null"
+        alternativeNames:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        birthLocationId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        residenceLocationId:
+          type:
+            - "string"
+            - "null"
+          format: "uuid"
+        isInTrash:
+          type:
+            - "boolean"
+        movedToTrashDate:
+          type:
+            - "string"
+            - "null"
+          format: "date-time"
+        created_at:
+          type:
+            - "string"
+          format: "date-time"
+        updated_at:
+          type:
+            - "string"
+          format: "date-time"
+        referralCode:
+          type:
+            - "string"
+      required:
+        - "id"
+        - "shortId"
+        - "firstTimeMiExpo"
+        - "username"
+        - "phoneNumber"
+        - "isPhoneVerified"
+        - "secondaryPhoneNumber"
+        - "fullName"
+        - "firstName"
+        - "gender"
+        - "birthDate"
+        - "profilePictureUrl"
+        - "instagram"
+        - "mail"
+        - "dni"
+        - "alternativeNames"
+        - "birthLocationId"
+        - "residenceLocationId"
+        - "isInTrash"
+        - "movedToTrashDate"
+        - "created_at"
+        - "updated_at"
+        - "referralCode"
+    DeallocateAllRoleResponseDto:
       type:
         - "object"
       properties:

@@ -41,6 +41,10 @@ import {
   createRoleResponseSchema,
 } from './dto/create-role.dto';
 import {
+  DeallocateAllRoleResponseDto,
+  deallocateAllRoleResponseSchema,
+} from './dto/deallocate-all-role.dto';
+import {
   DeleteRoleResponseDto,
   deleteRoleResponseSchema,
 } from './dto/delete-role.dto';
@@ -113,7 +117,6 @@ export class RoleController {
 
     const groupId = await this.roleService.findGroupId();
 
-    console.log(groupId);
     if (!groupId) {
       throw new GoneException();
     }
@@ -197,6 +200,50 @@ export class RoleController {
     if (!profiles.profiles[0]) {
       throw new ConflictException(
         translate('route.role.allocate-production.not-found'),
+      );
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...profile } = { ...profiles.profiles[0] };
+
+    return profile;
+  }
+
+  @ApiOkResponse({
+    description: translate('route.role.deallocate-all.success'),
+    type: DeallocateAllRoleResponseDto,
+  })
+  @ApiBadRequestResponse({
+    description: translate('route.role.deallocate-all.no-roles'),
+    type: ErrorDto,
+  })
+  @ApiConflictResponse({
+    description: translate('route.role.deallocate-all.no-roles'),
+    type: ErrorDto,
+  })
+  @Post('/deallocate-all/:id')
+  async deallocateAll(
+    @Param('id', new ExistingRecord('profile')) profileId: string,
+  ): Promise<z.infer<typeof deallocateAllRoleResponseSchema>> {
+    const roleIdsObject =
+      await this.roleService.findAllRolesByProfileId(profileId);
+
+    if (!roleIdsObject) {
+      throw new BadRequestException(
+        translate('route.role.deallocate-all.no-roles'),
+      );
+    }
+
+    const rolesIds = roleIdsObject.map((role) => role.id);
+
+    const profiles = await this.tagService.massiveDeallocation({
+      tagIds: rolesIds,
+      profileIds: [profileId],
+    });
+
+    if (!profiles.profiles[0]) {
+      throw new ConflictException(
+        translate('route.role.deallocate-all.not-accepted'),
       );
     }
 
