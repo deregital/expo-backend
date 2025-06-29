@@ -26,6 +26,7 @@ import {
 } from '@nestjs/swagger';
 import z from 'zod';
 import { Role, TagType } from '~/types';
+import { ProfileService } from '../profile/profile.service';
 import {
   AllocateParticipantRoleDto,
   AllocateParticipantRoleResponseDto,
@@ -66,6 +67,7 @@ export class RoleController {
     private readonly tagService: TagService,
     private readonly tagGroupService: TagGroupService,
     private readonly roleService: RoleService,
+    private readonly profileService: ProfileService,
   ) {}
 
   @ApiOkResponse({
@@ -104,7 +106,7 @@ export class RoleController {
     if (!existsGroup) {
       const newRoleGroup = await this.tagGroupService.create({
         name: 'Roles',
-        color: '#11111',
+        color: '#666666',
         isExclusive: false,
       });
 
@@ -261,11 +263,23 @@ export class RoleController {
     description: translate('route.role.update.already-exists'),
     type: ErrorDto,
   })
+  @ApiConflictResponse({
+    description: translate('route.role.update.conflict-in-use'),
+    type: ErrorDto,
+  })
   @Patch('/:id')
   async update(
     @Param('id', new ExistingRecord('tag')) id: string,
     @Body() updateRoleDto: UpdateRoleDto,
   ): Promise<z.infer<typeof updateRoleResponseSchema>> {
+    const { profiles } = await this.profileService.findByTags([id]);
+
+    if (profiles.length > 0) {
+      throw new ConflictException(
+        translate('route.role.update.conflict-in-use'),
+      );
+    }
+
     const existsRole = await this.roleService.existsRole(updateRoleDto.name);
 
     if (existsRole) {
@@ -283,10 +297,22 @@ export class RoleController {
     description: translate('route.role.delete.success'),
     type: DeleteRoleResponseDto,
   })
+  @ApiConflictResponse({
+    description: translate('route.role.delete.conflict-in-use'),
+    type: ErrorDto,
+  })
   @Delete('/:id')
   async delete(
     @Param('id', new ExistingRecord('tag')) id: string,
   ): Promise<z.infer<typeof deleteRoleResponseSchema>> {
+    const { profiles } = await this.profileService.findByTags([id]);
+
+    if (profiles.length > 0) {
+      throw new ConflictException(
+        translate('route.role.delete.conflict-in-use'),
+      );
+    }
+
     return this.roleService.delete(id);
   }
 }
