@@ -814,6 +814,7 @@ export default {
       },
       delete: {
         success: 'Rol eliminado con éxito',
+        'conflict-in-use': 'No se puede eliminar el rol porque esta en uso',
       },
       'allocate-participant': {
         success: 'Rol/es agregados al perfil correctamente',

@@ -104,7 +104,7 @@ export class RoleController {
     if (!existsGroup) {
       const newRoleGroup = await this.tagGroupService.create({
         name: 'Roles',
-        color: '#11111',
+        color: '#666666',
         isExclusive: false,
       });
 
@@ -283,10 +283,21 @@ export class RoleController {
     description: translate('route.role.delete.success'),
     type: DeleteRoleResponseDto,
   })
+  @ApiConflictResponse({
+    description: translate('route.role.delete.conflict-in-use'),
+  })
   @Delete('/:id')
   async delete(
     @Param('id', new ExistingRecord('tag')) id: string,
   ): Promise<z.infer<typeof deleteRoleResponseSchema>> {
+    const isUsed = await this.roleService.isRoleInUse(id);
+
+    if (isUsed) {
+      throw new ConflictException(
+        translate('route.role.delete.conflict-in-use'),
+      );
+    }
+
     return this.roleService.delete(id);
   }
 }

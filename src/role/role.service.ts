@@ -80,6 +80,23 @@ export class RoleService {
     }));
   }
 
+  async isRoleInUse(id: string): Promise<boolean> {
+    return !!(await this.prisma.tag.findFirst({
+      where: {
+        id,
+        AND: {
+          profiles: {
+            some: {
+              tags: {
+                some: {},
+              },
+            },
+          },
+        },
+      },
+    }));
+  }
+
   async update(
     id: Tag['id'],
     updateRoleDto: UpdateRoleDto,
