@@ -18,6 +18,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import { z } from 'zod';
 import {
   Event,
+  // [N]
+  EventProducerLogin,
+  // [/N]
   EventTicket,
   Prisma,
   Tag,
@@ -76,6 +79,16 @@ export class EventService {
             price: ticket.price,
           })),
         },
+
+        // [N]
+        eventProducerLogin: {
+          create: dto.eventProducerLogin.map((login) => ({
+            mail: login.mail,
+            password: login.password,
+            isActive: login.isActive,
+          })),
+        },
+        // [/N]
       },
     });
   }
@@ -195,6 +208,12 @@ export class EventService {
     updateEventDto: Partial<
       Omit<UpdateEventDto, 'eventTickets'> & {
         eventTickets: Pick<EventTicket, 'id' | 'amount' | 'price' | 'type'>[];
+        // [N]
+        eventProducerLogin: Pick<
+          EventProducerLogin,
+          'mail' | 'password' | 'isActive'
+        >[];
+        // [/N]
       }
     >,
   ): Promise<z.infer<typeof updateEventResponseSchema>> {
@@ -227,6 +246,16 @@ export class EventService {
           : updateEventDto.folderId === null
             ? { disconnect: true }
             : undefined,
+
+        // [N]
+        eventProducerLogin: {
+          create: updateEventDto.eventProducerLogin?.map((login) => ({
+            mail: login.mail,
+            password: login.password,
+            isActive: login.isActive,
+          })),
+        },
+        // [/N]
       },
       include: {
         tagAssisted: { include: { group: true } },
@@ -242,6 +271,9 @@ export class EventService {
     event,
     supraEventId,
     tagGroupId,
+    // [N]
+    eventProducerLogin,
+    // [/N]
   }: {
     id: Event['id'];
     event: Pick<
@@ -257,6 +289,12 @@ export class EventService {
     >;
     supraEventId: Event['id'];
     tagGroupId: TagGroup['id'];
+    // [N]
+    eventProducerLogin: Pick<
+      EventProducerLogin,
+      'mail' | 'password' | 'isActive'
+    >[];
+    // [/N]
   }): Promise<Event> {
     return await this.prisma.event.upsert({
       where: { id },
@@ -269,6 +307,19 @@ export class EventService {
         bannerUrl: event.bannerUrl,
         mainPictureUrl: event.mainPictureUrl,
         description: event.description,
+        // [N]
+        eventProducerLogin: {
+          upsert: eventProducerLogin.map((login) => ({
+            where: { mail: login.mail },
+            update: { password: login.password },
+            create: {
+              mail: login.mail,
+              password: login.password,
+              isActive: login.isActive,
+            },
+          })),
+        },
+        // [/N]
       },
       create: {
         date: event.date,
@@ -294,6 +345,15 @@ export class EventService {
             type: TagType.EVENT,
           },
         },
+        // [N]
+        eventProducerLogin: {
+          create: eventProducerLogin.map((login) => ({
+            mail: login.mail,
+            password: login.password,
+            isActive: login.isActive,
+          })),
+        },
+        // [/N]
       },
     });
   }

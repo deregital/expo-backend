@@ -5,7 +5,12 @@ import {
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagSchema } from '@/tag/dto/tag.dto';
 import z from 'zod';
-import { eventSchema } from './event.dto';
+import {
+  // [N]
+  eventProducerLoginSchema,
+  // [/N]
+  eventSchema,
+} from './event.dto';
 
 export const createEventSchema = eventSchema
   .pick({
@@ -41,6 +46,10 @@ export const createEventSchema = eventSchema
       eventTickets: z.array(
         addEventTicketRefinements(baseEventTicketsSchema.omit({ id: true })),
       ),
+
+      // [N]
+      eventProducerLogin: z.array(eventProducerLoginSchema),
+      // [/N]
     }),
   );
 

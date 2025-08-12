@@ -185,15 +185,15 @@ model TagGroup {
 }
 
 model Event {
-  id           String   @id @default(uuid())
-  name         String
-  date         DateTime
-  startingDate DateTime @default(now()) @map("starting_date")
-  endingDate   DateTime @default(now()) @map("ending_date")
-  location          String
-  mainPictureUrl   String? @map("main_picture_url")
-  bannerUrl    String? @map("banner_url")
-  description  String? @map("description")
+  id             String   @id @default(uuid())
+  name           String
+  date           DateTime
+  startingDate   DateTime @default(now()) @map("starting_date")
+  endingDate     DateTime @default(now()) @map("ending_date")
+  location       String
+  mainPictureUrl String?  @map("main_picture_url")
+  bannerUrl      String?  @map("banner_url")
+  description    String?  @map("description")
 
   folderId String?      @map("folder_id")
   folder   EventFolder? @relation("EVENT_FOLDER_X_EVENT", fields: [folderId], references: [id], onDelete: Cascade)
@@ -217,6 +217,10 @@ model Event {
 
   productions      Production[] @relation("EVENT_X_PRODUCTION")
   participantRoles Tag[]        @relation("EVENT_X_ROLES")
+
+  // [N]
+  eventProducerLogin EventProducerLogin[] @relation("EVENT_X_EVENT_PRODUCER_LOGIN")
+  // [/N]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -369,6 +373,25 @@ model ProductionAffiliationRequest {
 
   @@map("PRODUCTION_AFFILIATION_REQUEST")
 }
+
+// [N]
+model EventProducerLogin {
+  id String @id @default(uuid())
+
+  eventId String @map("event_id")
+  event   Event  @relation(name: "EVENT_X_EVENT_PRODUCER_LOGIN", fields: [eventId], references: [id], onDelete: Cascade)
+
+  mail     String  @unique
+  password String
+  isActive Boolean @default(true) @map("is_active")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("EVENT_PRODUCER_LOGIN")
+}
+
+// [/N]
 
 enum AffiliationStatus {
   APPROVED
