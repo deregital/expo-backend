@@ -2910,8 +2910,6 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
-            - "FORM_OPTION"
-            - "PARTICIPANT_ROLE"
       required:
         - "name"
         - "groupId"
@@ -2940,8 +2938,6 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
-            - "FORM_OPTION"
-            - "PARTICIPANT_ROLE"
         created_at:
           type:
             - "string"
@@ -2989,8 +2985,6 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
-                  - "FORM_OPTION"
-                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -3076,8 +3070,6 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
-                  - "FORM_OPTION"
-                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -3156,8 +3148,6 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
-            - "FORM_OPTION"
-            - "PARTICIPANT_ROLE"
         created_at:
           type:
             - "string"
@@ -3249,8 +3239,6 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
-            - "FORM_OPTION"
-            - "PARTICIPANT_ROLE"
         created_at:
           type:
             - "string"
@@ -3291,8 +3279,6 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
-            - "FORM_OPTION"
-            - "PARTICIPANT_ROLE"
         created_at:
           type:
             - "string"
@@ -3783,8 +3769,6 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
-                  - "FORM_OPTION"
-                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -3840,8 +3824,6 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
-                  - "FORM_OPTION"
-                  - "PARTICIPANT_ROLE"
               group:
                 type:
                   - "object"
@@ -3932,8 +3914,6 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
-                  - "FORM_OPTION"
-                  - "PARTICIPANT_ROLE"
               group:
                 type:
                   - "object"
@@ -3987,8 +3967,6 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
-                  - "FORM_OPTION"
-                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -4130,8 +4108,6 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
-                        - "FORM_OPTION"
-                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -4212,8 +4188,6 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
-                        - "FORM_OPTION"
-                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -4313,8 +4287,6 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
-                  - "FORM_OPTION"
-                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -5947,8 +5919,6 @@ components:
                               - "PARTICIPANT"
                               - "NOT_IN_SYSTEM"
                               - "PRODUCTION_ROLE"
-                              - "FORM_OPTION"
-                              - "PARTICIPANT_ROLE"
                           group:
                             type:
                               - "object"
@@ -6011,6 +5981,28 @@ components:
                           - "amount"
                           - "type"
                           - "price"
+                    eventProducerLogin:
+                      type:
+                        - "array"
+                      items:
+                        type:
+                          - "object"
+                        properties:
+                          mail:
+                            type:
+                              - "string"
+                            format: "email"
+                          password:
+                            type:
+                              - "string"
+                            minLength: 1
+                          isActive:
+                            type:
+                              - "boolean"
+                        required:
+                          - "mail"
+                          - "password"
+                          - "isActive"
                   required:
                     - "id"
                     - "name"
@@ -6032,6 +6024,7 @@ components:
                     - "subEvents"
                     - "profileTags"
                     - "eventTickets"
+                    - "eventProducerLogin"
             required:
               - "id"
               - "name"
@@ -6317,8 +6310,6 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
-                        - "FORM_OPTION"
-                        - "PARTICIPANT_ROLE"
                     group:
                       type:
                         - "object"
@@ -6381,6 +6372,28 @@ components:
                     - "amount"
                     - "type"
                     - "price"
+              eventProducerLogin:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "object"
+                  properties:
+                    mail:
+                      type:
+                        - "string"
+                      format: "email"
+                    password:
+                      type:
+                        - "string"
+                      minLength: 1
+                    isActive:
+                      type:
+                        - "boolean"
+                  required:
+                    - "mail"
+                    - "password"
+                    - "isActive"
             required:
               - "id"
               - "name"
@@ -6402,6 +6415,7 @@ components:
               - "subEvents"
               - "profileTags"
               - "eventTickets"
+              - "eventProducerLogin"
       required:
         - "folders"
         - "withoutFolder"
@@ -6927,8 +6941,6 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
-                  - "FORM_OPTION"
-                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -7095,8 +7107,6 @@ components:
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
                 - "PRODUCTION_ROLE"
-                - "FORM_OPTION"
-                - "PARTICIPANT_ROLE"
             created_at:
               type:
                 - "string"
@@ -7173,8 +7183,6 @@ components:
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
                 - "PRODUCTION_ROLE"
-                - "FORM_OPTION"
-                - "PARTICIPANT_ROLE"
             created_at:
               type:
                 - "string"
@@ -7579,8 +7587,6 @@ components:
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
                 - "PRODUCTION_ROLE"
-                - "FORM_OPTION"
-                - "PARTICIPANT_ROLE"
             created_at:
               type:
                 - "string"
@@ -7916,8 +7922,6 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
-                        - "FORM_OPTION"
-                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -8121,8 +8125,6 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
-                        - "FORM_OPTION"
-                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -8403,8 +8405,6 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
-                        - "FORM_OPTION"
-                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -8613,8 +8613,6 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
-                        - "FORM_OPTION"
-                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -8801,8 +8799,6 @@ components:
                       - "PARTICIPANT"
                       - "NOT_IN_SYSTEM"
                       - "PRODUCTION_ROLE"
-                      - "FORM_OPTION"
-                      - "PARTICIPANT_ROLE"
                   created_at:
                     type:
                       - "string"
@@ -9520,8 +9516,6 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
-                  - "FORM_OPTION"
-                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"

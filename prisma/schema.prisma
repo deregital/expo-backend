@@ -280,7 +280,7 @@ model Ticket {
   dni      String
 
   // [N]
-  phoneNumber String   @map("__phone_number")
+  phoneNumber String   @default("") @map("__phone_number")
   instagrams  String[] @map("__instagrams")
   whoToWatch  String?  @map("__who_to_watch")
   // [/N]

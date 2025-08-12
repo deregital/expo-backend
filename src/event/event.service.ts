@@ -102,6 +102,9 @@ export class EventService {
           group: Pick<TagGroup, 'color' | 'isExclusive' | 'name' | 'id'>;
         })[];
         eventTickets: EventTicket[];
+        // [N]
+        eventProducerLogin: EventProducerLogin[];
+        // [/N]
       }
     >
   > {
@@ -118,6 +121,9 @@ export class EventService {
           },
         },
         eventTickets: true,
+        // [N]
+        eventProducerLogin: true,
+        // [/N]
       },
     });
   }
@@ -143,6 +149,9 @@ export class EventService {
         supraEvent: true,
         profileTags: { include: { group: true } },
         tickets: true,
+        // [N]
+        eventProducerLogin: true,
+        // [/N]
       },
     });
     return {
