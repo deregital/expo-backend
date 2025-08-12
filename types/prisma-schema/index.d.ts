@@ -19481,6 +19481,8 @@ export namespace Prisma {
     fullName: string | null;
     mail: string | null;
     dni: string | null;
+    phoneNumber: string | null;
+    whoToWatch: string | null;
     seat: number | null;
     scanned: boolean | null;
     scannedAt: Date | null;
@@ -19497,6 +19499,8 @@ export namespace Prisma {
     fullName: string | null;
     mail: string | null;
     dni: string | null;
+    phoneNumber: string | null;
+    whoToWatch: string | null;
     seat: number | null;
     scanned: boolean | null;
     scannedAt: Date | null;
@@ -19513,6 +19517,9 @@ export namespace Prisma {
     fullName: number;
     mail: number;
     dni: number;
+    phoneNumber: number;
+    instagrams: number;
+    whoToWatch: number;
     seat: number;
     scanned: number;
     scannedAt: number;
@@ -19538,6 +19545,8 @@ export namespace Prisma {
     fullName?: true;
     mail?: true;
     dni?: true;
+    phoneNumber?: true;
+    whoToWatch?: true;
     seat?: true;
     scanned?: true;
     scannedAt?: true;
@@ -19554,6 +19563,8 @@ export namespace Prisma {
     fullName?: true;
     mail?: true;
     dni?: true;
+    phoneNumber?: true;
+    whoToWatch?: true;
     seat?: true;
     scanned?: true;
     scannedAt?: true;
@@ -19570,6 +19581,9 @@ export namespace Prisma {
     fullName?: true;
     mail?: true;
     dni?: true;
+    phoneNumber?: true;
+    instagrams?: true;
+    whoToWatch?: true;
     seat?: true;
     scanned?: true;
     scannedAt?: true;
@@ -19676,6 +19690,9 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    phoneNumber: string;
+    instagrams: string[];
+    whoToWatch: string | null;
     seat: number | null;
     scanned: boolean;
     scannedAt: Date | null;
@@ -19713,6 +19730,9 @@ export namespace Prisma {
       fullName?: boolean;
       mail?: boolean;
       dni?: boolean;
+      phoneNumber?: boolean;
+      instagrams?: boolean;
+      whoToWatch?: boolean;
       seat?: boolean;
       scanned?: boolean;
       scannedAt?: boolean;
@@ -19737,6 +19757,9 @@ export namespace Prisma {
       fullName?: boolean;
       mail?: boolean;
       dni?: boolean;
+      phoneNumber?: boolean;
+      instagrams?: boolean;
+      whoToWatch?: boolean;
       seat?: boolean;
       scanned?: boolean;
       scannedAt?: boolean;
@@ -19761,6 +19784,9 @@ export namespace Prisma {
       fullName?: boolean;
       mail?: boolean;
       dni?: boolean;
+      phoneNumber?: boolean;
+      instagrams?: boolean;
+      whoToWatch?: boolean;
       seat?: boolean;
       scanned?: boolean;
       scannedAt?: boolean;
@@ -19782,6 +19808,9 @@ export namespace Prisma {
     fullName?: boolean;
     mail?: boolean;
     dni?: boolean;
+    phoneNumber?: boolean;
+    instagrams?: boolean;
+    whoToWatch?: boolean;
     seat?: boolean;
     scanned?: boolean;
     scannedAt?: boolean;
@@ -19800,6 +19829,9 @@ export namespace Prisma {
     | 'fullName'
     | 'mail'
     | 'dni'
+    | 'phoneNumber'
+    | 'instagrams'
+    | 'whoToWatch'
     | 'seat'
     | 'scanned'
     | 'scannedAt'
@@ -19848,6 +19880,9 @@ export namespace Prisma {
         fullName: string;
         mail: string;
         dni: string;
+        phoneNumber: string;
+        instagrams: string[];
+        whoToWatch: string | null;
         seat: number | null;
         scanned: boolean;
         scannedAt: Date | null;
@@ -20487,6 +20522,9 @@ export namespace Prisma {
     readonly fullName: FieldRef<'Ticket', 'String'>;
     readonly mail: FieldRef<'Ticket', 'String'>;
     readonly dni: FieldRef<'Ticket', 'String'>;
+    readonly phoneNumber: FieldRef<'Ticket', 'String'>;
+    readonly instagrams: FieldRef<'Ticket', 'String[]'>;
+    readonly whoToWatch: FieldRef<'Ticket', 'String'>;
     readonly seat: FieldRef<'Ticket', 'Int'>;
     readonly scanned: FieldRef<'Ticket', 'Boolean'>;
     readonly scannedAt: FieldRef<'Ticket', 'DateTime'>;
@@ -28043,6 +28081,9 @@ export namespace Prisma {
     fullName: 'fullName';
     mail: 'mail';
     dni: 'dni';
+    phoneNumber: 'phoneNumber';
+    instagrams: 'instagrams';
+    whoToWatch: 'whoToWatch';
     seat: 'seat';
     scanned: 'scanned';
     scannedAt: 'scannedAt';
@@ -29450,6 +29491,9 @@ export namespace Prisma {
     fullName?: StringFilter<'Ticket'> | string;
     mail?: StringFilter<'Ticket'> | string;
     dni?: StringFilter<'Ticket'> | string;
+    phoneNumber?: StringFilter<'Ticket'> | string;
+    instagrams?: StringNullableListFilter<'Ticket'>;
+    whoToWatch?: StringNullableFilter<'Ticket'> | string | null;
     seat?: IntNullableFilter<'Ticket'> | number | null;
     scanned?: BoolFilter<'Ticket'> | boolean;
     scannedAt?: DateTimeNullableFilter<'Ticket'> | Date | string | null;
@@ -29475,6 +29519,9 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
+    phoneNumber?: SortOrder;
+    instagrams?: SortOrder;
+    whoToWatch?: SortOrderInput | SortOrder;
     seat?: SortOrderInput | SortOrder;
     scanned?: SortOrder;
     scannedAt?: SortOrderInput | SortOrder;
@@ -29498,6 +29545,9 @@ export namespace Prisma {
       fullName?: StringFilter<'Ticket'> | string;
       mail?: StringFilter<'Ticket'> | string;
       dni?: StringFilter<'Ticket'> | string;
+      phoneNumber?: StringFilter<'Ticket'> | string;
+      instagrams?: StringNullableListFilter<'Ticket'>;
+      whoToWatch?: StringNullableFilter<'Ticket'> | string | null;
       seat?: IntNullableFilter<'Ticket'> | number | null;
       scanned?: BoolFilter<'Ticket'> | boolean;
       scannedAt?: DateTimeNullableFilter<'Ticket'> | Date | string | null;
@@ -29525,6 +29575,9 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
+    phoneNumber?: SortOrder;
+    instagrams?: SortOrder;
+    whoToWatch?: SortOrderInput | SortOrder;
     seat?: SortOrderInput | SortOrder;
     scanned?: SortOrder;
     scannedAt?: SortOrderInput | SortOrder;
@@ -29553,6 +29606,9 @@ export namespace Prisma {
     fullName?: StringWithAggregatesFilter<'Ticket'> | string;
     mail?: StringWithAggregatesFilter<'Ticket'> | string;
     dni?: StringWithAggregatesFilter<'Ticket'> | string;
+    phoneNumber?: StringWithAggregatesFilter<'Ticket'> | string;
+    instagrams?: StringNullableListFilter<'Ticket'>;
+    whoToWatch?: StringNullableWithAggregatesFilter<'Ticket'> | string | null;
     seat?: IntNullableWithAggregatesFilter<'Ticket'> | number | null;
     scanned?: BoolWithAggregatesFilter<'Ticket'> | boolean;
     scannedAt?:
@@ -31109,6 +31165,9 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    phoneNumber: string;
+    instagrams?: TicketCreateinstagramsInput | string[];
+    whoToWatch?: string | null;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
@@ -31126,6 +31185,9 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    phoneNumber: string;
+    instagrams?: TicketCreateinstagramsInput | string[];
+    whoToWatch?: string | null;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
@@ -31141,6 +31203,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    instagrams?: TicketUpdateinstagramsInput | string[];
+    whoToWatch?: NullableStringFieldUpdateOperationsInput | string | null;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
     scanned?: BoolFieldUpdateOperationsInput | boolean;
     scannedAt?:
@@ -31162,6 +31227,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    instagrams?: TicketUpdateinstagramsInput | string[];
+    whoToWatch?: NullableStringFieldUpdateOperationsInput | string | null;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
     scanned?: BoolFieldUpdateOperationsInput | boolean;
     scannedAt?:
@@ -31182,6 +31250,9 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    phoneNumber: string;
+    instagrams?: TicketCreateinstagramsInput | string[];
+    whoToWatch?: string | null;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
@@ -31197,6 +31268,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    instagrams?: TicketUpdateinstagramsInput | string[];
+    whoToWatch?: NullableStringFieldUpdateOperationsInput | string | null;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
     scanned?: BoolFieldUpdateOperationsInput | boolean;
     scannedAt?:
@@ -31215,6 +31289,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    instagrams?: TicketUpdateinstagramsInput | string[];
+    whoToWatch?: NullableStringFieldUpdateOperationsInput | string | null;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
     scanned?: BoolFieldUpdateOperationsInput | boolean;
     scannedAt?:
@@ -32543,6 +32620,9 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
+    phoneNumber?: SortOrder;
+    instagrams?: SortOrder;
+    whoToWatch?: SortOrder;
     seat?: SortOrder;
     scanned?: SortOrder;
     scannedAt?: SortOrder;
@@ -32563,6 +32643,8 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
+    phoneNumber?: SortOrder;
+    whoToWatch?: SortOrder;
     seat?: SortOrder;
     scanned?: SortOrder;
     scannedAt?: SortOrder;
@@ -32579,6 +32661,8 @@ export namespace Prisma {
     fullName?: SortOrder;
     mail?: SortOrder;
     dni?: SortOrder;
+    phoneNumber?: SortOrder;
+    whoToWatch?: SortOrder;
     seat?: SortOrder;
     scanned?: SortOrder;
     scannedAt?: SortOrder;
@@ -35795,6 +35879,10 @@ export namespace Prisma {
     >;
   };
 
+  export type TicketCreateinstagramsInput = {
+    set: string[];
+  };
+
   export type EventCreateNestedOneWithoutTicketsInput = {
     create?: XOR<
       EventCreateWithoutTicketsInput,
@@ -35824,6 +35912,11 @@ export namespace Prisma {
 
   export type EnumTicketTypeFieldUpdateOperationsInput = {
     set?: $Enums.TicketType;
+  };
+
+  export type TicketUpdateinstagramsInput = {
+    set?: string[];
+    push?: string | string[];
   };
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -37406,6 +37499,9 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    phoneNumber: string;
+    instagrams?: TicketCreateinstagramsInput | string[];
+    whoToWatch?: string | null;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
@@ -37422,6 +37518,9 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    phoneNumber: string;
+    instagrams?: TicketCreateinstagramsInput | string[];
+    whoToWatch?: string | null;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
@@ -37799,6 +37898,9 @@ export namespace Prisma {
     fullName?: StringFilter<'Ticket'> | string;
     mail?: StringFilter<'Ticket'> | string;
     dni?: StringFilter<'Ticket'> | string;
+    phoneNumber?: StringFilter<'Ticket'> | string;
+    instagrams?: StringNullableListFilter<'Ticket'>;
+    whoToWatch?: StringNullableFilter<'Ticket'> | string | null;
     seat?: IntNullableFilter<'Ticket'> | number | null;
     scanned?: BoolFilter<'Ticket'> | boolean;
     scannedAt?: DateTimeNullableFilter<'Ticket'> | Date | string | null;
@@ -39731,6 +39833,9 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    phoneNumber: string;
+    instagrams?: TicketCreateinstagramsInput | string[];
+    whoToWatch?: string | null;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
@@ -39746,6 +39851,9 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    phoneNumber: string;
+    instagrams?: TicketCreateinstagramsInput | string[];
+    whoToWatch?: string | null;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
@@ -41167,6 +41275,9 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    phoneNumber: string;
+    instagrams?: TicketCreateinstagramsInput | string[];
+    whoToWatch?: string | null;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
@@ -41183,6 +41294,9 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    phoneNumber: string;
+    instagrams?: TicketCreateinstagramsInput | string[];
+    whoToWatch?: string | null;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
@@ -42381,6 +42495,9 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    phoneNumber: string;
+    instagrams?: TicketCreateinstagramsInput | string[];
+    whoToWatch?: string | null;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
@@ -42549,6 +42666,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    instagrams?: TicketUpdateinstagramsInput | string[];
+    whoToWatch?: NullableStringFieldUpdateOperationsInput | string | null;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
     scanned?: BoolFieldUpdateOperationsInput | boolean;
     scannedAt?:
@@ -42569,6 +42689,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    instagrams?: TicketUpdateinstagramsInput | string[];
+    whoToWatch?: NullableStringFieldUpdateOperationsInput | string | null;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
     scanned?: BoolFieldUpdateOperationsInput | boolean;
     scannedAt?:
@@ -42588,6 +42711,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    instagrams?: TicketUpdateinstagramsInput | string[];
+    whoToWatch?: NullableStringFieldUpdateOperationsInput | string | null;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
     scanned?: BoolFieldUpdateOperationsInput | boolean;
     scannedAt?:
@@ -43442,6 +43568,9 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    phoneNumber: string;
+    instagrams?: TicketCreateinstagramsInput | string[];
+    whoToWatch?: string | null;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
@@ -43492,6 +43621,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    instagrams?: TicketUpdateinstagramsInput | string[];
+    whoToWatch?: NullableStringFieldUpdateOperationsInput | string | null;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
     scanned?: BoolFieldUpdateOperationsInput | boolean;
     scannedAt?:
@@ -43511,6 +43643,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    instagrams?: TicketUpdateinstagramsInput | string[];
+    whoToWatch?: NullableStringFieldUpdateOperationsInput | string | null;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
     scanned?: BoolFieldUpdateOperationsInput | boolean;
     scannedAt?:
@@ -43530,6 +43665,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    instagrams?: TicketUpdateinstagramsInput | string[];
+    whoToWatch?: NullableStringFieldUpdateOperationsInput | string | null;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
     scanned?: BoolFieldUpdateOperationsInput | boolean;
     scannedAt?:
@@ -43869,6 +44007,9 @@ export namespace Prisma {
     fullName: string;
     mail: string;
     dni: string;
+    phoneNumber: string;
+    instagrams?: TicketCreateinstagramsInput | string[];
+    whoToWatch?: string | null;
     seat?: number | null;
     scanned?: boolean;
     scannedAt?: Date | string | null;
@@ -43883,6 +44024,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    instagrams?: TicketUpdateinstagramsInput | string[];
+    whoToWatch?: NullableStringFieldUpdateOperationsInput | string | null;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
     scanned?: BoolFieldUpdateOperationsInput | boolean;
     scannedAt?:
@@ -43903,6 +44047,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    instagrams?: TicketUpdateinstagramsInput | string[];
+    whoToWatch?: NullableStringFieldUpdateOperationsInput | string | null;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
     scanned?: BoolFieldUpdateOperationsInput | boolean;
     scannedAt?:
@@ -43922,6 +44069,9 @@ export namespace Prisma {
     fullName?: StringFieldUpdateOperationsInput | string;
     mail?: StringFieldUpdateOperationsInput | string;
     dni?: StringFieldUpdateOperationsInput | string;
+    phoneNumber?: StringFieldUpdateOperationsInput | string;
+    instagrams?: TicketUpdateinstagramsInput | string[];
+    whoToWatch?: NullableStringFieldUpdateOperationsInput | string | null;
     seat?: NullableIntFieldUpdateOperationsInput | number | null;
     scanned?: BoolFieldUpdateOperationsInput | boolean;
     scannedAt?:

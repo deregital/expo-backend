@@ -2910,6 +2910,8 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
       required:
         - "name"
         - "groupId"
@@ -2938,6 +2940,8 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
         created_at:
           type:
             - "string"
@@ -2985,6 +2989,8 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -3070,6 +3076,8 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -3148,6 +3156,8 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
         created_at:
           type:
             - "string"
@@ -3239,6 +3249,8 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
         created_at:
           type:
             - "string"
@@ -3279,6 +3291,8 @@ components:
             - "PARTICIPANT"
             - "NOT_IN_SYSTEM"
             - "PRODUCTION_ROLE"
+            - "FORM_OPTION"
+            - "PARTICIPANT_ROLE"
         created_at:
           type:
             - "string"
@@ -3769,6 +3783,8 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -3824,6 +3840,8 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               group:
                 type:
                   - "object"
@@ -3914,6 +3932,8 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               group:
                 type:
                   - "object"
@@ -3967,6 +3987,8 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -4108,6 +4130,8 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -4188,6 +4212,8 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -4287,6 +4313,8 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -5896,6 +5924,8 @@ components:
                               - "PARTICIPANT"
                               - "NOT_IN_SYSTEM"
                               - "PRODUCTION_ROLE"
+                              - "FORM_OPTION"
+                              - "PARTICIPANT_ROLE"
                           group:
                             type:
                               - "object"
@@ -6264,6 +6294,8 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     group:
                       type:
                         - "object"
@@ -6872,6 +6904,8 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -6957,6 +6991,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -6990,6 +7038,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -7021,6 +7072,8 @@ components:
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
                 - "PRODUCTION_ROLE"
+                - "FORM_OPTION"
+                - "PARTICIPANT_ROLE"
             created_at:
               type:
                 - "string"
@@ -7097,6 +7150,8 @@ components:
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
                 - "PRODUCTION_ROLE"
+                - "FORM_OPTION"
+                - "PARTICIPANT_ROLE"
             created_at:
               type:
                 - "string"
@@ -7479,6 +7534,8 @@ components:
                 - "PARTICIPANT"
                 - "NOT_IN_SYSTEM"
                 - "PRODUCTION_ROLE"
+                - "FORM_OPTION"
+                - "PARTICIPANT_ROLE"
             created_at:
               type:
                 - "string"
@@ -7814,6 +7871,8 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -8017,6 +8076,8 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -8297,6 +8358,8 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -8505,6 +8568,8 @@ components:
                         - "PARTICIPANT"
                         - "NOT_IN_SYSTEM"
                         - "PRODUCTION_ROLE"
+                        - "FORM_OPTION"
+                        - "PARTICIPANT_ROLE"
                     created_at:
                       type:
                         - "string"
@@ -8691,6 +8756,8 @@ components:
                       - "PARTICIPANT"
                       - "NOT_IN_SYSTEM"
                       - "PRODUCTION_ROLE"
+                      - "FORM_OPTION"
+                      - "PARTICIPANT_ROLE"
                   created_at:
                     type:
                       - "string"
@@ -9408,6 +9475,8 @@ components:
                   - "PARTICIPANT"
                   - "NOT_IN_SYSTEM"
                   - "PRODUCTION_ROLE"
+                  - "FORM_OPTION"
+                  - "PARTICIPANT_ROLE"
               created_at:
                 type:
                   - "string"
@@ -10169,6 +10238,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         profileId:
           type:
             - "string"
@@ -10183,6 +10266,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
     CreateTicketResponseDto:
       type:
         - "object"
@@ -10214,6 +10300,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -10335,6 +10435,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -10381,6 +10484,20 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               profileId:
                 type:
                   - "string"
@@ -10392,6 +10509,9 @@ components:
               - "mail"
               - "dni"
               - "ticketGroupId"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
       required:
         - "tickets"
     CreateManyTicketResponseDto:
@@ -10428,6 +10548,20 @@ components:
             type:
               - "string"
             minLength: 1
+          phoneNumber:
+            type:
+              - "string"
+            minLength: 1
+          instagrams:
+            type:
+              - "array"
+            items:
+              type:
+                - "string"
+          whoToWatch:
+            type:
+              - "string"
+              - "null"
           seat:
             type:
               - "number"
@@ -10549,6 +10683,9 @@ components:
           - "fullName"
           - "mail"
           - "dni"
+          - "phoneNumber"
+          - "instagrams"
+          - "whoToWatch"
           - "seat"
           - "scanned"
           - "scannedAt"
@@ -10616,6 +10753,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -10669,6 +10820,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -10713,6 +10867,20 @@ components:
               type:
                 - "string"
               minLength: 1
+            phoneNumber:
+              type:
+                - "string"
+              minLength: 1
+            instagrams:
+              type:
+                - "array"
+              items:
+                type:
+                  - "string"
+            whoToWatch:
+              type:
+                - "string"
+                - "null"
             seat:
               type:
                 - "number"
@@ -10974,6 +11142,9 @@ components:
             - "fullName"
             - "mail"
             - "dni"
+            - "phoneNumber"
+            - "instagrams"
+            - "whoToWatch"
             - "seat"
             - "scanned"
             - "scannedAt"
@@ -11023,6 +11194,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -11211,6 +11396,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -11259,6 +11447,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -11447,6 +11649,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -11495,6 +11700,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -11616,6 +11835,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -11684,6 +11906,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -11717,6 +11953,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -11754,6 +11993,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -11787,6 +12040,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -11824,6 +12080,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -11857,6 +12127,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -11910,6 +12183,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -11943,6 +12230,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -12038,6 +12328,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -12071,6 +12375,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"

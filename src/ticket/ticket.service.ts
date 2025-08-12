@@ -248,13 +248,16 @@ export class TicketService {
 
     const font: Font = {
       'DMSans-Bold': {
+        // @ts-expect-error - Type 'Buffer' is not assignable to type 'string | ArrayBuffer | Uint8Array<ArrayBufferLike>'.
         data: fontBold, // Provide the buffer instead of a string path
       },
       'DMSans-SemiBold': {
+        // @ts-expect-error - Type 'Buffer' is not assignable to type 'string | ArrayBuffer | Uint8Array<ArrayBufferLike>'.
         data: fontSemiBold, // Provide the buffer instead of a string path
         fallback: true,
       },
       'DMSans-Light': {
+        // @ts-expect-error - Type 'Buffer' is not assignable to type 'string | ArrayBuffer | Uint8Array<ArrayBufferLike>'.
         data: fontLight, // Provide the buffer instead of a string path
       },
     };
@@ -265,6 +268,8 @@ export class TicketService {
       plugins,
       options: { font },
     });
+
+    // @ts-expect-error - Type 'ArrayBufferLike' is not assignable to type 'BlobPart'.
     const blob = new Blob([pdf.buffer], {
       type: 'application/pdf',
     });
