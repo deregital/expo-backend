@@ -175,6 +175,10 @@ export class EventController {
             mainPictureUrl: subEvent.mainPictureUrl,
             bannerUrl: subEvent.bannerUrl,
             description: subEvent.description,
+
+            // [N]
+            eventProducerLogin: createEventDto.eventProducerLogin,
+            // [/N]
           });
         }),
       );
@@ -197,6 +201,10 @@ export class EventController {
       subEvents: subEvents.map((subEvent) => ({ id: subEvent.id })),
       startingDate: eventStartingDate.toISOString(),
       endingDate: eventEndingDate.toISOString(),
+
+      // [N]
+      eventProducerLogin: createEventDto.eventProducerLogin,
+      // [/N]
     });
   }
 
@@ -839,6 +847,16 @@ export class EventController {
         id: subEvent.id,
         supraEventId: updatedEvent.id,
         tagGroupId: tagGroupSubEventId,
+
+        // [N]
+        eventProducerLogin: updateEventDto.eventProducerLogin
+          ? updateEventDto.eventProducerLogin.map((login) => ({
+              mail: login.mail,
+              password: login.password,
+              isActive: login.isActive,
+            }))
+          : [],
+        // [/N]
       });
     });
 

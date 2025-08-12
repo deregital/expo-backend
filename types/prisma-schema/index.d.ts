@@ -115,6 +115,12 @@ export type DynamicQuestion =
  */
 export type DynamicOption =
   $Result.DefaultSelection<Prisma.$DynamicOptionPayload>;
+/**
+ * Model EventProducerLogin
+ *
+ */
+export type EventProducerLogin =
+  $Result.DefaultSelection<Prisma.$EventProducerLoginPayload>;
 
 /**
  * Enums
@@ -609,6 +615,19 @@ export class PrismaClient<
    * ```
    */
   get dynamicOption(): Prisma.DynamicOptionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.eventProducerLogin`: Exposes CRUD operations for the **EventProducerLogin** model.
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more EventProducerLogins
+   * const eventProducerLogins = await prisma.eventProducerLogin.findMany()
+   * ```
+   */
+  get eventProducerLogin(): Prisma.EventProducerLoginDelegate<
+    ExtArgs,
+    ClientOptions
+  >;
 }
 
 export namespace Prisma {
@@ -1087,6 +1106,7 @@ export namespace Prisma {
     DynamicForm: 'DynamicForm';
     DynamicQuestion: 'DynamicQuestion';
     DynamicOption: 'DynamicOption';
+    EventProducerLogin: 'EventProducerLogin';
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -1131,7 +1151,8 @@ export namespace Prisma {
         | 'productionAffiliationRequest'
         | 'dynamicForm'
         | 'dynamicQuestion'
-        | 'dynamicOption';
+        | 'dynamicOption'
+        | 'eventProducerLogin';
       txIsolationLevel: Prisma.TransactionIsolationLevel;
     };
     model: {
@@ -2633,6 +2654,82 @@ export namespace Prisma {
           };
         };
       };
+      EventProducerLogin: {
+        payload: Prisma.$EventProducerLoginPayload<ExtArgs>;
+        fields: Prisma.EventProducerLoginFieldRefs;
+        operations: {
+          findUnique: {
+            args: Prisma.EventProducerLoginFindUniqueArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventProducerLoginPayload> | null;
+          };
+          findUniqueOrThrow: {
+            args: Prisma.EventProducerLoginFindUniqueOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventProducerLoginPayload>;
+          };
+          findFirst: {
+            args: Prisma.EventProducerLoginFindFirstArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventProducerLoginPayload> | null;
+          };
+          findFirstOrThrow: {
+            args: Prisma.EventProducerLoginFindFirstOrThrowArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventProducerLoginPayload>;
+          };
+          findMany: {
+            args: Prisma.EventProducerLoginFindManyArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventProducerLoginPayload>[];
+          };
+          create: {
+            args: Prisma.EventProducerLoginCreateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventProducerLoginPayload>;
+          };
+          createMany: {
+            args: Prisma.EventProducerLoginCreateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          createManyAndReturn: {
+            args: Prisma.EventProducerLoginCreateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventProducerLoginPayload>[];
+          };
+          delete: {
+            args: Prisma.EventProducerLoginDeleteArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventProducerLoginPayload>;
+          };
+          update: {
+            args: Prisma.EventProducerLoginUpdateArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventProducerLoginPayload>;
+          };
+          deleteMany: {
+            args: Prisma.EventProducerLoginDeleteManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateMany: {
+            args: Prisma.EventProducerLoginUpdateManyArgs<ExtArgs>;
+            result: BatchPayload;
+          };
+          updateManyAndReturn: {
+            args: Prisma.EventProducerLoginUpdateManyAndReturnArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventProducerLoginPayload>[];
+          };
+          upsert: {
+            args: Prisma.EventProducerLoginUpsertArgs<ExtArgs>;
+            result: $Utils.PayloadToResult<Prisma.$EventProducerLoginPayload>;
+          };
+          aggregate: {
+            args: Prisma.EventProducerLoginAggregateArgs<ExtArgs>;
+            result: $Utils.Optional<AggregateEventProducerLogin>;
+          };
+          groupBy: {
+            args: Prisma.EventProducerLoginGroupByArgs<ExtArgs>;
+            result: $Utils.Optional<EventProducerLoginGroupByOutputType>[];
+          };
+          count: {
+            args: Prisma.EventProducerLoginCountArgs<ExtArgs>;
+            result:
+              | $Utils.Optional<EventProducerLoginCountAggregateOutputType>
+              | number;
+          };
+        };
+      };
     };
   } & {
     other: {
@@ -2741,6 +2838,7 @@ export namespace Prisma {
     dynamicForm?: DynamicFormOmit;
     dynamicQuestion?: DynamicQuestionOmit;
     dynamicOption?: DynamicOptionOmit;
+    eventProducerLogin?: EventProducerLoginOmit;
   };
 
   /* Types for Logging */
@@ -3236,6 +3334,7 @@ export namespace Prisma {
     eventTickets: number;
     productions: number;
     participantRoles: number;
+    eventProducerLogin: number;
   };
 
   export type EventCountOutputTypeSelect<
@@ -3248,6 +3347,9 @@ export namespace Prisma {
     eventTickets?: boolean | EventCountOutputTypeCountEventTicketsArgs;
     productions?: boolean | EventCountOutputTypeCountProductionsArgs;
     participantRoles?: boolean | EventCountOutputTypeCountParticipantRolesArgs;
+    eventProducerLogin?:
+      | boolean
+      | EventCountOutputTypeCountEventProducerLoginArgs;
   };
 
   // Custom InputTypes
@@ -3324,6 +3426,15 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
   > = {
     where?: TagWhereInput;
+  };
+
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeCountEventProducerLoginArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: EventProducerLoginWhereInput;
   };
 
   /**
@@ -14528,6 +14639,7 @@ export namespace Prisma {
       eventTickets?: boolean | Event$eventTicketsArgs<ExtArgs>;
       productions?: boolean | Event$productionsArgs<ExtArgs>;
       participantRoles?: boolean | Event$participantRolesArgs<ExtArgs>;
+      eventProducerLogin?: boolean | Event$eventProducerLoginArgs<ExtArgs>;
       _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>;
     },
     ExtArgs['result']['event']
@@ -14643,6 +14755,7 @@ export namespace Prisma {
     eventTickets?: boolean | Event$eventTicketsArgs<ExtArgs>;
     productions?: boolean | Event$productionsArgs<ExtArgs>;
     participantRoles?: boolean | Event$participantRolesArgs<ExtArgs>;
+    eventProducerLogin?: boolean | Event$eventProducerLoginArgs<ExtArgs>;
     _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>;
   };
   export type EventIncludeCreateManyAndReturn<
@@ -14678,6 +14791,7 @@ export namespace Prisma {
       eventTickets: Prisma.$EventTicketPayload<ExtArgs>[];
       productions: Prisma.$ProductionPayload<ExtArgs>[];
       participantRoles: Prisma.$TagPayload<ExtArgs>[];
+      eventProducerLogin: Prisma.$EventProducerLoginPayload<ExtArgs>[];
     };
     scalars: $Extensions.GetPayloadResult<
       {
@@ -15368,6 +15482,17 @@ export namespace Prisma {
     ): Prisma.PrismaPromise<
       | $Result.GetResult<
           Prisma.$TagPayload<ExtArgs>,
+          T,
+          'findMany',
+          ClientOptions
+        >
+      | Null
+    >;
+    eventProducerLogin<T extends Event$eventProducerLoginArgs<ExtArgs> = {}>(
+      args?: Subset<T, Event$eventProducerLoginArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      | $Result.GetResult<
+          Prisma.$EventProducerLoginPayload<ExtArgs>,
           T,
           'findMany',
           ClientOptions
@@ -16080,6 +16205,36 @@ export namespace Prisma {
     take?: number;
     skip?: number;
     distinct?: TagScalarFieldEnum | TagScalarFieldEnum[];
+  };
+
+  /**
+   * Event.eventProducerLogin
+   */
+  export type Event$eventProducerLoginArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventProducerLogin
+     */
+    select?: EventProducerLoginSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventProducerLogin
+     */
+    omit?: EventProducerLoginOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventProducerLoginInclude<ExtArgs> | null;
+    where?: EventProducerLoginWhereInput;
+    orderBy?:
+      | EventProducerLoginOrderByWithRelationInput
+      | EventProducerLoginOrderByWithRelationInput[];
+    cursor?: EventProducerLoginWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?:
+      | EventProducerLoginScalarFieldEnum
+      | EventProducerLoginScalarFieldEnum[];
   };
 
   /**
@@ -32642,6 +32797,1382 @@ export namespace Prisma {
   };
 
   /**
+   * Model EventProducerLogin
+   */
+
+  export type AggregateEventProducerLogin = {
+    _count: EventProducerLoginCountAggregateOutputType | null;
+    _min: EventProducerLoginMinAggregateOutputType | null;
+    _max: EventProducerLoginMaxAggregateOutputType | null;
+  };
+
+  export type EventProducerLoginMinAggregateOutputType = {
+    id: string | null;
+    eventId: string | null;
+    mail: string | null;
+    password: string | null;
+    isActive: boolean | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type EventProducerLoginMaxAggregateOutputType = {
+    id: string | null;
+    eventId: string | null;
+    mail: string | null;
+    password: string | null;
+    isActive: boolean | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+
+  export type EventProducerLoginCountAggregateOutputType = {
+    id: number;
+    eventId: number;
+    mail: number;
+    password: number;
+    isActive: number;
+    created_at: number;
+    updated_at: number;
+    _all: number;
+  };
+
+  export type EventProducerLoginMinAggregateInputType = {
+    id?: true;
+    eventId?: true;
+    mail?: true;
+    password?: true;
+    isActive?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type EventProducerLoginMaxAggregateInputType = {
+    id?: true;
+    eventId?: true;
+    mail?: true;
+    password?: true;
+    isActive?: true;
+    created_at?: true;
+    updated_at?: true;
+  };
+
+  export type EventProducerLoginCountAggregateInputType = {
+    id?: true;
+    eventId?: true;
+    mail?: true;
+    password?: true;
+    isActive?: true;
+    created_at?: true;
+    updated_at?: true;
+    _all?: true;
+  };
+
+  export type EventProducerLoginAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which EventProducerLogin to aggregate.
+     */
+    where?: EventProducerLoginWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of EventProducerLogins to fetch.
+     */
+    orderBy?:
+      | EventProducerLoginOrderByWithRelationInput
+      | EventProducerLoginOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: EventProducerLoginWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` EventProducerLogins from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` EventProducerLogins.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned EventProducerLogins
+     **/
+    _count?: true | EventProducerLoginCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+     **/
+    _min?: EventProducerLoginMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+     **/
+    _max?: EventProducerLoginMaxAggregateInputType;
+  };
+
+  export type GetEventProducerLoginAggregateType<
+    T extends EventProducerLoginAggregateArgs,
+  > = {
+    [P in keyof T & keyof AggregateEventProducerLogin]: P extends
+      | '_count'
+      | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEventProducerLogin[P]>
+      : GetScalarType<T[P], AggregateEventProducerLogin[P]>;
+  };
+
+  export type EventProducerLoginGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    where?: EventProducerLoginWhereInput;
+    orderBy?:
+      | EventProducerLoginOrderByWithAggregationInput
+      | EventProducerLoginOrderByWithAggregationInput[];
+    by: EventProducerLoginScalarFieldEnum[] | EventProducerLoginScalarFieldEnum;
+    having?: EventProducerLoginScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: EventProducerLoginCountAggregateInputType | true;
+    _min?: EventProducerLoginMinAggregateInputType;
+    _max?: EventProducerLoginMaxAggregateInputType;
+  };
+
+  export type EventProducerLoginGroupByOutputType = {
+    id: string;
+    eventId: string;
+    mail: string;
+    password: string;
+    isActive: boolean;
+    created_at: Date;
+    updated_at: Date;
+    _count: EventProducerLoginCountAggregateOutputType | null;
+    _min: EventProducerLoginMinAggregateOutputType | null;
+    _max: EventProducerLoginMaxAggregateOutputType | null;
+  };
+
+  type GetEventProducerLoginGroupByPayload<
+    T extends EventProducerLoginGroupByArgs,
+  > = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EventProducerLoginGroupByOutputType, T['by']> & {
+        [P in keyof T &
+          keyof EventProducerLoginGroupByOutputType]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
+            : GetScalarType<T[P], EventProducerLoginGroupByOutputType[P]>
+          : GetScalarType<T[P], EventProducerLoginGroupByOutputType[P]>;
+      }
+    >
+  >;
+
+  export type EventProducerLoginSelect<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      eventId?: boolean;
+      mail?: boolean;
+      password?: boolean;
+      isActive?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      event?: boolean | EventDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['eventProducerLogin']
+  >;
+
+  export type EventProducerLoginSelectCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      eventId?: boolean;
+      mail?: boolean;
+      password?: boolean;
+      isActive?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      event?: boolean | EventDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['eventProducerLogin']
+  >;
+
+  export type EventProducerLoginSelectUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetSelect<
+    {
+      id?: boolean;
+      eventId?: boolean;
+      mail?: boolean;
+      password?: boolean;
+      isActive?: boolean;
+      created_at?: boolean;
+      updated_at?: boolean;
+      event?: boolean | EventDefaultArgs<ExtArgs>;
+    },
+    ExtArgs['result']['eventProducerLogin']
+  >;
+
+  export type EventProducerLoginSelectScalar = {
+    id?: boolean;
+    eventId?: boolean;
+    mail?: boolean;
+    password?: boolean;
+    isActive?: boolean;
+    created_at?: boolean;
+    updated_at?: boolean;
+  };
+
+  export type EventProducerLoginOmit<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = $Extensions.GetOmit<
+    | 'id'
+    | 'eventId'
+    | 'mail'
+    | 'password'
+    | 'isActive'
+    | 'created_at'
+    | 'updated_at',
+    ExtArgs['result']['eventProducerLogin']
+  >;
+  export type EventProducerLoginInclude<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    event?: boolean | EventDefaultArgs<ExtArgs>;
+  };
+  export type EventProducerLoginIncludeCreateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    event?: boolean | EventDefaultArgs<ExtArgs>;
+  };
+  export type EventProducerLoginIncludeUpdateManyAndReturn<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    event?: boolean | EventDefaultArgs<ExtArgs>;
+  };
+
+  export type $EventProducerLoginPayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    name: 'EventProducerLogin';
+    objects: {
+      event: Prisma.$EventPayload<ExtArgs>;
+    };
+    scalars: $Extensions.GetPayloadResult<
+      {
+        id: string;
+        eventId: string;
+        mail: string;
+        password: string;
+        isActive: boolean;
+        created_at: Date;
+        updated_at: Date;
+      },
+      ExtArgs['result']['eventProducerLogin']
+    >;
+    composites: {};
+  };
+
+  type EventProducerLoginGetPayload<
+    S extends boolean | null | undefined | EventProducerLoginDefaultArgs,
+  > = $Result.GetResult<Prisma.$EventProducerLoginPayload, S>;
+
+  type EventProducerLoginCountArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = Omit<
+    EventProducerLoginFindManyArgs,
+    'select' | 'include' | 'distinct' | 'omit'
+  > & {
+    select?: EventProducerLoginCountAggregateInputType | true;
+  };
+
+  export interface EventProducerLoginDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['EventProducerLogin'];
+      meta: { name: 'EventProducerLogin' };
+    };
+    /**
+     * Find zero or one EventProducerLogin that matches the filter.
+     * @param {EventProducerLoginFindUniqueArgs} args - Arguments to find a EventProducerLogin
+     * @example
+     * // Get one EventProducerLogin
+     * const eventProducerLogin = await prisma.eventProducerLogin.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EventProducerLoginFindUniqueArgs>(
+      args: SelectSubset<T, EventProducerLoginFindUniqueArgs<ExtArgs>>,
+    ): Prisma__EventProducerLoginClient<
+      $Result.GetResult<
+        Prisma.$EventProducerLoginPayload<ExtArgs>,
+        T,
+        'findUnique',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find one EventProducerLogin that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {EventProducerLoginFindUniqueOrThrowArgs} args - Arguments to find a EventProducerLogin
+     * @example
+     * // Get one EventProducerLogin
+     * const eventProducerLogin = await prisma.eventProducerLogin.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EventProducerLoginFindUniqueOrThrowArgs>(
+      args: SelectSubset<T, EventProducerLoginFindUniqueOrThrowArgs<ExtArgs>>,
+    ): Prisma__EventProducerLoginClient<
+      $Result.GetResult<
+        Prisma.$EventProducerLoginPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first EventProducerLogin that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventProducerLoginFindFirstArgs} args - Arguments to find a EventProducerLogin
+     * @example
+     * // Get one EventProducerLogin
+     * const eventProducerLogin = await prisma.eventProducerLogin.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EventProducerLoginFindFirstArgs>(
+      args?: SelectSubset<T, EventProducerLoginFindFirstArgs<ExtArgs>>,
+    ): Prisma__EventProducerLoginClient<
+      $Result.GetResult<
+        Prisma.$EventProducerLoginPayload<ExtArgs>,
+        T,
+        'findFirst',
+        ClientOptions
+      > | null,
+      null,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find the first EventProducerLogin that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventProducerLoginFindFirstOrThrowArgs} args - Arguments to find a EventProducerLogin
+     * @example
+     * // Get one EventProducerLogin
+     * const eventProducerLogin = await prisma.eventProducerLogin.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EventProducerLoginFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, EventProducerLoginFindFirstOrThrowArgs<ExtArgs>>,
+    ): Prisma__EventProducerLoginClient<
+      $Result.GetResult<
+        Prisma.$EventProducerLoginPayload<ExtArgs>,
+        T,
+        'findFirstOrThrow',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Find zero or more EventProducerLogins that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventProducerLoginFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all EventProducerLogins
+     * const eventProducerLogins = await prisma.eventProducerLogin.findMany()
+     *
+     * // Get first 10 EventProducerLogins
+     * const eventProducerLogins = await prisma.eventProducerLogin.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const eventProducerLoginWithIdOnly = await prisma.eventProducerLogin.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends EventProducerLoginFindManyArgs>(
+      args?: SelectSubset<T, EventProducerLoginFindManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$EventProducerLoginPayload<ExtArgs>,
+        T,
+        'findMany',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create a EventProducerLogin.
+     * @param {EventProducerLoginCreateArgs} args - Arguments to create a EventProducerLogin.
+     * @example
+     * // Create one EventProducerLogin
+     * const EventProducerLogin = await prisma.eventProducerLogin.create({
+     *   data: {
+     *     // ... data to create a EventProducerLogin
+     *   }
+     * })
+     *
+     */
+    create<T extends EventProducerLoginCreateArgs>(
+      args: SelectSubset<T, EventProducerLoginCreateArgs<ExtArgs>>,
+    ): Prisma__EventProducerLoginClient<
+      $Result.GetResult<
+        Prisma.$EventProducerLoginPayload<ExtArgs>,
+        T,
+        'create',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Create many EventProducerLogins.
+     * @param {EventProducerLoginCreateManyArgs} args - Arguments to create many EventProducerLogins.
+     * @example
+     * // Create many EventProducerLogins
+     * const eventProducerLogin = await prisma.eventProducerLogin.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends EventProducerLoginCreateManyArgs>(
+      args?: SelectSubset<T, EventProducerLoginCreateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Create many EventProducerLogins and returns the data saved in the database.
+     * @param {EventProducerLoginCreateManyAndReturnArgs} args - Arguments to create many EventProducerLogins.
+     * @example
+     * // Create many EventProducerLogins
+     * const eventProducerLogin = await prisma.eventProducerLogin.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many EventProducerLogins and only return the `id`
+     * const eventProducerLoginWithIdOnly = await prisma.eventProducerLogin.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends EventProducerLoginCreateManyAndReturnArgs>(
+      args?: SelectSubset<
+        T,
+        EventProducerLoginCreateManyAndReturnArgs<ExtArgs>
+      >,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$EventProducerLoginPayload<ExtArgs>,
+        T,
+        'createManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Delete a EventProducerLogin.
+     * @param {EventProducerLoginDeleteArgs} args - Arguments to delete one EventProducerLogin.
+     * @example
+     * // Delete one EventProducerLogin
+     * const EventProducerLogin = await prisma.eventProducerLogin.delete({
+     *   where: {
+     *     // ... filter to delete one EventProducerLogin
+     *   }
+     * })
+     *
+     */
+    delete<T extends EventProducerLoginDeleteArgs>(
+      args: SelectSubset<T, EventProducerLoginDeleteArgs<ExtArgs>>,
+    ): Prisma__EventProducerLoginClient<
+      $Result.GetResult<
+        Prisma.$EventProducerLoginPayload<ExtArgs>,
+        T,
+        'delete',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Update one EventProducerLogin.
+     * @param {EventProducerLoginUpdateArgs} args - Arguments to update one EventProducerLogin.
+     * @example
+     * // Update one EventProducerLogin
+     * const eventProducerLogin = await prisma.eventProducerLogin.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends EventProducerLoginUpdateArgs>(
+      args: SelectSubset<T, EventProducerLoginUpdateArgs<ExtArgs>>,
+    ): Prisma__EventProducerLoginClient<
+      $Result.GetResult<
+        Prisma.$EventProducerLoginPayload<ExtArgs>,
+        T,
+        'update',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Delete zero or more EventProducerLogins.
+     * @param {EventProducerLoginDeleteManyArgs} args - Arguments to filter EventProducerLogins to delete.
+     * @example
+     * // Delete a few EventProducerLogins
+     * const { count } = await prisma.eventProducerLogin.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends EventProducerLoginDeleteManyArgs>(
+      args?: SelectSubset<T, EventProducerLoginDeleteManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more EventProducerLogins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventProducerLoginUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many EventProducerLogins
+     * const eventProducerLogin = await prisma.eventProducerLogin.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends EventProducerLoginUpdateManyArgs>(
+      args: SelectSubset<T, EventProducerLoginUpdateManyArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<BatchPayload>;
+
+    /**
+     * Update zero or more EventProducerLogins and returns the data updated in the database.
+     * @param {EventProducerLoginUpdateManyAndReturnArgs} args - Arguments to update many EventProducerLogins.
+     * @example
+     * // Update many EventProducerLogins
+     * const eventProducerLogin = await prisma.eventProducerLogin.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more EventProducerLogins and only return the `id`
+     * const eventProducerLoginWithIdOnly = await prisma.eventProducerLogin.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends EventProducerLoginUpdateManyAndReturnArgs>(
+      args: SelectSubset<T, EventProducerLoginUpdateManyAndReturnArgs<ExtArgs>>,
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<
+        Prisma.$EventProducerLoginPayload<ExtArgs>,
+        T,
+        'updateManyAndReturn',
+        ClientOptions
+      >
+    >;
+
+    /**
+     * Create or update one EventProducerLogin.
+     * @param {EventProducerLoginUpsertArgs} args - Arguments to update or create a EventProducerLogin.
+     * @example
+     * // Update or create a EventProducerLogin
+     * const eventProducerLogin = await prisma.eventProducerLogin.upsert({
+     *   create: {
+     *     // ... data to create a EventProducerLogin
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the EventProducerLogin we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EventProducerLoginUpsertArgs>(
+      args: SelectSubset<T, EventProducerLoginUpsertArgs<ExtArgs>>,
+    ): Prisma__EventProducerLoginClient<
+      $Result.GetResult<
+        Prisma.$EventProducerLoginPayload<ExtArgs>,
+        T,
+        'upsert',
+        ClientOptions
+      >,
+      never,
+      ExtArgs,
+      ClientOptions
+    >;
+
+    /**
+     * Count the number of EventProducerLogins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventProducerLoginCountArgs} args - Arguments to filter EventProducerLogins to count.
+     * @example
+     * // Count the number of EventProducerLogins
+     * const count = await prisma.eventProducerLogin.count({
+     *   where: {
+     *     // ... the filter for the EventProducerLogins we want to count
+     *   }
+     * })
+     **/
+    count<T extends EventProducerLoginCountArgs>(
+      args?: Subset<T, EventProducerLoginCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<
+              T['select'],
+              EventProducerLoginCountAggregateOutputType
+            >
+        : number
+    >;
+
+    /**
+     * Allows you to perform aggregations operations on a EventProducerLogin.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventProducerLoginAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+     **/
+    aggregate<T extends EventProducerLoginAggregateArgs>(
+      args: Subset<T, EventProducerLoginAggregateArgs>,
+    ): Prisma.PrismaPromise<GetEventProducerLoginAggregateType<T>>;
+
+    /**
+     * Group by EventProducerLogin.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventProducerLoginGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+     **/
+    groupBy<
+      T extends EventProducerLoginGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EventProducerLoginGroupByArgs['orderBy'] }
+        : { orderBy?: EventProducerLoginGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<
+        Keys<MaybeTupleToUnion<T['orderBy']>>
+      >,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ];
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  }[OrderFields],
+    >(
+      args: SubsetIntersection<T, EventProducerLoginGroupByArgs, OrderByArg> &
+        InputErrors,
+    ): {} extends InputErrors
+      ? GetEventProducerLoginGroupByPayload<T>
+      : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the EventProducerLogin model
+     */
+    readonly fields: EventProducerLoginFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for EventProducerLogin.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EventProducerLoginClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    ClientOptions = {},
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    event<T extends EventDefaultArgs<ExtArgs> = {}>(
+      args?: Subset<T, EventDefaultArgs<ExtArgs>>,
+    ): Prisma__EventClient<
+      | $Result.GetResult<
+          Prisma.$EventPayload<ExtArgs>,
+          T,
+          'findUniqueOrThrow',
+          ClientOptions
+        >
+      | Null,
+      Null,
+      ExtArgs,
+      ClientOptions
+    >;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?:
+        | ((value: T) => TResult1 | PromiseLike<TResult1>)
+        | undefined
+        | null,
+      onrejected?:
+        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(
+      onrejected?:
+        | ((reason: any) => TResult | PromiseLike<TResult>)
+        | undefined
+        | null,
+    ): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+  /**
+   * Fields of the EventProducerLogin model
+   */
+  interface EventProducerLoginFieldRefs {
+    readonly id: FieldRef<'EventProducerLogin', 'String'>;
+    readonly eventId: FieldRef<'EventProducerLogin', 'String'>;
+    readonly mail: FieldRef<'EventProducerLogin', 'String'>;
+    readonly password: FieldRef<'EventProducerLogin', 'String'>;
+    readonly isActive: FieldRef<'EventProducerLogin', 'Boolean'>;
+    readonly created_at: FieldRef<'EventProducerLogin', 'DateTime'>;
+    readonly updated_at: FieldRef<'EventProducerLogin', 'DateTime'>;
+  }
+
+  // Custom InputTypes
+  /**
+   * EventProducerLogin findUnique
+   */
+  export type EventProducerLoginFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventProducerLogin
+     */
+    select?: EventProducerLoginSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventProducerLogin
+     */
+    omit?: EventProducerLoginOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventProducerLoginInclude<ExtArgs> | null;
+    /**
+     * Filter, which EventProducerLogin to fetch.
+     */
+    where: EventProducerLoginWhereUniqueInput;
+  };
+
+  /**
+   * EventProducerLogin findUniqueOrThrow
+   */
+  export type EventProducerLoginFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventProducerLogin
+     */
+    select?: EventProducerLoginSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventProducerLogin
+     */
+    omit?: EventProducerLoginOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventProducerLoginInclude<ExtArgs> | null;
+    /**
+     * Filter, which EventProducerLogin to fetch.
+     */
+    where: EventProducerLoginWhereUniqueInput;
+  };
+
+  /**
+   * EventProducerLogin findFirst
+   */
+  export type EventProducerLoginFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventProducerLogin
+     */
+    select?: EventProducerLoginSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventProducerLogin
+     */
+    omit?: EventProducerLoginOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventProducerLoginInclude<ExtArgs> | null;
+    /**
+     * Filter, which EventProducerLogin to fetch.
+     */
+    where?: EventProducerLoginWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of EventProducerLogins to fetch.
+     */
+    orderBy?:
+      | EventProducerLoginOrderByWithRelationInput
+      | EventProducerLoginOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for EventProducerLogins.
+     */
+    cursor?: EventProducerLoginWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` EventProducerLogins from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` EventProducerLogins.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of EventProducerLogins.
+     */
+    distinct?:
+      | EventProducerLoginScalarFieldEnum
+      | EventProducerLoginScalarFieldEnum[];
+  };
+
+  /**
+   * EventProducerLogin findFirstOrThrow
+   */
+  export type EventProducerLoginFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventProducerLogin
+     */
+    select?: EventProducerLoginSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventProducerLogin
+     */
+    omit?: EventProducerLoginOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventProducerLoginInclude<ExtArgs> | null;
+    /**
+     * Filter, which EventProducerLogin to fetch.
+     */
+    where?: EventProducerLoginWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of EventProducerLogins to fetch.
+     */
+    orderBy?:
+      | EventProducerLoginOrderByWithRelationInput
+      | EventProducerLoginOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for EventProducerLogins.
+     */
+    cursor?: EventProducerLoginWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` EventProducerLogins from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` EventProducerLogins.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of EventProducerLogins.
+     */
+    distinct?:
+      | EventProducerLoginScalarFieldEnum
+      | EventProducerLoginScalarFieldEnum[];
+  };
+
+  /**
+   * EventProducerLogin findMany
+   */
+  export type EventProducerLoginFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventProducerLogin
+     */
+    select?: EventProducerLoginSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventProducerLogin
+     */
+    omit?: EventProducerLoginOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventProducerLoginInclude<ExtArgs> | null;
+    /**
+     * Filter, which EventProducerLogins to fetch.
+     */
+    where?: EventProducerLoginWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of EventProducerLogins to fetch.
+     */
+    orderBy?:
+      | EventProducerLoginOrderByWithRelationInput
+      | EventProducerLoginOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing EventProducerLogins.
+     */
+    cursor?: EventProducerLoginWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` EventProducerLogins from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` EventProducerLogins.
+     */
+    skip?: number;
+    distinct?:
+      | EventProducerLoginScalarFieldEnum
+      | EventProducerLoginScalarFieldEnum[];
+  };
+
+  /**
+   * EventProducerLogin create
+   */
+  export type EventProducerLoginCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventProducerLogin
+     */
+    select?: EventProducerLoginSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventProducerLogin
+     */
+    omit?: EventProducerLoginOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventProducerLoginInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a EventProducerLogin.
+     */
+    data: XOR<
+      EventProducerLoginCreateInput,
+      EventProducerLoginUncheckedCreateInput
+    >;
+  };
+
+  /**
+   * EventProducerLogin createMany
+   */
+  export type EventProducerLoginCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to create many EventProducerLogins.
+     */
+    data:
+      | EventProducerLoginCreateManyInput
+      | EventProducerLoginCreateManyInput[];
+    skipDuplicates?: boolean;
+  };
+
+  /**
+   * EventProducerLogin createManyAndReturn
+   */
+  export type EventProducerLoginCreateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventProducerLogin
+     */
+    select?: EventProducerLoginSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventProducerLogin
+     */
+    omit?: EventProducerLoginOmit<ExtArgs> | null;
+    /**
+     * The data used to create many EventProducerLogins.
+     */
+    data:
+      | EventProducerLoginCreateManyInput
+      | EventProducerLoginCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventProducerLoginIncludeCreateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * EventProducerLogin update
+   */
+  export type EventProducerLoginUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventProducerLogin
+     */
+    select?: EventProducerLoginSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventProducerLogin
+     */
+    omit?: EventProducerLoginOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventProducerLoginInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a EventProducerLogin.
+     */
+    data: XOR<
+      EventProducerLoginUpdateInput,
+      EventProducerLoginUncheckedUpdateInput
+    >;
+    /**
+     * Choose, which EventProducerLogin to update.
+     */
+    where: EventProducerLoginWhereUniqueInput;
+  };
+
+  /**
+   * EventProducerLogin updateMany
+   */
+  export type EventProducerLoginUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * The data used to update EventProducerLogins.
+     */
+    data: XOR<
+      EventProducerLoginUpdateManyMutationInput,
+      EventProducerLoginUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which EventProducerLogins to update
+     */
+    where?: EventProducerLoginWhereInput;
+    /**
+     * Limit how many EventProducerLogins to update.
+     */
+    limit?: number;
+  };
+
+  /**
+   * EventProducerLogin updateManyAndReturn
+   */
+  export type EventProducerLoginUpdateManyAndReturnArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventProducerLogin
+     */
+    select?: EventProducerLoginSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventProducerLogin
+     */
+    omit?: EventProducerLoginOmit<ExtArgs> | null;
+    /**
+     * The data used to update EventProducerLogins.
+     */
+    data: XOR<
+      EventProducerLoginUpdateManyMutationInput,
+      EventProducerLoginUncheckedUpdateManyInput
+    >;
+    /**
+     * Filter which EventProducerLogins to update
+     */
+    where?: EventProducerLoginWhereInput;
+    /**
+     * Limit how many EventProducerLogins to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventProducerLoginIncludeUpdateManyAndReturn<ExtArgs> | null;
+  };
+
+  /**
+   * EventProducerLogin upsert
+   */
+  export type EventProducerLoginUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventProducerLogin
+     */
+    select?: EventProducerLoginSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventProducerLogin
+     */
+    omit?: EventProducerLoginOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventProducerLoginInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the EventProducerLogin to update in case it exists.
+     */
+    where: EventProducerLoginWhereUniqueInput;
+    /**
+     * In case the EventProducerLogin found by the `where` argument doesn't exist, create a new EventProducerLogin with this data.
+     */
+    create: XOR<
+      EventProducerLoginCreateInput,
+      EventProducerLoginUncheckedCreateInput
+    >;
+    /**
+     * In case the EventProducerLogin was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<
+      EventProducerLoginUpdateInput,
+      EventProducerLoginUncheckedUpdateInput
+    >;
+  };
+
+  /**
+   * EventProducerLogin delete
+   */
+  export type EventProducerLoginDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventProducerLogin
+     */
+    select?: EventProducerLoginSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventProducerLogin
+     */
+    omit?: EventProducerLoginOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventProducerLoginInclude<ExtArgs> | null;
+    /**
+     * Filter which EventProducerLogin to delete.
+     */
+    where: EventProducerLoginWhereUniqueInput;
+  };
+
+  /**
+   * EventProducerLogin deleteMany
+   */
+  export type EventProducerLoginDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Filter which EventProducerLogins to delete
+     */
+    where?: EventProducerLoginWhereInput;
+    /**
+     * Limit how many EventProducerLogins to delete.
+     */
+    limit?: number;
+  };
+
+  /**
+   * EventProducerLogin without action
+   */
+  export type EventProducerLoginDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+  > = {
+    /**
+     * Select specific fields to fetch from the EventProducerLogin
+     */
+    select?: EventProducerLoginSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the EventProducerLogin
+     */
+    omit?: EventProducerLoginOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventProducerLoginInclude<ExtArgs> | null;
+  };
+
+  /**
    * Enums
    */
 
@@ -32942,6 +34473,19 @@ export namespace Prisma {
 
   export type DynamicOptionScalarFieldEnum =
     (typeof DynamicOptionScalarFieldEnum)[keyof typeof DynamicOptionScalarFieldEnum];
+
+  export const EventProducerLoginScalarFieldEnum: {
+    id: 'id';
+    eventId: 'eventId';
+    mail: 'mail';
+    password: 'password';
+    isActive: 'isActive';
+    created_at: 'created_at';
+    updated_at: 'updated_at';
+  };
+
+  export type EventProducerLoginScalarFieldEnum =
+    (typeof EventProducerLoginScalarFieldEnum)[keyof typeof EventProducerLoginScalarFieldEnum];
 
   export const SortOrder: {
     asc: 'asc';
@@ -33982,6 +35526,7 @@ export namespace Prisma {
     eventTickets?: EventTicketListRelationFilter;
     productions?: ProductionListRelationFilter;
     participantRoles?: TagListRelationFilter;
+    eventProducerLogin?: EventProducerLoginListRelationFilter;
   };
 
   export type EventOrderByWithRelationInput = {
@@ -34012,6 +35557,7 @@ export namespace Prisma {
     eventTickets?: EventTicketOrderByRelationAggregateInput;
     productions?: ProductionOrderByRelationAggregateInput;
     participantRoles?: TagOrderByRelationAggregateInput;
+    eventProducerLogin?: EventProducerLoginOrderByRelationAggregateInput;
   };
 
   export type EventWhereUniqueInput = Prisma.AtLeast<
@@ -34052,6 +35598,7 @@ export namespace Prisma {
       eventTickets?: EventTicketListRelationFilter;
       productions?: ProductionListRelationFilter;
       participantRoles?: TagListRelationFilter;
+      eventProducerLogin?: EventProducerLoginListRelationFilter;
     },
     'id' | 'tagAssistedId' | 'tagConfirmedId'
   >;
@@ -35112,6 +36659,84 @@ export namespace Prisma {
     updated_at?: DateTimeWithAggregatesFilter<'DynamicOption'> | Date | string;
   };
 
+  export type EventProducerLoginWhereInput = {
+    AND?: EventProducerLoginWhereInput | EventProducerLoginWhereInput[];
+    OR?: EventProducerLoginWhereInput[];
+    NOT?: EventProducerLoginWhereInput | EventProducerLoginWhereInput[];
+    id?: StringFilter<'EventProducerLogin'> | string;
+    eventId?: StringFilter<'EventProducerLogin'> | string;
+    mail?: StringFilter<'EventProducerLogin'> | string;
+    password?: StringFilter<'EventProducerLogin'> | string;
+    isActive?: BoolFilter<'EventProducerLogin'> | boolean;
+    created_at?: DateTimeFilter<'EventProducerLogin'> | Date | string;
+    updated_at?: DateTimeFilter<'EventProducerLogin'> | Date | string;
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>;
+  };
+
+  export type EventProducerLoginOrderByWithRelationInput = {
+    id?: SortOrder;
+    eventId?: SortOrder;
+    mail?: SortOrder;
+    password?: SortOrder;
+    isActive?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    event?: EventOrderByWithRelationInput;
+  };
+
+  export type EventProducerLoginWhereUniqueInput = Prisma.AtLeast<
+    {
+      id?: string;
+      mail?: string;
+      AND?: EventProducerLoginWhereInput | EventProducerLoginWhereInput[];
+      OR?: EventProducerLoginWhereInput[];
+      NOT?: EventProducerLoginWhereInput | EventProducerLoginWhereInput[];
+      eventId?: StringFilter<'EventProducerLogin'> | string;
+      password?: StringFilter<'EventProducerLogin'> | string;
+      isActive?: BoolFilter<'EventProducerLogin'> | boolean;
+      created_at?: DateTimeFilter<'EventProducerLogin'> | Date | string;
+      updated_at?: DateTimeFilter<'EventProducerLogin'> | Date | string;
+      event?: XOR<EventScalarRelationFilter, EventWhereInput>;
+    },
+    'id' | 'mail'
+  >;
+
+  export type EventProducerLoginOrderByWithAggregationInput = {
+    id?: SortOrder;
+    eventId?: SortOrder;
+    mail?: SortOrder;
+    password?: SortOrder;
+    isActive?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+    _count?: EventProducerLoginCountOrderByAggregateInput;
+    _max?: EventProducerLoginMaxOrderByAggregateInput;
+    _min?: EventProducerLoginMinOrderByAggregateInput;
+  };
+
+  export type EventProducerLoginScalarWhereWithAggregatesInput = {
+    AND?:
+      | EventProducerLoginScalarWhereWithAggregatesInput
+      | EventProducerLoginScalarWhereWithAggregatesInput[];
+    OR?: EventProducerLoginScalarWhereWithAggregatesInput[];
+    NOT?:
+      | EventProducerLoginScalarWhereWithAggregatesInput
+      | EventProducerLoginScalarWhereWithAggregatesInput[];
+    id?: StringWithAggregatesFilter<'EventProducerLogin'> | string;
+    eventId?: StringWithAggregatesFilter<'EventProducerLogin'> | string;
+    mail?: StringWithAggregatesFilter<'EventProducerLogin'> | string;
+    password?: StringWithAggregatesFilter<'EventProducerLogin'> | string;
+    isActive?: BoolWithAggregatesFilter<'EventProducerLogin'> | boolean;
+    created_at?:
+      | DateTimeWithAggregatesFilter<'EventProducerLogin'>
+      | Date
+      | string;
+    updated_at?:
+      | DateTimeWithAggregatesFilter<'EventProducerLogin'>
+      | Date
+      | string;
+  };
+
   export type AccountCreateInput = {
     id?: string;
     username: string;
@@ -35937,6 +37562,7 @@ export namespace Prisma {
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
     productions?: ProductionCreateNestedManyWithoutEventsInput;
     participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginCreateNestedManyWithoutEventInput;
   };
 
   export type EventUncheckedCreateInput = {
@@ -35963,6 +37589,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
     productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
     participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginUncheckedCreateNestedManyWithoutEventInput;
   };
 
   export type EventUpdateInput = {
@@ -35989,6 +37616,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
     productions?: ProductionUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateInput = {
@@ -36015,6 +37643,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
     productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUncheckedUpdateManyWithoutEventNestedInput;
   };
 
   export type EventCreateManyInput = {
@@ -36989,6 +38618,75 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
+  export type EventProducerLoginCreateInput = {
+    id?: string;
+    mail: string;
+    password: string;
+    isActive?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    event: EventCreateNestedOneWithoutEventProducerLoginInput;
+  };
+
+  export type EventProducerLoginUncheckedCreateInput = {
+    id?: string;
+    eventId: string;
+    mail: string;
+    password: string;
+    isActive?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type EventProducerLoginUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    mail?: StringFieldUpdateOperationsInput | string;
+    password?: StringFieldUpdateOperationsInput | string;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    event?: EventUpdateOneRequiredWithoutEventProducerLoginNestedInput;
+  };
+
+  export type EventProducerLoginUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    eventId?: StringFieldUpdateOperationsInput | string;
+    mail?: StringFieldUpdateOperationsInput | string;
+    password?: StringFieldUpdateOperationsInput | string;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type EventProducerLoginCreateManyInput = {
+    id?: string;
+    eventId: string;
+    mail: string;
+    password: string;
+    isActive?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type EventProducerLoginUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    mail?: StringFieldUpdateOperationsInput | string;
+    password?: StringFieldUpdateOperationsInput | string;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type EventProducerLoginUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    eventId?: StringFieldUpdateOperationsInput | string;
+    mail?: StringFieldUpdateOperationsInput | string;
+    password?: StringFieldUpdateOperationsInput | string;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>;
     in?: string[] | ListStringFieldRefInput<$PrismaModel>;
@@ -37686,7 +39384,17 @@ export namespace Prisma {
     none?: EventTicketWhereInput;
   };
 
+  export type EventProducerLoginListRelationFilter = {
+    every?: EventProducerLoginWhereInput;
+    some?: EventProducerLoginWhereInput;
+    none?: EventProducerLoginWhereInput;
+  };
+
   export type EventTicketOrderByRelationAggregateInput = {
+    _count?: SortOrder;
+  };
+
+  export type EventProducerLoginOrderByRelationAggregateInput = {
     _count?: SortOrder;
   };
 
@@ -38499,6 +40207,36 @@ export namespace Prisma {
     text?: SortOrder;
     tagId?: SortOrder;
     questionId?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type EventProducerLoginCountOrderByAggregateInput = {
+    id?: SortOrder;
+    eventId?: SortOrder;
+    mail?: SortOrder;
+    password?: SortOrder;
+    isActive?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type EventProducerLoginMaxOrderByAggregateInput = {
+    id?: SortOrder;
+    eventId?: SortOrder;
+    mail?: SortOrder;
+    password?: SortOrder;
+    isActive?: SortOrder;
+    created_at?: SortOrder;
+    updated_at?: SortOrder;
+  };
+
+  export type EventProducerLoginMinOrderByAggregateInput = {
+    id?: SortOrder;
+    eventId?: SortOrder;
+    mail?: SortOrder;
+    password?: SortOrder;
+    isActive?: SortOrder;
     created_at?: SortOrder;
     updated_at?: SortOrder;
   };
@@ -40929,6 +42667,23 @@ export namespace Prisma {
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[];
   };
 
+  export type EventProducerLoginCreateNestedManyWithoutEventInput = {
+    create?:
+      | XOR<
+          EventProducerLoginCreateWithoutEventInput,
+          EventProducerLoginUncheckedCreateWithoutEventInput
+        >
+      | EventProducerLoginCreateWithoutEventInput[]
+      | EventProducerLoginUncheckedCreateWithoutEventInput[];
+    connectOrCreate?:
+      | EventProducerLoginCreateOrConnectWithoutEventInput
+      | EventProducerLoginCreateOrConnectWithoutEventInput[];
+    createMany?: EventProducerLoginCreateManyEventInputEnvelope;
+    connect?:
+      | EventProducerLoginWhereUniqueInput
+      | EventProducerLoginWhereUniqueInput[];
+  };
+
   export type TicketUncheckedCreateNestedManyWithoutEventInput = {
     create?:
       | XOR<
@@ -41029,6 +42784,23 @@ export namespace Prisma {
       | TagCreateOrConnectWithoutRoleEventsInput
       | TagCreateOrConnectWithoutRoleEventsInput[];
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[];
+  };
+
+  export type EventProducerLoginUncheckedCreateNestedManyWithoutEventInput = {
+    create?:
+      | XOR<
+          EventProducerLoginCreateWithoutEventInput,
+          EventProducerLoginUncheckedCreateWithoutEventInput
+        >
+      | EventProducerLoginCreateWithoutEventInput[]
+      | EventProducerLoginUncheckedCreateWithoutEventInput[];
+    connectOrCreate?:
+      | EventProducerLoginCreateOrConnectWithoutEventInput
+      | EventProducerLoginCreateOrConnectWithoutEventInput[];
+    createMany?: EventProducerLoginCreateManyEventInputEnvelope;
+    connect?:
+      | EventProducerLoginWhereUniqueInput
+      | EventProducerLoginWhereUniqueInput[];
   };
 
   export type EventFolderUpdateOneWithoutEventsNestedInput = {
@@ -41296,6 +43068,44 @@ export namespace Prisma {
     deleteMany?: TagScalarWhereInput | TagScalarWhereInput[];
   };
 
+  export type EventProducerLoginUpdateManyWithoutEventNestedInput = {
+    create?:
+      | XOR<
+          EventProducerLoginCreateWithoutEventInput,
+          EventProducerLoginUncheckedCreateWithoutEventInput
+        >
+      | EventProducerLoginCreateWithoutEventInput[]
+      | EventProducerLoginUncheckedCreateWithoutEventInput[];
+    connectOrCreate?:
+      | EventProducerLoginCreateOrConnectWithoutEventInput
+      | EventProducerLoginCreateOrConnectWithoutEventInput[];
+    upsert?:
+      | EventProducerLoginUpsertWithWhereUniqueWithoutEventInput
+      | EventProducerLoginUpsertWithWhereUniqueWithoutEventInput[];
+    createMany?: EventProducerLoginCreateManyEventInputEnvelope;
+    set?:
+      | EventProducerLoginWhereUniqueInput
+      | EventProducerLoginWhereUniqueInput[];
+    disconnect?:
+      | EventProducerLoginWhereUniqueInput
+      | EventProducerLoginWhereUniqueInput[];
+    delete?:
+      | EventProducerLoginWhereUniqueInput
+      | EventProducerLoginWhereUniqueInput[];
+    connect?:
+      | EventProducerLoginWhereUniqueInput
+      | EventProducerLoginWhereUniqueInput[];
+    update?:
+      | EventProducerLoginUpdateWithWhereUniqueWithoutEventInput
+      | EventProducerLoginUpdateWithWhereUniqueWithoutEventInput[];
+    updateMany?:
+      | EventProducerLoginUpdateManyWithWhereWithoutEventInput
+      | EventProducerLoginUpdateManyWithWhereWithoutEventInput[];
+    deleteMany?:
+      | EventProducerLoginScalarWhereInput
+      | EventProducerLoginScalarWhereInput[];
+  };
+
   export type TicketUncheckedUpdateManyWithoutEventNestedInput = {
     create?:
       | XOR<
@@ -41487,6 +43297,44 @@ export namespace Prisma {
       | TagUpdateManyWithWhereWithoutRoleEventsInput
       | TagUpdateManyWithWhereWithoutRoleEventsInput[];
     deleteMany?: TagScalarWhereInput | TagScalarWhereInput[];
+  };
+
+  export type EventProducerLoginUncheckedUpdateManyWithoutEventNestedInput = {
+    create?:
+      | XOR<
+          EventProducerLoginCreateWithoutEventInput,
+          EventProducerLoginUncheckedCreateWithoutEventInput
+        >
+      | EventProducerLoginCreateWithoutEventInput[]
+      | EventProducerLoginUncheckedCreateWithoutEventInput[];
+    connectOrCreate?:
+      | EventProducerLoginCreateOrConnectWithoutEventInput
+      | EventProducerLoginCreateOrConnectWithoutEventInput[];
+    upsert?:
+      | EventProducerLoginUpsertWithWhereUniqueWithoutEventInput
+      | EventProducerLoginUpsertWithWhereUniqueWithoutEventInput[];
+    createMany?: EventProducerLoginCreateManyEventInputEnvelope;
+    set?:
+      | EventProducerLoginWhereUniqueInput
+      | EventProducerLoginWhereUniqueInput[];
+    disconnect?:
+      | EventProducerLoginWhereUniqueInput
+      | EventProducerLoginWhereUniqueInput[];
+    delete?:
+      | EventProducerLoginWhereUniqueInput
+      | EventProducerLoginWhereUniqueInput[];
+    connect?:
+      | EventProducerLoginWhereUniqueInput
+      | EventProducerLoginWhereUniqueInput[];
+    update?:
+      | EventProducerLoginUpdateWithWhereUniqueWithoutEventInput
+      | EventProducerLoginUpdateWithWhereUniqueWithoutEventInput[];
+    updateMany?:
+      | EventProducerLoginUpdateManyWithWhereWithoutEventInput
+      | EventProducerLoginUpdateManyWithWhereWithoutEventInput[];
+    deleteMany?:
+      | EventProducerLoginScalarWhereInput
+      | EventProducerLoginScalarWhereInput[];
   };
 
   export type EventCreateNestedManyWithoutFolderInput = {
@@ -42565,6 +44413,32 @@ export namespace Prisma {
         DynamicQuestionUpdateWithoutOptionsInput
       >,
       DynamicQuestionUncheckedUpdateWithoutOptionsInput
+    >;
+  };
+
+  export type EventCreateNestedOneWithoutEventProducerLoginInput = {
+    create?: XOR<
+      EventCreateWithoutEventProducerLoginInput,
+      EventUncheckedCreateWithoutEventProducerLoginInput
+    >;
+    connectOrCreate?: EventCreateOrConnectWithoutEventProducerLoginInput;
+    connect?: EventWhereUniqueInput;
+  };
+
+  export type EventUpdateOneRequiredWithoutEventProducerLoginNestedInput = {
+    create?: XOR<
+      EventCreateWithoutEventProducerLoginInput,
+      EventUncheckedCreateWithoutEventProducerLoginInput
+    >;
+    connectOrCreate?: EventCreateOrConnectWithoutEventProducerLoginInput;
+    upsert?: EventUpsertWithoutEventProducerLoginInput;
+    connect?: EventWhereUniqueInput;
+    update?: XOR<
+      XOR<
+        EventUpdateToOneWithWhereWithoutEventProducerLoginInput,
+        EventUpdateWithoutEventProducerLoginInput
+      >,
+      EventUncheckedUpdateWithoutEventProducerLoginInput
     >;
   };
 
@@ -45105,6 +46979,7 @@ export namespace Prisma {
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
     productions?: ProductionCreateNestedManyWithoutEventsInput;
     participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginCreateNestedManyWithoutEventInput;
   };
 
   export type EventUncheckedCreateWithoutTagAssistedInput = {
@@ -45130,6 +47005,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
     productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
     participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginUncheckedCreateNestedManyWithoutEventInput;
   };
 
   export type EventCreateOrConnectWithoutTagAssistedInput = {
@@ -45163,6 +47039,7 @@ export namespace Prisma {
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
     productions?: ProductionCreateNestedManyWithoutEventsInput;
     participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginCreateNestedManyWithoutEventInput;
   };
 
   export type EventUncheckedCreateWithoutTagConfirmedInput = {
@@ -45188,6 +47065,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
     productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
     participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginUncheckedCreateNestedManyWithoutEventInput;
   };
 
   export type EventCreateOrConnectWithoutTagConfirmedInput = {
@@ -45373,6 +47251,7 @@ export namespace Prisma {
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
     productions?: ProductionCreateNestedManyWithoutEventsInput;
     participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginCreateNestedManyWithoutEventInput;
   };
 
   export type EventUncheckedCreateWithoutProfileTagsInput = {
@@ -45398,6 +47277,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
     productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
     participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginUncheckedCreateNestedManyWithoutEventInput;
   };
 
   export type EventCreateOrConnectWithoutProfileTagsInput = {
@@ -45431,6 +47311,7 @@ export namespace Prisma {
     profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
     productions?: ProductionCreateNestedManyWithoutEventsInput;
+    eventProducerLogin?: EventProducerLoginCreateNestedManyWithoutEventInput;
   };
 
   export type EventUncheckedCreateWithoutParticipantRolesInput = {
@@ -45456,6 +47337,7 @@ export namespace Prisma {
     profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
     productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
+    eventProducerLogin?: EventProducerLoginUncheckedCreateNestedManyWithoutEventInput;
   };
 
   export type EventCreateOrConnectWithoutParticipantRolesInput = {
@@ -45578,6 +47460,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
     productions?: ProductionUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutTagAssistedInput = {
@@ -45603,6 +47486,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
     productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUncheckedUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUpsertWithoutTagConfirmedInput = {
@@ -45648,6 +47532,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
     productions?: ProductionUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutTagConfirmedInput = {
@@ -45673,6 +47558,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
     productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUncheckedUpdateManyWithoutEventNestedInput;
   };
 
   export type AccountUpsertWithWhereUniqueWithoutTagsInput = {
@@ -46164,6 +48050,7 @@ export namespace Prisma {
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
     productions?: ProductionCreateNestedManyWithoutEventsInput;
     participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginCreateNestedManyWithoutEventInput;
   };
 
   export type EventUncheckedCreateWithoutSubEventsInput = {
@@ -46189,6 +48076,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
     productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
     participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginUncheckedCreateNestedManyWithoutEventInput;
   };
 
   export type EventCreateOrConnectWithoutSubEventsInput = {
@@ -46304,6 +48192,7 @@ export namespace Prisma {
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
     productions?: ProductionCreateNestedManyWithoutEventsInput;
     participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginCreateNestedManyWithoutEventInput;
   };
 
   export type EventUncheckedCreateWithoutSupraEventInput = {
@@ -46329,6 +48218,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
     productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
     participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginUncheckedCreateNestedManyWithoutEventInput;
   };
 
   export type EventCreateOrConnectWithoutSupraEventInput = {
@@ -46483,6 +48373,39 @@ export namespace Prisma {
       TagCreateWithoutRoleEventsInput,
       TagUncheckedCreateWithoutRoleEventsInput
     >;
+  };
+
+  export type EventProducerLoginCreateWithoutEventInput = {
+    id?: string;
+    mail: string;
+    password: string;
+    isActive?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type EventProducerLoginUncheckedCreateWithoutEventInput = {
+    id?: string;
+    mail: string;
+    password: string;
+    isActive?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
+  export type EventProducerLoginCreateOrConnectWithoutEventInput = {
+    where: EventProducerLoginWhereUniqueInput;
+    create: XOR<
+      EventProducerLoginCreateWithoutEventInput,
+      EventProducerLoginUncheckedCreateWithoutEventInput
+    >;
+  };
+
+  export type EventProducerLoginCreateManyEventInputEnvelope = {
+    data:
+      | EventProducerLoginCreateManyEventInput
+      | EventProducerLoginCreateManyEventInput[];
+    skipDuplicates?: boolean;
   };
 
   export type EventFolderUpsertWithoutEventsInput = {
@@ -46668,6 +48591,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
     productions?: ProductionUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutSubEventsInput = {
@@ -46693,6 +48617,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
     productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUncheckedUpdateManyWithoutEventNestedInput;
   };
 
   export type TicketUpsertWithWhereUniqueWithoutEventInput = {
@@ -46904,6 +48829,51 @@ export namespace Prisma {
     >;
   };
 
+  export type EventProducerLoginUpsertWithWhereUniqueWithoutEventInput = {
+    where: EventProducerLoginWhereUniqueInput;
+    update: XOR<
+      EventProducerLoginUpdateWithoutEventInput,
+      EventProducerLoginUncheckedUpdateWithoutEventInput
+    >;
+    create: XOR<
+      EventProducerLoginCreateWithoutEventInput,
+      EventProducerLoginUncheckedCreateWithoutEventInput
+    >;
+  };
+
+  export type EventProducerLoginUpdateWithWhereUniqueWithoutEventInput = {
+    where: EventProducerLoginWhereUniqueInput;
+    data: XOR<
+      EventProducerLoginUpdateWithoutEventInput,
+      EventProducerLoginUncheckedUpdateWithoutEventInput
+    >;
+  };
+
+  export type EventProducerLoginUpdateManyWithWhereWithoutEventInput = {
+    where: EventProducerLoginScalarWhereInput;
+    data: XOR<
+      EventProducerLoginUpdateManyMutationInput,
+      EventProducerLoginUncheckedUpdateManyWithoutEventInput
+    >;
+  };
+
+  export type EventProducerLoginScalarWhereInput = {
+    AND?:
+      | EventProducerLoginScalarWhereInput
+      | EventProducerLoginScalarWhereInput[];
+    OR?: EventProducerLoginScalarWhereInput[];
+    NOT?:
+      | EventProducerLoginScalarWhereInput
+      | EventProducerLoginScalarWhereInput[];
+    id?: StringFilter<'EventProducerLogin'> | string;
+    eventId?: StringFilter<'EventProducerLogin'> | string;
+    mail?: StringFilter<'EventProducerLogin'> | string;
+    password?: StringFilter<'EventProducerLogin'> | string;
+    isActive?: BoolFilter<'EventProducerLogin'> | boolean;
+    created_at?: DateTimeFilter<'EventProducerLogin'> | Date | string;
+    updated_at?: DateTimeFilter<'EventProducerLogin'> | Date | string;
+  };
+
   export type EventCreateWithoutFolderInput = {
     id?: string;
     name: string;
@@ -46927,6 +48897,7 @@ export namespace Prisma {
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
     productions?: ProductionCreateNestedManyWithoutEventsInput;
     participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginCreateNestedManyWithoutEventInput;
   };
 
   export type EventUncheckedCreateWithoutFolderInput = {
@@ -46952,6 +48923,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
     productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
     participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginUncheckedCreateNestedManyWithoutEventInput;
   };
 
   export type EventCreateOrConnectWithoutFolderInput = {
@@ -47221,6 +49193,7 @@ export namespace Prisma {
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
     productions?: ProductionCreateNestedManyWithoutEventsInput;
     participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginCreateNestedManyWithoutEventInput;
   };
 
   export type EventUncheckedCreateWithoutTicketsInput = {
@@ -47246,6 +49219,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
     productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
     participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginUncheckedCreateNestedManyWithoutEventInput;
   };
 
   export type EventCreateOrConnectWithoutTicketsInput = {
@@ -47407,6 +49381,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
     productions?: ProductionUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutTicketsInput = {
@@ -47432,6 +49407,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
     productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUncheckedUpdateManyWithoutEventNestedInput;
   };
 
   export type ProfileUpsertWithoutTicketsInput = {
@@ -47624,6 +49600,7 @@ export namespace Prisma {
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
     productions?: ProductionCreateNestedManyWithoutEventsInput;
     participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginCreateNestedManyWithoutEventInput;
   };
 
   export type EventUncheckedCreateWithoutTicketGroupsInput = {
@@ -47649,6 +49626,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
     productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
     participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginUncheckedCreateNestedManyWithoutEventInput;
   };
 
   export type EventCreateOrConnectWithoutTicketGroupsInput = {
@@ -47831,6 +49809,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
     productions?: ProductionUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutTicketGroupsInput = {
@@ -47856,6 +49835,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
     productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUncheckedUpdateManyWithoutEventNestedInput;
   };
 
   export type TicketUpsertWithWhereUniqueWithoutTicketGroupInput = {
@@ -48032,6 +50012,7 @@ export namespace Prisma {
     profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
     productions?: ProductionCreateNestedManyWithoutEventsInput;
     participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginCreateNestedManyWithoutEventInput;
   };
 
   export type EventUncheckedCreateWithoutEventTicketsInput = {
@@ -48057,6 +50038,7 @@ export namespace Prisma {
     profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
     productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
     participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginUncheckedCreateNestedManyWithoutEventInput;
   };
 
   export type EventCreateOrConnectWithoutEventTicketsInput = {
@@ -48110,6 +50092,7 @@ export namespace Prisma {
     profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
     productions?: ProductionUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutEventTicketsInput = {
@@ -48135,6 +50118,7 @@ export namespace Prisma {
     profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
     productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUncheckedUpdateManyWithoutEventNestedInput;
   };
 
   export type ProfileCreateWithoutProductionsAdministratedInput = {
@@ -48320,6 +50304,7 @@ export namespace Prisma {
     profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
     participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginCreateNestedManyWithoutEventInput;
   };
 
   export type EventUncheckedCreateWithoutProductionsInput = {
@@ -48345,6 +50330,7 @@ export namespace Prisma {
     profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
     eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
     participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
+    eventProducerLogin?: EventProducerLoginUncheckedCreateNestedManyWithoutEventInput;
   };
 
   export type EventCreateOrConnectWithoutProductionsInput = {
@@ -49317,6 +51303,138 @@ export namespace Prisma {
     multipleChoice?: BoolFieldUpdateOperationsInput | boolean;
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type EventCreateWithoutEventProducerLoginInput = {
+    id?: string;
+    name: string;
+    date: Date | string;
+    startingDate?: Date | string;
+    endingDate?: Date | string;
+    location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
+    active?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    folder?: EventFolderCreateNestedOneWithoutEventsInput;
+    tagAssisted: TagCreateNestedOneWithoutAssistedEventInput;
+    tagConfirmed: TagCreateNestedOneWithoutConfirmedEventInput;
+    supraEvent?: EventCreateNestedOneWithoutSubEventsInput;
+    tickets?: TicketCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupCreateNestedManyWithoutEventInput;
+    subEvents?: EventCreateNestedManyWithoutSupraEventInput;
+    profileTags?: TagCreateNestedManyWithoutProfileEventsInput;
+    eventTickets?: EventTicketCreateNestedManyWithoutEventInput;
+    productions?: ProductionCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagCreateNestedManyWithoutRoleEventsInput;
+  };
+
+  export type EventUncheckedCreateWithoutEventProducerLoginInput = {
+    id?: string;
+    name: string;
+    date: Date | string;
+    startingDate?: Date | string;
+    endingDate?: Date | string;
+    location: string;
+    mainPictureUrl?: string | null;
+    bannerUrl?: string | null;
+    description?: string | null;
+    folderId?: string | null;
+    tagAssistedId: string;
+    tagConfirmedId: string;
+    supraEventId?: string | null;
+    active?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+    tickets?: TicketUncheckedCreateNestedManyWithoutEventInput;
+    ticketGroups?: TicketGroupUncheckedCreateNestedManyWithoutEventInput;
+    subEvents?: EventUncheckedCreateNestedManyWithoutSupraEventInput;
+    profileTags?: TagUncheckedCreateNestedManyWithoutProfileEventsInput;
+    eventTickets?: EventTicketUncheckedCreateNestedManyWithoutEventInput;
+    productions?: ProductionUncheckedCreateNestedManyWithoutEventsInput;
+    participantRoles?: TagUncheckedCreateNestedManyWithoutRoleEventsInput;
+  };
+
+  export type EventCreateOrConnectWithoutEventProducerLoginInput = {
+    where: EventWhereUniqueInput;
+    create: XOR<
+      EventCreateWithoutEventProducerLoginInput,
+      EventUncheckedCreateWithoutEventProducerLoginInput
+    >;
+  };
+
+  export type EventUpsertWithoutEventProducerLoginInput = {
+    update: XOR<
+      EventUpdateWithoutEventProducerLoginInput,
+      EventUncheckedUpdateWithoutEventProducerLoginInput
+    >;
+    create: XOR<
+      EventCreateWithoutEventProducerLoginInput,
+      EventUncheckedCreateWithoutEventProducerLoginInput
+    >;
+    where?: EventWhereInput;
+  };
+
+  export type EventUpdateToOneWithWhereWithoutEventProducerLoginInput = {
+    where?: EventWhereInput;
+    data: XOR<
+      EventUpdateWithoutEventProducerLoginInput,
+      EventUncheckedUpdateWithoutEventProducerLoginInput
+    >;
+  };
+
+  export type EventUpdateWithoutEventProducerLoginInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    date?: DateTimeFieldUpdateOperationsInput | Date | string;
+    startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    folder?: EventFolderUpdateOneWithoutEventsNestedInput;
+    tagAssisted?: TagUpdateOneRequiredWithoutAssistedEventNestedInput;
+    tagConfirmed?: TagUpdateOneRequiredWithoutConfirmedEventNestedInput;
+    supraEvent?: EventUpdateOneWithoutSubEventsNestedInput;
+    tickets?: TicketUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUpdateManyWithoutEventNestedInput;
+    subEvents?: EventUpdateManyWithoutSupraEventNestedInput;
+    profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
+    eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
+  };
+
+  export type EventUncheckedUpdateWithoutEventProducerLoginInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    name?: StringFieldUpdateOperationsInput | string;
+    date?: DateTimeFieldUpdateOperationsInput | Date | string;
+    startingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    endingDate?: DateTimeFieldUpdateOperationsInput | Date | string;
+    location?: StringFieldUpdateOperationsInput | string;
+    mainPictureUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    bannerUrl?: NullableStringFieldUpdateOperationsInput | string | null;
+    description?: NullableStringFieldUpdateOperationsInput | string | null;
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null;
+    tagAssistedId?: StringFieldUpdateOperationsInput | string;
+    tagConfirmedId?: StringFieldUpdateOperationsInput | string;
+    supraEventId?: NullableStringFieldUpdateOperationsInput | string | null;
+    active?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    tickets?: TicketUncheckedUpdateManyWithoutEventNestedInput;
+    ticketGroups?: TicketGroupUncheckedUpdateManyWithoutEventNestedInput;
+    subEvents?: EventUncheckedUpdateManyWithoutSupraEventNestedInput;
+    profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
+    eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
+    productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
+    participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
   };
 
   export type CommentCreateManyAccountInput = {
@@ -50541,6 +52659,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
     productions?: ProductionUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutProfileTagsInput = {
@@ -50566,6 +52685,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
     productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUncheckedUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateManyWithoutProfileTagsInput = {
@@ -50610,6 +52730,7 @@ export namespace Prisma {
     profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
     productions?: ProductionUpdateManyWithoutEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutParticipantRolesInput = {
@@ -50635,6 +52756,7 @@ export namespace Prisma {
     profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
     productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUncheckedUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateManyWithoutParticipantRolesInput = {
@@ -50782,6 +52904,15 @@ export namespace Prisma {
     updated_at?: Date | string;
   };
 
+  export type EventProducerLoginCreateManyEventInput = {
+    id?: string;
+    mail: string;
+    password: string;
+    isActive?: boolean;
+    created_at?: Date | string;
+    updated_at?: Date | string;
+  };
+
   export type TicketUpdateWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string;
     type?: EnumTicketTypeFieldUpdateOperationsInput | $Enums.TicketType;
@@ -50906,6 +53037,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
     productions?: ProductionUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutSupraEventInput = {
@@ -50931,6 +53063,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
     productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUncheckedUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateManyWithoutSupraEventInput = {
@@ -51091,6 +53224,33 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
+  export type EventProducerLoginUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    mail?: StringFieldUpdateOperationsInput | string;
+    password?: StringFieldUpdateOperationsInput | string;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type EventProducerLoginUncheckedUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    mail?: StringFieldUpdateOperationsInput | string;
+    password?: StringFieldUpdateOperationsInput | string;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
+  export type EventProducerLoginUncheckedUpdateManyWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string;
+    mail?: StringFieldUpdateOperationsInput | string;
+    password?: StringFieldUpdateOperationsInput | string;
+    isActive?: BoolFieldUpdateOperationsInput | boolean;
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string;
+  };
+
   export type EventCreateManyFolderInput = {
     id?: string;
     name: string;
@@ -51132,6 +53292,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
     productions?: ProductionUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutFolderInput = {
@@ -51157,6 +53318,7 @@ export namespace Prisma {
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
     productions?: ProductionUncheckedUpdateManyWithoutEventsNestedInput;
     participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUncheckedUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateManyWithoutFolderInput = {
@@ -51441,6 +53603,7 @@ export namespace Prisma {
     profileTags?: TagUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUpdateManyWithoutEventNestedInput;
     participantRoles?: TagUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateWithoutProductionsInput = {
@@ -51466,6 +53629,7 @@ export namespace Prisma {
     profileTags?: TagUncheckedUpdateManyWithoutProfileEventsNestedInput;
     eventTickets?: EventTicketUncheckedUpdateManyWithoutEventNestedInput;
     participantRoles?: TagUncheckedUpdateManyWithoutRoleEventsNestedInput;
+    eventProducerLogin?: EventProducerLoginUncheckedUpdateManyWithoutEventNestedInput;
   };
 
   export type EventUncheckedUpdateManyWithoutProductionsInput = {

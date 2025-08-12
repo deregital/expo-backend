@@ -5899,6 +5899,28 @@ components:
               - "amount"
               - "type"
               - "price"
+        eventProducerLogin:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              password:
+                type:
+                  - "string"
+                minLength: 1
+              isActive:
+                type:
+                  - "boolean"
+            required:
+              - "mail"
+              - "password"
+              - "isActive"
       required:
         - "name"
         - "date"
@@ -5911,6 +5933,7 @@ components:
         - "description"
         - "tagsId"
         - "eventTickets"
+        - "eventProducerLogin"
     CreateEventResponseDto:
       type:
         - "object"
@@ -7855,6 +7878,28 @@ components:
               - "amount"
               - "type"
               - "price"
+        eventProducerLogin:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              password:
+                type:
+                  - "string"
+                minLength: 1
+              isActive:
+                type:
+                  - "boolean"
+            required:
+              - "mail"
+              - "password"
+              - "isActive"
     UpdateEventResponseDto:
       type:
         - "object"

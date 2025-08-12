@@ -20,6 +20,9 @@ export default {
       dynamicForm: 'Formulario dinámico',
       dynamicQuestion: 'Pregunta dinámica',
       dynamicOption: 'Opción dinámica',
+      // [N]
+      eventProducerLogin: 'Login de productor de eventos',
+      // [/N]
     },
     tag: { assisted: 'Asistió', confirmed: 'Confirmó asistencia' },
     ticketType: {
@@ -247,6 +250,17 @@ export default {
         min: 'El formulario debe tener al menos 1 pregunta',
       },
     },
+    // [N]
+    eventProducerLogin: {
+      mail: {
+        invalid:
+          'El email no es válido. Debe tener el formato "algo@dominio.algo"',
+      },
+      password: {
+        required: 'La contraseña es requerida',
+      },
+    },
+    // [/N]
   },
   route: {
     auth: {

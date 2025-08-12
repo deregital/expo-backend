@@ -225,6 +225,10 @@ model Event {
   productions      Production[] @relation("EVENT_X_PRODUCTION")
   participantRoles Tag[]        @relation("EVENT_X_ROLES")
 
+  // [N]
+  eventProducerLogin EventProducerLogin[] @relation("EVENT_X_EVENT_PRODUCER_LOGIN")
+  // [/N]
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -431,6 +435,25 @@ model DynamicOption {
 
   @@map("DYNAMIC_OPTION")
 }
+
+// [N]
+model EventProducerLogin {
+  id String @id @default(uuid())
+
+  eventId String @map("event_id")
+  event   Event  @relation(name: "EVENT_X_EVENT_PRODUCER_LOGIN", fields: [eventId], references: [id], onDelete: Cascade)
+
+  mail     String  @unique
+  password String
+  isActive Boolean @default(true) @map("is_active")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("EVENT_PRODUCER_LOGIN")
+}
+
+// [/N]
 
 enum AffiliationStatus {
   APPROVED
