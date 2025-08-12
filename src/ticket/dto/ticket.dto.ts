@@ -1,5 +1,6 @@
 import { eventSchema } from '@/event/dto/event.dto';
 import { translate } from '@/i18n/translate';
+import { profileSchema } from '@/schema/profile.schema';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { ticketGroupSchema } from '@/ticket-group/dto/ticket-group.dto';
 import z from 'zod';
@@ -16,6 +17,12 @@ export const ticketSchema = z.object({
   fullName: z.string().min(1, translate('model.ticket.fullName.required')),
   mail: z.string().email(translate('model.ticket.mail.email')),
   dni: z.string().min(1, translate('model.ticket.dni.required')),
+
+  // [N]
+  phoneNumber: profileSchema.shape.phoneNumber,
+  instagrams: z.array(z.string()),
+  whoToWatch: z.string().nullable(),
+  // [/N]
 
   seat: z.number().min(1, translate('model.ticket.seat.required')).nullable(),
   scanned: z.boolean(),

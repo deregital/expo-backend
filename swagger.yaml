@@ -7408,6 +7408,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -7441,6 +7455,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -10769,6 +10786,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         profileId:
           type:
             - "string"
@@ -10783,6 +10814,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
     CreateTicketResponseDto:
       type:
         - "object"
@@ -10814,6 +10848,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -10935,6 +10983,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -10981,6 +11032,20 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               profileId:
                 type:
                   - "string"
@@ -10992,6 +11057,9 @@ components:
               - "mail"
               - "dni"
               - "ticketGroupId"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
         referralCode:
           type:
             - "string"
@@ -11032,6 +11100,20 @@ components:
             type:
               - "string"
             minLength: 1
+          phoneNumber:
+            type:
+              - "string"
+            minLength: 1
+          instagrams:
+            type:
+              - "array"
+            items:
+              type:
+                - "string"
+          whoToWatch:
+            type:
+              - "string"
+              - "null"
           seat:
             type:
               - "number"
@@ -11153,6 +11235,9 @@ components:
           - "fullName"
           - "mail"
           - "dni"
+          - "phoneNumber"
+          - "instagrams"
+          - "whoToWatch"
           - "seat"
           - "scanned"
           - "scannedAt"
@@ -11220,6 +11305,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -11273,6 +11372,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -11317,6 +11419,20 @@ components:
               type:
                 - "string"
               minLength: 1
+            phoneNumber:
+              type:
+                - "string"
+              minLength: 1
+            instagrams:
+              type:
+                - "array"
+              items:
+                type:
+                  - "string"
+            whoToWatch:
+              type:
+                - "string"
+                - "null"
             seat:
               type:
                 - "number"
@@ -11584,6 +11700,9 @@ components:
             - "fullName"
             - "mail"
             - "dni"
+            - "phoneNumber"
+            - "instagrams"
+            - "whoToWatch"
             - "seat"
             - "scanned"
             - "scannedAt"
@@ -11633,6 +11752,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -11827,6 +11960,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -11875,6 +12011,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -12069,6 +12219,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -12117,6 +12270,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -12238,6 +12405,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -12306,6 +12476,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -12339,6 +12523,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -12376,6 +12563,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -12409,6 +12610,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -12446,6 +12650,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -12479,6 +12697,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -12532,6 +12753,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -12565,6 +12800,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -12664,6 +12902,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -12697,6 +12949,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"

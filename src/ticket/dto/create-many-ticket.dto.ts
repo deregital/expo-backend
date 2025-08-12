@@ -15,6 +15,12 @@ export const createManyTicketSchema = z.object({
         mail: true,
         dni: true,
         ticketGroupId: true,
+
+        // [N]
+        phoneNumber: true,
+        instagrams: true,
+        whoToWatch: true,
+        // [/N]
       })
       .extend({
         profileId: profileSchema.shape.id.optional(),
