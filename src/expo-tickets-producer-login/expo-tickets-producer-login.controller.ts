@@ -8,7 +8,7 @@ import {
   getEventTicketsLoginProducerResponseSchema,
 } from '@/expo-tickets-producer-login/dto/[N]get-event-tickets.dto';
 import { ErrorDto } from '@/shared/errors/errorType';
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import z from 'zod';
 import { ExpoTicketsProducerLoginService } from './expo-tickets-producer-login.service';
@@ -42,7 +42,7 @@ export class ExpoTicketsProducerLoginController {
     type: ErrorDto,
     description: 'Credenciales incorrectas',
   })
-  @Get('get-event-tickets')
+  @Post('get-event-tickets')
   async getEventTickets(
     @Body() loginDto: LoginProducerDto,
   ): Promise<z.infer<typeof getEventTicketsLoginProducerResponseSchema>> {

@@ -2784,7 +2784,7 @@ paths:
       tags:
         - "ExpoTicketsProducerLogin"
   /expo-tickets-producer-login/get-event-tickets:
-    get:
+    post:
       operationId: "ExpoTicketsProducerLoginController_getEventTickets"
       parameters: []
       requestBody:
