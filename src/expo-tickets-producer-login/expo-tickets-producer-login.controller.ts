@@ -1,8 +1,8 @@
 import {
   LoginProducerDto,
   loginProducerResponseSchema,
-} from '@/expo-tickets-producer-login/dto/[N]expo-tickets-producer-login';
-import { getEventTicketsLoginProducerResponseSchema } from '@/expo-tickets-producer-login/dto/[N]get-event-tickets';
+} from '@/expo-tickets-producer-login/dto/[N]expo-tickets-producer-login.dto';
+import { getEventTicketsLoginProducerResponseSchema } from '@/expo-tickets-producer-login/dto/[N]get-event-tickets.dto';
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import z from 'zod';
 import { ExpoTicketsProducerLoginService } from './expo-tickets-producer-login.service';

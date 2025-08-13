@@ -1,8 +1,8 @@
 import {
   LoginProducerDto,
   loginProducerResponseSchema,
-} from '@/expo-tickets-producer-login/dto/[N]expo-tickets-producer-login';
-import { getEventTicketsLoginProducerResponseSchema } from '@/expo-tickets-producer-login/dto/[N]get-event-tickets';
+} from '@/expo-tickets-producer-login/dto/[N]expo-tickets-producer-login.dto';
+import { getEventTicketsLoginProducerResponseSchema } from '@/expo-tickets-producer-login/dto/[N]get-event-tickets.dto';
 import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';

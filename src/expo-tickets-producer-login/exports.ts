@@ -1,2 +1,2 @@
-export * from './dto/[N]expo-tickets-producer-login';
-export * from './dto/[N]get-event-tickets';
+export * from './dto/[N]expo-tickets-producer-login.dto';
+export * from './dto/[N]get-event-tickets.dto';
