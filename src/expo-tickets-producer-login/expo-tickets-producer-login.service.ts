@@ -7,6 +7,7 @@ import { PRISMA_SERVICE } from '@/prisma/constants';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import z from 'zod';
+import { TicketType } from '~/types/prisma-schema';
 
 @Injectable()
 export class ExpoTicketsProducerLoginService {
@@ -37,6 +38,10 @@ export class ExpoTicketsProducerLoginService {
         event: {
           include: {
             tickets: {
+              where: {
+                type: TicketType.SPECTATOR,
+              },
+
               select: {
                 id: true,
                 dni: true,
