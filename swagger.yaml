@@ -2769,8 +2769,18 @@ paths:
             schema:
               $ref: "#/components/schemas/LoginProducerDto"
       responses:
-        201:
-          description: ""
+        200:
+          description: "Login exitoso"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginProducerResponseDto"
+        401:
+          description: "Credenciales incorrectas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
       tags:
         - "ExpoTicketsProducerLogin"
   /expo-tickets-producer-login/get-event-tickets:
@@ -2785,7 +2795,17 @@ paths:
               $ref: "#/components/schemas/LoginProducerDto"
       responses:
         200:
-          description: ""
+          description: "Tickets obtenidos exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetEventTicketsLoginProducerResponseDto"
+        401:
+          description: "Credenciales incorrectas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
       tags:
         - "ExpoTicketsProducerLogin"
 info:
@@ -14496,3 +14516,165 @@ components:
       required:
         - "mail"
         - "password"
+    LoginProducerResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+        message:
+          type:
+            - "string"
+      required:
+        - "success"
+        - "message"
+    GetEventTicketsLoginProducerResponseDto:
+      type:
+        - "object"
+      properties:
+        email:
+          type:
+            - "string"
+          format: "email"
+        password:
+          type:
+            - "string"
+        event:
+          type:
+            - "object"
+          properties:
+            id:
+              type:
+                - "string"
+              format: "uuid"
+            name:
+              type:
+                - "string"
+              minLength: 1
+            date:
+              type:
+                - "string"
+              format: "date-time"
+            startingDate:
+              type:
+                - "string"
+              format: "date-time"
+            endingDate:
+              type:
+                - "string"
+              format: "date-time"
+            location:
+              type:
+                - "string"
+              minLength: 1
+            mainPictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            bannerUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            description:
+              type:
+                - "string"
+                - "null"
+            folderId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            tagAssistedId:
+              type:
+                - "string"
+              format: "uuid"
+            tagConfirmedId:
+              type:
+                - "string"
+              format: "uuid"
+            active:
+              type:
+                - "boolean"
+            supraEventId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            created_at:
+              type:
+                - "string"
+              format: "date-time"
+            updated_at:
+              type:
+                - "string"
+              format: "date-time"
+            tickets:
+              type:
+                - "array"
+              items:
+                type:
+                  - "object"
+                properties:
+                  id:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  dni:
+                    type:
+                      - "string"
+                    minLength: 1
+                  fullName:
+                    type:
+                      - "string"
+                    minLength: 1
+                  mail:
+                    type:
+                      - "string"
+                    format: "email"
+                  phoneNumber:
+                    type:
+                      - "string"
+                    minLength: 1
+                  whoToWatch:
+                    type:
+                      - "string"
+                      - "null"
+                  instagrams:
+                    type:
+                      - "array"
+                    items:
+                      type:
+                        - "string"
+                required:
+                  - "id"
+                  - "dni"
+                  - "fullName"
+                  - "mail"
+                  - "phoneNumber"
+                  - "whoToWatch"
+                  - "instagrams"
+          required:
+            - "id"
+            - "name"
+            - "date"
+            - "startingDate"
+            - "endingDate"
+            - "location"
+            - "mainPictureUrl"
+            - "bannerUrl"
+            - "description"
+            - "folderId"
+            - "tagAssistedId"
+            - "tagConfirmedId"
+            - "active"
+            - "supraEventId"
+            - "created_at"
+            - "updated_at"
+            - "tickets"
+      required:
+        - "email"
+        - "password"
+        - "event"
