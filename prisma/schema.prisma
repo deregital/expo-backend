@@ -381,13 +381,14 @@ model EventProducerLogin {
   eventId String @map("event_id")
   event   Event  @relation(name: "EVENT_X_EVENT_PRODUCER_LOGIN", fields: [eventId], references: [id], onDelete: Cascade)
 
-  mail     String  @unique
+  mail     String
   password String
   isActive Boolean @default(true) @map("is_active")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  @@unique([eventId, mail])
   @@map("EVENT_PRODUCER_LOGIN")
 }
 

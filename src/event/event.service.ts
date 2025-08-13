@@ -257,13 +257,27 @@ export class EventService {
             : undefined,
 
         // [N]
-        eventProducerLogin: {
-          create: updateEventDto.eventProducerLogin?.map((login) => ({
-            mail: login.mail,
-            password: login.password,
-            isActive: login.isActive,
-          })),
-        },
+        eventProducerLogin: updateEventDto.eventProducerLogin
+          ? {
+              deleteMany: {
+                eventId: id,
+                mail: {
+                  notIn: updateEventDto.eventProducerLogin.map(
+                    (login) => login.mail,
+                  ),
+                },
+              },
+              upsert: updateEventDto.eventProducerLogin.map((login) => ({
+                where: { eventId_mail: { eventId: id, mail: login.mail } },
+                update: { password: login.password, isActive: login.isActive },
+                create: {
+                  mail: login.mail,
+                  password: login.password,
+                  isActive: login.isActive,
+                },
+              })),
+            }
+          : undefined,
         // [/N]
       },
       include: {
@@ -318,9 +332,15 @@ export class EventService {
         description: event.description,
         // [N]
         eventProducerLogin: {
+          deleteMany: {
+            eventId: id,
+            mail: {
+              notIn: eventProducerLogin.map((login) => login.mail),
+            },
+          },
           upsert: eventProducerLogin.map((login) => ({
-            where: { mail: login.mail },
-            update: { password: login.password },
+            where: { eventId_mail: { eventId: id, mail: login.mail } },
+            update: { password: login.password, isActive: login.isActive },
             create: {
               mail: login.mail,
               password: login.password,

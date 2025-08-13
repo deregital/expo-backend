@@ -31610,18 +31610,19 @@ export namespace Prisma {
   export type EventProducerLoginWhereUniqueInput = Prisma.AtLeast<
     {
       id?: string;
-      mail?: string;
+      eventId_mail?: EventProducerLoginEventIdMailCompoundUniqueInput;
       AND?: EventProducerLoginWhereInput | EventProducerLoginWhereInput[];
       OR?: EventProducerLoginWhereInput[];
       NOT?: EventProducerLoginWhereInput | EventProducerLoginWhereInput[];
       eventId?: StringFilter<'EventProducerLogin'> | string;
+      mail?: StringFilter<'EventProducerLogin'> | string;
       password?: StringFilter<'EventProducerLogin'> | string;
       isActive?: BoolFilter<'EventProducerLogin'> | boolean;
       created_at?: DateTimeFilter<'EventProducerLogin'> | Date | string;
       updated_at?: DateTimeFilter<'EventProducerLogin'> | Date | string;
       event?: XOR<EventScalarRelationFilter, EventWhereInput>;
     },
-    'id' | 'mail'
+    'id' | 'eventId_mail'
   >;
 
   export type EventProducerLoginOrderByWithAggregationInput = {
@@ -34722,6 +34723,11 @@ export namespace Prisma {
       _min?: NestedEnumAffiliationStatusFilter<$PrismaModel>;
       _max?: NestedEnumAffiliationStatusFilter<$PrismaModel>;
     };
+
+  export type EventProducerLoginEventIdMailCompoundUniqueInput = {
+    eventId: string;
+    mail: string;
+  };
 
   export type EventProducerLoginCountOrderByAggregateInput = {
     id?: SortOrder;
