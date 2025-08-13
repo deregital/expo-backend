@@ -2758,6 +2758,36 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "ProductionAffiliationRequest"
+  /expo-tickets-producer-login/login:
+    post:
+      operationId: "ExpoTicketsProducerLoginController_login"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginProducerDto"
+      responses:
+        201:
+          description: ""
+      tags:
+        - "ExpoTicketsProducerLogin"
+  /expo-tickets-producer-login/get-event-tickets:
+    get:
+      operationId: "ExpoTicketsProducerLoginController_getEventTickets"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginProducerDto"
+      responses:
+        200:
+          description: ""
+      tags:
+        - "ExpoTicketsProducerLogin"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -14452,3 +14482,17 @@ components:
               - "profile"
       required:
         - "productions"
+    LoginProducerDto:
+      type:
+        - "object"
+      properties:
+        mail:
+          type:
+            - "string"
+          format: "email"
+        password:
+          type:
+            - "string"
+      required:
+        - "mail"
+        - "password"

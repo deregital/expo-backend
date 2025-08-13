@@ -168,4 +168,10 @@ export class PrismaService implements OnModuleInit {
   get productionAffiliationRequest(): PrismaClient['productionAffiliationRequest'] {
     return this.db.productionAffiliationRequest;
   }
+
+  // [N]
+  get eventProducerLogin(): PrismaClient['eventProducerLogin'] {
+    return this.db.eventProducerLogin;
+  }
+  // [/N]
 }
