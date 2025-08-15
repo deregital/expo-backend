@@ -12628,6 +12628,10 @@ components:
             - "BOOKED"
             - "PAID"
             - "FREE"
+        amountTickets:
+          type:
+            - "number"
+          minimum: 0
     UpdateTicketGroupResponseDto:
       type:
         - "object"

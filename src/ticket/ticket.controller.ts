@@ -422,6 +422,17 @@ export class TicketController {
       });
     }
 
+    if (ticket.ticketGroupId !== null) {
+      const ticketGroup = await this.ticketGroupService.findGroup(
+        ticket.ticketGroupId,
+      );
+      if (ticketGroup.amountTickets > 0) {
+        await this.ticketGroupService.update(ticket.ticketGroupId, {
+          amountTickets: ticketGroup.amountTickets - 1,
+        });
+      }
+    }
+
     return await this.ticketService.delete(id);
   }
 
