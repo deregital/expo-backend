@@ -3,7 +3,12 @@ import {
   baseEventTicketsSchema,
   eventTicketsSchema,
 } from '@/event/dto/event-tickets.dto';
-import { eventSchema } from '@/event/dto/event.dto';
+import {
+  // [N]
+  eventProducerLoginSchema,
+  // [/N]
+  eventSchema,
+} from '@/event/dto/event.dto';
 import { createZodDtoWithoutDate } from '@/shared/dto-modification/create-zod-dto-without-date';
 import { tagGroupSchema } from '@/tag-group/dto/tag-group.dto';
 import { tagSchema } from '@/tag/dto/tag.dto';
@@ -48,6 +53,10 @@ export const updateEventSchema = eventSchema
           }),
         ),
       ),
+
+      // [N]
+      eventProducerLogin: z.array(eventProducerLoginSchema),
+      // [/N]
     }),
   )
   .partial();

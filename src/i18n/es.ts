@@ -17,6 +17,9 @@ export default {
       ticketGroup: 'Grupo de tickets',
       production: 'Producción',
       productionAffiliationRequest: 'Solicitud de afiliación a producción',
+      // [N]
+      eventProducerLogin: 'Login de productor de eventos',
+      // [/N]
     },
     tag: { assisted: 'Asistió', confirmed: 'Confirmó asistencia' },
     ticketType: {
@@ -205,6 +208,17 @@ export default {
         uuid: 'El ID debe ser un UUID',
       },
     },
+    // [N]
+    eventProducerLogin: {
+      mail: {
+        invalid:
+          'El email no es válido. Debe tener el formato "algo@dominio.algo"',
+      },
+      password: {
+        required: 'La contraseña es requerida',
+      },
+    },
+    // [/N]
   },
   route: {
     auth: {
