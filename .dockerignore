@@ -9,7 +9,16 @@
 # production
 /build
 
+# compiled output
+/dist
+/types/prisma-schema
+
+# secrets
+.env
+.env.*
+
 # misc
+.git
 .DS_Store
 
 npm-debug.log*
