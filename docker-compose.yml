@@ -1,0 +1,60 @@
+services:
+  db:
+    image: postgres:17
+    container_name: expo-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-expo}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-expo}
+      POSTGRES_DB: ${POSTGRES_DB:-expo}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # Only reachable from this machine (e.g. pgAdmin); 5432 is taken by the Windows Postgres.
+    ports:
+      - '127.0.0.1:5433:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  expo-backend:
+    build: .
+    image: expo-backend
+    container_name: expo-backend
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-expo}:${POSTGRES_PASSWORD:-expo}@db:5432/${POSTGRES_DB:-expo}
+    ports:
+      - '3000:3000'
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Expects the expo-manager repo cloned next to this one (../expo-manager).
+  expo-manager:
+    build:
+      context: ../expo-manager
+      secrets:
+        - source: manager_env
+          target: env
+    image: expo-manager
+    container_name: expo-manager
+    env_file: ../expo-manager/.env
+    environment:
+      EXPO_BACKEND_URL: http://expo-backend:3000
+      # Must be the exact URL used in the browser, otherwise next-auth login fails.
+      NEXTAUTH_URL: ${EXPO_MANAGER_URL:-http://localhost:3001}
+    ports:
+      - '3001:3000'
+    depends_on:
+      - expo-backend
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+
+secrets:
+  manager_env:
+    file: ../expo-manager/.env
