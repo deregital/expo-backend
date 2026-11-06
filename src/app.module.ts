@@ -26,8 +26,11 @@ import { WebhookModule } from '@/webhook/webhook.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE, ModuleRef } from '@nestjs/core';
-import { ProductionModule } from './production/production.module';
+// [N]
+import { ExpoTicketsProducerLoginModule } from './expo-tickets-producer-login/expo-tickets-producer-login.module';
+// [/N]
 import { ProductionAffiliationRequestModule } from './production-affiliation-request/production-affiliation-request.module';
+import { ProductionModule } from './production/production.module';
 
 @Module({
   imports: [
@@ -57,6 +60,9 @@ import { ProductionAffiliationRequestModule } from './production-affiliation-req
     MercadoPagoModule,
     ProductionModule,
     ProductionAffiliationRequestModule,
+    // [N]
+    ExpoTicketsProducerLoginModule,
+    // [/N]
   ],
   providers: [
     {

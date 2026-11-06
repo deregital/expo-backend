@@ -67,6 +67,9 @@ export class EventFolderService {
               },
             },
             eventTickets: true,
+            // [N]
+            eventProducerLogin: true,
+            // [/N]
           },
         },
       },

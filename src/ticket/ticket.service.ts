@@ -26,7 +26,7 @@ import { barcodes, image, line, text } from '@pdfme/schemas';
 import { format } from 'date-fns/format';
 import { es } from 'date-fns/locale';
 import z from 'zod';
-import { Event, Profile, Ticket, TicketType } from '~/types';
+import { Event, Profile, Ticket, TicketGroupStatus, TicketType } from '~/types';
 import {
   CreateManyTicketDto,
   createManyTicketResponseSchema,
@@ -98,7 +98,21 @@ export class TicketService {
     eventId: string,
   ): Promise<z.infer<typeof findByEventTicketResponseSchema>> {
     const ticketsByEvent = await this.prisma.ticket.findMany({
-      where: { eventId },
+      where: {
+        eventId,
+        OR: [
+          {
+            ticketGroup: {
+              status: {
+                not: TicketGroupStatus.BOOKED,
+              },
+            },
+          },
+          {
+            ticketGroup: null,
+          },
+        ],
+      },
       include: { event: true, profile: true },
     });
 
@@ -265,6 +279,7 @@ export class TicketService {
       plugins,
       options: { font },
     });
+
     const blob = new Blob([pdf.buffer], {
       type: 'application/pdf',
     });

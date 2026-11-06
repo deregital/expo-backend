@@ -11,6 +11,12 @@ export const createTicketSchema = ticketSchema
     fullName: true,
     mail: true,
     dni: true,
+
+    // [N]
+    phoneNumber: true,
+    instagrams: true,
+    whoToWatch: true,
+    // [/N]
   })
   .extend({
     profileId: profileSchema.shape.id.optional(),

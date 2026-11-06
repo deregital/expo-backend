@@ -1,6 +1,8 @@
 import { translate } from '@/i18n/translate';
 import { ConflictException } from '@nestjs/common';
 import {
+  BinaryLike,
+  CipherKey,
   createCipheriv,
   createDecipheriv,
   createHash,
@@ -41,7 +43,11 @@ function getKeyFromSecret(secret: string): Buffer {
 export function encryptString(string: string): string {
   const key = getKeyFromSecret(process.env.BARCODE_SECRET!);
   const iv = randomBytes(16); // 16 bytes para AES-256-CBC
-  const cipher = createCipheriv('aes-256-cbc', key, iv);
+  const cipher = createCipheriv(
+    'aes-256-cbc',
+    key as unknown as CipherKey,
+    iv as unknown as BinaryLike,
+  );
 
   // Codifica en Base64 en lugar de hex
   let encrypted = cipher.update(string, 'utf8', 'base64');
@@ -64,7 +70,11 @@ export function decryptString(encryptedString: string): string {
     const iv = Buffer.from(ivBase64!, 'base64');
 
     let ticketId: string;
-    const decipher = createDecipheriv('aes-256-cbc', key, iv);
+    const decipher = createDecipheriv(
+      'aes-256-cbc',
+      key as unknown as CipherKey,
+      iv as unknown as BinaryLike,
+    );
     ticketId = decipher.update(cipherTextBase64!, 'base64', 'utf8');
     ticketId += decipher.final('utf8');
 

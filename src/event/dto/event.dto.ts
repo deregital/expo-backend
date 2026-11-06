@@ -49,3 +49,15 @@ export const eventSchema = z.object({
   created_at: z.date(),
   updated_at: z.date(),
 });
+
+// [N]
+export const eventProducerLoginSchema = z.object({
+  mail: z
+    .string()
+    .email({ message: translate('model.eventProducerLogin.mail.invalid') }),
+  password: z
+    .string()
+    .min(1, translate('model.eventProducerLogin.password.required')),
+  isActive: z.boolean(),
+});
+// [/N]

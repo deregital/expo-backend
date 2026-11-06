@@ -2758,6 +2758,56 @@ paths:
                 $ref: "#/components/schemas/ErrorDto"
       tags:
         - "ProductionAffiliationRequest"
+  /expo-tickets-producer-login/login:
+    post:
+      operationId: "ExpoTicketsProducerLoginController_login"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginProducerDto"
+      responses:
+        200:
+          description: "Login exitoso"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginProducerResponseDto"
+        401:
+          description: "Credenciales incorrectas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "ExpoTicketsProducerLogin"
+  /expo-tickets-producer-login/get-event-tickets:
+    post:
+      operationId: "ExpoTicketsProducerLoginController_getEventTickets"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginProducerDto"
+      responses:
+        200:
+          description: "Tickets obtenidos exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetEventTicketsLoginProducerResponseDto"
+        401:
+          description: "Credenciales incorrectas"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags:
+        - "ExpoTicketsProducerLogin"
 info:
   title: "Expo Backend"
   description: "Backend de las aplicaciones de Expo"
@@ -5454,6 +5504,28 @@ components:
               - "amount"
               - "type"
               - "price"
+        eventProducerLogin:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              password:
+                type:
+                  - "string"
+                minLength: 1
+              isActive:
+                type:
+                  - "boolean"
+            required:
+              - "mail"
+              - "password"
+              - "isActive"
       required:
         - "name"
         - "date"
@@ -5466,6 +5538,7 @@ components:
         - "description"
         - "tagsId"
         - "eventTickets"
+        - "eventProducerLogin"
     CreateEventResponseDto:
       type:
         - "object"
@@ -5958,6 +6031,28 @@ components:
                           - "amount"
                           - "type"
                           - "price"
+                    eventProducerLogin:
+                      type:
+                        - "array"
+                      items:
+                        type:
+                          - "object"
+                        properties:
+                          mail:
+                            type:
+                              - "string"
+                            format: "email"
+                          password:
+                            type:
+                              - "string"
+                            minLength: 1
+                          isActive:
+                            type:
+                              - "boolean"
+                        required:
+                          - "mail"
+                          - "password"
+                          - "isActive"
                   required:
                     - "id"
                     - "name"
@@ -5979,6 +6074,7 @@ components:
                     - "subEvents"
                     - "profileTags"
                     - "eventTickets"
+                    - "eventProducerLogin"
             required:
               - "id"
               - "name"
@@ -6326,6 +6422,28 @@ components:
                     - "amount"
                     - "type"
                     - "price"
+              eventProducerLogin:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "object"
+                  properties:
+                    mail:
+                      type:
+                        - "string"
+                      format: "email"
+                    password:
+                      type:
+                        - "string"
+                      minLength: 1
+                    isActive:
+                      type:
+                        - "boolean"
+                  required:
+                    - "mail"
+                    - "password"
+                    - "isActive"
             required:
               - "id"
               - "name"
@@ -6347,6 +6465,7 @@ components:
               - "subEvents"
               - "profileTags"
               - "eventTickets"
+              - "eventProducerLogin"
       required:
         - "folders"
         - "withoutFolder"
@@ -6957,6 +7076,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -6990,6 +7123,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -7383,6 +7519,28 @@ components:
               - "amount"
               - "type"
               - "price"
+        eventProducerLogin:
+          type:
+            - "array"
+          items:
+            type:
+              - "object"
+            properties:
+              mail:
+                type:
+                  - "string"
+                format: "email"
+              password:
+                type:
+                  - "string"
+                minLength: 1
+              isActive:
+                type:
+                  - "boolean"
+            required:
+              - "mail"
+              - "password"
+              - "isActive"
     UpdateEventResponseDto:
       type:
         - "object"
@@ -10169,6 +10327,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         profileId:
           type:
             - "string"
@@ -10183,6 +10355,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
     CreateTicketResponseDto:
       type:
         - "object"
@@ -10214,6 +10389,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -10335,6 +10524,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -10381,6 +10573,20 @@ components:
                   - "string"
                   - "null"
                 format: "uuid"
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               profileId:
                 type:
                   - "string"
@@ -10392,6 +10598,9 @@ components:
               - "mail"
               - "dni"
               - "ticketGroupId"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
       required:
         - "tickets"
     CreateManyTicketResponseDto:
@@ -10428,6 +10637,20 @@ components:
             type:
               - "string"
             minLength: 1
+          phoneNumber:
+            type:
+              - "string"
+            minLength: 1
+          instagrams:
+            type:
+              - "array"
+            items:
+              type:
+                - "string"
+          whoToWatch:
+            type:
+              - "string"
+              - "null"
           seat:
             type:
               - "number"
@@ -10549,6 +10772,9 @@ components:
           - "fullName"
           - "mail"
           - "dni"
+          - "phoneNumber"
+          - "instagrams"
+          - "whoToWatch"
           - "seat"
           - "scanned"
           - "scannedAt"
@@ -10616,6 +10842,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -10669,6 +10909,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -10713,6 +10956,20 @@ components:
               type:
                 - "string"
               minLength: 1
+            phoneNumber:
+              type:
+                - "string"
+              minLength: 1
+            instagrams:
+              type:
+                - "array"
+              items:
+                type:
+                  - "string"
+            whoToWatch:
+              type:
+                - "string"
+                - "null"
             seat:
               type:
                 - "number"
@@ -10974,6 +11231,9 @@ components:
             - "fullName"
             - "mail"
             - "dni"
+            - "phoneNumber"
+            - "instagrams"
+            - "whoToWatch"
             - "seat"
             - "scanned"
             - "scannedAt"
@@ -11023,6 +11283,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -11211,6 +11485,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -11259,6 +11536,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -11447,6 +11738,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -11495,6 +11789,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -11616,6 +11924,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -11684,6 +11995,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -11717,6 +12042,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -11754,6 +12082,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -11787,6 +12129,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -11824,6 +12169,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -11857,6 +12216,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -11910,6 +12272,20 @@ components:
           type:
             - "string"
           minLength: 1
+        phoneNumber:
+          type:
+            - "string"
+          minLength: 1
+        instagrams:
+          type:
+            - "array"
+          items:
+            type:
+              - "string"
+        whoToWatch:
+          type:
+            - "string"
+            - "null"
         seat:
           type:
             - "number"
@@ -11943,6 +12319,9 @@ components:
         - "fullName"
         - "mail"
         - "dni"
+        - "phoneNumber"
+        - "instagrams"
+        - "whoToWatch"
         - "seat"
         - "scanned"
         - "scannedAt"
@@ -12038,6 +12417,20 @@ components:
                 type:
                   - "string"
                 minLength: 1
+              phoneNumber:
+                type:
+                  - "string"
+                minLength: 1
+              instagrams:
+                type:
+                  - "array"
+                items:
+                  type:
+                    - "string"
+              whoToWatch:
+                type:
+                  - "string"
+                  - "null"
               seat:
                 type:
                   - "number"
@@ -12071,6 +12464,9 @@ components:
               - "fullName"
               - "mail"
               - "dni"
+              - "phoneNumber"
+              - "instagrams"
+              - "whoToWatch"
               - "seat"
               - "scanned"
               - "scannedAt"
@@ -12232,6 +12628,10 @@ components:
             - "BOOKED"
             - "PAID"
             - "FREE"
+        amountTickets:
+          type:
+            - "number"
+          minimum: 0
     UpdateTicketGroupResponseDto:
       type:
         - "object"
@@ -14106,3 +14506,179 @@ components:
               - "profile"
       required:
         - "productions"
+    LoginProducerDto:
+      type:
+        - "object"
+      properties:
+        mail:
+          type:
+            - "string"
+          format: "email"
+        password:
+          type:
+            - "string"
+      required:
+        - "mail"
+        - "password"
+    LoginProducerResponseDto:
+      type:
+        - "object"
+      properties:
+        success:
+          type:
+            - "boolean"
+        message:
+          type:
+            - "string"
+      required:
+        - "success"
+        - "message"
+    GetEventTicketsLoginProducerResponseDto:
+      type:
+        - "object"
+      properties:
+        email:
+          type:
+            - "string"
+          format: "email"
+        password:
+          type:
+            - "string"
+        event:
+          type:
+            - "object"
+          properties:
+            id:
+              type:
+                - "string"
+              format: "uuid"
+            name:
+              type:
+                - "string"
+              minLength: 1
+            date:
+              type:
+                - "string"
+              format: "date-time"
+            startingDate:
+              type:
+                - "string"
+              format: "date-time"
+            endingDate:
+              type:
+                - "string"
+              format: "date-time"
+            location:
+              type:
+                - "string"
+              minLength: 1
+            mainPictureUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            bannerUrl:
+              type:
+                - "string"
+                - "null"
+              format: "uri"
+            description:
+              type:
+                - "string"
+                - "null"
+            folderId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            tagAssistedId:
+              type:
+                - "string"
+              format: "uuid"
+            tagConfirmedId:
+              type:
+                - "string"
+              format: "uuid"
+            active:
+              type:
+                - "boolean"
+            supraEventId:
+              type:
+                - "string"
+                - "null"
+              format: "uuid"
+            created_at:
+              type:
+                - "string"
+              format: "date-time"
+            updated_at:
+              type:
+                - "string"
+              format: "date-time"
+            tickets:
+              type:
+                - "array"
+              items:
+                type:
+                  - "object"
+                properties:
+                  id:
+                    type:
+                      - "string"
+                    format: "uuid"
+                  dni:
+                    type:
+                      - "string"
+                    minLength: 1
+                  fullName:
+                    type:
+                      - "string"
+                    minLength: 1
+                  mail:
+                    type:
+                      - "string"
+                    format: "email"
+                  phoneNumber:
+                    type:
+                      - "string"
+                    minLength: 1
+                  whoToWatch:
+                    type:
+                      - "string"
+                      - "null"
+                  instagrams:
+                    type:
+                      - "array"
+                    items:
+                      type:
+                        - "string"
+                required:
+                  - "id"
+                  - "dni"
+                  - "fullName"
+                  - "mail"
+                  - "phoneNumber"
+                  - "whoToWatch"
+                  - "instagrams"
+          required:
+            - "id"
+            - "name"
+            - "date"
+            - "startingDate"
+            - "endingDate"
+            - "location"
+            - "mainPictureUrl"
+            - "bannerUrl"
+            - "description"
+            - "folderId"
+            - "tagAssistedId"
+            - "tagConfirmedId"
+            - "active"
+            - "supraEventId"
+            - "created_at"
+            - "updated_at"
+            - "tickets"
+      required:
+        - "email"
+        - "password"
+        - "event"

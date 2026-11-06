@@ -18,3 +18,7 @@ export * from './tag-group/exports';
 export * from './tag/exports';
 export * from './ticket-group/exports';
 export * from './ticket/exports';
+
+// [N]
+export * from './expo-tickets-producer-login/exports';
+// [/N]
